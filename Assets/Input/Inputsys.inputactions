@@ -1,5 +1,5 @@
 {
-    "name": "Input",
+    "name": "Inputsys",
     "maps": [
         {
             "name": "Keyboard",
@@ -27,6 +27,24 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "5f924e40-b903-4127-a368-dfe8f71ed89d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NormalAttack",
+                    "type": "Button",
+                    "id": "3f220980-351e-4669-87a0-fd6718eb05a8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SubAttack",
+                    "type": "Button",
+                    "id": "f8ddf5af-a8d8-41bd-97d9-801e60f30ac6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -108,6 +126,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91bf4184-9128-4a2c-a2d8-229f5ee97513",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NormalAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa5f6f92-9637-4b02-9a41-bb04537b623d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SubAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

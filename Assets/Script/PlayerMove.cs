@@ -18,9 +18,9 @@ public class PlayerMove : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction Move;
     private InputAction Jump;
+    private InputAction Dash;
     private Rigidbody2D playerRig;
     private GameObject groundDetector;
-    private InputAction Dash;
     private float drag;
     private bool isDoubleJumpAble;
     private bool isGrounded;
