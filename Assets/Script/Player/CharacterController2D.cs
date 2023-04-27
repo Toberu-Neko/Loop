@@ -46,10 +46,11 @@ public class CharacterController2D : MonoBehaviour
 	private float jumpWallDistX = 0; //Distance between player and wall
 	private bool limitVelOnWallJump = false; //For limit wall jump distance with low fps
 
+	private PlayerBattle playerBattle;
 	[Header("Events")]
-	[Space]
+	//[Space]
 
-	public UnityEvent OnFallEvent;
+	private UnityEvent OnFallEvent;
 	public UnityEvent OnLandEvent;
     private void OnDrawGizmosSelected()
     {
@@ -62,12 +63,11 @@ public class CharacterController2D : MonoBehaviour
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+        playerBattle = GetComponent<PlayerBattle>();
 
-		if (OnFallEvent == null)
-			OnFallEvent = new UnityEvent();
 
-		if (OnLandEvent == null)
-			OnLandEvent = new UnityEvent();
+        OnFallEvent ??= new UnityEvent();
+		OnLandEvent ??= new UnityEvent();
 	}
 
 
@@ -85,9 +85,10 @@ public class CharacterController2D : MonoBehaviour
 				m_Grounded = true;
 				if (!wasGrounded )									//If player just landed
 				{
-					OnLandEvent.Invoke();							//Event for when player lands
+					// OnLandEvent.Invoke();
+					animator.SetBool("Grounded", m_Grounded);
 
-					if (!m_WallInfront && !isDashing)				//If player is not beside a wall or dashing
+                if (!m_WallInfront && !isDashing)				//If player is not beside a wall or dashing
 						particleJumpDown.Play();
 
 					canDoubleJump = true;
@@ -102,7 +103,9 @@ public class CharacterController2D : MonoBehaviour
 		if (!m_Grounded)
 		{
 			OnFallEvent.Invoke();
-			Collider2D[] collidersWall = Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_GroundLayer);
+            animator.SetBool("Grounded", m_Grounded);
+
+            Collider2D[] collidersWall = Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_GroundLayer);
 			for (int i = 0; i < collidersWall.Length; i++)
 			{
 				if (collidersWall[i].gameObject != null)
@@ -154,7 +157,9 @@ public class CharacterController2D : MonoBehaviour
 			// If crouching, check to see if the character can stand up
 			if (isDashing)
 			{
-				m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
+                playerBattle.DoDashDamage();
+                m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
+
 			}
 			//only control the player if grounded or airControl is turned on
 			else if (m_Grounded || m_AirControl)
@@ -169,13 +174,11 @@ public class CharacterController2D : MonoBehaviour
 				// If the input is moving the player right and the player is facing left...
 				if (move > 0 && !m_FacingRight && !isWallSliding)
 				{
-					// ... flip the player.
 					Flip();
 				}
 				// Otherwise if the input is moving the player left and the player is facing right...
 				else if (move < 0 && m_FacingRight && !isWallSliding)
 				{
-					// ... flip the player.
 					Flip();
 				}
 			}
@@ -183,9 +186,9 @@ public class CharacterController2D : MonoBehaviour
 			if (m_Grounded && jump)
 			{
 				// Add a vertical force to the player.
-				animator.SetBool("IsJumping", true);
-				animator.SetBool("JumpUp", true);
-				m_Grounded = false;
+				animator.SetTrigger("Jump");
+                animator.SetBool("Grounded", m_Grounded);
+                m_Grounded = false;
 				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 				canDoubleJump = true;
 				particleJumpDown.Play();
@@ -196,8 +199,8 @@ public class CharacterController2D : MonoBehaviour
 				canDoubleJump = false;
 				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
 				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce / 1.2f));
-				animator.SetBool("IsDoubleJumping", true);
-			}
+                animator.SetTrigger("Jump");
+            }
 
 			else if (m_WallInfront && !m_Grounded)
 			{
@@ -208,12 +211,14 @@ public class CharacterController2D : MonoBehaviour
 					Flip();
 					StartCoroutine(WaitToCheck(0.1f));
 					canDoubleJump = true;
-					animator.SetBool("IsWallSliding", true);
+					animator.SetBool("WallSlide", true);
 				}
 				isDashing = false;
 
 				if (isWallSliding)
 				{
+					PlayerBattle.battleState = PlayerBattle.BattleState.OnWall;
+
 					if (move * transform.localScale.x > 0.1f)
 					{
 						StartCoroutine(WaitToEndSliding());
@@ -229,17 +234,16 @@ public class CharacterController2D : MonoBehaviour
 				if (jump && isWallSliding)
 				{
                     m_Rigidbody2D.simulated = true;
-                    animator.SetBool("IsJumping", true);
-					animator.SetBool("JumpUp", true); 
+					animator.SetTrigger("Jump");
 
-					m_Rigidbody2D.velocity = new Vector2(0f, 0f);
+                    m_Rigidbody2D.velocity = new Vector2(0f, 0f);
 					m_Rigidbody2D.AddForce(new Vector2(transform.localScale.x * m_JumpForce * wallJumpForceX, m_JumpForce));
 
 					jumpWallStartX = transform.position.x;
 					limitVelOnWallJump = true;
 					canDoubleJump = true;
 					isWallSliding = false;
-					animator.SetBool("IsWallSliding", false);
+					animator.SetBool("WallSlide", false);
 					oldWallSlidding = false;
 					m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
 					canMove = false;
@@ -248,7 +252,7 @@ public class CharacterController2D : MonoBehaviour
 				{
                     m_Rigidbody2D.simulated = true;
                     isWallSliding = false;
-					animator.SetBool("IsWallSliding", false);
+					animator.SetBool("WallSlide", false);
 					oldWallSlidding = false;
 					m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
 					canDoubleJump = true;
@@ -259,7 +263,8 @@ public class CharacterController2D : MonoBehaviour
 			{
 				isWallSliding = false;
                 m_Rigidbody2D.simulated = true;
-                animator.SetBool("IsWallSliding", false);
+
+                animator.SetBool("WallSlide", false);
 				oldWallSlidding = false;
 				m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
 				canDoubleJump = true;
@@ -282,9 +287,10 @@ public class CharacterController2D : MonoBehaviour
 	public void ApplyDamage(float damage, Vector3 position) 
 	{
 		if (!invincible)
-		{
-			animator.SetBool("Hit", true);
-			life -= damage;
+        {
+            //animator.SetBool("Hit", true);
+            animator.SetTrigger("Hurt");
+            life -= damage;
 			Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f ;
 			m_Rigidbody2D.velocity = Vector2.zero;
 			m_Rigidbody2D.AddForce(damageDir * 10);
@@ -302,8 +308,8 @@ public class CharacterController2D : MonoBehaviour
 
 	IEnumerator DashCooldown()
 	{
-		animator.SetBool("IsDashing", true);
-		isDashing = true;
+		animator.SetTrigger("Roll");
+        isDashing = true;
 		canDash = false;
 
 		yield return new WaitForSeconds(dashDuration);
@@ -345,20 +351,39 @@ public class CharacterController2D : MonoBehaviour
         m_Rigidbody2D.simulated = true;
         canDoubleJump = true;
 		isWallSliding = false;
-		animator.SetBool("IsWallSliding", false);
+		animator.SetBool("WallSlide", false);
 		oldWallSlidding = false;
 		m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
-	}
+        PlayerBattle.battleState = PlayerBattle.BattleState.Idle;
+    }
 
 	IEnumerator WaitToDead()
 	{
-		animator.SetBool("IsDead", true);
-		canMove = false;
+		animator.SetTrigger("Death");
+        canMove = false;
 		invincible = true;
-		GetComponent<Attack>().enabled = false;
+		playerBattle.enabled = false;
 		yield return new WaitForSeconds(0.4f);
 		m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
 		yield return new WaitForSeconds(1.1f);
 		SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 	}
+
+  void AE_SlideDust()
+    {/*
+        Vector3 spawnPosition;
+
+        if (m_facingDirection == 1)
+            spawnPosition = m_wallSensorR2.transform.position;
+        else
+            spawnPosition = m_wallSensorL2.transform.position;
+
+        if (m_slideDust != null)
+        {
+            // Set correct arrow spawn position
+            GameObject dust = Instantiate(m_slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;
+            // Turn arrow in correct direction
+            dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
+        }*/
+    }
 }

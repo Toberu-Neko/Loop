@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static PlayerMove;
 
-public class PlayerMove : MonoBehaviour
+
+public class OldPlayerMove : MonoBehaviour
 {
     [SerializeField]
     private float movenSpeed;
