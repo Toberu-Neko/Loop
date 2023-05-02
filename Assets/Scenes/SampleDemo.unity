@@ -1770,6 +1770,17 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &519420034 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114743086845943066, guid: d975e66254b08984ab50d4c39dcb947f, type: 3}
+  m_PrefabInstance: {fileID: 296927483}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d11666ee1aeff4dbb0ae6b9f495a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &573815214
 GameObject:
   m_ObjectHideFlags: 0
@@ -6494,14 +6505,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9955788a5eaffa49a9297f38eaa6202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 1
-  perfectBlockTime: 1
+  attackCooldown: 0.2
   dmgValue: 4
-  throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
-  attackCheck: {fileID: 4370584448646285}
+  attackWidth: 1.56
+  attackHeight: 1.73
+  perfectBlockTime: 1
+  battleState: 0
   canAttack: 1
-  isTimeToCheck: 0
-  cam: {fileID: 519420028}
+  attackCheck: {fileID: 4370584448646285}
+  throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
+  cameraFollow: {fileID: 519420034}
 --- !u!198 &198584873005665905
 ParticleSystem:
   m_ObjectHideFlags: 0

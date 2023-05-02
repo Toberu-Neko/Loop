@@ -5,9 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class CharacterController2D : MonoBehaviour
 {
-	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
+	[Header("Settings")]
+	[SerializeField] private bool m_AirControl = true;							// Whether or not a player can steer while jumping;
+
+
+	
+	[Header("Jump")]
+    [SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
-	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask m_GroundLayer;							// A mask determining what is ground to the character
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_WallCheck;                             //Posicion que controla si el personaje toca una pared
@@ -17,6 +22,8 @@ public class CharacterController2D : MonoBehaviour
 	[Header("Dash")]
 	[SerializeField] private float dashDuration;
 	[SerializeField] private float dashCooldown;
+	[SerializeField] private float m_DashForce = 25f;
+	
 	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	private Rigidbody2D m_Rigidbody2D;
@@ -25,7 +32,6 @@ public class CharacterController2D : MonoBehaviour
 	private float limitFallSpeed = 25f; // Limit fall speed
 
 	public bool canDoubleJump = true; //If player can double jump
-	[SerializeField] private float m_DashForce = 25f;
 	private bool canDash = true;
 	private bool isDashing = false; //If player is dashing
 	private bool m_WallInfront = false; //If there is a wall in front of the player
@@ -33,9 +39,6 @@ public class CharacterController2D : MonoBehaviour
 	private bool oldWallSlidding = false; //If player is sliding in a wall in the previous frame
 	private float prevVelocityX = 0f;
 	private bool canCheck = false; //For check if player is wallsliding
-
-	public float life = 10f; //Life of the player
-	public bool invincible = false; //If player can die
 	private bool canMove = true; //If player can move
 
 	private Animator animator;
@@ -47,27 +50,12 @@ public class CharacterController2D : MonoBehaviour
 	private bool limitVelOnWallJump = false; //For limit wall jump distance with low fps
 
 	private PlayerBattle playerBattle;
-	[Header("Events")]
-	//[Space]
-
-	private UnityEvent OnFallEvent;
-	public UnityEvent OnLandEvent;
-    private void OnDrawGizmosSelected()
-    {
-        // 在編輯器中繪製圓形區域
-        Gizmos.color = Color.yellow; // 設定Gizmos的顏色
-        Gizmos.DrawWireSphere(m_GroundCheck.position, k_GroundedRadius); // 繪製一個WireSphere，表示圓形區域
-    }
 
     private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
         playerBattle = GetComponent<PlayerBattle>();
-
-
-        OnFallEvent ??= new UnityEvent();
-		OnLandEvent ??= new UnityEvent();
 	}
 
 
@@ -88,10 +76,8 @@ public class CharacterController2D : MonoBehaviour
 					// OnLandEvent.Invoke();
 					animator.SetBool("Grounded", m_Grounded);
 
-                if (!m_WallInfront && !isDashing)				//If player is not beside a wall or dashing
-						particleJumpDown.Play();
-
-					canDoubleJump = true;
+					if (!m_WallInfront && !isDashing)				//If player is not beside a wall or dashing
+						canDoubleJump = true;
 
 					if (m_Rigidbody2D.velocity.y < 0f)
 						limitVelOnWallJump = false;
@@ -102,7 +88,6 @@ public class CharacterController2D : MonoBehaviour
 
 		if (!m_Grounded)
 		{
-			OnFallEvent.Invoke();
             animator.SetBool("Grounded", m_Grounded);
 
             Collider2D[] collidersWall = Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_GroundLayer);
@@ -152,14 +137,13 @@ public class CharacterController2D : MonoBehaviour
 		if (canMove) {
 			if (dash && canDash && !isWallSliding)
 			{
-				StartCoroutine(DashCooldown());
+				Dash();
 			}
 			// If crouching, check to see if the character can stand up
 			if (isDashing)
 			{
-                playerBattle.DoDashDamage();
+                // playerBattle.DoDashDamage();
                 m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
-
 			}
 			//only control the player if grounded or airControl is turned on
 			else if (m_Grounded || m_AirControl)
@@ -217,7 +201,7 @@ public class CharacterController2D : MonoBehaviour
 
 				if (isWallSliding)
 				{
-					PlayerBattle.battleState = PlayerBattle.BattleState.OnWall;
+                    playerBattle.battleState = PlayerBattle.BattleState.OnWall;
 
 					if (move * transform.localScale.x > 0.1f)
 					{
@@ -235,6 +219,7 @@ public class CharacterController2D : MonoBehaviour
 				{
                     m_Rigidbody2D.simulated = true;
 					animator.SetTrigger("Jump");
+                    playerBattle.battleState = PlayerBattle.BattleState.Idle;
 
                     m_Rigidbody2D.velocity = new Vector2(0f, 0f);
 					m_Rigidbody2D.AddForce(new Vector2(transform.localScale.x * m_JumpForce * wallJumpForceX, m_JumpForce));
@@ -250,19 +235,21 @@ public class CharacterController2D : MonoBehaviour
 				}
 				else if (dash && canDash)
 				{
+                    playerBattle.battleState = PlayerBattle.BattleState.Idle;
                     m_Rigidbody2D.simulated = true;
                     isWallSliding = false;
 					animator.SetBool("WallSlide", false);
 					oldWallSlidding = false;
 					m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
 					canDoubleJump = true;
-					StartCoroutine(DashCooldown());
+					Dash();
 				}
 			}
 			else if (isWallSliding && !m_WallInfront && canCheck) 
 			{
 				isWallSliding = false;
                 m_Rigidbody2D.simulated = true;
+                playerBattle.battleState = PlayerBattle.BattleState.Idle;
 
                 animator.SetBool("WallSlide", false);
 				oldWallSlidding = false;
@@ -284,38 +271,20 @@ public class CharacterController2D : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
-	public void ApplyDamage(float damage, Vector3 position) 
-	{
-		if (!invincible)
-        {
-            //animator.SetBool("Hit", true);
-            animator.SetTrigger("Hurt");
-            life -= damage;
-			Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f ;
-			m_Rigidbody2D.velocity = Vector2.zero;
-			m_Rigidbody2D.AddForce(damageDir * 10);
-			if (life <= 0)
-			{
-				StartCoroutine(WaitToDead());
-			}
-			else
-			{
-				StartCoroutine(Stun(0.25f));
-				StartCoroutine(MakeInvincible(1f));
-			}
-		}
-	}
 
-	IEnumerator DashCooldown()
+    #region Dash
+    private void Dash()
 	{
-		animator.SetTrigger("Roll");
+        animator.SetTrigger("Roll");
         isDashing = true;
-		canDash = false;
+        canDash = false;
 
-		yield return new WaitForSeconds(dashDuration);
-		isDashing = false;
-		yield return new WaitForSeconds(dashCooldown);
-		ResetCanDash();
+        Invoke(nameof(DashDuration), dashDuration);
+    }
+	private void DashDuration()
+	{
+        isDashing = false;
+        Invoke(nameof(ResetCanDash), dashCooldown);
     }
 	private void ResetCanDash()
 	{
@@ -324,18 +293,19 @@ public class CharacterController2D : MonoBehaviour
 		else
 			Invoke(nameof(ResetCanDash), Time.deltaTime);
     }
-	IEnumerator Stun(float time) 
+    #endregion
+    #region StunPlayer
+    public void Stun(float time)
 	{
-		canMove = false;
-		yield return new WaitForSeconds(time);
-		canMove = true;
-	}
-	IEnumerator MakeInvincible(float time) 
+        canMove = false;
+		Invoke(nameof(ResetCanMove), time);
+    }
+	private void ResetCanMove()
 	{
-		invincible = true;
-		yield return new WaitForSeconds(time);
-		invincible = false;
-	}
+        canMove = true;
+    }
+    #endregion
+
 
 	IEnumerator WaitToCheck(float time)
 	{
@@ -354,20 +324,13 @@ public class CharacterController2D : MonoBehaviour
 		animator.SetBool("WallSlide", false);
 		oldWallSlidding = false;
 		m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
-        PlayerBattle.battleState = PlayerBattle.BattleState.Idle;
+        playerBattle.battleState = PlayerBattle.BattleState.Idle;
     }
 
-	IEnumerator WaitToDead()
+	public void Dead()
 	{
-		animator.SetTrigger("Death");
         canMove = false;
-		invincible = true;
-		playerBattle.enabled = false;
-		yield return new WaitForSeconds(0.4f);
-		m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
-		yield return new WaitForSeconds(1.1f);
-		SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-	}
+    }
 
   void AE_SlideDust()
     {/*
