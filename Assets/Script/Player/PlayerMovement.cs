@@ -60,34 +60,15 @@ public class PlayerMovement : MonoBehaviour {
 		animator.SetTrigger("Jump");
 	}
 
-	public void OnLanding()
-	{
-		// animator.SetBool("IsJumping", false);
-	}
-
-    // private bool jumpAfterMoveable = false;
-    // private bool dashAfterMoveable = false;
 	void FixedUpdate ()
 	{
 		if (PlayerStatus.moveable == false)
         {
-            /*
-            if (goJump)
-                jumpAfterMoveable = true;
-            if (goDash)
-                dashAfterMoveable = true;*/
-
             controller.Move(0, false, false);
             animator.SetInteger("AnimState", 0);
             goJump = false;
             goDash = false;
         }
-        /*else if(jumpAfterMoveable || dashAfterMoveable)
-        {
-            controller.Move(0, jumpAfterMoveable, dashAfterMoveable);
-            jumpAfterMoveable = false;
-            dashAfterMoveable = false;
-        }*/
         else
         {
 		    // Move our character

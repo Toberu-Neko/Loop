@@ -1,16 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.Timeline;
-using static PlayerBattle;
-using static PlayerMovement;
+
 
 public class PlayerBattle : MonoBehaviour
 {
-    [SerializeField] private float life = 10f; //Life of the player
+    [SerializeField] private int life = 10; //Life of the player
     [HideInInspector] public bool invincible = false; //If player can be hurt
     [Header("Damaged")]
     [SerializeField] private float damagedStunTime = 0.25f;
@@ -30,7 +26,7 @@ public class PlayerBattle : MonoBehaviour
 
 	private Rigidbody2D m_Rigidbody2D;
 	private Animator animator;
-    [SerializeField] private bool canAttack = true;
+    private bool canAttack = true;
     private CharacterController2D characterController;
 
     private PlayerInput playerInput;
@@ -97,7 +93,8 @@ public class PlayerBattle : MonoBehaviour
 
         if (normalAttack.WasPressedThisFrame() && canAttack && battleState == BattleState.Idle)
 		{
-			canAttack = false;
+            characterController.turnAble = false;
+            canAttack = false;
 			animator.SetTrigger("Attack" + attackCount);
 			attackCount += 1;
 			if(attackCount == 4)
@@ -112,13 +109,13 @@ public class PlayerBattle : MonoBehaviour
 
 		if (subAttack.WasPressedThisFrame() && battleState == BattleState.Idle)
 		{
-			GameObject throwableWeapon = Instantiate(throwableObject, attackCheck.position, Quaternion.identity) as GameObject; 
+			GameObject throwableWeapon = Instantiate(throwableObject, attackCheck.position, Quaternion.identity); 
 			Vector2 direction = new Vector2(transform.localScale.x , 0);
 			throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction; 
 			throwableWeapon.name = "ThrowableWeapon";
 		}
 
-		if (block.IsPressed() && battleState != BattleState.OnWall)
+		if (block.IsPressed() && battleState != BattleState.OnWall && battleState != BattleState.Attack)
 		{
 			if(blockTimer == 0)
 			{
@@ -142,14 +139,19 @@ public class PlayerBattle : MonoBehaviour
 			battleState = BattleState.Idle;
         }
 	}
+    public void OnAttackFinished()
+    {
+        Debug.Log("finished;");
+        characterController.turnAble = true;
+    }
 
-	private void AttackCooldown()
+    private void AttackCooldown()
 	{
 		if(battleState == BattleState.Attack)
 			battleState = BattleState.Idle;
         canAttack = true;
 	}
-    public void ApplyDamage(float damage, Vector3 position)
+    public void ApplyDamage(int damage, Vector3 position)
     {
         if (!invincible)
         {
@@ -176,9 +178,9 @@ public class PlayerBattle : MonoBehaviour
     {
 		bool haveEnemy = false;
 
-        Vector2 attackSize = new Vector2(attackWidth, attackHeight);
-		Vector2 attackOffset = new Vector2(attackWidth / 2, attackHeight / 2);
-        Vector2 attackPosition = new Vector2(transform.position.x + attackOffset.x * transform.localScale.x,
+        Vector2 attackSize = new(attackWidth, attackHeight);
+		Vector2 attackOffset = new(attackWidth / 2, attackHeight / 2);
+        Vector2 attackPosition = new(transform.position.x + attackOffset.x * transform.localScale.x,
                                              transform.position.y + attackOffset.y);
 
         // Check enemies in attack range

@@ -626,7 +626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &157337139
 Transform:
   m_ObjectHideFlags: 0
@@ -6461,38 +6461,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783f8b7882d2d2a42a5b76de9179978f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_AirControl: 1
+  onWallGravity: 0
   m_JumpForce: 850
   m_MovementSmoothing: 0.05
-  m_AirControl: 1
   m_GroundLayer:
     serializedVersion: 2
     m_Bits: 1
   m_GroundCheck: {fileID: 4291728073584969}
   m_WallCheck: {fileID: 4986332468732661}
   wallJumpForceX: 0.8
+  endSlidingDelay: 0.1
   dashDuration: 0.1
   dashCooldown: 0.1
-  canDoubleJump: 0
   m_DashForce: 25
-  life: 10
-  invincible: 0
+  canDoubleJump: 0
   particleJumpUp: {fileID: 198584873005665905}
   particleJumpDown: {fileID: 198967112134933723}
-  OnLandEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114145885887768173}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnLanding
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &114435281941944949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6505,13 +6490,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9955788a5eaffa49a9297f38eaa6202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 0.2
+  life: 10
+  invincible: 0
+  damagedStunTime: 0.25
+  damagedInvincibleTime: 1
+  attackCooldown: 0.5
   dmgValue: 4
   attackWidth: 1.56
   attackHeight: 1.73
   perfectBlockTime: 1
   battleState: 0
-  canAttack: 1
   attackCheck: {fileID: 4370584448646285}
   throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
   cameraFollow: {fileID: 519420034}

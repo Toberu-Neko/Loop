@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class CharacterController2D : MonoBehaviour
 {
 	[Header("Settings")]
-	[SerializeField] private bool m_AirControl = true;							// Whether or not a player can steer while jumping;
-
+	[SerializeField] private bool m_AirControl = true;                          // Whether or not a player can steer while jumping;
+	[SerializeField] private bool onWallGravity;
 
 	
 	[Header("Jump")]
@@ -19,7 +19,8 @@ public class CharacterController2D : MonoBehaviour
 	
 	[Header("WallJump")]
 	[SerializeField] private float wallJumpForceX;
-	[Header("Dash")]
+	[SerializeField] private float endSlidingDelay;
+    [Header("Dash")]
 	[SerializeField] private float dashDuration;
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float m_DashForce = 25f;
@@ -51,9 +52,11 @@ public class CharacterController2D : MonoBehaviour
 
 	private PlayerBattle playerBattle;
 
+	[HideInInspector] public bool turnAble;
     private void Awake()
 	{
-		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+		turnAble = true;
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
         playerBattle = GetComponent<PlayerBattle>();
 	}
@@ -135,14 +138,14 @@ public class CharacterController2D : MonoBehaviour
 	public void Move(float move, bool jump, bool dash)
 	{
 		if (canMove) {
-			if (dash && canDash && !isWallSliding)
+			if (dash && canDash && !isWallSliding && 
+				(playerBattle.battleState == PlayerBattle.BattleState.Idle || playerBattle.battleState == PlayerBattle.BattleState.OnWall))
 			{
 				Dash();
 			}
 			// If crouching, check to see if the character can stand up
 			if (isDashing)
 			{
-                // playerBattle.DoDashDamage();
                 m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
 			}
 			//only control the player if grounded or airControl is turned on
@@ -169,8 +172,9 @@ public class CharacterController2D : MonoBehaviour
 			// If the player should jump...
 			if (m_Grounded && jump)
 			{
-				// Add a vertical force to the player.
-				animator.SetTrigger("Jump");
+                // Add a vertical force to the player.
+                turnAble = true;
+                animator.SetTrigger("Jump");
                 animator.SetBool("Grounded", m_Grounded);
                 m_Grounded = false;
 				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
@@ -185,11 +189,11 @@ public class CharacterController2D : MonoBehaviour
 				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce / 1.2f));
                 animator.SetTrigger("Jump");
             }
-
 			else if (m_WallInfront && !m_Grounded)
 			{
 				if (!oldWallSlidding && m_Rigidbody2D.velocity.y < 0 || isDashing)
 				{
+					// Debug.Log("OnWall");
 					isWallSliding = true;
 					m_WallCheck.localPosition = new Vector3(-m_WallCheck.localPosition.x, m_WallCheck.localPosition.y, 0);
 					Flip();
@@ -205,13 +209,14 @@ public class CharacterController2D : MonoBehaviour
 
 					if (move * transform.localScale.x > 0.1f)
 					{
-						StartCoroutine(WaitToEndSliding());
+						Invoke(nameof(WaitToEndSliding), endSlidingDelay);
 					}
 					else 
 					{
 						oldWallSlidding = true;
 						m_Rigidbody2D.velocity = new Vector2(-transform.localScale.x * 2, 0);
-						m_Rigidbody2D.simulated = false;
+						if(!onWallGravity)
+							m_Rigidbody2D.simulated = false;
                     }
 				}
 
@@ -237,6 +242,7 @@ public class CharacterController2D : MonoBehaviour
 				{
                     playerBattle.battleState = PlayerBattle.BattleState.Idle;
                     m_Rigidbody2D.simulated = true;
+
                     isWallSliding = false;
 					animator.SetBool("WallSlide", false);
 					oldWallSlidding = false;
@@ -258,17 +264,23 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 	}
+	private void ExitWall()
+	{
 
+	}
 
 	private void Flip()
 	{
-		// Switch the way the player is labelled as facing.
-		m_FacingRight = !m_FacingRight;
+		if (turnAble)
+		{
+			// Switch the way the player is labelled as facing.
+			m_FacingRight = !m_FacingRight;
 
-		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+			// Multiply the player's x local scale by -1.
+			Vector3 theScale = transform.localScale;
+			theScale.x *= -1;
+			transform.localScale = theScale;
+		}
 	}
 
 
@@ -314,10 +326,8 @@ public class CharacterController2D : MonoBehaviour
 		canCheck = true;
 	}
 
-	IEnumerator WaitToEndSliding()
+	private void WaitToEndSliding()
 	{
-		//The delay of leaving wall.
-		yield return new WaitForSeconds(0.1f);
         m_Rigidbody2D.simulated = true;
         canDoubleJump = true;
 		isWallSliding = false;
@@ -333,7 +343,8 @@ public class CharacterController2D : MonoBehaviour
     }
 
   void AE_SlideDust()
-    {/*
+    {
+		/*
         Vector3 spawnPosition;
 
         if (m_facingDirection == 1)
