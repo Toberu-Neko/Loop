@@ -52,7 +52,7 @@ public class PlayerBattle : MonoBehaviour
         // 計算攻擊框位置和大小
         Vector2 attackSize = new Vector2(attackWidth, attackHeight);
         Vector2 attackOffset = new Vector2(attackWidth / 2, attackHeight / 2);
-        Vector2 attackPosition = new Vector2(transform.position.x + attackOffset.x * transform.localScale.x,
+        Vector2 attackPosition = new Vector2(transform.position.x + attackOffset.x * transform.right.x,
                                                  transform.position.y + attackOffset.y);
 
         // 繪製攻擊框
@@ -117,7 +117,7 @@ public class PlayerBattle : MonoBehaviour
 		if (subAttack.WasPressedThisFrame() && battleState == BattleState.Idle)
 		{
 			GameObject throwableWeapon = Instantiate(throwableObject, attackCheck.position, Quaternion.identity); 
-			Vector2 direction = new Vector2(transform.localScale.x , 0);
+			Vector2 direction = new Vector2(transform.right.x , 0);
 			throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction; 
 			throwableWeapon.name = "ThrowableWeapon";
 		}
@@ -186,11 +186,11 @@ public class PlayerBattle : MonoBehaviour
 
         Vector2 attackSize = new(attackWidth, attackHeight);
 		Vector2 attackOffset = new(attackWidth / 2, attackHeight / 2);
-        Vector2 attackPosition = new(transform.position.x + attackOffset.x * transform.localScale.x,
+        Vector2 attackPosition = new(transform.position.x + attackOffset.x * transform.right.x,
                                              transform.position.y + attackOffset.y);
 
         // Check enemies in attack range
-        Collider2D[] collidersEnemies = Physics2D.OverlapBoxAll(attackPosition, attackSize, 0);
+        Collider2D[] collidersEnemies = Physics2D.OverlapBoxAll(attackPosition , attackSize, 0);
         foreach (Collider2D enemyCollider in collidersEnemies)
         {
             if (enemyCollider.gameObject.CompareTag("Enemy"))

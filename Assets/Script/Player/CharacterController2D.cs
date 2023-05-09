@@ -8,7 +8,7 @@ public class CharacterController2D : MonoBehaviour
 	[Header("Settings")]
 	[SerializeField] private bool m_AirControl = true;                          // Whether or not a player can steer while jumping;
 	[SerializeField] private bool onWallGravity;
-
+	[SerializeField] private float maxAngle;
 	
 	[Header("Jump")]
     [SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
@@ -69,23 +69,34 @@ public class CharacterController2D : MonoBehaviour
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_GroundLayer);
-		for (int i = 0; i < colliders.Length; i++)
+		// Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_GroundLayer);
+        RaycastHit2D groundHit = Physics2D.Raycast(m_GroundCheck.position, Vector2.down, 1f, m_GroundLayer);
+		if(groundHit.collider != null)
 		{
-			if (colliders[i].gameObject != gameObject)				//If player is grounded
-				m_Grounded = true;
-				if (!wasGrounded )									//If player just landed
-				{
-					// OnLandEvent.Invoke();
-					animator.SetBool("Grounded", m_Grounded);
+            Vector2 normal = groundHit.normal;
+            float angle = Mathf.Atan2(normal.x, normal.y) * Mathf.Rad2Deg;
+            //Debug.Log("¦aªO¨¤«×¬°¡G" + angle);
+			if (angle > maxAngle || angle < -maxAngle)
+			{	
+                m_Rigidbody2D.AddForce(new(0, -100f));
+            }
 
-					if (!m_WallInfront && !isDashing)				//If player is not beside a wall or dashing
-						canDoubleJump = true;
+            else if (groundHit.distance < 0.2f)
+			{
+                m_Grounded = true;
+                if (!wasGrounded)
+                {
+                    // OnLandEvent.Invoke();
+                    animator.SetBool("Grounded", m_Grounded);
 
-					if (m_Rigidbody2D.velocity.y < 0f)
-						limitVelOnWallJump = false;
-				}
-		}
+                    if (!m_WallInfront && !isDashing)               //If player is not beside a wall or dashing
+                        canDoubleJump = true;
+
+                    if (m_Rigidbody2D.velocity.y < 0f)
+                        limitVelOnWallJump = false;
+                }
+            }
+        }
 
         m_WallInfront = false;
 
@@ -93,21 +104,55 @@ public class CharacterController2D : MonoBehaviour
 		{
             animator.SetBool("Grounded", m_Grounded);
 
-            Collider2D[] collidersWall = Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_GroundLayer);
-			for (int i = 0; i < collidersWall.Length; i++)
-			{
-				if (collidersWall[i].gameObject != null)
+			// Collider2D[] collidersWall = Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_GroundLayer);
+			Vector2 hitDir = transform.right;
+
+            if (isWallSliding)
+				hitDir = transform.right * -1;
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, hitDir, 3, m_GroundLayer);
+            if (hit.collider != null)
+            {
+                Vector2 normal = hit.normal;
+                float angle = Mathf.Atan2(normal.y, normal.x) * Mathf.Rad2Deg;
+                // print("Angle: " + angle);
+				// print("Distance: " + hit.distance);
+
+				hit.distance = Mathf.Abs(hit.distance);
+				if(hit.distance < 0.35f && 
+					((angle < 182 && angle > 178) 
+					|| (angle < 2 && angle > -2)
+					|| (angle > -182 && angle < -178)))
 				{
 					isDashing = false;
 					m_WallInfront = true;
 				}
-			}
+            }
+            
+			/*
+            for (int i = 0; i < collidersWall.Length; i++)
+			{
+				if (collidersWall[i].gameObject != null && collidersWall[i] is BoxCollider2D)
+				{
+					isDashing = false;
+					m_WallInfront = true;
+
+                    BoxCollider2D boxCollider = (BoxCollider2D)collidersWall[i];
+                    Vector2 bottomLeft = new Vector2(boxCollider.bounds.max.x, boxCollider.bounds.max.y);
+                    Vector2 bottomRight = new Vector2(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
+                    Vector2 position2D = new Vector2(transform.position.x, transform.position.y);
+
+                    Vector2 directionToPlayer = new Vector2(transform.position.x, transform.position.y) - bottomLeft;
+                    float angle = Vector2.Angle(directionToPlayer, bottomRight - bottomLeft);
+                    Debug.Log("Angle to wall: " + angle);
+                }
+			}*/
 			prevVelocityX = m_Rigidbody2D.velocity.x;
 		}
 
 		if (limitVelOnWallJump)
 		{
-			jumpWallDistX = (jumpWallStartX - transform.position.x) * transform.localScale.x;
+			jumpWallDistX = (jumpWallStartX - transform.position.x) * transform.right.x;
 
 			if (m_Rigidbody2D.velocity.y < -0.5f)
 				limitVelOnWallJump = false;
@@ -119,7 +164,7 @@ public class CharacterController2D : MonoBehaviour
 			else if (jumpWallDistX < -1f && jumpWallDistX >= -2f) 
 			{
 				canMove = true;
-				m_Rigidbody2D.velocity = new Vector2(10f * transform.localScale.x, m_Rigidbody2D.velocity.y);
+				m_Rigidbody2D.velocity = new Vector2(10f * transform.right.x, m_Rigidbody2D.velocity.y);
 			}
 			else if (jumpWallDistX < -2f) 
 			{
@@ -135,7 +180,7 @@ public class CharacterController2D : MonoBehaviour
 	}
 
 
-	public void Move(float move, bool jump, bool dash)
+    public void Move(float move, bool jump, bool dash)
 	{
 		if (canMove) {
 			if (dash && canDash && !isWallSliding && 
@@ -146,7 +191,7 @@ public class CharacterController2D : MonoBehaviour
 			// If crouching, check to see if the character can stand up
 			if (isDashing)
 			{
-                m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
+                m_Rigidbody2D.velocity = new Vector2(transform.right.x * m_DashForce, 0);
 			}
 			//only control the player if grounded or airControl is turned on
 			else if (m_Grounded || m_AirControl)
@@ -207,14 +252,14 @@ public class CharacterController2D : MonoBehaviour
 				{
                     playerBattle.battleState = PlayerBattle.BattleState.OnWall;
 
-					if (move * transform.localScale.x > 0.1f)
+					if (move * transform.right.x > 0.1f)
 					{
 						Invoke(nameof(WaitToEndSliding), endSlidingDelay);
 					}
 					else 
 					{
 						oldWallSlidding = true;
-						m_Rigidbody2D.velocity = new Vector2(-transform.localScale.x * 2, 0);
+						m_Rigidbody2D.velocity = new Vector2(-transform.right.x * 2, 0);
 						if(!onWallGravity)
 							m_Rigidbody2D.simulated = false;
                     }
@@ -227,7 +272,7 @@ public class CharacterController2D : MonoBehaviour
                     playerBattle.battleState = PlayerBattle.BattleState.Idle;
 
                     m_Rigidbody2D.velocity = new Vector2(0f, 0f);
-					m_Rigidbody2D.AddForce(new Vector2(transform.localScale.x * m_JumpForce * wallJumpForceX, m_JumpForce));
+					m_Rigidbody2D.AddForce(new Vector2(transform.right.x * m_JumpForce * wallJumpForceX, m_JumpForce));
 
 					jumpWallStartX = transform.position.x;
 					limitVelOnWallJump = true;
@@ -264,10 +309,7 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 	}
-	private void ExitWall()
-	{
 
-	}
 
 	private void Flip()
 	{
@@ -275,11 +317,11 @@ public class CharacterController2D : MonoBehaviour
 		{
 			// Switch the way the player is labelled as facing.
 			m_FacingRight = !m_FacingRight;
-
+			transform.right *= -1;
 			// Multiply the player's x local scale by -1.
-			Vector3 theScale = transform.localScale;
+			/*Vector3 theScale = transform.localScale;
 			theScale.x *= -1;
-			transform.localScale = theScale;
+			transform.localScale = theScale;*/
 		}
 	}
 
