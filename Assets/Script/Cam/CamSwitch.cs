@@ -38,4 +38,28 @@ public class CamSwitch : MonoBehaviour
     {
         cams.Remove(vcam);
     }
+
+
+    private void OnDrawGizmos()
+    {
+        var polygonCollider = GetComponent<PolygonCollider2D>();
+        if (polygonCollider == null)
+            return;
+
+        Gizmos.color = Color.green;
+        for (int i = 0; i < polygonCollider.pathCount; i++)
+        {
+            var path = polygonCollider.GetPath(i);
+            for (int j = 0; j < path.Length; j++)
+            {
+                var worldPos = transform.TransformPoint(path[j]);
+                Gizmos.DrawSphere(worldPos, 0.05f);
+                if (j > 0)
+                {
+                    var prevWorldPos = transform.TransformPoint(path[j - 1]);
+                    Gizmos.DrawLine(worldPos, prevWorldPos);
+                }
+            }
+        }
+    }
 }
