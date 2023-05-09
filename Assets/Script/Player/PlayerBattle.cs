@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-
+using Cinemachine;
 
 public class PlayerBattle : MonoBehaviour
 {
@@ -38,8 +38,9 @@ public class PlayerBattle : MonoBehaviour
     [SerializeField] private Transform attackCheck;
     [SerializeField] private GameObject throwableObject;
     [SerializeField] private CameraFollow cameraFollow;
+    private CinemachineImpulseSource impulseSoruce;
 
-	private float blockTimer = 0f;
+    private float blockTimer = 0f;
 
     public enum BattleState { Idle, Attack, Block, Dash, Jump, Fall, Hit, Dead, OnWall };
 
@@ -63,7 +64,8 @@ public class PlayerBattle : MonoBehaviour
         animator = GetComponent<Animator>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
-		normalAttack = playerInput.actions["NormalAttack"];
+        impulseSoruce = GetComponent<CinemachineImpulseSource>();
+        normalAttack = playerInput.actions["NormalAttack"];
         subAttack = playerInput.actions["SubAttack"];
 		block = playerInput.actions["Block"];
     }
@@ -96,7 +98,12 @@ public class PlayerBattle : MonoBehaviour
             characterController.turnAble = false;
             canAttack = false;
 			animator.SetTrigger("Attack" + attackCount);
-			attackCount += 1;
+            if (attackCount == 1 || attackCount == 2)
+                Invoke(nameof(AttackFinished), 0.429f);
+            if(attackCount == 3)
+                Invoke(nameof(AttackFinished), 0.571f);
+
+            attackCount += 1;
 			if(attackCount == 4)
                 attackCount = 1;
 
@@ -139,9 +146,8 @@ public class PlayerBattle : MonoBehaviour
 			battleState = BattleState.Idle;
         }
 	}
-    public void OnAttackFinished()
+    private void AttackFinished()
     {
-        Debug.Log("finished;");
         characterController.turnAble = true;
     }
 
@@ -195,7 +201,7 @@ public class PlayerBattle : MonoBehaviour
         }
 		if (haveEnemy)
 		{
-            cameraFollow.ShakeCamera();
+            impulseSoruce.GenerateImpulse();
         }
     }
     IEnumerator MakeInvincible(float time)
@@ -230,8 +236,8 @@ public class PlayerBattle : MonoBehaviour
 					dmgValue = -dmgValue;
 				}
 				collidersEnemies[i].gameObject.SendMessage("ApplyDamage", dmgValue);
-                cameraFollow.ShakeCamera();
-			}
+                impulseSoruce.GenerateImpulse();
+            }
 		}
 	}
 }

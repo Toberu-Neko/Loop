@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private CharacterController2D controller;
     [SerializeField] private float runSpeed = 40f;
 	
-	
-
     private PlayerInput playerInput;
     private InputAction move;
     private InputAction jump;
