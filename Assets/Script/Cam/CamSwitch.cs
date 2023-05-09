@@ -42,8 +42,7 @@ public class CamSwitch : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        var polygonCollider = GetComponent<PolygonCollider2D>();
-        if (polygonCollider == null)
+        if (!TryGetComponent<PolygonCollider2D>(out var polygonCollider))
             return;
 
         Gizmos.color = Color.green;
