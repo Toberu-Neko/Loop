@@ -29,7 +29,7 @@ public class PlayerBattle : MonoBehaviour
     private bool normalBlock = false;
     private bool perfectBlock = false;
 
-    public BattleState battleState = BattleState.Idle;
+    [HideInInspector] public BattleState battleState = BattleState.Idle;
 	private BattleState previousState;
 
 	private Rigidbody2D m_Rigidbody2D;
@@ -46,6 +46,7 @@ public class PlayerBattle : MonoBehaviour
     [SerializeField] private Transform attackCheck;
     [SerializeField] private GameObject throwableObject;
     private CinemachineImpulseSource impulseSoruce;
+    private Collider2D playerCol;
 
     private float blockTimer = 0f;
 
@@ -67,6 +68,7 @@ public class PlayerBattle : MonoBehaviour
     }
     private void Awake()
 	{
+        playerCol = GetComponent<Collider2D>(); 
         characterController = GetComponent<CharacterController2D>();
         animator = GetComponent<Animator>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -84,13 +86,15 @@ public class PlayerBattle : MonoBehaviour
     {
 		if(previousState != battleState) 
 		{
+            Debug.Log("ChangeState");
+
 			switch (battleState)
 			{
-				case BattleState.Idle:
+                case BattleState.OnWall:
+                case BattleState.Idle:
 					PlayerStatus.instance.moveable = true;
                     PlayerStatus.instance.jumpAndDashAble = true;
                     PlayerStatus.instance.movementMultiplier = 1f;
-
                     break;
 
 				case BattleState.GroundAttack:
@@ -99,6 +103,8 @@ public class PlayerBattle : MonoBehaviour
 
                 case BattleState.SkyAttack:
                     break;
+                
+
 
                 case BattleState.Block:
                     PlayerStatus.instance.jumpAndDashAble = false;
@@ -169,6 +175,12 @@ public class PlayerBattle : MonoBehaviour
 
 		if (block.IsPressed() && isBlocking)
 		{
+            if(battleState != BattleState.Block)
+            {
+                ReleaseBlock(false);
+                return;
+            }
+            Debug.Log("PressingBlock");
             blockTimer += Time.deltaTime;
             
             if (blockTimer > perfectBlockTime && perfectBlock)
@@ -178,29 +190,33 @@ public class PlayerBattle : MonoBehaviour
 		
         if (block.WasReleasedThisFrame() && isBlocking) 
 		{
-            //Perfect Block
-            if (blockTimer <= perfectBlockTime)
-			{
-                animator.SetTrigger("Block");
-                animator.SetBool("IdleBlock", false);
-                normalBlock = false;
-                perfectBlock = false;
-                isBlocking = false;
-                PlayerStatus.instance.moveable = false;
-                Invoke(nameof(EndBlock), 0.417f);
-            }
-            else
-            {
-                //End of Block
-	            animator.SetBool("IdleBlock", false);
-                isBlocking = false;
-                normalBlock = false;
-                EndBlock();
-            }
-
-            blockTimer = 0;
+            ReleaseBlock(true);
         }
 	}
+    private void ReleaseBlock(bool doPerfect)
+    {
+        //Perfect Block
+        if (blockTimer <= perfectBlockTime && doPerfect)
+        {
+            animator.SetTrigger("Block");
+            animator.SetBool("IdleBlock", false);
+            normalBlock = false;
+            perfectBlock = false;
+            isBlocking = false;
+            PlayerStatus.instance.moveable = false;
+            Invoke(nameof(EndBlock), 0.417f);
+        }
+        else
+        {
+            //End of Block
+            animator.SetBool("IdleBlock", false);
+            isBlocking = false;
+            normalBlock = false;
+            EndBlock();
+        }
+
+        blockTimer = 0;
+    }
     private void EndBlock()
     {
         battleState = BattleState.Idle;
@@ -245,6 +261,8 @@ public class PlayerBattle : MonoBehaviour
         if (perfectBlock)
         {
             impulseSoruce.GenerateImpulse();
+            ReleaseBlock(true);
+            IgnoreAttack(damagedInvincibleTime);
             return;
         }
         
@@ -272,6 +290,15 @@ public class PlayerBattle : MonoBehaviour
             characterController.Stun(damagedStunTime);
             StartCoroutine(MakeInvincible(damagedInvincibleTime));
         }
+    }
+    private void IgnoreAttack(float time)
+    {
+        Physics2D.IgnoreLayerCollision(gameObject.layer, 8, true);
+        Invoke(nameof(ResetIgnoreAttack), time);
+    }
+    private void ResetIgnoreAttack()
+    {
+        Physics2D.IgnoreLayerCollision(gameObject.layer, 8, false);
     }
     private void DoAttack()
     {
