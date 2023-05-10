@@ -22,8 +22,10 @@ public class PlayerBattle : MonoBehaviour
 	[SerializeField] private float perfectBlockTime;
     [SerializeField][Range(0f, 1f)] private float blockMoveSpeedMultiplier;
     [SerializeField][Range(0f, 1f)] private float normalBlockDmgMultiplier;
+    [SerializeField] private float blockCooldown;
+    private bool canBlock = true;
+    private bool isBlocking = false;
 
-    [Space]
     private bool normalBlock = false;
     private bool perfectBlock = false;
 
@@ -43,12 +45,11 @@ public class PlayerBattle : MonoBehaviour
 
     [SerializeField] private Transform attackCheck;
     [SerializeField] private GameObject throwableObject;
-    [SerializeField] private CameraFollow cameraFollow;
     private CinemachineImpulseSource impulseSoruce;
 
     private float blockTimer = 0f;
 
-    public enum BattleState { Idle, GroundAttack, SkyAttack, Block, Dash, OnWall };
+    public enum BattleState { Idle, GroundAttack, SkyAttack, PerfectBlock, Block, Dash, OnWall };
 
     private void OnDrawGizmosSelected()
     {
@@ -98,7 +99,6 @@ public class PlayerBattle : MonoBehaviour
 
                 case BattleState.SkyAttack:
                     break;
-
 
                 case BattleState.Block:
                     PlayerStatus.instance.jumpAndDashAble = false;
@@ -157,43 +157,59 @@ public class PlayerBattle : MonoBehaviour
 		}
 
         //Block
-		if (block.IsPressed() && battleState != BattleState.OnWall && battleState != BattleState.GroundAttack)
+        if(block.WasPressedThisFrame() && battleState == BattleState.Idle && canBlock)
+        {
+            animator.SetBool("IdleBlock", true);
+            battleState = BattleState.Block;
+            normalBlock = true;
+            perfectBlock = true;
+            canBlock = false;
+            isBlocking = true;
+        }
+
+		if (block.IsPressed() && isBlocking)
 		{
-			if(blockTimer == 0)
-			{
-                animator.SetBool("IdleBlock", true);
-                battleState = BattleState.Block;
-                normalBlock = true;
-                perfectBlock = true;
-            }
-            if (blockTimer > perfectBlockTime && perfectBlock)
-            {
-                perfectBlock = false;
-            }
             blockTimer += Time.deltaTime;
+            
+            if (blockTimer > perfectBlockTime && perfectBlock)
+                perfectBlock = false;
 
 		}
-		else if (blockTimer != 0f) 
+		
+        if (block.WasReleasedThisFrame() && isBlocking) 
 		{
-			if(blockTimer <= perfectBlockTime)
+            //Perfect Block
+            if (blockTimer <= perfectBlockTime)
 			{
-                //Perfect Block
                 animator.SetTrigger("Block");
                 animator.SetBool("IdleBlock", false);
                 normalBlock = false;
                 perfectBlock = false;
+                isBlocking = false;
+                PlayerStatus.instance.moveable = false;
+                Invoke(nameof(EndBlock), 0.417f);
             }
             else
             {
                 //End of Block
 	            animator.SetBool("IdleBlock", false);
+                isBlocking = false;
                 normalBlock = false;
+                EndBlock();
             }
 
             blockTimer = 0;
-			battleState = BattleState.Idle;
         }
 	}
+    private void EndBlock()
+    {
+        battleState = BattleState.Idle;
+        Invoke(nameof(ResetCanBlock), blockCooldown);
+    }
+    private void ResetCanBlock()
+    {
+        canBlock = true;
+    }
     private void ResetSkyAttack()
     {
         if(characterController.GetGrounded() || characterController.GetWallSliding())
@@ -225,6 +241,7 @@ public class PlayerBattle : MonoBehaviour
         if (invincible)
             return;
 
+        float applyDamage = damage;
         if (perfectBlock)
         {
             impulseSoruce.GenerateImpulse();
@@ -233,15 +250,18 @@ public class PlayerBattle : MonoBehaviour
         
         if(normalBlock)
         {
-            damage *= normalBlockDmgMultiplier;
+            applyDamage *= normalBlockDmgMultiplier;
         }
 
         animator.SetTrigger("Hurt");
-        life -= damage;
+
+        life -= applyDamage;
+
         Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f;
 
         m_Rigidbody2D.velocity = Vector2.zero;
-        m_Rigidbody2D.AddForce(damageDir * 10);
+        m_Rigidbody2D.AddForce(new Vector2(damageDir.x, 0) * 10);
+
         if (life <= 0)
         {
             life = 0;

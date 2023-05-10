@@ -205,8 +205,8 @@ public class CharacterController2D : MonoBehaviour
                 isGrounded = false;
 				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 				canDoubleJump = true;
-				particleJumpDown.Play();
-				particleJumpUp.Play();
+				// particleJumpDown.Play();
+				// particleJumpUp.Play();
 			}
 			else if (!isGrounded && jump && canDoubleJump && !isWallSliding)
 			{
