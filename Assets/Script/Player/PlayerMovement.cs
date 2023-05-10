@@ -53,17 +53,19 @@ public class PlayerMovement : MonoBehaviour {
 		animator.SetFloat("AirSpeedY", rig.velocity.y);
 	}
 
-	public void OnFall()
-	{
-		animator.SetTrigger("Jump");
-	}
-
 	void FixedUpdate ()
 	{
-		if (PlayerStatus.moveable == false)
+		if (!PlayerStatus.instance.moveable)
         {
             controller.Move(0, false, false);
             animator.SetInteger("AnimState", 0);
+            goJump = false;
+            goDash = false;
+        }
+        else if (PlayerStatus.instance.moveable && !PlayerStatus.instance.jumpAndDashAble)
+        {
+            controller.Move(horizontalMove * Time.fixedDeltaTime, false, false);
+
             goJump = false;
             goDash = false;
         }
