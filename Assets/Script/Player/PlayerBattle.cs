@@ -180,7 +180,7 @@ public class PlayerBattle : MonoBehaviour
                 ReleaseBlock(false);
                 return;
             }
-            Debug.Log("PressingBlock");
+
             blockTimer += Time.deltaTime;
             
             if (blockTimer > perfectBlockTime && perfectBlock)
@@ -190,7 +190,7 @@ public class PlayerBattle : MonoBehaviour
 		
         if (block.WasReleasedThisFrame() && isBlocking) 
 		{
-            ReleaseBlock(true);
+            ReleaseBlock(false);
         }
 	}
     private void ReleaseBlock(bool doPerfect)
@@ -204,7 +204,7 @@ public class PlayerBattle : MonoBehaviour
             perfectBlock = false;
             isBlocking = false;
             PlayerStatus.instance.moveable = false;
-            Invoke(nameof(EndBlock), 0.417f);
+            Invoke(nameof(EndBlock), 0.417f);//0.417f
         }
         else
         {
