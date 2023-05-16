@@ -13,14 +13,6 @@ public class CamSwitch : MonoBehaviour
     {
         vcam.Priority = 10;
         activatedCam = vcam;
-
-        foreach(CinemachineVirtualCamera cam in cams) 
-        {
-            if(cam != vcam && cam.Priority != 0)
-            {
-                cam.Priority = 0;
-            }
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D trigger)
@@ -28,6 +20,13 @@ public class CamSwitch : MonoBehaviour
         if(trigger.CompareTag("Player"))
         {
             SwitchCamera(cam);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D trigger)
+    {
+        if (trigger.CompareTag("Player"))
+        {
+            cam.Priority = 0;
         }
     }
     public static void RegisterCam(CinemachineVirtualCamera vcam)
