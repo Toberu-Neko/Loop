@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Grass : MonoBehaviour
 {
-    public ParticleSystem leafParticle;
-
+    [SerializeField] private ParticleSystem leafParticle;
+    private Animator animator;
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (transform.position.x - col.transform.position.x > 0) 
         {
-            GetComponent<Animator>().Play("MovingGrassL");
+            animator.Play("MovingGrassL");
         }
         else 
         {
-            GetComponent<Animator>().Play("MovingGrassR");
+            animator.Play("MovingGrassR");
         }
     }
 

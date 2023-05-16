@@ -46,6 +46,7 @@ public class PlayerBattle : MonoBehaviour
     private Rigidbody2D rig;
     private PlayerUI playerUI;
     private PlayerStatus playerStatus;
+    private Camera cam;
 
     private PlayerInput playerInput;
     private InputAction normalAttack;
@@ -67,13 +68,14 @@ public class PlayerBattle : MonoBehaviour
         Vector2 attackSize = new Vector2(attackWidth, attackHeight);
         Vector2 attackOffset = new Vector2(attackWidth / 2, attackHeight / 2);
         Vector2 attackPosition = new Vector2(transform.position.x + attackOffset.x * transform.right.x,
-                                                 transform.position.y + attackOffset.y);
+                                                 transform.position.y + 0.7f);
 
         // 繪製攻擊框
         Gizmos.DrawWireCube(attackPosition, attackSize);
     }
     private void Awake()
 	{
+        cam = Camera.main;
         playerStatus = GetComponent<PlayerStatus>();
         playerUI = GetComponent<PlayerUI>();
         showCounterAttack = transform.Find("DebugCounterAttack").gameObject;
@@ -138,7 +140,6 @@ public class PlayerBattle : MonoBehaviour
 		{
             if (canCounterAttack)
             {
-                Debug.Log("Counter");
                 animator.SetTrigger("CounterAttackTrigger");
                 canAttack = false;
                 DoAttack(100f, 100f);
@@ -183,9 +184,11 @@ public class PlayerBattle : MonoBehaviour
         //Sub Attack
 		if (subAttack.WasPressedThisFrame() && battleState == BattleState.Idle)
 		{
+            Vector3 worldMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 			GameObject throwableWeapon = Instantiate(throwableObject, attackCheck.position, Quaternion.identity); 
-			Vector2 direction = new Vector2(transform.right.x , 0);
-			throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction; 
+			Vector2 direction = worldMousePos - transform.position;
+
+            throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction.normalized; 
 			throwableWeapon.name = "ThrowableWeapon";
 		}
 
@@ -310,9 +313,7 @@ public class PlayerBattle : MonoBehaviour
         characterController.turnAble = false;
 
         bool haveEnemy = false;
-
-        Vector2 attackSize = Vector2.zero;
-
+        Vector2 attackSize;
         if (t_setWidth == 0f || t_setHeight == 0f)
             attackSize = new(attackWidth, attackHeight);
         else
@@ -320,7 +321,7 @@ public class PlayerBattle : MonoBehaviour
 
         Vector2 attackOffset = new(attackSize.x / 2, attackSize.y / 2);
         Vector2 attackPosition = new(transform.position.x + attackOffset.x * transform.right.x,
-                                     transform.position.y + attackOffset.y);
+                                     transform.position.y + 0.7f);
 
         Collider2D[] collidersEnemies = Physics2D.OverlapBoxAll(attackPosition, attackSize, 0);
         foreach (Collider2D enemyCollider in collidersEnemies)
@@ -365,6 +366,7 @@ public class PlayerBattle : MonoBehaviour
 	}
     void RestCanCounterAttack()
     {
+        CancelInvoke(nameof(RestCanCounterAttack));
         if(battleState == BattleState.CounterAttack)
         {
             canAttack = true;

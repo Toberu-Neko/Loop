@@ -34,7 +34,8 @@ public class PlayerMovement : MonoBehaviour {
         jump = playerInput.actions["Jump"];
         dash = playerInput.actions["Dash"];
     }
-    void Update () {
+    void Update () 
+    {
 
 		horizontalMove = move.ReadValue<Vector2>().x * runSpeed;
         verticalMove = move.ReadValue<Vector2>().y;
