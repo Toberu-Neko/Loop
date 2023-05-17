@@ -22,6 +22,12 @@ public class Player : MonoBehaviour
     public Rigidbody2D RB { get; private set; }
     #endregion
 
+    #region Check Transforms
+    [SerializeField]
+    private Transform groundCheck;
+
+    #endregion
+
     #region Other Variables
     public Vector2 CurrentVelocity { get; private set; }
     public int FacingDirection { get; private set; }
@@ -72,9 +78,19 @@ public class Player : MonoBehaviour
         CurrentVelocity = workspace;
     }
 
+    public void SetVelocityY(float velocity)
+    {
+        workspace.Set(CurrentVelocity.x, velocity);
+        RB.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
     #endregion
 
     #region Check Functions
+    public bool CheckIfGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
+    }
     public void CheckIfShouldFlip(int xInput)
     {
         if(xInput !=0 && xInput != FacingDirection)
