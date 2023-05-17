@@ -5,13 +5,20 @@ using UnityEngine;
 public class ThrowableWeapon : MonoBehaviour
 {
 	public Vector2 direction;
-    [SerializeField] private bool hasHit = false;
     [SerializeField] private float speed = 10f;
 
+	private bool hasHit = false;
+	private Rigidbody2D rig;
+
+    private void Awake()
+    {
+		Physics2D.IgnoreCollision(GetComponent<Collider2D>(), GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>());
+        rig = GetComponent<Rigidbody2D>();
+    }
     void FixedUpdate()
     {
 		if (!hasHit)
-		GetComponent<Rigidbody2D>().velocity = direction * speed;
+            rig.velocity = direction * speed;
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)

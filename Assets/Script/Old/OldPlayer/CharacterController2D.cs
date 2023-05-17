@@ -6,16 +6,21 @@ using UnityEngine.SceneManagement;
 public class CharacterController2D : MonoBehaviour
 {
 	[Header("Settings")]
-	[SerializeField] private bool m_AirControl = true;                          // Whether or not a player can steer while jumping;
+	[SerializeField] private bool m_AirControl = true;                          
 	[SerializeField] private bool onWallGravity;
 	[SerializeField] private float maxAngle;
 	
 	[Header("Jump")]
-    [SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
+    [SerializeField] private float m_JumpForce = 400f;							
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
-	[SerializeField] private LayerMask m_GroundLayer;							// A mask determining what is ground to the character
-	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
-	[SerializeField] private Transform m_WallCheck;                             //Posicion que controla si el personaje toca una pared
+	[SerializeField] private LayerMask m_GroundLayer;
+    [SerializeField] private LayerMask m_PlatformLayer;
+	private LayerMask groundOnlyLayerMask;
+	bool detectPlat = true;
+    [SerializeField] private Transform m_GroundCheck;
+	[SerializeField] private Transform m_HeadCheck;
+	[SerializeField] private Transform m_WallCheck;
+
 	
 	[Header("WallJump")]
 	[SerializeField] private float wallJumpForceX;
@@ -27,21 +32,21 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private float m_DashForce = 25f;
 	
 	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
-	private bool isGrounded;            // Whether or not the player is grounded.
+	private bool isGrounded;            
 	private Rigidbody2D m_Rigidbody2D;
-	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+	private bool m_FacingRight = true;
 	private Vector3 velocity = Vector3.zero;
-	private float limitFallSpeed = 25f; // Limit fall speed
+	private float limitFallSpeed = 25f;
 
-	public bool canDoubleJump = true; //If player can double jump
+	public bool canDoubleJump = true;
 	private bool canDash = true;
-	private bool isDashing = false; //If player is dashing
-	private bool m_WallInfront = false; //If there is a wall in front of the player
+	private bool isDashing = false; 
+	private bool m_WallInfront = false; 
 	private bool isWallSliding = false; //If player is sliding in a wall
 	private bool oldWallSlidding = false; //If player is sliding in a wall in the previous frame
 	private float prevVelocityX = 0f;
-	private bool canCheck = false; //For check if player is wallsliding
-	private bool canMove = true; //If player can move
+	private bool canCheck = false;
+	private bool canMove = true;
 
 	private Animator animator;
 	public ParticleSystem particleJumpUp; //Trail particles
@@ -52,11 +57,17 @@ public class CharacterController2D : MonoBehaviour
 	private bool limitVelOnWallJump = false; //For limit wall jump distance with low fps
 
 	private PlayerBattle playerBattle;
+	private PlayerStatus playerStatus;
+	private Collider2D col;
 
 	[HideInInspector] public bool turnAble;
     private void Awake()
 	{
-		turnAble = true;
+        groundOnlyLayerMask = m_GroundLayer & ~m_PlatformLayer;
+
+        col = GetComponent<Collider2D>();
+        playerStatus = GetComponent<PlayerStatus>();
+        turnAble = true;
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
         playerBattle = GetComponent<PlayerBattle>();
@@ -67,7 +78,7 @@ public class CharacterController2D : MonoBehaviour
 		bool wasGrounded = isGrounded;
         isGrounded = false;
 
-        RaycastHit2D groundHit = Physics2D.Raycast(m_GroundCheck.position, Vector2.down, 1f, m_GroundLayer);
+        RaycastHit2D groundHit = Physics2D.Raycast(m_GroundCheck.position, Vector2.down, .5f, m_GroundLayer);
 		if(groundHit.collider != null)
 		{
             Vector2 normal = groundHit.normal;
@@ -77,7 +88,6 @@ public class CharacterController2D : MonoBehaviour
 			{	
                 m_Rigidbody2D.AddForce(new(0, -100f));
             }
-
             else if (groundHit.distance < 0.2f)
 			{
                 isGrounded = true;
@@ -95,6 +105,18 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
+        RaycastHit2D headPlatHit = Physics2D.Raycast(m_HeadCheck.position, Vector2.up, .5f, m_PlatformLayer);
+		if(headPlatHit.collider != null && !Physics2D.GetIgnoreCollision(col, headPlatHit.collider))
+		{
+            Physics2D.IgnoreCollision(col, headPlatHit.collider, true);
+        }
+
+        RaycastHit2D groundPlatHit = Physics2D.Raycast(m_GroundCheck.position, Vector2.down, .5f, m_PlatformLayer);
+        if (groundPlatHit.collider != null && Physics2D.GetIgnoreCollision(col, groundPlatHit.collider) && detectPlat)
+        {
+            Physics2D.IgnoreCollision(col, groundPlatHit.collider, false);
+        }
+
         m_WallInfront = false;
 		if (!isGrounded)
 		{
@@ -104,7 +126,7 @@ public class CharacterController2D : MonoBehaviour
             if (isWallSliding)
 				hitDir = transform.right * -1;
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, hitDir, 3, m_GroundLayer);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, hitDir, 3, groundOnlyLayerMask);
             if (hit.collider != null)
             {
                 Vector2 normal = hit.normal;
@@ -126,7 +148,6 @@ public class CharacterController2D : MonoBehaviour
 		}
 
 		LimitVelOnWallJump();
-
     }
 	private void LimitVelOnWallJump()
 	{
@@ -159,9 +180,21 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    public void Move(float move, bool jump, bool dash)
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
+		{
+            Physics2D.IgnoreCollision(col, collision.gameObject.GetComponent<Collider2D>(), true);
+        }
+    }
+	private void ResetDetectPlat()
 	{
-		if (canMove) {
+		detectPlat = true;
+    }
+    public void Move(float vertical, float move, bool jump, bool dash)
+	{
+		if (canMove) 
+		{
 			if (dash && canDash && !isWallSliding && 
 				(playerBattle.battleState == PlayerBattle.BattleState.Idle || playerBattle.battleState == PlayerBattle.BattleState.OnWall))
 			{
@@ -178,35 +211,36 @@ public class CharacterController2D : MonoBehaviour
 				if (m_Rigidbody2D.velocity.y < -limitFallSpeed)
 					m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, -limitFallSpeed);
 
-
-				Vector3 targetVelocity = new Vector2(move * 10f * PlayerStatus.instance.movementMultiplier, m_Rigidbody2D.velocity.y);
-
+				Vector3 targetVelocity = new Vector2(move * 10f * playerStatus.movementMultiplier, m_Rigidbody2D.velocity.y);
 
 				m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
 
-				// If the input is moving the player right and the player is facing left...
 				if (move > 0 && !m_FacingRight && !isWallSliding)
-				{
 					Flip();
-				}
-				// Otherwise if the input is moving the player left and the player is facing right...
+
 				else if (move < 0 && m_FacingRight && !isWallSliding)
-				{
 					Flip();
-				}
 			}
 			// If the player should jump...
-			if (isGrounded && jump)
+			if(isGrounded && jump && vertical == -1f)
 			{
-                // Add a vertical force to the player.
+				Debug.Log("GoDown!");
+				detectPlat = false;
+				Invoke(nameof(ResetDetectPlat), Time.fixedDeltaTime * 6f);
+                RaycastHit2D groundPlatHit = Physics2D.Raycast(m_GroundCheck.position, Vector2.down, .5f, m_PlatformLayer);
+                if (groundPlatHit.collider != null)
+                {
+                    Physics2D.IgnoreCollision(col, groundPlatHit.collider, true);
+                }
+            }
+			else if (isGrounded && jump)
+			{
                 turnAble = true;
                 animator.SetTrigger("Jump");
                 animator.SetBool("Grounded", isGrounded);
                 isGrounded = false;
 				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 				canDoubleJump = true;
-				// particleJumpDown.Play();
-				// particleJumpUp.Play();
 			}
 			else if (!isGrounded && jump && canDoubleJump && !isWallSliding)
 			{

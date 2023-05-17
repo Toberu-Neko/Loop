@@ -13,16 +13,20 @@ public class PlayerMovement : MonoBehaviour {
     private InputAction jump;
     private InputAction dash;
 
+    private PlayerStatus playerStatus;
 	private Animator animator;
 	private Rigidbody2D rig;
 
 	float horizontalMove = 0f;
-	bool goJump = false;
+    float verticalMove = 0f;
+
+    bool goJump = false;
 	bool goDash = false;
 	bool preFrameMoved = false;
 
     private void Awake()
     {
+        playerStatus = GetComponent<PlayerStatus>();
         animator = GetComponent<Animator>();
         rig = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
@@ -30,9 +34,13 @@ public class PlayerMovement : MonoBehaviour {
         jump = playerInput.actions["Jump"];
         dash = playerInput.actions["Dash"];
     }
-    void Update () {
+    void Update () 
+    {
 
 		horizontalMove = move.ReadValue<Vector2>().x * runSpeed;
+        verticalMove = move.ReadValue<Vector2>().y;
+
+
         if (jump.WasPressedThisFrame())
         {
             goJump = true;
@@ -55,24 +63,23 @@ public class PlayerMovement : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
-		if (!PlayerStatus.instance.moveable)
+		if (!playerStatus.moveable)
         {
-            controller.Move(0, false, false);
+            controller.Move(0, 0, false, false);
             animator.SetInteger("AnimState", 0);
             goJump = false;
             goDash = false;
         }
-        else if (PlayerStatus.instance.moveable && !PlayerStatus.instance.jumpAndDashAble)
+        else if (playerStatus.moveable && !playerStatus.jumpAndDashAble)
         {
-            controller.Move(horizontalMove * Time.fixedDeltaTime, false, false);
+            controller.Move(verticalMove, horizontalMove * Time.fixedDeltaTime, false, false);
 
             goJump = false;
             goDash = false;
         }
         else
         {
-		    // Move our character
-		    controller.Move(horizontalMove * Time.fixedDeltaTime, goJump, goDash);
+		    controller.Move(verticalMove, horizontalMove * Time.fixedDeltaTime, goJump, goDash);
             if(horizontalMove != 0)
                 animator.SetInteger("AnimState", 1);
             else

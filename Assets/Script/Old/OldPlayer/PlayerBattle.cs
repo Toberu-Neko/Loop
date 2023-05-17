@@ -25,32 +25,39 @@ public class PlayerBattle : MonoBehaviour
     [SerializeField] private float blockCooldown;
     private bool canBlock = true;
     private bool isBlocking = false;
-
+    private bool canCounterAttack = false;
     private bool normalBlock = false;
     private bool perfectBlock = false;
+    [SerializeField] private float counterAttackCountdown;
 
     [HideInInspector] public BattleState battleState = BattleState.Idle;
 	private BattleState previousState;
 
-	private Rigidbody2D m_Rigidbody2D;
-	private Animator animator;
+
     private bool canAttack = true;
     private CharacterController2D characterController;
 
-    private PlayerInput playerInput;
-    private InputAction normalAttack;
-	private InputAction subAttack;
-	private InputAction block;
-	private int attackCount = 1;
-
     [SerializeField] private Transform attackCheck;
     [SerializeField] private GameObject throwableObject;
+
     private CinemachineImpulseSource impulseSoruce;
+    private Animator animator;
     private Collider2D playerCol;
+    private Rigidbody2D rig;
+    private PlayerUI playerUI;
+    private PlayerStatus playerStatus;
+    private Camera cam;
+
+    private PlayerInput playerInput;
+    private InputAction normalAttack;
+    private InputAction subAttack;
+    private InputAction block;
+    private int attackCount = 1;
 
     private float blockTimer = 0f;
 
-    public enum BattleState { Idle, GroundAttack, SkyAttack, PerfectBlock, Block, Dash, OnWall };
+    [SerializeField] private GameObject showCounterAttack;
+    public enum BattleState { Idle, GroundAttack, SkyAttack, CounterAttack, PerfectBlock, Block, Dash, OnWall };
 
     private void OnDrawGizmosSelected()
     {
@@ -61,17 +68,23 @@ public class PlayerBattle : MonoBehaviour
         Vector2 attackSize = new Vector2(attackWidth, attackHeight);
         Vector2 attackOffset = new Vector2(attackWidth / 2, attackHeight / 2);
         Vector2 attackPosition = new Vector2(transform.position.x + attackOffset.x * transform.right.x,
-                                                 transform.position.y + attackOffset.y);
+                                                 transform.position.y + 0.7f);
 
         // 繪製攻擊框
         Gizmos.DrawWireCube(attackPosition, attackSize);
     }
     private void Awake()
 	{
+        cam = Camera.main;
+        playerStatus = GetComponent<PlayerStatus>();
+        playerUI = GetComponent<PlayerUI>();
+        showCounterAttack = transform.Find("DebugCounterAttack").gameObject;
+        showCounterAttack.SetActive(false);
+
         playerCol = GetComponent<Collider2D>(); 
         characterController = GetComponent<CharacterController2D>();
         animator = GetComponent<Animator>();
-        m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        rig = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         impulseSoruce = GetComponent<CinemachineImpulseSource>();
         normalAttack = playerInput.actions["NormalAttack"];
@@ -81,34 +94,42 @@ public class PlayerBattle : MonoBehaviour
     private void Start()
     {
 		battleState = BattleState.Idle;
+        playerUI.UpdateLifeText(life);
     }
     void Update()
     {
 		if(previousState != battleState) 
 		{
-            Debug.Log("ChangeState");
-
-			switch (battleState)
+            switch (battleState)
 			{
                 case BattleState.OnWall:
                 case BattleState.Idle:
-					PlayerStatus.instance.moveable = true;
-                    PlayerStatus.instance.jumpAndDashAble = true;
-                    PlayerStatus.instance.movementMultiplier = 1f;
+                    playerStatus.moveable = true;
+                    playerStatus.jumpAndDashAble = true;
+                    playerStatus.movementMultiplier = 1f;
+                    rig.simulated = true;
+                    invincible = false;
                     break;
 
 				case BattleState.GroundAttack:
-                        PlayerStatus.instance.moveable = false;
+                    playerStatus.moveable = false;
                     break;
 
                 case BattleState.SkyAttack:
+                    // PlayerStatus.instance.moveable = false;
                     break;
-                
+
+                case BattleState.CounterAttack:
+                    playerStatus.moveable = false;
+                    rig.velocity = Vector2.zero;
+                    rig.simulated = false;
+                    invincible = true;
+                    break;
 
 
                 case BattleState.Block:
-                    PlayerStatus.instance.jumpAndDashAble = false;
-                    PlayerStatus.instance.movementMultiplier = blockMoveSpeedMultiplier;
+                    playerStatus.jumpAndDashAble = false;
+                    playerStatus.movementMultiplier = blockMoveSpeedMultiplier;
 					break;
 			}
 		}
@@ -117,9 +138,16 @@ public class PlayerBattle : MonoBehaviour
         //Normal Attack
         if (normalAttack.WasPressedThisFrame() && canAttack && battleState == BattleState.Idle)
 		{
-            if (characterController.GetGrounded())
+            if (canCounterAttack)
             {
-                characterController.turnAble = false;
+                animator.SetTrigger("CounterAttackTrigger");
+                canAttack = false;
+                DoAttack(100f, 100f);
+                battleState = BattleState.CounterAttack;
+                Invoke(nameof(RestCanCounterAttack), 0.571f);
+            }
+            else if (!canCounterAttack && characterController.GetGrounded())
+            {
                 canAttack = false;
 			    animator.SetTrigger("Attack" + attackCount);
                 if (attackCount == 1 || attackCount == 2)
@@ -137,12 +165,12 @@ public class PlayerBattle : MonoBehaviour
 
 			    Invoke(nameof(AttackCooldown), attackCooldown);
             }
-            if (!characterController.GetGrounded())
+            else if (!canCounterAttack && !characterController.GetGrounded())
             {
                 // Debug.Log("SkyAttack");
                 animator.SetBool("SkyAttack", true);
                 animator.SetTrigger("SkyAttackTrigger");
-                characterController.turnAble = false;
+                
                 canAttack = false;
 
                 DoAttack();
@@ -156,14 +184,17 @@ public class PlayerBattle : MonoBehaviour
         //Sub Attack
 		if (subAttack.WasPressedThisFrame() && battleState == BattleState.Idle)
 		{
+            Vector3 worldMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 			GameObject throwableWeapon = Instantiate(throwableObject, attackCheck.position, Quaternion.identity); 
-			Vector2 direction = new Vector2(transform.right.x , 0);
-			throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction; 
+			Vector2 direction = worldMousePos - transform.position;
+
+            throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction.normalized; 
 			throwableWeapon.name = "ThrowableWeapon";
 		}
 
         //Block
-        if(block.WasPressedThisFrame() && battleState == BattleState.Idle && canBlock)
+        #region Block
+        if (block.WasPressedThisFrame() && battleState == BattleState.Idle && canBlock)
         {
             animator.SetBool("IdleBlock", true);
             battleState = BattleState.Block;
@@ -192,7 +223,55 @@ public class PlayerBattle : MonoBehaviour
 		{
             ReleaseBlock(false);
         }
-	}
+        #endregion
+    }
+    public void ApplyDamage(float damage, Vector3 position, bool canBlock = true)
+    {
+        if (invincible)
+            return;
+
+        float applyDamage = damage;
+        if (perfectBlock && canBlock)
+        {
+            impulseSoruce.GenerateImpulse();
+            canCounterAttack = true;
+
+            ReleaseBlock(true);
+            showCounterAttack.SetActive(true);
+
+            Invoke(nameof(RestCanCounterAttack), counterAttackCountdown);
+
+            IgnoreAttack(damagedInvincibleTime);
+            return;
+        }
+
+        if (normalBlock && canBlock)
+        {
+            applyDamage *= normalBlockDmgMultiplier;
+        }
+
+        animator.SetTrigger("Hurt");
+
+        life -= applyDamage;
+        playerUI.UpdateLifeText(life);
+
+        Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f;
+
+        rig.velocity = Vector2.zero;
+        rig.AddForce(new Vector2(damageDir.x, 0) * 10);
+
+        if (life <= 0)
+        {
+            life = 0;
+            StartCoroutine(WaitToDead());
+        }
+        else
+        {
+            characterController.Stun(damagedStunTime);
+            StartCoroutine(MakeInvincible(damagedInvincibleTime));
+        }
+    }
+    #region BlockF
     private void ReleaseBlock(bool doPerfect)
     {
         //Perfect Block
@@ -203,7 +282,7 @@ public class PlayerBattle : MonoBehaviour
             normalBlock = false;
             perfectBlock = false;
             isBlocking = false;
-            PlayerStatus.instance.moveable = false;
+            playerStatus.moveable = false;
             Invoke(nameof(EndBlock), 0.417f);//0.417f
         }
         else
@@ -212,6 +291,7 @@ public class PlayerBattle : MonoBehaviour
             animator.SetBool("IdleBlock", false);
             isBlocking = false;
             normalBlock = false;
+            perfectBlock = false;
             EndBlock();
         }
 
@@ -226,6 +306,38 @@ public class PlayerBattle : MonoBehaviour
     {
         canBlock = true;
     }
+    #endregion
+
+    private void DoAttack(float t_setWidth = 0f, float t_setHeight = 0f)
+    {
+        characterController.turnAble = false;
+
+        bool haveEnemy = false;
+        Vector2 attackSize;
+        if (t_setWidth == 0f || t_setHeight == 0f)
+            attackSize = new(attackWidth, attackHeight);
+        else
+            attackSize = new(t_setWidth, t_setHeight);
+
+        Vector2 attackOffset = new(attackSize.x / 2, attackSize.y / 2);
+        Vector2 attackPosition = new(transform.position.x + attackOffset.x * transform.right.x,
+                                     transform.position.y + 0.7f);
+
+        Collider2D[] collidersEnemies = Physics2D.OverlapBoxAll(attackPosition, attackSize, 0);
+        foreach (Collider2D enemyCollider in collidersEnemies)
+        {
+            if (enemyCollider.gameObject.CompareTag("Enemy"))
+            {
+                haveEnemy = true;
+                enemyCollider.gameObject.SendMessage("ApplyDamage", dmgValue);
+            }
+        }
+        if (haveEnemy)
+        {
+            impulseSoruce.GenerateImpulse();
+        }
+    }
+
     private void ResetSkyAttack()
     {
         if(characterController.GetGrounded() || characterController.GetWallSliding())
@@ -252,45 +364,20 @@ public class PlayerBattle : MonoBehaviour
 			battleState = BattleState.Idle;
         canAttack = true;
 	}
-    public void ApplyDamage(float damage, Vector3 position)
+    void RestCanCounterAttack()
     {
-        if (invincible)
-            return;
-
-        float applyDamage = damage;
-        if (perfectBlock)
+        CancelInvoke(nameof(RestCanCounterAttack));
+        if(battleState == BattleState.CounterAttack)
         {
-            impulseSoruce.GenerateImpulse();
-            ReleaseBlock(true);
-            IgnoreAttack(damagedInvincibleTime);
-            return;
-        }
-        
-        if(normalBlock)
-        {
-            applyDamage *= normalBlockDmgMultiplier;
+            canAttack = true;
+            battleState = BattleState.Idle;
+            characterController.turnAble = true;
         }
 
-        animator.SetTrigger("Hurt");
-
-        life -= applyDamage;
-
-        Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f;
-
-        m_Rigidbody2D.velocity = Vector2.zero;
-        m_Rigidbody2D.AddForce(new Vector2(damageDir.x, 0) * 10);
-
-        if (life <= 0)
-        {
-            life = 0;
-            StartCoroutine(WaitToDead());
-        }
-        else
-        {
-            characterController.Stun(damagedStunTime);
-            StartCoroutine(MakeInvincible(damagedInvincibleTime));
-        }
+        canCounterAttack = false;
+        showCounterAttack.SetActive(false);
     }
+    
     private void IgnoreAttack(float time)
     {
         Physics2D.IgnoreLayerCollision(gameObject.layer, 8, true);
@@ -300,29 +387,7 @@ public class PlayerBattle : MonoBehaviour
     {
         Physics2D.IgnoreLayerCollision(gameObject.layer, 8, false);
     }
-    private void DoAttack()
-    {
-		bool haveEnemy = false;
 
-        Vector2 attackSize = new(attackWidth, attackHeight);
-		Vector2 attackOffset = new(attackWidth / 2, attackHeight / 2);
-        Vector2 attackPosition = new(transform.position.x + attackOffset.x * transform.right.x,
-                                             transform.position.y + attackOffset.y);
-
-        Collider2D[] collidersEnemies = Physics2D.OverlapBoxAll(attackPosition , attackSize, 0);
-        foreach (Collider2D enemyCollider in collidersEnemies)
-        {
-            if (enemyCollider.gameObject.CompareTag("Enemy"))
-            {
-				haveEnemy = true;
-                enemyCollider.gameObject.SendMessage("ApplyDamage", dmgValue);
-            }
-        }
-		if (haveEnemy)
-		{
-            impulseSoruce.GenerateImpulse();
-        }
-    }
     IEnumerator MakeInvincible(float time)
     {
         invincible = true;
@@ -337,7 +402,7 @@ public class PlayerBattle : MonoBehaviour
         invincible = true;
         enabled = false;
         yield return new WaitForSeconds(0.4f);
-        m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
+        rig.velocity = new Vector2(0, rig.velocity.y);
         yield return new WaitForSeconds(1.1f);
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
