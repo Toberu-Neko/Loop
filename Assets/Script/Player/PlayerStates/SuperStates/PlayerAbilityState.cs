@@ -8,6 +8,7 @@ public class PlayerAbilityState : PlayerState
 
     //If have an abality that needs to know if grounded, change to protect.
     private bool isGrounded;
+
     public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -34,9 +35,10 @@ public class PlayerAbilityState : PlayerState
     {
         base.LogicUpdate();
 
-        if(isAbilityDone && player.CurrentVelocity.y < 0.01f)
+
+        if(isAbilityDone)
         {
-            if(isGrounded)
+            if(isGrounded && player.CurrentVelocity.y < 0.01f)
             {
                 stateMachine.ChangeState(player.IdleState);
             }
