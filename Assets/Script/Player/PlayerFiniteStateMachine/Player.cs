@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        StateMachine.CurrentState.LogicUpdate();
+        StateMachine.CurrentState.PhysicsUpdate();
     }
     #endregion
 

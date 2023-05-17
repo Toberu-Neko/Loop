@@ -31,6 +31,7 @@ public class PlayerState
     // Called once per frame
     public virtual void LogicUpdate()
     {
+
     }
 
     // Called once per fixed frame
