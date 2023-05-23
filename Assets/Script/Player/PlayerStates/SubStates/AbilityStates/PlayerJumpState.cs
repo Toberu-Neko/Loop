@@ -20,6 +20,7 @@ public class PlayerJumpState : PlayerAbilityState
         player.SetVelocityY(playerData.jumpVelocity);
         isAbilityDone = true;
         amountOfJumpsLeft--;
+        player.InAirState.SetIsJumping();
 
         count++;
         // Debug.Log(count);

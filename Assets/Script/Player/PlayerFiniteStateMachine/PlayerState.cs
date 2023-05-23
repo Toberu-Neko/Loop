@@ -8,8 +8,10 @@ public class PlayerState
     protected PlayerStateMachine stateMachine;
     protected PlayerData playerData;
 
-    protected float startTime;
     protected bool isAnimationFinished;
+    protected bool isExitingState;
+
+    protected float startTime;
 
     private string animBoolName;
     public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
@@ -28,10 +30,12 @@ public class PlayerState
         Debug.Log(animBoolName);
         
         isAnimationFinished = false;
+        isExitingState = false;
     }
     public virtual void Exit()
     {
         player.Anim.SetBool(animBoolName, false);
+        isExitingState = true;
     }
     // Called once per frame
     public virtual void LogicUpdate()
