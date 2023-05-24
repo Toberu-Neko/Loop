@@ -12,15 +12,19 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool JumInputStop { get; private set; }
     public bool GrabInput { get; private set; }
+    public bool DashInput { get; private set; }
+    public bool DashInputStop { get; private set; }
 
     [SerializeField]
     private float inputHoldTime = 0.2f;
 
     private float jumpInputStartTime;
+    private float dashInputStartTime;
 
     private void Update()
     {
         CheckJumpInputHoldTime();
+        CheckDashInputHoldTime();
     }
     public void OnMoveInput(InputAction.CallbackContext context)
     {
@@ -42,6 +46,28 @@ public class PlayerInputHandler : MonoBehaviour
         else
         {
             NormInputY = 0;
+        }
+    }
+    public void OnDashInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            DashInput = true;
+            DashInputStop = false;
+            dashInputStartTime = Time.time;
+        }
+        else if (context.canceled)
+        {
+            DashInputStop = true;
+        }
+    }
+
+    public void UseDashInput() => DashInput = false;
+    private void CheckDashInputHoldTime()
+    {
+        if(Time.time >= dashInputStartTime + inputHoldTime)
+        {
+            DashInput = false;
         }
     }
     public void OnJumpInput(InputAction.CallbackContext context)

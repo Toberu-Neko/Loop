@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public PlayerWallGrabState WallGrabState { get; private set; }
     public PlayerWallClimbState WallClimbState { get; private set; }
     public PlayerWallJumpState WallJumpState { get; private set; }
+    public PlayerLedgeClimbState LedgeClimbState { get; private set; }
+    public PlayerDashState DashState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -31,6 +33,8 @@ public class Player : MonoBehaviour
     private Transform groundCheck;
     [SerializeField]
     private Transform wallCheck;
+    [SerializeField]
+    private Transform ledgeCheck;
 
     #endregion
 
@@ -38,7 +42,7 @@ public class Player : MonoBehaviour
     public Vector2 CurrentVelocity { get; private set; }
     public int FacingDirection { get; private set; }
 
-    private Vector2 tempVelocity;
+    private Vector2 v2Workspace;
     #endregion
 
     #region Unity Callback Functions
@@ -61,6 +65,8 @@ public class Player : MonoBehaviour
         WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
         WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "inAir");
+        LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
+        DashState = new PlayerDashState(this, StateMachine, playerData, "dash");
     }
 
     private void Start()
@@ -84,22 +90,27 @@ public class Player : MonoBehaviour
     public void SetVelocity(float velocity, Vector2 angle, int direction)
     {
         angle.Normalize();
-        tempVelocity.Set(angle.x * velocity * direction, angle.y * velocity);
-        RB.velocity = tempVelocity;
-        CurrentVelocity = tempVelocity;
+        v2Workspace.Set(angle.x * velocity * direction, angle.y * velocity);
+        RB.velocity = v2Workspace;
+        CurrentVelocity = v2Workspace;
     }
     public void SetVelocityX(float velocity)
     {
-        tempVelocity.Set(velocity, CurrentVelocity.y);
-        RB.velocity = tempVelocity;
-        CurrentVelocity = tempVelocity;
+        v2Workspace.Set(velocity, CurrentVelocity.y);
+        RB.velocity = v2Workspace;
+        CurrentVelocity = v2Workspace;
     }
 
     public void SetVelocityY(float velocity)
     {
-        tempVelocity.Set(CurrentVelocity.x, velocity);
-        RB.velocity = tempVelocity;
-        CurrentVelocity = tempVelocity;
+        v2Workspace.Set(CurrentVelocity.x, velocity);
+        RB.velocity = v2Workspace;
+        CurrentVelocity = v2Workspace;
+    }
+    public void SetVelocityZero()
+    {
+        RB.velocity = Vector2.zero;
+        CurrentVelocity = Vector2.zero;
     }
     #endregion
 
@@ -116,6 +127,10 @@ public class Player : MonoBehaviour
     {
         return Physics2D.Raycast(wallCheck.position, Vector2.right * -FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
     }
+    public bool CheckIfTouchingLedge()
+    {
+        return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
+    }
     public void CheckIfShouldFlip(int xInput)
     {
         if(xInput !=0 && xInput != FacingDirection)
@@ -126,6 +141,18 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Other Functions
+    public Vector2 DeterminCornerPosition()
+    {
+        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
+        float xDist = xHit.distance;
+        v2Workspace.Set(xDist * FacingDirection, 0f);
+
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)v2Workspace, Vector2.down, ledgeCheck.position.y - wallCheck.position.y, playerData.whatIsGround);
+        float yDist = yHit.distance;
+        v2Workspace.Set(wallCheck.position.x + (xDist * FacingDirection), wallCheck.position.y - yDist);
+
+        return v2Workspace;
+    }
     private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
