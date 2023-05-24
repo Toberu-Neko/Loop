@@ -81,6 +81,13 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Set Functions
+    public void SetVelocity(float velocity, Vector2 angle, int direction)
+    {
+        angle.Normalize();
+        tempVelocity.Set(angle.x * velocity * direction, angle.y * velocity);
+        RB.velocity = tempVelocity;
+        CurrentVelocity = tempVelocity;
+    }
     public void SetVelocityX(float velocity)
     {
         tempVelocity.Set(velocity, CurrentVelocity.y);
@@ -104,6 +111,10 @@ public class Player : MonoBehaviour
     public bool CheckIfTouchingWall()
     {
         return Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
+    }
+    public bool CheckIfTouchingWallBack()
+    {
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * -FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
     }
     public void CheckIfShouldFlip(int xInput)
     {
