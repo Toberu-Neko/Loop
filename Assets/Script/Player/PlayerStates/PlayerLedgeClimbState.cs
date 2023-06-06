@@ -70,13 +70,13 @@ public class PlayerLedgeClimbState : PlayerState
         {
             if(isTouchingCeiling)
             {
+                Debug.Log(isTouchingCeiling);
                 stateMachine.ChangeState(player.CrouchIdleState);
             }
             else
             {
                 stateMachine.ChangeState(player.IdleState);
             }
-
         }
         else
         {
@@ -109,7 +109,7 @@ public class PlayerLedgeClimbState : PlayerState
 
     private void CheckForSpace()
     {
-        isTouchingCeiling = Physics2D.Raycast(cornerPosition + (Vector2.up * 0.015f) + (Vector2.right * player.FacingDirection * 0.015f), Vector2.up, playerData.standColliderHeight, playerData.whatIsGround);
+        isTouchingCeiling = Physics2D.Raycast(cornerPosition + (Vector2.up * 0.015f) + (0.015f * player.FacingDirection * Vector2.right), Vector2.up, playerData.standColliderHeight, playerData.whatIsGround);
         player.Anim.SetBool("isTouchingCeiling", isTouchingCeiling);
     }
 }

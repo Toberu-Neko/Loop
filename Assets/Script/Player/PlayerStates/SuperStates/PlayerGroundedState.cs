@@ -29,6 +29,7 @@ public class PlayerGroundedState : PlayerState
         isTouchingWall = player.CheckIfTouchingWall();
         isTouchingLedge = player.CheckIfTouchingLedge();
         isTouchingCeiling = player.CheckForCeiling();
+        // Debug.Log("PGS: " + isTouchingCeiling);
     }
 
     public override void Enter()

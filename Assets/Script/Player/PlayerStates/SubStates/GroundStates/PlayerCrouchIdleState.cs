@@ -34,6 +34,7 @@ public class PlayerCrouchIdleState : PlayerGroundedState
             }
             else if (yInput != -1 && !isTouchingCeiling)
             {
+                // Debug.Log(isTouchingCeiling);
                 stateMachine.ChangeState(player.IdleState);
             }
         }
