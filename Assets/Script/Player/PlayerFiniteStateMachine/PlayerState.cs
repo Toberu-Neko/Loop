@@ -35,7 +35,6 @@ public class PlayerState
         player.Anim.SetBool(animBoolName, false);
         isExitingState = true;
     }
-    // Called once per frame
     public virtual void LogicUpdate()
     {
 
