@@ -32,7 +32,7 @@ public class PlayerCrouchIdleState : PlayerGroundedState
             {
                 stateMachine.ChangeState(player.CrouchMoveState);
             }
-            else if (yInput != -1)
+            else if (yInput != -1 && !isTouchingCeiling)
             {
                 stateMachine.ChangeState(player.IdleState);
             }
