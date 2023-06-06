@@ -29,9 +29,6 @@ public class Entity : MonoBehaviour
     {
         core = GetComponentInChildren<Core>();
 
-        facingDirection = 1;
-
-        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
     }
