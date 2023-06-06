@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public PlayerWallJumpState WallJumpState { get; private set; }
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
     public PlayerDashState DashState { get; private set; }
+    public PlayerCrouchIdleState CrouchIdleState { get; private set; }
+    public PlayerCrouchMoveState CrouchMoveState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public Transform DashDirectionIndicator { get; private set; }
+    public BoxCollider2D MovementCollider { get; private set; }
     #endregion
 
     #region Check Transforms
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
+        MovementCollider = GetComponent<BoxCollider2D>();
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
         
         FacingDirection = 1;
@@ -69,6 +73,8 @@ public class Player : MonoBehaviour
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "inAir");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
         DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
+        CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
+        CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
     }
 
     private void Start()
@@ -149,13 +155,23 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Other Functions
+    public void SetColliderHeight(float height)
+    {
+        Vector2 center = MovementCollider.offset;
+        v2Workspace.Set(MovementCollider.size.x, height);
+
+        center.y += (height - MovementCollider.size.y) / 2;
+
+        MovementCollider.size = v2Workspace;
+        MovementCollider.offset = center;
+    }
     public Vector2 DeterminCornerPosition()
     {
         RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
         float xDist = xHit.distance;
-        v2Workspace.Set(xDist * FacingDirection, 0f);
+        v2Workspace.Set((xDist + 0.015f) * FacingDirection, 0f);
 
-        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)v2Workspace, Vector2.down, ledgeCheck.position.y - wallCheck.position.y, playerData.whatIsGround);
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)v2Workspace, Vector2.down, ledgeCheck.position.y - wallCheck.position.y + 0.015f, playerData.whatIsGround);
         float yDist = yHit.distance;
         v2Workspace.Set(wallCheck.position.x + (xDist * FacingDirection), wallCheck.position.y - yDist);
 
