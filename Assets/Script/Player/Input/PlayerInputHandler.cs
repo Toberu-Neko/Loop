@@ -57,11 +57,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            AttackInputs[(int)CombatInputs.secondary] = true;
+            // AttackInputs[(int)CombatInputs.secondary] = true;
         }
         if (context.canceled)
         {
-            AttackInputs[(int)CombatInputs.secondary] = false;
+            // AttackInputs[(int)CombatInputs.secondary] = false;
         }
     }
     public void OnMoveInput(InputAction.CallbackContext context)
