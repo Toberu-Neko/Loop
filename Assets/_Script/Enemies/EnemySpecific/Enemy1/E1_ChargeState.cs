@@ -29,7 +29,11 @@ public class E1_ChargeState : ChargeState
     {
         base.LogicUpdate();
 
-        if (isChargeTimeOver)
+        if(!isDetectingLedge || isDetectingWall)
+        {
+            stateMachine.ChangeState(enemy.LookForPlayerState);
+        }
+        else if (isChargeTimeOver)
         {
             if (isPlayerInMinAgroRange)
             {

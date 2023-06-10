@@ -29,7 +29,10 @@ public class E1_PlayerDetectedState : PlayerDetectedState
         {
             stateMachine.ChangeState(enemy.ChargeState);
         }
-
+        else if (!isPlayerInMaxAgroRange)
+        {
+            stateMachine.ChangeState(enemy.LookForPlayerState);
+        }
     }
 
     public override void PhysicsUpdate()
