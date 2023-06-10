@@ -11,6 +11,7 @@ public class AliveToEnemyCollider : MonoBehaviour, IDamageable
     }
     public void Damage(float damageAmount, float damagePosition)
     {
-        basicEnemyController.Damage(damageAmount, damagePosition);
+        // basicEnemyController.Damage(damageAmount, damagePosition);
+        Debug.Log("AH");
     }
 }
