@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   movementVelocity: 10
-  jumpVelocity: 20
-  amountOfJumps: 1
+  jumpVelocity: 16
+  amountOfJumps: 2
   wallJumpVelocity: 20
   wallJumpTime: 0.4
   wallJumpAngle: {x: 1, y: 2}
   coyoteTime: 0.1
   variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: 2
-  wallClimbVelocity: 3
+  wallClimbVelocity: 5
   startOffset: {x: 0.4, y: 0.9}
   stopOffset: {x: 0.4, y: 1.5}
   dashCooldown: 0.5
-  maxHoldTime: 1
+  maxHoldTime: 2
   holdTimeScale: 0.25
   dashTime: 0.2
   dashVelocity: 30
@@ -35,8 +35,3 @@ MonoBehaviour:
   crouchMovementVelocity: 5
   crouchColliderHeight: 0.825
   standColliderHeight: 1.65
-  groundCheckRadius: 0.3
-  wallCheckDistance: 0.5
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 64
