@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AliveToEnemyCollider : MonoBehaviour, IDamageable
+public class AliveToEnemy : MonoBehaviour, IDamageable
 {
     BasicEnemyController basicEnemyController;
+
     private void Awake()
     {
         basicEnemyController = transform.parent.GetComponent<BasicEnemyController>();

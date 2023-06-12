@@ -70,6 +70,10 @@ public class Entity : MonoBehaviour
     {
         return Physics2D.Raycast(playerCheck.position, AliveGO.transform.right, EntityData.maxAgroDistance, EntityData.whatIsPlayer);
     }
+    public virtual bool CheckPlayerInCloseRangeAction()
+    {
+        return Physics2D.Raycast(playerCheck.position, AliveGO.transform.right, EntityData.closeRangeActionDistance, EntityData.whatIsPlayer);
+    }
     public virtual void Flip()
     {
         FacingDirection *= -1;
