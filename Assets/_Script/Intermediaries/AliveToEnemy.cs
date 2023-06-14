@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class AliveToEnemy : MonoBehaviour, IDamageable
 {
-    BasicEnemyController basicEnemyController;
+    Enemy1 enemy;
 
     private void Awake()
     {
-        basicEnemyController = transform.parent.GetComponent<BasicEnemyController>();
+        enemy = transform.parent.GetComponent<Enemy1>();
     }
-    public void Damage(float damageAmount, float damagePosition)
+    public void Damage(AttackDetails details)
     {
-        // basicEnemyController.Damage(damageAmount, damagePosition);
-        Debug.Log("AH");
+        enemy.Damage(details);
     }
 }

@@ -36,8 +36,6 @@ public class Player : MonoBehaviour
     public PlayerInventory Inventory { get; private set; }
     #endregion
 
-
-
     #region Other Variables
     // public int FacingDirection { get; private set; }
 
@@ -94,8 +92,6 @@ public class Player : MonoBehaviour
         StateMachine.CurrentState.PhysicsUpdate();
     }
     #endregion
-
-
 
     #region Other Functions
     public void SetColliderHeight(float height)

@@ -66,9 +66,9 @@ public class PlayerAttackState : PlayerAbilityState
     {
         shouldCheckFlip = value;
     }
-    public float GetPlayerXPosition()
+    public Vector2 GetPlayerPosition()
     {
-        return core.transform.position.x;
+        return (Vector2)core.transform.position;
     }
 
     #region Animation Triggers
