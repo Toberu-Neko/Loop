@@ -49,7 +49,7 @@ public class MeleeAttackState : AttackState
         foreach (Collider2D collider in detectedObjects)
         {
             IDamageable dam = collider.GetComponent<IDamageable>();
-            AttackDetails attackDetails = new((Vector2)entity.AliveGO.transform.position, stateData.attackDamage, 10f);
+            AttackDetails attackDetails = new((Vector2)entity.transform.position, stateData.attackDamage, 10f);
             dam.Damage(attackDetails);
         }
     }

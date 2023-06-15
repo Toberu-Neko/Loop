@@ -50,7 +50,7 @@ public class E2_PlayerDetectedState : PlayerDetectedState
         }
         else if (!isDetectingLedge)
         {
-            entity.Flip();
+            core.Movement.Flip();
             stateMachine.ChangeState(enemy.MoveState);
         }
     }

@@ -40,9 +40,8 @@ public class AggressiveWeapon : Weapon
 
     public void AddToDetected(Collider2D collision)
     {
-        IDamageable damageable = collision.GetComponent<IDamageable>();
-
-        if(damageable != null)
+        
+        if(collision.TryGetComponent<IDamageable>(out var damageable))
         {
             detectedDamageable.Add(damageable);
         }
@@ -50,9 +49,7 @@ public class AggressiveWeapon : Weapon
 
     public void RemoveFromDetected(Collider2D collision)
     {
-        IDamageable damageable = collision.GetComponent<IDamageable>();
-
-        if (damageable != null)
+        if (collision.TryGetComponent<IDamageable>(out var damageable))
         {
             detectedDamageable.Remove(damageable);
         }
