@@ -47,6 +47,8 @@ public class Entity : MonoBehaviour, IDamageable
     {
         StateMachine.CurrentState.LogicUpdate();
 
+        Anim.SetFloat("yVelocity", RB.velocity.y);
+
         if(Time.time >= lastDamageTime + EntityData.stunRecoveryTime)
         {
             ResetStunResistance();
@@ -108,6 +110,12 @@ public class Entity : MonoBehaviour, IDamageable
             Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(AliveGO.transform.right * EntityData.closeRangeActionDistance), 0.2f);
             Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(AliveGO.transform.right * EntityData.minAgroDistance), 0.2f);
             Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(AliveGO.transform.right * EntityData.maxAgroDistance), 0.2f);
+        }
+        else
+        {
+            Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * EntityData.closeRangeActionDistance), 0.2f);
+            Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * EntityData.minAgroDistance), 0.2f);
+            Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * EntityData.maxAgroDistance), 0.2f);
         }
 
     }

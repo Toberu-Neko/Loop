@@ -39,7 +39,7 @@ public class IdleState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(Time.time >= startTime + idleTime)
+        if(Time.time >= StartTime + idleTime)
         {
             isIdleTimeOver = true;
         }

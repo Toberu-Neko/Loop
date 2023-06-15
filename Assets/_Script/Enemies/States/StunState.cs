@@ -47,12 +47,12 @@ public class StunState : State
     {
         base.LogicUpdate();
 
-        if(Time.time >= startTime + stateData.stunTime)
+        if(Time.time >= StartTime + stateData.stunTime)
         {
             isStunTimeOver = true;
         }
 
-        if(isGrounded && Time.time >= startTime + stateData.stunKnockbackTime && !isMovementStopped)
+        if(isGrounded && Time.time >= StartTime + stateData.stunKnockbackTime && !isMovementStopped)
         {
             isMovementStopped = true;
             entity.SetVelocity(0f);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AliveToEnemy : MonoBehaviour, IDamageable
+public class AliveToEnemy1 : MonoBehaviour, IDamageable
 {
     Enemy1 enemy;
 

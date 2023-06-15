@@ -7,7 +7,8 @@ public class State
     protected FiniteStateMachine stateMachine;
     protected Entity entity;
 
-    protected float startTime;
+    public float StartTime { get; protected set;}
+
     protected string animBoolName;
 
     public State(Entity entity, FiniteStateMachine stateMachine, string animBoolName)
@@ -19,7 +20,7 @@ public class State
 
     public virtual void Enter()
     {
-        startTime = Time.time;
+        StartTime = Time.time;
         entity.Anim.SetBool(animBoolName, true);
 
         DoChecks();

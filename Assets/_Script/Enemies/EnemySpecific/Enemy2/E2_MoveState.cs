@@ -28,6 +28,17 @@ public class E2_MoveState : MoveState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if(isPlayerInMinAgroRange)
+        {
+            stateMachine.ChangeState(enemy.PlayerDetectedState);
+        }
+        else if(isDetectingWall || !isDetectingLedge)
+        {
+            enemy.IdleState.SetFlipAfterIdle(true);
+            stateMachine.ChangeState(enemy.IdleState);
+        }
+
     }
 
     public override void PhysicsUpdate()
