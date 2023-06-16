@@ -7,6 +7,29 @@ public class PlayerGroundedState : PlayerState
 {
     protected int xInput;
     protected int yInput;
+
+    protected bool isTouchingCeiling;
+
+    protected Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    private Movement movement;
+    private CollisionSenses CollisionSenses 
+    { 
+        // ?? == if left is null, return right, else return left
+        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
+
+
+        /* get
+        {
+            if(collisionSenses)
+            {
+                return collisionSenses;
+            }
+            collisionSenses = core.GetCoreComponent<CollisionSenses>();
+            return collisionSenses;
+        }*/ 
+    }
+    private CollisionSenses collisionSenses;
+
     private bool jumpInput;
     private bool grabInput;
     private bool dashInput;
@@ -14,8 +37,6 @@ public class PlayerGroundedState : PlayerState
     private bool isGrounded;
     private bool isTouchingWall;
     private bool isTouchingLedge;
-
-    protected bool isTouchingCeiling;
 
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -25,10 +46,13 @@ public class PlayerGroundedState : PlayerState
     {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
-        isTouchingWall = core.CollisionSenses.WallFront;
-        isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
-        isTouchingCeiling = core.CollisionSenses.Ceiling;
+        if (CollisionSenses)
+        {
+            isGrounded = CollisionSenses.Ground;
+            isTouchingWall = CollisionSenses.WallFront;
+            isTouchingLedge = CollisionSenses.LedgeHorizontal;
+            isTouchingCeiling = CollisionSenses.Ceiling;
+        }
         // Debug.Log("PGS: " + isTouchingCeiling);
     }
 

@@ -13,6 +13,11 @@ public class StunState : State
     protected bool performCloseRangeAction;
     protected bool isPlayerInMinAgroRange;
 
+    private Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    private Movement movement;
+    private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>(); }
+    private CollisionSenses collisionSenses;
+
     public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -22,7 +27,7 @@ public class StunState : State
     {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
+        isGrounded = CollisionSenses.Ground;
         performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
         isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
     }
@@ -33,7 +38,7 @@ public class StunState : State
 
         isStunTimeOver = false;
         isMovementStopped = false;
-        core.Movement.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.LastDamageDirection);
+        Movement?.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.LastDamageDirection);
     }
 
     public override void Exit()
@@ -55,7 +60,7 @@ public class StunState : State
         if(isGrounded && Time.time >= StartTime + stateData.stunKnockbackTime && !isMovementStopped)
         {
             isMovementStopped = true;
-            core.Movement.SetVelocityX(0f);
+            Movement?.SetVelocityX(0f);
         }
     }
 

@@ -12,6 +12,8 @@ public class Weapon : MonoBehaviour
     protected PlayerAttackState state;
 
     protected Core core;
+    protected Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    private Movement movement;
 
     protected int attackCounter;
 

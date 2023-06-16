@@ -9,6 +9,11 @@ public class PlayerAbilityState : PlayerState
     //If have an abality that needs to know if grounded, change to protect.
     private bool isGrounded;
 
+    protected Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    private Movement movement;
+    private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>(); }
+    private CollisionSenses collisionSenses;
+
     public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -17,7 +22,9 @@ public class PlayerAbilityState : PlayerState
     {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
+        if(CollisionSenses)
+            isGrounded = CollisionSenses.Ground;
+
     }
 
     public override void Enter()
@@ -37,7 +44,7 @@ public class PlayerAbilityState : PlayerState
 
         if(isAbilityDone)
         {
-            if(isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
+            if(isGrounded && Movement?.CurrentVelocity.y < 0.01f)
             {
                 stateMachine.ChangeState(player.IdleState);
             }

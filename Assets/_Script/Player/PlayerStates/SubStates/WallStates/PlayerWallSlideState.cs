@@ -14,13 +14,13 @@ public class PlayerWallSlideState : PlayerTouchingWallState
 
         if (!isExitingState)
         {
-            core.Movement.SetVelocityY(-playerData.wallSlideVelocity);
+            Movement?.SetVelocityY(-playerData.wallSlideVelocity);
 
             if(grabInput && yInput == 0)
             {
                 stateMachine.ChangeState(player.WallGrabState);
             }
-            else if(!isTouchingWall || (xInput != core.Movement.FacingDirection && !grabInput))
+            else if(!isTouchingWall || (xInput != Movement?.FacingDirection && !grabInput))
             {
                 stateMachine.ChangeState(player.InAirState);
             }

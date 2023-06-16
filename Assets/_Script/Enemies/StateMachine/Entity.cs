@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Entity : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Entity : MonoBehaviour
     public int LastDamageDirection { get; private set; }
     public AnimationToStatemachine AnimationToStatemachine { get; private set; }
     public Core Core { get; private set; }
+    private Movement Movement { get => movement ??= Core.GetCoreComponent<Movement>(); }
+    private Movement movement;
 
 
     [SerializeField] private Transform wallCheck;
@@ -44,7 +47,7 @@ public class Entity : MonoBehaviour
         Core.LogicUpdate();
         StateMachine.CurrentState.LogicUpdate();
 
-        Anim.SetFloat("yVelocity", Core.Movement.RB.velocity.y);
+        Anim.SetFloat("yVelocity", Movement.RB.velocity.y);
 
         if(Time.time >= lastDamageTime + EntityData.stunRecoveryTime)
         {
@@ -73,7 +76,7 @@ public class Entity : MonoBehaviour
     {
         if (Core != null)
         {
-            Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(Vector2.right * Core.Movement.FacingDirection * EntityData.wallCheckDistance));
+            Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(Vector2.right * Movement.FacingDirection * EntityData.wallCheckDistance));
             Gizmos.DrawLine(ledgeCheck.position, ledgeCheck.position + (Vector3)(Vector2.down * EntityData.ledgeCheckDistance));
         }
 
@@ -85,8 +88,8 @@ public class Entity : MonoBehaviour
     }
     public virtual void DamageHop(float velocity)
     {
-        velocityWorkspcae.Set(Core.Movement.RB.velocity.x, velocity);
-        Core.Movement.RB.velocity = velocityWorkspcae;
+        velocityWorkspcae.Set(Movement.RB.velocity.x, velocity);
+        Movement.RB.velocity = velocityWorkspcae;
     }
     public virtual void ResetStunResistance()
     {
