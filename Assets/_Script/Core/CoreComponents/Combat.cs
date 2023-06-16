@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Combat : CoreComponent, IDamageable, IKnockbackable
 {
-    private Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    [SerializeField] private GameObject damageParticles;
+
+    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
-    private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>(); }
+
+    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
-    private Stats Stats { get => stats ??= core.GetComponent<Stats>();}
+    private Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;
+
+    private ParticleManager ParticleManager => particleManager ? particleManager : core.GetCoreComponent<ParticleManager>();
+    private ParticleManager particleManager;
 
     [SerializeField]
     private float maxKnockbackTime = 0.2f;
@@ -27,6 +33,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         Debug.Log(core.transform.parent.name + "Damaged");
         Stats?.DecreaseHeakth(damageAmount);
+        ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
     }
 
     public void Knockback(Vector2 angle, float strength, int direction)

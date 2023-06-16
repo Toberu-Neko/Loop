@@ -13,7 +13,7 @@ public class PlayerTouchingWallState : PlayerState
 
     protected bool isTouchingLedge;
 
-    protected Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
     private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();}
     private CollisionSenses collisionSenses;

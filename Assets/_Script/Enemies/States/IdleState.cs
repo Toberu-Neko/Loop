@@ -12,7 +12,7 @@ public class IdleState : State
 
     protected float idleTime;
 
-    private Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
 
     public IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(entity, stateMachine, animBoolName)

@@ -13,9 +13,9 @@ public class StunState : State
     protected bool performCloseRangeAction;
     protected bool isPlayerInMinAgroRange;
 
-    private Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
-    private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>(); }
+    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
     public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData) : base(entity, stateMachine, animBoolName)

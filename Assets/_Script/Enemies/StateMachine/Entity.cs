@@ -12,7 +12,7 @@ public class Entity : MonoBehaviour
     public int LastDamageDirection { get; private set; }
     public AnimationToStatemachine AnimationToStatemachine { get; private set; }
     public Core Core { get; private set; }
-    private Movement Movement { get => movement ??= Core.GetCoreComponent<Movement>(); }
+    private Movement Movement => movement ? movement : Core.GetCoreComponent<Movement>();
     private Movement movement;
 
 

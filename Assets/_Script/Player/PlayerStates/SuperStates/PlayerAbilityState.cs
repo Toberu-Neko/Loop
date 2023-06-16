@@ -9,9 +9,9 @@ public class PlayerAbilityState : PlayerState
     //If have an abality that needs to know if grounded, change to protect.
     private bool isGrounded;
 
-    protected Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
-    private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>(); }
+    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
     public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)

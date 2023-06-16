@@ -10,7 +10,7 @@ public class PlayerGroundedState : PlayerState
 
     protected bool isTouchingCeiling;
 
-    protected Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
     private CollisionSenses CollisionSenses 
     { 
@@ -87,7 +87,7 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.SecondaryAttackState);
         }
-        else if (jumpInput && player.JumpState.CanJump())
+        else if (jumpInput && player.JumpState.CanJump() && !isTouchingCeiling)
         {
             stateMachine.ChangeState(player.JumpState);
         }

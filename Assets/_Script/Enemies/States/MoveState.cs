@@ -10,9 +10,9 @@ public class MoveState : State
     protected bool isDetectingLedge;
     protected bool isPlayerInMinAgroRange;
 
-    private Movement Movement { get => movement ??= core.GetCoreComponent<Movement>(); }
+    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
-    private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>(); }
+    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
     public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
