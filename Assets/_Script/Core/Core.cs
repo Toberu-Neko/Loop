@@ -21,21 +21,38 @@ public class Core : MonoBehaviour
         get => GenericNotImplementedError<Combat>.TryGet(combat, transform.parent.name);
         private set => combat = value;
     }
+    public Stats Stats
+    {
+        get => GenericNotImplementedError<Stats>.TryGet(stats, transform.parent.name);
+        private set => stats = value;
+    }
 
     private Movement movement;
     private CollisionSenses collisionSenses;
     private Combat combat;
+    private Stats stats;
+
+    private List<ILogicUpdate> compents = new();
 
     private void Awake()
     {
         Movement = GetComponentInChildren<Movement>();
         CollisionSenses = GetComponentInChildren<CollisionSenses>();
         Combat = GetComponentInChildren<Combat>();
+        Stats = GetComponentInChildren<Stats>();
     }
 
     public void LogicUpdate()
     {
-        Movement.LogicUpdate();
-        Combat.LogicUpdate();
+        foreach (ILogicUpdate compent in compents)
+        {
+            compent.LogicUpdate();
+        }
+    }
+
+    public void AddCompent(ILogicUpdate compent)
+    {
+        if(!compents.Contains(compent))
+            compents.Add(compent);
     }
 }
