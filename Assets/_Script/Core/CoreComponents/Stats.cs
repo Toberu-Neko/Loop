@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class Stats : CoreComponent
 {
     [SerializeField] private float maxHealth;
     private float currentHealth;
+
+    public event Action OnHealthZero;
 
     protected override void Awake()
     {
@@ -21,7 +24,8 @@ public class Stats : CoreComponent
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Debug.Log(core.transform.parent.name + "'s health is 0.");
+            
+            OnHealthZero?.Invoke();
         }
     }
 
