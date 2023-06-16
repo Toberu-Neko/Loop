@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Entity : MonoBehaviour, IDamageable
+public class Entity : MonoBehaviour
 {
     public FiniteStateMachine StateMachine { get; private set; }
     public D_Entity EntityData;
@@ -41,6 +41,7 @@ public class Entity : MonoBehaviour, IDamageable
     }
     public virtual void Update()
     {
+        Core.LogicUpdate();
         StateMachine.CurrentState.LogicUpdate();
 
         Anim.SetFloat("yVelocity", Core.Movement.RB.velocity.y);
@@ -91,36 +92,5 @@ public class Entity : MonoBehaviour, IDamageable
     {
         isStunned = false;
         currentStunResistance = EntityData.stunResistance;
-    }
-
-    public virtual void Damage(AttackDetails details)
-    {
-        lastDamageTime = Time.time;
-
-        currentHealth -= details.damageAmount;
-        currentStunResistance -= details.stunDamageAmount;
-
-        DamageHop(EntityData.damageHopSpeed);
-
-        Instantiate(EntityData.hitParticle, transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
-
-        if (details.position.x > transform.position.x)
-        {
-            LastDamageDirection = -1;
-        }
-        else
-        {
-            LastDamageDirection = 1;
-        }
-
-        if(currentStunResistance <= 0)
-        {
-            isStunned = true;
-        }
-
-        if(currentHealth <= 0)
-        {
-            isDead = true;
-        }
     }
 }

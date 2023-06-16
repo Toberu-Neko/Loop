@@ -39,7 +39,10 @@ public class IdleState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(Time.time >= StartTime + idleTime)
+
+        core.Movement.SetVelocityX(0f);
+
+        if (Time.time >= StartTime + idleTime)
         {
             isIdleTimeOver = true;
         }

@@ -6,46 +6,36 @@ public class Core : MonoBehaviour
 {
     public Movement Movement
     {
-        get
-        {
-            if (movement)
-            {
-                return movement;            
-            }
-
-            Debug.LogError("No Movement component found on " + transform.parent.name);
-            return null;
-        }
-
-        private set { movement = value; }
+        get => GenericNotImplementedError<Movement>.TryGet(movement, transform.parent.name);
+        private set => movement = value;
     }
+
     public CollisionSenses CollisionSenses
     {
-        get
-        {
-            if (collisionSenses)
-            {
-                return collisionSenses;
-            }
+        get => GenericNotImplementedError<CollisionSenses>.TryGet(collisionSenses, transform.parent.name);
+        private set => collisionSenses = value;
+    }
 
-            Debug.LogError("No Collision Senses component found on " + transform.parent.name);
-            return null;
-        }
-
-        private set { collisionSenses = value; }
+    public Combat Combat
+    {
+        get => GenericNotImplementedError<Combat>.TryGet(combat, transform.parent.name);
+        private set => combat = value;
     }
 
     private Movement movement;
     private CollisionSenses collisionSenses;
+    private Combat combat;
 
     private void Awake()
     {
         Movement = GetComponentInChildren<Movement>();
         CollisionSenses = GetComponentInChildren<CollisionSenses>();
+        Combat = GetComponentInChildren<Combat>();
     }
 
     public void LogicUpdate()
     {
-          Movement.LogicUpdate();
+        Movement.LogicUpdate();
+        Combat.LogicUpdate();
     }
 }

@@ -7,7 +7,8 @@ public class AggressiveWeapon : Weapon
 {
     protected SO_AggressiveWeaponData aggressiveWeaponData;
 
-    private List<IDamageable> detectedDamageable = new();
+    private List<IDamageable> detectedDamageables = new();
+    private List<IKnockbackable> detectedKnockbackables = new();
 
     protected override void Awake()
     {
@@ -32,26 +33,41 @@ public class AggressiveWeapon : Weapon
     private void CheckMeleeAttack()
     {
         WeaponAttackDetails details = aggressiveWeaponData.AttackDetails[attackCounter];
-        foreach(IDamageable damageable in detectedDamageable.ToList())
+        foreach(IDamageable damageable in detectedDamageables.ToList())
         {
-            damageable.Damage(new AttackDetails(state.GetPlayerPosition(), details.damageAmount, 1f));
+            damageable.Damage(details.damageAmount);
         }
+
+        foreach (IKnockbackable item in detectedKnockbackables.ToList())
+        {
+            item.Knockback(details.knockbackAngle, details.knockbackStrength, core.Movement.FacingDirection);
+        }
+
     }
 
     public void AddToDetected(Collider2D collision)
     {
-        
-        if(collision.TryGetComponent<IDamageable>(out var damageable))
+        if(collision.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            detectedDamageable.Add(damageable);
+            detectedDamageables.Add(damageable);
+        }
+
+        if (collision.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
+        {
+            detectedKnockbackables.Add(knockbackable);
         }
     }
 
     public void RemoveFromDetected(Collider2D collision)
     {
-        if (collision.TryGetComponent<IDamageable>(out var damageable))
+        if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            detectedDamageable.Remove(damageable);
+            detectedDamageables.Remove(damageable);
+        }
+
+        if (collision.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
+        {
+            detectedKnockbackables.Remove(knockbackable);
         }
     }
 }

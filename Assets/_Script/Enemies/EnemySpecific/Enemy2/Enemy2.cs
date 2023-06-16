@@ -41,36 +41,16 @@ public class Enemy2 : Entity
         DodgeState = new E2_DodgeState(this, StateMachine, "dodge", DodgeStateData, this);
         RangedAttackState = new E2_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
 
-        StateMachine.Initialize(MoveState);
     }
-
+    private void Start()
+    {
+        StateMachine.Initialize(MoveState);
+        
+    }
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
 
         Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
-    }
-
-    public override void Damage(AttackDetails details)
-    {
-        base.Damage(details);
-
-        if (isDead)
-        {
-            StateMachine.ChangeState(DeadState);
-        }
-        else if (isStunned && StateMachine.CurrentState != StunState)
-        {
-            StateMachine.ChangeState(StunState);
-        }
-        else if (CheckPlayerInMinAgroRange())
-        {
-            StateMachine.ChangeState(RangedAttackState);
-        }
-        else if (!CheckPlayerInMinAgroRange())
-        {
-            LookForPlayerState.SetTurnImmediately(true);
-            StateMachine.ChangeState(LookForPlayerState);
-        }
     }
 }

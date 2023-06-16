@@ -36,29 +36,15 @@ public class Enemy1 : Entity
         MeleeAttackState = new E1_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackPosition, meleeAttackStateData, this);
         StunState = new E1_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new E1_DeadState(this, StateMachine, "dead", deadStateData, this);
-
+    }
+    private void Start()
+    {
         StateMachine.Initialize(MoveState);
     }
-
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
 
         Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
-    }
-
-    public override void Damage(AttackDetails details)
-    {
-        base.Damage(details);
-
-        if (isDead)
-        {
-            StateMachine.ChangeState(DeadState);
-        }
-        else if (isStunned && StateMachine.CurrentState != StunState)
-        {
-            StateMachine.ChangeState(StunState);
-        }
-
     }
 }

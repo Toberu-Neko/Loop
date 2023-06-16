@@ -165,20 +165,11 @@ public class BasicEnemyController : MonoBehaviour, IDamageable
         currentState = state;
     }
 
-    public void Damage(AttackDetails details)
+    public void Damage(float damageAmount)
     {
-        currentHealth -= details.damageAmount;
+        currentHealth -= damageAmount;
 
         Instantiate(hitParticle, alive.transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
-
-        if(details.position.x > alive.transform.position.x)
-        {
-            damageDirection = -1;
-        }
-        else
-        {
-            damageDirection = 1;
-        }
 
         if(currentHealth > 0f)
         {

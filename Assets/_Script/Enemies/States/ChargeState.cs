@@ -44,7 +44,9 @@ public class ChargeState : State
     {
         base.LogicUpdate();
 
-        if(Time.time >= StartTime + stateData.chargeTime)
+        core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
+
+        if (Time.time >= StartTime + stateData.chargeTime)
         {
             isChargeTimeOver = true;
         }
