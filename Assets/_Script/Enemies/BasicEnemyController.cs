@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicEnemyController : MonoBehaviour, IDamageable
+public class BasicEnemyController : MonoBehaviour
 {
     private enum State
     {

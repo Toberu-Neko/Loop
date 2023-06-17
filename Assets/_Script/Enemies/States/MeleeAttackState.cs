@@ -53,7 +53,7 @@ public class MeleeAttackState : AttackState
         {
             if (collider.TryGetComponent<IDamageable>(out var dam))
             {
-                dam.Damage(stateData.attackDamage);
+                dam.Damage(stateData.attackDamage, entity.GetPosition());
             }
 
             if (collider.TryGetComponent<IKnockbackable>(out var knockbackable))

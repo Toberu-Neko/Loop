@@ -10,10 +10,13 @@ public class Weapon : MonoBehaviour
     protected Animator weaponAnimator;
 
     protected PlayerAttackState state;
-
+    
     protected Core core;
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
+
+    protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
+    private CollisionSenses collisionSenses;
 
     protected int attackCounter;
 
@@ -52,12 +55,14 @@ public class Weapon : MonoBehaviour
     #region Animation Triggers
     public virtual void AnimationStartMovementTrigger()
     {
-        state.SetPlayerVelocity(weaponData.movementSpeed[attackCounter]);
+        if(CollisionSenses.Ground)
+            state.SetPlayerVelocity(weaponData.movementSpeed[attackCounter]);
     }
 
     public virtual void AnimationStopMovementTrigger()
     {
-        state.SetPlayerVelocity(0f);
+        if (CollisionSenses.Ground)
+            state.SetPlayerVelocity(0f);
     }
 
     public virtual void AnimationTurnOffFlipTrigger()

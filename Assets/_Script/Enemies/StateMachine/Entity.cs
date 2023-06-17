@@ -91,9 +91,15 @@ public class Entity : MonoBehaviour
         velocityWorkspcae.Set(Movement.RB.velocity.x, velocity);
         Movement.RB.velocity = velocityWorkspcae;
     }
+
     public virtual void ResetStunResistance()
     {
         isStunned = false;
         currentStunResistance = EntityData.stunResistance;
+    }
+
+    public Vector2 GetPosition()
+    {
+        return (Vector2)transform.position;
     }
 }

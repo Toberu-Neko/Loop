@@ -5,6 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data/Base Data")]
 public class PlayerData : ScriptableObject
 {
+    public LayerMask whatIsEnemy;
+
+    [Header("BlockState")]
+    public float blockMovementVelocity = 5f;
+    public float perfectBlockTime = 0.2f;
+    public float blockCooldown = 0.5f;
+
+    [Header("PerfectBlockState")]
+    public float perfectBlockKnockbackRadius = 1f;
+    public float perfectBlockKnockbackForce = 10f;
+    public Vector2 perfectBlockKnockbackAngle = new(1, 2);
+
     [Header("MoveState")]
     public float movementVelocity = 10f;
 

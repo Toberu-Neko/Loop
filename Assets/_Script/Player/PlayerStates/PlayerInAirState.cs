@@ -92,13 +92,13 @@ public class PlayerInAirState : PlayerState
 
         CheckJumpMultiplier();
 
-        if (player.InputHandler.AttackInputs[(int)CombatInputs.primary])
+        if (player.InputHandler.AttackInput)
         {
-            stateMachine.ChangeState(player.PrimaryAttackState);
+            stateMachine.ChangeState(player.AttackState);
         }
-        else if (player.InputHandler.AttackInputs[(int)(CombatInputs.secondary)])
+        else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock())
         {
-            stateMachine.ChangeState(player.SecondaryAttackState);
+            stateMachine.ChangeState(player.BlockState);
         }
         else if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)
         {

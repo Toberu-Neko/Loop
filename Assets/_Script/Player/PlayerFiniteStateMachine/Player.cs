@@ -19,8 +19,9 @@ public class Player : MonoBehaviour
     public PlayerDashState DashState { get; private set; }
     public PlayerCrouchIdleState CrouchIdleState { get; private set; }
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
-    public PlayerAttackState PrimaryAttackState { get; private set; }
-    public PlayerAttackState SecondaryAttackState { get; private set; }
+    public PlayerAttackState AttackState { get; private set; }
+    public PlayerBlockState BlockState { get; private set; }
+    public PlayerPerfectBlockState PerfectBlockState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -68,13 +69,14 @@ public class Player : MonoBehaviour
         DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
-        PrimaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
-        SecondaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        AttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
+        PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
     }
 
     private void Start()
     {
-        PrimaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
+        AttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
         // SecondaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
 
         StateMachine.Initialize(IdleState);
@@ -110,4 +112,9 @@ public class Player : MonoBehaviour
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, playerData.perfectBlockKnockbackRadius);
+    }
 }

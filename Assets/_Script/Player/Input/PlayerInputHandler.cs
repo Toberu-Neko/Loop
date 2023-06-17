@@ -20,7 +20,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool GrabInput { get; private set; }
     public bool DashInput { get; private set; }
     public bool DashInputStop { get; private set; }
-    public bool[] AttackInputs { get; private set; }
+    public bool AttackInput { get; private set; }
+    public bool BlockInput { get; private set; }
 
     [SerializeField]
     private float inputHoldTime = 0.2f;
@@ -30,9 +31,6 @@ public class PlayerInputHandler : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-
-        int count = Enum.GetValues(typeof(CombatInputs)).Length;
-        AttackInputs = new bool[count];
 
         cam = Camera.main;
     }
@@ -46,22 +44,22 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if(context.started)
         {
-            AttackInputs[(int)CombatInputs.primary] = true;
+            AttackInput = true;
         }
         if (context.canceled)
         {
-            AttackInputs[(int)CombatInputs.primary] = false;
+            AttackInput = false;
         }
     }
     public void OnSecondaryAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            // AttackInputs[(int)CombatInputs.secondary] = true;
+            BlockInput = true;
         }
         if (context.canceled)
         {
-            // AttackInputs[(int)CombatInputs.secondary] = false;
+            BlockInput = false;
         }
     }
     public void OnMoveInput(InputAction.CallbackContext context)

@@ -7,7 +7,7 @@ public class CombatTestDummy : MonoBehaviour, IDamageable
     [SerializeField] private GameObject hitParticles;
     private Animator anim;
 
-    public void Damage(float damageAmount)
+    public void Damage(float damageAmount, Vector2 damagePosition, bool blockable = true)
     {
         Debug.Log(damageAmount);
 
