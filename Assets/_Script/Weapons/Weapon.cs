@@ -20,16 +20,25 @@ public class Weapon : MonoBehaviour
 
     protected int attackCounter;
 
+    protected float startTime;
+
     protected virtual void Awake()
     {
         baseAnimator = transform.Find("Base").GetComponent<Animator>();
         weaponAnimator = transform.Find("Weapon").GetComponent<Animator>();
 
         gameObject.SetActive(false);
+
+    }
+    protected virtual void Update()
+    {
+        
     }
 
     public virtual void EnterWeapon()
     {
+        startTime = Time.time;
+
         gameObject.SetActive(true);
 
         if (attackCounter >= weaponData.amountOfAttacks)

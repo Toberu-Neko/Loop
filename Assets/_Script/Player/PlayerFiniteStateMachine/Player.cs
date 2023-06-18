@@ -22,6 +22,11 @@ public class Player : MonoBehaviour
     public PlayerAttackState AttackState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
     public PlayerPerfectBlockState PerfectBlockState { get; private set; }
+    public PlayerSwordAttackState SwordAttackState { get; private set; }
+    public PlayerSwordNormalAttackState SwordNormalAttackState { get; private set; }
+    public PlayerSwordStrongAttackState SwordStrongAttackState { get; private set; }
+    public PlayerSwordSkyAttackState SwordSkyAttackState { get; private set; }
+
 
     [SerializeField]
     private PlayerData playerData;
@@ -72,12 +77,17 @@ public class Player : MonoBehaviour
         AttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
+
+        SwordAttackState = new PlayerSwordAttackState(this, StateMachine, playerData, "swordAttack");
+        SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, playerData, "swordNormalAttack");
+        SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, playerData, "swordStrongAttack");
+        SwordSkyAttackState = new PlayerSwordSkyAttackState(this, StateMachine, playerData, "swordSkyAttack");
     }
 
     private void Start()
     {
-        AttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
-        // SecondaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
+        //TODO: SetWeapon
+        AttackState.SetWeapon(Inventory.weapons[0]);
 
         StateMachine.Initialize(IdleState);
     }

@@ -10,13 +10,18 @@ public class Stats : CoreComponent
 
     public event Action OnHealthZero;
 
+    public bool PerfectBlockAttack { get; private set; }
+    private float perfectBlockTimer;
+
+    private Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
+    private Combat combat;
+
     protected override void Awake()
     {
         base.Awake();
 
         currentHealth = maxHealth;
     }
-
     public void DecreaseHeakth(float amount)
     {
         currentHealth -= amount;
@@ -32,5 +37,11 @@ public class Stats : CoreComponent
     public void IncreaseHealth(float amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+    }
+
+    public void SetPerfectBlockAttackTrue()
+    {
+        // TODO: Add perfect block attack timer
+        PerfectBlockAttack = true;
     }
 }

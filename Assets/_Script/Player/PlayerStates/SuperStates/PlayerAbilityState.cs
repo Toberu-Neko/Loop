@@ -14,7 +14,7 @@ public class PlayerAbilityState : PlayerState
 
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
+    protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
     public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)

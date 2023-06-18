@@ -21,6 +21,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool DashInput { get; private set; }
     public bool DashInputStop { get; private set; }
     public bool AttackInput { get; private set; }
+    public bool HoldAttackInput { get; private set; }
     public bool BlockInput { get; private set; }
 
     [SerializeField]
@@ -39,18 +40,24 @@ public class PlayerInputHandler : MonoBehaviour
     {
         CheckJumpInputHoldTime();
         CheckDashInputHoldTime();
+
+        
     }
     public void OnPrimaryAttackInput(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
+            // Debug.Log("AttackInput");
             AttackInput = true;
+            HoldAttackInput = true;
         }
         if (context.canceled)
         {
             AttackInput = false;
+            HoldAttackInput = false;
         }
     }
+    public void UseAttackInput() => AttackInput = false;
     public void OnSecondaryAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -65,6 +72,8 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         RawMovementInput = context.ReadValue<Vector2>();
+
+        Debug.Log(context.started);
 
         NormInputX = UnityEngine.Mathf.RoundToInt(RawMovementInput.x);
         NormInputY = UnityEngine.Mathf.RoundToInt(RawMovementInput.y);

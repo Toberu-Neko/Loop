@@ -62,6 +62,7 @@ public class PlayerGroundedState : PlayerState
 
         player.JumpState.ResetAmountOfJumpsLeft();
         player.DashState.ResetCanDash();
+        player.SwordAttackState.ResetCanAttack();
     }
 
     public override void Exit()
@@ -79,9 +80,12 @@ public class PlayerGroundedState : PlayerState
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
 
-        if (player.InputHandler.AttackInput && !isTouchingCeiling)
+        // Debug.Log(xInput);
+
+        if (player.InputHandler.AttackInput && !isTouchingCeiling && player.SwordAttackState.CheckIfCanAttack())
         {
-            stateMachine.ChangeState(player.AttackState);
+            // stateMachine.ChangeState(player.AttackState);
+            stateMachine.ChangeState(player.SwordAttackState);
         }
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock())
         {

@@ -92,9 +92,10 @@ public class PlayerInAirState : PlayerState
 
         CheckJumpMultiplier();
 
-        if (player.InputHandler.AttackInput)
+        if (player.InputHandler.AttackInput && player.SwordAttackState.CheckIfCanAttack())
         {
-            stateMachine.ChangeState(player.AttackState);
+            // stateMachine.ChangeState(player.AttackState);
+            stateMachine.ChangeState(player.SwordAttackState);
         }
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock())
         {

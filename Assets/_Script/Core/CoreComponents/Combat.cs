@@ -9,6 +9,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     [SerializeField] private float blockDamageMultiplier = 0.5f;
 
     public event Action OnDamaged;
+    public event Action OnPerfectBlock;
 
     public bool PerfectBlock { get; set; }
     public bool NormalBlock { get; set; }
@@ -49,6 +50,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
         if (PerfectBlock)
         {
+            OnPerfectBlock?.Invoke();
             Debug.Log("PerfectBlock!");
             return;
         }

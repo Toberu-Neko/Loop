@@ -21,6 +21,7 @@ public class PlayerAttackState : PlayerAbilityState
         base.Enter();
 
         setVelocity = false;
+        player.InputHandler.UseAttackInput();
 
         weapon.EnterWeapon();
     }
@@ -77,6 +78,11 @@ public class PlayerAttackState : PlayerAbilityState
         base.AnimationFinishTrigger();
 
         isAbilityDone = true;
+    }
+
+    public override void AnimationTrigger()
+    {
+        base.AnimationTrigger();
     }
     #endregion
 }
