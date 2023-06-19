@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerSwordStrongAttackState : PlayerAbilityState
 {
+    private SO_WeaponData_Sword weaponData;
     public PlayerSwordStrongAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        weaponData = player.PlayerWeaponManager.SwordData;
     }
     public override void LogicUpdate()
     {
@@ -16,8 +18,10 @@ public class PlayerSwordStrongAttackState : PlayerAbilityState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(25, new Vector2(3, 1), 25);
-
+        GameObject projectile = GameObject.Instantiate(player.PlayerWeaponManager.SwordData.projectile, core.transform.position, core.transform.parent.rotation);
+        SwordProjectile projectileScript = projectile.GetComponent<SwordProjectile>();
+        projectileScript.Fire(weaponData.projectileDamage, weaponData.projectileSpeed, weaponData.projectileDuration, Movement.FacingDirection,
+            weaponData.projectileKnockbackAngle, weaponData.projectileKnockbackStrength);
     }
     public override void AnimationFinishTrigger()
     {

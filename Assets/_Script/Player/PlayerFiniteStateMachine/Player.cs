@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private PlayerData playerData;
+
     #region State Variables
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -22,22 +24,23 @@ public class Player : MonoBehaviour
     public PlayerAttackState AttackState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
     public PlayerPerfectBlockState PerfectBlockState { get; private set; }
-    public PlayerSwordAttackState SwordAttackState { get; private set; }
+    #endregion
+
+    #region SwordStates
+    public PlayerSwordHubState SwordHubState { get; private set; }
     public PlayerSwordNormalAttackState SwordNormalAttackState { get; private set; }
     public PlayerSwordStrongAttackState SwordStrongAttackState { get; private set; }
     public PlayerSwordSkyAttackState SwordSkyAttackState { get; private set; }
-    public PlayerSwordCounterAttackState SwordCounterAttackState { get; private set; }
-
-
-    [SerializeField] private PlayerData playerData;
-    [field: SerializeField] public SO_WeaponData_Sword SwordData { get; private set; }
-
+    public PlayerSwordSoulOneAttackState SwordCounterAttackState { get; private set; }
+    public PlayerSwordSoulOneAttackState PlayerSwordSoulOneAttackState { get; private set; }
+    public PlayerSwordSoulMaxAttackState PlayerSwordSoulMaxAttackState { get; private set; }
     #endregion
+
+
 
     #region Components
     public Core Core { get; private set; }
     public Animator Anim { get; private set; }
-
     public PlayerWeaponManager PlayerWeaponManager { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
@@ -83,11 +86,13 @@ public class Player : MonoBehaviour
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
 
-        SwordAttackState = new PlayerSwordAttackState(this, StateMachine, playerData, "swordAttack");
+        SwordHubState = new PlayerSwordHubState(this, StateMachine, playerData, "swordAttack");
         SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, playerData, "swordNormalAttack");
         SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, playerData, "swordStrongAttack");
         SwordSkyAttackState = new PlayerSwordSkyAttackState(this, StateMachine, playerData, "swordSkyAttack");
-        SwordCounterAttackState = new PlayerSwordCounterAttackState(this, StateMachine, playerData, "swordCounterAttack");
+        SwordCounterAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordCounterAttack");
+        PlayerSwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordSoulOneAttack");
+        PlayerSwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
     }
 
     private void Start()

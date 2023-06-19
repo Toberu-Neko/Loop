@@ -5,8 +5,11 @@ using TMPro;
 
 public class DebugPlayerComp : MonoBehaviour
 {
-    [SerializeField] GameObject PerfectBlockAttack;
+    [SerializeField] GameObject perfectBlockAttack;
     [SerializeField] TextMeshProUGUI HpText;
+    [SerializeField] TextMeshProUGUI weaponText;
+
+    private PlayerWeaponManager weaponManager;
 
     private Core core;
 
@@ -18,33 +21,45 @@ public class DebugPlayerComp : MonoBehaviour
     private void Awake()
     {
         core = GetComponentInChildren<Core>();
+        weaponManager = GetComponent<PlayerWeaponManager>();
 
-        PerfectBlockAttack.SetActive(false);
+        perfectBlockAttack.SetActive(false);
     }
 
     void Start()
     {
-        Combat.OnPerfectBlock += () => PerfectBlockAttack.SetActive(true);
-        HpText.text = "生命值: " + Stats.CurrentHealth.ToString();
+        UpdateHpText();
+        UpdateWeaponText();
     }
 
     private void OnEnable()
     {
+        Combat.OnPerfectBlock += () => perfectBlockAttack.SetActive(true);
         Combat.OnDamaged += UpdateHpText;
+        weaponManager.OnEnergyChanged += UpdateWeaponText;
+
     }
 
     private void OnDisable()
     {
+        Combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
         Combat.OnDamaged -= UpdateHpText;
+        weaponManager.OnEnergyChanged -= UpdateWeaponText;
     }
 
     void Update()
     {
-        if(!Stats.PerfectBlockAttackable && PerfectBlockAttack.activeInHierarchy)
+        if(!Stats.PerfectBlockAttackable && perfectBlockAttack.activeInHierarchy)
         {
-            PerfectBlockAttack.SetActive(false);
+            perfectBlockAttack.SetActive(false);
         }
     }
 
     void UpdateHpText() => HpText.text = "生命值: " + Stats.CurrentHealth.ToString();
+
+    void UpdateWeaponText()
+    {
+        weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
+            "\n 能量: " + weaponManager.GetCurrentTypeEnergy();
+    }
 }

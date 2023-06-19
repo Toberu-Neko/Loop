@@ -10,7 +10,7 @@ public class PlayerSwordNormalAttackState : PlayerAbilityState
 
     public PlayerSwordNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        swordData = player.SwordData;
+        swordData = player.PlayerWeaponManager.SwordData;
         attackCounter = 0;
     }
     public override void Enter()

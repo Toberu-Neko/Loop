@@ -5,8 +5,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newSwordData", menuName = "Data/WeaponData/Sword")]
 public class SO_WeaponData_Sword : SO_WeaponData
 {
+    public int maxEnergy;
+
+    public GameObject projectile;
+
     [SerializeField] private WeaponAttackDetails[] normalAttackDetails;
-    public WeaponAttackDetails strongAttackDetails;
+
+    [Header("Strong Attack")]
+    public float strongAttackHoldTime;
+
+    public float projectileDamage;
+    public float projectileSpeed;
+    public float projectileDuration;
+    public float projectileKnockbackStrength;
+    public Vector2 projectileKnockbackAngle;
+
+
     public WeaponAttackDetails[] NormalAttackDetails { get => normalAttackDetails; private set => normalAttackDetails = value; }
     private void OnEnable()
     {

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ea6f724493e754b88f18481c57ff39, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  maxEnergy: 3
+  projectile: {fileID: 7587280026452555047, guid: 550bf30c55b84ea4b84c80455626ff6d, type: 3}
   normalAttackDetails:
   - attackName: "\u8F15\u653B\u64CA"
     movementSpeed: 3
@@ -38,9 +40,9 @@ MonoBehaviour:
     damageAmount: 20
     knockbackForce: 20
     knockbackAngle: {x: 1, y: 2}
-  strongAttackDetails:
-    attackName: "\u84C4\u529B\u653B\u64CA"
-    movementSpeed: 5
-    damageAmount: 20
-    knockbackForce: 30
-    knockbackAngle: {x: 2, y: 2}
+  strongAttackHoldTime: 1
+  projectileDamage: 10
+  projectileSpeed: 10
+  projectileDuration: 1.5
+  projectileKnockbackStrength: 18
+  projectileKnockbackAngle: {x: 2, y: 1}

@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordCounterAttackState : PlayerAbilityState
+public class PlayerSwordSoulOneAttackState : PlayerAbilityState
 {
-    WeaponAttackDetails details;
-    public PlayerSwordCounterAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerSwordSoulOneAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        details = player.SwordData.strongAttackDetails;
     }
 
     public override void Enter()
@@ -19,8 +17,6 @@ public class PlayerSwordCounterAttackState : PlayerAbilityState
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
-
-        DoDamageToDamageList(details.damageAmount, details.knockbackAngle, details.knockbackForce);
     }
 
     public override void AnimationFinishTrigger()
@@ -33,8 +29,6 @@ public class PlayerSwordCounterAttackState : PlayerAbilityState
     public override void AnimationStartMovementTrigger()
     {
         base.AnimationStartMovementTrigger();
-
-        Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
     }
 
     public override void AnimationStopMovementTrigger()

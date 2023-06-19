@@ -2,34 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordAttackState : PlayerAbilityState
+public class PlayerSwordHubState : PlayerAbilityState
 {
-    [SerializeField] private float holdAttackTime = 2f;
+    private float holdAttackTime = 2f;
     
-    private bool holdAttackInput;
     private int xInput;
+    private bool holdAttackInput;
 
     private bool holdEnough;
     protected int attackCounter = 0;
 
     private bool canAttack;
-    public PlayerSwordAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerSwordHubState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-    }
-
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-    }
-
-    public override void AnimationActionTrigger()
-    {
-        base.AnimationActionTrigger();
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
+        holdAttackTime = player.PlayerWeaponManager.SwordData.strongAttackHoldTime;
     }
 
     public override void Enter()
@@ -69,7 +55,7 @@ public class PlayerSwordAttackState : PlayerAbilityState
 
         if (Stats.PerfectBlockAttackable)
         {
-            stateMachine.ChangeState(player.SwordCounterAttackState);
+            // stateMachine.ChangeState(player.SwordCounterAttackState);
         }
         if (!CollisionSenses.Ground)
         {
@@ -83,12 +69,8 @@ public class PlayerSwordAttackState : PlayerAbilityState
         {
             stateMachine.ChangeState(player.SwordStrongAttackState);
         }
-
     }
     public bool CheckIfCanAttack() => canAttack;
+    public void SetCanAttackFalse() => canAttack = false;
     public void ResetCanAttack() => canAttack = true;
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
 }

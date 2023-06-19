@@ -7,10 +7,6 @@ public class Core : MonoBehaviour
 {
     private readonly List<CoreComponent> coreComponents = new();
 
-    private void Awake()
-    {
-    }
-
     public void LogicUpdate()
     {
         foreach (CoreComponent compent in coreComponents)

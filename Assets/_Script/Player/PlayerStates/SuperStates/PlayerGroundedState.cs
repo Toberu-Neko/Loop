@@ -62,7 +62,7 @@ public class PlayerGroundedState : PlayerState
 
         player.JumpState.ResetAmountOfJumpsLeft();
         player.DashState.ResetCanDash();
-        player.SwordAttackState.ResetCanAttack();
+        player.SwordHubState.ResetCanAttack();
     }
 
     public override void Exit()
@@ -82,10 +82,25 @@ public class PlayerGroundedState : PlayerState
 
         // Debug.Log(xInput);
 
-        if (player.InputHandler.AttackInput && !isTouchingCeiling && player.SwordAttackState.CheckIfCanAttack())
+        if (player.InputHandler.AttackInput && !isTouchingCeiling && player.SwordHubState.CheckIfCanAttack())
         {
-            // stateMachine.ChangeState(player.AttackState);
-            stateMachine.ChangeState(player.SwordAttackState);
+            stateMachine.ChangeState(player.SwordHubState);
+        }
+        else if(player.InputHandler.WeaponSkillInput && !isTouchingCeiling && 
+            player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0)
+        {
+            if (player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy)
+            {
+                player.SwordHubState.SetCanAttackFalse();
+                Debug.Log("PlayerSwordSoulOneAttackState");
+                // TODO: stateMachine.ChangeState(player.PlayerSwordSoulOneAttackState);
+            }
+            if (player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
+            {
+                player.SwordHubState.SetCanAttackFalse();
+                Debug.Log("PlayerSwordSoulMaxAttackState");
+                // TODO: stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
+            }
         }
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock())
         {
