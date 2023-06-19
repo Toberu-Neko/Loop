@@ -40,7 +40,7 @@ public class AggressiveWeapon : Weapon
 
         foreach (IKnockbackable item in detectedKnockbackables.ToList())
         {
-            item.Knockback(details.knockbackAngle, details.knockbackForce, Movement.FacingDirection);
+            item.Knockback(details.knockbackAngle, details.knockbackForce, Movement.FacingDirection, (Vector2)core.transform.position);
         }
 
     }

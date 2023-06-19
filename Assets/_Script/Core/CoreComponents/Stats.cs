@@ -10,6 +10,9 @@ public class Stats : CoreComponent
 
     public event Action OnHealthZero;
 
+    public int SwordEnergy { get; private set; }
+
+
     public bool PerfectBlockAttackable { get; private set; }
     [SerializeField] private float perfectBlockDuration;
     private float perfectBlockStartTime;
@@ -22,8 +25,19 @@ public class Stats : CoreComponent
         base.Awake();
 
         currentHealth = maxHealth;
-        Combat.OnPerfectBlock+= SetPerfectBlockAttackTrue;
     }
+
+    private void OnEnable()
+    {
+        Combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
+
+    }
+
+    private void OnDisable()
+    {
+        Combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

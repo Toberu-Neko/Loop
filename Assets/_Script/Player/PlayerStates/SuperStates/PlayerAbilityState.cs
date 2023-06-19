@@ -80,7 +80,7 @@ public class PlayerAbilityState : PlayerState
         {
             foreach (IKnockbackable knockbackable in Combat.DetectedKnockbackables.ToList())
             {
-                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection);
+                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection, (Vector2)core.transform.position);
             }
         }
     }

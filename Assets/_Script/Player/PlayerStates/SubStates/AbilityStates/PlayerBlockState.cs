@@ -33,6 +33,7 @@ public class PlayerBlockState : PlayerAbilityState
         base.Enter();
 
         Combat.OnDamaged += DamagedWhileBlocking;
+        Combat.OnPerfectBlock += GoToPerfectBlockState;
 
         Combat.PerfectBlock = true;
         Combat.NormalBlock = true;
@@ -45,8 +46,10 @@ public class PlayerBlockState : PlayerAbilityState
         base.Exit();
 
         Combat.OnDamaged -= DamagedWhileBlocking;
+        Combat.OnPerfectBlock -= GoToPerfectBlockState;
 
-        
+        Combat.PerfectBlock = false;
+        Combat.NormalBlock = false;
     }
 
     public override void LogicUpdate()
@@ -74,26 +77,11 @@ public class PlayerBlockState : PlayerAbilityState
             }
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
+    private void GoToPerfectBlockState() => stateMachine.ChangeState(player.PerfectBlockState);
     private void DamagedWhileBlocking()
     {
         lastBlockTime = Time.time;
-
-        if (Combat.PerfectBlock)
-        {
-            stateMachine.ChangeState(player.PerfectBlockState);
-        }
-        else
-        {
-            Combat.PerfectBlock = false;
-            Combat.NormalBlock = false;
-            isAbilityDone = true;
-        }
+        isAbilityDone = true;
     }
 
     public bool CheckIfCanBlock()

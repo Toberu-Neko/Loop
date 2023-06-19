@@ -42,61 +42,70 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     public void Damage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
-        OnDamaged?.Invoke();
-
-        if (!blockable)
+        if (!blockable || !FacingDamgePosition(damagePosition))
         {
             Stats?.DecreaseHeakth(damageAmount);
             ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
-            return;
         }
-
-        if (PerfectBlock)
+        else if (PerfectBlock)
         {
             OnPerfectBlock?.Invoke();
-            Debug.Log("PerfectBlock!");
-            return;
         }
-
-        if (NormalBlock)
+        else if(NormalBlock)
         {
-            Debug.Log("NormalBlock!");
             Stats?.DecreaseHeakth(damageAmount * blockDamageMultiplier);
             ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
-            return;
         }
-
-        Stats?.DecreaseHeakth(damageAmount * blockDamageMultiplier);
-        ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
+        else
+        {
+            Stats?.DecreaseHeakth(damageAmount * blockDamageMultiplier);
+            ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
+        }
+        OnDamaged?.Invoke();
     }
 
-    public void Knockback(Vector2 angle, float strength, int direction, bool blockable = true)
+
+    public void Knockback(Vector2 angle, float strength, int direction, Vector2 damagePosition, bool blockable = true)
     {
-        if(!blockable)
+        if (!blockable || !FacingDamgePosition(damagePosition))
         {
             Movement.SetVelocity(strength, angle, direction);
             Movement.CanSetVelocity = false;
 
             isKnockbackActive = true;
             knockbackStartTime = Time.time;
-            return;
         }
-
-        if (PerfectBlock)
+        else if (PerfectBlock)
         {
             return;
         }
-
-        if (NormalBlock)
+        else if (NormalBlock)
         {
             return;
         }
+        else
+        {
+            Movement.SetVelocity(strength, angle, direction);
+            Movement.CanSetVelocity = false;
 
-        Movement.SetVelocity(strength, angle, direction);
-        Movement.CanSetVelocity = false;
+            isKnockbackActive = true;
+            knockbackStartTime = Time.time;
+        }
+    }
 
-        isKnockbackActive = true;
-        knockbackStartTime = Time.time;
+    private bool FacingDamgePosition(Vector2 damagePosition)
+    {
+        int damageDirection;
+        if (damagePosition.x - core.transform.position.x > 0)
+        {
+            damageDirection = 1;
+        }
+        else
+        {
+            damageDirection = -1;
+        }
+
+        return damageDirection == Movement.FacingDirection;
     }
 
     private void CheckKnockback()
