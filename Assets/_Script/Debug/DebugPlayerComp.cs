@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DebugPlayerComp : MonoBehaviour
 {
     [SerializeField] GameObject PerfectBlockAttack;
+    [SerializeField] TextMeshProUGUI HpText;
+
     private Core core;
 
     private Stats Stats => stats ? stats : stats = core.GetCoreComponent<Stats>();
@@ -22,9 +25,19 @@ public class DebugPlayerComp : MonoBehaviour
     void Start()
     {
         Combat.OnPerfectBlock += () => PerfectBlockAttack.SetActive(true);
+        HpText.text = "生命值: " + Stats.CurrentHealth.ToString();
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        Combat.OnDamaged += UpdateHpText;
+    }
+
+    private void OnDisable()
+    {
+        Combat.OnDamaged -= UpdateHpText;
+    }
+
     void Update()
     {
         if(!Stats.PerfectBlockAttackable && PerfectBlockAttack.activeInHierarchy)
@@ -32,4 +45,6 @@ public class DebugPlayerComp : MonoBehaviour
             PerfectBlockAttack.SetActive(false);
         }
     }
+
+    void UpdateHpText() => HpText.text = "生命值: " + Stats.CurrentHealth.ToString();
 }

@@ -6,12 +6,9 @@ using UnityEngine;
 public class Stats : CoreComponent
 {
     [SerializeField] private float maxHealth;
-    private float currentHealth;
+    public float CurrentHealth { get; private set; }
 
     public event Action OnHealthZero;
-
-    public int SwordEnergy { get; private set; }
-
 
     public bool PerfectBlockAttackable { get; private set; }
     [SerializeField] private float perfectBlockDuration;
@@ -24,18 +21,18 @@ public class Stats : CoreComponent
     {
         base.Awake();
 
-        currentHealth = maxHealth;
+        CurrentHealth = maxHealth;
     }
 
     private void OnEnable()
     {
-        Combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
+        // Combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
 
     }
 
     private void OnDisable()
     {
-        Combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
+        // Combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
     }
 
     public override void LogicUpdate()
@@ -50,11 +47,11 @@ public class Stats : CoreComponent
 
     public void DecreaseHeakth(float amount)
     {
-        currentHealth -= amount;
+        CurrentHealth -= amount;
 
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
-            currentHealth = 0;
+            CurrentHealth = 0;
             
             OnHealthZero?.Invoke();
         }
@@ -62,7 +59,7 @@ public class Stats : CoreComponent
 
     public void IncreaseHealth(float amount)
     {
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, maxHealth);
     }
 
     public void SetPerfectBlockAttackTrue()

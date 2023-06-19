@@ -24,6 +24,9 @@ public class PlayerInputHandler : MonoBehaviour
     public bool HoldAttackInput { get; private set; }
     public bool BlockInput { get; private set; }
 
+    public bool WeaponSkillInput { get; private set; }
+    public bool WeaponSkillHoldInput { get; private set; }
+
     [SerializeField]
     private float inputHoldTime = 0.2f;
 
@@ -58,6 +61,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
     public void UseAttackInput() => AttackInput = false;
+
     public void OnSecondaryAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -69,6 +73,20 @@ public class PlayerInputHandler : MonoBehaviour
             BlockInput = false;
         }
     }
+
+    public void OnWeaponSkillInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            WeaponSkillInput = true;
+            WeaponSkillHoldInput = true;
+        }
+        if (context.canceled)
+        {
+            WeaponSkillInput = false;
+            WeaponSkillHoldInput = false;
+        }
+    }
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         RawMovementInput = context.ReadValue<Vector2>();
@@ -76,6 +94,7 @@ public class PlayerInputHandler : MonoBehaviour
         NormInputX = UnityEngine.Mathf.RoundToInt(RawMovementInput.x);
         NormInputY = UnityEngine.Mathf.RoundToInt(RawMovementInput.y);
     }
+
     public void OnDashInput(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -89,7 +108,9 @@ public class PlayerInputHandler : MonoBehaviour
             DashInputStop = true;
         }
     }
+
     public void UseDashInput() => DashInput = false;
+
     private void CheckDashInputHoldTime()
     {
         if(Time.time >= dashInputStartTime + inputHoldTime)

@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
     #region Components
     public Core Core { get; private set; }
     public Animator Anim { get; private set; }
+
+    public PlayerWeaponManager PlayerWeaponManager { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public Transform DashDirectionIndicator { get; private set; }
@@ -59,6 +61,7 @@ public class Player : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         MovementCollider = GetComponent<BoxCollider2D>();
         Inventory = GetComponent<PlayerInventory>();
+        PlayerWeaponManager = GetComponent<PlayerWeaponManager>();
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
 
         StateMachine = new PlayerStateMachine();

@@ -58,7 +58,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         }
         else
         {
-            Stats?.DecreaseHeakth(damageAmount * blockDamageMultiplier);
+            Stats?.DecreaseHeakth(damageAmount);
             ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
         }
         OnDamaged?.Invoke();
@@ -81,7 +81,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         }
         else if (NormalBlock)
         {
-            return;
+            Movement.SetVelocity(strength, new Vector2(3,0), direction);
+            Movement.CanSetVelocity = false;
+
+            isKnockbackActive = true;
+            knockbackStartTime = Time.time;
         }
         else
         {
