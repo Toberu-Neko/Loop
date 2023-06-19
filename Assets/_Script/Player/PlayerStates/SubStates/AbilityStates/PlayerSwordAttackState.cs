@@ -22,9 +22,9 @@ public class PlayerSwordAttackState : PlayerAbilityState
         base.AnimationFinishTrigger();
     }
 
-    public override void AnimationTrigger()
+    public override void AnimationActionTrigger()
     {
-        base.AnimationTrigger();
+        base.AnimationActionTrigger();
     }
 
     public override void DoChecks()

@@ -12,11 +12,11 @@ public class PlayerSwordStrongAttackState : PlayerAbilityState
         base.LogicUpdate();
 
     }
-    public override void AnimationTrigger()
+    public override void AnimationActionTrigger()
     {
-        base.AnimationTrigger();
+        base.AnimationActionTrigger();
 
-        Debug.Log("Do Sword Strong Attack");
+        DoDamageToDamageList(25, new Vector2(3, 1), 25);
 
     }
     public override void AnimationFinishTrigger()

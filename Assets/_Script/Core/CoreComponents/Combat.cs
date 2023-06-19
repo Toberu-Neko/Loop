@@ -11,6 +11,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     public event Action OnDamaged;
     public event Action OnPerfectBlock;
 
+    public List<IDamageable> DetectedDamageables { get; private set; } = new();
+    public List<IKnockbackable> DetectedKnockbackables { get; private set; } = new();
+
     public bool PerfectBlock { get; set; }
     public bool NormalBlock { get; set; }
 
@@ -104,6 +107,34 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
             // Debug.Log("Reset");
             isKnockbackActive = false;
             Movement.CanSetVelocity = true;
+        }
+    }
+
+    public void AddToDetected(Collider2D collision)
+    {
+        if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
+        {
+            Debug.Log($"Add {collision.gameObject.transform.parent.parent.name}");
+            DetectedDamageables.Add(damageable);
+        }
+
+        if (collision.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
+        {
+            DetectedKnockbackables.Add(knockbackable);
+        }
+    }
+
+    public void RemoveFromDetected(Collider2D collision)
+    {
+        if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
+        {
+            Debug.Log($"Remove {collision.gameObject.transform.parent.parent.name}");
+            DetectedDamageables.Remove(damageable);
+        }
+
+        if (collision.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
+        {
+            DetectedKnockbackables.Remove(knockbackable);
         }
     }
 }

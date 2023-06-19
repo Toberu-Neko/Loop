@@ -28,12 +28,13 @@ public class Player : MonoBehaviour
     public PlayerSwordSkyAttackState SwordSkyAttackState { get; private set; }
 
 
-    [SerializeField]
-    private PlayerData playerData;
+    [SerializeField] private PlayerData playerData;
+    [field: SerializeField] public SO_WeaponData_Sword SwordData { get; private set; }
+
     #endregion
 
     #region Components
-    public Core core { get; private set; }
+    public Core Core { get; private set; }
     public Animator Anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour
     #region Unity Callback Functions
     private void Awake()
     {
-        core = GetComponentInChildren<Core>();
+        Core = GetComponentInChildren<Core>();
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
@@ -86,15 +87,15 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        //TODO: SetWeapon
-        AttackState.SetWeapon(Inventory.weapons[0]);
+        // TODO: SetWeapon
+        // AttackState.SetWeapon(Inventory.weapons[0]);
 
         StateMachine.Initialize(IdleState);
     }
 
     private void Update()
     {
-        core.LogicUpdate();
+        Core.LogicUpdate();
 
         StateMachine.CurrentState.LogicUpdate();
     }
@@ -117,11 +118,17 @@ public class Player : MonoBehaviour
         MovementCollider.offset = center;
     }
 
-    private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
+    private void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();
 
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
+    private void AnimationStartMovementTrigger() => StateMachine.CurrentState.AnimationStartMovementTrigger();
+
+    private void AnimationStopMovementTrigger() => StateMachine.CurrentState.AnimationStopMovementTrigger();
+
+
     #endregion
+
 
     private void OnDrawGizmos()
     {

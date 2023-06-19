@@ -15,9 +15,9 @@ public class PlayerPerfectBlockState : PlayerAbilityState
         base.AnimationFinishTrigger();
     }
 
-    public override void AnimationTrigger()
+    public override void AnimationActionTrigger()
     {
-        base.AnimationTrigger();
+        base.AnimationActionTrigger();
 
         Collider2D[] enemy = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemy);
 

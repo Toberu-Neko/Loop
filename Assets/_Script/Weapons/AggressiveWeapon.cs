@@ -5,7 +5,7 @@ using System.Linq;
 
 public class AggressiveWeapon : Weapon
 {
-    protected SO_AggressiveWeaponData aggressiveWeaponData;
+    protected SO_WeaponData_Sword aggressiveWeaponData;
 
     private List<IDamageable> detectedDamageables = new();
     private List<IKnockbackable> detectedKnockbackables = new();
@@ -14,9 +14,9 @@ public class AggressiveWeapon : Weapon
     {
         base.Awake();
 
-        if(weaponData.GetType() == typeof(SO_AggressiveWeaponData))
+        if(weaponData.GetType() == typeof(SO_WeaponData_Sword))
         {
-            aggressiveWeaponData = (SO_AggressiveWeaponData)weaponData;
+            aggressiveWeaponData = (SO_WeaponData_Sword)weaponData;
         }
         else
         {
@@ -40,7 +40,7 @@ public class AggressiveWeapon : Weapon
 
         foreach (IKnockbackable item in detectedKnockbackables.ToList())
         {
-            item.Knockback(details.knockbackAngle, details.knockbackStrength, Movement.FacingDirection);
+            item.Knockback(details.knockbackAngle, details.knockbackForce, Movement.FacingDirection);
         }
 
     }

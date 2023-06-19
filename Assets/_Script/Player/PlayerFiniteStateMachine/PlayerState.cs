@@ -22,7 +22,7 @@ public class PlayerState
         this.stateMachine = stateMachine;
         this.playerData = playerData;
         this.animBoolName = animBoolName;
-        core = player.core;
+        core = player.Core;
     }
     public virtual void Enter()
     {
@@ -50,7 +50,15 @@ public class PlayerState
     }
     public virtual void DoChecks() { }
 
-    public virtual void AnimationTrigger() { }
+    public virtual void AnimationActionTrigger() { }
 
     public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
+
+    public virtual void AnimationStartMovementTrigger() { }
+
+    public virtual void AnimationStopMovementTrigger() { }
+    
+    public virtual void AnimationTurnOnFlipTrigger() { }
+
+    public virtual void AnimationTurnOffFlipTrigger() { }
 }

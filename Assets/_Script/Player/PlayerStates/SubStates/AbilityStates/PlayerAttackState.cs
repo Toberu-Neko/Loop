@@ -38,7 +38,7 @@ public class PlayerAttackState : PlayerAbilityState
 
         if (setVelocity)
         {
-            Movement?.SetVelocityX(velocityToSet * Movement.FacingDirection);
+            Movement.SetVelocityX(velocityToSet * Movement.FacingDirection);
         }
     }
 
@@ -58,7 +58,7 @@ public class PlayerAttackState : PlayerAbilityState
 
     public void SetPlayerVelocity(float velocity)
     {
-        Movement?.SetVelocityX(velocity * Movement.FacingDirection);
+        Movement.SetVelocityX(velocity * Movement.FacingDirection);
 
         velocityToSet = velocity;
         setVelocity = true;
@@ -80,9 +80,9 @@ public class PlayerAttackState : PlayerAbilityState
         isAbilityDone = true;
     }
 
-    public override void AnimationTrigger()
+    public override void AnimationActionTrigger()
     {
-        base.AnimationTrigger();
+        base.AnimationActionTrigger();
     }
     #endregion
 }

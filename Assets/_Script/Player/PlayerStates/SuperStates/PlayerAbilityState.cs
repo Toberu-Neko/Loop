@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerAbilityState : PlayerState
@@ -27,7 +28,6 @@ public class PlayerAbilityState : PlayerState
 
         if(CollisionSenses)
             isGrounded = CollisionSenses.Ground;
-
     }
 
     public override void Enter()
@@ -62,4 +62,25 @@ public class PlayerAbilityState : PlayerState
     {
         base.PhysicsUpdate();
     }
+
+    public void DoDamageToDamageList(float damageAmount, Vector2 knockBackAngle, float knockBackForce)
+    {
+        if (Combat.DetectedDamageables.Count > 0)
+        {
+            foreach (IDamageable damageable in Combat.DetectedDamageables.ToList())
+            {
+                damageable.Damage(damageAmount, core.transform.position);
+            }
+        }
+
+        if (Combat.DetectedKnockbackables.Count > 0)
+        {
+            foreach (IKnockbackable knockbackable in Combat.DetectedKnockbackables.ToList())
+            {
+                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection);
+            }
+        }
+    }
+
+
 }

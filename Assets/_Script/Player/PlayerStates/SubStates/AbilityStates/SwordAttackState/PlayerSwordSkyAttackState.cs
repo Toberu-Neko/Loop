@@ -17,11 +17,11 @@ public class PlayerSwordSkyAttackState : PlayerAbilityState
             Movement.SetVelocityZero();
         }
     }
-    public override void AnimationTrigger()
+    public override void AnimationActionTrigger()
     {
-        base.AnimationTrigger();
+        base.AnimationActionTrigger();
 
-        Debug.Log("Do Sword Sky Attack");
+        DoDamageToDamageList(20, new Vector2(3, 1), 20);
     }
 
     public override void AnimationFinishTrigger()

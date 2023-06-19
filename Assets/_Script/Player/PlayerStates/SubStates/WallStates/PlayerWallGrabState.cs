@@ -14,9 +14,9 @@ public class PlayerWallGrabState : PlayerTouchingWallState
         base.AnimationFinishTrigger();
     }
 
-    public override void AnimationTrigger()
+    public override void AnimationActionTrigger()
     {
-        base.AnimationTrigger();
+        base.AnimationActionTrigger();
     }
 
     public override void DoChecks()

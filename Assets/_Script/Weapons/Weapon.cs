@@ -41,7 +41,7 @@ public class Weapon : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        if (attackCounter >= weaponData.amountOfAttacks)
+        if (attackCounter >= weaponData.AmountOfAttacks)
         {
             attackCounter = 0;
         }
@@ -65,7 +65,7 @@ public class Weapon : MonoBehaviour
     public virtual void AnimationStartMovementTrigger()
     {
         if(CollisionSenses.Ground)
-            state.SetPlayerVelocity(weaponData.movementSpeed[attackCounter]);
+            state.SetPlayerVelocity(weaponData.MovementSpeed[attackCounter]);
     }
 
     public virtual void AnimationStopMovementTrigger()

@@ -37,9 +37,9 @@ public class PlayerLedgeClimbState : PlayerState
         player.Anim.SetBool("climbLedge", false);
     }
 
-    public override void AnimationTrigger()
+    public override void AnimationActionTrigger()
     {
-        base.AnimationTrigger();
+        base.AnimationActionTrigger();
 
         isHanging = true;
     }

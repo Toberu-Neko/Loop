@@ -73,8 +73,6 @@ public class PlayerInputHandler : MonoBehaviour
     {
         RawMovementInput = context.ReadValue<Vector2>();
 
-        Debug.Log(context.started);
-
         NormInputX = UnityEngine.Mathf.RoundToInt(RawMovementInput.x);
         NormInputY = UnityEngine.Mathf.RoundToInt(RawMovementInput.y);
     }
