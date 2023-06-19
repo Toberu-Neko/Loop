@@ -56,8 +56,8 @@ public class PlayerBlockState : PlayerAbilityState
         xInput = player.InputHandler.NormInputX;
         blockInput = player.InputHandler.BlockInput;
 
-        Movement?.CheckIfShouldFlip(xInput);
-        Movement?.SetVelocityX(playerData.blockMovementVelocity * xInput);
+        Movement.CheckIfShouldFlip(xInput);
+        Movement.SetVelocityX(playerData.blockMovementVelocity * xInput);
 
         if(Time.time >= startTime + playerData.perfectBlockTime && Combat.PerfectBlock)
         {

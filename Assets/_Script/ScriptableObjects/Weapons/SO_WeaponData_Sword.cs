@@ -5,18 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newSwordData", menuName = "Data/WeaponData/Sword")]
 public class SO_WeaponData_Sword : SO_WeaponData
 {
-    [SerializeField] private WeaponAttackDetails[] attackDetails;
-
-    public WeaponAttackDetails[] AttackDetails { get => attackDetails; private set => attackDetails = value; }
+    [SerializeField] private WeaponAttackDetails[] normalAttackDetails;
+    public WeaponAttackDetails strongAttackDetails;
+    public WeaponAttackDetails[] NormalAttackDetails { get => normalAttackDetails; private set => normalAttackDetails = value; }
     private void OnEnable()
     {
-        AmountOfAttacks = attackDetails.Length;
+        AmountOfAttacks = normalAttackDetails.Length;
 
         MovementSpeed = new float[AmountOfAttacks];
 
         for (int i = 0; i < AmountOfAttacks; i++)
         {
-            MovementSpeed[i] = attackDetails[i].movementSpeed;
+            MovementSpeed[i] = normalAttackDetails[i].movementSpeed;
         }
     }
 }

@@ -32,7 +32,7 @@ public class AggressiveWeapon : Weapon
 
     private void CheckMeleeAttack()
     {
-        WeaponAttackDetails details = aggressiveWeaponData.AttackDetails[attackCounter];
+        WeaponAttackDetails details = aggressiveWeaponData.NormalAttackDetails[attackCounter];
         foreach(IDamageable damageable in detectedDamageables.ToList())
         {
             damageable.Damage(details.damageAmount, (Vector2)core.transform.parent.position);

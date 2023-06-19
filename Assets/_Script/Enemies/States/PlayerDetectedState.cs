@@ -26,7 +26,7 @@ public class PlayerDetectedState : State
     {
         base.Enter();
 
-        Movement?.SetVelocityX(0f);
+        Movement.SetVelocityX(0f);
         performLongRangeAction = false;
     }
 
@@ -39,7 +39,7 @@ public class PlayerDetectedState : State
     {
         base.LogicUpdate();
 
-        Movement?.SetVelocityX(0f);
+        Movement.SetVelocityX(0f);
 
         if (Time.time >= StartTime + stateData.longRangeActionTime) 
         {

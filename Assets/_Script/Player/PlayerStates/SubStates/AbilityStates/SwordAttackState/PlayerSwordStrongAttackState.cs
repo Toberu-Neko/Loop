@@ -24,4 +24,14 @@ public class PlayerSwordStrongAttackState : PlayerAbilityState
         base.AnimationFinishTrigger();
         isAbilityDone = true;
     }
+
+    public override void AnimationStartMovementTrigger()
+    {
+        base.AnimationStartMovementTrigger();
+    }
+
+    public override void AnimationStopMovementTrigger()
+    {
+        base.AnimationStopMovementTrigger();
+    }
 }

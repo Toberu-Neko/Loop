@@ -67,8 +67,8 @@ public class PlayerTouchingWallState : PlayerState
         grabInput = player.InputHandler.GrabInput;
         jumpInput = player.InputHandler.JumpInput;
 
-        Movement?.CheckIfShouldFlip(xInput);
-        Movement?.SetVelocityX(0f);
+        Movement.CheckIfShouldFlip(xInput);
+        Movement.SetVelocityX(0f);
 
         if (jumpInput)
         {
@@ -79,7 +79,7 @@ public class PlayerTouchingWallState : PlayerState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (!isTouchingWall || (xInput != Movement?.FacingDirection && !grabInput))
+        else if (!isTouchingWall || (xInput != Movement.FacingDirection && !grabInput))
         {
             stateMachine.ChangeState(player.InAirState);
         }

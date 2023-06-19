@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ea6f724493e754b88f18481c57ff39, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  attackDetails:
+  normalAttackDetails:
   - attackName: "\u8F15\u653B\u64CA"
     movementSpeed: 3
     damageAmount: 10
@@ -38,3 +38,9 @@ MonoBehaviour:
     damageAmount: 20
     knockbackForce: 20
     knockbackAngle: {x: 1, y: 2}
+  strongAttackDetails:
+    attackName: "\u84C4\u529B\u653B\u64CA"
+    movementSpeed: 5
+    damageAmount: 20
+    knockbackForce: 30
+    knockbackAngle: {x: 2, y: 2}

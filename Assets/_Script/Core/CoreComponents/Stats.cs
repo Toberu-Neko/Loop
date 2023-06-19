@@ -10,8 +10,9 @@ public class Stats : CoreComponent
 
     public event Action OnHealthZero;
 
-    public bool PerfectBlockAttack { get; private set; }
-    private float perfectBlockTimer;
+    public bool PerfectBlockAttackable { get; private set; }
+    [SerializeField] private float perfectBlockDuration;
+    private float perfectBlockStartTime;
 
     private Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
     private Combat combat;
@@ -21,7 +22,18 @@ public class Stats : CoreComponent
         base.Awake();
 
         currentHealth = maxHealth;
+        Combat.OnPerfectBlock+= SetPerfectBlockAttackTrue;
     }
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if(Time.time >= perfectBlockStartTime + perfectBlockDuration && PerfectBlockAttackable)
+        {
+            PerfectBlockAttackable = false;
+        }
+    }
+
     public void DecreaseHeakth(float amount)
     {
         currentHealth -= amount;
@@ -41,7 +53,12 @@ public class Stats : CoreComponent
 
     public void SetPerfectBlockAttackTrue()
     {
-        // TODO: Add perfect block attack timer
-        PerfectBlockAttack = true;
+        perfectBlockStartTime = Time.time;
+        PerfectBlockAttackable = true;
+    }
+
+    public void SetPerfectBlockAttackFalse()
+    {
+        PerfectBlockAttackable = false;
     }
 }

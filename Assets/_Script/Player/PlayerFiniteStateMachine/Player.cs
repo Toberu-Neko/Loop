@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public PlayerSwordNormalAttackState SwordNormalAttackState { get; private set; }
     public PlayerSwordStrongAttackState SwordStrongAttackState { get; private set; }
     public PlayerSwordSkyAttackState SwordSkyAttackState { get; private set; }
+    public PlayerSwordCounterAttackState SwordCounterAttackState { get; private set; }
 
 
     [SerializeField] private PlayerData playerData;
@@ -83,6 +84,7 @@ public class Player : MonoBehaviour
         SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, playerData, "swordNormalAttack");
         SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, playerData, "swordStrongAttack");
         SwordSkyAttackState = new PlayerSwordSkyAttackState(this, StateMachine, playerData, "swordSkyAttack");
+        SwordCounterAttackState = new PlayerSwordCounterAttackState(this, StateMachine, playerData, "swordCounterAttack");
     }
 
     private void Start()

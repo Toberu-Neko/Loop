@@ -67,6 +67,10 @@ public class PlayerSwordAttackState : PlayerAbilityState
 
         Movement.CheckIfShouldFlip(xInput);
 
+        if (Stats.PerfectBlockAttackable)
+        {
+            stateMachine.ChangeState(player.SwordCounterAttackState);
+        }
         if (!CollisionSenses.Ground)
         {
             stateMachine.ChangeState(player.SwordSkyAttackState);

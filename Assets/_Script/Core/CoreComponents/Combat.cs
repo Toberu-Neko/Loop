@@ -74,7 +74,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if(!blockable)
         {
-            Movement?.SetVelocity(strength, angle, direction);
+            Movement.SetVelocity(strength, angle, direction);
             Movement.CanSetVelocity = false;
 
             isKnockbackActive = true;
@@ -92,7 +92,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
             return;
         }
 
-        Movement?.SetVelocity(strength, angle, direction);
+        Movement.SetVelocity(strength, angle, direction);
         Movement.CanSetVelocity = false;
 
         isKnockbackActive = true;

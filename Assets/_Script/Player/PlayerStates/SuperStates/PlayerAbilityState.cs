@@ -10,6 +10,9 @@ public class PlayerAbilityState : PlayerState
     //If have an abality that needs to know if grounded, change to protect.
     private bool isGrounded;
 
+    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
+    private Stats stats;
+
     protected Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
     private Combat combat;
 
@@ -47,7 +50,7 @@ public class PlayerAbilityState : PlayerState
 
         if(isAbilityDone)
         {
-            if(isGrounded && Movement?.CurrentVelocity.y < 0.01f)
+            if(isGrounded && Movement.CurrentVelocity.y < 0.01f)
             {
                 stateMachine.ChangeState(player.IdleState);
             }

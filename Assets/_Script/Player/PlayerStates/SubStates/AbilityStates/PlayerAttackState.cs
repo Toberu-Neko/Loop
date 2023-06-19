@@ -33,7 +33,7 @@ public class PlayerAttackState : PlayerAbilityState
 
         if (shouldCheckFlip)
         {
-            Movement?.CheckIfShouldFlip(xInput);
+            Movement.CheckIfShouldFlip(xInput);
         }
 
         if (setVelocity)

@@ -37,7 +37,7 @@ public class ChargeState : State
     {
         base.Enter();
 
-        Movement?.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
+        Movement.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
         isChargeTimeOver = false;
     }
 
@@ -50,7 +50,7 @@ public class ChargeState : State
     {
         base.LogicUpdate();
 
-        Movement?.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
+        Movement.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
 
         if (Time.time >= StartTime + stateData.chargeTime)
         {

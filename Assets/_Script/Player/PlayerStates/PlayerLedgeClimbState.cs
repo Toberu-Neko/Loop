@@ -48,7 +48,7 @@ public class PlayerLedgeClimbState : PlayerState
     {
         base.Enter();
 
-        Movement?.SetVelocityZero();
+        Movement.SetVelocityZero();
         player.transform.position = detectedPosition;
         cornerPosition = DeterminCornerPosition();
 
@@ -91,7 +91,7 @@ public class PlayerLedgeClimbState : PlayerState
             yInput = player.InputHandler.NormInputY;
             jumpInput = player.InputHandler.JumpInput;
 
-            Movement?.SetVelocityZero();
+            Movement.SetVelocityZero();
             player.transform.position = startPosition;
 
             if (xInput == Movement.FacingDirection && isHanging && !isClimbing)
