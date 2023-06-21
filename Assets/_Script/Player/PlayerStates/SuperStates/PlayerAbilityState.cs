@@ -62,6 +62,14 @@ public class PlayerAbilityState : PlayerState
         }
     }
 
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        Combat.DetectedDamageables.Clear();
+        Combat.DetectedKnockbackables.Clear();
+    }
+
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();

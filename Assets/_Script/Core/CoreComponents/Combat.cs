@@ -65,6 +65,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
             Stats?.DecreaseHeakth(damageAmount);
             ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
         }
+
+        // Debug.Log("Damage");
         OnDamaged?.Invoke();
     }
 
@@ -85,7 +87,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         }
         else if (PerfectBlock)
         {
-            Debug.Log("KnockBackPerfectBlock");
             return;
         }
         else if (NormalBlock)
@@ -98,8 +99,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         }
         else
         {
-            Debug.Log("KnockBack");
-
             Movement.SetVelocity(strength, angle, direction);
             Movement.CanSetVelocity = false;
 
