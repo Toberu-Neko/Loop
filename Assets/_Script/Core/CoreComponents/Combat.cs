@@ -42,7 +42,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     public void Damage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
-        if (!blockable || !FacingDamgePosition(damagePosition))
+        if (Stats.Invincible)
+        {
+            return;
+        }
+        else if (!blockable || !FacingDamgePosition(damagePosition))
         {
             Stats?.DecreaseHeakth(damageAmount);
             ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
@@ -67,7 +71,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     public void Knockback(Vector2 angle, float strength, int direction, Vector2 damagePosition, bool blockable = true)
     {
-        if (!blockable || !FacingDamgePosition(damagePosition))
+        if (Stats.Invincible)
+        {
+            return;
+        }
+        else if (!blockable || !FacingDamgePosition(damagePosition))
         {
             Movement.SetVelocity(strength, angle, direction);
             Movement.CanSetVelocity = false;

@@ -13,6 +13,7 @@ public class Stats : CoreComponent
     public event Action OnHealthZero;
 
     public bool PerfectBlockAttackable { get; private set; }
+    public bool Invincible { get; private set; }
     // private float perfectBlockStartTime;
 
     private Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
@@ -70,5 +71,15 @@ public class Stats : CoreComponent
     {
         if(PerfectBlockAttackable)
             PerfectBlockAttackable = false;
+    }
+
+    public void SetInvincibleTrue()
+    {
+        Invincible = true;
+    }
+
+    public void SetInvincibleFalse()
+    {
+        Invincible = false;
     }
 }
