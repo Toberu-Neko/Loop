@@ -4,8 +4,35 @@ using UnityEngine;
 
 public class PlayerSwordSoulMaxAttackState : PlayerAbilityState
 {
+    WeaponAttackDetails details;
     public PlayerSwordSoulMaxAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        details = player.PlayerWeaponManager.SwordData.soulThreeAttackDetails;
     }
 
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        DoDamageToDamageList(details.damageAmount, details.knockbackAngle, details.knockbackForce, false);
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        isAbilityDone = true;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        player.PlayerWeaponManager.ClearEnergy();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
 }

@@ -46,6 +46,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform ceilingCheck;
     #endregion
 
+    [SerializeField] private float ceilingCheckRadius;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private float wallCheckDistance;
 
@@ -53,7 +54,7 @@ public class CollisionSenses : CoreComponent
 
     public bool Ceiling 
     {
-        get => Physics2D.OverlapCircle(CeilingCheck.position, groundCheckRadius, whatIsGround);
+        get => Physics2D.OverlapCircle(CeilingCheck.position, ceilingCheckRadius, whatIsGround);
     }
     public bool Ground
     {

@@ -124,6 +124,9 @@ public class Player : MonoBehaviour
 
         MovementCollider.size = v2Workspace;
         MovementCollider.offset = center;
+
+        Debug.Log(MovementCollider.size);
+
     }
 
     private void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();

@@ -102,8 +102,7 @@ public class PlayerGroundedState : PlayerState
             && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
         {
             player.SwordHubState.SetCanAttackFalse();
-            Debug.Log("PlayerSwordSoulMaxAttackState");
-            // TODO: stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
+            stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
         }
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock())
         {

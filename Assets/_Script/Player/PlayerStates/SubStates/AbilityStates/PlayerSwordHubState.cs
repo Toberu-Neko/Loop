@@ -16,6 +16,8 @@ public class PlayerSwordHubState : PlayerAbilityState
     public PlayerSwordHubState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         holdAttackTime = player.PlayerWeaponManager.SwordData.strongAttackHoldTime;
+
+        Combat.OnDamaged += () => isAbilityDone = true;
     }
 
     public override void Enter()

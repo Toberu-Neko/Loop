@@ -85,6 +85,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         }
         else if (PerfectBlock)
         {
+            Debug.Log("KnockBackPerfectBlock");
             return;
         }
         else if (NormalBlock)
@@ -97,6 +98,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         }
         else
         {
+            Debug.Log("KnockBack");
+
             Movement.SetVelocity(strength, angle, direction);
             Movement.CanSetVelocity = false;
 
@@ -135,7 +138,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            Debug.Log($"Add {collision.gameObject.transform.parent.parent.name}");
+            // Debug.Log($"Add {collision.gameObject.transform.parent.parent.name}");
             DetectedDamageables.Add(damageable);
         }
 
@@ -149,7 +152,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            Debug.Log($"Remove {collision.gameObject.transform.parent.parent.name}");
+            // Debug.Log($"Remove {collision.gameObject.transform.parent.parent.name}");
             DetectedDamageables.Remove(damageable);
         }
 

@@ -6,6 +6,7 @@ public class PlayerSwordSkyAttackState : PlayerAbilityState
 {
     public PlayerSwordSkyAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        Combat.OnDamaged += () => isAbilityDone = true;
     }
 
     public override void LogicUpdate()

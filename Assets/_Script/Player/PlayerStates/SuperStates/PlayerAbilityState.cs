@@ -23,6 +23,7 @@ public class PlayerAbilityState : PlayerState
 
     public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+
     }
 
     public override void DoChecks()
@@ -66,13 +67,13 @@ public class PlayerAbilityState : PlayerState
         base.PhysicsUpdate();
     }
 
-    public void DoDamageToDamageList(float damageAmount, Vector2 knockBackAngle, float knockBackForce)
+    public void DoDamageToDamageList(float damageAmount, Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
     {
         if (Combat.DetectedDamageables.Count > 0)
         {
             foreach (IDamageable damageable in Combat.DetectedDamageables.ToList())
             {
-                damageable.Damage(damageAmount, core.transform.position);
+                damageable.Damage(damageAmount, core.transform.position, blockable);
             }
         }
 
@@ -80,7 +81,7 @@ public class PlayerAbilityState : PlayerState
         {
             foreach (IKnockbackable knockbackable in Combat.DetectedKnockbackables.ToList())
             {
-                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection, (Vector2)core.transform.position);
+                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection, (Vector2)core.transform.position, blockable);
             }
         }
     }

@@ -13,6 +13,8 @@ public class PlayerPerfectBlockState : PlayerAbilityState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
+
+        isAbilityDone = true;
     }
 
     public override void AnimationActionTrigger()
@@ -46,13 +48,5 @@ public class PlayerPerfectBlockState : PlayerAbilityState
 
         Combat.PerfectBlock = false;
         Combat.NormalBlock = false;
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-
-        if(isAnimationFinished)
-            isAbilityDone = true;
     }
 }

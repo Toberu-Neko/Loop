@@ -13,21 +13,6 @@ public class PlayerBlockState : PlayerAbilityState
     {
     }
 
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-    }
-
-    public override void AnimationActionTrigger()
-    {
-        base.AnimationActionTrigger();
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
     public override void Enter()
     {
         base.Enter();
@@ -45,11 +30,10 @@ public class PlayerBlockState : PlayerAbilityState
     {
         base.Exit();
 
+        lastBlockTime = Time.time;
+
         Combat.OnDamaged -= DamagedWhileBlocking;
         Combat.OnPerfectBlock -= GoToPerfectBlockState;
-
-        Combat.PerfectBlock = false;
-        Combat.NormalBlock = false;
     }
 
     public override void LogicUpdate()
@@ -80,7 +64,6 @@ public class PlayerBlockState : PlayerAbilityState
     private void GoToPerfectBlockState() => stateMachine.ChangeState(player.PerfectBlockState);
     private void DamagedWhileBlocking()
     {
-        lastBlockTime = Time.time;
         isAbilityDone = true;
     }
 

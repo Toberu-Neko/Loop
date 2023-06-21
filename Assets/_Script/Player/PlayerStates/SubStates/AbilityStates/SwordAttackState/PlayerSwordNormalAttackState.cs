@@ -12,6 +12,9 @@ public class PlayerSwordNormalAttackState : PlayerAbilityState
     {
         swordData = player.PlayerWeaponManager.SwordData;
         attackCounter = 0;
+
+        Combat.OnDamaged += () => isAbilityDone = true;
+
     }
     public override void Enter()
     {
