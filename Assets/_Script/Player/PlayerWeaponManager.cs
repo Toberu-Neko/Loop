@@ -59,6 +59,21 @@ public class PlayerWeaponManager : MonoBehaviour
         }
         OnEnergyChanged?.Invoke();
     }
+
+    public void DecreaseEnergy()
+    {
+        switch (CurrentWeaponType)
+        {
+            case PlayerWeaponType.Sword:
+                SwordCurrentEnergy--;
+                break;
+            case PlayerWeaponType.Fist:
+                break;
+            case PlayerWeaponType.Gun:
+                break;
+        }
+        OnEnergyChanged?.Invoke();
+    }
     private void OnEnable()
     {
         Combat.OnPerfectBlock += IncreaseEnergy;

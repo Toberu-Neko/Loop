@@ -6,8 +6,8 @@ using UnityEngine;
 public class D_RangedAttackState : ScriptableObject
 {
     public GameObject projectile;
-    public float projectileDamage = 10f;
-    public float projectileSpeed = 12f;
+    public ProjectileDetails projectileDetails;
+
     public float projectileTravelDistance = 12f;
     public float projectileLifeTime = 5f;
     public float projectileGravityScale = 0.2f;

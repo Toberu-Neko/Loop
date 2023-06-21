@@ -36,8 +36,6 @@ public class Player : MonoBehaviour
     public PlayerSwordSoulMaxAttackState PlayerSwordSoulMaxAttackState { get; private set; }
     #endregion
 
-
-
     #region Components
     public Core Core { get; private set; }
     public Animator Anim { get; private set; }

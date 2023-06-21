@@ -14,11 +14,11 @@ public class SO_WeaponData_Sword : SO_WeaponData
     [Header("Strong Attack")]
     public float strongAttackHoldTime;
 
-    public float projectileDamage;
-    public float projectileSpeed;
-    public float projectileDuration;
-    public float projectileKnockbackStrength;
-    public Vector2 projectileKnockbackAngle;
+    public ProjectileDetails projectileDetails;
+
+    [Header("Soul One Attack")]
+    public WeaponAttackDetails soulOneAttackDetails;
+
 
 
     public WeaponAttackDetails[] NormalAttackDetails { get => normalAttackDetails; private set => normalAttackDetails = value; }

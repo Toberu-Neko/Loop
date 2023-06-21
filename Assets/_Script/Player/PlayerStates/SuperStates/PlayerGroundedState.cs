@@ -10,6 +10,9 @@ public class PlayerGroundedState : PlayerState
 
     protected bool isTouchingCeiling;
 
+    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
+    private Stats stats;
+
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
     private CollisionSenses CollisionSenses 
@@ -86,21 +89,21 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.SwordHubState);
         }
-        else if(player.InputHandler.WeaponSkillInput && !isTouchingCeiling && 
-            player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0)
+        else if(player.InputHandler.WeaponSkillInput && !isTouchingCeiling && player.SwordHubState.CheckIfCanAttack() && 
+            player.PlayerWeaponManager.SwordCurrentEnergy > 0 &&
+            Stats.PerfectBlockAttackable && 
+            player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy)
         {
-            if (player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy)
-            {
-                player.SwordHubState.SetCanAttackFalse();
-                Debug.Log("PlayerSwordSoulOneAttackState");
-                // TODO: stateMachine.ChangeState(player.PlayerSwordSoulOneAttackState);
-            }
-            if (player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
-            {
-                player.SwordHubState.SetCanAttackFalse();
-                Debug.Log("PlayerSwordSoulMaxAttackState");
-                // TODO: stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
-            }
+            player.SwordHubState.SetCanAttackFalse();
+            stateMachine.ChangeState(player.PlayerSwordSoulOneAttackState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && !isTouchingCeiling &&
+            player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0
+            && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
+        {
+            player.SwordHubState.SetCanAttackFalse();
+            Debug.Log("PlayerSwordSoulMaxAttackState");
+            // TODO: stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
         }
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock())
         {

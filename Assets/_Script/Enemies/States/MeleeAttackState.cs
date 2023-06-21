@@ -6,9 +6,6 @@ public class MeleeAttackState : AttackState
 {
     protected D_MeleeAttack stateData;
 
-    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
-
     public MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttack stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;

@@ -7,13 +7,8 @@ public class SwordProjectile : MonoBehaviour
 {
     private List<GameObject> collidedObjects = new();
 
-    private float speed;
-    private float duration;
-    private int facingDirection;
+    private ProjectileDetails projectileDetails;
 
-    private float damageAmount = 10;
-    private Vector2 knockbackAngle = new(2, 1);
-    private float knockbackStrength = 10;
 
     private Rigidbody2D rb;
 
@@ -25,19 +20,13 @@ public class SwordProjectile : MonoBehaviour
     private void Start()
     {
         rb.gravityScale = 0;
-        rb.velocity = transform.right * speed;
+        rb.velocity = transform.right * projectileDetails.speed;
 
-        Invoke(nameof(DestoryThis), duration);
+        Invoke(nameof(DestoryThis), projectileDetails.duration);
     }
-    public void Fire(float damageAmount, float speed, float duration, int facingDirection, Vector2 knockbackAngle, float knockbackStrength)
+    public void Fire(ProjectileDetails details)
     {
-        this.speed = speed;
-        this.duration = duration;
-        this.facingDirection = facingDirection;
-        this.damageAmount = damageAmount;
-            
-        this.knockbackAngle = knockbackAngle;
-        this.knockbackStrength = knockbackStrength;
+        projectileDetails = details;
     }
 
     private void DestoryThis()
@@ -51,11 +40,11 @@ public class SwordProjectile : MonoBehaviour
         {
             if(collision.TryGetComponent(out IDamageable damageable))
             {
-                damageable.Damage(damageAmount, transform.position, true);
+                damageable.Damage(projectileDetails.damageAmount, transform.position, true);
             }
             if(collision.TryGetComponent(out IKnockbackable knockbackable))
             {
-                knockbackable.Knockback(knockbackAngle, knockbackStrength, facingDirection, transform.position);
+                knockbackable.Knockback(projectileDetails.knockbackAngle, projectileDetails.knockbackStrength, projectileDetails.facingDirection, transform.position);
             }
             collidedObjects.Add(collision.gameObject);
         }

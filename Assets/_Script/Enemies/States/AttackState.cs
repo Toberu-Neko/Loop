@@ -9,7 +9,7 @@ public class AttackState : State
     protected bool isAnimationFinished;
     protected bool isPlayerInMinAgroRange;
 
-    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
+    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
 
     public AttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition) : base(entity, stateMachine, animBoolName)

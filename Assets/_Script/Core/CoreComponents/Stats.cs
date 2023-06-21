@@ -6,13 +6,14 @@ using UnityEngine;
 public class Stats : CoreComponent
 {
     [SerializeField] private float maxHealth;
+    [SerializeField] private float perfectBlockAttackDuration;
+
     public float CurrentHealth { get; private set; }
 
     public event Action OnHealthZero;
 
     public bool PerfectBlockAttackable { get; private set; }
-    [SerializeField] private float perfectBlockDuration;
-    private float perfectBlockStartTime;
+    // private float perfectBlockStartTime;
 
     private Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
     private Combat combat;
@@ -26,23 +27,18 @@ public class Stats : CoreComponent
 
     private void OnEnable()
     {
-        // Combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
+        Combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
 
     }
 
     private void OnDisable()
     {
-        // Combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
+        Combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        if(Time.time >= perfectBlockStartTime + perfectBlockDuration && PerfectBlockAttackable)
-        {
-            PerfectBlockAttackable = false;
-        }
     }
 
     public void DecreaseHeakth(float amount)
@@ -64,12 +60,15 @@ public class Stats : CoreComponent
 
     public void SetPerfectBlockAttackTrue()
     {
-        perfectBlockStartTime = Time.time;
         PerfectBlockAttackable = true;
+
+        CancelInvoke(nameof(SetPerfectBlockAttackFalse));
+        Invoke(nameof(SetPerfectBlockAttackFalse), perfectBlockAttackDuration);
     }
 
     public void SetPerfectBlockAttackFalse()
     {
-        PerfectBlockAttackable = false;
+        if(PerfectBlockAttackable)
+            PerfectBlockAttackable = false;
     }
 }
