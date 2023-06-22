@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StunState : State
 {
-    protected D_StunState stateData;
+    protected S_EnemyStunState stateData;
 
     protected bool isStunTimeOver;
     protected bool isGrounded;
@@ -18,7 +18,7 @@ public class StunState : State
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
-    public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData) : base(entity, stateMachine, animBoolName)
+    public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyStunState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

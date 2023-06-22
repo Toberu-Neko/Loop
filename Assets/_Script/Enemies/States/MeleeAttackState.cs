@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MeleeAttackState : AttackState
 {
-    protected D_MeleeAttack stateData;
+    protected S_EnemyMeleeAttackState stateData;
 
-    public MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttack stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
     }
@@ -45,12 +45,12 @@ public class MeleeAttackState : AttackState
     {
         base.TriggerAttack();
 
-        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.attackRadius, stateData.whatIsPlayer);
+        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.meleeAttackRadius, stateData.whatIsPlayer);
         foreach (Collider2D collider in detectedObjects)
         {
             if (collider.TryGetComponent<IDamageable>(out var dam))
             {
-                dam.Damage(stateData.attackDamage, entity.GetPosition());
+                dam.Damage(stateData.meleeAttackDamage, entity.GetPosition());
             }
 
             if (collider.TryGetComponent<IKnockbackable>(out var knockbackable))

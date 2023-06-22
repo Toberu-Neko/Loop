@@ -13,20 +13,31 @@ public class Enemy1 : Entity
     public E1_StunState StunState { get; private set; }
     public E1_DeadState DeadState { get; private set; }
 
-    [SerializeField] private D_IdleState idleStateData;
-    [SerializeField] private D_MoveState moveStateData;
-    [SerializeField] private D_PlayerDetected playerDetectedStateData;
-    [SerializeField] private D_ChargeState chargeStateData;
-    [SerializeField] private D_LookForPlayer lookForPlayerStateData;
-    [SerializeField] private D_MeleeAttack meleeAttackStateData;
-    [SerializeField] private D_StunState stunStateData;
-    [SerializeField] private D_DeadState deadStateData;
+    [SerializeField] private E1_StateData stateData;
+
+    [SerializeField] private S_EnemyIdleState idleStateData;
+    [SerializeField] private S_EnemyGroundMoveState moveStateData;
+    [SerializeField] private S_EnemyPlayerDetectedState playerDetectedStateData;
+    [SerializeField] private S_EnemyChargeState chargeStateData;
+    [SerializeField] private S_EnemyLookForPlayerState lookForPlayerStateData;
+    [SerializeField] private S_EnemyMeleeAttackState meleeAttackStateData;
+    [SerializeField] private S_EnemyStunState stunStateData;
+    [SerializeField] private S_EnemyDeadState deadStateData;
 
     [SerializeField] private Transform meleeAttackPosition;
 
     public override void Awake()
     {
         base.Awake();
+
+        idleStateData = stateData.idleStateData;
+        moveStateData = stateData.groundMoveStateData;
+        playerDetectedStateData = stateData.playerDetectedStateData;
+        chargeStateData = stateData.chargeStateData;
+        lookForPlayerStateData = stateData.lookForPlayerStateData;
+        meleeAttackStateData = stateData.meleeAttackStateData;
+        stunStateData = stateData.stunStateData;
+        deadStateData = stateData.deadStateData;
 
         MoveState = new E1_MoveState(this, StateMachine, "move", moveStateData, this);
         IdleState = new E1_IdleState(this, StateMachine, "idle", idleStateData, this);
@@ -45,6 +56,6 @@ public class Enemy1 : Entity
     {
         base.OnDrawGizmos();
 
-        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
+        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.meleeAttackRadius);
     }
 }

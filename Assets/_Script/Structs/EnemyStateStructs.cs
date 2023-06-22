@@ -20,12 +20,13 @@ public struct S_EnemyGroundMoveState
 [Serializable]
 public struct S_EnemyPlayerDetectedState
 {
-    public float longRangeActionTime;
+    public float delayTime;
 }
 
 [Serializable]
 public struct S_EnemyRangedAttackState
 {
+    [HideInInspector] public LayerMask whatIsPlayer;
     public GameObject projectile;
     public ProjectileDetails projectileDetails;
 
@@ -39,6 +40,8 @@ public struct S_EnemyRangedAttackState
 [Serializable]
 public struct S_EnemyMeleeAttackState
 {
+    [HideInInspector]public LayerMask whatIsPlayer;
+
     public float meleeAttackRadius;
     public float meleeAttackDamage;
 

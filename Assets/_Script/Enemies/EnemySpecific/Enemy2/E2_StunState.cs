@@ -5,7 +5,7 @@ using UnityEngine;
 public class E2_StunState : StunState
 {
     private Enemy2 enemy;
-    public E2_StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E2_StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyStunState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

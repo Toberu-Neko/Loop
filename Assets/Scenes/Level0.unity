@@ -9516,15 +9516,55 @@ MonoBehaviour:
   ledgeCheck: {fileID: 786152012}
   playerCheck: {fileID: 648200112}
   groundCheck: {fileID: 1474261772}
-  idleStateData: {fileID: 11400000, guid: 2e24e6eef5ee2a849998819727f456ef, type: 2}
-  moveStateData: {fileID: 11400000, guid: 3635505681c2c8a4baf82e05b96ba38e, type: 2}
-  playerDetectedStateData: {fileID: 11400000, guid: 0055634f14c6bcc4c9f9e13ffd6b3bc7, type: 2}
-  meleeAttackStateData: {fileID: 11400000, guid: d272ce7566937a9458a58fc4f946d71b, type: 2}
-  lookForPlayerStateData: {fileID: 11400000, guid: fc924322149f81f43a61180335f18338, type: 2}
-  stunStateData: {fileID: 11400000, guid: 1ac37d0571498434fb67008d8b8b6331, type: 2}
-  deadStateData: {fileID: 11400000, guid: 9e51cbc8de8554d4bb75834c81691291, type: 2}
-  DodgeStateData: {fileID: 11400000, guid: 8a319154524423742a2fc00f55c77aaf, type: 2}
-  rangedAttackStateData: {fileID: 11400000, guid: e20065da18a03ff40a9e9679c9d10311, type: 2}
+  stateData: {fileID: 11400000, guid: c1938410d3a42ed4d8f45d28b7cbbd44, type: 2}
+  idleStateData:
+    minIdleTime: 0
+    maxIdleTime: 0
+  moveStateData:
+    movementSpeed: 0
+  playerDetectedStateData:
+    delayTime: 0
+  meleeAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 0
+    meleeAttackRadius: 0
+    meleeAttackDamage: 0
+    knockbackAngle: {x: 0, y: 0}
+    knockbackStrength: 0
+  lookForPlayerStateData:
+    amountOfTurns: 0
+    timeBetweenTurns: 0
+  stunStateData:
+    stunTime: 0
+    stunKnockbackTime: 0
+    stunKnockbackSpeed: 0
+    stunKnockbackAngle: {x: 0, y: 0}
+  deadStateData:
+    deathChunkParticle: {fileID: 0}
+    deathBloodParticle: {fileID: 0}
+  DodgeStateData:
+    dodgeSpeed: 0
+    dodgeTime: 0
+    dodgeCooldown: 0
+    dodgeAngle: {x: 0, y: 0}
+  rangedAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 0
+    projectile: {fileID: 0}
+    projectileDetails:
+      damageAmount: 0
+      speed: 0
+      duration: 0
+      facingDirection: 0
+      knockbackAngle: {x: 0, y: 0}
+      knockbackStrength: 0
+    projectileTravelDistance: 0
+    projectileLifeTime: 0
+    projectileGravityScale: 0
+    timeBetweenProjectiles: 0
+    rangedAttackRadius: 0
   meleeAttackPosition: {fileID: 1566720650}
   rangedAttackPosition: {fileID: 871850193}
 --- !u!114 &1390666067
@@ -15761,15 +15801,55 @@ MonoBehaviour:
   ledgeCheck: {fileID: 1956702987}
   playerCheck: {fileID: 1923653813}
   groundCheck: {fileID: 1839991961}
-  idleStateData: {fileID: 11400000, guid: 2e24e6eef5ee2a849998819727f456ef, type: 2}
-  moveStateData: {fileID: 11400000, guid: 3635505681c2c8a4baf82e05b96ba38e, type: 2}
-  playerDetectedStateData: {fileID: 11400000, guid: 0055634f14c6bcc4c9f9e13ffd6b3bc7, type: 2}
-  meleeAttackStateData: {fileID: 11400000, guid: d272ce7566937a9458a58fc4f946d71b, type: 2}
-  lookForPlayerStateData: {fileID: 11400000, guid: fc924322149f81f43a61180335f18338, type: 2}
-  stunStateData: {fileID: 11400000, guid: 1ac37d0571498434fb67008d8b8b6331, type: 2}
-  deadStateData: {fileID: 11400000, guid: 9e51cbc8de8554d4bb75834c81691291, type: 2}
-  DodgeStateData: {fileID: 11400000, guid: 8a319154524423742a2fc00f55c77aaf, type: 2}
-  rangedAttackStateData: {fileID: 11400000, guid: e20065da18a03ff40a9e9679c9d10311, type: 2}
+  stateData: {fileID: 11400000, guid: c1938410d3a42ed4d8f45d28b7cbbd44, type: 2}
+  idleStateData:
+    minIdleTime: 0
+    maxIdleTime: 0
+  moveStateData:
+    movementSpeed: 0
+  playerDetectedStateData:
+    delayTime: 0
+  meleeAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 0
+    meleeAttackRadius: 0
+    meleeAttackDamage: 0
+    knockbackAngle: {x: 0, y: 0}
+    knockbackStrength: 0
+  lookForPlayerStateData:
+    amountOfTurns: 0
+    timeBetweenTurns: 0
+  stunStateData:
+    stunTime: 0
+    stunKnockbackTime: 0
+    stunKnockbackSpeed: 0
+    stunKnockbackAngle: {x: 0, y: 0}
+  deadStateData:
+    deathChunkParticle: {fileID: 0}
+    deathBloodParticle: {fileID: 0}
+  DodgeStateData:
+    dodgeSpeed: 0
+    dodgeTime: 0
+    dodgeCooldown: 0
+    dodgeAngle: {x: 0, y: 0}
+  rangedAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 0
+    projectile: {fileID: 0}
+    projectileDetails:
+      damageAmount: 0
+      speed: 0
+      duration: 0
+      facingDirection: 0
+      knockbackAngle: {x: 0, y: 0}
+      knockbackStrength: 0
+    projectileTravelDistance: 0
+    projectileLifeTime: 0
+    projectileGravityScale: 0
+    timeBetweenProjectiles: 0
+    rangedAttackRadius: 0
   meleeAttackPosition: {fileID: 206385953}
   rangedAttackPosition: {fileID: 679763538}
 --- !u!1 &2129512517

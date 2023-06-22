@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChargeState : State
 {
-    protected D_ChargeState stateData;
+    protected S_EnemyChargeState stateData;
 
     protected bool isPlayerInMinAgroRange;
     protected bool isDetectingLedge;
@@ -17,7 +17,7 @@ public class ChargeState : State
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
-    public ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChargeState stateData) : base(entity, stateMachine, animBoolName)
+    public ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

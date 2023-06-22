@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerDetectedState : State
 {
-    protected D_PlayerDetected stateData;
+    protected S_EnemyPlayerDetectedState stateData;
 
     protected bool isPlayerInMinAgroRange;
     protected bool isPlayerInMaxAgroRange;
@@ -17,7 +17,7 @@ public class PlayerDetectedState : State
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
-    public PlayerDetectedState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_PlayerDetected stateData) : base(entity, stateMachine, animBoolName)
+    public PlayerDetectedState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyPlayerDetectedState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
@@ -41,7 +41,7 @@ public class PlayerDetectedState : State
 
         Movement.SetVelocityX(0f);
 
-        if (Time.time >= StartTime + stateData.longRangeActionTime) 
+        if (Time.time >= StartTime + stateData.delayTime) 
         {
             performLongRangeAction = true;
         }

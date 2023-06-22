@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LookForPlayerState : State
 {
-    protected D_LookForPlayer stateData;
+    protected S_EnemyLookForPlayerState stateData;
 
     protected bool turnImmediately;
     protected bool isPlayerInMinAgroRange;
@@ -18,7 +18,7 @@ public class LookForPlayerState : State
     private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
 
-    public LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_LookForPlayer stateData) : base(entity, stateMachine, animBoolName)
+    public LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

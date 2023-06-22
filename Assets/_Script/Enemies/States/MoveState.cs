@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveState : State
 {
-    protected D_MoveState stateData;
+    protected S_EnemyGroundMoveState stateData;
 
     protected bool isDetectingWall;
     protected bool isDetectingLedge;
@@ -15,7 +15,7 @@ public class MoveState : State
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
-    public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
+    public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyGroundMoveState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

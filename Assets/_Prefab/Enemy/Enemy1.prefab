@@ -85,6 +85,7 @@ MonoBehaviour:
   ledgeCheckHorizontal: {fileID: 0}
   ledgeCheckVertical: {fileID: 367230062520613131}
   ceilingCheck: {fileID: 0}
+  ceilingCheckRadius: 0
   groundCheckRadius: 0.3
   wallCheckDistance: 0.3
   whatIsGround:
@@ -357,7 +358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  perfectBlockDuration: 0
+  perfectBlockAttackDuration: 0
 --- !u!1 &6399509986428146018
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,7 +530,7 @@ Transform:
   m_Children:
   - {fileID: 3290867470089072581}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8233369278302130990
 SpriteRenderer:
@@ -705,14 +706,36 @@ MonoBehaviour:
   ledgeCheck: {fileID: 367230062520613131}
   playerCheck: {fileID: 4921504929297199723}
   groundCheck: {fileID: 5571966029180549775}
-  idleStateData: {fileID: 11400000, guid: ff6bb309506e71144a90edba241a9e77, type: 2}
-  moveStateData: {fileID: 11400000, guid: 208584834d6cd5c40a333bd4529add8c, type: 2}
-  playerDetectedStateData: {fileID: 11400000, guid: 7d0bf185a6704d346957a182dc1c6903, type: 2}
-  chargeStateData: {fileID: 11400000, guid: 92fa42520a4ca494585666a5fbf879a0, type: 2}
-  lookForPlayerStateData: {fileID: 11400000, guid: 80981ca6449aa9d4f912c8cf87052d05, type: 2}
-  meleeAttackStateData: {fileID: 11400000, guid: cbb0e1f9cc9a5a64884115095e272ca9, type: 2}
-  stunStateData: {fileID: 11400000, guid: 017e10c04a22ca5438655efa40bbb78c, type: 2}
-  deadStateData: {fileID: 11400000, guid: c984378773acc3f419b13e22b4456a00, type: 2}
+  stateData: {fileID: 11400000, guid: 5d5991640abee204b9673d15689e46f9, type: 2}
+  idleStateData:
+    minIdleTime: 0
+    maxIdleTime: 0
+  moveStateData:
+    movementSpeed: 0
+  playerDetectedStateData:
+    delayTime: 0
+  chargeStateData:
+    chargeSpeed: 0
+    chargeTime: 0
+  lookForPlayerStateData:
+    amountOfTurns: 0
+    timeBetweenTurns: 0
+  meleeAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 0
+    meleeAttackRadius: 0
+    meleeAttackDamage: 0
+    knockbackAngle: {x: 0, y: 0}
+    knockbackStrength: 0
+  stunStateData:
+    stunTime: 0
+    stunKnockbackTime: 0
+    stunKnockbackSpeed: 0
+    stunKnockbackAngle: {x: 0, y: 0}
+  deadStateData:
+    deathChunkParticle: {fileID: 0}
+    deathBloodParticle: {fileID: 0}
   meleeAttackPosition: {fileID: 2697786611478194588}
 --- !u!1 &7376203822454778383
 GameObject:
