@@ -3833,7 +3833,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &591928498
 GameObject:
@@ -6637,7 +6637,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1001875250
 GameObject:
@@ -9517,54 +9517,11 @@ MonoBehaviour:
   playerCheck: {fileID: 648200112}
   groundCheck: {fileID: 1474261772}
   stateData: {fileID: 11400000, guid: c1938410d3a42ed4d8f45d28b7cbbd44, type: 2}
-  idleStateData:
-    minIdleTime: 0
-    maxIdleTime: 0
-  moveStateData:
-    movementSpeed: 0
-  playerDetectedStateData:
-    delayTime: 0
-  meleeAttackStateData:
-    whatIsPlayer:
-      serializedVersion: 2
-      m_Bits: 0
-    meleeAttackRadius: 0
-    meleeAttackDamage: 0
-    knockbackAngle: {x: 0, y: 0}
-    knockbackStrength: 0
-  lookForPlayerStateData:
-    amountOfTurns: 0
-    timeBetweenTurns: 0
-  stunStateData:
-    stunTime: 0
-    stunKnockbackTime: 0
-    stunKnockbackSpeed: 0
-    stunKnockbackAngle: {x: 0, y: 0}
-  deadStateData:
-    deathChunkParticle: {fileID: 0}
-    deathBloodParticle: {fileID: 0}
   DodgeStateData:
     dodgeSpeed: 0
     dodgeTime: 0
     dodgeCooldown: 0
     dodgeAngle: {x: 0, y: 0}
-  rangedAttackStateData:
-    whatIsPlayer:
-      serializedVersion: 2
-      m_Bits: 0
-    projectile: {fileID: 0}
-    projectileDetails:
-      damageAmount: 0
-      speed: 0
-      duration: 0
-      facingDirection: 0
-      knockbackAngle: {x: 0, y: 0}
-      knockbackStrength: 0
-    projectileTravelDistance: 0
-    projectileLifeTime: 0
-    projectileGravityScale: 0
-    timeBetweenProjectiles: 0
-    rangedAttackRadius: 0
   meleeAttackPosition: {fileID: 1566720650}
   rangedAttackPosition: {fileID: 871850193}
 --- !u!114 &1390666067
@@ -11382,7 +11339,7 @@ RectTransform:
   m_Children:
   - {fileID: 2113062560}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -14419,7 +14376,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2237528303303251726, guid: a2356ec13aacf3f47a8ff4b7d0fc652e, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2237528303303251726, guid: a2356ec13aacf3f47a8ff4b7d0fc652e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14465,10 +14422,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy1 (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 7671179602250584507, guid: a2356ec13aacf3f47a8ff4b7d0fc652e, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 2004288232}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15619,13 +15572,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125506860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.56, y: -3.5, z: -0.0269161}
+  m_LocalPosition: {x: -17.568, y: -3.5, z: -0.0269161}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2025829140}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2125506862
 Animator:
@@ -15802,54 +15755,11 @@ MonoBehaviour:
   playerCheck: {fileID: 1923653813}
   groundCheck: {fileID: 1839991961}
   stateData: {fileID: 11400000, guid: c1938410d3a42ed4d8f45d28b7cbbd44, type: 2}
-  idleStateData:
-    minIdleTime: 0
-    maxIdleTime: 0
-  moveStateData:
-    movementSpeed: 0
-  playerDetectedStateData:
-    delayTime: 0
-  meleeAttackStateData:
-    whatIsPlayer:
-      serializedVersion: 2
-      m_Bits: 0
-    meleeAttackRadius: 0
-    meleeAttackDamage: 0
-    knockbackAngle: {x: 0, y: 0}
-    knockbackStrength: 0
-  lookForPlayerStateData:
-    amountOfTurns: 0
-    timeBetweenTurns: 0
-  stunStateData:
-    stunTime: 0
-    stunKnockbackTime: 0
-    stunKnockbackSpeed: 0
-    stunKnockbackAngle: {x: 0, y: 0}
-  deadStateData:
-    deathChunkParticle: {fileID: 0}
-    deathBloodParticle: {fileID: 0}
   DodgeStateData:
     dodgeSpeed: 0
     dodgeTime: 0
     dodgeCooldown: 0
     dodgeAngle: {x: 0, y: 0}
-  rangedAttackStateData:
-    whatIsPlayer:
-      serializedVersion: 2
-      m_Bits: 0
-    projectile: {fileID: 0}
-    projectileDetails:
-      damageAmount: 0
-      speed: 0
-      duration: 0
-      facingDirection: 0
-      knockbackAngle: {x: 0, y: 0}
-      knockbackStrength: 0
-    projectileTravelDistance: 0
-    projectileLifeTime: 0
-    projectileGravityScale: 0
-    timeBetweenProjectiles: 0
-    rangedAttackRadius: 0
   meleeAttackPosition: {fileID: 206385953}
   rangedAttackPosition: {fileID: 679763538}
 --- !u!1 &2129512517
@@ -16038,10 +15948,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy1
       objectReference: {fileID: 0}
-    - target: {fileID: 7671179602250584507, guid: a2356ec13aacf3f47a8ff4b7d0fc652e, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 2004288232}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

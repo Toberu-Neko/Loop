@@ -6,6 +6,7 @@ using UnityEngine;
 public class DebugEntityStats : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI hpText;
+    private Canvas canvas;
     private Core core;
 
     private Movement Movement => movement ? movement : movement = core.GetCoreComponent<Movement>();
@@ -19,8 +20,10 @@ public class DebugEntityStats : MonoBehaviour
     private Camera cam;
     private void Awake()
     {
+        canvas = GetComponent<Canvas>();
         core = GetComponentInParent<Core>();
         cam = Camera.main;
+        canvas.worldCamera = cam;
     }
     void Start()
     {

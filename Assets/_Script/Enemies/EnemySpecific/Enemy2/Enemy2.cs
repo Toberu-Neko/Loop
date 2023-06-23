@@ -16,15 +16,15 @@ public class Enemy2 : Entity
 
     [SerializeField] private E2_StateData stateData;
 
-    [SerializeField] private S_EnemyIdleState idleStateData;
-    [SerializeField] private S_EnemyGroundMoveState moveStateData;
-    [SerializeField] private S_EnemyPlayerDetectedState playerDetectedStateData;
-    [SerializeField] private S_EnemyMeleeAttackState meleeAttackStateData;
-    [SerializeField] private S_EnemyLookForPlayerState lookForPlayerStateData;
-    [SerializeField] private S_EnemyStunState stunStateData;
-    [SerializeField] private S_EnemyDeadState deadStateData;
-    public S_EnemyDodgeState DodgeStateData;
-    [SerializeField] private S_EnemyRangedAttackState rangedAttackStateData;
+    private S_EnemyIdleState idleStateData;
+    private S_EnemyGroundMoveState moveStateData;
+    private S_EnemyPlayerDetectedState playerDetectedStateData;
+    private S_EnemyMeleeAttackState meleeAttackStateData;
+    private S_EnemyLookForPlayerState lookForPlayerStateData;
+    private S_EnemyStunState stunStateData;
+    private S_EnemyDeadState deadStateData;
+    [HideInInspector] public S_EnemyDodgeState DodgeStateData;
+    private S_EnemyRangedAttackState rangedAttackStateData;
 
     [SerializeField] private Transform meleeAttackPosition;
     [SerializeField] private Transform rangedAttackPosition;

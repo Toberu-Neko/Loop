@@ -76,4 +76,14 @@ public class CollisionSenses : CoreComponent
     {
         get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, wallCheckDistance, whatIsGround);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.gray;
+        if(GroundCheck) Gizmos.DrawWireSphere(GroundCheck.position, groundCheckRadius);
+        if (CeilingCheck) Gizmos.DrawWireSphere(CeilingCheck.position, ceilingCheckRadius);
+        if (WallCheck) Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallCheckDistance);
+        if (LedgeCheckHorizontal) Gizmos.DrawLine(LedgeCheckHorizontal.position, LedgeCheckHorizontal.position + Vector3.right * wallCheckDistance);
+        if (LedgeCheckVertical) Gizmos.DrawLine(LedgeCheckVertical.position, LedgeCheckVertical.position + Vector3.down * wallCheckDistance);
+    }
 }
