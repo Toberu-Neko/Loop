@@ -26,9 +26,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool WeaponSkillInput { get; private set; }
     public bool WeaponSkillHoldInput { get; private set; }
+    public bool ChangeWeapon1 { get; private set; }
+    public bool ChangeWeapon2 { get; private set; }
+    public bool ChangeWeapon3 { get; private set; }
 
-    [SerializeField]
-    private float inputHoldTime = 0.2f;
+    [SerializeField] private float inputHoldTime = 0.2f;
 
     private float jumpInputStartTime;
     private float dashInputStartTime;
@@ -43,9 +45,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         CheckJumpInputHoldTime();
         CheckDashInputHoldTime();
-
-        
     }
+
     public void OnPrimaryAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -62,7 +63,7 @@ public class PlayerInputHandler : MonoBehaviour
     }
     public void UseAttackInput() => AttackInput = false;
 
-    public void OnSecondaryAttackInput(InputAction.CallbackContext context)
+    public void OnBlockInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -85,6 +86,42 @@ public class PlayerInputHandler : MonoBehaviour
         {
             WeaponSkillInput = false;
             WeaponSkillHoldInput = false;
+        }
+    }
+
+    public void OnChangeWeapon1Input(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            ChangeWeapon1 = true;
+        }
+        if(context.canceled)
+        {
+            ChangeWeapon1 = false;
+        }
+    }
+
+    public void OnChangeWeapon2Input(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ChangeWeapon2 = true;
+        }
+        if (context.canceled)
+        {
+            ChangeWeapon2 = false;
+        }
+    }
+
+    public void OnChangeWeapon3Input(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ChangeWeapon3 = true;
+        }
+        if (context.canceled)
+        {
+            ChangeWeapon3 = false;
         }
     }
     public void OnMoveInput(InputAction.CallbackContext context)
