@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Combat : CoreComponent, IDamageable, IKnockbackable
@@ -8,8 +9,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     [SerializeField] private GameObject damageParticles;
     [SerializeField] private float blockDamageMultiplier = 0.5f;
 
-    public event Action OnDamaged;
     public event Action OnPerfectBlock;
+    public event Action OnDamaged;
+    public event Action OnKnockback;
 
     public List<IDamageable> DetectedDamageables { get; private set; } = new();
     public List<IKnockbackable> DetectedKnockbackables { get; private set; } = new();
@@ -29,8 +31,10 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     private ParticleManager ParticleManager => particleManager ? particleManager : core.GetCoreComponent<ParticleManager>();
     private ParticleManager particleManager;
 
-    [SerializeField]
-    private float maxKnockbackTime = 0.2f;
+    [SerializeField] private float maxKnockbackTime = 0.2f;
+    [SerializeField] private Vector2 normalBlockKnockbakDirection = new(1, 0.25f);
+    [SerializeField] private float normalBlockKnockbakMultiplier = 0.75f;
+
 
     private bool isKnockbackActive;
     private float knockbackStartTime;
@@ -65,8 +69,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
             Stats?.DecreaseHeakth(damageAmount);
             ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
         }
-
-        // Debug.Log("Damage");
         OnDamaged?.Invoke();
     }
 
@@ -80,31 +82,33 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
             Movement.SetVelocity(strength, angle, direction);
-            Movement.CanSetVelocity = false;
-
-            isKnockbackActive = true;
-            knockbackStartTime = Time.time;
+            StartKnockback();
         }
         else if (PerfectBlock)
         {
-            return;
+            
         }
         else if (NormalBlock)
         {
-            Movement.SetVelocity(strength, new Vector2(3,0), direction);
-            Movement.CanSetVelocity = false;
-
-            isKnockbackActive = true;
-            knockbackStartTime = Time.time;
+            Movement.SetVelocity(strength * normalBlockKnockbakMultiplier, normalBlockKnockbakDirection, direction);
+            StartKnockback();
         }
         else
         {
             Movement.SetVelocity(strength, angle, direction);
-            Movement.CanSetVelocity = false;
-
-            isKnockbackActive = true;
-            knockbackStartTime = Time.time;
+            StartKnockback();
         }
+        OnKnockback?.Invoke();
+    }
+
+    private void StartKnockback()
+    {
+        Movement.CanSetVelocity = false;
+        // Movement.SetDragZero();
+        // Movement.SetGravityZero();
+
+        isKnockbackActive = true;
+        knockbackStartTime = Time.time;
     }
 
     private bool FacingDamgePosition(Vector2 damagePosition)
@@ -124,12 +128,12 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     private void CheckKnockback()
     {
-        // Debug.Log(isKnockbackActive);
         if (isKnockbackActive && ((Movement.CurrentVelocity.y <= 0.01f && CollisionSenses.Ground) || Time.time >= knockbackStartTime + maxKnockbackTime))
         {
-            // Debug.Log("Reset");
-            isKnockbackActive = false;
             Movement.CanSetVelocity = true;
+            // Movement.SetDragOrginal();
+            // Movement.SetGravityOrginal();
+            isKnockbackActive = false;
         }
     }
 

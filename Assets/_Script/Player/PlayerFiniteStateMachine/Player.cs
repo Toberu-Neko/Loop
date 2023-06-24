@@ -117,6 +117,7 @@ public class Player : MonoBehaviour
     #region Other Functions
     public void SetColliderHeight(float height)
     {
+        //TODO: Delete this, use animation instead
         Vector2 center = MovementCollider.offset;
         v2Workspace.Set(MovementCollider.size.x, height);
 
@@ -124,8 +125,6 @@ public class Player : MonoBehaviour
 
         MovementCollider.size = v2Workspace;
         MovementCollider.offset = center;
-
-        Debug.Log(MovementCollider.size);
 
     }
 

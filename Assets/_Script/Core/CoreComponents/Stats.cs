@@ -29,7 +29,6 @@ public class Stats : CoreComponent
     private void OnEnable()
     {
         Combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
-
     }
 
     private void OnDisable()

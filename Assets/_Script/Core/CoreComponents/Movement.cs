@@ -10,6 +10,9 @@ public class Movement : CoreComponent
 
     public bool CanSetVelocity { get; set; }
 
+    private float orginalGrag;
+    private float orginalGravityScale;
+
     public Vector2 CurrentVelocity { get; private set; }
 
     private Vector2 velocityWorkspace;
@@ -18,6 +21,8 @@ public class Movement : CoreComponent
         base.Awake();
 
         RB = GetComponentInParent<Rigidbody2D>();
+        orginalGrag = RB.drag;
+        orginalGravityScale = RB.gravityScale;
 
         FacingDirection = 1;
         CanSetVelocity = true;
@@ -72,6 +77,25 @@ public class Movement : CoreComponent
         {
             Flip();
         }
+    }
+    public void SetDragZero()
+    {
+        RB.drag = 0.0f;
+    }
+
+    public void SetDragOrginal()
+    {
+        RB.drag = orginalGrag;
+    }
+
+    public void SetGravityZero()
+    {
+        RB.gravityScale = 0.0f;
+    }
+
+    public void SetGravityOrginal()
+    {
+        RB.gravityScale = orginalGravityScale;
     }
 
     public void Flip()

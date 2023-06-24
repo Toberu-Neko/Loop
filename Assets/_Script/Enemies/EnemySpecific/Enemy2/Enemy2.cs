@@ -33,12 +33,7 @@ public class Enemy2 : Entity
     {
         base.Awake();
 
-        Debug.Log(stateData.idleStateData.minIdleTime);
-
         idleStateData = stateData.idleStateData;
-
-        Debug.Log(idleStateData.minIdleTime);
-
         moveStateData = stateData.groundMoveStateData;
         playerDetectedStateData = stateData.playerDetectedStateData;
         meleeAttackStateData = stateData.meleeAttackStateData;

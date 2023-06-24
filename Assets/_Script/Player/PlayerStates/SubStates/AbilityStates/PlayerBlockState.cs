@@ -9,6 +9,10 @@ public class PlayerBlockState : PlayerAbilityState
 
     private float lastBlockTime;
 
+    private bool knockbackFinished;
+    private bool damageFinished;
+    private bool perfectBlock;
+
     public PlayerBlockState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -17,11 +21,16 @@ public class PlayerBlockState : PlayerAbilityState
     {
         base.Enter();
 
-        Combat.OnDamaged += DamagedWhileBlocking;
-        Combat.OnPerfectBlock += GoToPerfectBlockState;
+        Combat.OnDamaged += DamageFinished;
+        Combat.OnPerfectBlock += PerfectBlock;
+        Combat.OnKnockback += KnockbackFinished;
 
         Combat.PerfectBlock = true;
         Combat.NormalBlock = true;
+
+        knockbackFinished = false;
+        damageFinished = false;
+        perfectBlock = false;
 
         lastBlockTime = 0;
     }
@@ -32,8 +41,12 @@ public class PlayerBlockState : PlayerAbilityState
 
         lastBlockTime = Time.time;
 
-        Combat.OnDamaged -= DamagedWhileBlocking;
-        Combat.OnPerfectBlock -= GoToPerfectBlockState;
+        Combat.PerfectBlock = false;
+        Combat.NormalBlock = false;
+
+        Combat.OnDamaged -= DamageFinished;
+        Combat.OnPerfectBlock -= PerfectBlock;
+        Combat.OnKnockback -= KnockbackFinished;
     }
 
     public override void LogicUpdate()
@@ -53,19 +66,23 @@ public class PlayerBlockState : PlayerAbilityState
 
         if (!isExitingState)
         {
-            if (!blockInput)
+            if (perfectBlock)
             {
-                Combat.PerfectBlock = false;
-                Combat.NormalBlock = false;
+                stateMachine.ChangeState(player.PerfectBlockState);
+            }
+            else if (!blockInput || (knockbackFinished && damageFinished))
+            {
                 isAbilityDone = true;
             }
         }
     }
     private void GoToPerfectBlockState() => stateMachine.ChangeState(player.PerfectBlockState);
-    private void DamagedWhileBlocking()
-    {
-        isAbilityDone = true;
-    }
+
+    private void KnockbackFinished() => knockbackFinished = true;
+    
+    private void DamageFinished() => damageFinished = true;
+
+    private void PerfectBlock() => perfectBlock = true;
 
     public bool CheckIfCanBlock()
     {
