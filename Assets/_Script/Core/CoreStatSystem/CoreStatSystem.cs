@@ -24,12 +24,14 @@ public class CoreStatSystem
         }
     }
 
+    public bool decreaseable = true;
     private float currentValue;
 
     public void Init()
     {
         CurrentValue = MaxValue;
     }
+
 
     public void Increase(float amount)
     {

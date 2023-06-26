@@ -6,7 +6,7 @@ using UnityEngine;
 public class Stats : CoreComponent
 {
     [field: SerializeField] public CoreStatSystem Health { get; private set; }
-    [field: SerializeField] public CoreStatSystem Stamina { get; private set; }
+    [field: SerializeField] public CoreStatSystem Poise { get; private set; }
     [SerializeField] private float staminaRecoveryRate;
 
 
@@ -27,7 +27,7 @@ public class Stats : CoreComponent
         combat = core.GetCoreComponent<Combat>();
 
         Health.Init();
-        Stamina.Init();
+        Poise.Init();
     }
     private void Update()
     {
@@ -35,21 +35,24 @@ public class Stats : CoreComponent
         {
             InCombat = false;
         }
-        if (!InCombat && !Stamina.CurrentValue.Equals(Stamina.MaxValue))
+
+        if (!InCombat && !Poise.CurrentValue.Equals(Poise.MaxValue))
         {
-            Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
+            Poise.Increase(staminaRecoveryRate * Time.deltaTime);
         }
     }
     private void OnEnable()
     {
         combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
         combat.OnDamaged += HandleOnDamaged;
+        Poise.OnCurrentValueZero += HandlePoiseZero;
     }
 
     private void OnDisable()
     {
         combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
         combat.OnDamaged -= HandleOnDamaged;
+        Poise.OnCurrentValueZero -= HandlePoiseZero;
     }
 
     public override void LogicUpdate()
@@ -86,4 +89,13 @@ public class Stats : CoreComponent
         InCombat = true;
         lastCombatTime = Time.time;
     }
+
+    private void HandlePoiseZero()
+    {
+        Poise.Init();
+        Poise.decreaseable = false;
+        Invoke(nameof(ResetPoiseDecreaseable), 2f);
+    }
+
+    private void ResetPoiseDecreaseable() => Poise.decreaseable = true;
 }

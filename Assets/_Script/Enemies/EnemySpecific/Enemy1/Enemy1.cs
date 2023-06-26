@@ -47,11 +47,29 @@ public class Enemy1 : Entity
         MeleeAttackState = new E1_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackPosition, meleeAttackStateData, this);
         StunState = new E1_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new E1_DeadState(this, StateMachine, "dead", deadStateData, this);
+
+        stats.Poise.OnCurrentValueZero += HandlePoiseZero;
+    }
+    private void OnDisable()
+    {
+        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+
+    private void OnDestroy()
+    {
+        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+    private void HandlePoiseZero()
+    {
+        StateMachine.ChangeState(StunState);
     }
     private void Start()
     {
         StateMachine.Initialize(MoveState);
     }
+
+
+
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

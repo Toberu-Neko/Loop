@@ -17,7 +17,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     public List<IDamageable> DetectedDamageables { get; private set; } = new();
     public List<IKnockbackable> DetectedKnockbackables { get; private set; } = new();
-    public List<IStaminaDamageable> DetectedIStaminaDamageables { get; private set; } = new();
+    public List<IStaminaDamageable> DetectedStaminaDamageables { get; private set; } = new();
 
     public bool PerfectBlock { get; set; }
     public bool NormalBlock { get; set; }
@@ -54,7 +54,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
-            Stats.Stamina.Decrease(damageAmount);
+            Stats.Poise.Decrease(damageAmount);
         }
         else if (PerfectBlock)
         {
@@ -62,11 +62,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
         else if (NormalBlock)
         {
-            Stats.Stamina.Decrease(damageAmount * blockDamageMultiplier);
+            Stats.Poise.Decrease(damageAmount * blockDamageMultiplier);
         }
         else
         {
-            Stats.Stamina.Decrease(damageAmount);
+            Stats.Poise.Decrease(damageAmount);
         }
         OnStaminaDamaged?.Invoke();
     }
@@ -178,7 +178,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
         if(collision.TryGetComponent<IStaminaDamageable>(out IStaminaDamageable staminaDamageable))
         {
-            DetectedIStaminaDamageables.Add(staminaDamageable);
+            DetectedStaminaDamageables.Add(staminaDamageable);
         }
     }
 
@@ -196,7 +196,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
         if(collision.TryGetComponent<IStaminaDamageable>(out IStaminaDamageable staminaDamageable))
         {
-            DetectedIStaminaDamageables.Remove(staminaDamageable);
+            DetectedStaminaDamageables.Remove(staminaDamageable);
         }
     }
 

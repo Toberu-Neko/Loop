@@ -14,20 +14,28 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public event Action OnEnergyChanged;
 
+    private bool perfectBlockThisFram = false;
 
     private Core core;
-
-    private Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
     private Combat combat;
     private void Awake()
     {
         core = GetComponentInChildren<Core>();
+        combat = core.GetCoreComponent<Combat>();
     }
 
     private void Start()
     {
         CurrentWeaponType = PlayerWeaponType.Sword;
         SwordCurrentEnergy = 0;
+    }
+
+    private void Update()
+    {
+        if (perfectBlockThisFram)
+        {
+            IncreaseEnergy();
+        }
     }
 
     public int GetCurrentTypeEnergy()
@@ -49,7 +57,7 @@ public class PlayerWeaponManager : MonoBehaviour
         switch (CurrentWeaponType)
         {
             case PlayerWeaponType.Sword:
-                if(SwordCurrentEnergy < SwordData.maxEnergy)
+                if (SwordCurrentEnergy < SwordData.maxEnergy)
                     SwordCurrentEnergy++;
                 break;
             case PlayerWeaponType.Fist:
@@ -57,6 +65,7 @@ public class PlayerWeaponManager : MonoBehaviour
             case PlayerWeaponType.Gun:
                 break;
         }
+        perfectBlockThisFram = false;
         OnEnergyChanged?.Invoke();
     }
 
@@ -91,11 +100,11 @@ public class PlayerWeaponManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        Combat.OnPerfectBlock += IncreaseEnergy;
+        combat.OnPerfectBlock += () => perfectBlockThisFram = true ;
     }
     private void OnDisable()
     {
-        Combat.OnPerfectBlock -= IncreaseEnergy;
+        combat.OnPerfectBlock -= () => perfectBlockThisFram = true;
     }
 }
 

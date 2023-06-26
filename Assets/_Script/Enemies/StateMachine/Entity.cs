@@ -12,7 +12,6 @@ public class Entity : MonoBehaviour
     public int LastDamageDirection { get; private set; }
     public AnimationToStatemachine AnimationToStatemachine { get; private set; }
     public Core Core { get; private set; }
-    private Movement Movement => movement ? movement : Core.GetCoreComponent<Movement>();
     private Movement movement;
 
 
@@ -21,8 +20,8 @@ public class Entity : MonoBehaviour
     [SerializeField] private Transform playerCheck;
     [SerializeField] private Transform groundCheck;
 
-    private float currentHealth;
-    private float currentStunResistance;
+    protected Stats stats;
+
     private float lastDamageTime;
 
     private Vector2 velocityWorkspcae;
@@ -34,20 +33,20 @@ public class Entity : MonoBehaviour
     {
         Core = GetComponentInChildren<Core>();
 
+        movement = Core.GetCoreComponent<Movement>();
+        stats = Core.GetCoreComponent<Stats>();
+
         Anim = GetComponent<Animator>();
         AnimationToStatemachine = GetComponent<AnimationToStatemachine>();
 
         StateMachine = new();
-
-        currentHealth = EntityData.maxHealth;
-        currentStunResistance = EntityData.stunResistance;
     }
     public virtual void Update()
     {
         Core.LogicUpdate();
         StateMachine.CurrentState.LogicUpdate();
 
-        Anim.SetFloat("yVelocity", Movement.RB.velocity.y);
+        Anim.SetFloat("yVelocity", movement.RB.velocity.y);
 
         if(Time.time >= lastDamageTime + EntityData.stunRecoveryTime)
         {
@@ -76,7 +75,7 @@ public class Entity : MonoBehaviour
     {
         if (Core != null)
         {
-            Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(Vector2.right * Movement.FacingDirection * EntityData.wallCheckDistance));
+            Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(Vector2.right * movement.FacingDirection * EntityData.wallCheckDistance));
             Gizmos.DrawLine(ledgeCheck.position, ledgeCheck.position + (Vector3)(Vector2.down * EntityData.ledgeCheckDistance));
         }
 
@@ -88,14 +87,13 @@ public class Entity : MonoBehaviour
     }
     public virtual void DamageHop(float velocity)
     {
-        velocityWorkspcae.Set(Movement.RB.velocity.x, velocity);
-        Movement.RB.velocity = velocityWorkspcae;
+        velocityWorkspcae.Set(movement.RB.velocity.x, velocity);
+        movement.RB.velocity = velocityWorkspcae;
     }
 
     public virtual void ResetStunResistance()
     {
         isStunned = false;
-        currentStunResistance = EntityData.stunResistance;
     }
 
     public Vector2 GetPosition()

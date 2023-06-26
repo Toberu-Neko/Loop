@@ -52,6 +52,22 @@ public class Enemy2 : Entity
         DeadState = new E2_DeadState(this, StateMachine, "dead", deadStateData, this);
         DodgeState = new E2_DodgeState(this, StateMachine, "dodge", DodgeStateData, this);
         RangedAttackState = new E2_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
+
+        stats.Poise.OnCurrentValueZero += HandlePoiseZero;
+    }
+    private void OnDisable()
+    {
+        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+
+    private void OnDestroy()
+    {
+        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+
+    private void HandlePoiseZero()
+    {
+        StateMachine.ChangeState(StunState);
     }
     private void Start()
     {

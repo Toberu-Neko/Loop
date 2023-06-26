@@ -68,6 +68,7 @@ public class PlayerAbilityState : PlayerState
 
         Combat.DetectedDamageables.Clear();
         Combat.DetectedKnockbackables.Clear();
+        Combat.DetectedStaminaDamageables.Clear();
     }
 
     public override void PhysicsUpdate()
@@ -93,9 +94,9 @@ public class PlayerAbilityState : PlayerState
             }
         }
 
-        if(Combat.DetectedIStaminaDamageables.Count > 0)
+        if(Combat.DetectedStaminaDamageables.Count > 0)
         {
-            foreach (IStaminaDamageable staminaDamageable in Combat.DetectedIStaminaDamageables.ToList())
+            foreach (IStaminaDamageable staminaDamageable in Combat.DetectedStaminaDamageables.ToList())
             {
                 staminaDamageable.TakeStaminaDamage(damageStaminaAmount, core.transform.position, blockable);
             }
