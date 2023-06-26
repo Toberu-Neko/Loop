@@ -37,7 +37,7 @@ public class PlayerSwordNormalAttackState : PlayerAbilityState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(details.damageAmount, details.knockbackAngle, details.knockbackForce);
+        DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
     }
 
     public override void AnimationStartMovementTrigger()

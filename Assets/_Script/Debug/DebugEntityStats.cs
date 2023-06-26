@@ -9,12 +9,8 @@ public class DebugEntityStats : MonoBehaviour
     private Canvas canvas;
     private Core core;
 
-    private Movement Movement => movement ? movement : movement = core.GetCoreComponent<Movement>();
     private Movement movement;
-    private Stats Stats => stats ? stats : stats = core.GetCoreComponent<Stats>();
     private Stats stats;
-
-    private Combat Combat => combat ? combat : combat = core.GetCoreComponent<Combat>();
     private Combat combat;
 
     private Camera cam;
@@ -22,12 +18,16 @@ public class DebugEntityStats : MonoBehaviour
     {
         canvas = GetComponent<Canvas>();
         core = GetComponentInParent<Core>();
+        movement = core.GetCoreComponent<Movement>();
+        stats = core.GetCoreComponent<Stats>();
+        combat = core.GetCoreComponent<Combat>();
+
         cam = Camera.main;
         canvas.worldCamera = cam;
     }
     void Start()
     {
-        UpdateHPText();
+        UpdateText();
     }
 
     private void Update()
@@ -40,13 +40,19 @@ public class DebugEntityStats : MonoBehaviour
 
     private void OnEnable()
     {
-        Combat.OnDamaged += UpdateHPText;
+        stats.Health.OnValueChanged += UpdateText;
+        stats.Stamina.OnValueChanged += UpdateText;
     }
 
     private void OnDisable()
     {
-        Combat.OnDamaged -= UpdateHPText;
+        stats.Health.OnValueChanged -= UpdateText;
+        stats.Stamina.OnValueChanged -= UpdateText;
     }
 
-    void UpdateHPText() => hpText.text = "HP: " + Stats.CurrentHealth.ToString();
+    void UpdateText()
+    {
+        hpText.text = "HP: " + stats.Health.CurrentValue.ToString() +
+            "\nST: " + stats.Stamina.CurrentValue.ToString();
+    }
 }

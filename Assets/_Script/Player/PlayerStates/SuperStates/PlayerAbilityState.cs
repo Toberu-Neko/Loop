@@ -75,7 +75,7 @@ public class PlayerAbilityState : PlayerState
         base.PhysicsUpdate();
     }
 
-    public void DoDamageToDamageList(float damageAmount, Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
+    public void DoDamageToDamageList(float damageAmount,float damageStaminaAmount ,Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
     {
         if (Combat.DetectedDamageables.Count > 0)
         {
@@ -90,6 +90,14 @@ public class PlayerAbilityState : PlayerState
             foreach (IKnockbackable knockbackable in Combat.DetectedKnockbackables.ToList())
             {
                 knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection, (Vector2)core.transform.position, blockable);
+            }
+        }
+
+        if(Combat.DetectedIStaminaDamageables.Count > 0)
+        {
+            foreach (IStaminaDamageable staminaDamageable in Combat.DetectedIStaminaDamageables.ToList())
+            {
+                staminaDamageable.TakeStaminaDamage(damageStaminaAmount, core.transform.position, blockable);
             }
         }
     }

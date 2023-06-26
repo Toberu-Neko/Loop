@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class PlayerSwordSkyAttackState : PlayerAbilityState
 {
+    private WeaponAttackDetails details;
     public PlayerSwordSkyAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        details = player.PlayerWeaponManager.SwordData.skyAttackDetails;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
         Combat.OnDamaged += () => isAbilityDone = true;
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        Combat.OnDamaged -= () => isAbilityDone = true;
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -22,7 +36,7 @@ public class PlayerSwordSkyAttackState : PlayerAbilityState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(20, new Vector2(3, 1), 20);
+        DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
     }
 
     public override void AnimationFinishTrigger()

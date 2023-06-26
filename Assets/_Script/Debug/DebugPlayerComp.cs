@@ -55,7 +55,7 @@ public class DebugPlayerComp : MonoBehaviour
         }
     }
 
-    void UpdateHpText() => HpText.text = "生命值: " + Stats.CurrentHealth.ToString();
+    void UpdateHpText() => HpText.text = "生命值: " + Stats.Health.CurrentValue.ToString();
 
     void UpdateWeaponText()
     {

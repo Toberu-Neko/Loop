@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerSwordSoulOneAttackState : PlayerAbilityState
 {
-    WeaponAttackDetails deatails;
+    WeaponAttackDetails details;
     public PlayerSwordSoulOneAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        deatails = player.PlayerWeaponManager.SwordData.soulOneAttackDetails;
+        details = player.PlayerWeaponManager.SwordData.soulOneAttackDetails;
     }
 
     public override void Enter()
@@ -21,7 +21,7 @@ public class PlayerSwordSoulOneAttackState : PlayerAbilityState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(deatails.damageAmount, deatails.knockbackAngle, deatails.knockbackForce);
+        DoDamageToDamageList(details.damageAmount,details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
     }
 
     public override void AnimationFinishTrigger()
@@ -35,7 +35,7 @@ public class PlayerSwordSoulOneAttackState : PlayerAbilityState
     {
         base.AnimationStartMovementTrigger();
 
-        Movement.SetVelocityX(deatails.movementSpeed * Movement.FacingDirection);
+        Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
     }
 
     public override void AnimationStopMovementTrigger()

@@ -7,6 +7,7 @@ using UnityEngine;
 public class CoreStatSystem
 {
     public event Action OnCurrentValueZero;
+    public event Action OnValueChanged;
 
     [field: SerializeField] public float MaxValue { get; private set; }
 
@@ -33,10 +34,12 @@ public class CoreStatSystem
     public void Increase(float amount)
     {
         CurrentValue += amount;
+        OnValueChanged?.Invoke();
     }
 
     public void Decrease(float amount)
     {
         CurrentValue -= amount;
+        OnValueChanged?.Invoke();
     }
 }

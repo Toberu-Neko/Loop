@@ -13,6 +13,9 @@ public class Stats : CoreComponent
     [SerializeField] private float perfectBlockAttackDuration;
     public bool PerfectBlockAttackable { get; private set; }
     public bool Invincible { get; private set; } = false;
+    public bool InCombat { get; private set; } = false;
+    [SerializeField] private float combatTimer = 2f;
+    private float lastCombatTime;
 
     private Combat combat;
 
@@ -28,20 +31,25 @@ public class Stats : CoreComponent
     }
     private void Update()
     {
-        if (!Stamina.CurrentValue.Equals(Stamina.MaxValue))
+        if(InCombat && Time.time >= lastCombatTime + combatTimer)
+        {
+            InCombat = false;
+        }
+        if (!InCombat && !Stamina.CurrentValue.Equals(Stamina.MaxValue))
         {
             Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
         }
     }
-
     private void OnEnable()
     {
         combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
+        combat.OnDamaged += HandleOnDamaged;
     }
 
     private void OnDisable()
     {
         combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
+        combat.OnDamaged -= HandleOnDamaged;
     }
 
     public override void LogicUpdate()
@@ -71,5 +79,11 @@ public class Stats : CoreComponent
     public void SetInvincibleFalse()
     {
         Invincible = false;
+    }
+
+    private void HandleOnDamaged()
+    {
+        InCombat = true;
+        lastCombatTime = Time.time;
     }
 }

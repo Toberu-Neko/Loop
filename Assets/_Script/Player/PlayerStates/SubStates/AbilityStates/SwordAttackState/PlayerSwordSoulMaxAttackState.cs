@@ -14,7 +14,7 @@ public class PlayerSwordSoulMaxAttackState : PlayerAbilityState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(details.damageAmount, details.knockbackAngle, details.knockbackForce, false);
+        DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
     }
 
     public override void AnimationFinishTrigger()
