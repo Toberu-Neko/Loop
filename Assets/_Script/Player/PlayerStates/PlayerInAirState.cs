@@ -26,6 +26,9 @@ public class PlayerInAirState : PlayerState
 
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
+
+    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
+    private Stats stats;
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -92,14 +95,26 @@ public class PlayerInAirState : PlayerState
 
         CheckJumpMultiplier();
 
-        if (player.InputHandler.AttackInput && player.SwordHubState.CheckIfCanAttack())
+        if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword &&
+                    player.SwordHubState.CheckIfCanAttack())
         {
-            // stateMachine.ChangeState(player.AttackState);
             stateMachine.ChangeState(player.SwordHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.SwordHubState.CheckIfCanAttack())
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword
+            && player.SwordHubState.CheckIfCanAttack() &&
+            player.PlayerWeaponManager.SwordCurrentEnergy > 0 &&
+            Stats.PerfectBlockAttackable &&
+            player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy)
         {
-            Debug.Log("GoToSwordSkillState");
+            player.SwordHubState.SetCanAttackFalse();
+            stateMachine.ChangeState(player.PlayerSwordSoulOneAttackState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword &&
+            player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0
+            && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
+        {
+            player.SwordHubState.SetCanAttackFalse();
+            stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
         }
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock())
         {

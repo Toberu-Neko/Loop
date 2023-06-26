@@ -37,6 +37,7 @@ public class DebugPlayerComp : MonoBehaviour
         Combat.OnPerfectBlock += () => perfectBlockAttack.SetActive(true);
         Combat.OnDamaged += UpdateHpText;
         weaponManager.OnEnergyChanged += UpdateWeaponText;
+        weaponManager.OnWeaponChanged += UpdateWeaponText;
 
     }
 
@@ -45,6 +46,7 @@ public class DebugPlayerComp : MonoBehaviour
         Combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
         Combat.OnDamaged -= UpdateHpText;
         weaponManager.OnEnergyChanged -= UpdateWeaponText;
+        weaponManager.OnWeaponChanged -= UpdateWeaponText;
     }
 
     void Update()

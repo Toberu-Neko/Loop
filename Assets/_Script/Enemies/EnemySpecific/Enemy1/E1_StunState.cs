@@ -23,6 +23,8 @@ public class E1_StunState : StunState
     public override void Exit()
     {
         base.Exit();
+
+        
     }
 
     public override void LogicUpdate()

@@ -85,11 +85,13 @@ public class PlayerGroundedState : PlayerState
 
         // Debug.Log(xInput);
 
-        if (player.InputHandler.AttackInput && !isTouchingCeiling && player.SwordHubState.CheckIfCanAttack())
+        if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling && 
+            player.SwordHubState.CheckIfCanAttack())
         {
             stateMachine.ChangeState(player.SwordHubState);
         }
-        else if(player.InputHandler.WeaponSkillInput && !isTouchingCeiling && player.SwordHubState.CheckIfCanAttack() && 
+        else if(player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling 
+            && player.SwordHubState.CheckIfCanAttack() && 
             player.PlayerWeaponManager.SwordCurrentEnergy > 0 &&
             Stats.PerfectBlockAttackable && 
             player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy)
@@ -97,9 +99,9 @@ public class PlayerGroundedState : PlayerState
             player.SwordHubState.SetCanAttackFalse();
             stateMachine.ChangeState(player.PlayerSwordSoulOneAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && !isTouchingCeiling &&
-            player.SwordHubState.CheckIfCanAttack() && 
-            player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling &&
+            player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0
+            && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
         {
             player.SwordHubState.SetCanAttackFalse();
             stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
@@ -11,33 +12,63 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField, HideInInspector] private int nothing;
     [field: SerializeField] public SO_WeaponData_Sword SwordData { get; private set; }
     public int SwordCurrentEnergy { get; private set; }
+    public int FistCurrentEnergy { get; private set; }
+    public int GunCurrentEnergy { get; private set; }
 
     public event Action OnEnergyChanged;
+    public event Action OnWeaponChanged;
 
     private bool perfectBlockThisFram = false;
 
     private Core core;
     private Combat combat;
+    private Player player;
+    private PlayerInputHandler inputHandler;
+
     private void Awake()
     {
         core = GetComponentInChildren<Core>();
         combat = core.GetCoreComponent<Combat>();
+        player = GetComponent<Player>();
+        inputHandler = GetComponent<PlayerInputHandler>();
     }
 
     private void Start()
     {
         CurrentWeaponType = PlayerWeaponType.Sword;
-        SwordCurrentEnergy = 0;
+        InitializeEnergy();
     }
 
     private void Update()
     {
+        if (inputHandler.ChangeWeapon1 && CurrentWeaponType != PlayerWeaponType.Sword)
+        {
+            CurrentWeaponType = PlayerWeaponType.Sword;
+            OnWeaponChanged?.Invoke();
+        }
+        else if (inputHandler.ChangeWeapon2 && CurrentWeaponType != PlayerWeaponType.Fist)
+        {
+            CurrentWeaponType = PlayerWeaponType.Fist;
+            OnWeaponChanged?.Invoke();
+        }
+        else if (inputHandler.ChangeWeapon3 && CurrentWeaponType != PlayerWeaponType.Gun)
+        {
+            CurrentWeaponType = PlayerWeaponType.Gun;
+            OnWeaponChanged?.Invoke();
+        }
+
         if (perfectBlockThisFram)
         {
             IncreaseEnergy();
         }
     }
+    public void InitializeEnergy()
+    {
+        SwordCurrentEnergy = 0;
+        FistCurrentEnergy = 0;
+        GunCurrentEnergy = 100;
 
+    }
     public int GetCurrentTypeEnergy()
     {
         switch (CurrentWeaponType)
@@ -45,9 +76,9 @@ public class PlayerWeaponManager : MonoBehaviour
             case PlayerWeaponType.Sword:
                 return SwordCurrentEnergy;
             case PlayerWeaponType.Fist:
-                break;
+                return FistCurrentEnergy;
             case PlayerWeaponType.Gun:
-                break;
+                return GunCurrentEnergy;
         }
         return -1;
     }

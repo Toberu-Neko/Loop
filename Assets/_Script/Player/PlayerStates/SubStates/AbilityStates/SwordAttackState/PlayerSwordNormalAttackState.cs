@@ -37,7 +37,6 @@ public class PlayerSwordNormalAttackState : PlayerAbilityState
     {
         base.AnimationActionTrigger();
 
-        Debug.Log(details.attackName + "details.staminaDamageAmount" + details.staminaDamageAmount);
         DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
     }
 

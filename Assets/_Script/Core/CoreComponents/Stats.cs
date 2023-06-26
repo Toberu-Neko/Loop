@@ -94,8 +94,7 @@ public class Stats : CoreComponent
     {
         Poise.Init();
         Poise.decreaseable = false;
-        Invoke(nameof(ResetPoiseDecreaseable), 2f);
     }
 
-    private void ResetPoiseDecreaseable() => Poise.decreaseable = true;
+    public void ResetPoiseDecreaseable() => Poise.decreaseable = true;
 }

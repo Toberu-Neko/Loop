@@ -15,6 +15,12 @@ public class StunState : State
 
     private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
+
+    protected Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
+    private Combat combat;
+
+    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
+    private Stats stats;
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
@@ -46,6 +52,7 @@ public class StunState : State
         base.Exit();
 
         entity.ResetStunResistance();
+        Stats.ResetPoiseDecreaseable();
     }
 
     public override void LogicUpdate()

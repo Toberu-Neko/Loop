@@ -48,7 +48,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     }
     public void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
-        if (Stats.Invincible)
+        if (Stats.Invincible || !Stats.Poise.decreaseable)
         {
             return;
         }
