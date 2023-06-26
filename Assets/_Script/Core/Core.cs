@@ -33,9 +33,14 @@ public class Core : MonoBehaviour
         if (comp)
             return comp;
 
-        if (comp == null)
-            Debug.LogWarning($"{typeof(T)} not found on {transform.parent.name}");
+        Debug.LogWarning($"{typeof(T)} not found on {transform.parent.name}");
 
         return null;
+    }
+
+    public T GetCoreComponent<T>(ref T value) where T : CoreComponent
+    {
+        value = GetCoreComponent<T>();
+        return value;
     }
 }

@@ -5,57 +5,48 @@ using UnityEngine;
 
 public class Stats : CoreComponent
 {
-    [SerializeField] private float maxHealth;
+    [field: SerializeField] public CoreStatSystem Health { get; private set; }
+    [field: SerializeField] public CoreStatSystem Stamina { get; private set; }
+    [SerializeField] private float staminaRecoveryRate;
+
+
     [SerializeField] private float perfectBlockAttackDuration;
-
-    public float CurrentHealth { get; private set; }
-
-    public event Action OnHealthZero;
-
     public bool PerfectBlockAttackable { get; private set; }
     public bool Invincible { get; private set; } = false;
-    // private float perfectBlockStartTime;
 
-    private Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
     private Combat combat;
+
 
     protected override void Awake()
     {
         base.Awake();
 
-        CurrentHealth = maxHealth;
+        combat = core.GetCoreComponent<Combat>();
+
+        Health.Init();
+        Stamina.Init();
+    }
+    private void Update()
+    {
+        if (!Stamina.CurrentValue.Equals(Stamina.MaxValue))
+        {
+            Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
+        }
     }
 
     private void OnEnable()
     {
-        Combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
+        combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
     }
 
     private void OnDisable()
     {
-        Combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
+        combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-    }
-
-    public void DecreaseHeakth(float amount)
-    {
-        CurrentHealth -= amount;
-
-        if (CurrentHealth <= 0)
-        {
-            CurrentHealth = 0;
-            
-            OnHealthZero?.Invoke();
-        }
-    }
-
-    public void IncreaseHealth(float amount)
-    {
-        CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, maxHealth);
     }
 
     public void SetPerfectBlockAttackTrue()
