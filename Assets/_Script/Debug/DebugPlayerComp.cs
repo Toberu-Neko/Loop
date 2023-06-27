@@ -62,6 +62,6 @@ public class DebugPlayerComp : MonoBehaviour
     void UpdateWeaponText()
     {
         weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
-            "\n 能量: " + weaponManager.GetCurrentTypeEnergy();
+            "\n 能量: " + weaponManager.GetCurrentTypeEnergyStr();
     }
 }

@@ -36,6 +36,10 @@ public class Player : MonoBehaviour
     public PlayerSwordSoulMaxAttackState PlayerSwordSoulMaxAttackState { get; private set; }
     #endregion
 
+    #region GunStates
+    public PlayerGunNormalAttackState PlayerGunNormalAttackState { get; private set; }
+    #endregion
+
     #region Components
     public Core Core { get; private set; }
     public Animator Anim { get; private set; }
@@ -91,6 +95,8 @@ public class Player : MonoBehaviour
         SwordCounterAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordCounterAttack");
         PlayerSwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordSoulOneAttack");
         PlayerSwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
+
+        PlayerGunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, playerData, "gunNormalAttack");
     }
 
     private void Start()

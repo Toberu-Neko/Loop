@@ -84,7 +84,7 @@ public class PlayerGroundedState : PlayerState
         dashInput = player.InputHandler.DashInput;
 
         // Debug.Log(xInput);
-
+        #region Sword Attack State
         if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling && 
             player.SwordHubState.CheckIfCanAttack())
         {
@@ -105,6 +105,11 @@ public class PlayerGroundedState : PlayerState
         {
             player.SwordHubState.SetCanAttackFalse();
             stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
+        }
+        #endregion
+        else if(player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun && !isTouchingCeiling)
+        {
+            Debug.Log("GunNormalAttack");
         }
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock())
         {

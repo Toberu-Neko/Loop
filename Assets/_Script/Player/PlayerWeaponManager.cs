@@ -13,8 +13,16 @@ public class PlayerWeaponManager : MonoBehaviour
     [field: SerializeField] public SO_WeaponData_Sword SwordData { get; private set; }
     public int SwordCurrentEnergy { get; private set; }
     public int FistCurrentEnergy { get; private set; }
-    public int GunCurrentEnergy { get; private set; }
 
+    [Header("Gun")]
+    [SerializeField, HideInInspector] private int nothing2;
+    [field: SerializeField] public Transform ProjectileStartPos { get; private set; }
+    [field: SerializeField] public SO_WeaponData_Gun GunData { get; private set; }
+
+    public float GunCurrentEnergy { get; private set; }
+    public bool GunEnergyRegenable { get; private set; }
+    
+    
     public event Action OnEnergyChanged;
     public event Action OnWeaponChanged;
 
@@ -57,7 +65,12 @@ public class PlayerWeaponManager : MonoBehaviour
             OnWeaponChanged?.Invoke();
         }
 
-        if (perfectBlockThisFram)
+        if ((CurrentWeaponType == PlayerWeaponType.Sword || CurrentWeaponType == PlayerWeaponType.Fist) && perfectBlockThisFram)
+        {
+            IncreaseEnergy();
+        }
+
+        if(CurrentWeaponType == PlayerWeaponType.Gun && GunEnergyRegenable)
         {
             IncreaseEnergy();
         }
@@ -66,21 +79,24 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         SwordCurrentEnergy = 0;
         FistCurrentEnergy = 0;
-        GunCurrentEnergy = 100;
+        GunCurrentEnergy = GunData.maxEnergy;
+        GunEnergyRegenable = true;
 
     }
-    public int GetCurrentTypeEnergy()
+    public string GetCurrentTypeEnergyStr()
     {
         switch (CurrentWeaponType)
         {
             case PlayerWeaponType.Sword:
-                return SwordCurrentEnergy;
+                return SwordCurrentEnergy.ToString();
             case PlayerWeaponType.Fist:
-                return FistCurrentEnergy;
+                return FistCurrentEnergy.ToString();
             case PlayerWeaponType.Gun:
-                return GunCurrentEnergy;
+                return GunCurrentEnergy.ToString();
         }
-        return -1;
+
+        Debug.Log("WeaponTyperError");
+        return "WeaponTyperError";
     }
 
     private void IncreaseEnergy()
@@ -94,6 +110,8 @@ public class PlayerWeaponManager : MonoBehaviour
             case PlayerWeaponType.Fist:
                 break;
             case PlayerWeaponType.Gun:
+                if(GunCurrentEnergy < GunData.maxEnergy)
+                    GunCurrentEnergy += GunData.energyRegen * Time.deltaTime;
                 break;
         }
         perfectBlockThisFram = false;
@@ -110,6 +128,7 @@ public class PlayerWeaponManager : MonoBehaviour
             case PlayerWeaponType.Fist:
                 break;
             case PlayerWeaponType.Gun:
+                GunCurrentEnergy -= GunData.energyCostPerShot;
                 break;
         }
         OnEnergyChanged?.Invoke();
@@ -125,10 +144,17 @@ public class PlayerWeaponManager : MonoBehaviour
             case PlayerWeaponType.Fist:
                 break;
             case PlayerWeaponType.Gun:
+                GunCurrentEnergy = 0;
                 break;
         }
         OnEnergyChanged?.Invoke();
     }
+
+    public void SetGunRegenable(bool regenable)
+    {
+        GunEnergyRegenable = regenable;
+    }
+
     private void OnEnable()
     {
         combat.OnPerfectBlock += () => perfectBlockThisFram = true ;
