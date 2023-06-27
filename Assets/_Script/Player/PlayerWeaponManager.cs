@@ -112,6 +112,9 @@ public class PlayerWeaponManager : MonoBehaviour
             case PlayerWeaponType.Gun:
                 if(GunCurrentEnergy < GunData.maxEnergy)
                     GunCurrentEnergy += GunData.energyRegen * Time.deltaTime;
+
+                if (GunCurrentEnergy > GunData.maxEnergy)
+                    GunCurrentEnergy = GunData.maxEnergy;
                 break;
         }
         perfectBlockThisFram = false;
@@ -154,6 +157,14 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         GunEnergyRegenable = regenable;
     }
+
+    public void GunFired()
+    {
+        GunEnergyRegenable = false;
+        CancelInvoke(nameof(SetGunRagenableTrue));
+        Invoke(nameof(SetGunRagenableTrue), GunData.energyRegenDelay);
+    }
+    private void SetGunRagenableTrue() => GunEnergyRegenable = true;
 
     private void OnEnable()
     {

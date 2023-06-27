@@ -8,6 +8,7 @@ public class E2_Projectile : MonoBehaviour
 
     private float travelDistance;
     private float xStartPosition;
+    private int facingDirection;
 
     [SerializeField] private float gravity;
     [SerializeField] private float damageRadius;
@@ -65,7 +66,7 @@ public class E2_Projectile : MonoBehaviour
                     }
                     if(collider.TryGetComponent(out IKnockbackable knockbackable))
                     {
-                        knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, details.facingDirection, transform.position);
+                        knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, facingDirection, transform.position);
                         Destroy(gameObject);
                     }
                 }
@@ -86,7 +87,7 @@ public class E2_Projectile : MonoBehaviour
         }
     }
 
-    public void FireProjectile(ProjectileDetails details, float travelDistance)
+    public void FireProjectile(ProjectileDetails details, float travelDistance, int facingDirection)
     {
         this.details = details;
         this.travelDistance = travelDistance;

@@ -1,14 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SwordProjectile : MonoBehaviour
+public class PlayerProjectile : MonoBehaviour
 {
+    [SerializeField] private bool destoryWhenCollide;
     private List<GameObject> collidedObjects = new();
 
     private ProjectileDetails projectileDetails;
 
+    private Vector2 fireDirection;
+    private int knockbackDirection;
 
     private Rigidbody2D rb;
 
@@ -20,17 +21,28 @@ public class SwordProjectile : MonoBehaviour
     private void Start()
     {
         rb.gravityScale = 0;
-        rb.velocity = transform.right * projectileDetails.speed;
+        rb.velocity = fireDirection * projectileDetails.speed;
 
         Invoke(nameof(DestoryThis), projectileDetails.duration);
     }
-    public void Fire(ProjectileDetails details)
+    public void Fire(ProjectileDetails details, Vector2 fireDirection)
     {
         projectileDetails = details;
+        this.fireDirection = fireDirection;
+
+        if(fireDirection.x > 0)
+        {
+            knockbackDirection = 1;
+        }
+        else
+        {
+            knockbackDirection = -1;
+        }
     }
 
     private void DestoryThis()
     {
+        CancelInvoke(nameof(DestoryThis));
         Destroy(gameObject);
     }
 
@@ -44,9 +56,17 @@ public class SwordProjectile : MonoBehaviour
             }
             if(collision.TryGetComponent(out IKnockbackable knockbackable))
             {
-                knockbackable.Knockback(projectileDetails.knockbackAngle, projectileDetails.knockbackStrength, projectileDetails.facingDirection, transform.position);
+                knockbackable.Knockback(projectileDetails.knockbackAngle, projectileDetails.knockbackStrength, knockbackDirection, transform.position);
             }
+            if(collision.TryGetComponent(out IStaminaDamageable staminaDamageable))
+            {
+                staminaDamageable.TakeStaminaDamage(projectileDetails.staminaDamageAmount, transform.position, true);
+            }
+
             collidedObjects.Add(collision.gameObject);
+
+            if (destoryWhenCollide)
+                DestoryThis();
         }
 
     }

@@ -7,8 +7,7 @@ public class PlayerAbilityState : PlayerState
 {
     protected bool isAbilityDone;
 
-    //If have an abality that needs to know if grounded, change to protect.
-    private bool isGrounded;
+    protected bool isGrounded;
 
     protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;

@@ -80,7 +80,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
             Stats.Health.Decrease(damageAmount);
-            ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
+            ParticleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         else if (PerfectBlock)
         {
@@ -89,12 +89,12 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         else if(NormalBlock)
         {
             Stats.Health.Decrease(damageAmount * blockDamageMultiplier);
-            ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
+            ParticleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         else
         {
             Stats.Health.Decrease(damageAmount);
-            ParticleManager?.StartParticlesWithRandomRotation(damageParticles);
+            ParticleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         OnDamaged?.Invoke();
     }

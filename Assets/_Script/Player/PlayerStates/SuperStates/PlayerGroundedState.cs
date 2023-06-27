@@ -15,22 +15,7 @@ public class PlayerGroundedState : PlayerState
 
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
-    private CollisionSenses CollisionSenses 
-    { 
-        // ?? == if left is null, return right, else return left
-        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
-
-
-        /* get
-        {
-            if(collisionSenses)
-            {
-                return collisionSenses;
-            }
-            collisionSenses = core.GetCoreComponent<CollisionSenses>();
-            return collisionSenses;
-        }*/ 
-    }
+    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
     private bool jumpInput;
@@ -56,7 +41,6 @@ public class PlayerGroundedState : PlayerState
             isTouchingLedge = CollisionSenses.LedgeHorizontal;
             isTouchingCeiling = CollisionSenses.Ceiling;
         }
-        // Debug.Log("PGS: " + isTouchingCeiling);
     }
 
     public override void Enter()
@@ -109,7 +93,7 @@ public class PlayerGroundedState : PlayerState
         #endregion
         else if(player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun && !isTouchingCeiling)
         {
-            Debug.Log("GunNormalAttack");
+            stateMachine.ChangeState(player.PlayerGunNormalAttackState);
         }
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock())
         {

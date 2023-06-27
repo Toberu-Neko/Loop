@@ -12,5 +12,6 @@ public class SO_WeaponData_Gun : SO_WeaponData
     [Header("NormalAttack")]
     public GameObject normalAttackObject;
     public float energyCostPerShot;
+    public float attackSpeed;
     public ProjectileDetails normalAttackDetails;
 }

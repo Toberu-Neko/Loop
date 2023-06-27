@@ -8,22 +8,6 @@ public class PlayerMoveState : PlayerGroundedState
     {
 
     }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -42,7 +26,6 @@ public class PlayerMoveState : PlayerGroundedState
             {
                 stateMachine.ChangeState(player.CrouchMoveState);
             }
-
         }
     }
 

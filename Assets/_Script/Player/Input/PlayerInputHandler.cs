@@ -16,7 +16,7 @@ public class PlayerInputHandler : MonoBehaviour
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
 
-    public bool JumInputStop { get; private set; }
+    public bool JumpInputStop { get; private set; }
     public bool GrabInput { get; private set; }
     public bool DashInput { get; private set; }
     public bool DashInputStop { get; private set; }
@@ -172,12 +172,12 @@ public class PlayerInputHandler : MonoBehaviour
         if(context.started)
         {
             JumpInput = true;
-            JumInputStop = false;
+            JumpInputStop = false;
             jumpInputStartTime = Time.time;
         }
         if(context.canceled)
         {
-            JumInputStop = true;
+            JumpInputStop = true;
         }
     }
     public void OnGrabInput(InputAction.CallbackContext context)

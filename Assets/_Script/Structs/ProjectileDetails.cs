@@ -7,9 +7,10 @@ using UnityEngine;
 public struct ProjectileDetails
 {
     public float damageAmount;
+    public float staminaDamageAmount;
     public float speed;
     public float duration;
-    [HideInInspector] public int facingDirection;
+
     public Vector2 knockbackAngle;
     public float knockbackStrength;
     

@@ -19,10 +19,9 @@ public class PlayerSwordStrongAttackState : PlayerAbilityState
     {
         base.AnimationActionTrigger();
 
-        GameObject projectile = GameObject.Instantiate(player.PlayerWeaponManager.SwordData.projectile, core.transform.position, core.transform.parent.rotation);
-        SwordProjectile projectileScript = projectile.GetComponent<SwordProjectile>();
-        weaponData.projectileDetails.facingDirection = Movement.FacingDirection;
-        projectileScript.Fire(weaponData.projectileDetails);
+        GameObject projectile = GameObject.Instantiate(player.PlayerWeaponManager.SwordData.projectile, core.transform.position, Quaternion.identity);
+        PlayerProjectile projectileScript = projectile.GetComponent<PlayerProjectile>();
+        projectileScript.Fire(weaponData.projectileDetails, new Vector2(Movement.FacingDirection, 0));
     }
     public override void AnimationFinishTrigger()
     {

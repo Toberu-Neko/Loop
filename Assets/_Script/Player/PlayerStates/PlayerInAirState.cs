@@ -89,12 +89,13 @@ public class PlayerInAirState : PlayerState
         xInput = player.InputHandler.NormInputX;
         jumpInput = player.InputHandler.JumpInput;
 
-        jumpInputStop = player.InputHandler.JumInputStop;
+        jumpInputStop = player.InputHandler.JumpInputStop;
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
 
         CheckJumpMultiplier();
 
+        #region Sword
         if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword &&
                     player.SwordHubState.CheckIfCanAttack())
         {
@@ -115,6 +116,11 @@ public class PlayerInAirState : PlayerState
         {
             player.SwordHubState.SetCanAttackFalse();
             stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
+        }
+        #endregion
+        else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun)
+        {
+            stateMachine.ChangeState(player.PlayerGunNormalAttackState);
         }
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock())
         {
@@ -159,11 +165,6 @@ public class PlayerInAirState : PlayerState
             player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
             player.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
     private void CheckJumpMultiplier()
     {
