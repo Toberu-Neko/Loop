@@ -72,7 +72,7 @@ public class PlayerBlockState : PlayerAttackState
             }
             else if (!blockInput || (knockbackFinished && damageFinished))
             {
-                isAbilityDone = true;
+                isAttackDone = true;
             }
         }
     }

@@ -13,7 +13,7 @@ public class PlayerSwordNormalAttackState : PlayerAttackState
         swordData = player.PlayerWeaponManager.SwordData;
         attackCounter = 0;
 
-        Combat.OnDamaged += () => isAbilityDone = true;
+        Combat.OnDamaged += () => isAttackDone = true;
 
     }
     public override void Enter()
@@ -57,7 +57,7 @@ public class PlayerSwordNormalAttackState : PlayerAttackState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
-        isAbilityDone = true;
+        isAttackDone = true;
     }
 
 }

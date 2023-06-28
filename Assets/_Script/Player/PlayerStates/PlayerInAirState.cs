@@ -122,6 +122,10 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.PlayerGunNormalAttackState);
         }
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun)
+        {
+            stateMachine.ChangeState(player.PlayerGunChargeAttackState);
+        }
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock())
         {
             stateMachine.ChangeState(player.BlockState);

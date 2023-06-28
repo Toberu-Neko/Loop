@@ -17,7 +17,7 @@ public class PlayerSwordHubState : PlayerAttackState
     {
         holdAttackTime = player.PlayerWeaponManager.SwordData.strongAttackHoldTime;
 
-        Combat.OnDamaged += () => isAbilityDone = true;
+        Combat.OnDamaged += () => isAttackDone = true;
     }
 
     public override void Enter()

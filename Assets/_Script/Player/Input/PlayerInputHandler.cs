@@ -88,6 +88,7 @@ public class PlayerInputHandler : MonoBehaviour
             WeaponSkillHoldInput = false;
         }
     }
+    public void UseWeaponSkillInput() => WeaponSkillInput = false;
 
     public void OnChangeWeapon1Input(InputAction.CallbackContext context)
     {

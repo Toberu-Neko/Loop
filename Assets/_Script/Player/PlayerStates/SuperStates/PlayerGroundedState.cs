@@ -95,6 +95,10 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.PlayerGunNormalAttackState);
         }
+        else if(player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun && !isTouchingCeiling)
+        {
+            stateMachine.ChangeState(player.PlayerGunChargeAttackState);
+        }
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock())
         {
             stateMachine.ChangeState(player.BlockState);

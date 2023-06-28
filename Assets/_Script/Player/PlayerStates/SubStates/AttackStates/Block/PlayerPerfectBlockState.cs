@@ -14,7 +14,7 @@ public class PlayerPerfectBlockState : PlayerAttackState
     {
         base.AnimationFinishTrigger();
 
-        isAbilityDone = true;
+        isAttackDone = true;
     }
 
     public override void AnimationActionTrigger()

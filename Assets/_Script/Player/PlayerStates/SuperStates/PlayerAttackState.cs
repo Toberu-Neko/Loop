@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerAttackState : PlayerState
 {
-    protected bool isAbilityDone;
+    protected bool isAttackDone;
 
     protected bool isGrounded;
+
+    private bool jumpInput;
+    private bool jumpInputStop;
+    private bool isJumping;
 
     protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;
@@ -37,7 +42,8 @@ public class PlayerAttackState : PlayerState
     {
         base.Enter();
         Stats.SetCanChangeWeapon(false);
-        isAbilityDone = false;
+        isAttackDone = false;
+        isJumping = false;
     }
 
     public override void Exit()
@@ -50,7 +56,10 @@ public class PlayerAttackState : PlayerState
     {
         base.LogicUpdate();
 
-        if(isAbilityDone)
+        jumpInput = player.InputHandler.JumpInput;
+        jumpInputStop = player.InputHandler.JumpInputStop;
+
+        if (isAttackDone)
         {
             if(isGrounded && Movement.CurrentVelocity.y < 0.01f)
             {
@@ -70,11 +79,6 @@ public class PlayerAttackState : PlayerState
         Combat.DetectedDamageables.Clear();
         Combat.DetectedKnockbackables.Clear();
         Combat.DetectedStaminaDamageables.Clear();
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 
     public void DoDamageToDamageList(float damageAmount,float damageStaminaAmount ,Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
@@ -103,6 +107,38 @@ public class PlayerAttackState : PlayerState
             }
         }
     }
+    protected void Jump()
+    {
+        CheckJumpMultiplier();
 
+        if (jumpInput && player.JumpState.AmountOfJumpsLeft > 0)
+        {
+            Movement.SetVelocityY(playerData.jumpVelocity);
+            player.JumpState.DecreaseAmountOfJumpsLeft();
+            player.InputHandler.UseJumpInput();
+            isJumping = true;
+        }
+
+        if (isGrounded && Movement.CurrentVelocity.y < 0.01f && player.JumpState.AmountOfJumpsLeft != playerData.amountOfJumps)
+        {
+            player.JumpState.ResetAmountOfJumpsLeft();
+        }
+    }
+
+    private void CheckJumpMultiplier()
+    {
+        if (isJumping)
+        {
+            if (jumpInputStop)
+            {
+                Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.variableJumpHeightMultiplier);
+                isJumping = false;
+            }
+            else if (Movement.CurrentVelocity.y <= 0f)
+            {
+                isJumping = false;
+            }
+        }
+    }
 
 }

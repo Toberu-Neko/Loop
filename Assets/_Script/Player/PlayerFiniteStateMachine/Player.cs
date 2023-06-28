@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
 
     #region GunStates
     public PlayerGunNormalAttackState PlayerGunNormalAttackState { get; private set; }
+    public PlayerGunChargingState PlayerGunChargeAttackState { get; private set; }
     #endregion
 
     #region Components
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
         PlayerSwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
 
         PlayerGunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, playerData, "gunNormalAttack");
+        PlayerGunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
     }
 
     private void Start()

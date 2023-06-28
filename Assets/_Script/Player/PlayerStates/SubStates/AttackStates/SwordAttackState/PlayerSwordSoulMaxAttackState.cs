@@ -21,7 +21,7 @@ public class PlayerSwordSoulMaxAttackState : PlayerAttackState
     {
         base.AnimationFinishTrigger();
 
-        isAbilityDone = true;
+        isAttackDone = true;
     }
 
     public override void Enter()

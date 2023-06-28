@@ -28,7 +28,7 @@ public class PlayerSwordSoulOneAttackState : PlayerAttackState
     {
         base.AnimationFinishTrigger();
 
-        isAbilityDone = true;
+        isAttackDone = true;
     }
 
     public override void AnimationStartMovementTrigger()

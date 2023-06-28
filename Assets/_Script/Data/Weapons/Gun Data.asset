@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Gun Data
   m_EditorClassIdentifier: 
   maxEnergy: 100
-  energyRegen: 8
-  energyRegenDelay: 1.5
+  energyRegen: 5
+  energyRegenDelay: 1
   normalAttackObject: {fileID: 4763303106170138442, guid: 017f74101e07e384a9eaac15ff7d27db, type: 3}
   energyCostPerShot: 4
   attackSpeed: 0.5
@@ -25,3 +25,15 @@ MonoBehaviour:
     duration: 10
     knockbackAngle: {x: 1, y: 0.2}
     knockbackStrength: 15
+  chargeAttackObject: {fileID: 7646123403547316394, guid: 2630a78d2b1429640918c6d9550d2950, type: 3}
+  minChargeTime: 1
+  chargeAttackHeight: 1
+  chargeAttackWidthPerSecond: 3
+  chargeAttackEnergyCostPerSecond: 10
+  chargeAttackDetails:
+    attackName: 
+    movementSpeed: 0
+    damageAmount: 0
+    staminaDamageAmount: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}

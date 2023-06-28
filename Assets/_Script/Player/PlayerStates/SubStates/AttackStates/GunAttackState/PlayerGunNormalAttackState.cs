@@ -12,11 +12,9 @@ public class PlayerGunNormalAttackState : PlayerAttackState
     private float lastAttackTime = 0f;
 
     private int xInput;
-    private bool jumpInput;
-    private bool jumpInputStop;
+
     private Vector2 mouseDirectionInput;
 
-    private bool isJumping;
 
     public PlayerGunNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -26,8 +24,6 @@ public class PlayerGunNormalAttackState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
-
-        isJumping = false;
     }
     public override void Exit()
     {
@@ -39,18 +35,23 @@ public class PlayerGunNormalAttackState : PlayerAttackState
         base.LogicUpdate();
 
         attackInput = player.InputHandler.AttackInput;
-        xInput = player.InputHandler.NormInputX;
-        jumpInput = player.InputHandler.JumpInput;
-        jumpInputStop = player.InputHandler.JumpInputStop;
         mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
+        xInput = player.InputHandler.NormInputX;
 
-        MovementAndJump();
+        Movement.SetVelocityX(playerData.movementVelocity * xInput);
+
+        Jump();
+
+        if (mouseDirectionInput.x < 0)
+            Movement.CheckIfShouldFlip(-1);
+        else if (mouseDirectionInput.x > 0)
+            Movement.CheckIfShouldFlip(1);
 
         CheckCanAttack();
 
         if (!attackInput)
         {
-            isAbilityDone = true;
+            isAttackDone = true;
         }
         else if(canAttack && player.PlayerWeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
         {
@@ -61,47 +62,6 @@ public class PlayerGunNormalAttackState : PlayerAttackState
 
             PlayerProjectile proj = GameObject.Instantiate(data.normalAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity).GetComponent<PlayerProjectile>();
             proj.Fire(data.normalAttackDetails, mouseDirectionInput);
-        }
-    }
-
-    private void MovementAndJump()
-    {
-        Movement.SetVelocityX(playerData.movementVelocity * xInput);
-
-        CheckJumpMultiplier();
-
-        if (jumpInput && player.JumpState.AmountOfJumpsLeft > 0)
-        {
-            Movement.SetVelocityY(playerData.jumpVelocity);
-            player.JumpState.DecreaseAmountOfJumpsLeft();
-            player.InputHandler.UseJumpInput();
-            isJumping = true;
-        }
-
-        if (isGrounded && Movement.CurrentVelocity.y < 0.01f && player.JumpState.AmountOfJumpsLeft != playerData.amountOfJumps)
-        {
-            player.JumpState.ResetAmountOfJumpsLeft();
-        }
-
-        if (mouseDirectionInput.x < 0)
-            Movement.CheckIfShouldFlip(-1);
-        else if (mouseDirectionInput.x > 0)
-            Movement.CheckIfShouldFlip(1);
-    }
-
-    private void CheckJumpMultiplier()
-    {
-        if (isJumping)
-        {
-            if (jumpInputStop)
-            {
-                Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.variableJumpHeightMultiplier);
-                isJumping = false;
-            }
-            else if (Movement.CurrentVelocity.y <= 0f)
-            {
-                isJumping = false;
-            }
         }
     }
 
