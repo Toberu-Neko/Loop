@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordNormalAttackState : PlayerAbilityState
+public class PlayerSwordNormalAttackState : PlayerAttackState
 {
     private int attackCounter;
     private SO_WeaponData_Sword swordData;

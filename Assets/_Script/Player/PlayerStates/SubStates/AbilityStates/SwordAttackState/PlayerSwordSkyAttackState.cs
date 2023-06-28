@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordSkyAttackState : PlayerAbilityState
+public class PlayerSwordSkyAttackState : PlayerAttackState
 {
     private WeaponAttackDetails details;
     public PlayerSwordSkyAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)

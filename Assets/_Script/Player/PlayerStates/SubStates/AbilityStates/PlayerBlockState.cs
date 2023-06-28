@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBlockState : PlayerAbilityState
+public class PlayerBlockState : PlayerAttackState
 {
     private bool blockInput;
     private int xInput;

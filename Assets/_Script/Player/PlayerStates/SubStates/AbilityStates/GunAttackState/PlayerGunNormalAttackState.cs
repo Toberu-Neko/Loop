@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows;
 
-public class PlayerGunNormalAttackState : PlayerAbilityState
+public class PlayerGunNormalAttackState : PlayerAttackState
 {
     private SO_WeaponData_Gun data;
 

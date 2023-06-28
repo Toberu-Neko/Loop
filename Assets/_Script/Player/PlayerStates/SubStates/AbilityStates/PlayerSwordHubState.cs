@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordHubState : PlayerAbilityState
+public class PlayerSwordHubState : PlayerAttackState
 {
     private float holdAttackTime = 2f;
     

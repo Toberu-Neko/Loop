@@ -14,6 +14,7 @@ public class Stats : CoreComponent
     public bool PerfectBlockAttackable { get; private set; }
     public bool Invincible { get; private set; } = false;
     public bool InCombat { get; private set; } = false;
+    public bool CanChangeWeapon { get; private set; } = true;
     [SerializeField] private float combatTimer = 2f;
     private float lastCombatTime;
 
@@ -74,15 +75,11 @@ public class Stats : CoreComponent
             PerfectBlockAttackable = false;
     }
 
-    public void SetInvincibleTrue()
-    {
-        Invincible = true;
-    }
+    public void SetInvincibleTrue() => Invincible = true;
 
-    public void SetInvincibleFalse()
-    {
-        Invincible = false;
-    }
+    public void SetInvincibleFalse() => Invincible = false;
+
+    public void SetCanChangeWeapon(bool volume) => CanChangeWeapon = volume;
 
     private void HandleOnDamaged()
     {

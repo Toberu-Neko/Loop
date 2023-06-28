@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,12 +32,14 @@ public class PlayerWeaponManager : MonoBehaviour
     private Core core;
     private Combat combat;
     private Player player;
+    private Stats stats;
     private PlayerInputHandler inputHandler;
 
     private void Awake()
     {
         core = GetComponentInChildren<Core>();
         combat = core.GetCoreComponent<Combat>();
+        stats = core.GetCoreComponent<Stats>();
         player = GetComponent<Player>();
         inputHandler = GetComponent<PlayerInputHandler>();
     }
@@ -49,6 +52,9 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Update()
     {
+        if(stats.CanChangeWeapon)
+            ChangeWeapon();
+
         if ((CurrentWeaponType == PlayerWeaponType.Sword || CurrentWeaponType == PlayerWeaponType.Fist) && perfectBlockThisFram)
         {
             IncreaseEnergy();
