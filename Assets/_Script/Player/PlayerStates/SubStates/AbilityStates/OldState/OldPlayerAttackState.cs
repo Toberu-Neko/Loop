@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackState : PlayerAbilityState
+public class OldPlayerAttackState : PlayerAbilityState
 {
     private Weapon weapon;
 
@@ -12,7 +12,7 @@ public class PlayerAttackState : PlayerAbilityState
     private bool setVelocity;
     private bool shouldCheckFlip;
 
-    public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public OldPlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

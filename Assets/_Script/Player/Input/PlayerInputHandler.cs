@@ -10,8 +10,8 @@ public class PlayerInputHandler : MonoBehaviour
     private Camera cam;
 
     public Vector2 RawMovementInput { get; private set; }
-    public Vector2 RawDashDirectionInput { get; private set; }
-    public Vector2Int DashDirectionInput { get; private set; }
+    public Vector2 RawMouseDirectionInput { get; private set; }
+    public Vector2Int FixedMouseDirectionInput { get; private set; }
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
@@ -155,17 +155,19 @@ public class PlayerInputHandler : MonoBehaviour
             DashInput = false;
         }
     }
-    public void OnDashDirectionInput(InputAction.CallbackContext context)
+    public void OnMouseDirectionInput(InputAction.CallbackContext context)
     {
-        RawDashDirectionInput = context.ReadValue<Vector2>();
+        RawMouseDirectionInput = context.ReadValue<Vector2>();
 
         if(playerInput.currentControlScheme == "Keyboard")
         {
-            RawDashDirectionInput = cam.ScreenToWorldPoint((Vector3)RawDashDirectionInput) - transform.position;
-            RawDashDirectionInput.Normalize();
+            RawMouseDirectionInput = cam.ScreenToWorldPoint((Vector3)RawMouseDirectionInput) - transform.position;
+            RawMouseDirectionInput = RawMouseDirectionInput.normalized;
         }
+        // Debug.Log(RawMouseDirectionInput);
         //45 degree angle
-        DashDirectionInput = Vector2Int.RoundToInt(RawDashDirectionInput.normalized);
+        FixedMouseDirectionInput = Vector2Int.RoundToInt(RawMouseDirectionInput.normalized);
+
     }
     public void OnJumpInput(InputAction.CallbackContext context)
     {

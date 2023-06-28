@@ -49,6 +49,19 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Update()
     {
+        if ((CurrentWeaponType == PlayerWeaponType.Sword || CurrentWeaponType == PlayerWeaponType.Fist) && perfectBlockThisFram)
+        {
+            IncreaseEnergy();
+        }
+
+        if(CurrentWeaponType == PlayerWeaponType.Gun && GunEnergyRegenable)
+        {
+            IncreaseEnergy();
+        }
+    }
+
+    private void ChangeWeapon()
+    {
         if (inputHandler.ChangeWeapon1 && CurrentWeaponType != PlayerWeaponType.Sword)
         {
             CurrentWeaponType = PlayerWeaponType.Sword;
@@ -64,17 +77,8 @@ public class PlayerWeaponManager : MonoBehaviour
             CurrentWeaponType = PlayerWeaponType.Gun;
             OnWeaponChanged?.Invoke();
         }
-
-        if ((CurrentWeaponType == PlayerWeaponType.Sword || CurrentWeaponType == PlayerWeaponType.Fist) && perfectBlockThisFram)
-        {
-            IncreaseEnergy();
-        }
-
-        if(CurrentWeaponType == PlayerWeaponType.Gun && GunEnergyRegenable)
-        {
-            IncreaseEnergy();
-        }
     }
+
     public void InitializeEnergy()
     {
         SwordCurrentEnergy = 0;

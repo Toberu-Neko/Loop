@@ -14,6 +14,7 @@ public class PlayerGunNormalAttackState : PlayerAbilityState
     private int xInput;
     private bool jumpInput;
     private bool jumpInputStop;
+    private Vector2 mouseDirectionInput;
 
     private bool isJumping;
 
@@ -41,24 +42,9 @@ public class PlayerGunNormalAttackState : PlayerAbilityState
         xInput = player.InputHandler.NormInputX;
         jumpInput = player.InputHandler.JumpInput;
         jumpInputStop = player.InputHandler.JumpInputStop;
+        mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
 
-        Movement.SetVelocityX(playerData.movementVelocity * xInput);
-
-        CheckJumpMultiplier();
-
-        if (jumpInput && player.JumpState.AmountOfJumpsLeft > 0)
-        {
-            Movement.SetVelocityY(playerData.jumpVelocity);
-            player.JumpState.DecreaseAmountOfJumpsLeft();
-            player.InputHandler.UseJumpInput();
-            isJumping = true;
-            Debug.Log(player.JumpState.AmountOfJumpsLeft);
-        }
-
-        if (isGrounded && Movement.CurrentVelocity.y < 0.01f && player.JumpState.AmountOfJumpsLeft != playerData.amountOfJumps)
-        {
-            player.JumpState.ResetAmountOfJumpsLeft();
-        }
+        MovementAndJump();
 
         CheckCanAttack();
 
@@ -74,9 +60,33 @@ public class PlayerGunNormalAttackState : PlayerAbilityState
             player.PlayerWeaponManager.GunFired();
 
             PlayerProjectile proj = GameObject.Instantiate(data.normalAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity).GetComponent<PlayerProjectile>();
-            proj.Fire(data.normalAttackDetails, new Vector2(Movement.FacingDirection, 0));
-            //TODO: Set the projectile's direction
+            proj.Fire(data.normalAttackDetails, mouseDirectionInput);
         }
+    }
+
+    private void MovementAndJump()
+    {
+        Movement.SetVelocityX(playerData.movementVelocity * xInput);
+
+        CheckJumpMultiplier();
+
+        if (jumpInput && player.JumpState.AmountOfJumpsLeft > 0)
+        {
+            Movement.SetVelocityY(playerData.jumpVelocity);
+            player.JumpState.DecreaseAmountOfJumpsLeft();
+            player.InputHandler.UseJumpInput();
+            isJumping = true;
+        }
+
+        if (isGrounded && Movement.CurrentVelocity.y < 0.01f && player.JumpState.AmountOfJumpsLeft != playerData.amountOfJumps)
+        {
+            player.JumpState.ResetAmountOfJumpsLeft();
+        }
+
+        if (mouseDirectionInput.x < 0)
+            Movement.CheckIfShouldFlip(-1);
+        else if (mouseDirectionInput.x > 0)
+            Movement.CheckIfShouldFlip(1);
     }
 
     private void CheckJumpMultiplier()

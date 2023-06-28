@@ -44,6 +44,7 @@ public class PlayerData : ScriptableObject
     public Vector2 stopOffset;
 
     [Header("DashState")]
+    public bool useFixedDegreeAngle = true;
     public float dashCooldown = 0.5f;
     public float maxHoldTime = 1f;
     public float holdTimeScale = 0.25f;
