@@ -9,8 +9,4 @@ public class TransparentPlatform : MonoBehaviour
         GameObject player = GameObject.Find("Player");
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
-    void Start()
-    {
-        
-    }
 }

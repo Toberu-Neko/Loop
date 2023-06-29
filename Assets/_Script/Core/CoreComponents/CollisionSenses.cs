@@ -15,6 +15,11 @@ public class CollisionSenses : CoreComponent
         get => GenericNotImplementedError<Transform>.TryGet(groundCheck, transform.parent.name);
         private set => groundCheck = value; 
     }
+    public Transform HeadCheck
+    {
+        get => GenericNotImplementedError<Transform>.TryGet(headCheck, transform.parent.name);
+        private set => headCheck = value;
+    }
     public Transform WallCheck {
         get => GenericNotImplementedError<Transform>.TryGet(wallCheck, transform.parent.name);
         private set => wallCheck = value; 
@@ -35,7 +40,6 @@ public class CollisionSenses : CoreComponent
         private set => ceilingCheck = value; 
     }
 
-    public float GroundCheckRadius { get => groundCheckRadius; set => groundCheckRadius = value; }
     public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
     public LayerMask WhatIsGround { get => whatIsGround; set => whatIsGround = value; }
 
@@ -44,29 +48,41 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform ledgeCheckHorizontal;
     [SerializeField] private Transform ledgeCheckVertical;
     [SerializeField] private Transform ceilingCheck;
+    [SerializeField] private Transform headCheck;
     #endregion
 
-    [SerializeField] private float ceilingCheckRadius;
-    [SerializeField] private float groundCheckRadius;
+    [SerializeField] private Vector2 ceilingCheckV2;
+    [SerializeField] private Vector2 groundCheckV2;
+    [SerializeField] private Vector2 headCheckV2;
+    
     [SerializeField] private float wallCheckDistance;
 
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private LayerMask whatIsPlatform;
 
-    public bool Ceiling 
+    public bool SolidCeiling 
     {
-        get => Physics2D.OverlapCircle(CeilingCheck.position, ceilingCheckRadius, whatIsGround);
+        get => Physics2D.BoxCast(CeilingCheck.position, ceilingCheckV2, 0f, Vector2.up, 0.1f, whatIsGround - whatIsPlatform);
     }
     public bool Ground
     {
-        get => Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+        get => Physics2D.BoxCast(GroundCheck.position, groundCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
+    }
+    public RaycastHit2D HeadPlatform
+    {
+        get => Physics2D.BoxCast(HeadCheck.position, headCheckV2, 0f, Vector2.up, 0.1f, whatIsPlatform);
+    }
+    public RaycastHit2D GroundPlatform
+    {
+        get => Physics2D.BoxCast(GroundCheck.position, groundCheckV2, 0f, Vector2.down, 0.1f, whatIsPlatform);
     }
     public bool WallFront
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
     }
     public bool WallBack
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
     }
     public bool LedgeHorizontal
     {
@@ -74,16 +90,25 @@ public class CollisionSenses : CoreComponent
     }
     public bool LedgeVertical
     {
-        get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, wallCheckDistance, whatIsGround - whatIsPlatform);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.gray;
-        if(GroundCheck) Gizmos.DrawWireSphere(GroundCheck.position, groundCheckRadius);
-        if (CeilingCheck) Gizmos.DrawWireSphere(CeilingCheck.position, ceilingCheckRadius);
         if (WallCheck) Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallCheckDistance);
         if (LedgeCheckHorizontal) Gizmos.DrawLine(LedgeCheckHorizontal.position, LedgeCheckHorizontal.position + Vector3.right * wallCheckDistance);
         if (LedgeCheckVertical) Gizmos.DrawLine(LedgeCheckVertical.position, LedgeCheckVertical.position + Vector3.down * wallCheckDistance);
+
+        if (GroundCheck)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(GroundCheck.position, groundCheckV2);
+        }
+        if (GroundCheck && HeadCheck && CeilingCheck)
+        {
+            Gizmos.DrawWireCube(HeadCheck.position, headCheckV2);
+            Gizmos.DrawWireCube(CeilingCheck.position, ceilingCheckV2);
+        }
     }
 }

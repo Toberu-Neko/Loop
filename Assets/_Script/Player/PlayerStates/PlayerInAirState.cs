@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerInAirState : PlayerState
 {
     //Input
     private int xInput;
+    private int yInput;
     private bool jumpInput;
     private bool jumpInputStop;
     private bool grabInput;
     private bool dashInput;
+
 
     //Checks
     private bool isGrounded;
@@ -48,6 +51,16 @@ public class PlayerInAirState : PlayerState
             isTouchingWall = CollisionSenses.WallFront;
             isToucingWallBack = CollisionSenses.WallBack;
             isTouchingLedge = CollisionSenses.LedgeHorizontal;
+
+            if (CollisionSenses.HeadPlatform)
+            {
+                Physics2D.IgnoreCollision(player.MovementCollider, CollisionSenses.HeadPlatform.collider, true);
+            }
+
+            if (CollisionSenses.GroundPlatform)
+            {
+                Physics2D.IgnoreCollision(player.MovementCollider, CollisionSenses.GroundPlatform.collider, false);
+            }
         }
 
         if(isTouchingWall && !isTouchingLedge)
@@ -87,7 +100,9 @@ public class PlayerInAirState : PlayerState
         CheckWallJumpCoyoteTime();
 
         xInput = player.InputHandler.NormInputX;
+        yInput = player.InputHandler.NormInputY;
         jumpInput = player.InputHandler.JumpInput;
+
 
         jumpInputStop = player.InputHandler.JumpInputStop;
         grabInput = player.InputHandler.GrabInput;
@@ -145,7 +160,7 @@ public class PlayerInAirState : PlayerState
             player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.WallJumpState);
         }
-        else if(jumpInput && player.JumpState.CanJump())
+        else if(jumpInput && yInput >= 0 && player.JumpState.CanJump())
         {
             stateMachine.ChangeState(player.JumpState);
         }

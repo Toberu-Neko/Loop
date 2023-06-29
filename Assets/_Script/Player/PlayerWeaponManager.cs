@@ -196,20 +196,6 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         combat.OnPerfectBlock -= () => perfectBlockThisFram = true;
     }
-
-    
-    private void OnDrawGizmos()
-    {
-        Vector3 attackRange = new Vector3(8, 2, 0);
-        Vector3 offset = new(attackRange.x / 2, 0, 0);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(ProjectileStartPos.position + offset, attackRange);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(ProjectileStartPos.position + new Vector3(1f /2f , 0, 0), new Vector3(1, 2, 0));
-
-    }
 }
 
 public enum PlayerWeaponType

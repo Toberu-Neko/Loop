@@ -39,7 +39,7 @@ public class PlayerGroundedState : PlayerState
             isGrounded = CollisionSenses.Ground;
             isTouchingWall = CollisionSenses.WallFront;
             isTouchingLedge = CollisionSenses.LedgeHorizontal;
-            isTouchingCeiling = CollisionSenses.Ceiling;
+            isTouchingCeiling = CollisionSenses.SolidCeiling;
         }
     }
 
@@ -103,7 +103,12 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.BlockState);
         }
-        else if (jumpInput && player.JumpState.CanJump() && !isTouchingCeiling)
+        else if(jumpInput && yInput < 0 && CollisionSenses.GroundPlatform)
+        {
+            Physics2D.IgnoreCollision(player.MovementCollider, CollisionSenses.GroundPlatform.collider, true);
+
+        }
+        else if (jumpInput && yInput >= 0 && player.JumpState.CanJump() && !isTouchingCeiling)
         {
             stateMachine.ChangeState(player.JumpState);
         }
