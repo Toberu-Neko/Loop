@@ -14,15 +14,17 @@ public class Enemy2 : Entity
     public E2_DodgeState DodgeState { get; private set; }
     public E2_RangedAttackState RangedAttackState { get; private set; }
 
-    [SerializeField] private D_IdleState idleStateData;
-    [SerializeField] private D_MoveState moveStateData;
-    [SerializeField] private D_PlayerDetected playerDetectedStateData;
-    [SerializeField] private D_MeleeAttack meleeAttackStateData;
-    [SerializeField] private D_LookForPlayer lookForPlayerStateData;
-    [SerializeField] private D_StunState stunStateData;
-    [SerializeField] private D_DeadState deadStateData;
-    public D_DodgeState DodgeStateData;
-    [SerializeField] private D_RangedAttackState rangedAttackStateData;
+    [SerializeField] private E2_StateData stateData;
+
+    private S_EnemyIdleState idleStateData;
+    private S_EnemyGroundMoveState moveStateData;
+    private S_EnemyPlayerDetectedState playerDetectedStateData;
+    private S_EnemyMeleeAttackState meleeAttackStateData;
+    private S_EnemyLookForPlayerState lookForPlayerStateData;
+    private S_EnemyStunState stunStateData;
+    private S_EnemyDeadState deadStateData;
+    [HideInInspector] public S_EnemyDodgeState DodgeStateData;
+    private S_EnemyRangedAttackState rangedAttackStateData;
 
     [SerializeField] private Transform meleeAttackPosition;
     [SerializeField] private Transform rangedAttackPosition;
@@ -30,6 +32,16 @@ public class Enemy2 : Entity
     public override void Awake()
     {
         base.Awake();
+
+        idleStateData = stateData.idleStateData;
+        moveStateData = stateData.groundMoveStateData;
+        playerDetectedStateData = stateData.playerDetectedStateData;
+        meleeAttackStateData = stateData.meleeAttackStateData;
+        lookForPlayerStateData = stateData.lookForPlayerStateData;
+        stunStateData = stateData.stunStateData;
+        deadStateData = stateData.deadStateData;
+        DodgeStateData = stateData.dodgeStateData;
+        rangedAttackStateData = stateData.rangedAttackStateData;
 
         IdleState = new E2_IdleState(this, StateMachine, "idle", idleStateData, this);
         MoveState = new E2_MoveState(this, StateMachine, "move", moveStateData, this);
@@ -41,6 +53,21 @@ public class Enemy2 : Entity
         DodgeState = new E2_DodgeState(this, StateMachine, "dodge", DodgeStateData, this);
         RangedAttackState = new E2_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
 
+        stats.Poise.OnCurrentValueZero += HandlePoiseZero;
+    }
+    private void OnDisable()
+    {
+        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+
+    private void OnDestroy()
+    {
+        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+
+    private void HandlePoiseZero()
+    {
+        StateMachine.ChangeState(StunState);
     }
     private void Start()
     {
@@ -51,6 +78,6 @@ public class Enemy2 : Entity
     {
         base.OnDrawGizmos();
 
-        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
+        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.meleeAttackRadius);
     }
 }

@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     public PlayerDashState DashState { get; private set; }
     public PlayerCrouchIdleState CrouchIdleState { get; private set; }
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
-    public PlayerAttackState AttackState { get; private set; }
+    public OldPlayerAttackState AttackState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
     public PlayerPerfectBlockState PerfectBlockState { get; private set; }
     #endregion
@@ -34,6 +34,11 @@ public class Player : MonoBehaviour
     public PlayerSwordSoulOneAttackState SwordCounterAttackState { get; private set; }
     public PlayerSwordSoulOneAttackState PlayerSwordSoulOneAttackState { get; private set; }
     public PlayerSwordSoulMaxAttackState PlayerSwordSoulMaxAttackState { get; private set; }
+    #endregion
+
+    #region GunStates
+    public PlayerGunNormalAttackState PlayerGunNormalAttackState { get; private set; }
+    public PlayerGunChargingState PlayerGunChargeAttackState { get; private set; }
     #endregion
 
     #region Components
@@ -80,7 +85,7 @@ public class Player : MonoBehaviour
         DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
-        AttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        AttackState = new OldPlayerAttackState(this, StateMachine, playerData, "attack");
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
 
@@ -91,6 +96,9 @@ public class Player : MonoBehaviour
         SwordCounterAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordCounterAttack");
         PlayerSwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordSoulOneAttack");
         PlayerSwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
+
+        PlayerGunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, playerData, "gunNormalAttack");
+        PlayerGunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
     }
 
     private void Start()
@@ -117,6 +125,7 @@ public class Player : MonoBehaviour
     #region Other Functions
     public void SetColliderHeight(float height)
     {
+        //TODO: Delete this, use animation instead
         Vector2 center = MovementCollider.offset;
         v2Workspace.Set(MovementCollider.size.x, height);
 
@@ -124,6 +133,7 @@ public class Player : MonoBehaviour
 
         MovementCollider.size = v2Workspace;
         MovementCollider.offset = center;
+
     }
 
     private void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();

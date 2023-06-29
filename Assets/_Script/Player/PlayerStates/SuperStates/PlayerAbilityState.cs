@@ -7,8 +7,7 @@ public class PlayerAbilityState : PlayerState
 {
     protected bool isAbilityDone;
 
-    //If have an abality that needs to know if grounded, change to protect.
-    private bool isGrounded;
+    protected bool isGrounded;
 
     protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;
@@ -23,6 +22,7 @@ public class PlayerAbilityState : PlayerState
 
     public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+
     }
 
     public override void DoChecks()
@@ -61,18 +61,27 @@ public class PlayerAbilityState : PlayerState
         }
     }
 
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        Combat.DetectedDamageables.Clear();
+        Combat.DetectedKnockbackables.Clear();
+        Combat.DetectedStaminaDamageables.Clear();
+    }
+
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
     }
 
-    public void DoDamageToDamageList(float damageAmount, Vector2 knockBackAngle, float knockBackForce)
+    public void DoDamageToDamageList(float damageAmount,float damageStaminaAmount ,Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
     {
         if (Combat.DetectedDamageables.Count > 0)
         {
             foreach (IDamageable damageable in Combat.DetectedDamageables.ToList())
             {
-                damageable.Damage(damageAmount, core.transform.position);
+                damageable.Damage(damageAmount, core.transform.position, blockable);
             }
         }
 
@@ -80,7 +89,15 @@ public class PlayerAbilityState : PlayerState
         {
             foreach (IKnockbackable knockbackable in Combat.DetectedKnockbackables.ToList())
             {
-                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection, (Vector2)core.transform.position);
+                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection, (Vector2)core.transform.position, blockable);
+            }
+        }
+
+        if(Combat.DetectedStaminaDamageables.Count > 0)
+        {
+            foreach (IStaminaDamageable staminaDamageable in Combat.DetectedStaminaDamageables.ToList())
+            {
+                staminaDamageable.TakeStaminaDamage(damageStaminaAmount, core.transform.position, blockable);
             }
         }
     }

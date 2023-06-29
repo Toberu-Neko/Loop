@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StunState : State
 {
-    protected D_StunState stateData;
+    protected S_EnemyStunState stateData;
 
     protected bool isStunTimeOver;
     protected bool isGrounded;
@@ -15,10 +15,16 @@ public class StunState : State
 
     private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
+
+    protected Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
+    private Combat combat;
+
+    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
+    private Stats stats;
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
-    public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData) : base(entity, stateMachine, animBoolName)
+    public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyStunState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
@@ -46,6 +52,7 @@ public class StunState : State
         base.Exit();
 
         entity.ResetStunResistance();
+        Stats.ResetPoiseDecreaseable();
     }
 
     public override void LogicUpdate()

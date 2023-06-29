@@ -13,20 +13,31 @@ public class Enemy1 : Entity
     public E1_StunState StunState { get; private set; }
     public E1_DeadState DeadState { get; private set; }
 
-    [SerializeField] private D_IdleState idleStateData;
-    [SerializeField] private D_MoveState moveStateData;
-    [SerializeField] private D_PlayerDetected playerDetectedStateData;
-    [SerializeField] private D_ChargeState chargeStateData;
-    [SerializeField] private D_LookForPlayer lookForPlayerStateData;
-    [SerializeField] private D_MeleeAttack meleeAttackStateData;
-    [SerializeField] private D_StunState stunStateData;
-    [SerializeField] private D_DeadState deadStateData;
+    [SerializeField] private E1_StateData stateData;
+
+    private S_EnemyIdleState idleStateData;
+    private S_EnemyGroundMoveState moveStateData;
+    private S_EnemyPlayerDetectedState playerDetectedStateData;
+    private S_EnemyChargeState chargeStateData;
+    private S_EnemyLookForPlayerState lookForPlayerStateData;
+    private S_EnemyMeleeAttackState meleeAttackStateData;
+    private S_EnemyStunState stunStateData;
+    private S_EnemyDeadState deadStateData;
 
     [SerializeField] private Transform meleeAttackPosition;
 
     public override void Awake()
     {
         base.Awake();
+
+        idleStateData = stateData.idleStateData;
+        moveStateData = stateData.groundMoveStateData;
+        playerDetectedStateData = stateData.playerDetectedStateData;
+        chargeStateData = stateData.chargeStateData;
+        lookForPlayerStateData = stateData.lookForPlayerStateData;
+        meleeAttackStateData = stateData.meleeAttackStateData;
+        stunStateData = stateData.stunStateData;
+        deadStateData = stateData.deadStateData;
 
         MoveState = new E1_MoveState(this, StateMachine, "move", moveStateData, this);
         IdleState = new E1_IdleState(this, StateMachine, "idle", idleStateData, this);
@@ -36,15 +47,33 @@ public class Enemy1 : Entity
         MeleeAttackState = new E1_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackPosition, meleeAttackStateData, this);
         StunState = new E1_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new E1_DeadState(this, StateMachine, "dead", deadStateData, this);
+
+        stats.Poise.OnCurrentValueZero += HandlePoiseZero;
+    }
+    private void OnDisable()
+    {
+        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+
+    private void OnDestroy()
+    {
+        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+    private void HandlePoiseZero()
+    {
+        StateMachine.ChangeState(StunState);
     }
     private void Start()
     {
         StateMachine.Initialize(MoveState);
     }
+
+
+
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
 
-        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
+        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.meleeAttackRadius);
     }
 }

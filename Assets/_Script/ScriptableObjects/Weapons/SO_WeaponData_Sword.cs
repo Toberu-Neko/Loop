@@ -11,6 +11,9 @@ public class SO_WeaponData_Sword : SO_WeaponData
 
     [SerializeField] private WeaponAttackDetails[] normalAttackDetails;
 
+    [Header("Sky Attack")]
+    public WeaponAttackDetails skyAttackDetails;
+
     [Header("Strong Attack")]
     public float strongAttackHoldTime;
 
@@ -18,6 +21,11 @@ public class SO_WeaponData_Sword : SO_WeaponData
 
     [Header("Soul One Attack")]
     public WeaponAttackDetails soulOneAttackDetails;
+
+    [Header("Soul Three Attack")]
+    public WeaponAttackDetails soulThreeAttackDetails;
+
+
 
 
 

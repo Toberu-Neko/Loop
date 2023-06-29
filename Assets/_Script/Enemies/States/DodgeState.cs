@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DodgeState : State
 {
-    protected D_DodgeState stateData;
+    protected S_EnemyDodgeState stateData;
 
     protected bool performCloseRangeAction;
     protected bool isPlayerInMinAgroRange;
@@ -17,7 +17,7 @@ public class DodgeState : State
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
-    public DodgeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_DodgeState stateData) : base(entity, stateMachine, animBoolName)
+    public DodgeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyDodgeState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

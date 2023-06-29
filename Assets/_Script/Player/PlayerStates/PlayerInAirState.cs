@@ -26,6 +26,9 @@ public class PlayerInAirState : PlayerState
 
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
+
+    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
+    private Stats stats;
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -86,20 +89,42 @@ public class PlayerInAirState : PlayerState
         xInput = player.InputHandler.NormInputX;
         jumpInput = player.InputHandler.JumpInput;
 
-        jumpInputStop = player.InputHandler.JumInputStop;
+        jumpInputStop = player.InputHandler.JumpInputStop;
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
 
         CheckJumpMultiplier();
 
-        if (player.InputHandler.AttackInput && player.SwordHubState.CheckIfCanAttack())
+        #region Sword
+        if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword &&
+                    player.SwordHubState.CheckIfCanAttack())
         {
-            // stateMachine.ChangeState(player.AttackState);
             stateMachine.ChangeState(player.SwordHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.SwordHubState.CheckIfCanAttack())
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword
+            && player.SwordHubState.CheckIfCanAttack() &&
+            player.PlayerWeaponManager.SwordCurrentEnergy > 0 &&
+            Stats.PerfectBlockAttackable &&
+            player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy)
         {
-            Debug.Log("GoToSwordSkillState");
+            player.SwordHubState.SetCanAttackFalse();
+            stateMachine.ChangeState(player.PlayerSwordSoulOneAttackState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword &&
+            player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0
+            && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
+        {
+            player.SwordHubState.SetCanAttackFalse();
+            stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
+        }
+        #endregion
+        else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun)
+        {
+            stateMachine.ChangeState(player.PlayerGunNormalAttackState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun)
+        {
+            stateMachine.ChangeState(player.PlayerGunChargeAttackState);
         }
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock())
         {
@@ -144,11 +169,6 @@ public class PlayerInAirState : PlayerState
             player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
             player.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
     private void CheckJumpMultiplier()
     {

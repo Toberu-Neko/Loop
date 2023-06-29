@@ -10,13 +10,13 @@ public class PlayerInputHandler : MonoBehaviour
     private Camera cam;
 
     public Vector2 RawMovementInput { get; private set; }
-    public Vector2 RawDashDirectionInput { get; private set; }
-    public Vector2Int DashDirectionInput { get; private set; }
+    public Vector2 RawMouseDirectionInput { get; private set; }
+    public Vector2Int FixedMouseDirectionInput { get; private set; }
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
 
-    public bool JumInputStop { get; private set; }
+    public bool JumpInputStop { get; private set; }
     public bool GrabInput { get; private set; }
     public bool DashInput { get; private set; }
     public bool DashInputStop { get; private set; }
@@ -26,9 +26,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool WeaponSkillInput { get; private set; }
     public bool WeaponSkillHoldInput { get; private set; }
+    public bool ChangeWeapon1 { get; private set; }
+    public bool ChangeWeapon2 { get; private set; }
+    public bool ChangeWeapon3 { get; private set; }
 
-    [SerializeField]
-    private float inputHoldTime = 0.2f;
+    [SerializeField] private float inputHoldTime = 0.2f;
 
     private float jumpInputStartTime;
     private float dashInputStartTime;
@@ -43,9 +45,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         CheckJumpInputHoldTime();
         CheckDashInputHoldTime();
-
-        
     }
+
     public void OnPrimaryAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -62,7 +63,7 @@ public class PlayerInputHandler : MonoBehaviour
     }
     public void UseAttackInput() => AttackInput = false;
 
-    public void OnSecondaryAttackInput(InputAction.CallbackContext context)
+    public void OnBlockInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -85,6 +86,43 @@ public class PlayerInputHandler : MonoBehaviour
         {
             WeaponSkillInput = false;
             WeaponSkillHoldInput = false;
+        }
+    }
+    public void UseWeaponSkillInput() => WeaponSkillInput = false;
+
+    public void OnChangeWeapon1Input(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            ChangeWeapon1 = true;
+        }
+        if(context.canceled)
+        {
+            ChangeWeapon1 = false;
+        }
+    }
+
+    public void OnChangeWeapon2Input(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ChangeWeapon2 = true;
+        }
+        if (context.canceled)
+        {
+            ChangeWeapon2 = false;
+        }
+    }
+
+    public void OnChangeWeapon3Input(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ChangeWeapon3 = true;
+        }
+        if (context.canceled)
+        {
+            ChangeWeapon3 = false;
         }
     }
     public void OnMoveInput(InputAction.CallbackContext context)
@@ -118,29 +156,31 @@ public class PlayerInputHandler : MonoBehaviour
             DashInput = false;
         }
     }
-    public void OnDashDirectionInput(InputAction.CallbackContext context)
+    public void OnMouseDirectionInput(InputAction.CallbackContext context)
     {
-        RawDashDirectionInput = context.ReadValue<Vector2>();
+        RawMouseDirectionInput = context.ReadValue<Vector2>();
 
         if(playerInput.currentControlScheme == "Keyboard")
         {
-            RawDashDirectionInput = cam.ScreenToWorldPoint((Vector3)RawDashDirectionInput) - transform.position;
-            RawDashDirectionInput.Normalize();
+            RawMouseDirectionInput = cam.ScreenToWorldPoint((Vector3)RawMouseDirectionInput) - transform.position;
+            RawMouseDirectionInput = RawMouseDirectionInput.normalized;
         }
+        // Debug.Log(RawMouseDirectionInput);
         //45 degree angle
-        DashDirectionInput = Vector2Int.RoundToInt(RawDashDirectionInput.normalized);
+        FixedMouseDirectionInput = Vector2Int.RoundToInt(RawMouseDirectionInput.normalized);
+
     }
     public void OnJumpInput(InputAction.CallbackContext context)
     {
         if(context.started)
         {
             JumpInput = true;
-            JumInputStop = false;
+            JumpInputStop = false;
             jumpInputStartTime = Time.time;
         }
         if(context.canceled)
         {
-            JumInputStop = true;
+            JumpInputStop = true;
         }
     }
     public void OnGrabInput(InputAction.CallbackContext context)

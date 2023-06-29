@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IdleState : State
 {
-    protected D_IdleState stateData;
+    protected S_EnemyIdleState stateData;
 
     protected bool flipAfterIdle;
     protected bool isIdleTimeOver;
@@ -15,7 +15,7 @@ public class IdleState : State
     private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
 
-    public IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(entity, stateMachine, animBoolName)
+    public IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyIdleState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

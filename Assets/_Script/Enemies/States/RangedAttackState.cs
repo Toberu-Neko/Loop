@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class RangedAttackState : AttackState
 {
-    protected D_RangedAttackState stateData;
+    protected S_EnemyRangedAttackState stateData;
 
     protected GameObject projectile;
     protected E2_Projectile projectileScript;
-    public RangedAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_RangedAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public RangedAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyRangedAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
     }
@@ -33,15 +33,6 @@ public class RangedAttackState : AttackState
         base.FinishAttack();
     }
 
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
 
     public override void TriggerAttack()
     {
@@ -49,7 +40,6 @@ public class RangedAttackState : AttackState
 
         projectile = GameObject.Instantiate(stateData.projectile, attackPosition.position, attackPosition.rotation);
         projectileScript = projectile.GetComponent<E2_Projectile>();
-        stateData.projectileDetails.facingDirection = Movement.FacingDirection;
-        projectileScript.FireProjectile(stateData.projectileDetails, stateData.projectileTravelDistance);
+        projectileScript.FireProjectile(stateData.projectileDetails, stateData.projectileTravelDistance, Movement.FacingDirection);
     }
 }

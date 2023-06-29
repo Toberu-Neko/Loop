@@ -5,24 +5,9 @@ using UnityEngine;
 public class E2_LookForPlayerState : LookForPlayerState
 {
     private Enemy2 enemy;
-    public E2_LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_LookForPlayer stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E2_LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
     }
 
     public override void LogicUpdate()
@@ -39,8 +24,4 @@ public class E2_LookForPlayerState : LookForPlayerState
         }
     }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
 }

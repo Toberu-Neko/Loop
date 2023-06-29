@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e910762b7cba74bb2fc225fe1a2b59, type: 3}
+  m_Name: E1_StateData
+  m_EditorClassIdentifier: 
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  idleStateData:
+    minIdleTime: 1
+    maxIdleTime: 2
+  groundMoveStateData:
+    movementSpeed: 3
+  playerDetectedStateData:
+    delayTime: 1.5
+  chargeStateData:
+    chargeSpeed: 6
+    chargeTime: 1.5
+  lookForPlayerStateData:
+    amountOfTurns: 2
+    timeBetweenTurns: 0.75
+  meleeAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 128
+    meleeAttackRadius: 0.75
+    meleeAttackDamage: 10
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 10
+  stunStateData:
+    stunTime: 3
+    stunKnockbackTime: 0.2
+    stunKnockbackSpeed: 20
+    stunKnockbackAngle: {x: 1, y: 2}
+  deadStateData:
+    deathChunkParticle: {fileID: 514008935881032697, guid: 2b7e98a56000226409b0277c751f3f30, type: 3}
+    deathBloodParticle: {fileID: 2615349222246815121, guid: db18ab1de83847b4fa75fa59ee0730ce, type: 3}

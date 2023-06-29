@@ -5,58 +5,79 @@ using UnityEngine;
 
 public class Stats : CoreComponent
 {
-    [SerializeField] private float maxHealth;
+    [field: SerializeField] public CoreStatSystem Health { get; private set; }
+    [field: SerializeField] public CoreStatSystem Poise { get; private set; }
+    [SerializeField] private float staminaRecoveryRate;
     [SerializeField] private float perfectBlockAttackDuration;
-
-    public float CurrentHealth { get; private set; }
-
-    public event Action OnHealthZero;
+    [SerializeField] private float invincibleDurationAfterDamaged;
 
     public bool PerfectBlockAttackable { get; private set; }
-    public bool Invincible { get; private set; }
-    // private float perfectBlockStartTime;
+    public bool Invincible { get; private set; } = false;
 
-    private Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
+    public bool InCombat { get; private set; } = false;
+    public bool CanChangeWeapon { get; private set; } = true;
+
     private Combat combat;
+    [SerializeField] private float combatTimer = 2f;
+    private float lastCombatTime;
+    private bool damagedThisFrame = false;
+    private bool staminaDamagedThisFrame = false;
+    private bool knockbackedThisFrame = false;
 
     protected override void Awake()
     {
         base.Awake();
 
-        CurrentHealth = maxHealth;
-    }
+        combat = core.GetCoreComponent<Combat>();
 
+        Health.Init();
+        Poise.Init();
+    }
+    private void Update()
+    {
+        if(InCombat && Time.time >= lastCombatTime + combatTimer)
+        {
+            InCombat = false;
+        }
+
+        if (!InCombat && !Poise.CurrentValue.Equals(Poise.MaxValue))
+        {
+            Poise.Increase(staminaRecoveryRate * Time.deltaTime);
+        }
+
+        if(damagedThisFrame && knockbackedThisFrame && staminaDamagedThisFrame)
+        {
+            SetInvincibleTrueAfterDamaged();
+            damagedThisFrame = false;
+            knockbackedThisFrame = false;
+            staminaDamagedThisFrame = false;
+        }
+    }
     private void OnEnable()
     {
-        Combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
+        combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
+        combat.OnDamaged += HandleOnDamaged;
+        Poise.OnCurrentValueZero += HandlePoiseZero;
 
+        combat.OnDamaged += () => damagedThisFrame = true;
+        combat.OnKnockback += () => knockbackedThisFrame = true;
+        combat.OnStaminaDamaged += () => staminaDamagedThisFrame = true;
     }
 
     private void OnDisable()
     {
-        Combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
+        combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
+        combat.OnDamaged -= HandleOnDamaged;
+        Poise.OnCurrentValueZero -= HandlePoiseZero;
+
+        combat.OnDamaged -= () => damagedThisFrame = true;
+        combat.OnKnockback -= () => knockbackedThisFrame = true;
+        combat.OnStaminaDamaged -= () => staminaDamagedThisFrame = true;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-    }
-
-    public void DecreaseHeakth(float amount)
-    {
-        CurrentHealth -= amount;
-
-        if (CurrentHealth <= 0)
-        {
-            CurrentHealth = 0;
-            
-            OnHealthZero?.Invoke();
-        }
-    }
-
-    public void IncreaseHealth(float amount)
-    {
-        CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, maxHealth);
     }
 
     public void SetPerfectBlockAttackTrue()
@@ -73,13 +94,31 @@ public class Stats : CoreComponent
             PerfectBlockAttackable = false;
     }
 
-    public void SetInvincibleTrue()
+    public void SetInvincibleTrue() => Invincible = true;
+
+    public void SetInvincibleFalse() => Invincible = false;
+
+    private void SetInvincibleTrueAfterDamaged()
     {
         Invincible = true;
+        CancelInvoke(nameof(SetInvincibleFalse));
+        Invoke(nameof(SetInvincibleFalse), invincibleDurationAfterDamaged);
     }
 
-    public void SetInvincibleFalse()
+    public void SetCanChangeWeapon(bool volume) => CanChangeWeapon = volume;
+
+    private void HandleOnDamaged()
     {
-        Invincible = false;
+
+        InCombat = true;
+        lastCombatTime = Time.time;
     }
+
+    private void HandlePoiseZero()
+    {
+        Poise.Init();
+        Poise.decreaseable = false;
+    }
+
+    public void ResetPoiseDecreaseable() => Poise.decreaseable = true;
 }

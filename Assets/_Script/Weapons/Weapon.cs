@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     protected Animator baseAnimator;
     protected Animator weaponAnimator;
 
-    protected PlayerAttackState state;
+    protected OldPlayerAttackState state;
     
     protected Core core;
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
@@ -96,7 +96,7 @@ public class Weapon : MonoBehaviour
 
     #endregion
 
-    public void InitializeWeapon(PlayerAttackState state, Core core)
+    public void InitializeWeapon(OldPlayerAttackState state, Core core)
     {
         this.state = state;
         this.core = core;

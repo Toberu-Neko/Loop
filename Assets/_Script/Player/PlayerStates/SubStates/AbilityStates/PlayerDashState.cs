@@ -56,7 +56,11 @@ public class PlayerDashState : PlayerAbilityState
 
             if (isHolding)
             {
-                dashDirectionInput = player.InputHandler.DashDirectionInput;
+                if(playerData.useFixedDegreeAngle)
+                    dashDirectionInput = player.InputHandler.FixedMouseDirectionInput;
+                else
+                    dashDirectionInput = player.InputHandler.RawMouseDirectionInput;
+
                 dashInputStop = player.InputHandler.DashInputStop;
 
                 if (dashDirectionInput != Vector2.zero)
@@ -66,6 +70,7 @@ public class PlayerDashState : PlayerAbilityState
                 }
 
                 float angle = Vector2.SignedAngle(Vector2.right, dashDirection);
+                
                 player.DashDirectionIndicator.rotation = Quaternion.Euler(0f, 0f, angle - 45f);
 
                 if(dashInputStop || Time.unscaledTime >= startTime + playerData.maxHoldTime)

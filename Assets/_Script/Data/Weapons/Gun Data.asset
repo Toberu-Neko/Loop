@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae8c2ce1219dbd4285c5480c2520879, type: 3}
+  m_Name: Gun Data
+  m_EditorClassIdentifier: 
+  maxEnergy: 100
+  energyRegen: 5
+  energyRegenDelay: 1
+  normalAttackObject: {fileID: 4763303106170138442, guid: 017f74101e07e384a9eaac15ff7d27db, type: 3}
+  energyCostPerShot: 4
+  attackSpeed: 0.5
+  normalAttackDetails:
+    damageAmount: 5
+    staminaDamageAmount: 1
+    speed: 20
+    duration: 5
+    knockbackAngle: {x: 1, y: 0.2}
+    knockbackStrength: 15
+  chargeMovementSpeedMultiplier: 0.3
+  chargeAttackBackFireVelocity: 1.5
+  minChargeTime: 1
+  chargeAttackHeight: 1
+  chargeAttackWidthPerSecond: 2.5
+  chargeAttackEnergyCostPerSecond: 15
+  chargeAttackDamagePace: 0.1
+  chargeAttackDamageAmount: 3
+  chargeAttackStaminaDamageAmount: 1
+  chargeAttackKnockbackForce: 15
+  chargeAttackKnockbackAngle: {x: 1, y: 0.4}

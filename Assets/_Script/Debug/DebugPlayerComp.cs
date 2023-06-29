@@ -37,6 +37,7 @@ public class DebugPlayerComp : MonoBehaviour
         Combat.OnPerfectBlock += () => perfectBlockAttack.SetActive(true);
         Combat.OnDamaged += UpdateHpText;
         weaponManager.OnEnergyChanged += UpdateWeaponText;
+        weaponManager.OnWeaponChanged += UpdateWeaponText;
 
     }
 
@@ -45,6 +46,7 @@ public class DebugPlayerComp : MonoBehaviour
         Combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
         Combat.OnDamaged -= UpdateHpText;
         weaponManager.OnEnergyChanged -= UpdateWeaponText;
+        weaponManager.OnWeaponChanged -= UpdateWeaponText;
     }
 
     void Update()
@@ -55,11 +57,11 @@ public class DebugPlayerComp : MonoBehaviour
         }
     }
 
-    void UpdateHpText() => HpText.text = "生命值: " + Stats.CurrentHealth.ToString();
+    void UpdateHpText() => HpText.text = "生命值: " + Stats.Health.CurrentValue.ToString();
 
     void UpdateWeaponText()
     {
         weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
-            "\n 能量: " + weaponManager.GetCurrentTypeEnergy();
+            "\n 能量: " + weaponManager.GetCurrentTypeEnergyStr();
     }
 }
