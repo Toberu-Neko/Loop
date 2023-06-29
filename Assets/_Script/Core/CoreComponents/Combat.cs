@@ -166,6 +166,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     public void AddToDetected(Collider2D collision)
     {
+        // Debug.Log("Add " + collision.gameObject.name + "to detected");
         if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             DetectedDamageables.Add(damageable);
@@ -184,6 +185,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     public void RemoveFromDetected(Collider2D collision)
     {
+        // Debug.Log("Remove " + collision.gameObject.name +" from detected");
         if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             DetectedDamageables.Remove(damageable);

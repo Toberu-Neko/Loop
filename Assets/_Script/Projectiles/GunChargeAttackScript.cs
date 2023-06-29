@@ -9,13 +9,16 @@ public class GunChargeAttackScript : MonoBehaviour
     [SerializeField] private Transform endSpriteObj;
     [SerializeField] private SpriteRenderer endSpriteRenderer;
 
-    public void Init(Vector2 size, Vector3 angle)
+    private Vector3 workspace;
+    public void Init(Vector2 size)
     {
         chargeAttackCollider.size = size;
         chargeSpriteRenderer.size = size;
-        chargeAttackObj.transform.position = new(transform.position.x + size.x / 2, transform.position.y, transform.position.z);
 
-        endSpriteObj.position = new(transform.position.x + size.x - endSpriteRenderer.size.x / 2, transform.position.y, transform.position.z);
-        transform.localEulerAngles = angle;
+        workspace.Set(transform.localPosition.x + size.x / 2, transform.localPosition.y, transform.localPosition.z);
+        chargeAttackObj.transform.localPosition = workspace;
+
+        workspace.Set(transform.localPosition.x + size.x - endSpriteRenderer.size.x / 2, transform.localPosition.y, transform.localPosition.z);
+        endSpriteObj.localPosition = workspace;
     }
 }

@@ -19,6 +19,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField, HideInInspector] private int nothing2;
     [field: SerializeField] public Transform ProjectileStartPos { get; private set; }
     [field: SerializeField] public SO_WeaponData_Gun GunData { get; private set; }
+    [field: SerializeField] public GunChargeAttackScript GunChargeAttackScript { get; private set; }
 
     public float GunCurrentEnergy { get; private set; }
     public bool GunEnergyRegenable { get; private set; }
@@ -42,6 +43,7 @@ public class PlayerWeaponManager : MonoBehaviour
         stats = core.GetCoreComponent<Stats>();
         player = GetComponent<Player>();
         inputHandler = GetComponent<PlayerInputHandler>();
+        GunChargeAttackScript.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -52,7 +54,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Update()
     {
-        if(stats.CanChangeWeapon)
+       if(stats.CanChangeWeapon)
             ChangeWeapon();
 
         if ((CurrentWeaponType == PlayerWeaponType.Sword || CurrentWeaponType == PlayerWeaponType.Fist) && perfectBlockThisFram)
@@ -144,6 +146,16 @@ public class PlayerWeaponManager : MonoBehaviour
                 GunCurrentEnergy -= GunData.energyCostPerShot;
                 break;
         }
+        OnEnergyChanged?.Invoke();
+    }
+
+    public void DecreaseGunEnergy(float amount)
+    {
+        if(GunCurrentEnergy < amount)
+            GunCurrentEnergy = 0;
+        else
+            GunCurrentEnergy -= amount;
+
         OnEnergyChanged?.Invoke();
     }
 

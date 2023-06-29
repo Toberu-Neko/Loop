@@ -27,6 +27,11 @@ public class MeleeAttackState : AttackState
             {
                 knockbackable.Knockback(stateData.knockbackAngle, stateData.knockbackStrength, Movement.FacingDirection, (Vector2)core.transform.position);
             }
+
+            if (collider.TryGetComponent<IStaminaDamageable>(out var staminaDamageable))
+            {
+                staminaDamageable.TakeStaminaDamage(stateData.staminaAttackDamage, entity.GetPosition());
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ public class CoreStatSystem
 {
     public event Action OnCurrentValueZero;
     public event Action OnValueChanged;
+    public event Action OnValueDecreased;
 
     [field: SerializeField] public float MaxValue { get; private set; }
 
@@ -43,5 +44,6 @@ public class CoreStatSystem
     {
         CurrentValue -= amount;
         OnValueChanged?.Invoke();
+        OnValueDecreased?.Invoke();
     }
 }

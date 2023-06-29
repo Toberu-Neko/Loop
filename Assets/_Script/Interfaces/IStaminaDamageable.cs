@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IStaminaDamageable
 {
-    void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable);
+    void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable = true);
 }

@@ -55,21 +55,24 @@ public class E2_Projectile : MonoBehaviour
             Collider2D[] damageHit = Physics2D.OverlapCircleAll(damagePosition.position, damageRadius, whatIsPlayer);
             Collider2D groundHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsGround);
 
-            if (damageHit.Length > 0)
+            if (damageHit.Length > 1)
             {
                 foreach(Collider2D collider in damageHit)
                 {
                     if(collider.TryGetComponent(out IDamageable damageable))
                     {
                         damageable.Damage(details.damageAmount, transform.position);
-                        Destroy(gameObject);
                     }
                     if(collider.TryGetComponent(out IKnockbackable knockbackable))
                     {
                         knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, facingDirection, transform.position);
-                        Destroy(gameObject);
+                    }
+                    if(collider.TryGetComponent(out IStaminaDamageable staminaDamageable))
+                    {
+                        staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
                     }
                 }
+                Destroy(gameObject);
             }
 
             if (groundHit)

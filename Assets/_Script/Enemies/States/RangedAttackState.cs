@@ -33,15 +33,6 @@ public class RangedAttackState : AttackState
         base.FinishAttack();
     }
 
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
 
     public override void TriggerAttack()
     {

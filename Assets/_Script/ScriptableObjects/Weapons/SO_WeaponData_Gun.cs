@@ -16,7 +16,6 @@ public class SO_WeaponData_Gun : SO_WeaponData
     public ProjectileDetails normalAttackDetails;
 
     [Header("ChargeAttack")]
-    public GameObject chargeAttackObject;
     public float chargeMovementSpeedMultiplier = 0.3f;
     public float chargeAttackBackFireVelocity = 3f;
     public float minChargeTime;
@@ -24,6 +23,9 @@ public class SO_WeaponData_Gun : SO_WeaponData
     public float chargeAttackWidthPerSecond = 0.5f;
     public float chargeAttackEnergyCostPerSecond;
 
-    [Tooltip("¨C¥R¯à¤@¬í")]
-    public WeaponAttackDetails chargeAttackDetails;
+    public float chargeAttackDamagePace = 0.2f;
+    public float chargeAttackDamageAmount;
+    public float chargeAttackStaminaDamageAmount;
+    public float chargeAttackKnockbackForce;
+    public Vector2 chargeAttackKnockbackAngle;
 }

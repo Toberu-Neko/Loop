@@ -39,8 +39,6 @@ public class PlayerBlockState : PlayerAttackState
     {
         base.Exit();
 
-        lastBlockTime = Time.time;
-
         Combat.PerfectBlock = false;
         Combat.NormalBlock = false;
 
@@ -68,15 +66,21 @@ public class PlayerBlockState : PlayerAttackState
         {
             if (perfectBlock)
             {
+                lastBlockTime = Time.time;
                 stateMachine.ChangeState(player.PerfectBlockState);
             }
-            else if (!blockInput || (knockbackFinished && damageFinished))
+            else if(knockbackFinished && damageFinished)
             {
+                lastBlockTime = Time.time;
+                isAttackDone = true;
+            }
+            else if (!blockInput)
+            {
+                lastBlockTime = 0;
                 isAttackDone = true;
             }
         }
     }
-    private void GoToPerfectBlockState() => stateMachine.ChangeState(player.PerfectBlockState);
 
     private void KnockbackFinished() => knockbackFinished = true;
     

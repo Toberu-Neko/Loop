@@ -10,11 +10,15 @@ public class PlayerGunChargingState : PlayerAttackState
     private GunChargeAttackScript chargeAttack;
     private bool shootable;
     private bool moveable;
+    private bool shot;
 
+    private float chargeTime;
+    private float lastDamageTime;
     private int xInput;
     public PlayerGunChargingState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         data = player.PlayerWeaponManager.GunData;
+        chargeAttack = player.PlayerWeaponManager.GunChargeAttackScript;
     }
 
     public override void Enter()
@@ -22,9 +26,12 @@ public class PlayerGunChargingState : PlayerAttackState
         base.Enter();
 
         player.InputHandler.UseWeaponSkillInput();
+        player.PlayerWeaponManager.SetGunRegenable(false);
 
+        lastDamageTime = 0;
         shootable = true;
         moveable = true;
+        shot = false;
     }
     public override void Exit()
     {
@@ -45,33 +52,52 @@ public class PlayerGunChargingState : PlayerAttackState
             Movement.SetVelocityX(playerData.movementVelocity * data.chargeMovementSpeedMultiplier * xInput);
         }
 
-        if(!holdSkillInput && Time.time >= startTime + data.minChargeTime && shootable)
+        if ((holdSkillInput || Time.time < startTime + data.minChargeTime) && player.PlayerWeaponManager.GunCurrentEnergy > 0)
+        {
+            player.PlayerWeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond * Time.deltaTime);
+        }
+        else if(Time.time >= startTime + data.minChargeTime && shootable)
         {
             player.Anim.SetBool("gunChargeShoot", true);
             shootable = false;
             moveable = false;
         }
+
+        if (shot && Time.time >= lastDamageTime + data.chargeAttackDamagePace)
+        {
+            // Debug.Log("Shoot at " + Time.time);
+            lastDamageTime = Time.time;
+            DoDamageToDamageList(
+                data.chargeAttackDamageAmount * chargeTime,
+                data.chargeAttackStaminaDamageAmount,
+                data.chargeAttackKnockbackAngle,
+                data.chargeAttackKnockbackForce);
+        }
     }
+
     public override void AnimationStartMovementTrigger()
     {
         base.AnimationStartMovementTrigger();
 
-        Movement.SetVelocityX(data.chargeAttackBackFireVelocity * -Movement.FacingDirection);
+        Movement.SetVelocityX(data.chargeAttackBackFireVelocity * -Movement.FacingDirection * chargeTime);
     }
     public override void AnimationStopMovementTrigger()
     {
         base.AnimationStopMovementTrigger();
 
         Movement.SetVelocityX(0f);
-        GameObject.Destroy(chargeAttack.gameObject);
+        chargeAttack.gameObject.SetActive(false);
     }
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
 
-        float chargeTime = Time.time - startTime;
-        chargeAttack = GameObject.Instantiate(data.chargeAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, player.transform.rotation, player.transform).GetComponent<GunChargeAttackScript>();
-        chargeAttack.Init(new Vector2(chargeTime * data.chargeAttackWidthPerSecond, data.chargeAttackHeight), player.transform.eulerAngles);
+        chargeTime = Time.time - startTime;
+        chargeAttack.Init(new Vector2(chargeTime * data.chargeAttackWidthPerSecond, data.chargeAttackHeight));
+        chargeAttack.gameObject.SetActive(true);
+
+        player.PlayerWeaponManager.GunFired();
+        shot = true;
     }
 
     public override void AnimationFinishTrigger()

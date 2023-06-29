@@ -22,18 +22,17 @@ MonoBehaviour:
     damageAmount: 5
     staminaDamageAmount: 1
     speed: 20
-    duration: 10
+    duration: 5
     knockbackAngle: {x: 1, y: 0.2}
     knockbackStrength: 15
-  chargeAttackObject: {fileID: 7646123403547316394, guid: 2630a78d2b1429640918c6d9550d2950, type: 3}
+  chargeMovementSpeedMultiplier: 0.3
+  chargeAttackBackFireVelocity: 1.5
   minChargeTime: 1
   chargeAttackHeight: 1
-  chargeAttackWidthPerSecond: 3
-  chargeAttackEnergyCostPerSecond: 10
-  chargeAttackDetails:
-    attackName: 
-    movementSpeed: 0
-    damageAmount: 0
-    staminaDamageAmount: 0
-    knockbackForce: 0
-    knockbackAngle: {x: 0, y: 0}
+  chargeAttackWidthPerSecond: 2.5
+  chargeAttackEnergyCostPerSecond: 15
+  chargeAttackDamagePace: 0.1
+  chargeAttackDamageAmount: 3
+  chargeAttackStaminaDamageAmount: 1
+  chargeAttackKnockbackForce: 15
+  chargeAttackKnockbackAngle: {x: 1, y: 0.4}

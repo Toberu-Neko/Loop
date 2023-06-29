@@ -45,6 +45,8 @@ public struct S_EnemyMeleeAttackState
     public float meleeAttackRadius;
     public float meleeAttackDamage;
 
+    public float staminaAttackDamage;
+
     public Vector2 knockbackAngle;
     public float knockbackStrength;
 }
