@@ -6,7 +6,7 @@ using UnityEngine;
 public class Stats : CoreComponent
 {
     [field: SerializeField] public CoreStatSystem Health { get; private set; }
-    [field: SerializeField] public CoreStatSystem Poise { get; private set; }
+    [field: SerializeField] public CoreStatSystem Stamina { get; private set; }
     [SerializeField] private float staminaRecoveryRate;
     [SerializeField] private float perfectBlockAttackDuration;
     [SerializeField] private float invincibleDurationAfterDamaged;
@@ -32,7 +32,7 @@ public class Stats : CoreComponent
         combat = core.GetCoreComponent<Combat>();
 
         Health.Init();
-        Poise.Init();
+        Stamina.Init();
     }
     private void Update()
     {
@@ -41,18 +41,10 @@ public class Stats : CoreComponent
             InCombat = false;
         }
 
-        if (!InCombat && !Poise.CurrentValue.Equals(Poise.MaxValue))
+        if (!InCombat && !Stamina.CurrentValue.Equals(Stamina.MaxValue))
         {
-            Poise.Increase(staminaRecoveryRate * Time.deltaTime);
+            Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
         }
-        /*
-        if(damagedThisFrame && knockbackedThisFrame && staminaDamagedThisFrame)
-        {
-            SetInvincibleTrueAfterDamaged();
-            damagedThisFrame = false;
-            knockbackedThisFrame = false;
-            staminaDamagedThisFrame = false;
-        }*/
     }
     private void LateUpdate()
     {
@@ -68,7 +60,7 @@ public class Stats : CoreComponent
     {
         combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
         combat.OnDamaged += HandleOnDamaged;
-        Poise.OnCurrentValueZero += HandlePoiseZero;
+        Stamina.OnCurrentValueZero += HandlePoiseZero;
 
         combat.OnDamaged += () => damagedThisFrame = true;
         combat.OnKnockback += () => knockbackedThisFrame = true;
@@ -79,7 +71,7 @@ public class Stats : CoreComponent
     {
         combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
         combat.OnDamaged -= HandleOnDamaged;
-        Poise.OnCurrentValueZero -= HandlePoiseZero;
+        Stamina.OnCurrentValueZero -= HandlePoiseZero;
 
         combat.OnDamaged -= () => damagedThisFrame = true;
         combat.OnKnockback -= () => knockbackedThisFrame = true;
@@ -127,9 +119,9 @@ public class Stats : CoreComponent
 
     private void HandlePoiseZero()
     {
-        Poise.Init();
-        Poise.decreaseable = false;
+        Stamina.Init();
+        Stamina.decreaseable = false;
     }
 
-    public void ResetPoiseDecreaseable() => Poise.decreaseable = true;
+    public void ResetPoiseDecreaseable() => Stamina.decreaseable = true;
 }

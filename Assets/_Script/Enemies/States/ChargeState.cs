@@ -12,10 +12,6 @@ public class ChargeState : State
     protected bool isChargeTimeOver;
     protected bool performCloseRangeAction;
 
-    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
 
     public ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData) : base(entity, stateMachine, animBoolName)
     {

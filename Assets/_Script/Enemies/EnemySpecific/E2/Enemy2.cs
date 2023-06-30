@@ -53,18 +53,18 @@ public class Enemy2 : Entity
         DodgeState = new E2_DodgeState(this, StateMachine, "dodge", DodgeStateData, this);
         RangedAttackState = new E2_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
 
-        stats.Poise.OnCurrentValueZero += HandlePoiseZero;
+        stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
     private void OnDisable()
     {
-        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+        stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
 
     private void OnDestroy()
     {
-        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+        stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
     private void HandlePoiseZero()
@@ -86,6 +86,6 @@ public class Enemy2 : Entity
     {
         base.OnDrawGizmos();
 
-        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.meleeAttackRadius);
+        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
     }
 }

@@ -13,13 +13,14 @@ public class PlayerSwordNormalAttackState : PlayerAttackState
         swordData = player.PlayerWeaponManager.SwordData;
         attackCounter = 0;
 
-        Combat.OnDamaged += () => isAttackDone = true;
 
     }
     public override void Enter()
     {
         base.Enter();
 
+
+        Combat.OnDamaged += () => isAttackDone = true;
         details = swordData.NormalAttackDetails[attackCounter];
         player.Anim.SetInteger("swordAttackCount", attackCounter);
     }
@@ -27,6 +28,8 @@ public class PlayerSwordNormalAttackState : PlayerAttackState
     {
         base.Exit();
 
+
+        Combat.OnDamaged -= () => isAttackDone = true;
         attackCounter++;
         if(attackCounter >= swordData.AmountOfAttacks)
         {

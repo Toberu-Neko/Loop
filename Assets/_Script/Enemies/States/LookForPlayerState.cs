@@ -15,8 +15,6 @@ public class LookForPlayerState : State
 
     protected int amountOfTurnsDone;
 
-    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
 
     public LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData) : base(entity, stateMachine, animBoolName)
     {

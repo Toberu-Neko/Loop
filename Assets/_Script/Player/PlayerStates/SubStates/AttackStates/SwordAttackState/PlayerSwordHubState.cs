@@ -16,14 +16,14 @@ public class PlayerSwordHubState : PlayerAttackState
     public PlayerSwordHubState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         holdAttackTime = player.PlayerWeaponManager.SwordData.strongAttackHoldTime;
-
-        Combat.OnDamaged += () => isAttackDone = true;
     }
 
     public override void Enter()
     {
         base.Enter();
 
+
+        Combat.OnDamaged += () => isAttackDone = true;
         player.InputHandler.UseAttackInput();
         holdEnough = false;
         canAttack = false;
@@ -33,6 +33,8 @@ public class PlayerSwordHubState : PlayerAttackState
     {
         base.Exit();
 
+
+        Combat.OnDamaged -= () => isAttackDone = true;
         player.Anim.SetBool("swordHoldAttack", false);
     }
 

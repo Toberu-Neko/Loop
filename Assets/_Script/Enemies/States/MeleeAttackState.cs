@@ -5,22 +5,33 @@ using UnityEngine;
 public class MeleeAttackState : AttackState
 {
     protected S_EnemyMeleeAttackState stateData;
+    private float startTime;
 
     public MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
+    }
+    public override void Enter()
+    {
+        base.Enter();
+        startTime = Time.time;
+    }
+
+    public bool CheckCanAttack()
+    {
+        return Time.time >= startTime + stateData.attackCooldown;
     }
 
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
 
-        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.meleeAttackRadius, stateData.whatIsPlayer);
+        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.attackRadius, stateData.whatIsPlayer);
         foreach (Collider2D collider in detectedObjects)
         {
             if (collider.TryGetComponent<IDamageable>(out var dam))
             {
-                dam.Damage(stateData.meleeAttackDamage, entity.GetPosition());
+                dam.Damage(stateData.attackDamage, entity.GetPosition());
             }
 
             if (collider.TryGetComponent<IKnockbackable>(out var knockbackable))

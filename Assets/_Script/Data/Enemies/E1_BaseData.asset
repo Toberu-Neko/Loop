@@ -12,20 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975447ccf87b87240b4ec091fcaffcb9, type: 3}
   m_Name: E1_BaseData
   m_EditorClassIdentifier: 
-  maxHealth: 60
-  damageHopSpeed: 10
-  wallCheckDistance: 0.2
-  ledgeCheckDistance: 1
-  groundCheckRadius: 0.3
-  stunResistance: 3
-  stunRecoveryTime: 2
+  collideDamage: 1
+  collisionAttackDetails:
+    attackName: 
+    movementSpeed: 0
+    damageAmount: 5
+    staminaDamageAmount: 0
+    knockbackForce: 12
+    knockbackAngle: {x: 1, y: 0.75}
   minAgroDistance: 7
   maxAgroDistance: 8
-  closeRangeActionDistance: 1.21
+  closeRangeActionDistance: 0.8
   hitParticle: {fileID: 7655857405548607486, guid: 2dffad8e560ec3248a05f4cc27e6d322, type: 3}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 64
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128

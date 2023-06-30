@@ -12,17 +12,8 @@ public class StunState : State
 
     protected bool performCloseRangeAction;
     protected bool isPlayerInMinAgroRange;
+    protected bool isPlayerInMaxAgroRange;
 
-    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
-
-    protected Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
-    private Combat combat;
-
-    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
-    private Stats stats;
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
 
     public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyStunState stateData) : base(entity, stateMachine, animBoolName)
     {
@@ -36,6 +27,7 @@ public class StunState : State
         isGrounded = CollisionSenses.Ground;
         performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
         isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
+        isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
     }
 
     public override void Enter()

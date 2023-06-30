@@ -42,10 +42,11 @@ public struct S_EnemyMeleeAttackState
 {
     [HideInInspector]public LayerMask whatIsPlayer;
 
-    public float meleeAttackRadius;
-    public float meleeAttackDamage;
-
+    public float attackRadius;
+    public float attackDamage;
     public float staminaAttackDamage;
+
+    public float attackCooldown;
 
     public Vector2 knockbackAngle;
     public float knockbackStrength;
@@ -90,8 +91,8 @@ public struct S_EnemyChargeState
 }
 
 [Serializable]
-public struct E_IdleDataStruct
+public struct S_EnemyShieldMoveState
 {
-    public float minIdleTime;
-    public float maxIdleTime;
+    public float movementSpeed;
+    public float removeShieldTime;
 }

@@ -12,11 +12,6 @@ public class PlayerDetectedState : State
     protected bool performCloseRangeAction;
     protected bool isDetectingLedge;
 
-    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
-
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
 
     public PlayerDetectedState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyPlayerDetectedState stateData) : base(entity, stateMachine, animBoolName)
     {

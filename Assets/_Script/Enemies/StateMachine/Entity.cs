@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class Entity : MonoBehaviour
 {
     [SerializeField] private Transform playerCheck;
 
     public FiniteStateMachine StateMachine { get; private set; }
-    public D_Entity EntityData;
+    [SerializeField] private D_Entity EntityData;
 
     public Core Core { get; private set; }
     private Movement movement;
     protected Stats stats;
 
     public Animator Anim { get; private set; }
-    private Vector2 velocityWorkspcae;
+    private WeaponAttackDetails collisionAttackDetails;
 
     public virtual void Awake()
     {
@@ -26,6 +25,7 @@ public class Entity : MonoBehaviour
         stats = Core.GetCoreComponent<Stats>();
 
         Anim = GetComponent<Animator>();
+        collisionAttackDetails = EntityData.collisionAttackDetails;
 
         StateMachine = new();
     }
@@ -73,5 +73,28 @@ public class Entity : MonoBehaviour
     public Vector2 GetPosition()
     {
         return (Vector2)transform.position;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            int direction;
+            if (collision.gameObject.transform.position.x > GetPosition().x)
+            {
+                direction = 1;
+            }
+            else
+            {
+                direction = -1;
+            }
+            if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
+            {
+                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, direction, GetPosition(), false);
+            }
+            if(collision.gameObject.TryGetComponent(out IDamageable damageable) && EntityData.collideDamage)
+            {
+                damageable.Damage(collisionAttackDetails.damageAmount, GetPosition(), false);
+            }
+        }
     }
 }

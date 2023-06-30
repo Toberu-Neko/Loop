@@ -50,8 +50,5 @@ public class PlayerPerfectBlockState : PlayerAttackState
     public override void Exit()
     {
         base.Exit();
-
-        Combat.PerfectBlock = false;
-        Combat.NormalBlock = false;
     }
 }

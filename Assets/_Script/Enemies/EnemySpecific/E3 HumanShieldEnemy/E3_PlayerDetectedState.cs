@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E1_PlayerDetectedState : PlayerDetectedState
+public class E3_PlayerDetectedState : PlayerDetectedState
 {
-    private Enemy1 enemy;
+    private Enemy3 enemy;
 
-    public E1_PlayerDetectedState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyPlayerDetectedState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E3_PlayerDetectedState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyPlayerDetectedState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }
@@ -15,13 +15,13 @@ public class E1_PlayerDetectedState : PlayerDetectedState
     {
         base.LogicUpdate();
 
-        if (performCloseRangeAction)
+        if (performCloseRangeAction && enemy.MeleeAttackState.CheckCanAttack())
         {
             stateMachine.ChangeState(enemy.MeleeAttackState);
         }
         else if (performLongRangeAction)
         {
-            stateMachine.ChangeState(enemy.ChargeState);
+            stateMachine.ChangeState(enemy.ShieldMoveState);
         }
         else if (!isPlayerInMaxAgroRange)
         {

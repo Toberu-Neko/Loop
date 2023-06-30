@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class State
@@ -13,6 +12,19 @@ public class State
     public float StartTime { get; protected set;}
 
     protected string animBoolName;
+
+    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
+    private Stats stats;
+
+    protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
+    private CollisionSenses collisionSenses;
+
+    protected Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
+    private Combat combat;
+
+    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
+    private Movement movement;
+
 
     public State(Entity entity, FiniteStateMachine stateMachine, string animBoolName)
     {

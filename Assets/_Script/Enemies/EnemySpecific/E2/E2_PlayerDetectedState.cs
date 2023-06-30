@@ -21,7 +21,7 @@ public class E2_PlayerDetectedState : PlayerDetectedState
             {
                 stateMachine.ChangeState(enemy.DodgeState);
             }
-            else
+            else if(enemy.MeleeAttackState.CheckCanAttack())
             {
                 stateMachine.ChangeState(enemy.MeleeAttackState);
             }

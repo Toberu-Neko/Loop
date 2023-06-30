@@ -9,6 +9,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 {
     [SerializeField] private GameObject damageParticles;
     [SerializeField] private float blockDamageMultiplier = 0.5f;
+    [SerializeField] private float blockStaminaMultiplier = 0.5f;
 
     public event Action OnPerfectBlock;
     public event Action OnDamaged;
@@ -48,13 +49,13 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     }
     public void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
-        if (Stats.Invincible || !Stats.Poise.decreaseable)
+        if (Stats.Invincible || !Stats.Stamina.decreaseable)
         {
             return;
         }
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
-            Stats.Poise.Decrease(damageAmount);
+            Stats.Stamina.Decrease(damageAmount);
         }
         else if (PerfectBlock)
         {
@@ -62,11 +63,20 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
         else if (NormalBlock)
         {
-            Stats.Poise.Decrease(damageAmount * blockDamageMultiplier);
+            Stats.Stamina.Decrease(damageAmount * blockStaminaMultiplier);
+            /*
+            if (damageAmount * blockDamageMultiplier < 1)
+            {
+                Stats.Stamina.Decrease(1);
+            }
+            else
+            {
+                Stats.Stamina.Decrease(damageAmount * blockStaminaMultiplier);
+            }*/
         }
         else
         {
-            Stats.Poise.Decrease(damageAmount);
+            Stats.Stamina.Decrease(damageAmount);
         }
         OnStaminaDamaged?.Invoke();
     }
@@ -202,5 +212,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Debug.Log(collision.name);
+    }
 
 }

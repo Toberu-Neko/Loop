@@ -41,18 +41,18 @@ public class DebugEntityStats : MonoBehaviour
     private void OnEnable()
     {
         stats.Health.OnValueChanged += UpdateText;
-        stats.Poise.OnValueChanged += UpdateText;
+        stats.Stamina.OnValueChanged += UpdateText;
     }
 
     private void OnDisable()
     {
         stats.Health.OnValueChanged -= UpdateText;
-        stats.Poise.OnValueChanged -= UpdateText;
+        stats.Stamina.OnValueChanged -= UpdateText;
     }
 
     void UpdateText()
     {
         hpText.text = "HP: " + stats.Health.CurrentValue.ToString() +
-            "\nST: " + stats.Poise.CurrentValue.ToString();
+            "\nST: " + stats.Stamina.CurrentValue.ToString();
     }
 }

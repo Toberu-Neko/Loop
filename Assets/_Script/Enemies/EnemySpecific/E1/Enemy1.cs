@@ -48,18 +48,18 @@ public class Enemy1 : Entity
         StunState = new E1_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new E1_DeadState(this, StateMachine, "dead", deadStateData, this);
 
-        stats.Poise.OnCurrentValueZero += HandlePoiseZero;
+        stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
     private void OnDisable()
     {
-        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+        stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
 
     private void OnDestroy()
     {
-        stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+        stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
     private void HandlePoiseZero()
@@ -81,6 +81,8 @@ public class Enemy1 : Entity
     {
         base.OnDrawGizmos();
 
-        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.meleeAttackRadius);
+        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
     }
+
+    
 }

@@ -12,10 +12,6 @@ public class DodgeState : State
     protected bool isGrounded;
     protected bool isDodgeOver;
 
-    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
 
     public DodgeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyDodgeState stateData) : base(entity, stateMachine, animBoolName)
     {

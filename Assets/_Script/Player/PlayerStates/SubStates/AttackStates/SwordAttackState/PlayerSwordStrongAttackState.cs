@@ -8,7 +8,19 @@ public class PlayerSwordStrongAttackState : PlayerAttackState
     public PlayerSwordStrongAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         weaponData = player.PlayerWeaponManager.SwordData;
+    }
+    public override void Enter()
+    {
+        base.Enter();
+
         Combat.OnDamaged += () => isAttackDone = true;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        Combat.OnDamaged -= () => isAttackDone = true;
     }
     public override void LogicUpdate()
     {
