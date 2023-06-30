@@ -25,7 +25,7 @@ public class CoreStatSystem
         }
     }
 
-    public bool decreaseable = true;
+    [HideInInspector] public bool decreaseable = true;
     private float currentValue;
 
     public void Init()

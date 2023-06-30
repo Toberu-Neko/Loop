@@ -52,6 +52,8 @@ public class CollisionSenses : CoreComponent
     #endregion
 
     [SerializeField] private Vector2 ceilingCheckV2;
+
+    [Tooltip("這個的值要略小於Collider的寬度, 不然碰到牆壁時會卡住.")]
     [SerializeField] private Vector2 groundCheckV2;
     [SerializeField] private Vector2 headCheckV2;
     

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OldPlayerAttackState : PlayerAbilityState
 {
-    private Weapon weapon;
+    private OldWeapon weapon;
 
     private int xInput;
 
@@ -50,7 +50,7 @@ public class OldPlayerAttackState : PlayerAbilityState
         weapon.ExitWeapon();
     }
 
-    public void SetWeapon(Weapon weapon)
+    public void SetWeapon(OldWeapon weapon)
     {
         this.weapon = weapon;
         weapon.InitializeWeapon(this, core);

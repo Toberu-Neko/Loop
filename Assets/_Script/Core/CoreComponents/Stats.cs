@@ -21,6 +21,7 @@ public class Stats : CoreComponent
     [SerializeField] private float combatTimer = 2f;
     private float lastCombatTime;
     private bool damagedThisFrame = false;
+    
     private bool staminaDamagedThisFrame = false;
     private bool knockbackedThisFrame = false;
 

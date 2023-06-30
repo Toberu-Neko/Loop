@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class WeaponAnimationToWeapon : MonoBehaviour
 {
-    private Weapon weapon;
+    private OldWeapon weapon;
     private void Awake()
     {
-        weapon = GetComponentInParent<Weapon>();
+        weapon = GetComponentInParent<OldWeapon>();
     }
     private void AnimationFinishTrigger()
     {

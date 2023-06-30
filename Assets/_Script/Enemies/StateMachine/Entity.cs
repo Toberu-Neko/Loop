@@ -15,7 +15,6 @@ public class Entity : MonoBehaviour
     private Movement movement;
     protected Stats stats;
 
-    public AnimationToStatemachine AnimationToStatemachine { get; private set; }
     public Animator Anim { get; private set; }
     private Vector2 velocityWorkspcae;
 
@@ -27,7 +26,6 @@ public class Entity : MonoBehaviour
         stats = Core.GetCoreComponent<Stats>();
 
         Anim = GetComponent<Animator>();
-        AnimationToStatemachine = GetComponent<AnimationToStatemachine>();
 
         StateMachine = new();
     }

@@ -66,12 +66,12 @@ public class StunState : State
         if(isGrounded && Time.time >= StartTime + stateData.stunKnockbackTime && !isMovementStopped)
         {
             isMovementStopped = true;
-            Movement.SetVelocityX(0f);
+            Movement.SetVelocityZero();
         }
-    }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
+        if (isMovementStopped && isGrounded)
+        {
+            Movement.SetVelocityZero();
+        }
     }
 }

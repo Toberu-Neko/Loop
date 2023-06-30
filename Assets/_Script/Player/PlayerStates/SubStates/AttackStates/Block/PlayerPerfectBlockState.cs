@@ -33,7 +33,12 @@ public class PlayerPerfectBlockState : PlayerAttackState
             else
                 direction = -1;
 
-            enemyCollider.GetComponentInChildren<IKnockbackable>().Knockback(playerData.perfectBlockKnockbackAngle ,playerData.perfectBlockKnockbackForce, direction, (Vector2)core.transform.position);
+            IKnockbackable knockbackable = enemyCollider.GetComponentInChildren<IKnockbackable>();
+            if (knockbackable != null)
+            {
+                knockbackable.Knockback(playerData.perfectBlockKnockbackAngle ,playerData.perfectBlockKnockbackForce, direction, (Vector2)core.transform.position);
+            }
+            
         }
     }
 
