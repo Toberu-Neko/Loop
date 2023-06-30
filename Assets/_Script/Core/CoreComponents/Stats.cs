@@ -44,8 +44,18 @@ public class Stats : CoreComponent
         {
             Poise.Increase(staminaRecoveryRate * Time.deltaTime);
         }
-
+        /*
         if(damagedThisFrame && knockbackedThisFrame && staminaDamagedThisFrame)
+        {
+            SetInvincibleTrueAfterDamaged();
+            damagedThisFrame = false;
+            knockbackedThisFrame = false;
+            staminaDamagedThisFrame = false;
+        }*/
+    }
+    private void LateUpdate()
+    {
+        if (damagedThisFrame)
         {
             SetInvincibleTrueAfterDamaged();
             damagedThisFrame = false;
