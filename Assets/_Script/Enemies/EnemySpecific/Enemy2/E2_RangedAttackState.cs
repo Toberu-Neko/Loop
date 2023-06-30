@@ -10,24 +10,9 @@ public class E2_RangedAttackState : RangedAttackState
         this.enemy = enemy;
     }
 
-    public override void DoChecks()
+    public override void AnimationFinishTrigger()
     {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
-    public override void FinishAttack()
-    {
-        base.FinishAttack();
+        base.AnimationFinishTrigger();
     }
 
     public override void LogicUpdate()
@@ -47,13 +32,8 @@ public class E2_RangedAttackState : RangedAttackState
         }
     }
 
-    public override void PhysicsUpdate()
+    public override void AnimationActionTrigger()
     {
-        base.PhysicsUpdate();
-    }
-
-    public override void TriggerAttack()
-    {
-        base.TriggerAttack();
+        base.AnimationActionTrigger();
     }
 }

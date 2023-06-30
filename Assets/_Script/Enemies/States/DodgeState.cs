@@ -54,9 +54,4 @@ public class DodgeState : State
             isDodgeOver = true;
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
 }

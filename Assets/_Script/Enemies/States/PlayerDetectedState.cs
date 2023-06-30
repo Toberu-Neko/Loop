@@ -14,6 +14,7 @@ public class PlayerDetectedState : State
 
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
+
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
@@ -47,10 +48,6 @@ public class PlayerDetectedState : State
         }
     }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
     public override void DoChecks()
     {
         base.DoChecks();

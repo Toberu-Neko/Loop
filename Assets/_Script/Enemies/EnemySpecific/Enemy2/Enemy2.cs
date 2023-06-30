@@ -54,21 +54,29 @@ public class Enemy2 : Entity
         RangedAttackState = new E2_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
 
         stats.Poise.OnCurrentValueZero += HandlePoiseZero;
+        stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
     private void OnDisable()
     {
         stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+        stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
 
     private void OnDestroy()
     {
         stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+        stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
-
     private void HandlePoiseZero()
     {
+        if (stats.Health.CurrentValue <= 0)
+            return;
+
         StateMachine.ChangeState(StunState);
     }
+
+    private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
+
     private void Start()
     {
         StateMachine.Initialize(MoveState);

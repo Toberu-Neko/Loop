@@ -11,21 +11,6 @@ public class E2_PlayerDetectedState : PlayerDetectedState
         this.enemy = enemy;
     }
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -54,10 +39,5 @@ public class E2_PlayerDetectedState : PlayerDetectedState
             Movement.Flip();
             stateMachine.ChangeState(enemy.MoveState);
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

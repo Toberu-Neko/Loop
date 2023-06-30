@@ -49,26 +49,33 @@ public class Enemy1 : Entity
         DeadState = new E1_DeadState(this, StateMachine, "dead", deadStateData, this);
 
         stats.Poise.OnCurrentValueZero += HandlePoiseZero;
+        stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
     private void OnDisable()
     {
         stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+        stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
 
     private void OnDestroy()
     {
         stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+        stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
     private void HandlePoiseZero()
     {
+        if (stats.Health.CurrentValue <= 0)
+            return;
+
         StateMachine.ChangeState(StunState);
     }
+
+    private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
+
     private void Start()
     {
         StateMachine.Initialize(MoveState);
     }
-
-
 
     public override void OnDrawGizmos()
     {

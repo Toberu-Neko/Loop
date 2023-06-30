@@ -11,9 +11,9 @@ public class MeleeAttackState : AttackState
         this.stateData = stateData;
     }
 
-    public override void TriggerAttack()
+    public override void AnimationActionTrigger()
     {
-        base.TriggerAttack();
+        base.AnimationActionTrigger();
 
         Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.meleeAttackRadius, stateData.whatIsPlayer);
         foreach (Collider2D collider in detectedObjects)

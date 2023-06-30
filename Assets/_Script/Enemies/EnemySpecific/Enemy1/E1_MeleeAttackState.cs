@@ -27,4 +27,9 @@ public class E1_MeleeAttackState : MeleeAttackState
             }
         }
     }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+    }
 }

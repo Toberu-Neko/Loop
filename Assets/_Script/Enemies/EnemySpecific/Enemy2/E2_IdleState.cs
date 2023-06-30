@@ -10,21 +10,6 @@ public class E2_IdleState : IdleState
         this.enemy = enemy;
     }
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -37,10 +22,5 @@ public class E2_IdleState : IdleState
         {
             stateMachine.ChangeState(enemy.MoveState);
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

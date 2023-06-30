@@ -51,11 +51,6 @@ public class IdleState : State
             isIdleTimeOver = true;
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
     public override void DoChecks()
     {
         base.DoChecks();

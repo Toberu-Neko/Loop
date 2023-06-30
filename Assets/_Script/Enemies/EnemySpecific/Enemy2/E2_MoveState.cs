@@ -9,22 +9,6 @@ public class E2_MoveState : MoveState
     {
         this.enemy = enemy;
     }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -39,10 +23,5 @@ public class E2_MoveState : MoveState
             stateMachine.ChangeState(enemy.IdleState);
         }
 
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

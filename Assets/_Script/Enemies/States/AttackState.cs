@@ -6,7 +6,6 @@ public class AttackState : State
 {
     protected Transform attackPosition;
 
-    protected bool isAnimationFinished;
     protected bool isPlayerInMinAgroRange;
 
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
@@ -28,7 +27,6 @@ public class AttackState : State
     {
         base.Enter();
 
-        entity.AnimationToStatemachine.attackState = this;
         isAnimationFinished = false;
         Movement.SetVelocityX(0f);
     }
@@ -44,18 +42,13 @@ public class AttackState : State
         Movement.SetVelocityX(0f);
     }
 
-    public override void PhysicsUpdate()
+    public override void AnimationActionTrigger()
     {
-        base.PhysicsUpdate();
+        base.AnimationActionTrigger();
     }
 
-    public virtual void TriggerAttack()
+    public override void AnimationFinishTrigger()
     {
-
-    }
-
-    public virtual void FinishAttack()
-    {
-        isAnimationFinished = true;
+        base.AnimationFinishTrigger();
     }
 }

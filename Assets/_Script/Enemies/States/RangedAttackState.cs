@@ -12,31 +12,15 @@ public class RangedAttackState : AttackState
     {
         this.stateData = stateData;
     }
-
-    public override void DoChecks()
+    
+    public override void AnimationFinishTrigger()
     {
-        base.DoChecks();
+        base.AnimationFinishTrigger();
     }
 
-    public override void Enter()
+    public override void AnimationActionTrigger()
     {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
-    public override void FinishAttack()
-    {
-        base.FinishAttack();
-    }
-
-
-    public override void TriggerAttack()
-    {
-        base.TriggerAttack();
+        base.AnimationActionTrigger();
 
         projectile = GameObject.Instantiate(stateData.projectile, attackPosition.position, attackPosition.rotation);
         projectileScript = projectile.GetComponent<E2_Projectile>();
