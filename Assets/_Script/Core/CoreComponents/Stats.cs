@@ -110,13 +110,21 @@ public class Stats : CoreComponent
             PerfectBlockAttackable = false;
     }
 
-    public void SetInvincibleTrue() => Invincible = true;
+    public void SetInvincibleTrue()
+    {
+        Invincible = true;
+        Physics2D.IgnoreLayerCollision(7, 11, true);
+    }
 
-    public void SetInvincibleFalse() => Invincible = false;
+    public void SetInvincibleFalse()
+    {
+        Invincible = false;
+        Physics2D.IgnoreLayerCollision(7, 11, false);
+    }
 
     private void SetInvincibleTrueAfterDamaged()
     {
-        Invincible = true;
+        SetInvincibleTrue();
         CancelInvoke(nameof(SetInvincibleFalse));
         Invoke(nameof(SetInvincibleFalse), invincibleDurationAfterDamaged);
     }

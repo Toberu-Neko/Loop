@@ -4,7 +4,9 @@ using UnityEngine;
 [Serializable]
 public struct S_EnemyStunState
 {
+    [Tooltip("暈眩時間")]
     public float stunTime;
+    [Tooltip("暈眩後的擊退時間長度")]
     public float stunKnockbackTime;
     public float stunKnockbackSpeed;
 

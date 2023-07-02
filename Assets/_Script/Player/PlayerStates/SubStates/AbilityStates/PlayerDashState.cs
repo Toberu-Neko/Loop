@@ -44,7 +44,6 @@ public class PlayerDashState : PlayerAbilityState
             Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
         }
         Stats.SetInvincibleFalse();
-        Physics2D.IgnoreLayerCollision(7, 11, false);
     }
 
     public override void LogicUpdate()
@@ -87,7 +86,6 @@ public class PlayerDashState : PlayerAbilityState
 
                     player.DashDirectionIndicator.gameObject.SetActive(false);
                     Stats.SetInvincibleTrue();
-                    Physics2D.IgnoreLayerCollision(7, 11, true);
                     PlaceAfterImage();
                 }
             }

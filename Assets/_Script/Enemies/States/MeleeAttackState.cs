@@ -26,8 +26,6 @@ public class MeleeAttackState : AttackState
     {
         base.AnimationActionTrigger();
 
-        Debug.Log("Damage");
-
         Collider2D detectedObjects = Physics2D.OverlapCircle(attackPosition.position, stateData.attackRadius, stateData.whatIsPlayer);
         if (detectedObjects)
         {

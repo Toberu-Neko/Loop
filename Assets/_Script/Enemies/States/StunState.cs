@@ -55,7 +55,7 @@ public class StunState : State
             isStunTimeOver = true;
         }
 
-        if(isGrounded && Time.time >= StartTime + stateData.stunKnockbackTime && !isMovementStopped)
+        if(isGrounded && Time.time >= StartTime + 0.2f && !isMovementStopped)
         {
             isMovementStopped = true;
             Movement.SetVelocityZero();

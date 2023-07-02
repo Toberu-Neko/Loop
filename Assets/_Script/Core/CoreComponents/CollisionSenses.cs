@@ -24,6 +24,11 @@ public class CollisionSenses : CoreComponent
         get => GenericNotImplementedError<Transform>.TryGet(wallCheck, transform.parent.name);
         private set => wallCheck = value; 
     }
+    public Transform WallBackCheck
+    {
+        get => GenericNotImplementedError<Transform>.TryGet(wallBackCheck, transform.parent.name);
+        private set => wallBackCheck = value;
+    }
     public Transform LedgeCheckHorizontal
     {
         get => GenericNotImplementedError<Transform>.TryGet(ledgeCheckHorizontal, transform.parent.name);
@@ -46,6 +51,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private Transform ledgeCheckVertical;
+    [SerializeField] private Transform wallBackCheck;
     [SerializeField] private Transform ledgeCheckHorizontal;
     [SerializeField] private Transform ceilingCheck;
     [SerializeField] private Transform headCheck;
@@ -82,9 +88,17 @@ public class CollisionSenses : CoreComponent
     {
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
     }
+    public bool WallFrontLong
+    {
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance * 3f, whatIsGround - whatIsPlatform);
+    }
     public bool WallBack
     {
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
+    }
+    public bool WallBackLong
+    {
+        get => Physics2D.Raycast(WallBackCheck.position, -Vector2.right * Movement.FacingDirection, wallCheckDistance * 3f, whatIsGround - whatIsPlatform);
     }
     public bool LedgeHorizontal
     {

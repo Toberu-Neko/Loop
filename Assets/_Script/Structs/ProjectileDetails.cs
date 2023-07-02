@@ -6,12 +6,17 @@ using UnityEngine;
 [Serializable]
 public struct ProjectileDetails
 {
+    [Tooltip("傷害")]
     public float damageAmount;
+    [Tooltip("耐力傷害")]
     public float staminaDamageAmount;
+    [Tooltip("飛行速度")]
     public float speed;
+    [Tooltip("持續時間")]
     public float duration;
-
-    public Vector2 knockbackAngle;
+    [Tooltip("擊退力道")]
     public float knockbackStrength;
+    [Tooltip("擊退角度")]
+    public Vector2 knockbackAngle;
     
 }

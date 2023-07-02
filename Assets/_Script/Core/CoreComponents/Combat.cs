@@ -210,4 +210,5 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             DetectedStaminaDamageables.Remove(staminaDamageable);
         }
     }
+
 }

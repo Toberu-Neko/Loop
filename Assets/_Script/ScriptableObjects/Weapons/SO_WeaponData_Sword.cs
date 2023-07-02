@@ -5,8 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newSwordData", menuName = "Data/WeaponData/Sword")]
 public class SO_WeaponData_Sword : SO_WeaponData
 {
+    [Tooltip("最大能量")]
     public int maxEnergy;
 
+    [Tooltip("蓄力攻擊劍氣")]
     public GameObject projectile;
 
     [SerializeField] private WeaponAttackDetails[] normalAttackDetails;
@@ -15,6 +17,7 @@ public class SO_WeaponData_Sword : SO_WeaponData
     public WeaponAttackDetails skyAttackDetails;
 
     [Header("Strong Attack")]
+    [Tooltip("蓄力攻擊時間")]
     public float strongAttackHoldTime;
 
     public ProjectileDetails projectileDetails;

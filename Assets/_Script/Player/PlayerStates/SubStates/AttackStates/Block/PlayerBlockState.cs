@@ -55,7 +55,7 @@ public class PlayerBlockState : PlayerAttackState
         blockInput = player.InputHandler.BlockInput;
 
         Movement.CheckIfShouldFlip(xInput);
-        Movement.SetVelocityX(playerData.blockMovementVelocity * xInput);
+        Movement.SetVelocityX(playerData.movementVelocity * playerData.blockMovementMultiplier * xInput);
 
         if(Time.time >= startTime + playerData.perfectBlockTime && Combat.PerfectBlock)
         {

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc50bc4cdda32e84d9d656da85804c0c, type: 3}
-  m_Name: PlayerData
+  m_Name: PlayerStateData
   m_EditorClassIdentifier: 
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 2048
+  movementVelocity: 10
+  jumpVelocity: 16
+  amountOfJumps: 2
   blockMovementVelocity: 3
   perfectBlockTime: 0.8
   blockCooldown: 0.6
   perfectBlockKnockbackRadius: 2
   perfectBlockKnockbackForce: 15
   perfectBlockKnockbackAngle: {x: 1, y: 1.5}
-  movementVelocity: 10
-  jumpVelocity: 16
-  amountOfJumps: 2
   wallJumpVelocity: 20
   wallJumpTime: 0.4
   wallJumpAngle: {x: 1, y: 2}

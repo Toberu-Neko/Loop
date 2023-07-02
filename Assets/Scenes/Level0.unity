@@ -176,6 +176,7 @@ MonoBehaviour:
   wallCheck: {fileID: 1924555999}
   ledgeCheckVertical: {fileID: 0}
   ledgeCheckHorizontal: {fileID: 1001875251}
+  wallBackCheck: {fileID: 0}
   ceilingCheck: {fileID: 848071890}
   headCheck: {fileID: 134768215}
   groundCheckV2: {x: 0.7, y: 0.1}
@@ -239,6 +240,7 @@ MonoBehaviour:
   wallCheck: {fileID: 249470914}
   ledgeCheckVertical: {fileID: 1956702987}
   ledgeCheckHorizontal: {fileID: 0}
+  wallBackCheck: {fileID: 0}
   ceilingCheck: {fileID: 0}
   headCheck: {fileID: 0}
   groundCheckV2: {x: 0.47, y: 0.1}
@@ -2269,7 +2271,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 144, y: 0}
+  m_AnchoredPosition: {x: 144.14, y: 159.3}
   m_SizeDelta: {x: 288.2716, y: 106.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &280223605
@@ -5594,6 +5596,7 @@ MonoBehaviour:
   wallCheck: {fileID: 585046177}
   ledgeCheckVertical: {fileID: 321895390}
   ledgeCheckHorizontal: {fileID: 0}
+  wallBackCheck: {fileID: 0}
   ceilingCheck: {fileID: 0}
   headCheck: {fileID: 0}
   groundCheckV2: {x: 0.68, y: 0.1}
@@ -8934,7 +8937,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 144.13586, y: 0}
+  m_AnchoredPosition: {x: 144.14, y: 53.1}
   m_SizeDelta: {x: 288.2716, y: 106.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1272998529
@@ -11276,6 +11279,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combat: {fileID: 1779046445}
+--- !u!1 &1450849451
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450849452}
+  m_Layer: 11
+  m_Name: WallBackCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1450849452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450849451}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.75, y: -0.43000007, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6436567989675861357}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1454257047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15533,7 +15567,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004288228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.4, y: -0.03000021, z: -10}
+  m_LocalPosition: {x: -25.489998, y: -1.4500008, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17307,6 +17341,7 @@ MonoBehaviour:
   wallCheck: {fileID: 7204148589757224026}
   ledgeCheckVertical: {fileID: 4392656456107839921}
   ledgeCheckHorizontal: {fileID: 0}
+  wallBackCheck: {fileID: 1450849452}
   ceilingCheck: {fileID: 0}
   headCheck: {fileID: 0}
   groundCheckV2: {x: 1.41, y: 0.1}
@@ -17548,6 +17583,7 @@ Transform:
   m_Children:
   - {fileID: 4392656456107839921}
   - {fileID: 7204148589757224026}
+  - {fileID: 1450849452}
   - {fileID: 8412417997986681397}
   m_Father: {fileID: 1461121807545059199}
   m_RootOrder: 1

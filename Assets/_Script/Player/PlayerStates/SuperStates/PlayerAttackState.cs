@@ -131,7 +131,7 @@ public class PlayerAttackState : PlayerState
         {
             if (jumpInputStop)
             {
-                Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.variableJumpHeightMultiplier);
+                Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.jumpInpusStopYSpeedMultiplier);
                 isJumping = false;
             }
             else if (Movement.CurrentVelocity.y <= 0f)

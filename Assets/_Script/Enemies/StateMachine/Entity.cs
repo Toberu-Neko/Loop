@@ -15,6 +15,7 @@ public class Entity : MonoBehaviour
     private Movement movement;
     protected Stats stats;
     private Combat combat;
+    private CollisionSenses collisionSenses;
 
     public Animator Anim { get; private set; }
     private WeaponAttackDetails collisionAttackDetails;
@@ -27,6 +28,7 @@ public class Entity : MonoBehaviour
         movement = Core.GetCoreComponent<Movement>();
         stats = Core.GetCoreComponent<Stats>();
         combat = Core.GetCoreComponent<Combat>();
+        collisionSenses = Core.GetCoreComponent<CollisionSenses>();
 
         Anim = GetComponent<Animator>();
         collisionAttackDetails = EntityData.collisionAttackDetails;
@@ -119,11 +121,58 @@ public class Entity : MonoBehaviour
             {
                 direction = -1;
             }
+
+            if (collisionSenses.WallFrontLong)
+            {
+                direction = -movement.FacingDirection;
+            }
+
+            if (collisionSenses.WallBackLong)
+            {
+                direction = movement.FacingDirection;
+            }
+
             if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
             {
+                Debug.Log("Enter");
                 knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, direction, GetPosition(), false);
             }
             if(collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
+            {
+                damageable.Damage(collisionAttackDetails.damageAmount, GetPosition(), false);
+            }
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            int direction;
+            if (collision.gameObject.transform.position.x > GetPosition().x)
+            {
+                direction = 1;
+            }
+            else
+            {
+                direction = -1;
+            }
+
+            if (collisionSenses.WallFrontLong)
+            {
+                direction = -movement.FacingDirection;
+            }
+
+            if(collisionSenses.WallBackLong)
+            {
+                direction = movement.FacingDirection;
+            }
+
+            if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
+            {
+                knockbackable.Knockback(Vector2.up, collisionAttackDetails.knockbackForce * 5f, direction, GetPosition(), false);
+                Debug.Log("Stay");
+            }
+            if (collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
             {
                 damageable.Damage(collisionAttackDetails.damageAmount, GetPosition(), false);
             }
