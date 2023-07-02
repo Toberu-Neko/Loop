@@ -10,11 +10,14 @@ public class ChargeState : State
     protected bool isDetectingLedge;
     protected bool isDetectingWall;
     protected bool isChargeTimeOver;
+    protected bool gotoNextState;
     protected bool performCloseRangeAction;
 
-
+    private float startTime;
+    private bool firstCharge;
     public ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData) : base(entity, stateMachine, animBoolName)
     {
+        firstCharge = true;
         this.stateData = stateData;
     }
 
@@ -33,29 +36,51 @@ public class ChargeState : State
     {
         base.Enter();
 
+        startTime = Time.time;
+
         Movement.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
         isChargeTimeOver = false;
+        gotoNextState = false;
+
+        entity.SetSkillCollideDamage(true);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        entity.SetSkillCollideDamage(false);
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
+        if(!isChargeTimeOver)
+            Movement.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
+        else
+            Movement.SetVelocityX(0f);
 
-        if (Time.time >= StartTime + stateData.chargeTime)
+
+        if (Time.time >= StartTime + stateData.chargeTime && !isChargeTimeOver)
         {
             isChargeTimeOver = true;
         }
+
+        if(Time.time >= StartTime + stateData.chargeTime + stateData.finishChargeDelay && !gotoNextState)
+        {
+            gotoNextState = true;
+        }
     }
 
-    public override void PhysicsUpdate()
+    public bool CheckCanCharge()
     {
-        base.PhysicsUpdate();
+        if (firstCharge)
+        {
+            firstCharge = false;
+            return true;
+        }
+
+        return Time.time >= startTime + stateData.chargeCooldown;
     }
 }

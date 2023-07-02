@@ -12,6 +12,7 @@ public class Enemy3 : Entity
     public E3_StunState StunState { get; private set; }
     public E3_DeadState DeadState { get; private set; }
     public E3_ShieldMoveState ShieldMoveState { get; private set; }
+    public E3_ChargeState ChargeState { get; private set; }
 
 
     [SerializeField] private E3_StateData stateData;
@@ -23,6 +24,7 @@ public class Enemy3 : Entity
     private S_EnemyMeleeAttackState meleeAttackStateData;
     private S_EnemyStunState stunStateData;
     private S_EnemyDeadState deadStateData;
+    private S_EnemyChargeState chargeStateData;
 
     private S_EnemyShieldMoveState shieldMoveStateData;
 
@@ -40,6 +42,7 @@ public class Enemy3 : Entity
         stunStateData = stateData.stunStateData;
         deadStateData = stateData.deadStateData;
         shieldMoveStateData = stateData.shieldMoveStateData;
+        chargeStateData = stateData.chargeStateData;
 
         MoveState = new E3_MoveState(this, StateMachine, "move", moveStateData, this);
         IdleState = new E3_IdleState(this, StateMachine, "idle", idleStateData, this);
@@ -49,6 +52,7 @@ public class Enemy3 : Entity
         StunState = new E3_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new E3_DeadState(this, StateMachine, "dead", deadStateData, this);
         ShieldMoveState = new E3_ShieldMoveState(this, StateMachine, "shieldMove", shieldMoveStateData, this);
+        ChargeState = new E3_ChargeState(this, StateMachine, "shieldMove", chargeStateData, this);
 
         stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;

@@ -23,6 +23,8 @@ MonoBehaviour:
   playerDetectedStateData:
     delayTime: 1.5
   chargeStateData:
+    chargeCooldown: 0
+    finishChargeDelay: 0
     chargeSpeed: 6
     chargeTime: 1.5
   lookForPlayerStateData:
@@ -32,7 +34,7 @@ MonoBehaviour:
     whatIsPlayer:
       serializedVersion: 2
       m_Bits: 128
-    attackRadius: 0.75
+    attackRadius: 0.95
     attackDamage: 10
     staminaAttackDamage: 2
     attackCooldown: 1.5

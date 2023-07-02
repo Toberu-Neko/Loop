@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 public class Entity : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class Entity : MonoBehaviour
     public Core Core { get; private set; }
     private Movement movement;
     protected Stats stats;
+    private Combat combat;
 
     public Animator Anim { get; private set; }
     private WeaponAttackDetails collisionAttackDetails;
+    public bool SkillCollideDamage { get; private set; }
 
     public virtual void Awake()
     {
@@ -23,6 +26,7 @@ public class Entity : MonoBehaviour
 
         movement = Core.GetCoreComponent<Movement>();
         stats = Core.GetCoreComponent<Stats>();
+        combat = Core.GetCoreComponent<Combat>();
 
         Anim = GetComponent<Animator>();
         collisionAttackDetails = EntityData.collisionAttackDetails;
@@ -74,6 +78,34 @@ public class Entity : MonoBehaviour
     {
         return (Vector2)transform.position;
     }
+
+    public void DoDamageToDamageList(float damageAmount, float damageStaminaAmount, Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
+    {
+        if (combat.DetectedDamageables.Count > 0)
+        {
+            foreach (IDamageable damageable in combat.DetectedDamageables.ToList())
+            {
+                damageable.Damage(damageAmount, GetPosition(), blockable);
+            }
+        }
+
+        if (combat.DetectedKnockbackables.Count > 0)
+        {
+            foreach (IKnockbackable knockbackable in combat.DetectedKnockbackables.ToList())
+            {
+                knockbackable.Knockback(knockBackAngle, knockBackForce, movement.FacingDirection, GetPosition(), blockable);
+            }
+        }
+
+        if (combat.DetectedStaminaDamageables.Count > 0)
+        {
+            foreach (IStaminaDamageable staminaDamageable in combat.DetectedStaminaDamageables.ToList())
+            {
+                staminaDamageable.TakeStaminaDamage(damageStaminaAmount, GetPosition(), blockable);
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
@@ -91,10 +123,12 @@ public class Entity : MonoBehaviour
             {
                 knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, direction, GetPosition(), false);
             }
-            if(collision.gameObject.TryGetComponent(out IDamageable damageable) && EntityData.collideDamage)
+            if(collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
             {
                 damageable.Damage(collisionAttackDetails.damageAmount, GetPosition(), false);
             }
         }
     }
+
+    public void SetSkillCollideDamage(bool value) => SkillCollideDamage = value;
 }

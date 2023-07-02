@@ -86,7 +86,14 @@ public struct S_EnemyDeadState
 [Serializable]
 public struct S_EnemyChargeState
 {
+    [Tooltip("冷卻時間, 從開始衝刺起算。")]
+    public float chargeCooldown;
+
+    [Tooltip("衝刺完的喘氣時間")]
+    public float finishChargeDelay;
+
     public float chargeSpeed;
+    [Tooltip("衝刺時間長度")]
     public float chargeTime;
 }
 

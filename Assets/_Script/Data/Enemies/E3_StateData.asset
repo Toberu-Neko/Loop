@@ -21,13 +21,15 @@ MonoBehaviour:
   groundMoveStateData:
     movementSpeed: 2
   playerDetectedStateData:
-    delayTime: 0.2
+    delayTime: 1
   shieldMoveStateData:
     movementSpeed: 1
     removeShieldTime: 1
-  lookForPlayerStateData:
-    amountOfTurns: 2
-    timeBetweenTurns: 2
+  chargeStateData:
+    chargeCooldown: 7
+    finishChargeDelay: 1
+    chargeSpeed: 6
+    chargeTime: 1.5
   meleeAttackStateData:
     whatIsPlayer:
       serializedVersion: 2
@@ -38,6 +40,9 @@ MonoBehaviour:
     attackCooldown: 0.5
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 10
+  lookForPlayerStateData:
+    amountOfTurns: 2
+    timeBetweenTurns: 2
   stunStateData:
     stunTime: 3
     stunKnockbackTime: 0.2

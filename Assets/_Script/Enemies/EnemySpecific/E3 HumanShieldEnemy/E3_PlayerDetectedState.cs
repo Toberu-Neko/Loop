@@ -21,7 +21,14 @@ public class E3_PlayerDetectedState : PlayerDetectedState
         }
         else if (performLongRangeAction)
         {
-            stateMachine.ChangeState(enemy.ShieldMoveState);
+            if (enemy.ChargeState.CheckCanCharge())
+            {
+                stateMachine.ChangeState(enemy.ChargeState);
+            }
+            else
+            {
+                stateMachine.ChangeState(enemy.ShieldMoveState);
+            }
         }
         else if (!isPlayerInMaxAgroRange)
         {

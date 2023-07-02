@@ -12,8 +12,9 @@ public class E3_StateData : D_BaseEnemyStateData
     public S_EnemyShieldMoveState shieldMoveStateData;
 
     [Header("Attack")]
-    public S_EnemyLookForPlayerState lookForPlayerStateData;
+    public S_EnemyChargeState chargeStateData;
     public S_EnemyMeleeAttackState meleeAttackStateData;
+    public S_EnemyLookForPlayerState lookForPlayerStateData;
 
     [Header("Combat")]
     public S_EnemyStunState stunStateData;

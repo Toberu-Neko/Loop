@@ -43,6 +43,8 @@ public class PlayerDashState : PlayerAbilityState
         {
             Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
         }
+        Stats.SetInvincibleFalse();
+        Physics2D.IgnoreLayerCollision(7, 11, false);
     }
 
     public override void LogicUpdate()
@@ -78,11 +80,14 @@ public class PlayerDashState : PlayerAbilityState
                     isHolding = false;
                     Time.timeScale = 1f;
                     startTime = Time.time;
+
                     Movement.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
                     player.RB.drag = playerData.drag;
                     Movement.SetVelocity(playerData.dashVelocity, dashDirection);
 
                     player.DashDirectionIndicator.gameObject.SetActive(false);
+                    Stats.SetInvincibleTrue();
+                    Physics2D.IgnoreLayerCollision(7, 11, true);
                     PlaceAfterImage();
                 }
             }

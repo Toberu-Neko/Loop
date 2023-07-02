@@ -64,15 +64,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         else if (NormalBlock)
         {
             Stats.Stamina.Decrease(damageAmount * blockStaminaMultiplier);
-            /*
-            if (damageAmount * blockDamageMultiplier < 1)
-            {
-                Stats.Stamina.Decrease(1);
-            }
-            else
-            {
-                Stats.Stamina.Decrease(damageAmount * blockStaminaMultiplier);
-            }*/
         }
         else
         {
@@ -211,10 +202,4 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             DetectedStaminaDamageables.Remove(staminaDamageable);
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Debug.Log(collision.name);
-    }
-
 }
