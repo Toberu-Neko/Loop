@@ -33,7 +33,8 @@ public class DodgeState : State
         base.Enter();
 
         isDodgeOver = false;
-        Movement.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -Movement.FacingDirection);
+        Combat.Knockback(stateData.dodgeAngle, stateData.dodgeSpeed, -Movement.FacingDirection, Vector2.zero, false);
+        // Movement.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -Movement.FacingDirection);
     }
 
     public override void Exit()
@@ -45,7 +46,7 @@ public class DodgeState : State
     {
         base.LogicUpdate();
 
-        if(Time.time >= StartTime + stateData.dodgeTime && isGrounded)
+        if(Time.time >= StartTime + 0.2f && isGrounded)
         {
             isDodgeOver = true;
         }
