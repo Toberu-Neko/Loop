@@ -56,6 +56,7 @@ public class PlayerLedgeClimbState : PlayerState
         stopPosition.Set(cornerPosition.x + (Movement.FacingDirection * playerData.stopOffset.x), cornerPosition.y + playerData.stopOffset.y);
 
         player.transform.position = startPosition;
+        combat.OnDamaged += HandleOnDamaged;
     }
 
     public override void Exit()
@@ -68,6 +69,8 @@ public class PlayerLedgeClimbState : PlayerState
             player.transform.position = stopPosition;
             isClimbing = false;
         }
+
+        combat.OnDamaged -= HandleOnDamaged;
     }
 
     public override void LogicUpdate()
@@ -111,6 +114,8 @@ public class PlayerLedgeClimbState : PlayerState
             }
         }
     }
+
+    private void HandleOnDamaged() => stateMachine.ChangeState(player.InAirState);
 
     public void SetDetectedPosition(Vector2 pos) => detectedPosition = pos;
 

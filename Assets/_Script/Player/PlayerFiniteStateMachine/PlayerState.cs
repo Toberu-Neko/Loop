@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerState
 {
     protected Core core;
+    protected Combat combat;
+
 
     protected Player player;
     protected PlayerStateMachine stateMachine;
@@ -23,6 +25,7 @@ public class PlayerState
         this.playerData = playerData;
         this.animBoolName = animBoolName;
         core = player.Core;
+        combat = player.Core.GetCoreComponent<Combat>();
     }
     public virtual void Enter()
     {
@@ -38,12 +41,8 @@ public class PlayerState
         player.Anim.SetBool(animBoolName, false);
         isExitingState = true;
     }
-    public virtual void LogicUpdate()
-    {
+    public virtual void LogicUpdate() { }
 
-    }
-
-    // Called once per fixed frame
     public virtual void PhysicsUpdate()
     {
         DoChecks();

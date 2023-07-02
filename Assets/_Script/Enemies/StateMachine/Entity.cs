@@ -134,7 +134,6 @@ public class Entity : MonoBehaviour
 
             if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
             {
-                Debug.Log("Enter");
                 knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, direction, GetPosition(), false);
             }
             if(collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))

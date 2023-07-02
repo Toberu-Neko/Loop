@@ -24,8 +24,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public List<IKnockbackable> DetectedKnockbackables { get; private set; } = new();
     public List<IStaminaDamageable> DetectedStaminaDamageables { get; private set; } = new();
 
-    public bool PerfectBlock { get; set; }
-    public bool NormalBlock { get; set; }
+    public bool PerfectBlock { get; private set; }
+    public bool NormalBlock { get; private set; }
 
     private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
@@ -160,6 +160,15 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
 
         return damageDirection == Movement.FacingDirection;
+    }
+   public void SetPerfectBlock(bool value)
+    {
+        PerfectBlock = value;
+    }
+
+    public void SetNormalBlock(bool value)
+    {
+        NormalBlock = value;
     }
 
     private void CheckKnockback()

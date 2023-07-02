@@ -13,6 +13,9 @@ public class PlayerTouchingWallState : PlayerState
 
     protected bool isTouchingLedge;
 
+    private bool damaged;
+    private float endTime;
+
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
     private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();}
@@ -21,16 +24,6 @@ public class PlayerTouchingWallState : PlayerState
 
     public PlayerTouchingWallState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-    }
-
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-    }
-
-    public override void AnimationActionTrigger()
-    {
-        base.AnimationActionTrigger();
     }
 
     public override void DoChecks()
@@ -52,11 +45,22 @@ public class PlayerTouchingWallState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        damaged = false;
+        combat.OnDamaged += HandleOnDamaged;
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        combat.OnDamaged -= HandleOnDamaged;
+        endTime = Time.time;
+    }
+
+    private void HandleOnDamaged()
+    {
+        damaged = true;
     }
 
     public override void LogicUpdate()
@@ -70,7 +74,11 @@ public class PlayerTouchingWallState : PlayerState
         Movement.CheckIfShouldFlip(xInput);
         Movement.SetVelocityX(0f);
 
-        if (jumpInput)
+        if (damaged)
+        {
+            stateMachine.ChangeState(player.InAirState);
+        }
+        else if (jumpInput)
         {
             player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.WallJumpState);
@@ -89,8 +97,8 @@ public class PlayerTouchingWallState : PlayerState
         }
     }
 
-    public override void PhysicsUpdate()
+    public virtual bool CheckCanClimbWall()
     {
-        base.PhysicsUpdate();
+        return Time.time >= endTime + 1f;
     }
 }

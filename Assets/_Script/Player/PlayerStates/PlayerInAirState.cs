@@ -161,11 +161,11 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.JumpState);
         }
-        else if(isTouchingWall && grabInput && isTouchingLedge)
+        else if(isTouchingWall && grabInput && isTouchingLedge && player.WallGrabState.CheckCanClimbWall())
         {
             stateMachine.ChangeState(player.WallGrabState);
         }
-        else if(isTouchingWall && xInput == Movement.FacingDirection && Movement.CurrentVelocity.y <= 0)
+        else if(isTouchingWall && xInput == Movement.FacingDirection && Movement.CurrentVelocity.y <= 0 && player.WallSlideState.CheckCanClimbWall())
         {
             stateMachine.ChangeState(player.WallSlideState);
         }

@@ -25,7 +25,7 @@ public class ShieldMoveState : State
 
         // TODO: Perfect block???
         // Combat.PerfectBlock = true;
-        Combat.NormalBlock = true;
+        Combat.SetNormalBlock(true);
         stopMovement = false;
         performCloseRangeAction = false;
         goToStunState = false;
@@ -36,7 +36,7 @@ public class ShieldMoveState : State
     {
         base.Exit();
 
-        Combat.NormalBlock = false;
+        Combat.SetNormalBlock(false);
     }
 
     public override void LogicUpdate()

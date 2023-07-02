@@ -25,8 +25,8 @@ public class PlayerBlockState : PlayerAttackState
         Combat.OnPerfectBlock += PerfectBlock;
         Combat.OnKnockback += KnockbackFinished;
 
-        Combat.PerfectBlock = true;
-        Combat.NormalBlock = true;
+        Combat.SetPerfectBlock(true);
+        Combat.SetNormalBlock(true);
 
         knockbackFinished = false;
         damageFinished = false;
@@ -39,8 +39,8 @@ public class PlayerBlockState : PlayerAttackState
     {
         base.Exit();
 
-        Combat.PerfectBlock = false;
-        Combat.NormalBlock = false;
+        Combat.SetPerfectBlock(false);
+        Combat.SetNormalBlock(false);
 
         Combat.OnDamaged -= DamageFinished;
         Combat.OnPerfectBlock -= PerfectBlock;
@@ -59,7 +59,7 @@ public class PlayerBlockState : PlayerAttackState
 
         if(Time.time >= startTime + playerData.perfectBlockTime && Combat.PerfectBlock)
         {
-            Combat.PerfectBlock = false;
+            Combat.SetPerfectBlock(false);
         }
 
         if (!isExitingState)
