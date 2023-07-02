@@ -9,6 +9,11 @@ public class Death : CoreComponent
 
     private ParticleManager ParticleManager => particleManager ? particleManager : core.GetCoreComponent<ParticleManager>();
     private ParticleManager particleManager;
+
+    private void Start()
+    {
+        deathParticles = core.CoreData.deathParticles;
+    }
     public void Die()
     {
         foreach(var particle in deathParticles)

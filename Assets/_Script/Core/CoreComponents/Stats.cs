@@ -25,14 +25,25 @@ public class Stats : CoreComponent
     private bool staminaDamagedThisFrame = false;
     private bool knockbackedThisFrame = false;
 
+    private void Start()
+    {
+        Health.MaxValue = core.CoreData.maxHealth;
+        Stamina.MaxValue = core.CoreData.maxStamina;
+        staminaRecoveryRate = core.CoreData.staminaRecoveryRate;
+        perfectBlockAttackDuration = core.CoreData.perfectBlockAttackDuration;
+        invincibleDurationAfterDamaged = core.CoreData.invincibleDurationAfterDamaged;
+        combatTimer = core.CoreData.combatTimer;
+
+        Health.Init();
+        Stamina.Init();
+    }
+
+    float am = 0;
     protected override void Awake()
     {
         base.Awake();
 
         combat = core.GetCoreComponent<Combat>();
-
-        Health.Init();
-        Stamina.Init();
     }
     private void Update()
     {
@@ -44,6 +55,8 @@ public class Stats : CoreComponent
         if (!InCombat && !Stamina.CurrentValue.Equals(Stamina.MaxValue))
         {
             Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
+            // am += Time.deltaTime;
+            // Debug.Log(am);
         }
     }
     private void LateUpdate()

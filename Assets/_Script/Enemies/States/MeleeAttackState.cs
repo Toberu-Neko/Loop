@@ -26,23 +26,26 @@ public class MeleeAttackState : AttackState
     {
         base.AnimationActionTrigger();
 
-        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.attackRadius, stateData.whatIsPlayer);
-        foreach (Collider2D collider in detectedObjects)
+        Debug.Log("Damage");
+
+        Collider2D detectedObjects = Physics2D.OverlapCircle(attackPosition.position, stateData.attackRadius, stateData.whatIsPlayer);
+        if (detectedObjects)
         {
-            if (collider.TryGetComponent<IDamageable>(out var dam))
+            if (detectedObjects.TryGetComponent<IDamageable>(out var dam))
             {
                 dam.Damage(stateData.attackDamage, entity.GetPosition());
             }
 
-            if (collider.TryGetComponent<IKnockbackable>(out var knockbackable))
+            if (detectedObjects.TryGetComponent<IKnockbackable>(out var knockbackable))
             {
                 knockbackable.Knockback(stateData.knockbackAngle, stateData.knockbackStrength, Movement.FacingDirection, (Vector2)core.transform.position);
             }
 
-            if (collider.TryGetComponent<IStaminaDamageable>(out var staminaDamageable))
+            if (detectedObjects.TryGetComponent<IStaminaDamageable>(out var staminaDamageable))
             {
                 staminaDamageable.TakeStaminaDamage(stateData.staminaAttackDamage, entity.GetPosition());
             }
         }
+
     }
 }

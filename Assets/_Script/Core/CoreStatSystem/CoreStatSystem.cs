@@ -10,14 +10,14 @@ public class CoreStatSystem
     public event Action OnValueChanged;
     public event Action OnValueDecreased;
 
-    [field: SerializeField] public float MaxValue { get; private set; }
+    [field: SerializeField] public float MaxValue { get; set; }
 
     public float CurrentValue
     {
         get => currentValue;
         private set
         {
-            currentValue = Mathf.Clamp(value, 0, MaxValue);
+            currentValue = Mathf.Clamp((float)value, 0f, MaxValue);
             if (currentValue <= 0)
             {
                 OnCurrentValueZero?.Invoke();
@@ -31,6 +31,7 @@ public class CoreStatSystem
     public void Init()
     {
         CurrentValue = MaxValue;
+        OnValueChanged?.Invoke();
     }
 
 

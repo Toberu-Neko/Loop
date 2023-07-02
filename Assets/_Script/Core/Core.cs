@@ -6,6 +6,7 @@ using System.Linq;
 public class Core : MonoBehaviour
 {
     private readonly List<CoreComponent> coreComponents = new();
+
     [field: SerializeField] public CoreData CoreData { get; private set; }
 
     public void LogicUpdate()

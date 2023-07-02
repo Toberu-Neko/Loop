@@ -11,6 +11,10 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     [SerializeField] private float blockDamageMultiplier = 0.5f;
     [SerializeField] private float blockStaminaMultiplier = 0.5f;
 
+    [SerializeField] private float maxKnockbackTime = 0.2f;
+    [SerializeField] private Vector2 normalBlockKnockbakDirection = new(1, 0.25f);
+    [SerializeField] private float normalBlockKnockbakMultiplier = 0.75f;
+
     public event Action OnPerfectBlock;
     public event Action OnDamaged;
     public event Action OnKnockback;
@@ -35,13 +39,17 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     private ParticleManager ParticleManager => particleManager ? particleManager : core.GetCoreComponent<ParticleManager>();
     private ParticleManager particleManager;
 
-    [SerializeField] private float maxKnockbackTime = 0.2f;
-    [SerializeField] private Vector2 normalBlockKnockbakDirection = new(1, 0.25f);
-    [SerializeField] private float normalBlockKnockbakMultiplier = 0.75f;
-
-
     private bool isKnockbackActive;
     private float knockbackStartTime;
+    private void Start()
+    {
+        damageParticles = core.CoreData.damageParticles;
+        blockDamageMultiplier = core.CoreData.blockDamageMultiplier;
+        blockStaminaMultiplier = core.CoreData.blockStaminaMultiplier;
+        maxKnockbackTime = core.CoreData.maxKnockbackTime;
+        normalBlockKnockbakDirection = core.CoreData.normalBlockKnockbakDirection;
+        normalBlockKnockbakMultiplier = core.CoreData.normalBlockKnockbakMultiplier;
+    }
 
     public override void LogicUpdate()
     {

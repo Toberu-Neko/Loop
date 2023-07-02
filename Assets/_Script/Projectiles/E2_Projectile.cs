@@ -52,26 +52,24 @@ public class E2_Projectile : MonoBehaviour
     {
         if (!hasHitGround)
         {
-            Collider2D[] damageHit = Physics2D.OverlapCircleAll(damagePosition.position, damageRadius, whatIsPlayer);
+            Collider2D damageHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsPlayer);
             Collider2D groundHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsGround);
 
-            if (damageHit.Length > 1)
+            if (damageHit)
             {
-                foreach(Collider2D collider in damageHit)
+                if(damageHit.TryGetComponent(out IDamageable damageable))
                 {
-                    if(collider.TryGetComponent(out IDamageable damageable))
-                    {
-                        damageable.Damage(details.damageAmount, transform.position);
-                    }
-                    if(collider.TryGetComponent(out IKnockbackable knockbackable))
-                    {
-                        knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, facingDirection, transform.position);
-                    }
-                    if(collider.TryGetComponent(out IStaminaDamageable staminaDamageable))
-                    {
-                        staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
-                    }
+                    damageable.Damage(details.damageAmount, transform.position);
                 }
+                if(damageHit.TryGetComponent(out IKnockbackable knockbackable))
+                {
+                    knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, facingDirection, transform.position);
+                }
+                if(damageHit.TryGetComponent(out IStaminaDamageable staminaDamageable))
+                {
+                    staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
+                }
+                
                 Destroy(gameObject);
             }
 
@@ -80,9 +78,12 @@ public class E2_Projectile : MonoBehaviour
                 hasHitGround = true;
                 rb.gravityScale = 0f;
                 rb.velocity = Vector2.zero;
+
+                Destroy(gameObject, 5f);
+
             }
 
-            if(Mathf.Abs(xStartPosition - transform.position.x) >= travelDistance && !isGravityOn)
+            if (Mathf.Abs(xStartPosition - transform.position.x) >= travelDistance && !isGravityOn)
             {
                 isGravityOn = true;
                 rb.gravityScale = gravity;
