@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSwordHubState : PlayerAttackState
 {
-    private float holdAttackTime = 2f;
+    private float holdAttackTime;
     
     private int xInput;
     private bool holdAttackInput;
@@ -22,7 +22,6 @@ public class PlayerSwordHubState : PlayerAttackState
     {
         base.Enter();
 
-
         Combat.OnDamaged += () => isAttackDone = true;
         player.InputHandler.UseAttackInput();
         holdEnough = false;
@@ -32,7 +31,6 @@ public class PlayerSwordHubState : PlayerAttackState
     public override void Exit()
     {
         base.Exit();
-
 
         Combat.OnDamaged -= () => isAttackDone = true;
         player.Anim.SetBool("swordHoldAttack", false);
@@ -57,10 +55,6 @@ public class PlayerSwordHubState : PlayerAttackState
 
         Movement.CheckIfShouldFlip(xInput);
 
-        if (Stats.PerfectBlockAttackable)
-        {
-            // stateMachine.ChangeState(player.SwordCounterAttackState);
-        }
         if (!CollisionSenses.Ground)
         {
             stateMachine.ChangeState(player.SwordSkyAttackState);

@@ -38,7 +38,6 @@ public class Stats : CoreComponent
         Stamina.Init();
     }
 
-    float am = 0;
     protected override void Awake()
     {
         base.Awake();

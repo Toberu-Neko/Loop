@@ -32,13 +32,17 @@ public class Player : MonoBehaviour
     public PlayerSwordStrongAttackState SwordStrongAttackState { get; private set; }
     public PlayerSwordSkyAttackState SwordSkyAttackState { get; private set; }
     public PlayerSwordSoulOneAttackState SwordCounterAttackState { get; private set; }
-    public PlayerSwordSoulOneAttackState PlayerSwordSoulOneAttackState { get; private set; }
-    public PlayerSwordSoulMaxAttackState PlayerSwordSoulMaxAttackState { get; private set; }
+    public PlayerSwordSoulOneAttackState SwordSoulOneAttackState { get; private set; }
+    public PlayerSwordSoulMaxAttackState SwordSoulMaxAttackState { get; private set; }
     #endregion
 
     #region GunStates
-    public PlayerGunNormalAttackState PlayerGunNormalAttackState { get; private set; }
-    public PlayerGunChargingState PlayerGunChargeAttackState { get; private set; }
+    public PlayerGunNormalAttackState GunNormalAttackState { get; private set; }
+    public PlayerGunChargingState GunChargeAttackState { get; private set; }
+    #endregion
+
+    #region FistStates
+    public PlayerFistHubState FistHubState { get; private set; }
     #endregion
 
     #region Components
@@ -94,11 +98,13 @@ public class Player : MonoBehaviour
         SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, playerData, "swordStrongAttack");
         SwordSkyAttackState = new PlayerSwordSkyAttackState(this, StateMachine, playerData, "swordSkyAttack");
         SwordCounterAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordCounterAttack");
-        PlayerSwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordSoulOneAttack");
-        PlayerSwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
+        SwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordSoulOneAttack");
+        SwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
 
-        PlayerGunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, playerData, "gunNormalAttack");
-        PlayerGunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
+        GunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, playerData, "gunNormalAttack");
+        GunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
+
+        FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
     }
 
     private void Start()

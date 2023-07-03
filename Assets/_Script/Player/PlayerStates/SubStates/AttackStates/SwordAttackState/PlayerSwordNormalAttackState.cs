@@ -12,8 +12,6 @@ public class PlayerSwordNormalAttackState : PlayerAttackState
     {
         swordData = player.PlayerWeaponManager.SwordData;
         attackCounter = 0;
-
-
     }
     public override void Enter()
     {

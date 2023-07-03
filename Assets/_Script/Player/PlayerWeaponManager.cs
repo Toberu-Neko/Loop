@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
@@ -13,14 +9,20 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField, HideInInspector] private int nothing;
     [field: SerializeField] public SO_WeaponData_Sword SwordData { get; private set; }
     public int SwordCurrentEnergy { get; private set; }
+
+    [Header("Fist")]
+    [SerializeField, HideInInspector] private int nothing2;
+    [field: SerializeField] public SO_WeaponData_Fist FistData { get; private set; }
     public int FistCurrentEnergy { get; private set; }
 
+
     [Header("Gun")]
-    [SerializeField, HideInInspector] private int nothing2;
-    [field: SerializeField] public Transform ProjectileStartPos { get; private set; }
+    [SerializeField, HideInInspector] private int nothing3;
     [field: SerializeField] public SO_WeaponData_Gun GunData { get; private set; }
     [field: SerializeField] public GunChargeAttackScript GunChargeAttackScript { get; private set; }
 
+
+    [field: SerializeField] public Transform ProjectileStartPos { get; private set; }
     public float GunCurrentEnergy { get; private set; }
     public bool GunEnergyRegenable { get; private set; }
     
@@ -90,10 +92,9 @@ public class PlayerWeaponManager : MonoBehaviour
     public void InitializeEnergy()
     {
         SwordCurrentEnergy = 0;
-        FistCurrentEnergy = 0;
+        FistCurrentEnergy = 5;
         GunCurrentEnergy = GunData.maxEnergy;
         GunEnergyRegenable = true;
-
     }
     public string GetCurrentTypeEnergyStr()
     {
@@ -120,6 +121,8 @@ public class PlayerWeaponManager : MonoBehaviour
                     SwordCurrentEnergy++;
                 break;
             case PlayerWeaponType.Fist:
+                if(FistCurrentEnergy < FistData.maxEnergy)
+                    FistCurrentEnergy++;
                 break;
             case PlayerWeaponType.Gun:
                 if(GunCurrentEnergy < GunData.maxEnergy)
@@ -141,6 +144,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 SwordCurrentEnergy--;
                 break;
             case PlayerWeaponType.Fist:
+                FistCurrentEnergy--;
                 break;
             case PlayerWeaponType.Gun:
                 GunCurrentEnergy -= GunData.energyCostPerShot;
@@ -167,6 +171,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 SwordCurrentEnergy = 0;
                 break;
             case PlayerWeaponType.Fist:
+                FistCurrentEnergy = 0;
                 break;
             case PlayerWeaponType.Gun:
                 GunCurrentEnergy = 0;

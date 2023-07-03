@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerState
 {
     protected Core core;
-    protected Combat combat;
+    protected Combat Combat;
 
 
     protected Player player;
@@ -25,7 +25,7 @@ public class PlayerState
         this.playerData = playerData;
         this.animBoolName = animBoolName;
         core = player.Core;
-        combat = player.Core.GetCoreComponent<Combat>();
+        Combat = player.Core.GetCoreComponent<Combat>();
     }
     public virtual void Enter()
     {

@@ -120,24 +120,34 @@ public class PlayerInAirState : PlayerState
             player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy)
         {
             player.SwordHubState.SetCanAttackFalse();
-            stateMachine.ChangeState(player.PlayerSwordSoulOneAttackState);
+            stateMachine.ChangeState(player.SwordSoulOneAttackState);
         }
         else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword &&
             player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0
             && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
         {
             player.SwordHubState.SetCanAttackFalse();
-            stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
+            stateMachine.ChangeState(player.SwordSoulMaxAttackState);
         }
         #endregion
+
+        #region Gun
         else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun)
         {
-            stateMachine.ChangeState(player.PlayerGunNormalAttackState);
+            stateMachine.ChangeState(player.GunNormalAttackState);
         }
         else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun)
         {
-            stateMachine.ChangeState(player.PlayerGunChargeAttackState);
+            stateMachine.ChangeState(player.GunChargeAttackState);
         }
+        #endregion
+
+        #region Fist
+        else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist)
+        {
+            stateMachine.ChangeState(player.FistHubState);
+        }
+        #endregion
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock())
         {
             stateMachine.ChangeState(player.BlockState);

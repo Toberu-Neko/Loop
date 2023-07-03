@@ -67,8 +67,7 @@ public class PlayerGroundedState : PlayerState
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
 
-        // Debug.Log(xInput);
-        #region Sword Attack State
+        #region Sword
         if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling && 
             player.SwordHubState.CheckIfCanAttack())
         {
@@ -81,24 +80,34 @@ public class PlayerGroundedState : PlayerState
             player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy)
         {
             player.SwordHubState.SetCanAttackFalse();
-            stateMachine.ChangeState(player.PlayerSwordSoulOneAttackState);
+            stateMachine.ChangeState(player.SwordSoulOneAttackState);
         }
         else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling &&
             player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0
             && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy)
         {
             player.SwordHubState.SetCanAttackFalse();
-            stateMachine.ChangeState(player.PlayerSwordSoulMaxAttackState);
+            stateMachine.ChangeState(player.SwordSoulMaxAttackState);
         }
         #endregion
+
+        #region Gun
         else if(player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun && !isTouchingCeiling)
         {
-            stateMachine.ChangeState(player.PlayerGunNormalAttackState);
+            stateMachine.ChangeState(player.GunNormalAttackState);
         }
         else if(player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun && !isTouchingCeiling)
         {
-            stateMachine.ChangeState(player.PlayerGunChargeAttackState);
+            stateMachine.ChangeState(player.GunChargeAttackState);
         }
+        #endregion
+
+        #region Fist
+        else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist && !isTouchingCeiling)
+        {
+            stateMachine.ChangeState(player.FistHubState);
+        }
+        #endregion
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock())
         {
             stateMachine.ChangeState(player.BlockState);
