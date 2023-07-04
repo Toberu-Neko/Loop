@@ -13,38 +13,48 @@ MonoBehaviour:
   m_Name: FistData
   m_EditorClassIdentifier: 
   maxEnergy: 5
+  resetAttackTime: 5
   normalAttackDetails:
-    attackName: 
-    damageAmount: 0
-    staminaDamageAmount: 0
-    movementSpeed: 0
-    knockbackForce: 0
-    knockbackAngle: {x: 0, y: 0}
+  - attackName: "\u8F15"
+    damageAmount: 8
+    staminaDamageAmount: 1
+    movementSpeed: 3
+    knockbackForce: 10
+    knockbackAngle: {x: 1, y: 0.2}
+  - attackName: "\u91CD"
+    damageAmount: 12
+    staminaDamageAmount: 2
+    movementSpeed: 3
+    knockbackForce: 15
+    knockbackAngle: {x: 0.5, y: 1}
   strongAttackHoldTime: 2
-  strongAttackDetails:
-    attackName: 
-    damageAmount: 0
-    staminaDamageAmount: 0
-    movementSpeed: 0
-    knockbackForce: 0
-    knockbackAngle: {x: 0, y: 0}
   everySoulAddtionalHoldTime: 1
-  soulTwoAttackDetails:
-    attackName: 
+  soulAttackDetails:
+  - attackName: 
     damageAmount: 0
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 0
     knockbackAngle: {x: 0, y: 0}
-  soulThreeAttackDetails:
-    attackName: 
+  - attackName: 
     damageAmount: 0
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 0
     knockbackAngle: {x: 0, y: 0}
-  soulFourAttackDetails:
-    attackName: 
+  - attackName: 
+    damageAmount: 0
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: 
+    damageAmount: 0
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: 
     damageAmount: 0
     staminaDamageAmount: 0
     movementSpeed: 0

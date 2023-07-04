@@ -8,19 +8,27 @@ public class PlayerSwordNormalAttackState : PlayerAttackState
     private SO_WeaponData_Sword swordData;
     private WeaponAttackDetails details;
 
+    private float lastAttackTime;
+
     public PlayerSwordNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         swordData = player.PlayerWeaponManager.SwordData;
         attackCounter = 0;
+        lastAttackTime = 0;
     }
     public override void Enter()
     {
         base.Enter();
 
-
         Combat.OnDamaged += () => isAttackDone = true;
+
+        if (Time.time >= lastAttackTime + swordData.resetAttackTime)
+        {
+            attackCounter = 0;
+        }
+
         details = swordData.NormalAttackDetails[attackCounter];
-        player.Anim.SetInteger("swordAttackCount", attackCounter);
+        player.Anim.SetInteger("attackCount", attackCounter);
     }
     public override void Exit()
     {
@@ -29,7 +37,9 @@ public class PlayerSwordNormalAttackState : PlayerAttackState
 
         Combat.OnDamaged -= () => isAttackDone = true;
         attackCounter++;
-        if(attackCounter >= swordData.AmountOfAttacks)
+        lastAttackTime = Time.time;
+
+        if (attackCounter >= swordData.AmountOfAttacks)
         {
             attackCounter = 0;
         }

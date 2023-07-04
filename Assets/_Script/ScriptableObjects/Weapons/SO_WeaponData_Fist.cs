@@ -9,18 +9,27 @@ public class SO_WeaponData_Fist : SO_WeaponData
     public int maxEnergy;
 
     [Header("Normal Attack")]
-    public WeaponAttackDetails normalAttackDetails;
+    public float resetAttackTime;
+    [SerializeField] private WeaponAttackDetails[] normalAttackDetails;
 
     [Header("Strong Attack")]
     public float strongAttackHoldTime;
     public float everySoulAddtionalHoldTime;
-    public WeaponAttackDetails strongAttackDetails;
-    [Space]
-    public WeaponAttackDetails soulTwoAttackDetails;
-    public WeaponAttackDetails soulThreeAttackDetails;
-    public WeaponAttackDetails soulFourAttackDetails;
-    public WeaponAttackDetails soulFiveAttackDetails;
+    public WeaponAttackDetails[] soulAttackDetails;
 
     [Header("Skill Attack")]
     public WeaponAttackDetails skillAttackDetails;
+
+    public WeaponAttackDetails[] NormalAttackDetails { get => normalAttackDetails; private set => normalAttackDetails = value; }
+    private void OnEnable()
+    {
+        AmountOfAttacks = normalAttackDetails.Length;
+
+        MovementSpeed = new float[AmountOfAttacks];
+
+        for (int i = 0; i < AmountOfAttacks; i++)
+        {
+            MovementSpeed[i] = normalAttackDetails[i].movementSpeed;
+        }
+    }
 }

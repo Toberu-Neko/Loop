@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
 
     #region FistStates
     public PlayerFistHubState FistHubState { get; private set; }
+    public PlayerFistNormalAttackState FistNormalAttackState { get; private set; }
+    public PlayerFistSoulAttackState FistSoulAttackState { get; private set; }
     #endregion
 
     #region Components
@@ -105,6 +107,8 @@ public class Player : MonoBehaviour
         GunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
 
         FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
+        FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, playerData, "fistNormalAttack");
+        FistSoulAttackState = new PlayerFistSoulAttackState(this, StateMachine, playerData, "fistSoulAttack");
     }
 
     private void Start()

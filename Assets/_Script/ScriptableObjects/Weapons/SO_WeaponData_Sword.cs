@@ -8,15 +8,16 @@ public class SO_WeaponData_Sword : SO_WeaponData
     [Tooltip("最大能量")]
     public int maxEnergy;
 
-    [Tooltip("蓄力攻擊劍氣")]
-    public GameObject projectile;
-
+    [Header("Normal Attack")]
+    public float resetAttackTime;
     [SerializeField] private WeaponAttackDetails[] normalAttackDetails;
 
     [Header("Sky Attack")]
     public WeaponAttackDetails skyAttackDetails;
 
     [Header("Strong Attack")]
+    [Tooltip("蓄力攻擊劍氣")]
+    public GameObject projectile;
     [Tooltip("蓄力攻擊時間")]
     public float strongAttackHoldTime;
 

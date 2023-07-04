@@ -64,6 +64,11 @@ public class PlayerFistHubState : PlayerAttackState
         if (chargeStage > 0 && Time.time >= lastChargeTime + useSoulTime && chargeStage <= data.maxEnergy && player.PlayerWeaponManager.FistCurrentEnergy > 0) 
         {
             chargeStage++;
+            if(chargeStage == 2)
+            {
+                chargeStage = 3;
+                player.PlayerWeaponManager.DecreaseEnergy();
+            }
             lastChargeTime = Time.time;
             player.PlayerWeaponManager.DecreaseEnergy();
             player.Anim.SetInteger("fistHubChargeStage", chargeStage);
@@ -74,26 +79,17 @@ public class PlayerFistHubState : PlayerAttackState
             switch (chargeStage)
             {
                 case 0:
-                    Debug.Log("NormalAttack");
+                    stateMachine.ChangeState(player.FistNormalAttackState);
                     break;
-                case 1:
-                    Debug.Log("StrongAttack");
+                case 1:// Strong Attack
+                case 3:// C2
+                case 4:// C3
+                case 5:// C4
+                case 6:// C5
+                    player.FistSoulAttackState.SetSoulAmount(chargeStage - 1);
+                    stateMachine.ChangeState(player.FistSoulAttackState);
                     break;
-                case 2:
-                    Debug.Log("SoulOneAttack");
-                    break;
-                case 3:
-                    Debug.Log("SoulTwoAttack");
-                    break;
-                case 4:
-                    Debug.Log("SoulThreeAttack");
-                    break;
-                case 5:
-                    Debug.Log("SoulFourAttack");
-                    break;
-                case 6:
-                    Debug.Log("SoulFiveAttack");
-                    break;
+
                 default:
                     Debug.LogError("error at counting fist charge");
                     break;
