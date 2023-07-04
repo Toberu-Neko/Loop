@@ -9,8 +9,18 @@ public class E3_LookForPlayerState : LookForPlayerState
     public E3_LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
+    }
+    public override void Enter()
+    {
+        base.Enter();
 
-        
+        Combat.SetNormalBlock(true);
+    }
+    public override void Exit()
+    {
+        base.Exit();
+
+        Combat.SetNormalBlock(false);
     }
 
     public override void LogicUpdate()

@@ -21,8 +21,22 @@ public class PlayerFistSoulAttackState : PlayerAttackState
         details = data.soulAttackDetails[soulAmount];
         player.Anim.SetInteger("attackCount", soulAmount);
         doAttack = false;
+
+        if(soulAmount == 0)
+        {
+            Combat.OnDamaged += () => isAttackDone = true;
+        }
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        if(soulAmount == 0)
+        {
+            Combat.OnDamaged -= () => isAttackDone = true;
+        }
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -32,9 +46,13 @@ public class PlayerFistSoulAttackState : PlayerAttackState
             if(soulAmount == 0)
                 DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
             else
-                DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount * 10, details.knockbackAngle, details.knockbackForce, false);
+                DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
         }
+    }
 
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
     }
     public override void AnimationActionTrigger()
     {
@@ -63,6 +81,7 @@ public class PlayerFistSoulAttackState : PlayerAttackState
         base.AnimationFinishTrigger();
         isAttackDone = true;
     }
+
 
     public void SetSoulAmount(int soulAmount) => this.soulAmount = soulAmount;
 }

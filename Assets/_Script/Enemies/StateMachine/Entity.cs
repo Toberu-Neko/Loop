@@ -110,6 +110,7 @@ public class Entity : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision.gameObject.name + " Enter");
         if (collision.collider.CompareTag("Player"))
         {
             int direction;

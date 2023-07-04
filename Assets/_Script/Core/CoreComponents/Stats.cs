@@ -132,7 +132,6 @@ public class Stats : CoreComponent
 
     private void HandleOnDamaged()
     {
-
         InCombat = true;
         lastCombatTime = Time.time;
     }

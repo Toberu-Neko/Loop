@@ -32,6 +32,7 @@ public class PlayerFistHubState : PlayerAttackState
         canAttack = false;
         chargeStage = 0;
         lastChargeTime = 0;
+        player.Anim.SetInteger("fistHubChargeStage", chargeStage);
     }
 
     public override void Exit()
@@ -57,18 +58,21 @@ public class PlayerFistHubState : PlayerAttackState
 
         if(chargeStage == 0 && Time.time >= startTime + strongAttackHoldTime)
         {
-            chargeStage++;
+            chargeStage = 1;
             lastChargeTime = Time.time;
             player.Anim.SetInteger("fistHubChargeStage", chargeStage);
         }
-        if (chargeStage > 0 && Time.time >= lastChargeTime + useSoulTime && chargeStage <= data.maxEnergy && player.PlayerWeaponManager.FistCurrentEnergy > 0) 
+        if (chargeStage == 1 && Time.time >= lastChargeTime + useSoulTime && player.PlayerWeaponManager.FistCurrentEnergy >= 2)
+        {
+            chargeStage = 2;
+            player.PlayerWeaponManager.DecreaseEnergy();
+            player.PlayerWeaponManager.DecreaseEnergy(); 
+            lastChargeTime = Time.time;
+            player.Anim.SetInteger("fistHubChargeStage", chargeStage);
+        }
+        if (chargeStage >= 2 && Time.time >= lastChargeTime + useSoulTime && chargeStage < data.maxEnergy && player.PlayerWeaponManager.FistCurrentEnergy > 0) 
         {
             chargeStage++;
-            if(chargeStage == 2)
-            {
-                chargeStage = 3;
-                player.PlayerWeaponManager.DecreaseEnergy();
-            }
             lastChargeTime = Time.time;
             player.PlayerWeaponManager.DecreaseEnergy();
             player.Anim.SetInteger("fistHubChargeStage", chargeStage);
@@ -82,10 +86,10 @@ public class PlayerFistHubState : PlayerAttackState
                     stateMachine.ChangeState(player.FistNormalAttackState);
                     break;
                 case 1:// Strong Attack
-                case 3:// C2
-                case 4:// C3
-                case 5:// C4
-                case 6:// C5
+                case 2:// C2
+                case 3:// C3
+                case 4:// C4
+                case 5:// C5
                     player.FistSoulAttackState.SetSoulAmount(chargeStage - 1);
                     stateMachine.ChangeState(player.FistSoulAttackState);
                     break;
