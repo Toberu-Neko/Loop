@@ -151,6 +151,7 @@ public class PlayerInAirState : PlayerState
             player.PlayerWeaponManager.FistCurrentEnergy == player.PlayerWeaponManager.FistData.maxEnergy)
         {
             player.FistSoulAttackState.SetStaticAttack(false);
+            player.PlayerWeaponManager.ClearCurrentEnergy();
             player.FistSoulAttackState.SetSoulAmount(player.PlayerWeaponManager.FistData.maxEnergy - 1);
             stateMachine.ChangeState(player.FistSoulAttackState);
         }
@@ -158,6 +159,7 @@ public class PlayerInAirState : PlayerState
             player.PlayerWeaponManager.FistCurrentEnergy == player.PlayerWeaponManager.FistData.maxEnergy)
         {
             player.FistSoulAttackState.SetStaticAttack(true);
+            player.PlayerWeaponManager.ClearCurrentEnergy();
             player.FistSoulAttackState.SetSoulAmount(player.PlayerWeaponManager.FistData.maxEnergy - 1);
             stateMachine.ChangeState(player.FistSoulAttackState);
         }

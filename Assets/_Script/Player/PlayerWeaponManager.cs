@@ -168,7 +168,7 @@ public class PlayerWeaponManager : MonoBehaviour
         OnEnergyChanged?.Invoke();
     }
 
-    public void ClearEnergy()
+    public void ClearCurrentEnergy()
     {
         switch (CurrentWeaponType)
         {

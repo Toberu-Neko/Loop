@@ -113,14 +113,14 @@ public class PlayerGroundedState : PlayerState
         else if(player.InputHandler.WeaponSkillInput && yInput >= 0 && weaponManager.CurrentWeaponType == PlayerWeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy)
         {
             player.FistSoulAttackState.SetStaticAttack(false);
-            weaponManager.ClearEnergy();
+            weaponManager.ClearCurrentEnergy();
             player.FistSoulAttackState.SetSoulAmount(weaponManager.FistData.maxEnergy - 1);
             stateMachine.ChangeState(player.FistSoulAttackState);
         }
         else if (player.InputHandler.WeaponSkillInput && yInput < 0 && weaponManager.CurrentWeaponType == PlayerWeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy)
         {
             player.FistSoulAttackState.SetStaticAttack(true);
-            weaponManager.ClearEnergy();
+            weaponManager.ClearCurrentEnergy();
             player.FistSoulAttackState.SetSoulAmount(weaponManager.FistData.maxEnergy - 1);
             stateMachine.ChangeState(player.FistSoulAttackState);
         }
