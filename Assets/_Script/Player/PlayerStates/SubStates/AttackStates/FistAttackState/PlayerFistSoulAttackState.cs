@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerFistSoulAttackState : PlayerAttackState
 {
     private int soulAmount;
+    private bool staticAttack;
     private SO_WeaponData_Fist data;
     private WeaponAttackDetails details;
 
@@ -19,12 +20,17 @@ public class PlayerFistSoulAttackState : PlayerAttackState
         base.Enter();
 
         details = data.soulAttackDetails[soulAmount];
+        player.Anim.SetBool("fistStaticAttack", staticAttack);
         player.Anim.SetInteger("attackCount", soulAmount);
         doAttack = false;
 
         if(soulAmount == 0)
         {
             Combat.OnDamaged += () => isAttackDone = true;
+        }
+        else
+        {
+            Stats.SetInvincibleTrue();
         }
     }
 
@@ -35,6 +41,10 @@ public class PlayerFistSoulAttackState : PlayerAttackState
         if(soulAmount == 0)
         {
             Combat.OnDamaged -= () => isAttackDone = true;
+        }
+        else
+        {
+            Stats.SetInvincibleFalse();
         }
     }
     public override void LogicUpdate()
@@ -50,10 +60,6 @@ public class PlayerFistSoulAttackState : PlayerAttackState
         }
     }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
@@ -84,4 +90,5 @@ public class PlayerFistSoulAttackState : PlayerAttackState
 
 
     public void SetSoulAmount(int soulAmount) => this.soulAmount = soulAmount;
+    public void SetStaticAttack(bool staticAttack) => this.staticAttack = staticAttack;
 }

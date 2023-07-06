@@ -147,6 +147,20 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.FistHubState);
         }
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist && 
+            player.PlayerWeaponManager.FistCurrentEnergy == player.PlayerWeaponManager.FistData.maxEnergy)
+        {
+            player.FistSoulAttackState.SetStaticAttack(false);
+            player.FistSoulAttackState.SetSoulAmount(player.PlayerWeaponManager.FistData.maxEnergy - 1);
+            stateMachine.ChangeState(player.FistSoulAttackState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist && 
+            player.PlayerWeaponManager.FistCurrentEnergy == player.PlayerWeaponManager.FistData.maxEnergy)
+        {
+            player.FistSoulAttackState.SetStaticAttack(true);
+            player.FistSoulAttackState.SetSoulAmount(player.PlayerWeaponManager.FistData.maxEnergy - 1);
+            stateMachine.ChangeState(player.FistSoulAttackState);
+        }
         #endregion
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock())
         {

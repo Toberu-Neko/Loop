@@ -30,6 +30,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool ChangeWeapon2 { get; private set; }
     public bool ChangeWeapon3 { get; private set; }
 
+    public bool DebugInput { get; private set; }
+
     [SerializeField] private float inputHoldTime = 0.2f;
 
     private float jumpInputStartTime;
@@ -47,7 +49,18 @@ public class PlayerInputHandler : MonoBehaviour
         CheckDashInputHoldTime();
     }
 
-    public void OnPrimaryAttackInput(InputAction.CallbackContext context)
+    public void OnDebugInput(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            DebugInput = true;
+        }
+        if(context.canceled)
+        {
+            DebugInput = false;
+        }
+    }
+    public void OnAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {

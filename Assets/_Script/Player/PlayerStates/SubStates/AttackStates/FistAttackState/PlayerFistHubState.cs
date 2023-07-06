@@ -8,6 +8,7 @@ public class PlayerFistHubState : PlayerAttackState
     private bool canAttack;
 
     private int xInput;
+    private int yInput;
     private bool holdAttackInput;
 
     private float strongAttackHoldTime;
@@ -48,6 +49,7 @@ public class PlayerFistHubState : PlayerAttackState
 
         holdAttackInput = player.InputHandler.HoldAttackInput;
         xInput = player.InputHandler.NormInputX;
+        yInput = player.InputHandler.NormInputY;
 
         if (CollisionSenses.Ground)
         {
@@ -78,6 +80,29 @@ public class PlayerFistHubState : PlayerAttackState
             player.Anim.SetInteger("fistHubChargeStage", chargeStage);
         }
 
+        if(yInput < 0)
+        {
+            switch (chargeStage)
+            {
+                case 0:
+                    stateMachine.ChangeState(player.FistNormalAttackState);
+                    break;
+                case 1:// Strong Attack
+                case 2:// C2
+                case 3:// C3
+                case 4:// C4
+                case 5:// C5
+                    player.FistSoulAttackState.SetStaticAttack(true);
+                    player.FistSoulAttackState.SetSoulAmount(chargeStage - 1);
+                    stateMachine.ChangeState(player.FistSoulAttackState);
+                    break;
+
+                default:
+                    Debug.LogError("error at counting fist charge");
+                    isAttackDone = true;
+                    break;
+            }
+        }
         if (!holdAttackInput)
         {
             switch (chargeStage)
@@ -90,15 +115,16 @@ public class PlayerFistHubState : PlayerAttackState
                 case 3:// C3
                 case 4:// C4
                 case 5:// C5
+                    player.FistSoulAttackState.SetStaticAttack(false);
                     player.FistSoulAttackState.SetSoulAmount(chargeStage - 1);
                     stateMachine.ChangeState(player.FistSoulAttackState);
                     break;
 
                 default:
                     Debug.LogError("error at counting fist charge");
+                    isAttackDone = true;
                     break;
             }
-            isAttackDone = true;
         }
 
 

@@ -68,6 +68,11 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             IncreaseEnergy();
         }
+
+        if (player.InputHandler.DebugInput)
+        {
+            AllEnergyMax();
+        }
     }
 
     private void ChangeWeapon()
@@ -177,6 +182,15 @@ public class PlayerWeaponManager : MonoBehaviour
                 GunCurrentEnergy = 0;
                 break;
         }
+        OnEnergyChanged?.Invoke();
+    }
+
+    private void AllEnergyMax()
+    {
+        SwordCurrentEnergy = SwordData.maxEnergy;
+        FistCurrentEnergy = FistData.maxEnergy;
+        GunCurrentEnergy = GunData.maxEnergy;
+
         OnEnergyChanged?.Invoke();
     }
 

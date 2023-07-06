@@ -110,7 +110,6 @@ public class Entity : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name + " Enter");
         if (collision.collider.CompareTag("Player"))
         {
             int direction;
@@ -169,8 +168,7 @@ public class Entity : MonoBehaviour
 
             if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
             {
-                knockbackable.Knockback(Vector2.up, collisionAttackDetails.knockbackForce * 5f, direction, GetPosition(), false);
-                Debug.Log("Stay");
+                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, direction, GetPosition(), false);
             }
             if (collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
             {
