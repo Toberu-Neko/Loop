@@ -18,22 +18,23 @@ MonoBehaviour:
   movementVelocity: 10
   jumpVelocity: 16
   amountOfJumps: 2
-  blockMovementVelocity: 3
+  blockMovementMultiplier: 0.5
   perfectBlockTime: 0.8
   blockCooldown: 0.6
-  perfectBlockKnockbackRadius: 2
+  perfectBlockKnockbackRadius: 2.5
   perfectBlockKnockbackForce: 15
   perfectBlockKnockbackAngle: {x: 1, y: 1.5}
   wallJumpVelocity: 20
   wallJumpTime: 0.4
   wallJumpAngle: {x: 1, y: 2}
   coyoteTime: 0.1
-  variableJumpHeightMultiplier: 0.5
+  jumpInpusStopYSpeedMultiplier: 0.5
   wallSlideVelocity: 2
   wallClimbVelocity: 5
-  startOffset: {x: 0.4, y: 1.05}
-  stopOffset: {x: 0.4, y: 1.5}
-  useFixedDegreeAngle: 1
+  crouchMovementMultiplier: 0.5
+  crouchColliderHeight: 0.825
+  standColliderHeight: 1.65
+  useFixedDegreeAngle: 0
   dashCooldown: 0.5
   maxHoldTime: 2
   holdTimeScale: 0.25
@@ -42,6 +43,5 @@ MonoBehaviour:
   drag: 10
   dashEndYMultiplier: 0.2
   distanceBetweenAfterImages: 0.5
-  crouchMovementVelocity: 5
-  crouchColliderHeight: 0.825
-  standColliderHeight: 1.65
+  startOffset: {x: 0.4, y: 1.05}
+  stopOffset: {x: 0.4, y: 1.5}

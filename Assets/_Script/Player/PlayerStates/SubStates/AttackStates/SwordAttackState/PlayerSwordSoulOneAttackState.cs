@@ -21,7 +21,7 @@ public class PlayerSwordSoulOneAttackState : PlayerAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(details.damageAmount,details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
+        DoDamageToDamageList(details.damageAmount,details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
     }
 
     public override void AnimationFinishTrigger()

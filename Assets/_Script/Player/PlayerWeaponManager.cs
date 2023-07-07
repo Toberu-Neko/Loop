@@ -97,7 +97,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public void InitializeEnergy()
     {
         SwordCurrentEnergy = 0;
-        FistCurrentEnergy = 5;
+        FistCurrentEnergy = 0;
         GunCurrentEnergy = GunData.maxEnergy;
         GunEnergyRegenable = true;
     }

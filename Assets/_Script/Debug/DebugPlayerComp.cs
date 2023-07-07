@@ -35,15 +35,16 @@ public class DebugPlayerComp : MonoBehaviour
     private void OnEnable()
     {
         Combat.OnPerfectBlock += () => perfectBlockAttack.SetActive(true);
+        Stats.Health.OnValueChanged += UpdateHpText;
         Combat.OnDamaged += UpdateHpText;
         weaponManager.OnEnergyChanged += UpdateWeaponText;
         weaponManager.OnWeaponChanged += UpdateWeaponText;
-
     }
 
     private void OnDisable()
     {
         Combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
+        Stats.Health.OnValueChanged -= UpdateHpText;
         Combat.OnDamaged -= UpdateHpText;
         weaponManager.OnEnergyChanged -= UpdateWeaponText;
         weaponManager.OnWeaponChanged -= UpdateWeaponText;
