@@ -17,6 +17,15 @@ public class PlayerSwordSoulOneAttackState : PlayerAttackState
         Stats.SetPerfectBlockAttackFalse();
         player.PlayerWeaponManager.DecreaseEnergy();
     }
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (isAnimationStartMovement)
+        {
+            Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
+        }
+    }
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
@@ -38,10 +47,4 @@ public class PlayerSwordSoulOneAttackState : PlayerAttackState
         Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
     }
 
-    public override void AnimationStopMovementTrigger()
-    {
-        base.AnimationStopMovementTrigger();
-
-        Movement.SetVelocityZero();
-    }
 }

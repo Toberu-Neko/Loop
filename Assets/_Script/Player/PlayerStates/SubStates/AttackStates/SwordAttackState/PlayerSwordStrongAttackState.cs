@@ -22,11 +22,6 @@ public class PlayerSwordStrongAttackState : PlayerAttackState
 
         Combat.OnDamaged -= () => isAttackDone = true;
     }
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-
-    }
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
@@ -41,13 +36,4 @@ public class PlayerSwordStrongAttackState : PlayerAttackState
         isAttackDone = true;
     }
 
-    public override void AnimationStartMovementTrigger()
-    {
-        base.AnimationStartMovementTrigger();
-    }
-
-    public override void AnimationStopMovementTrigger()
-    {
-        base.AnimationStopMovementTrigger();
-    }
 }

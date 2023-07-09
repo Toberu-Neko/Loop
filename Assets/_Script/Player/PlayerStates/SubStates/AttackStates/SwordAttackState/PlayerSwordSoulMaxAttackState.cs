@@ -31,8 +31,4 @@ public class PlayerSwordSoulMaxAttackState : PlayerAttackState
         player.PlayerWeaponManager.ClearCurrentEnergy();
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
 }

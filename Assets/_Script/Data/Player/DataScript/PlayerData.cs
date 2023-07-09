@@ -16,6 +16,7 @@ public class PlayerData : ScriptableObject
     public float jumpVelocity = 15f;
     [Tooltip("跳躍數量")]
     public int amountOfJumps = 1;
+    public float maxJumpTime = 0.25f;
 
     [Header("BlockState")]
     [Tooltip("防禦移動速度加成"), Range(0f, 2f)]

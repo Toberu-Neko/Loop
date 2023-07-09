@@ -8,31 +8,24 @@ public class PlayerIdleState : PlayerGroundedState
     {
     }
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
 
     public override void Enter()
     {
         base.Enter();
 
-        Movement.SetVelocityX(0f);
+        if(!isExitingState)
+            Movement.SetVelocityZero();
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityX(0f);
 
         if (!isExitingState)
         {
+            Movement.SetVelocityZero();
             if (xInput != 0)
             {
                 stateMachine.ChangeState(player.MoveState);

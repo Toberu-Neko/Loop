@@ -13,9 +13,7 @@ public class PlayerGroundedState : PlayerState
     protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;
 
-    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
+    protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
     private bool jumpInput;
@@ -25,6 +23,7 @@ public class PlayerGroundedState : PlayerState
     private bool isGrounded;
     private bool isTouchingWall;
     private bool isTouchingLedge;
+    protected bool isOnSlope;
 
     private PlayerWeaponManager weaponManager;
 
@@ -133,7 +132,6 @@ public class PlayerGroundedState : PlayerState
         else if(jumpInput && yInput < 0 && CollisionSenses.GroundPlatform)
         {
             Physics2D.IgnoreCollision(player.MovementCollider, CollisionSenses.GroundPlatform.collider, true);
-
         }
         else if (jumpInput && yInput >= 0 && player.JumpState.CanJump() && !isTouchingCeiling)
         {

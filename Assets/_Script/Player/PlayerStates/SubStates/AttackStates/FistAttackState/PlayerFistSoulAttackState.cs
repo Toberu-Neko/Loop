@@ -10,6 +10,7 @@ public class PlayerFistSoulAttackState : PlayerAttackState
     private WeaponAttackDetails details;
 
     private bool doAttack;
+    private bool startMovement;
     public PlayerFistSoulAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         data = player.PlayerWeaponManager.FistData;
@@ -51,6 +52,10 @@ public class PlayerFistSoulAttackState : PlayerAttackState
     {
         base.LogicUpdate();
 
+        if (isAnimationStartMovement)
+        {
+            Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
+        }
         if (doAttack)
         {
             if(soulAmount == 0)
@@ -71,14 +76,12 @@ public class PlayerFistSoulAttackState : PlayerAttackState
         base.AnimationStartMovementTrigger();
 
         Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
-
     }
 
     public override void AnimationStopMovementTrigger()
     {
         base.AnimationStopMovementTrigger();
 
-        Movement.SetVelocityZero();
         doAttack = false;
     }
 

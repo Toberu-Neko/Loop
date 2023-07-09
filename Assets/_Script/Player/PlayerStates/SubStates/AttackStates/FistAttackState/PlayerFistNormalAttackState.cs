@@ -47,6 +47,16 @@ public class PlayerFistNormalAttackState : PlayerAttackState
         }
     }
 
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (isAnimationStartMovement)
+        {
+            Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
+        }
+    }
+
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
@@ -60,12 +70,6 @@ public class PlayerFistNormalAttackState : PlayerAttackState
         Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
     }
 
-    public override void AnimationStopMovementTrigger()
-    {
-        base.AnimationStopMovementTrigger();
-
-        Movement.SetVelocityZero();
-    }
 
     public override void AnimationFinishTrigger()
     {

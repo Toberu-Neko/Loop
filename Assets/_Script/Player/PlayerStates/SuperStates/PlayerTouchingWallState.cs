@@ -16,8 +16,6 @@ public class PlayerTouchingWallState : PlayerState
     private bool damaged;
     private float endTime;
 
-    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
     private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();}
     private CollisionSenses collisionSenses;
 

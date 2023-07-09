@@ -21,8 +21,6 @@ public class PlayerLedgeClimbState : PlayerState
     private int xInput;
     private int yInput;
 
-    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 

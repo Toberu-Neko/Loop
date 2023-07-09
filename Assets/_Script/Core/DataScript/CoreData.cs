@@ -38,6 +38,10 @@ public class CoreData : ScriptableObject
     [Tooltip("普通防禦狀態下的擊退減免，擊退 = 原始擊退力量 * 數值")]
     public float normalBlockKnockbakMultiplier = 0.75f;
 
+    [Space(10)]
+    [Header("CollisionSenese")] 
+    public PhysicsMaterial2D noFrictionMaterial;
+    public PhysicsMaterial2D fullFrictionMaterial;
 
     [Space(10)]
     [Header("Death")]

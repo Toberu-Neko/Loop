@@ -24,8 +24,6 @@ public class PlayerInAirState : PlayerState
     private bool wallJumpCoyoteTime;
     private float startWallJumpCoyoteTime;
 
-    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
 
     protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;
@@ -77,6 +75,7 @@ public class PlayerInAirState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
     }
 
     public override void Exit()
@@ -87,6 +86,8 @@ public class PlayerInAirState : PlayerState
         oldIsTouchingWallBack= false;
         isTouchingWall = false;
         isToucingWallBack = false;
+        isJumping = false;
+        jumpInputStop = false;
     }
 
     public override void LogicUpdate()
@@ -95,6 +96,7 @@ public class PlayerInAirState : PlayerState
 
         CheckCoyoteTime();
         CheckWallJumpCoyoteTime();
+
 
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
@@ -168,9 +170,9 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.BlockState);
         }
-        else if (isGrounded && Movement.CurrentVelocity.y < 0.01f)
+        else if (isGrounded && !isJumping )
         {
-            stateMachine.ChangeState(player.LandState);
+            stateMachine.ChangeState(player.IdleState);
         }
         else if (isTouchingWall && !isTouchingLedge && !isGrounded)
         {
@@ -202,7 +204,7 @@ public class PlayerInAirState : PlayerState
         else
         {
             Movement.CheckIfShouldFlip(xInput);
-            Movement.SetVelocityX(playerData.movementVelocity * xInput);
+            Movement.SetVelocityX(playerData.movementVelocity * xInput, true);
 
             player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
             player.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
@@ -215,9 +217,10 @@ public class PlayerInAirState : PlayerState
             if (jumpInputStop)
             {
                 Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.jumpInpusStopYSpeedMultiplier);
+
                 isJumping = false;
             }
-            else if (Movement.CurrentVelocity.y <= 0f)
+            else if (Movement.CurrentVelocity.y < -0.01f)
             {
                 isJumping = false;
             }
@@ -247,5 +250,8 @@ public class PlayerInAirState : PlayerState
 
     public void StartWallJumpCoyoteTime() => wallJumpCoyoteTime = true;
     public void StopWallJumpCoyoteTime() => wallJumpCoyoteTime = false;
-    public void SetIsJumping() => isJumping = true;
+    public void SetIsJumping()
+    {
+        isJumping = true;
+    }
 }

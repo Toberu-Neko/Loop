@@ -3982,6 +3982,11 @@
   <properties>
    <property name="unity:layer" value="Ground"/>
   </properties>
+  <objectgroup draworder="index" id="3">
+   <object id="3" x="16" y="0">
+    <polygon points="0,0 0,16 -16,16"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="1800">
   <properties>
@@ -5706,7 +5711,7 @@
   </properties>
   <objectgroup draworder="index" id="3">
    <object id="2" x="16" y="16">
-    <polygon points="0,0 -16,0 -0.0111111,-6.98889"/>
+    <polygon points="0,0 -16,0 -0.0434783,-9.17391"/>
    </object>
   </objectgroup>
  </tile>

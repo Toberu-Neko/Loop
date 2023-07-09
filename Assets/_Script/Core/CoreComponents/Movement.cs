@@ -16,6 +16,10 @@ public class Movement : CoreComponent
     public Vector2 CurrentVelocity { get; private set; }
 
     private Vector2 velocityWorkspace;
+
+    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
+    private CollisionSenses collisionSenses;
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,27 +42,39 @@ public class Movement : CoreComponent
     {
         angle.Normalize();
         velocityWorkspace.Set(angle.x * velocity * direction, angle.y * velocity);
+
         SetFinalVelocity();
     }
+
     public void SetVelocity(float velocity, Vector2 direction)
     {
         velocityWorkspace = direction * velocity;
+
         SetFinalVelocity();
     }
-    public void SetVelocityX(float velocity)
+    public void SetVelocityX(float velocity, bool ignoreSlope = false)
     {
         velocityWorkspace.Set(velocity, CurrentVelocity.y);
+
+        if (CollisionSenses.Slope.IsOnSlope && !ignoreSlope)
+        {
+            SetVelocity(velocity, -CollisionSenses.Slope.NormalPrep);
+            return;
+        }
+
         SetFinalVelocity();
     }
 
     public void SetVelocityY(float velocity)
     {
         velocityWorkspace.Set(CurrentVelocity.x, velocity);
+
         SetFinalVelocity();
     }
     public void SetVelocityZero()
     {
         velocityWorkspace = Vector2.zero;
+
         SetFinalVelocity();
     }
 
@@ -66,6 +82,14 @@ public class Movement : CoreComponent
     {
         if (CanSetVelocity)
         {
+            if(velocityWorkspace == Vector2.zero && RB.sharedMaterial != core.CoreData.fullFrictionMaterial && CollisionSenses.Slope.IsOnSlope)
+            {
+                RB.sharedMaterial = core.CoreData.fullFrictionMaterial;
+            }
+            else if(velocityWorkspace != Vector2.zero && RB.sharedMaterial != core.CoreData.noFrictionMaterial)
+            {
+                RB.sharedMaterial = core.CoreData.noFrictionMaterial;
+            }
             RB.velocity = velocityWorkspace;
             CurrentVelocity = velocityWorkspace;
         }

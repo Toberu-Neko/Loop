@@ -6,6 +6,7 @@ public class PlayerState
 {
     protected Core core;
     protected Combat Combat;
+    protected Movement Movement;
 
 
     protected Player player;
@@ -13,6 +14,7 @@ public class PlayerState
     protected PlayerData playerData;
 
     protected bool isAnimationFinished;
+    protected bool isAnimationStartMovement;
     protected bool isExitingState;
 
     protected float startTime;
@@ -26,6 +28,7 @@ public class PlayerState
         this.animBoolName = animBoolName;
         core = player.Core;
         Combat = player.Core.GetCoreComponent<Combat>();
+        Movement = player.Core.GetCoreComponent<Movement>();
     }
     public virtual void Enter()
     {
@@ -35,6 +38,7 @@ public class PlayerState
                 
         isAnimationFinished = false;
         isExitingState = false;
+        isAnimationStartMovement = false;
     }
     public virtual void Exit()
     {
@@ -53,9 +57,9 @@ public class PlayerState
 
     public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
 
-    public virtual void AnimationStartMovementTrigger() { }
+    public virtual void AnimationStartMovementTrigger() { isAnimationStartMovement = true; }
 
-    public virtual void AnimationStopMovementTrigger() { }
+    public virtual void AnimationStopMovementTrigger() { isAnimationStartMovement = false; Movement.SetVelocityZero(); }
     
     public virtual void AnimationTurnOnFlipTrigger() { }
 

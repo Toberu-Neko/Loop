@@ -12,8 +12,6 @@ public class PlayerAbilityState : PlayerState
     protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;
 
-    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
     protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
