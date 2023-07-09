@@ -76,6 +76,10 @@ public class CollisionSenses : CoreComponent
     {
         get => Physics2D.BoxCast(GroundCheck.position, groundCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
     }
+    public RaycastHit2D SlopeVertical
+    {
+        get => Physics2D.BoxCast(GroundCheck.position, groundCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
+    }
     public RaycastHit2D HeadPlatform
     {
         get => Physics2D.BoxCast(HeadCheck.position, headCheckV2, 0f, Vector2.up, 0.1f, whatIsPlatform);
