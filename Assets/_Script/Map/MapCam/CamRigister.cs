@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class CamRigister : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    [SerializeField] private bool focusOnPlayer = true;
     private void OnEnable()
     {
         CamSwitch.RegisterCam(GetComponent<Cinemachine.CinemachineVirtualCamera>());
-        // GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = GameObject.Find("Player/Misc/LookAt").transform;
+
+        if (focusOnPlayer)
+        {
+            // GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = GameObject.Find("CameraFollowObject").transform;
+            GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = GameObject.Find("Player/Misc/LookAt").transform;
+        }
     }
     private void OnDisable()
     {

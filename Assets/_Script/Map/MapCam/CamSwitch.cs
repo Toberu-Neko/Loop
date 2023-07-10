@@ -11,7 +11,7 @@ public class CamSwitch : MonoBehaviour
 
     private void SwitchCamera(CinemachineVirtualCamera vcam)
     {
-        vcam.Priority = 10;
+        vcam.enabled = true;
         activatedCam = vcam;
     }
 
@@ -26,7 +26,7 @@ public class CamSwitch : MonoBehaviour
     {
         if (trigger.CompareTag("Player"))
         {
-            cam.Priority = 0;
+            cam.enabled = false;
         }
     }
     public static void RegisterCam(CinemachineVirtualCamera vcam)

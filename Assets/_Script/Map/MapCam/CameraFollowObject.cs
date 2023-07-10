@@ -30,7 +30,7 @@ public class CameraFollowObject : MonoBehaviour
 
     private void HandleFlip()
     {
-        LeanTween.rotateY(gameObject, DeterminEndRotation(), smoothSpeed);
+        LeanTween.rotateY(gameObject, DeterminEndRotation(), smoothSpeed).setEaseInOutSine();
     }
 
     private float DeterminEndRotation()

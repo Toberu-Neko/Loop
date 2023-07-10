@@ -9,21 +9,6 @@ public class PlayerWallGrabState : PlayerTouchingWallState
     {
     }
 
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-    }
-
-    public override void AnimationActionTrigger()
-    {
-        base.AnimationActionTrigger();
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
     public override void Enter()
     {
         base.Enter();
@@ -60,10 +45,5 @@ public class PlayerWallGrabState : PlayerTouchingWallState
         player.transform.position = holdPosition;
         Movement.SetVelocityX(0f);
         Movement.SetVelocityY(0f);
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

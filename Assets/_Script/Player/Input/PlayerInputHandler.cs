@@ -175,10 +175,12 @@ public class PlayerInputHandler : MonoBehaviour
 
         if(playerInput.currentControlScheme == "Keyboard")
         {
-            RawMouseDirectionInput = cam.ScreenToWorldPoint((Vector3)RawMouseDirectionInput) - transform.position;
+            // Debug.Log(((Vector3)RawMouseDirectionInput - cam.WorldToScreenPoint(transform.position)).normalized);
+            // RawMouseDirectionInput = cam.ScreenToWorldPoint((Vector3)RawMouseDirectionInput) - transform.position;
+            RawMouseDirectionInput = ((Vector3)RawMouseDirectionInput - cam.WorldToScreenPoint(transform.position)).normalized;
             RawMouseDirectionInput = RawMouseDirectionInput.normalized;
         }
-        // Debug.Log(RawMouseDirectionInput);
+
         //45 degree angle
         FixedMouseDirectionInput = Vector2Int.RoundToInt(RawMouseDirectionInput.normalized);
 
