@@ -41,14 +41,15 @@ public class CamSwitch : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!TryGetComponent<PolygonCollider2D>(out var polygonCollider))
+        if (!TryGetComponent<CompositeCollider2D>(out var compositeCollider))
             return;
 
         Gizmos.color = Color.green;
-        for (int i = 0; i < polygonCollider.pathCount; i++)
+        for (int i = 0; i < compositeCollider.pathCount; i++)
         {
-            var path = polygonCollider.GetPath(i);
-            for (int j = 0; j < path.Length; j++)
+            var path = new List<Vector2>();
+            compositeCollider.GetPath(i, path);
+            for (int j = 0; j < path.Count; j++)
             {
                 var worldPos = transform.TransformPoint(path[j]);
                 Gizmos.DrawSphere(worldPos, 0.05f);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class Movement : CoreComponent
 
     private Vector2 velocityWorkspace;
 
+    public event Action OnFlip;
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
@@ -130,6 +132,7 @@ public class Movement : CoreComponent
         float roundedAngle = Mathf.Round(RB.transform.eulerAngles.y * 1000000f) / 1000000f;
         RB.transform.eulerAngles = new Vector3(0f, roundedAngle, 0f);
 
+        OnFlip?.Invoke();
         //TODO: Fixed Rotate but remove if lag.
     }
     #endregion
