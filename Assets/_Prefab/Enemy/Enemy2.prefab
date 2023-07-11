@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 3499853162507574827}
   - component: {fileID: 4238626814641619740}
   - component: {fileID: 7517101357935260278}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Enemy2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -554,7 +554,7 @@ Transform:
   - {fileID: 1721487985452990222}
   - {fileID: 4606329102939636372}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7547773283138414722
 Animator:
@@ -811,6 +811,8 @@ MonoBehaviour:
   groundCheckV2: {x: 0.47, y: 0.1}
   ceilingCheckV2: {x: 0, y: 0}
   headCheckV2: {x: 0, y: 0}
+  slopeCheckDistance: 0.5
+  slopeMaxAngle: 0
   wallCheckDistance: 0.3
   whatIsGround:
     serializedVersion: 2

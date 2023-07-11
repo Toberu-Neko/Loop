@@ -6,13 +6,11 @@ using Cinemachine;
 public class CamSwitch : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera cam;
-    private static List<CinemachineVirtualCamera> cams = new();
-    public static CinemachineVirtualCamera activatedCam = null;
 
     private void SwitchCamera(CinemachineVirtualCamera vcam)
     {
         vcam.enabled = true;
-        activatedCam = vcam;
+        CamManager.activatedCam = vcam;
     }
 
     private void OnTriggerEnter2D(Collider2D trigger)
@@ -29,14 +27,7 @@ public class CamSwitch : MonoBehaviour
             cam.enabled = false;
         }
     }
-    public static void RegisterCam(CinemachineVirtualCamera vcam)
-    {
-        cams.Add(vcam);
-    }
-    public static void UnregisterCam(CinemachineVirtualCamera vcam)
-    {
-        cams.Remove(vcam);
-    }
+    
 
 
     private void OnDrawGizmos()

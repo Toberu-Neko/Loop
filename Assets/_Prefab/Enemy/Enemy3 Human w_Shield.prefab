@@ -330,6 +330,8 @@ MonoBehaviour:
   groundCheckV2: {x: 0.68, y: 0.1}
   ceilingCheckV2: {x: 0, y: 0}
   headCheckV2: {x: 0, y: 0}
+  slopeCheckDistance: 0.5
+  slopeMaxAngle: 0
   wallCheckDistance: 0.3
   whatIsGround:
     serializedVersion: 2
@@ -577,7 +579,7 @@ GameObject:
   - component: {fileID: 6462992349876117816}
   - component: {fileID: 2130274916645445016}
   - component: {fileID: 3299522003568493847}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Enemy3 Human w_Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +602,7 @@ Transform:
   - {fileID: 814474352383659638}
   - {fileID: 1775145114903683520}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8332310884644170712
 Animator:

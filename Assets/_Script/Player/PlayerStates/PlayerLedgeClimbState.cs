@@ -53,7 +53,6 @@ public class PlayerLedgeClimbState : PlayerState
         startPosition.Set(cornerPosition.x - (Movement.FacingDirection * playerData.startOffset.x), cornerPosition.y - playerData.startOffset.y);
         stopPosition.Set(cornerPosition.x + (Movement.FacingDirection * playerData.stopOffset.x), cornerPosition.y + playerData.stopOffset.y);
 
-        Debug.Log(startPosition);
         player.transform.position = startPosition;
         Combat.OnDamaged += HandleOnDamaged;
     }

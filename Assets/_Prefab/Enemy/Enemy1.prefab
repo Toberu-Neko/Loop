@@ -599,6 +599,8 @@ MonoBehaviour:
   groundCheckV2: {x: 1.41, y: 0.1}
   ceilingCheckV2: {x: 0, y: 0}
   headCheckV2: {x: 0, y: 0}
+  slopeCheckDistance: 0.5
+  slopeMaxAngle: 0
   wallCheckDistance: 0.3
   whatIsGround:
     serializedVersion: 2
@@ -651,7 +653,7 @@ GameObject:
   - component: {fileID: 1123667382063355027}
   - component: {fileID: 6900012096521706580}
   - component: {fileID: 231883734753020142}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Enemy1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -674,7 +676,7 @@ Transform:
   - {fileID: 7037364650129472806}
   - {fileID: 2152292054292639666}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8206256782856453248
 SpriteRenderer:

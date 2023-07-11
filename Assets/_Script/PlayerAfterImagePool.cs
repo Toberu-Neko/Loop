@@ -7,7 +7,7 @@ public class PlayerAfterImagePool : MonoBehaviour
     [SerializeField]
     private GameObject afterImagePrefab;
 
-    private Queue<GameObject> availableObjects = new Queue<GameObject>();
+    private Queue<GameObject> availableObjects = new();
 
     public static PlayerAfterImagePool Instance { get; private set; }
 
