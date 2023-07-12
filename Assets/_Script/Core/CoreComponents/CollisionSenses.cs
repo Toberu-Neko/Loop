@@ -67,6 +67,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private float slopeMaxAngle;
     
     [SerializeField] private float wallCheckDistance;
+    [SerializeField] private float ledgeCheckDistance = 1f;
 
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlatform;
@@ -146,7 +147,7 @@ public class CollisionSenses : CoreComponent
     }
     public bool LedgeVertical
     {
-        get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, wallCheckDistance, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, ledgeCheckDistance, whatIsGround - whatIsPlatform);
     }
 
     private void OnDrawGizmos()
@@ -154,7 +155,7 @@ public class CollisionSenses : CoreComponent
         Gizmos.color = Color.gray;
         if (WallCheck) Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallCheckDistance);
         if (LedgeCheckHorizontal) Gizmos.DrawLine(LedgeCheckHorizontal.position, LedgeCheckHorizontal.position + Vector3.right * wallCheckDistance);
-        if (LedgeCheckVertical) Gizmos.DrawLine(LedgeCheckVertical.position, LedgeCheckVertical.position + Vector3.down * wallCheckDistance);
+        if (LedgeCheckVertical) Gizmos.DrawLine(LedgeCheckVertical.position, LedgeCheckVertical.position + Vector3.down * ledgeCheckDistance);
 
         if (GroundCheck)
         {

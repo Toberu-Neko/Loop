@@ -31,11 +31,6 @@ public class MoveState : State
         base.LogicUpdate();
         Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
     public override void DoChecks()
     {
         base.DoChecks();

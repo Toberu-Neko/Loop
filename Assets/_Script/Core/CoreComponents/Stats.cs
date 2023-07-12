@@ -113,12 +113,14 @@ public class Stats : CoreComponent
     {
         Invincible = true;
         Physics2D.IgnoreLayerCollision(7, 11, true);
+        Physics2D.IgnoreLayerCollision(7, 13, true);
     }
 
     public void SetInvincibleFalse()
     {
         Invincible = false;
         Physics2D.IgnoreLayerCollision(7, 11, false);
+        Physics2D.IgnoreLayerCollision(7, 13, false);
     }
 
     private void SetInvincibleTrueAfterDamaged()
