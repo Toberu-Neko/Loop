@@ -6,6 +6,7 @@ public class PlayerState
 {
     protected Core core;
     protected Combat Combat;
+    protected Stats Stats;
     protected Movement Movement;
 
 
@@ -26,9 +27,11 @@ public class PlayerState
         this.stateMachine = stateMachine;
         this.playerData = playerData;
         this.animBoolName = animBoolName;
+
         core = player.Core;
         Combat = player.Core.GetCoreComponent<Combat>();
         Movement = player.Core.GetCoreComponent<Movement>();
+        Stats = player.Core.GetCoreComponent<Stats>();
     }
     public virtual void Enter()
     {

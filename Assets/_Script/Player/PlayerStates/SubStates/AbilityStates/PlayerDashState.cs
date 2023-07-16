@@ -30,6 +30,7 @@ public class PlayerDashState : PlayerAbilityState
         dashDirection = Vector2.right * Movement.FacingDirection;
 
         Time.timeScale = playerData.holdTimeScale;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
         startTime = Time.unscaledTime;
 
         player.DashDirectionIndicator.gameObject.SetActive(true);
@@ -78,6 +79,7 @@ public class PlayerDashState : PlayerAbilityState
                 {
                     isHolding = false;
                     Time.timeScale = 1f;
+                    Time.fixedDeltaTime = 0.02f;
                     startTime = Time.time;
 
                     Movement.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));

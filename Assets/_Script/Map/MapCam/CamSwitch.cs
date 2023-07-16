@@ -24,7 +24,9 @@ public class CamSwitch : MonoBehaviour
     {
         if (trigger.CompareTag("Player"))
         {
-            cam.enabled = false;
+            // cam.enabled = false;
+
+            //TODO: 切換程式碼要改到其他物件去，不能與邊界Collider相同
         }
     }
     

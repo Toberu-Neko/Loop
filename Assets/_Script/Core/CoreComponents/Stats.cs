@@ -13,6 +13,7 @@ public class Stats : CoreComponent
 
     public bool PerfectBlockAttackable { get; private set; }
     public bool Invincible { get; private set; } = false;
+    public bool IsRewindingPosition { get; private set; } = false;
 
     public bool InCombat { get; private set; } = false;
     public bool CanChangeWeapon { get; private set; } = true;
@@ -145,4 +146,6 @@ public class Stats : CoreComponent
     }
 
     public void ResetPoiseDecreaseable() => Stamina.decreaseable = true;
+
+    public void SetRewindingPosition(bool volume) => IsRewindingPosition = volume;
 }

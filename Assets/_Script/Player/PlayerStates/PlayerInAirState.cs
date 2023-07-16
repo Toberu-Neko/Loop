@@ -24,9 +24,6 @@ public class PlayerInAirState : PlayerState
     private bool wallJumpCoyoteTime;
     private float startWallJumpCoyoteTime;
 
-
-    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
-    private Stats stats;
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -174,7 +171,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (isTouchingWall && !isTouchingLedge && !isGrounded)
+        else if (isTouchingWall && !isTouchingLedge && !isGrounded && !Stats.IsRewindingPosition)
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }

@@ -95,7 +95,11 @@ public class PlayerLedgeClimbState : PlayerState
             Movement.SetVelocityZero();
             player.transform.position = startPosition;
 
-            if (xInput == Movement.FacingDirection && isHanging && !isClimbing)
+            if (Stats.IsRewindingPosition)
+            {
+                stateMachine.ChangeState(player.InAirState);
+            }
+            else if (xInput == Movement.FacingDirection && isHanging && !isClimbing)
             {
                 CheckForSpace();
                 isClimbing = true;

@@ -89,7 +89,7 @@ public class PlayerTouchingWallState : PlayerState
         {
             stateMachine.ChangeState(player.InAirState);
         }
-        else if(isTouchingWall && !isTouchingLedge)
+        else if(isTouchingWall && !isTouchingLedge && !Stats.IsRewindingPosition)
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }

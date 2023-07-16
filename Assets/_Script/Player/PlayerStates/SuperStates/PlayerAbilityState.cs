@@ -9,8 +9,6 @@ public class PlayerAbilityState : PlayerState
 
     protected bool isGrounded;
 
-    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
-    private Stats stats;
 
     protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;

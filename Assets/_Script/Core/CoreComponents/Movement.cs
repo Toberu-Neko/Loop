@@ -15,10 +15,12 @@ public class Movement : CoreComponent
     private float orginalGravityScale;
 
     public Vector2 CurrentVelocity { get; private set; }
+    private Transform parentTransform;
 
     private Vector2 velocityWorkspace;
 
     public event Action OnFlip;
+
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
@@ -26,6 +28,7 @@ public class Movement : CoreComponent
     {
         base.Awake();
 
+        parentTransform = core.transform.parent;
         RB = GetComponentInParent<Rigidbody2D>();
         orginalGrag = RB.drag;
         orginalGravityScale = RB.gravityScale;
@@ -40,6 +43,14 @@ public class Movement : CoreComponent
     }
 
     #region Set Functions
+
+    public void SetPosition(Vector2 position, Quaternion rotation, int facingDirection)
+    {
+        parentTransform.position = position;
+        parentTransform.rotation = rotation;
+        FacingDirection = facingDirection;
+    }
+
     public void SetVelocity(float velocity, Vector2 angle, int direction)
     {
         angle.Normalize();

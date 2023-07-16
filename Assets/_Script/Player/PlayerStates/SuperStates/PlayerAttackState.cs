@@ -14,8 +14,6 @@ public class PlayerAttackState : PlayerState
     private bool jumpInputStop;
     private bool isJumping;
 
-    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
-    private Stats stats;
 
     protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;

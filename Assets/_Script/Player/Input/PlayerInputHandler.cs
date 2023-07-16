@@ -20,6 +20,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool GrabInput { get; private set; }
     public bool DashInput { get; private set; }
     public bool DashInputStop { get; private set; }
+
+    #region Combat Inputs
     public bool AttackInput { get; private set; }
     public bool HoldAttackInput { get; private set; }
     public bool BlockInput { get; private set; }
@@ -29,6 +31,10 @@ public class PlayerInputHandler : MonoBehaviour
     public bool ChangeWeapon1 { get; private set; }
     public bool ChangeWeapon2 { get; private set; }
     public bool ChangeWeapon3 { get; private set; }
+    #endregion
+
+    public bool TimeSkillInput { get; private set; }
+    public bool TimeSkillHoldInput { get; private set; }
 
     public bool DebugInput { get; private set; }
 
@@ -60,6 +66,21 @@ public class PlayerInputHandler : MonoBehaviour
             DebugInput = false;
         }
     }
+
+    public void OnTimeSkillInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            TimeSkillInput = true;
+            TimeSkillHoldInput = true;
+        }
+        if (context.canceled)
+        {
+            TimeSkillInput = false;
+            TimeSkillHoldInput = false;
+        }
+    }
+    public void UseTimeSkillInput() => TimeSkillInput = false;
     public void OnAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)

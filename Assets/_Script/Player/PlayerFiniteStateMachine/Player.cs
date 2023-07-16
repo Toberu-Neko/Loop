@@ -130,6 +130,7 @@ public class Player : MonoBehaviour
     {
         StateMachine.CurrentState.PhysicsUpdate();
     }
+
     #endregion
 
     #region Other Functions
