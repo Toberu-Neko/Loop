@@ -81,6 +81,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
     public void UseTimeSkillInput() => TimeSkillInput = false;
+
     public void OnAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -190,6 +191,7 @@ public class PlayerInputHandler : MonoBehaviour
             DashInput = false;
         }
     }
+
     public void OnMouseDirectionInput(InputAction.CallbackContext context)
     {
         RawMouseDirectionInput = context.ReadValue<Vector2>();
@@ -197,6 +199,7 @@ public class PlayerInputHandler : MonoBehaviour
         if(playerInput.currentControlScheme == "Keyboard")
         {
             // Debug.Log(((Vector3)RawMouseDirectionInput - cam.WorldToScreenPoint(transform.position)).normalized);
+            // Debug.Log(cam.ScreenToWorldPoint((Vector3)RawMouseDirectionInput) - transform.position);
             // RawMouseDirectionInput = cam.ScreenToWorldPoint((Vector3)RawMouseDirectionInput) - transform.position;
             RawMouseDirectionInput = ((Vector3)RawMouseDirectionInput - cam.WorldToScreenPoint(transform.position)).normalized;
             RawMouseDirectionInput = RawMouseDirectionInput.normalized;

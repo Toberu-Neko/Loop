@@ -6,7 +6,7 @@ using UnityEngine;
 public class CamManager : MonoBehaviour
 {
     private List<CinemachineVirtualCamera> cams = new();
-    public CinemachineVirtualCamera activatedCam;
+    [HideInInspector] public CinemachineVirtualCamera activatedCam;
     public void RegisterCam(CinemachineVirtualCamera vcam)
     {
         cams.Add(vcam);

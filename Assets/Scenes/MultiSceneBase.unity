@@ -405,6 +405,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4782928465938760, guid: 4f122c35734336249acf5ff7323432b7, type: 3}
   m_PrefabInstance: {fileID: 77102335}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &79204885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 79204887}
+  - component: {fileID: 79204886}
+  - component: {fileID: 79204888}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &79204886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79204885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1108b1dda5a55fb4f8833437c463a430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &79204887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79204885}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &79204888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79204885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c53b941f5ff7c5845ae9f5721546d4e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &105187313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1553,7 +1610,7 @@ GameObject:
   - component: {fileID: 267308896}
   - component: {fileID: 267308897}
   m_Layer: 0
-  m_Name: Managers
+  m_Name: CamManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1567,7 +1624,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 267308895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -60.483467, y: -13.966317, z: 0.8889604}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7898,6 +7955,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 906740d1-67ae-484d-ad1d-d044c98fcd3e
     m_ActionName: Gameplay/TimeSkill[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 79204888}
+        m_TargetAssemblyTypeName: UI_InputManager, Assembly-CSharp
+        m_MethodName: OnESCInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0993d73b-da72-4d8f-834f-cd8ef353de0d
+    m_ActionName: UI/TriggerMenu[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -8461,6 +8534,7 @@ GameObject:
   - component: {fileID: 1571522891}
   - component: {fileID: 1571522890}
   - component: {fileID: 1571522889}
+  - component: {fileID: 1571522893}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -8552,6 +8626,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1571522893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571522888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81dfe78a7d5dd6b4a9a76420bbbbad11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 79204886}
 --- !u!1001 &1615562635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11233,7 +11320,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004288228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -85.17552, y: -20.95319, z: -10}
+  m_LocalPosition: {x: -85.175514, y: -20.95319, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
