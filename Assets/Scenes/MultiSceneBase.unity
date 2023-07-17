@@ -1551,6 +1551,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 267308896}
+  - component: {fileID: 267308897}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1573,6 +1574,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &267308897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267308895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdfd149fdfac0c49bcc700ed1aa14b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activatedCam: {fileID: 0}
 --- !u!114 &280223605 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8981675574451765123, guid: 6e4fcfa68da54924f8c8423de9f07ec8, type: 3}
@@ -9384,7 +9398,7 @@ GameObject:
   - component: {fileID: 1779046444}
   m_Layer: 7
   m_Name: Combat
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11094,7 +11108,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 1
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -11219,7 +11233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004288228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -85.175514, y: -20.95319, z: -10}
+  m_LocalPosition: {x: -85.17552, y: -20.95319, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

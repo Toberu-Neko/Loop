@@ -6,20 +6,18 @@ public class CamRigister : MonoBehaviour
 {
     [SerializeField] private bool focusOnPlayer = true;
 
-    private Cinemachine.CinemachineVirtualCamera cam;
+    [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
     private Transform player;
 
     private void Awake()
     {
-        cam = GetComponent<Cinemachine.CinemachineVirtualCamera>();
-
         // player = GameObject.Find("CameraFollowObject").transform;
         player = GameObject.Find("Player/Misc/LookAt").transform;
 
     }
     private void OnEnable()
     {
-        CamManager.RegisterCam(cam);
+        CamManager.instance.RegisterCam(cam);
 
         if (focusOnPlayer)
         {
@@ -28,6 +26,6 @@ public class CamRigister : MonoBehaviour
     }
     private void OnDisable()
     {
-        CamManager.UnregisterCam(cam);
+        CamManager.instance.UnregisterCam(cam);
     }
 }

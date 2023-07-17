@@ -62,9 +62,18 @@ public class PlayerTimeSkillManager : MonoBehaviour
         }
     }
 
+    private float fixedDeltaTimer = 0;
     private void Record()
     {
-        pointsInTime.Insert(0, new PointInTime((Vector2)transform.position, transform.rotation, movement.FacingDirection, sr.sprite));
+        if(Time.fixedDeltaTime >= 0.02f || fixedDeltaTimer >= 0.02f)
+        {
+            pointsInTime.Insert(0, new PointInTime((Vector2)transform.position, transform.rotation, movement.FacingDirection, sr.sprite));
+            fixedDeltaTimer = 0f;
+        }
+        else
+        {
+            fixedDeltaTimer += Time.fixedDeltaTime;
+        }
     }
 
     private void RewindPosition()
@@ -85,7 +94,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
     private void StartRewinding()
     {
         stats.SetRewindingPosition(true);
-        rb.simulated = false;
+        rb.isKinematic = true;
         anim.enabled = false;
 
         stats.SetInvincibleTrue();
@@ -93,7 +102,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
     private void StopRewinding()
     {
         stats.SetRewindingPosition(false);
-        rb.simulated = true;
+        rb.isKinematic = false;
         anim.enabled = true;
 
         stats.SetInvincibleFalse();
