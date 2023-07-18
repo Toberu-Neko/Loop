@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
+    private GameManager gameManager;
+
+    [SerializeField] private GameObject pauseMainUI;
 
     private void Awake()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         gameManager.OnGamePaused += OpenPauseMainUI;
         gameManager.OnGameResumed += ClosePauseMainUI;
+
+        ClosePauseMainUI();
     }
 
     private void OpenPauseMainUI()
     {
-
+        pauseMainUI.SetActive(true);
     }
 
     private void ClosePauseMainUI()
     {
-
+        pauseMainUI.SetActive(false);
     }
 }

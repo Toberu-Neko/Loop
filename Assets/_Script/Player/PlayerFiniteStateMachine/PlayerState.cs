@@ -9,7 +9,6 @@ public class PlayerState
     protected Stats Stats;
     protected Movement Movement;
 
-
     protected Player player;
     protected PlayerStateMachine stateMachine;
     protected PlayerData playerData;

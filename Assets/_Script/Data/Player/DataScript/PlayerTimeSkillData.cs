@@ -7,6 +7,9 @@ public class PlayerTimeSkillData : ScriptableObject
 {
     public float maxEnergy = 100f;
 
-    public float rewindCostPerSecond = 5f;
-    public float rewindExtraCostPerSecond = 2f;
+    [Header("Rewind Player")]
+    [Tooltip("用於清除位置資訊")]
+    public float rewindMaxTime = 10f;
+    [Tooltip("每秒消耗能量")]
+    public float rewindCostPerSecond = 10f;
 }

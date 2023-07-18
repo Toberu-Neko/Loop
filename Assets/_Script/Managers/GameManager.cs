@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            IsPaused = false;
         }
         else
         {
@@ -28,6 +27,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        IsPaused = false;
         inputManager = GetComponent<UI_InputManager>();
     }
 

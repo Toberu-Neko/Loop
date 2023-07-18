@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
 
+    private GameManager gameManager;
+
     #region State Variables
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -53,9 +55,9 @@ public class Player : MonoBehaviour
     public PlayerWeaponManager PlayerWeaponManager { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
+    public SpriteRenderer SR { get; private set; }
     public Transform DashDirectionIndicator { get; private set; }
     public BoxCollider2D MovementCollider { get; private set; }
-    public PlayerInventory Inventory { get; private set; }
     #endregion
 
     #region Other Variables
@@ -71,9 +73,10 @@ public class Player : MonoBehaviour
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
+        SR = GetComponent<SpriteRenderer>();
         MovementCollider = GetComponent<BoxCollider2D>();
-        Inventory = GetComponent<PlayerInventory>();
         PlayerWeaponManager = GetComponent<PlayerWeaponManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
 
         StateMachine = new PlayerStateMachine();

@@ -8,8 +8,10 @@ public class DebugPlayerComp : MonoBehaviour
     [SerializeField] GameObject perfectBlockAttack;
     [SerializeField] TextMeshProUGUI HpText;
     [SerializeField] TextMeshProUGUI weaponText;
+    [SerializeField] TextMeshProUGUI timeText;
 
     private PlayerWeaponManager weaponManager;
+    private PlayerTimeSkillManager timeSkillManager;
 
     private Core core;
 
@@ -22,6 +24,7 @@ public class DebugPlayerComp : MonoBehaviour
     {
         core = GetComponentInChildren<Core>();
         weaponManager = GetComponent<PlayerWeaponManager>();
+        timeSkillManager = GetComponent<PlayerTimeSkillManager>();
 
         perfectBlockAttack.SetActive(false);
     }
@@ -39,6 +42,7 @@ public class DebugPlayerComp : MonoBehaviour
         Combat.OnDamaged += UpdateHpText;
         weaponManager.OnEnergyChanged += UpdateWeaponText;
         weaponManager.OnWeaponChanged += UpdateWeaponText;
+        timeSkillManager.OnStateChanged += UpdateTimeSkillText;
     }
 
     private void OnDisable()
@@ -48,6 +52,7 @@ public class DebugPlayerComp : MonoBehaviour
         Combat.OnDamaged -= UpdateHpText;
         weaponManager.OnEnergyChanged -= UpdateWeaponText;
         weaponManager.OnWeaponChanged -= UpdateWeaponText;
+        timeSkillManager.OnStateChanged -= UpdateTimeSkillText;
     }
 
     void Update()
@@ -64,5 +69,11 @@ public class DebugPlayerComp : MonoBehaviour
     {
         weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
             "\n 能量: " + weaponManager.GetCurrentTypeEnergyStr();
+    }
+
+    void UpdateTimeSkillText()
+    {
+        timeText.text = "裝備技能: " + timeSkillManager.StateMachine.CurrentState.ToString()[16..] +
+            "\n 能量: " + timeSkillManager.CurrentEnergy.ToString();
     }
 }

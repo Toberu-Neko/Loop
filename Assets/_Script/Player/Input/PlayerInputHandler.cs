@@ -1,12 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
     private PlayerInput playerInput;
+    private GameManager gameManager;
     private Camera cam;
 
     public Vector2 RawMovementInput { get; private set; }
@@ -45,6 +43,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         cam = Camera.main;
     }
@@ -57,6 +56,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnDebugInput(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         if(context.started)
         {
             DebugInput = true;
@@ -69,6 +71,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnTimeSkillInput(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         if (context.started)
         {
             TimeSkillInput = true;
@@ -84,6 +89,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnAttackInput(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         if (context.started)
         {
             // Debug.Log("AttackInput");
@@ -100,6 +108,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnBlockInput(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         if (context.started)
         {
             BlockInput = true;
@@ -112,6 +123,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnWeaponSkillInput(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         if (context.started)
         {
             WeaponSkillInput = true;
@@ -127,7 +141,10 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnChangeWeapon1Input(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (gameManager.IsPaused)
+            return;
+
+        if (context.started)
         {
             ChangeWeapon1 = true;
         }
@@ -139,6 +156,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnChangeWeapon2Input(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         if (context.started)
         {
             ChangeWeapon2 = true;
@@ -151,6 +171,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnChangeWeapon3Input(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         if (context.started)
         {
             ChangeWeapon3 = true;
@@ -162,6 +185,9 @@ public class PlayerInputHandler : MonoBehaviour
     }
     public void OnMoveInput(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         RawMovementInput = context.ReadValue<Vector2>();
 
         NormInputX = UnityEngine.Mathf.RoundToInt(RawMovementInput.x);
@@ -170,6 +196,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnDashInput(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         if (context.started)
         {
             DashInput = true;
@@ -194,6 +223,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnMouseDirectionInput(InputAction.CallbackContext context)
     {
+        if (gameManager.IsPaused)
+            return;
+
         RawMouseDirectionInput = context.ReadValue<Vector2>();
 
         if(playerInput.currentControlScheme == "Keyboard")
@@ -211,7 +243,10 @@ public class PlayerInputHandler : MonoBehaviour
     }
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (gameManager.IsPaused)
+            return;
+
+        if (context.started)
         {
             JumpInput = true;
             JumpInputStop = false;
@@ -224,7 +259,10 @@ public class PlayerInputHandler : MonoBehaviour
     }
     public void OnGrabInput(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (gameManager.IsPaused)
+            return;
+
+        if (context.started)
         {
             GrabInput = true;
         }
@@ -242,10 +280,4 @@ public class PlayerInputHandler : MonoBehaviour
             JumpInput = false;
         }
     }
-}
-
-public enum CombatInputs
-{
-    primary,
-    secondary
 }
