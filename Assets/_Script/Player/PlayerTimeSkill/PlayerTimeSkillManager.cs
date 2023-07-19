@@ -11,6 +11,8 @@ public class PlayerTimeSkillManager : MonoBehaviour
     public PlayerTimeSkill_None SkillNone { get; private set; }
     public PlayerTimeSkill_RewindPlayer SkillRewindPlayer { get; private set; }
 
+    public PlayerTimeSkill_BookMark SkillBookMark { get; private set; }
+
     public event Action OnStateChanged;
 
     private float maxEnergy;
@@ -29,6 +31,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
         StateMachine = new();
         SkillNone = new(player, this, StateMachine, data, "None");
         SkillRewindPlayer = new(player, this, StateMachine, data, "RewindPlayer");
+        SkillBookMark = new(player, this, StateMachine, data, "BookMark");
 
         StateMachine.Initialize(SkillNone);
         OnStateChanged?.Invoke();
@@ -60,6 +63,12 @@ public class PlayerTimeSkillManager : MonoBehaviour
     public void ChangeToRewindSkill()
     {
         StateMachine.ChangeState(SkillRewindPlayer);
+        OnStateChanged?.Invoke();
+    }
+
+    public void ChangeToBookMarkSkill()
+    {
+        StateMachine.ChangeState(SkillBookMark);
         OnStateChanged?.Invoke();
     }
 }

@@ -1,59 +1,75 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
+public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
 {
     private List<PointInTime> pointsInTime;
-    public PlayerTimeSkill_RewindPlayer(Player player, PlayerTimeSkillManager manager, PlayerTimeSkillStateMachine stateMachine, PlayerTimeSkillData data, string animBoolName) : base(player, manager, stateMachine, data, animBoolName)
+
+    private bool isRecording;
+    private GameObject mark;
+
+    public PlayerTimeSkill_BookMark(Player player, PlayerTimeSkillManager manager, PlayerTimeSkillStateMachine stateMachine, PlayerTimeSkillData data, string animBoolName) : base(player, manager, stateMachine, data, animBoolName)
     {
     }
+
     public override void Enter()
     {
         base.Enter();
 
         pointsInTime = new();
+        isRecording = false;
     }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (player.InputHandler.TimeSkillInput && !Stats.IsRewindingPosition && manager.CurrentEnergy > data.rewindCostPerSecond * Time.deltaTime)
+        if (player.InputHandler.TimeSkillInput && 
+            !isRecording && !Stats.IsRewindingPosition &&
+            manager.CurrentEnergy > data.bookMarkCostPerSecond * Time.deltaTime)
         {
             player.InputHandler.UseTimeSkillInput();
+            isRecording = true;
+
+            mark = GameObject.Instantiate(data.bookMarkPrefab, player.transform.position, Quaternion.identity);
+            SpriteRenderer ren = mark.GetComponent<SpriteRenderer>();
+            ren.sprite = player.SR.sprite;
+            if(Movement.FacingDirection == -1)
+            {
+               ren.flipX = true;
+            }
+
+        }
+        else if (isRecording && (player.InputHandler.TimeSkillInput || manager.CurrentEnergy <= 0)) 
+        {
+            isRecording = false;
             StartRewinding();
         }
-        if (Stats.IsRewindingPosition)
+
+        if(isRecording)
         {
-            if(!player.InputHandler.TimeSkillHoldInput || manager.CurrentEnergy <= 0)
-                StopRewinding();
-            else
-                manager.DecreaseEnergy(data.rewindCostPerSecond * Time.deltaTime);
+            manager.DecreaseEnergy(data.bookMarkCostPerSecond * Time.deltaTime);
         }
     }
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        if (Stats.IsRewindingPosition)
-        {
-            RewindPosition();
-        }
-        else
+        if (isRecording)
         {
             Record();
         }
+        else if (Stats.IsRewindingPosition)
+        {
+            RewindPosition();
+        }
     }
-
-
     private float fixedDeltaTimer = 0;
     private void Record()
     {
         if (Time.fixedDeltaTime >= 0.02f || fixedDeltaTimer >= 0.02f)
         {
-            if(pointsInTime.Count > Mathf.Round(data.rewindMaxTime / Time.fixedDeltaTime))
+            if (pointsInTime.Count > Mathf.Round(data.rewindMaxTime / Time.fixedDeltaTime))
             {
                 pointsInTime.RemoveAt(pointsInTime.Count - 1);
             }
@@ -65,7 +81,6 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
             fixedDeltaTimer += Time.fixedDeltaTime;
         }
     }
-
     private void RewindPosition()
     {
         if (pointsInTime.Count > 0)
@@ -74,9 +89,9 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
             Movement.SetPosition(point.position, point.rotation, point.facingDirection);
             player.SR.sprite = point.sprite;
 
-            for (int i = 1; i < data.rewindPlaySpeed; i++)
+            for(int i = 1; i < data.rewindPlaySpeed; i++)
             {
-                if (pointsInTime.Count > 1)
+                if(pointsInTime.Count > 1)
                     pointsInTime.RemoveAt(0);
             }
             pointsInTime.RemoveAt(0);
@@ -100,25 +115,11 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
         Stats.SetRewindingPosition(false);
         player.RB.isKinematic = false;
         player.Anim.enabled = true;
+        if (mark)
+        {
+            GameObject.Destroy(mark);
+        }
 
         Stats.SetInvincibleFalse();
-    }
-}
-
-
-[Serializable]
-public class PointInTime
-{
-    public Vector2 position;
-    public Quaternion rotation;
-    public int facingDirection;
-    public Sprite sprite;
-
-    public PointInTime(Vector2 position, Quaternion rotation, int facingDirection, Sprite sprite)
-    {
-        this.position = position;
-        this.rotation = rotation;
-        this.facingDirection = facingDirection;
-        this.sprite = sprite;
     }
 }
