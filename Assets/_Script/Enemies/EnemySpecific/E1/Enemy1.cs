@@ -83,6 +83,4 @@ public class Enemy1 : Entity
 
         Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
     }
-
-    
 }

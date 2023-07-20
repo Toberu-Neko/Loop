@@ -14,6 +14,7 @@ public class Stats : CoreComponent
     public bool PerfectBlockAttackable { get; private set; }
     public bool Invincible { get; private set; } = false;
     public bool IsRewindingPosition { get; private set; } = false;
+    public bool IsTimeStopped { get; private set; } = false;
 
     public bool InCombat { get; private set; } = false;
     public bool CanChangeWeapon { get; private set; } = true;
@@ -26,6 +27,8 @@ public class Stats : CoreComponent
     private bool staminaDamagedThisFrame = false;
     private bool knockbackedThisFrame = false;
 
+    public event Action OnTimeStop;
+    public event Action OnTimeStart;
     private void Start()
     {
         Health.MaxValue = core.CoreData.maxHealth;
@@ -55,8 +58,6 @@ public class Stats : CoreComponent
         if (!InCombat && !Stamina.CurrentValue.Equals(Stamina.MaxValue))
         {
             Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
-            // am += Time.deltaTime;
-            // Debug.Log(am);
         }
     }
     private void LateUpdate()
@@ -109,6 +110,7 @@ public class Stats : CoreComponent
         if(PerfectBlockAttackable)
             PerfectBlockAttackable = false;
     }
+    #region Invincible
 
     public void SetInvincibleTrue()
     {
@@ -130,6 +132,7 @@ public class Stats : CoreComponent
         CancelInvoke(nameof(SetInvincibleFalse));
         Invoke(nameof(SetInvincibleFalse), invincibleDurationAfterDamaged);
     }
+    #endregion
 
     public void SetCanChangeWeapon(bool volume) => CanChangeWeapon = volume;
 
@@ -148,4 +151,16 @@ public class Stats : CoreComponent
     public void ResetPoiseDecreaseable() => Stamina.decreaseable = true;
 
     public void SetRewindingPosition(bool volume) => IsRewindingPosition = volume;
+
+    public void SetIsStoppedTrue()
+    {
+        IsTimeStopped = true;
+        OnTimeStop?.Invoke();
+    }
+
+    public void SetIsStoppedFalse()
+    {
+        IsTimeStopped = false;
+        OnTimeStart?.Invoke();
+    }
 }

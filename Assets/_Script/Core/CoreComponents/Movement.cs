@@ -21,6 +21,8 @@ public class Movement : CoreComponent
 
     public event Action OnFlip;
 
+    private Stats stats;
+
     private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
 
@@ -30,6 +32,8 @@ public class Movement : CoreComponent
 
         parentTransform = core.transform.parent;
         RB = GetComponentInParent<Rigidbody2D>();
+        stats = core.GetCoreComponent<Stats>();
+
         orginalGrag = RB.drag;
         orginalGravityScale = RB.gravityScale;
 
@@ -93,6 +97,12 @@ public class Movement : CoreComponent
 
     private void SetFinalVelocity()
     {
+        if(stats.IsTimeStopped)
+        {
+            RB.velocity = Vector2.zero;
+            CurrentVelocity = Vector2.zero;
+            return;
+        }
         if (CanSetVelocity)
         {
             if(velocityWorkspace == Vector2.zero && RB.sharedMaterial != core.CoreData.fullFrictionMaterial && CollisionSenses.Slope.IsOnSlope)

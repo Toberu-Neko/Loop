@@ -24,43 +24,81 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public bool PerfectBlock { get; private set; }
     public bool NormalBlock { get; private set; }
 
-    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
+    // private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
-
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
     private CollisionSenses collisionSenses;
-
-    private Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;
-
-    private ParticleManager ParticleManager => particleManager ? particleManager : core.GetCoreComponent<ParticleManager>();
     private ParticleManager particleManager;
 
     private bool isKnockbackActive;
     private float knockbackStartTime;
+
+
+    private float knockStrengthDelta = 0f;
+    private int knockBackDirection = 0;
+    private Vector2 knockbackAngleDelta = Vector2.zero;
+    private Vector2 workspace = Vector2.zero;
     private void Start()
     {
+        stats = core.GetCoreComponent<Stats>();
+        movement = core.GetCoreComponent<Movement>();
+        particleManager = core.GetCoreComponent<ParticleManager>();
+        collisionSenses = core.GetCoreComponent<CollisionSenses>();
+
         damageParticles = core.CoreData.damageParticles;
         blockDamageMultiplier = core.CoreData.blockDamageMultiplier;
         blockStaminaMultiplier = core.CoreData.blockStaminaMultiplier;
         maxKnockbackTime = core.CoreData.maxKnockbackTime;
         normalBlockKnockbakDirection = core.CoreData.normalBlockKnockbakDirection;
         normalBlockKnockbakMultiplier = core.CoreData.normalBlockKnockbakMultiplier;
+
+        stats.OnTimeStart += HandleStartTime;
+    }
+    private void OnDisable()
+    {
+        stats.OnTimeStart -= HandleStartTime;
     }
 
     public override void LogicUpdate()
     {
         CheckKnockback();
     }
+    private void HandleStartTime()
+    {
+        DecreaseHealth(healthDelta);
+        healthDelta = 0f;
+
+        DecreaseStamina(staminaDelta);
+        staminaDelta = 0f;
+
+        int dir;
+        if (knockStrengthDelta < 0)
+        {
+            dir = -1;
+            knockStrengthDelta *= 1;
+        }
+        else
+        {
+            dir = 1;
+        }
+
+        HandleKnockback(knockStrengthDelta, knockbackAngleDelta, dir);
+
+        knockStrengthDelta = 0f;
+        knockbackAngleDelta = Vector2.zero;
+    }
+
+    private float staminaDelta = 0f;
+
     public void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
-        if (Stats.Invincible || !Stats.Stamina.decreaseable)
+        if (stats.Invincible || !stats.Stamina.decreaseable)
         {
             return;
         }
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
-            Stats.Stamina.Decrease(damageAmount);
+            DecreaseStamina(damageAmount);
         }
         else if (PerfectBlock)
         {
@@ -68,25 +106,33 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
         else if (NormalBlock)
         {
-            Stats.Stamina.Decrease(damageAmount * blockStaminaMultiplier);
+            DecreaseStamina(damageAmount * blockStaminaMultiplier);
         }
         else
         {
-            Stats.Stamina.Decrease(damageAmount);
+            DecreaseStamina(damageAmount);
         }
         OnStaminaDamaged?.Invoke();
+    }
+    private void DecreaseStamina(float amount)
+    {
+        if(stats.IsTimeStopped)
+        {
+            staminaDelta += amount;
+            return;
+        }
+        stats.Stamina.Decrease(amount);
     }
 
     public void Damage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
-        if (Stats.Invincible)
+        if (stats.Invincible)
         {
             return;
         }
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
-            Stats.Health.Decrease(damageAmount);
-            ParticleManager.StartParticlesWithRandomRotation(damageParticles);
+            DecreaseHealth(damageAmount);
         }
         else if (PerfectBlock)
         {
@@ -94,28 +140,36 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
         else if(NormalBlock)
         {
-            Stats.Health.Decrease(damageAmount * blockDamageMultiplier);
-            ParticleManager.StartParticlesWithRandomRotation(damageParticles);
+            DecreaseHealth(damageAmount * blockDamageMultiplier);
         }
         else
         {
-            Stats.Health.Decrease(damageAmount);
-            ParticleManager.StartParticlesWithRandomRotation(damageParticles);
+            DecreaseHealth(damageAmount);
         }
         OnDamaged?.Invoke();
     }
 
+    private float healthDelta = 0f;
+    private void DecreaseHealth(float damageAmount)
+    {
+        if (stats.IsTimeStopped)
+        {
+            healthDelta += damageAmount;
+            return;
+        }
+        stats.Health.Decrease(damageAmount);
+        particleManager.StartParticlesWithRandomRotation(damageParticles);
+    }
 
     public void Knockback(Vector2 angle, float strength, int direction, Vector2 damagePosition, bool blockable = true)
     {
-        if (Stats.Invincible)
+        if (stats.Invincible)
         {
             return;
         }
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
-            Movement.SetVelocity(strength, angle, direction);
-            StartKnockback();
+            HandleKnockback(strength, angle, direction);
         }
         else if (PerfectBlock)
         {
@@ -123,27 +177,60 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
         else if (NormalBlock)
         {
-            Movement.SetVelocity(strength * normalBlockKnockbakMultiplier, normalBlockKnockbakDirection, direction);
-            StartKnockback();
+            HandleKnockback(strength * normalBlockKnockbakMultiplier, normalBlockKnockbakDirection, direction);
         }
         else
         {
-            Movement.SetVelocity(strength, angle, direction);
-            StartKnockback();
+            HandleKnockback(strength, angle, direction);
         }
         OnKnockback?.Invoke();
     }
 
-    private void StartKnockback()
-    {
-        Movement.CanSetVelocity = false;
-        // Movement.SetDragZero();
-        // Movement.SetGravityZero();
 
+    private void HandleKnockback(float strength, Vector2 angle, int direction)
+    {
+        if(stats.IsTimeStopped)
+        {
+            if(knockbackAngleDelta.x < angle.x)
+            {
+                workspace.Set(angle.x, knockbackAngleDelta.y);
+                knockbackAngleDelta = workspace;
+            }
+            if(knockbackAngleDelta.y < angle.y)
+            {
+                workspace.Set(knockbackAngleDelta.x, angle.y);
+                knockbackAngleDelta = workspace;
+            }
+
+            knockStrengthDelta += strength * direction;
+            return;
+        }
+
+        movement.SetVelocity(strength, angle, direction);
+        movement.CanSetVelocity = false;
         isKnockbackActive = true;
         knockbackStartTime = Time.time;
     }
 
+    private void CheckKnockback()
+    {
+        if (isKnockbackActive && ((movement.CurrentVelocity.y <= 0.01f && collisionSenses.Ground) || Time.time >= knockbackStartTime + maxKnockbackTime))
+        {
+            movement.CanSetVelocity = true;
+            isKnockbackActive = false;
+        }
+    }
+
+    #region Block
+    public void SetPerfectBlock(bool value)
+    {
+        PerfectBlock = value;
+    }
+
+    public void SetNormalBlock(bool value)
+    {
+        NormalBlock = value;
+    }
     public bool FacingDamgePosition(Vector2 damagePosition)
     {
         int damageDirection;
@@ -156,29 +243,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             damageDirection = -1;
         }
 
-        return damageDirection == Movement.FacingDirection;
+        return damageDirection == movement.FacingDirection;
     }
-   public void SetPerfectBlock(bool value)
-    {
-        PerfectBlock = value;
-    }
+    #endregion
 
-    public void SetNormalBlock(bool value)
-    {
-        NormalBlock = value;
-    }
-
-    private void CheckKnockback()
-    {
-        if (isKnockbackActive && ((Movement.CurrentVelocity.y <= 0.01f && CollisionSenses.Ground) || Time.time >= knockbackStartTime + maxKnockbackTime))
-        {
-            Movement.CanSetVelocity = true;
-            // Movement.SetDragOrginal();
-            // Movement.SetGravityOrginal();
-            isKnockbackActive = false;
-        }
-    }
-
+    #region Attack
     public void AddToDetected(Collider2D collision)
     {
         // Debug.Log("Add " + collision.gameObject.name + "to detected");
@@ -216,5 +285,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             DetectedStaminaDamageables.Remove(staminaDamageable);
         }
     }
+    #endregion
 
 }

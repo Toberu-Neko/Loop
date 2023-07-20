@@ -18,4 +18,8 @@ public class PlayerTimeSkillData : ScriptableObject
     [Tooltip("每秒消耗能量")]
     public float bookMarkCostPerSecond = 10f;
     public GameObject bookMarkPrefab;
+
+    [Header("Time Stop All")]
+    [Tooltip("每秒消耗能量")]
+    public float timeStopAllCostPerSecond = 20f;
 }

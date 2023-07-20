@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     private UI_InputManager inputManager;
 
     public bool IsPaused { get; private set; }
+    public bool TimeStopEnemy { get; private set; }
+    public event Action OnTimeStopEnemy;
+    public event Action OnTimeStartEnemy;
 
     public event Action OnGamePaused;
     public event Action OnGameResumed;
@@ -58,5 +61,17 @@ public class GameManager : MonoBehaviour
     {
         IsPaused = false;
         Time.timeScale = 1f;
+    }
+
+    public void SetTimeStopEnemyTrue()
+    {
+        TimeStopEnemy = true;
+        OnTimeStopEnemy?.Invoke();
+    }
+
+    public void SetTimeStopEnemyFalse()
+    {
+        TimeStopEnemy = false;
+        OnTimeStartEnemy?.Invoke();
     }
 }

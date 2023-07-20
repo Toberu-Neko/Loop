@@ -30,6 +30,7 @@ public class Core : MonoBehaviour
         if (comp)
             return comp;
 
+        
         comp = GetComponentInChildren<T>();
 
         if (comp)
