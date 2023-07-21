@@ -154,7 +154,7 @@ public class Movement : CoreComponent
         RB.transform.eulerAngles = new Vector3(0f, roundedAngle, 0f);
 
         OnFlip?.Invoke();
-        //TODO: Fixed Rotate but remove if lag.
+        //TODO: Fixed Rotate, but remove if lag.
     }
     #endregion
 }

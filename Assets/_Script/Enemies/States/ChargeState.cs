@@ -15,7 +15,7 @@ public class ChargeState : State
 
     private float startTime;
     private bool firstCharge;
-    public ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData) : base(entity, stateMachine, animBoolName)
+    public ChargeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData) : base(entity, stateMachine, animBoolName)
     {
         firstCharge = true;
         this.stateData = stateData;

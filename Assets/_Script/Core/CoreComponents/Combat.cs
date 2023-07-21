@@ -33,9 +33,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     private bool isKnockbackActive;
     private float knockbackStartTime;
 
-
     private float knockStrengthDelta = 0f;
-    private int knockBackDirection = 0;
     private Vector2 knockbackAngleDelta = Vector2.zero;
     private Vector2 workspace = Vector2.zero;
     private void Start()
@@ -76,6 +74,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         {
             dir = -1;
             knockStrengthDelta *= 1;
+
         }
         else
         {
@@ -133,6 +132,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
             DecreaseHealth(damageAmount);
+
+            particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         else if (PerfectBlock)
         {
@@ -141,10 +142,14 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         else if(NormalBlock)
         {
             DecreaseHealth(damageAmount * blockDamageMultiplier);
+
+            particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         else
         {
             DecreaseHealth(damageAmount);
+
+            particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         OnDamaged?.Invoke();
     }
@@ -157,6 +162,12 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             healthDelta += damageAmount;
             return;
         }
+
+        if(damageAmount == 0f)
+        {
+            return;
+        }
+
         stats.Health.Decrease(damageAmount);
         particleManager.StartParticlesWithRandomRotation(damageParticles);
     }

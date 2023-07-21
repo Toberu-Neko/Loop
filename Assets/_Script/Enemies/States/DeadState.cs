@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeadState : State
 {
     protected S_EnemyDeadState stateData;
-    public DeadState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyDeadState stateData) : base(entity, stateMachine, animBoolName)
+    public DeadState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyDeadState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

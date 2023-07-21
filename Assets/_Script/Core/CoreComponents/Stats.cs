@@ -50,6 +50,10 @@ public class Stats : CoreComponent
     }
     private void Update()
     {
+        if (IsTimeStopped)
+        {
+            lastCombatTime += Time.deltaTime;
+        }
         if(InCombat && Time.time >= lastCombatTime + combatTimer)
         {
             InCombat = false;

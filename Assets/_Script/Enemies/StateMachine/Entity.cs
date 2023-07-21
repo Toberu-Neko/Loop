@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour
 {
     [SerializeField] private Transform playerCheck;
 
-    public FiniteStateMachine StateMachine { get; private set; }
+    public EnemyStateMachine StateMachine { get; private set; }
     [SerializeField] private D_Entity EntityData;
 
     public Core Core { get; private set; }
@@ -34,7 +34,27 @@ public class Entity : MonoBehaviour
         collisionAttackDetails = EntityData.collisionAttackDetails;
 
         StateMachine = new();
+        stats.OnTimeStop += HandleOnTimeStop;
+        stats.OnTimeStart += HandleOnTimeStart;
     }
+    protected virtual void OnDisable()
+    {
+        stats.OnTimeStop -= HandleOnTimeStop;
+        stats.OnTimeStart -= HandleOnTimeStart;
+    }
+
+    private void HandleOnTimeStop()
+    {
+        Anim.enabled = false;
+        StateMachine.SetCanChangeState(false);
+    }
+
+    private void HandleOnTimeStart()
+    {
+        Anim.enabled = true;
+        StateMachine.SetCanChangeState(true);
+    }
+
     public virtual void Update()
     {
         Core.LogicUpdate();

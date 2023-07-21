@@ -5,7 +5,7 @@ using UnityEngine;
 public class E3_ChargeState : ChargeState
 {
     private Enemy3 enemy;
-    public E3_ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E3_ChargeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

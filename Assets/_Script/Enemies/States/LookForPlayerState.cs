@@ -16,7 +16,7 @@ public class LookForPlayerState : State
     protected int amountOfTurnsDone;
 
 
-    public LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData) : base(entity, stateMachine, animBoolName)
+    public LookForPlayerState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
@@ -51,7 +51,12 @@ public class LookForPlayerState : State
 
         Movement.SetVelocityX(0f);
 
-        if (turnImmediately)
+        if (Stats.IsTimeStopped)
+        {
+            lastTurnTime += Time.deltaTime;
+        }
+
+        if (turnImmediately && !Stats.IsTimeStopped)
         {
             Movement.Flip();
             lastTurnTime = Time.time;
@@ -75,12 +80,6 @@ public class LookForPlayerState : State
             isAllTurnsTimeDone = true;
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
     public void SetTurnImmediately(bool flip)
     {
         turnImmediately = flip;

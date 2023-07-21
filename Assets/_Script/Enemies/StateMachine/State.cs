@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class State
 {
-    protected FiniteStateMachine stateMachine;
+    protected EnemyStateMachine stateMachine;
     protected Entity entity;
     protected Core core;
 
@@ -26,7 +26,7 @@ public class State
     private Movement movement;
 
 
-    public State(Entity entity, FiniteStateMachine stateMachine, string animBoolName)
+    public State(Entity entity, EnemyStateMachine stateMachine, string animBoolName)
     {
         this.entity = entity;
         this.stateMachine = stateMachine;
@@ -50,7 +50,15 @@ public class State
         isAnimationFinished = true;
     }
 
-    public virtual void LogicUpdate(){ }
+    public virtual void LogicUpdate()
+    {
+        if (Stats.IsTimeStopped)
+        {
+            StartTime += Time.deltaTime;
+            Movement.SetVelocityZero();
+            return;
+        }
+    }
     public virtual void PhysicsUpdate(){ }
     public virtual void DoChecks(){ }
     public virtual void AnimationActionTrigger() { }

@@ -6,7 +6,7 @@ public class E3_LookForPlayerState : LookForPlayerState
 {
     private Enemy3 enemy;
 
-    public E3_LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E3_LookForPlayerState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

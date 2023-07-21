@@ -15,7 +15,7 @@ public class StunState : State
     protected bool isPlayerInMaxAgroRange;
 
 
-    public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyStunState stateData) : base(entity, stateMachine, animBoolName)
+    public StunState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyStunState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

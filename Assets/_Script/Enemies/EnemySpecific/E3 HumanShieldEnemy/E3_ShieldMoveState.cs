@@ -5,7 +5,7 @@ using UnityEngine;
 public class E3_ShieldMoveState : ShieldMoveState
 {
     private Enemy3 enemy;
-    public E3_ShieldMoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, S_EnemyShieldMoveState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E3_ShieldMoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyShieldMoveState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

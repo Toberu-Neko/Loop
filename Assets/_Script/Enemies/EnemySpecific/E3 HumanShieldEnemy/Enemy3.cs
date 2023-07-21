@@ -57,17 +57,14 @@ public class Enemy3 : Entity
         stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+
         stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
 
-    private void OnDestroy()
-    {
-        stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
-        stats.Health.OnCurrentValueZero -= HandleHealthZero;
-    }
     private void HandlePoiseZero()
     {
         if (stats.Health.CurrentValue <= 0)
