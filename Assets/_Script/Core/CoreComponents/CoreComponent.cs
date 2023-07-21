@@ -19,4 +19,8 @@ public class CoreComponent : MonoBehaviour, ILogicUpdate
     public virtual void LogicUpdate()
     {
     }
+
+    public virtual void LateLogicUpdate()
+    {
+    }
 }

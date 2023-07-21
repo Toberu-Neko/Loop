@@ -4,27 +4,22 @@ using UnityEngine;
 
 public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamageable
 {
-    [SerializeField] private GameObject damageParticles;
-    [SerializeField] private float blockDamageMultiplier = 0.5f;
-    [SerializeField] private float blockStaminaMultiplier = 0.5f;
+    private GameObject damageParticles;
+    private float blockDamageMultiplier = 0.5f;
+    private float blockStaminaMultiplier = 0.5f;
 
-    [SerializeField] private float maxKnockbackTime = 0.2f;
-    [SerializeField] private Vector2 normalBlockKnockbakDirection = new(1, 0.25f);
-    [SerializeField] private float normalBlockKnockbakMultiplier = 0.75f;
-
-    public event Action OnPerfectBlock;
-    public event Action OnDamaged;
-    public event Action OnKnockback;
-    public event Action OnStaminaDamaged;
+    private float maxKnockbackTime = 0.2f;
+    private Vector2 normalBlockKnockbakDirection = new(1, 0.25f);
+    private float normalBlockKnockbakMultiplier = 0.75f;
 
     public List<IDamageable> DetectedDamageables { get; private set; } = new();
     public List<IKnockbackable> DetectedKnockbackables { get; private set; } = new();
     public List<IStaminaDamageable> DetectedStaminaDamageables { get; private set; } = new();
 
     public bool PerfectBlock { get; private set; }
-    public bool NormalBlock { get; private set; }
+    private bool normalBlock;
 
-    private bool damagedThisFrame = false;
+    //Core
     // private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
     private CollisionSenses collisionSenses;
@@ -33,8 +28,15 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     private bool isKnockbackActive;
     private float knockbackStartTime;
+    private bool damagedThisFrame = false;
 
+    // events
+    public event Action OnPerfectBlock;
+    public event Action OnDamaged;
+    public event Action OnKnockback;
+    public event Action OnStaminaDamaged;
 
+    // time
     private float staminaDelta = 0f;
     private float healthDelta = 0f;
     private float knockStrengthDelta = 0f;
@@ -68,10 +70,15 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     public override void LogicUpdate()
     {
+        base.LogicUpdate();
+
         CheckKnockback();
     }
-    private void LateUpdate()
+
+    public override void LateLogicUpdate()
     {
+        base.LateLogicUpdate();
+
         if (damagedThisFrame)
         {
             stats.SetInvincibleTrueAfterDamaged();
@@ -79,7 +86,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
     }
 
-
+    #region Event Handlers
     private void HandleStartTime()
     {
         DecreaseHealth(healthDelta);
@@ -116,6 +123,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         stats.HandleOnDamaged();
         damagedThisFrame = true;
     }
+    #endregion
 
     #region Stamina
     public void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable)
@@ -132,7 +140,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         {
             OnPerfectBlock?.Invoke();
         }
-        else if (NormalBlock)
+        else if (normalBlock)
         {
             DecreaseStamina(damageAmount * blockStaminaMultiplier);
         }
@@ -171,7 +179,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         {
             OnPerfectBlock?.Invoke();
         }
-        else if(NormalBlock)
+        else if(normalBlock)
         {
             DecreaseHealth(damageAmount * blockDamageMultiplier);
 
@@ -220,7 +228,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         {
             OnPerfectBlock?.Invoke();
         }
-        else if (NormalBlock)
+        else if (normalBlock)
         {
             HandleKnockback(strength * normalBlockKnockbakMultiplier, normalBlockKnockbakDirection, direction);
         }
@@ -274,8 +282,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     public void SetNormalBlock(bool value)
     {
-        NormalBlock = value;
+        normalBlock = value;
     }
+
     public bool FacingDamgePosition(Vector2 damagePosition)
     {
         int damageDirection;

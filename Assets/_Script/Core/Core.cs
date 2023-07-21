@@ -17,6 +17,14 @@ public class Core : MonoBehaviour
         }
     }
 
+    public void LateLogicUpdate()
+    {
+        foreach (CoreComponent compent in coreComponents)
+        {
+            compent.LateLogicUpdate();
+        }
+    }
+
     public void AddCompent(CoreComponent compent)
     {
         if(!coreComponents.Contains(compent))

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Death : CoreComponent
 {
-    [SerializeField] private GameObject[] deathParticles;
+    private GameObject[] deathParticles;
 
     private Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
     private Stats stats;
@@ -26,6 +26,7 @@ public class Death : CoreComponent
 
     private void OnEnable()
     {
+        //TODO: Modify this if need to go dead state first.
         Stats.Health.OnCurrentValueZero += Die;
     }
 

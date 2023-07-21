@@ -7,24 +7,23 @@ public class Stats : CoreComponent
 {
     [field: SerializeField] public CoreStatSystem Health { get; private set; }
     [field: SerializeField] public CoreStatSystem Stamina { get; private set; }
-    [SerializeField] private float staminaRecoveryRate;
-    [SerializeField] private float perfectBlockAttackDuration;
-    [SerializeField] private float invincibleDurationAfterDamaged;
+
+    private float staminaRecoveryRate;
+    private float perfectBlockAttackDuration;
+    private float invincibleDurationAfterDamaged;
+    private float combatTimer = 2f;
+    private float lastCombatTime;
 
     public bool PerfectBlockAttackable { get; private set; }
     public bool Invincible { get; private set; } = false;
     public bool IsRewindingPosition { get; private set; } = false;
     public bool IsTimeStopped { get; private set; } = false;
-
     public bool InCombat { get; private set; } = false;
     public bool CanChangeWeapon { get; private set; } = true;
 
-    [SerializeField] private float combatTimer = 2f;
-    private float lastCombatTime;
-    
-
     public event Action OnTimeStop;
     public event Action OnTimeStart;
+
     private void Start()
     {
         Health.MaxValue = core.CoreData.maxHealth;
@@ -36,11 +35,6 @@ public class Stats : CoreComponent
 
         Health.Init();
         Stamina.Init();
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
     }
     private void Update()
     {

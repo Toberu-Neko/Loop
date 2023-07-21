@@ -134,6 +134,11 @@ public class Player : MonoBehaviour
         StateMachine.CurrentState.PhysicsUpdate();
     }
 
+    private void LateUpdate()
+    {
+        
+    }
+
     #endregion
 
     #region Other Functions
