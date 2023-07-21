@@ -24,6 +24,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public bool PerfectBlock { get; private set; }
     public bool NormalBlock { get; private set; }
 
+    private bool damagedThisFrame = false;
     // private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
     private CollisionSenses collisionSenses;
@@ -33,9 +34,13 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     private bool isKnockbackActive;
     private float knockbackStartTime;
 
+
+    private float staminaDelta = 0f;
+    private float healthDelta = 0f;
     private float knockStrengthDelta = 0f;
     private Vector2 knockbackAngleDelta = Vector2.zero;
     private Vector2 workspace = Vector2.zero;
+
     private void Start()
     {
         stats = core.GetCoreComponent<Stats>();
@@ -51,16 +56,30 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         normalBlockKnockbakMultiplier = core.CoreData.normalBlockKnockbakMultiplier;
 
         stats.OnTimeStart += HandleStartTime;
+        OnPerfectBlock += HandlePerfectBlock;
+        OnDamaged += HandleOnDamaged;
     }
     private void OnDisable()
     {
         stats.OnTimeStart -= HandleStartTime;
+        OnPerfectBlock -= HandlePerfectBlock;
+        OnDamaged -= HandleOnDamaged;
     }
 
     public override void LogicUpdate()
     {
         CheckKnockback();
     }
+    private void LateUpdate()
+    {
+        if (damagedThisFrame)
+        {
+            stats.SetInvincibleTrueAfterDamaged();
+            damagedThisFrame = false;
+        }
+    }
+
+
     private void HandleStartTime()
     {
         DecreaseHealth(healthDelta);
@@ -87,8 +106,18 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         knockbackAngleDelta = Vector2.zero;
     }
 
-    private float staminaDelta = 0f;
+    private void HandlePerfectBlock()
+    {
+        stats.SetPerfectBlockAttackTrue();
+    }
 
+    private void HandleOnDamaged()
+    {
+        stats.HandleOnDamaged();
+        damagedThisFrame = true;
+    }
+
+    #region Stamina
     public void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
         if (stats.Invincible || !stats.Stamina.decreaseable)
@@ -122,6 +151,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
         stats.Stamina.Decrease(amount);
     }
+    #endregion
+
+    #region Damage
 
     public void Damage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
@@ -154,7 +186,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         OnDamaged?.Invoke();
     }
 
-    private float healthDelta = 0f;
     private void DecreaseHealth(float damageAmount)
     {
         if (stats.IsTimeStopped)
@@ -171,6 +202,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         stats.Health.Decrease(damageAmount);
         particleManager.StartParticlesWithRandomRotation(damageParticles);
     }
+    #endregion
+
+    #region Knockback
 
     public void Knockback(Vector2 angle, float strength, int direction, Vector2 damagePosition, bool blockable = true)
     {
@@ -196,7 +230,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
         OnKnockback?.Invoke();
     }
-
 
     private void HandleKnockback(float strength, Vector2 angle, int direction)
     {
@@ -231,6 +264,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             isKnockbackActive = false;
         }
     }
+    #endregion
 
     #region Block
     public void SetPerfectBlock(bool value)

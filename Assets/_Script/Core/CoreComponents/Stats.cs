@@ -19,13 +19,9 @@ public class Stats : CoreComponent
     public bool InCombat { get; private set; } = false;
     public bool CanChangeWeapon { get; private set; } = true;
 
-    private Combat combat;
     [SerializeField] private float combatTimer = 2f;
     private float lastCombatTime;
-    private bool damagedThisFrame = false;
     
-    private bool staminaDamagedThisFrame = false;
-    private bool knockbackedThisFrame = false;
 
     public event Action OnTimeStop;
     public event Action OnTimeStart;
@@ -45,8 +41,6 @@ public class Stats : CoreComponent
     protected override void Awake()
     {
         base.Awake();
-
-        combat = core.GetCoreComponent<Combat>();
     }
     private void Update()
     {
@@ -64,41 +58,14 @@ public class Stats : CoreComponent
             Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
         }
     }
-    private void LateUpdate()
-    {
-        if (damagedThisFrame)
-        {
-            SetInvincibleTrueAfterDamaged();
-            damagedThisFrame = false;
-            knockbackedThisFrame = false;
-            staminaDamagedThisFrame = false;
-        }
-    }
     private void OnEnable()
     {
-        combat.OnPerfectBlock += SetPerfectBlockAttackTrue;
-        combat.OnDamaged += HandleOnDamaged;
         Stamina.OnCurrentValueZero += HandlePoiseZero;
-
-        combat.OnDamaged += () => damagedThisFrame = true;
-        combat.OnKnockback += () => knockbackedThisFrame = true;
-        combat.OnStaminaDamaged += () => staminaDamagedThisFrame = true;
     }
 
     private void OnDisable()
     {
-        combat.OnPerfectBlock -= SetPerfectBlockAttackTrue;
-        combat.OnDamaged -= HandleOnDamaged;
         Stamina.OnCurrentValueZero -= HandlePoiseZero;
-
-        combat.OnDamaged -= () => damagedThisFrame = true;
-        combat.OnKnockback -= () => knockbackedThisFrame = true;
-        combat.OnStaminaDamaged -= () => staminaDamagedThisFrame = true;
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
     }
 
     public void SetPerfectBlockAttackTrue()
@@ -130,7 +97,7 @@ public class Stats : CoreComponent
         Physics2D.IgnoreLayerCollision(7, 13, false);
     }
 
-    private void SetInvincibleTrueAfterDamaged()
+    public void SetInvincibleTrueAfterDamaged()
     {
         SetInvincibleTrue();
         CancelInvoke(nameof(SetInvincibleFalse));
@@ -140,7 +107,7 @@ public class Stats : CoreComponent
 
     public void SetCanChangeWeapon(bool volume) => CanChangeWeapon = volume;
 
-    private void HandleOnDamaged()
+    public void HandleOnDamaged()
     {
         InCombat = true;
         lastCombatTime = Time.time;
