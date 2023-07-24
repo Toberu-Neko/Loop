@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeStop : CoreComponent
+public class TimeStop : CoreComponent, ITimeStopable
 {
     private Stats stats;
 
@@ -10,8 +10,8 @@ public class TimeStop : CoreComponent
     {
         stats = core.GetCoreComponent<Stats>();
 
-        GameManager.Instance.OnTimeStopEnemy += HandleTimeStop;
-        GameManager.Instance.OnTimeStartEnemy += HandleTimeStart;
+        GameManager.Instance.OnAllTimeStopEnemy += HandleTimeStop;
+        GameManager.Instance.OnAllTimeStartEnemy += HandleTimeStart;
     }
 
     private void HandleTimeStop()

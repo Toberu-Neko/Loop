@@ -14,6 +14,8 @@ public class Movement : CoreComponent
     private float orginalGrag;
     private float orginalGravityScale;
 
+    public Slope Slope { get; set; } = new();
+
     public Vector2 CurrentVelocity { get; private set; }
     private Transform parentTransform;
 
@@ -73,9 +75,9 @@ public class Movement : CoreComponent
     {
         velocityWorkspace.Set(velocity, CurrentVelocity.y);
 
-        if (CollisionSenses.Slope.IsOnSlope && !ignoreSlope)
+        if (Slope.IsOnSlope && !ignoreSlope)
         {
-            SetVelocity(velocity, -CollisionSenses.Slope.NormalPrep);
+            SetVelocity(velocity, -Slope.NormalPrep);
             return;
         }
 
@@ -105,7 +107,7 @@ public class Movement : CoreComponent
         }
         if (CanSetVelocity)
         {
-            if(velocityWorkspace == Vector2.zero && RB.sharedMaterial != core.CoreData.fullFrictionMaterial && CollisionSenses.Slope.IsOnSlope)
+            if(velocityWorkspace == Vector2.zero && RB.sharedMaterial != core.CoreData.fullFrictionMaterial && Slope.IsOnSlope)
             {
                 RB.sharedMaterial = core.CoreData.fullFrictionMaterial;
             }

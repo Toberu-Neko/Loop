@@ -73,6 +73,13 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private LayerMask whatIsPlatform;
 
     private Slope slope = new();
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        Movement.Slope = Slope;
+    }
     public bool SolidCeiling 
     {
         get => Physics2D.BoxCast(CeilingCheck.position, ceilingCheckV2, 0f, Vector2.up, 0.1f, whatIsGround - whatIsPlatform);
@@ -178,16 +185,12 @@ public class Slope
     public bool IsOnSlope { get; private set; }
     public float SideAngle { get; private set; }
 
-    public Slope(Vector2 slopeNormal, float downAngle)
-    {
-        NormalPrep = slopeNormal;
-        DownAngle = downAngle;
-    }
-
     public Slope()
     {
         NormalPrep = Vector2.zero;
+        SideAngle= 0f;
         DownAngle = 0f;
+        IsOnSlope = false;
     }
 
     public void SetSideAngle(float angle)
