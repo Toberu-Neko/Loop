@@ -62,6 +62,10 @@ public class Entity : MonoBehaviour
 
         Anim.SetFloat("yVelocity", movement.RB.velocity.y);
     }
+    private void LateUpdate()
+    {
+        Core.LateLogicUpdate();
+    }
     public virtual void FixedUpdate()
     {
         StateMachine.CurrentState.DoChecks();

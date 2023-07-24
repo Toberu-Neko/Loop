@@ -26,6 +26,7 @@ public class Stats : CoreComponent
 
     private void Start()
     {
+
         Health.MaxValue = core.CoreData.maxHealth;
         Stamina.MaxValue = core.CoreData.maxStamina;
         staminaRecoveryRate = core.CoreData.staminaRecoveryRate;

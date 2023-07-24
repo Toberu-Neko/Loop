@@ -1,48 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class E2_Projectile : MonoBehaviour
 {
-    [SerializeField] private float damageAmount;
+
+    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private LayerMask whatIsPlayer;
+    [SerializeField] private float damageRadius;
+    [SerializeField] private Transform damagePosition;
+    [SerializeField] private Collider2D col;
+    [SerializeField] private Core core;
 
     private float travelDistance;
     private float xStartPosition;
     private int facingDirection;
-
-    [SerializeField] private float gravity;
-    [SerializeField] private float damageRadius;
-
     private bool isGravityOn;
     private bool hasHitGround;
 
-    private Rigidbody2D rb;
-    [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private LayerMask whatIsPlayer;
-    [SerializeField] private Transform damagePosition;
-
-    ProjectileDetails details;
-
+    private ProjectileDetails details;
+    private Movement movement;
+    private Stats stats;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        movement = core.GetCoreComponent<Movement>();
+        stats = core.GetCoreComponent<Stats>();
+
+        col.enabled = false;
     }
     private void Start()
     {
-        rb.gravityScale = 0f;
-        rb.velocity = transform.right * details.speed;
+        movement.SetGravityZero();
+        movement.SetVelocity(details.speed, transform.right);
 
         isGravityOn = false;
-
         xStartPosition = transform.position.x;
     }
     private void Update()
     {
+        core.LogicUpdate();
+
         if (!hasHitGround)
         {
-            if (isGravityOn)
+            if (isGravityOn && !stats.IsTimeStopped)
             {
-                float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+                float angle = Mathf.Atan2(movement.CurrentVelocity.y, movement.CurrentVelocity.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
@@ -76,17 +76,16 @@ public class E2_Projectile : MonoBehaviour
             if (groundHit)
             {
                 hasHitGround = true;
-                rb.gravityScale = 0f;
-                rb.velocity = Vector2.zero;
+                movement.SetGravityZero();
+                movement.SetVelocityZero();
 
                 Destroy(gameObject, 5f);
-
             }
 
             if (Mathf.Abs(xStartPosition - transform.position.x) >= travelDistance && !isGravityOn)
             {
                 isGravityOn = true;
-                rb.gravityScale = gravity;
+                movement.SetGravityOrginal();
             }
         }
     }
@@ -95,6 +94,7 @@ public class E2_Projectile : MonoBehaviour
     {
         this.details = details;
         this.travelDistance = travelDistance;
+        this.facingDirection = facingDirection;
     }
 
     private void OnDrawGizmos()

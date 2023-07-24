@@ -11,22 +11,19 @@ public class Movement : CoreComponent
 
     public bool CanSetVelocity { get; set; }
 
-    private float orginalGrag;
-    private float orginalGravityScale;
-
-    public Slope Slope { get; set; } = new();
 
     public Vector2 CurrentVelocity { get; private set; }
     private Transform parentTransform;
+    public Slope Slope { get; set; } = new();
 
     private Vector2 velocityWorkspace;
+    private Vector2 timeStopVelocity;
+    private float orginalGrag;
+    private float orginalGravityScale;
 
     public event Action OnFlip;
 
     private Stats stats;
-
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
 
     protected override void Awake()
     {
@@ -41,6 +38,28 @@ public class Movement : CoreComponent
 
         FacingDirection = 1;
         CanSetVelocity = true;
+        stats.OnTimeStart += HandleTimeStart;
+        stats.OnTimeStop += HandleTimeStop;
+    }
+
+    private void HandleTimeStop()
+    {
+        CurrentVelocity = RB.velocity;
+        timeStopVelocity = CurrentVelocity;
+        RB.isKinematic = true;
+        SetVelocityZero();
+    }
+
+    private void HandleTimeStart()
+    {
+        RB.isKinematic = false;
+        SetVelocity(timeStopVelocity);
+    }
+
+    private void OnDisable()
+    {
+        stats.OnTimeStart -= HandleTimeStart;
+        stats.OnTimeStop -= HandleTimeStop;
     }
 
     public override void LogicUpdate()
@@ -52,8 +71,7 @@ public class Movement : CoreComponent
 
     public void SetPosition(Vector2 position, Quaternion rotation, int facingDirection)
     {
-        parentTransform.position = position;
-        parentTransform.rotation = rotation;
+        parentTransform.SetPositionAndRotation(position, rotation);
         FacingDirection = facingDirection;
     }
 
@@ -68,6 +86,13 @@ public class Movement : CoreComponent
     public void SetVelocity(float velocity, Vector2 direction)
     {
         velocityWorkspace = direction * velocity;
+
+        SetFinalVelocity();
+    }
+
+    private void SetVelocity(Vector2 VectorVelocity)
+    {
+        velocityWorkspace = VectorVelocity;
 
         SetFinalVelocity();
     }

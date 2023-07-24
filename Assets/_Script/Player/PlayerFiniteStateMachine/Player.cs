@@ -136,7 +136,7 @@ public class Player : MonoBehaviour
 
     private void LateUpdate()
     {
-        
+        Core.LateLogicUpdate();
     }
 
     #endregion
