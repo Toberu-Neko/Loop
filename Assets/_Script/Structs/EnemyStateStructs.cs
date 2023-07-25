@@ -59,6 +59,7 @@ public struct S_EnemyMeleeAttackState
     [Tooltip("À»°h¨¤«×")]
     public Vector2 knockbackAngle;
     [Tooltip("À»°h¤O¹D")]
+    [Range(8, 50)]
     public float knockbackStrength;
 }
 

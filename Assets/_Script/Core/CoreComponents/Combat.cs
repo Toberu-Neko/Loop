@@ -72,7 +72,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     {
         base.LogicUpdate();
 
-        CheckKnockback();
+        if(isKnockbackActive)
+            CheckKnockback();
     }
 
     public override void LateLogicUpdate()
@@ -216,6 +217,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     public void Knockback(Vector2 angle, float strength, int direction, Vector2 damagePosition, bool blockable = true)
     {
+        angle = angle.normalized;
         if (stats.Invincible)
         {
             return;

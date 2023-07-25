@@ -188,5 +188,10 @@ public class Movement : CoreComponent
         OnFlip?.Invoke();
         //TODO: Fixed Rotate, but remove if lag.
     }
+
+    public void Turn()
+    {
+        RB.transform.eulerAngles *= -1; 
+    }
     #endregion
 }

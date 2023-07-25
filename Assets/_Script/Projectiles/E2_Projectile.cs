@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class E2_Projectile : MonoBehaviour, IKnockbackable
 {
-
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private float damageRadius;
@@ -16,6 +15,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
     private bool isGravityOn;
     private bool hasHitGround;
     private bool countered;
+    private bool damaged = false;
 
     private ProjectileDetails details;
     private Movement movement;
@@ -27,6 +27,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
         stats = core.GetCoreComponent<Stats>();
 
         countered = false;
+        damaged = false;
     }
     private void Start()
     {
@@ -48,26 +49,28 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
+
     }
 
     private void FixedUpdate()
     {
+
         if (!hasHitGround)
         {
-            Collider2D damageHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsPlayer);
+            /* Collider2D damageHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsPlayer);
             Collider2D groundHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsGround);
 
             if (damageHit)
             {
-                if(damageHit.TryGetComponent(out IDamageable damageable))
+                if (damageHit.TryGetComponent(out IDamageable damageable))
                 {
                     damageable.Damage(details.damageAmount, transform.position);
                 }
-                if(damageHit.TryGetComponent(out IKnockbackable knockbackable))
+                if (damageHit.TryGetComponent(out IKnockbackable knockbackable))
                 {
                     knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, facingDirection, transform.position);
                 }
-                if(damageHit.TryGetComponent(out IStaminaDamageable staminaDamageable))
+                if (damageHit.TryGetComponent(out IStaminaDamageable staminaDamageable))
                 {
                     staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
                 }
@@ -75,14 +78,14 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
                 Destroy(gameObject);
             }
 
-            if (groundHit)
+           if (groundHit)
             {
                 hasHitGround = true;
                 movement.SetGravityZero();
                 movement.SetVelocityZero();
 
                 Destroy(gameObject, 5f);
-            }
+            }*/
 
             if (Mathf.Abs(xStartPosition - transform.position.x) >= travelDistance && !isGravityOn)
             {
@@ -109,11 +112,55 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
     {
         if (stats.IsTimeStopped && !countered)
         {
+            Debug.Log("counter");
             countered = true;
+            gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             whatIsPlayer = LayerMask.GetMask("Damageable");
-            movement.SetTimeStopVelocity(movement.TimeStopVelocity * -5f);
-            facingDirection = direction;
             xStartPosition = transform.position.x;
+
+            if (facingDirection != direction)
+            {
+                movement.SetTimeStopVelocity(movement.TimeStopVelocity * -4f);
+                facingDirection = direction;
+                movement.Turn();
+            }
+            else
+            {
+                movement.SetTimeStopVelocity(movement.TimeStopVelocity * 4f);
+            }
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
+        {
+            Debug.Log(collision.gameObject.layer + " Ground");
+            hasHitGround = true;
+            movement.SetGravityZero();
+            movement.SetVelocityZero();
+
+            Destroy(gameObject, 5f);
+        }
+        if (((1 << collision.gameObject.layer) & whatIsPlayer) != 0 && !hasHitGround && !damaged)
+        {
+            damaged = true;
+            if (collision.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.Damage(details.damageAmount, transform.position);
+            }
+            if (collision.TryGetComponent(out IKnockbackable knockbackable))
+            {
+                knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, facingDirection, transform.position);
+            }
+            if (collision.TryGetComponent(out IStaminaDamageable staminaDamageable))
+            {
+                staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
+            }
+
+            Destroy(gameObject);
+        }
+    } 
 }
+
