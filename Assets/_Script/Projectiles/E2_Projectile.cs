@@ -112,7 +112,6 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
     {
         if (stats.IsTimeStopped && !countered)
         {
-            Debug.Log("counter");
             countered = true;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             whatIsPlayer = LayerMask.GetMask("Damageable");
@@ -122,7 +121,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
             {
                 movement.SetTimeStopVelocity(movement.TimeStopVelocity * -4f);
                 facingDirection = direction;
-                movement.Turn();
+                // movement.Turn();
             }
             else
             {
@@ -134,15 +133,6 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
-        {
-            Debug.Log(collision.gameObject.layer + " Ground");
-            hasHitGround = true;
-            movement.SetGravityZero();
-            movement.SetVelocityZero();
-
-            Destroy(gameObject, 5f);
-        }
         if (((1 << collision.gameObject.layer) & whatIsPlayer) != 0 && !hasHitGround && !damaged)
         {
             damaged = true;
@@ -161,6 +151,16 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 
             Destroy(gameObject);
         }
+
+        if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
+        {
+            hasHitGround = true;
+            movement.SetGravityZero();
+            movement.SetVelocityZero();
+
+            Destroy(gameObject, 5f);
+        }
+        
     } 
 }
 
