@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 8389792333474829003}
   - component: {fileID: 8389792333474828598}
   - component: {fileID: 7924324024540842114}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,15 +264,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f336ac897be4bbd4883b777bba68a4c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 0
-  gravity: 3
-  damageRadius: 0.15
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
+  damageRadius: 0.15
   damagePosition: {fileID: 8389792333630829836}
   col: {fileID: 7924324024540842114}
   core: {fileID: 3049410540354384412}
@@ -305,7 +303,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.031975448}

@@ -38,8 +38,6 @@ public struct S_EnemyRangedAttackState
     public float projectileTravelDistance;
     [Tooltip("投擲物件到被刪除為止的持續時間")]
     public float projectileLifeTime;
-    [Tooltip("投擲物件的重力")]
-    public float projectileGravityScale;
     [Tooltip("弓箭的頭的碰撞區域大小")]
     public float rangedAttackRadius;
 }

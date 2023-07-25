@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class E2_Projectile : MonoBehaviour
+public class E2_Projectile : MonoBehaviour, IKnockbackable
 {
 
     [SerializeField] private LayerMask whatIsGround;
@@ -15,16 +15,18 @@ public class E2_Projectile : MonoBehaviour
     private int facingDirection;
     private bool isGravityOn;
     private bool hasHitGround;
+    private bool countered;
 
     private ProjectileDetails details;
     private Movement movement;
     private Stats stats;
+
     private void Awake()
     {
         movement = core.GetCoreComponent<Movement>();
         stats = core.GetCoreComponent<Stats>();
 
-        col.enabled = false;
+        countered = false;
     }
     private void Start()
     {
@@ -69,7 +71,7 @@ public class E2_Projectile : MonoBehaviour
                 {
                     staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
                 }
-                
+
                 Destroy(gameObject);
             }
 
@@ -101,5 +103,17 @@ public class E2_Projectile : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(damagePosition.position, damageRadius);
+    }
+
+    public void Knockback(Vector2 angle, float force, int direction, Vector2 damagePosition, bool blockable = true)
+    {
+        if (stats.IsTimeStopped && !countered)
+        {
+            countered = true;
+            whatIsPlayer = LayerMask.GetMask("Damageable");
+            movement.SetTimeStopVelocity(movement.TimeStopVelocity * -5f);
+            facingDirection = direction;
+            xStartPosition = transform.position.x;
+        }
     }
 }

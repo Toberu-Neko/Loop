@@ -17,7 +17,7 @@ public class Movement : CoreComponent
     public Slope Slope { get; set; } = new();
 
     private Vector2 velocityWorkspace;
-    private Vector2 timeStopVelocity;
+    public Vector2 TimeStopVelocity { get; private set; }
     private float orginalGrag;
     private float orginalGravityScale;
 
@@ -45,7 +45,7 @@ public class Movement : CoreComponent
     private void HandleTimeStop()
     {
         CurrentVelocity = RB.velocity;
-        timeStopVelocity = CurrentVelocity;
+        TimeStopVelocity = CurrentVelocity;
         RB.isKinematic = true;
         SetVelocityZero();
     }
@@ -53,7 +53,12 @@ public class Movement : CoreComponent
     private void HandleTimeStart()
     {
         RB.isKinematic = false;
-        SetVelocity(timeStopVelocity);
+        SetVelocity(TimeStopVelocity);
+    }
+    
+    public void SetTimeStopVelocity(Vector2 value)
+    {
+        TimeStopVelocity = value;
     }
 
     private void OnDisable()

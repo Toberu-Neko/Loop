@@ -33,14 +33,12 @@ MonoBehaviour:
     projectileDetails:
       damageAmount: 10
       staminaDamageAmount: 2
-      speed: 12
+      speed: 20
       duration: 0
-      knockbackAngle: {x: 2, y: 1}
       knockbackStrength: 10
+      knockbackAngle: {x: 2, y: 1}
     projectileTravelDistance: 8
     projectileLifeTime: 5
-    projectileGravityScale: 0.2
-    timeBetweenProjectiles: 0.5
     rangedAttackRadius: 0.5
   meleeAttackStateData:
     whatIsPlayer:
@@ -54,7 +52,6 @@ MonoBehaviour:
     knockbackStrength: 10
   stunStateData:
     stunTime: 3
-    stunKnockbackTime: 0.2
     stunKnockbackSpeed: 8
     stunKnockbackAngle: {x: 1, y: 1}
   deadStateData:
@@ -62,6 +59,5 @@ MonoBehaviour:
     deathBloodParticle: {fileID: 2615349222246815121, guid: db18ab1de83847b4fa75fa59ee0730ce, type: 3}
   dodgeStateData:
     dodgeSpeed: 15
-    dodgeTime: 0.2
     dodgeCooldown: 2
     dodgeAngle: {x: 1, y: 1}
