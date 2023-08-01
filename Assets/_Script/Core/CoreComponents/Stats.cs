@@ -20,6 +20,7 @@ public class Stats : CoreComponent
     public bool IsTimeStopped { get; private set; } = false;
     public bool InCombat { get; private set; } = false;
     public bool CanChangeWeapon { get; private set; } = true;
+    public bool Attackable { get; private set; } = true;
 
     public event Action OnTimeStop;
     public event Action OnTimeStart;
@@ -129,4 +130,6 @@ public class Stats : CoreComponent
         IsTimeStopped = false;
         OnTimeStart?.Invoke();
     }
+
+    public void SetAttackable(bool volume) => Attackable = volume;
 }

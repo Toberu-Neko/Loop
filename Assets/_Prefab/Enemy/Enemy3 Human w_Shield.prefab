@@ -415,50 +415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aeab4ff0149cfa42aeec3f5dbc64134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5376142613727895581
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2834595540176974375}
-  - component: {fileID: 828713972261564434}
-  m_Layer: 11
-  m_Name: TimeStop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2834595540176974375
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5376142613727895581}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 638892564614473506}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &828713972261564434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5376142613727895581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f42922a1b7f75c47bae17fb68c92613, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5590318951167248324
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,10 +466,6 @@ MonoBehaviour:
   <Stamina>k__BackingField:
     <MaxValue>k__BackingField: 30
     decreaseable: 1
-  staminaRecoveryRate: 3
-  perfectBlockAttackDuration: 0
-  invincibleDurationAfterDamaged: 0.2
-  combatTimer: 4
 --- !u!1 &5936803207241525480
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,6 +477,7 @@ GameObject:
   - component: {fileID: 4726711956072997641}
   - component: {fileID: 552202899349899096}
   - component: {fileID: 4212355259334738103}
+  - component: {fileID: 2387319854377299400}
   m_Layer: 11
   m_Name: Combat
   m_TagString: Untagged
@@ -604,12 +557,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa1d21cd18dc704bb3f108543735945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageParticles: {fileID: 7655857405548607486, guid: cab4e4cffe5ed9f4e9ae0b8f7f235a48, type: 3}
-  blockDamageMultiplier: 0.8
-  blockStaminaMultiplier: 0.5
-  maxKnockbackTime: 0.2
-  normalBlockKnockbakDirection: {x: 0, y: 0}
-  normalBlockKnockbakMultiplier: 0
+--- !u!114 &2387319854377299400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936803207241525480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f42922a1b7f75c47bae17fb68c92613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6014013207449841304
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,9 +813,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8087907e9d261a49b8939661e1fc7b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathParticles:
-  - {fileID: 2615349222246815121, guid: db18ab1de83847b4fa75fa59ee0730ce, type: 3}
-  - {fileID: 514008935881032697, guid: 2b7e98a56000226409b0277c751f3f30, type: 3}
 --- !u!1 &6566801363051211149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,7 +983,6 @@ Transform:
   - {fileID: 6634756987873126644}
   - {fileID: 7277863991379026413}
   - {fileID: 3424643076564078165}
-  - {fileID: 2834595540176974375}
   m_Father: {fileID: 6653294008325240741}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

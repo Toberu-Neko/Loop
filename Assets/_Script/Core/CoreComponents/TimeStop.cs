@@ -14,11 +14,24 @@ public class TimeStop : CoreComponent, ITimeStopable
         GameManager.Instance.OnAllTimeStartEnemy += HandleTimeStart;
     }
 
-    private void HandleTimeStop()
+    private void OnDisable()
     {
-        stats.SetIsStoppedTrue();
+        GameManager.Instance.OnAllTimeStopEnemy -= HandleTimeStop;
+        GameManager.Instance.OnAllTimeStartEnemy -= HandleTimeStart;
     }
 
+    public void DoTimeStop(float stopTime)
+    {
+        stats.SetIsStoppedTrue();
+
+        CancelInvoke(nameof(HandleTimeStart));
+        Invoke(nameof(HandleTimeStart), stopTime);
+    }
+
+    private void HandleTimeStop()
+    {
+        stats.SetIsStoppedFalse();
+    }
     private void HandleTimeStart()
     {
         stats.SetIsStoppedFalse();

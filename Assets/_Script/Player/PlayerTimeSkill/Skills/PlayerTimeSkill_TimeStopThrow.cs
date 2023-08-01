@@ -1,0 +1,82 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
+{
+    private bool equipped;
+    private bool throwable;
+    private bool charging;
+    private float throwVelocity;
+    public PlayerTimeSkill_TimeStopThrow(Player player, PlayerTimeSkillManager manager, PlayerTimeSkillStateMachine stateMachine, PlayerTimeSkillData data, string animBoolName) : base(player, manager, stateMachine, data, animBoolName)
+    {
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        equipped = false;
+        throwable = true;
+        charging = false;
+        throwVelocity = data.minThrowVelocity;
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (player.InputHandler.TimeSkillInput && !equipped)
+        {
+            player.InputHandler.UseTimeSkillInput();
+            equipped = true;
+            Debug.Log("Equipped");  
+            Stats.SetAttackable(false);
+        }
+        else if(player.InputHandler.TimeSkillInput && equipped)
+        {
+            UnEquip();
+        }
+
+        if (equipped && throwable && player.InputHandler.AttackInput)
+        {
+            player.InputHandler.UseAttackInput();
+            throwable = false;
+            charging = true;
+        }
+
+        if(charging)
+        {
+            if(throwVelocity < data.maxThrowVelocity)
+            {
+                throwVelocity += data.throwVelocityIncreaseRate * Time.deltaTime;
+            }
+
+            if (!player.InputHandler.HoldAttackInput)
+            {
+                charging = false;
+                UnEquip();
+                HandleObjFlyBack();
+
+                GameObject obj = GameObject.Instantiate(data.timeStopThrowObj, player.transform.position, Quaternion.identity);
+                TimeStopProjectile projectile = obj.GetComponent<TimeStopProjectile>();
+                projectile.Fire(throwVelocity, player.InputHandler.RawMouseDirectionInput, data.throwStopTime);
+
+                throwVelocity = data.minThrowVelocity;
+            }
+        }
+    }
+
+    private void HandleObjFlyBack()
+    {
+        throwable = true;
+    }
+
+    private void UnEquip()
+    {
+        player.InputHandler.UseTimeSkillInput();
+        equipped = false;
+        Debug.Log("Unequipped");
+        Stats.SetAttackable(true);
+    }
+}

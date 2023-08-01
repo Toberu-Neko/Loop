@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using System.Linq;
 
@@ -202,4 +199,5 @@ public class Entity : MonoBehaviour
     }
 
     public void SetSkillCollideDamage(bool value) => SkillCollideDamage = value;
+
 }

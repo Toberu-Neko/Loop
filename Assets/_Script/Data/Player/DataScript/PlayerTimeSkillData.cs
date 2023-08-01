@@ -22,4 +22,11 @@ public class PlayerTimeSkillData : ScriptableObject
     [Header("Time Stop All")]
     [Tooltip("每秒消耗能量")]
     public float timeStopAllCostPerSecond = 20f;
+
+    public float throwVelocityIncreaseRate = 2f;
+    public float throwStopTime = 3f;
+    public float minThrowVelocity = 5f;
+    public float maxThrowVelocity = 20f;
+    public GameObject timeStopThrowObj;
+    public GameObject predictLineObj;
 }

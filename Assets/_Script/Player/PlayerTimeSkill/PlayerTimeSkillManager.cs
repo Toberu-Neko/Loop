@@ -11,7 +11,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
     public PlayerTimeSkill_None SkillNone { get; private set; }
     public PlayerTimeSkill_RewindPlayer SkillRewindPlayer { get; private set; }
     public PlayerTimeSkill_TimeStopAll SkillTimeStopAll { get; private set; }  
-
+    public PlayerTimeSkill_TimeStopThrow SkillTimeStopThrow { get; private set; }
     public PlayerTimeSkill_BookMark SkillBookMark { get; private set; }
 
     public event Action OnStateChanged;
@@ -34,6 +34,8 @@ public class PlayerTimeSkillManager : MonoBehaviour
         SkillRewindPlayer = new(player, this, StateMachine, data, "RewindPlayer");
         SkillBookMark = new(player, this, StateMachine, data, "BookMark");
         SkillTimeStopAll = new(player, this, StateMachine, data, "TimeStopAll");
+        SkillTimeStopThrow = new(player, this, StateMachine, data, "TimeStopThrow");
+
 
         StateMachine.Initialize(SkillNone);
         OnStateChanged?.Invoke();
@@ -77,6 +79,12 @@ public class PlayerTimeSkillManager : MonoBehaviour
     public void ChangeToTimeStopSkill()
     {
         StateMachine.ChangeState(SkillTimeStopAll);
+        OnStateChanged?.Invoke();
+    }
+
+    public void ChangeToTimeStopThrowSkill()
+    {
+        StateMachine.ChangeState(SkillTimeStopThrow);
         OnStateChanged?.Invoke();
     }
 }

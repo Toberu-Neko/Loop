@@ -4,7 +4,5 @@ using UnityEngine;
 
 public interface ITimeStopable
 {
-    public void HandleTimeStop() { }
-
-    public void HandleTimeStart() { }
+    void DoTimeStop(float stopTime);
 }
