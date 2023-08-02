@@ -30,7 +30,7 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
         {
             player.InputHandler.UseTimeSkillInput();
             equipped = true;
-            Debug.Log("Equipped");  
+            // Debug.Log("Equipped");  
             Stats.SetAttackable(false);
         }
         else if(player.InputHandler.TimeSkillInput && equipped)
@@ -52,15 +52,27 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
                 throwVelocity += data.throwVelocityIncreaseRate * Time.deltaTime;
             }
 
+            for (int i = 0; i < data.numberOfPredictLineObj; i++)
+            {
+                manager.PredictLineTransforms[i].gameObject.SetActive(true);
+                manager.PredictLineTransforms[i].position = PredictObjPosition(data.spaceBetweenPredictLineObj * i);
+            }
+
             if (!player.InputHandler.HoldAttackInput)
             {
                 charging = false;
                 UnEquip();
+                //TODO: Fly back
                 HandleObjFlyBack();
+
+                for (int i = 0; i < data.numberOfPredictLineObj; i++)
+                {
+                    manager.PredictLineTransforms[i].gameObject.SetActive(false);
+                }
 
                 GameObject obj = GameObject.Instantiate(data.timeStopThrowObj, player.transform.position, Quaternion.identity);
                 TimeStopProjectile projectile = obj.GetComponent<TimeStopProjectile>();
-                projectile.Fire(throwVelocity, player.InputHandler.RawMouseDirectionInput, data.throwStopTime);
+                projectile.Fire(throwVelocity, player.InputHandler.RawMouseDirectionInput, data.throwStopTime, data.gravityScale);
 
                 throwVelocity = data.minThrowVelocity;
             }
@@ -76,7 +88,15 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
     {
         player.InputHandler.UseTimeSkillInput();
         equipped = false;
-        Debug.Log("Unequipped");
+        // Debug.Log("Unequipped");
         Stats.SetAttackable(true);
+    }
+
+    private Vector2 PredictObjPosition(float t)
+    {
+        Vector2 position = (Vector2)player.transform.position + 
+            (t * throwVelocity * player.InputHandler.RawMouseDirectionInput) + 
+            (t * t) * 0.5f * (Physics2D.gravity * data.gravityScale);
+        return position;
     }
 }

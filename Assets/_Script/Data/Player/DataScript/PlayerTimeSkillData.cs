@@ -23,10 +23,16 @@ public class PlayerTimeSkillData : ScriptableObject
     [Tooltip("每秒消耗能量")]
     public float timeStopAllCostPerSecond = 20f;
 
+    [Header("Throw Object")]
+    public GameObject timeStopThrowObj;
     public float throwVelocityIncreaseRate = 2f;
     public float throwStopTime = 3f;
     public float minThrowVelocity = 5f;
     public float maxThrowVelocity = 20f;
-    public GameObject timeStopThrowObj;
+    public float gravityScale = 5f;
+
+    [Header("Predict Line")]
     public GameObject predictLineObj;
+    public int numberOfPredictLineObj = 25;
+    public float spaceBetweenPredictLineObj = 0.2f;
 }

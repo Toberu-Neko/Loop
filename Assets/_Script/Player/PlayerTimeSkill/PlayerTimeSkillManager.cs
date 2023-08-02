@@ -14,11 +14,14 @@ public class PlayerTimeSkillManager : MonoBehaviour
     public PlayerTimeSkill_TimeStopThrow SkillTimeStopThrow { get; private set; }
     public PlayerTimeSkill_BookMark SkillBookMark { get; private set; }
 
-    public event Action OnStateChanged;
+    public GameObject[] PredictLineObjects { get; private set; }
+    public Transform[] PredictLineTransforms { get; set; }
+    [SerializeField] private Transform predictObjMother;
 
     private float maxEnergy;
     public float CurrentEnergy { get; private set; }
 
+    public event Action OnStateChanged;
 
     private void Awake()
     {
@@ -26,6 +29,15 @@ public class PlayerTimeSkillManager : MonoBehaviour
 
         maxEnergy = data.maxEnergy;
         CurrentEnergy = maxEnergy;
+
+        PredictLineObjects = new GameObject[data.numberOfPredictLineObj];
+        PredictLineTransforms = new Transform[data.numberOfPredictLineObj];
+        for (int i = 0; i < data.numberOfPredictLineObj; i++)
+        {
+            PredictLineObjects[i] = Instantiate(data.predictLineObj, transform.position, Quaternion.identity, predictObjMother);
+            PredictLineTransforms[i] = PredictLineObjects[i].transform;
+            PredictLineObjects[i].SetActive(false);
+        }
     }
     private void Start()
     {

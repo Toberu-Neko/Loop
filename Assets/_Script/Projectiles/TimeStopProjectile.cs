@@ -10,15 +10,17 @@ public class TimeStopProjectile : MonoBehaviour
 
     [SerializeField] private float explodeRadius = 2f;
     [SerializeField] private LayerMask whatIsInteractable;
+    [SerializeField] private Rigidbody2D RB;
     private void Awake()
     {
         movement = core.GetCoreComponent<Movement>();
     }
 
-    public void Fire(float velocity, Vector2 direction, float stopTime)
+    public void Fire(float velocity, Vector2 direction, float stopTime, float gravityScale)
     {
         movement.SetVelocity(velocity, direction);
         this.stopTime = stopTime;
+        RB.gravityScale = gravityScale;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -33,7 +35,6 @@ public class TimeStopProjectile : MonoBehaviour
                 // Debug.Log(h.collider.gameObject.name);
                 if(h.collider.gameObject.TryGetComponent(out ITimeStopable stopable))
                 {
-                    Debug.Log("Get " + stopable.ToString());
                     stopable.DoTimeStop(stopTime);
                 }
             }
