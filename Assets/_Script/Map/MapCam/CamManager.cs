@@ -38,7 +38,10 @@ public class CamManager : MonoBehaviour
         if(instance == null)
             instance = this;
         else
+        {
+            Destroy(gameObject);
             Debug.LogError("There is more than one CamManager in the scene!");
+        }
     }
 
     #region Pan Camera

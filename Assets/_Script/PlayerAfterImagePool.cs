@@ -20,7 +20,7 @@ public class PlayerAfterImagePool : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
         GrowPool();
     }
 

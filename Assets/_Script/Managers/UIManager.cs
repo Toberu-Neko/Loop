@@ -18,6 +18,12 @@ public class UIManager : MonoBehaviour
         ClosePauseMainUI();
     }
 
+    private void OnDisable()
+    {
+        gameManager.OnGamePaused -= OpenPauseMainUI;
+        gameManager.OnGameResumed -= ClosePauseMainUI;
+    }
+
     private void OpenPauseMainUI()
     {
         pauseMainUI.SetActive(true);

@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private UI_InputManager inputManager;
 
     public bool IsPaused { get; private set; }
     public bool TimeStopEnemy { get; private set; }
@@ -21,46 +18,31 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
+            IsPaused = false;
+            // Debug.LogError("There is more than one GameManager in the scene!");
             return;
         }
 
         IsPaused = false;
-        inputManager = GetComponent<UI_InputManager>();
     }
 
-    private void Update()
-    {
-        if (inputManager.ESCInput)
-        {
-            if (IsPaused)
-            {
-                ResumeGame();
-                OnGameResumed?.Invoke();
-            }
-            else
-            {
-                PauseGame();
-                OnGamePaused?.Invoke();
-            }
-            inputManager.UseESCInput();
-        }
-    }
     public void PauseGame()
     {
         IsPaused = true;
         Time.timeScale = 0f;
+        OnGamePaused?.Invoke();
     }
 
     public void ResumeGame()
     {
         IsPaused = false;
         Time.timeScale = 1f;
+        OnGameResumed?.Invoke();
     }
 
     public void SetTimeStopEnemyTrue()

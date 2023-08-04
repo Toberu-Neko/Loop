@@ -43,7 +43,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = GameManager.Instance;
 
         cam = Camera.main;
     }
@@ -228,7 +228,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         RawMouseDirectionInput = context.ReadValue<Vector2>();
 
-        if(playerInput.currentControlScheme == "Keyboard")
+        if(playerInput.currentControlScheme == "Keyboard" && cam!=null)
         {
             // Debug.Log(((Vector3)RawMouseDirectionInput - cam.WorldToScreenPoint(transform.position)).normalized);
             // Debug.Log(cam.ScreenToWorldPoint((Vector3)RawMouseDirectionInput) - transform.position);

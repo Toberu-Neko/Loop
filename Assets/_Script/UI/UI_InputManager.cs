@@ -19,5 +19,20 @@ public class UI_InputManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (ESCInput)
+        {
+            if (GameManager.Instance.IsPaused)
+            {
+                GameManager.Instance.ResumeGame();
+            }
+            else
+            {
+                GameManager.Instance.PauseGame();
+            }
+            UseESCInput();
+        }
+    }
     public void UseESCInput() => ESCInput = false;
 }
