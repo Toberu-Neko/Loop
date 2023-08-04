@@ -24,8 +24,6 @@ public class PlayerInAirState : PlayerState
     private bool wallJumpCoyoteTime;
     private float startWallJumpCoyoteTime;
 
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }

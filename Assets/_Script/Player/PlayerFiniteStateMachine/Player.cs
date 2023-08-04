@@ -5,12 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
-
     private GameManager gameManager;
-
-    #region State Variables
+    #region ControlerStates
     public PlayerStateMachine StateMachine { get; private set; }
+
     public PlayerIdleState IdleState { get; private set; }
+    public PlayerChangeSceneState ChangeSceneState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
 
     #region Components
     public Core Core { get; private set; }
+
+    private Movement movement;
     public Animator Anim { get; private set; }
     public PlayerWeaponManager PlayerWeaponManager { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
@@ -70,18 +72,19 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Core = GetComponentInChildren<Core>();
+
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
         SR = GetComponent<SpriteRenderer>();
         MovementCollider = GetComponent<BoxCollider2D>();
         PlayerWeaponManager = GetComponent<PlayerWeaponManager>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
 
         StateMachine = new PlayerStateMachine();
 
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
+        ChangeSceneState = new PlayerChangeSceneState(this, StateMachine, playerData, "move");
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
@@ -97,6 +100,7 @@ public class Player : MonoBehaviour
         AttackState = new OldPlayerAttackState(this, StateMachine, playerData, "attack");
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
+
 
         SwordHubState = new PlayerSwordHubState(this, StateMachine, playerData, "swordAttack");
         SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, playerData, "swordNormalAttack");
@@ -116,10 +120,19 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        // TODO: SetWeapon
-        // AttackState.SetWeapon(Inventory.weapons[0]);
-
         StateMachine.Initialize(IdleState);
+
+        gameManager = GameManager.Instance;
+        gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
+        gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
+        gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
+    }
+
+    private void OnDisable()
+    {
+        gameManager.OnChangeSceneGoRight -= HandleChangeSceneToRight;
+        gameManager.OnChangeSceneGoLeft -= HandleChangeSceneToLeft;
+        gameManager.OnChangeSceneFinished -= HandleChangeSceneFinished;
     }
 
     private void Update()
@@ -163,6 +176,24 @@ public class Player : MonoBehaviour
 
     private void AnimationStopMovementTrigger() => StateMachine.CurrentState.AnimationStopMovementTrigger();
 
+    private void HandleChangeSceneToRight()
+    {
+        ChangeSceneState.SetFacingDirection(1);
+        StateMachine.ChangeState(ChangeSceneState);
+    }
+
+    private void HandleChangeSceneToLeft()
+    {
+        ChangeSceneState.SetFacingDirection(-1);
+        StateMachine.ChangeState(ChangeSceneState);
+    }
+
+    private void HandleChangeSceneFinished()
+    {
+        Invoke(nameof(ChangeToIdleState), 0.25f);
+    }
+
+    private void ChangeToIdleState() => StateMachine.ChangeState(IdleState);
 
     #endregion
 

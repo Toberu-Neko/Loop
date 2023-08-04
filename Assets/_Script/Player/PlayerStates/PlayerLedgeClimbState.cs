@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerLedgeClimbState : PlayerState
@@ -20,9 +17,6 @@ public class PlayerLedgeClimbState : PlayerState
 
     private int xInput;
     private int yInput;
-
-    private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
 
     public PlayerLedgeClimbState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {

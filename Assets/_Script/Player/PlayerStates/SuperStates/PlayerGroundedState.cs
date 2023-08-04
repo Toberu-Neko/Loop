@@ -10,10 +10,6 @@ public class PlayerGroundedState : PlayerState
 
     protected bool isTouchingCeiling;
 
-
-    protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
-
     private bool jumpInput;
     private bool grabInput;
     private bool dashInput;

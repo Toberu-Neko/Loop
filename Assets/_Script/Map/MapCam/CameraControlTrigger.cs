@@ -36,6 +36,16 @@ public class CameraControlTrigger : MonoBehaviour
             }
         }
     }
+    private void OnDrawGizmos()
+    {
+        if (!TryGetComponent<BoxCollider2D>(out var boxCollider))
+            return;
+
+        Gizmos.color = Color.white;
+
+        Bounds bounds = boxCollider.bounds;
+        Gizmos.DrawWireCube(bounds.center, bounds.size);
+    }
 }
 
 [Serializable]

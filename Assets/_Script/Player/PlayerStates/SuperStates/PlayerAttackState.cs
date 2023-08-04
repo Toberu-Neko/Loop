@@ -14,10 +14,6 @@ public class PlayerAttackState : PlayerState
     private bool jumpInputStop;
     private bool isJumping;
 
-
-    protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
-
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
 

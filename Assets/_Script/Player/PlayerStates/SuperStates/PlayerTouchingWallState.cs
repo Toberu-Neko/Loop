@@ -16,10 +16,6 @@ public class PlayerTouchingWallState : PlayerState
     private bool damaged;
     private float endTime;
 
-    private CollisionSenses CollisionSenses { get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();}
-    private CollisionSenses collisionSenses;
-
-
     public PlayerTouchingWallState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }

@@ -8,6 +8,7 @@ public class PlayerState
     protected Combat Combat;
     protected Stats Stats;
     protected Movement Movement;
+    protected CollisionSenses CollisionSenses;
 
     protected Player player;
     protected PlayerStateMachine stateMachine;
@@ -31,6 +32,7 @@ public class PlayerState
         Combat = player.Core.GetCoreComponent<Combat>();
         Movement = player.Core.GetCoreComponent<Movement>();
         Stats = player.Core.GetCoreComponent<Stats>();
+        CollisionSenses = player.Core.GetCoreComponent<CollisionSenses>();
     }
     public virtual void Enter()
     {

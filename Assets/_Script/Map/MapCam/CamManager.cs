@@ -6,7 +6,7 @@ using UnityEngine;
 public class CamManager : MonoBehaviour
 {
     private List<CinemachineVirtualCamera> cams = new();
-    [HideInInspector] public CinemachineVirtualCamera activatedCam;
+    public CinemachineVirtualCamera CurrentCam { get; private set; }
     public void RegisterCam(CinemachineVirtualCamera vcam)
     {
         cams.Add(vcam);
@@ -18,10 +18,10 @@ public class CamManager : MonoBehaviour
     }
     public void SwitchCamera(CinemachineVirtualCamera vcam)
     {
-        activatedCam = vcam;
+        CurrentCam = vcam;
         vcam.enabled = true;
 
-        framingTransposer = activatedCam.GetCinemachineComponent<CinemachineFramingTransposer>();
+        framingTransposer = CurrentCam.GetCinemachineComponent<CinemachineFramingTransposer>();
         startingTrackedObjectOffset = framingTransposer.m_TrackedObjectOffset;
     }
 
@@ -103,12 +103,12 @@ public class CamManager : MonoBehaviour
 
     public void SwapCamera(CinemachineVirtualCamera cameraLeft, CinemachineVirtualCamera cameraRight, Vector2 triggerExitDirection)
     {
-        if (activatedCam == cameraLeft && triggerExitDirection.x > 0f)
+        if (CurrentCam == cameraLeft && triggerExitDirection.x > 0f)
         {
             cameraLeft.enabled = false;
             SwitchCamera(cameraRight);
         }
-        else if (activatedCam == cameraRight && triggerExitDirection.x < 0f)
+        else if (CurrentCam == cameraRight && triggerExitDirection.x < 0f)
         {
             cameraRight.enabled = false;
             SwitchCamera(cameraLeft);

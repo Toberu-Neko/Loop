@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6724404637796324553}
   - component: {fileID: 3324489680294962871}
   m_Layer: 3
-  m_Name: MapVCam
+  m_Name: VCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6724404638285626580}
   m_Layer: 3
-  m_Name: MapCamSwitch
+  m_Name: MapCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,7 +246,7 @@ Transform:
   - {fileID: 6724404637796324554}
   - {fileID: 6724404638797106736}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6724404638797106738
 GameObject:
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 6724404638797106703}
   - component: {fileID: 6939659541819840119}
   m_Layer: 3
-  m_Name: MapTrigger
+  m_Name: CamBoaderTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -397,7 +397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dffd1548477d81947a1a0291bce41b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 6724404637796324555}
 --- !u!50 &6939659541819840119
 Rigidbody2D:
   serializedVersion: 4
