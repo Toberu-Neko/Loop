@@ -45,6 +45,10 @@ public class PlayerDashState : PlayerAbilityState
             Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
         }
         Stats.SetInvincibleFalse();
+
+        player.DashDirectionIndicator.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
     }
 
     public override void LogicUpdate()

@@ -13,19 +13,26 @@ public class ChangeSceneTrigger : MonoBehaviour
     public event Action OnChangeSceneGoLeft;
     public event Action OnChangeSceneGoRight;
 
+    private float enterPosX;
     private void Start()
     {
         GameManager.Instance.RegisterChangeSceneTrigger(this);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            enterPosX = (collision.transform.position - col.bounds.center).normalized.x;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             Vector2 exitDirection = (collision.transform.position - col.bounds.center).normalized;
-            if(exitDirection.x > 0 && SceneManager.GetSceneByName(leftScene.name).isLoaded)
+            if(exitDirection.x > 0 && enterPosX < 0 && 
+                SceneManager.GetSceneByName(leftScene.name).isLoaded)
             {
-                Debug.Log("TO right");
-
                 if (!isUnloaded)
                 {
                     isUnloaded = true;
@@ -33,10 +40,9 @@ public class ChangeSceneTrigger : MonoBehaviour
                     OnChangeSceneGoRight?.Invoke();
                 }
             }
-            else if(SceneManager.GetSceneByName(rightScene.name).isLoaded)
+            else if(enterPosX > 0 && exitDirection.x < 0 &&
+                SceneManager.GetSceneByName(rightScene.name).isLoaded)
             {
-                Debug.Log("TO left");
-
                 if (!isUnloaded)
                 {
                     isUnloaded = true;

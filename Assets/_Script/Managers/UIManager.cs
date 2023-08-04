@@ -65,21 +65,16 @@ public class UI_Manager : MonoBehaviour
         changeSceneUI.SetActive(true);
         changeSceneAnimator.SetBool("finishLoading", false);
         changeSceneAnimator.SetTrigger("toLeft");
-        Debug.Log("ChangeSceneUI Open Go Left");
     }
     private void HandleChangeSceneGoRight()
     {
         changeSceneUI.SetActive(true);
         changeSceneAnimator.SetBool("finishLoading", false);
         changeSceneAnimator.SetTrigger("toRight");
-        Debug.Log("ChangeSceneUI Open Go Right");
     }
     private void HandleChangeSceneFinish()
     {
-        changeSceneAnimator.SetBool("finishLoading", true);
-    }
-    private void OnFinishChangeSceneAnimation()
-    {
-        changeSceneUI.SetActive(false);
+        if(changeSceneAnimator.enabled)
+            changeSceneAnimator.SetBool("finishLoading", true);
     }
 }
