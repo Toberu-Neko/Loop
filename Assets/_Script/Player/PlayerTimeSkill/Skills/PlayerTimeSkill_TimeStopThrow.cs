@@ -8,6 +8,7 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
     private bool throwable;
     private bool charging;
     private float throwVelocity;
+    private TimeStopProjectile script;
     public PlayerTimeSkill_TimeStopThrow(Player player, PlayerTimeSkillManager manager, PlayerTimeSkillStateMachine stateMachine, PlayerTimeSkillData data, string animBoolName) : base(player, manager, stateMachine, data, animBoolName)
     {
     }
@@ -26,7 +27,7 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
     {
         base.LogicUpdate();
 
-        if (player.InputHandler.TimeSkillInput && !equipped)
+        if (player.InputHandler.TimeSkillInput && !equipped && throwable && manager.CurrentEnergy >= data.timeStopThrowCost)
         {
             player.InputHandler.UseTimeSkillInput();
             equipped = true;
@@ -60,10 +61,9 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
 
             if (!player.InputHandler.HoldAttackInput)
             {
+                manager.DecreaseEnergy(data.timeStopThrowCost);
                 charging = false;
                 UnEquip();
-                //TODO: Fly back
-                HandleObjFlyBack();
 
                 for (int i = 0; i < data.numberOfPredictLineObj; i++)
                 {
@@ -71,8 +71,9 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
                 }
 
                 GameObject obj = GameObject.Instantiate(data.timeStopThrowObj, player.transform.position, Quaternion.identity);
-                TimeStopProjectile projectile = obj.GetComponent<TimeStopProjectile>();
-                projectile.Fire(throwVelocity, player.InputHandler.RawMouseDirectionInput, data.throwStopTime, data.gravityScale);
+                script = obj.GetComponent<TimeStopProjectile>();
+                script.Fire(throwVelocity, player.InputHandler.RawMouseDirectionInput, data.throwStopTime, data.gravityScale, manager.transform);
+                script.OnReturnToPlayer += HandleObjFlyBack;
 
                 throwVelocity = data.minThrowVelocity;
             }
@@ -82,6 +83,7 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
     private void HandleObjFlyBack()
     {
         throwable = true;
+        script.OnReturnToPlayer -= HandleObjFlyBack;
     }
 
     private void UnEquip()

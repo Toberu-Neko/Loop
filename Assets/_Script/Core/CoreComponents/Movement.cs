@@ -95,7 +95,7 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
-    private void SetVelocity(Vector2 VectorVelocity)
+    public void SetVelocity(Vector2 VectorVelocity)
     {
         velocityWorkspace = VectorVelocity;
 
@@ -125,6 +125,11 @@ public class Movement : CoreComponent
         velocityWorkspace = Vector2.zero;
 
         SetFinalVelocity();
+    }
+
+    public void SetAngularVelocity(float velocity)
+    {
+        RB.angularVelocity = velocity;
     }
 
     private void SetFinalVelocity()

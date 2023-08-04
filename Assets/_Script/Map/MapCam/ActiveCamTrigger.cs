@@ -7,6 +7,9 @@ public class ActiveCamTrigger : MonoBehaviour
     [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        CamManager.instance.SwitchCamera(cam);
+        if (collision.CompareTag("Player"))
+        {
+            CamManager.instance.SwitchCamera(cam);
+        }
     }
 }
