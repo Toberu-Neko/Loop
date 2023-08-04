@@ -89,7 +89,7 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
             Movement.SetPosition(point.position, point.rotation, point.facingDirection);
             player.SR.sprite = point.sprite;
 
-            for(int i = 1; i < data.rewindPlaySpeed; i++)
+            for(int i = 1; i < data.bookmarkPlaySpeed; i++)
             {
                 if(pointsInTime.Count > 1)
                     pointsInTime.RemoveAt(0);

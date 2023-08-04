@@ -22,7 +22,7 @@ public class TimeStop : CoreComponent, ITimeStopable
 
     public void DoTimeStop(float stopTime)
     {
-        stats.SetIsStoppedTrue();
+        stats.SeTimeStopTrue();
 
         CancelInvoke(nameof(HandleTimeStart));
         Invoke(nameof(HandleTimeStart), stopTime);
@@ -30,10 +30,10 @@ public class TimeStop : CoreComponent, ITimeStopable
 
     private void HandleTimeStop()
     {
-        stats.SetIsStoppedFalse();
+        stats.SetTimeStopFalse();
     }
     private void HandleTimeStart()
     {
-        stats.SetIsStoppedFalse();
+        stats.SetTimeStopFalse();
     }
 }

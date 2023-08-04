@@ -6,9 +6,10 @@ using UnityEngine;
 public class PlayerTimeSkillData : ScriptableObject
 {
     public float maxEnergy = 100f;
+
+    [Header("Rewind Player")]
     [Range(1,5)]
     public int rewindPlaySpeed = 1;
-    [Header("Rewind Player")]
     [Tooltip("用於清除位置資訊")]
     public float rewindMaxTime = 10f;
     [Tooltip("每秒消耗能量")]
@@ -17,11 +18,15 @@ public class PlayerTimeSkillData : ScriptableObject
     [Header("Book Mark")]
     [Tooltip("每秒消耗能量")]
     public float bookMarkCostPerSecond = 10f;
+    [Range(1, 5)]
+    public int bookmarkPlaySpeed = 1;
     public GameObject bookMarkPrefab;
 
     [Header("Time Stop All")]
     [Tooltip("每秒消耗能量")]
     public float timeStopAllCostPerSecond = 20f;
+
+    [Header("Bullet Time All")]
 
     [Header("Time Stop Throw")]
     [Tooltip("每秒消耗能量")]
