@@ -31,13 +31,26 @@ public class Entity : MonoBehaviour
         collisionAttackDetails = EntityData.collisionAttackDetails;
 
         StateMachine = new();
-        stats.OnTimeStop += HandleOnTimeStop;
-        stats.OnTimeStart += HandleOnTimeStart;
+        stats.OnTimeStopStart += HandleOnTimeStop;
+        stats.OnTimeStopEnd += HandleOnTimeStart;
+        stats.OnTimeSlowStart += HandleTimeSlowStart;
+        stats.OnTimeSlowEnd += HandleTimeSlowEnd;
     }
     protected virtual void OnDisable()
     {
-        stats.OnTimeStop -= HandleOnTimeStop;
-        stats.OnTimeStart -= HandleOnTimeStart;
+        stats.OnTimeStopStart -= HandleOnTimeStop;
+        stats.OnTimeStopEnd -= HandleOnTimeStart;
+        stats.OnTimeSlowStart -= HandleTimeSlowStart;
+        stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
+    }
+
+    private void HandleTimeSlowStart()
+    {
+        Anim.speed *= GameManager.Instance.TimeSlowMultiplier;
+    }
+    private void HandleTimeSlowEnd()
+    {
+        Anim.speed /= GameManager.Instance.TimeSlowMultiplier;
     }
 
     private void HandleOnTimeStop()

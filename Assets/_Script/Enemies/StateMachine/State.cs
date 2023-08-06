@@ -58,6 +58,11 @@ public class State
             Movement.SetVelocityZero();
             return;
         }
+
+        if (Stats.IsTimeSlowed)
+        {
+            StartTime += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
+        }
     }
     public virtual void PhysicsUpdate(){ }
     public virtual void DoChecks(){ }

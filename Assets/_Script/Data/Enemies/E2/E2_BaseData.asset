@@ -12,18 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975447ccf87b87240b4ec091fcaffcb9, type: 3}
   m_Name: E2_BaseData
   m_EditorClassIdentifier: 
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
   collideDamage: 1
   collisionAttackDetails:
     attackName: 
-    movementSpeed: 0
     damageAmount: 5
     staminaDamageAmount: 0
+    movementSpeed: 0
     knockbackForce: 12
     knockbackAngle: {x: 1, y: 0.75}
   minAgroDistance: 7.5
   maxAgroDistance: 8.5
-  closeRangeActionDistance: 1.36
-  hitParticle: {fileID: 7655857405548607486, guid: 2dffad8e560ec3248a05f4cc27e6d322, type: 3}
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 128
+  closeRangeActionDistance: 0.5

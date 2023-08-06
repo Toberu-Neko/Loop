@@ -10,29 +10,29 @@ public class TimeStop : CoreComponent, ITimeStopable
     {
         stats = core.GetCoreComponent<Stats>();
 
-        GameManager.Instance.OnAllTimeStopEnemy += HandleTimeStop;
-        GameManager.Instance.OnAllTimeStartEnemy += HandleTimeStart;
+        GameManager.Instance.OnAllTimeStopStart += HandleTimeStopStart;
+        GameManager.Instance.OnAllTimeStopEnd += HandleTimeStopEnd;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.OnAllTimeStopEnemy -= HandleTimeStop;
-        GameManager.Instance.OnAllTimeStartEnemy -= HandleTimeStart;
+        GameManager.Instance.OnAllTimeStopStart -= HandleTimeStopStart;
+        GameManager.Instance.OnAllTimeStopEnd -= HandleTimeStopEnd;
     }
 
     public void DoTimeStop(float stopTime)
     {
         stats.SeTimeStopTrue();
 
-        CancelInvoke(nameof(HandleTimeStart));
-        Invoke(nameof(HandleTimeStart), stopTime);
+        CancelInvoke(nameof(HandleTimeStopEnd));
+        Invoke(nameof(HandleTimeStopEnd), stopTime);
     }
 
-    private void HandleTimeStop()
+    private void HandleTimeStopStart()
     {
-        stats.SetTimeStopFalse();
+        stats.SeTimeStopTrue();
     }
-    private void HandleTimeStart()
+    private void HandleTimeStopEnd()
     {
         stats.SetTimeStopFalse();
     }

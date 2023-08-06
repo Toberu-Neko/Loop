@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : CoreComponent
@@ -11,7 +9,6 @@ public class Movement : CoreComponent
 
     public bool CanSetVelocity { get; set; }
 
-
     public Vector2 CurrentVelocity { get; private set; }
     private Transform parentTransform;
     public Slope Slope { get; set; } = new();
@@ -19,7 +16,12 @@ public class Movement : CoreComponent
     private Vector2 velocityWorkspace;
     public Vector2 TimeStopVelocity { get; private set; }
     private float orginalGrag;
+
+
+    public Vector2 TimeSlowVelocity { get; private set; }
+    private float timeSlowOrgGravityScale;
     private float orginalGravityScale;
+    private float gravityWorkspace;
 
     public event Action OnFlip;
 
@@ -38,11 +40,27 @@ public class Movement : CoreComponent
 
         FacingDirection = 1;
         CanSetVelocity = true;
-        stats.OnTimeStart += HandleTimeStart;
-        stats.OnTimeStop += HandleTimeStop;
+        stats.OnTimeStopEnd += HandleTimeStopEnd;
+        stats.OnTimeStopStart += HandleTimeStopStart;
+
+        stats.OnTimeSlowStart += HandleTimeSlowStart;
+        stats.OnTimeSlowEnd += HandleTimeSlowEnd;
+    }
+    private void OnDisable()
+    {
+        stats.OnTimeStopEnd -= HandleTimeStopEnd;
+        stats.OnTimeStopStart -= HandleTimeStopStart;
+
+        stats.OnTimeSlowStart -= HandleTimeSlowStart;
+        stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
+    }
+    public override void LogicUpdate()
+    {
+        CurrentVelocity = RB.velocity;
     }
 
-    private void HandleTimeStop()
+    #region Time Stop
+    private void HandleTimeStopStart()
     {
         CurrentVelocity = RB.velocity;
         TimeStopVelocity = CurrentVelocity;
@@ -50,7 +68,7 @@ public class Movement : CoreComponent
         SetVelocityZero();
     }
 
-    private void HandleTimeStart()
+    private void HandleTimeStopEnd()
     {
         RB.isKinematic = false;
         SetVelocity(TimeStopVelocity);
@@ -60,17 +78,48 @@ public class Movement : CoreComponent
     {
         TimeStopVelocity = value;
     }
+    #endregion
 
-    private void OnDisable()
+    #region TimeSlow
+    private void HandleTimeSlowStart()
     {
-        stats.OnTimeStart -= HandleTimeStart;
-        stats.OnTimeStop -= HandleTimeStop;
+        gravityWorkspace = RB.gravityScale;
+        SetFinalGravity();
     }
 
-    public override void LogicUpdate()
+    private void HandleTimeSlowEnd()
     {
-        CurrentVelocity = RB.velocity;
+        gravityWorkspace = timeSlowOrgGravityScale;
+        SetFinalGravity();
     }
+    #endregion
+
+    #region Set Gravity
+    public void SetGravityZero()
+    {
+        gravityWorkspace = 0.0f;
+        SetFinalGravity();
+    }
+
+    public void SetGravityOrginal()
+    {
+        gravityWorkspace = orginalGravityScale;
+        SetFinalGravity();
+    }
+
+    private void SetFinalGravity()
+    {
+        if (stats.IsTimeSlowed)
+        {
+            timeSlowOrgGravityScale = gravityWorkspace;
+            RB.gravityScale = gravityWorkspace * stats.TimeSlowMultiplier * stats.TimeSlowMultiplier;
+        }
+        else
+        {
+            RB.gravityScale = gravityWorkspace;
+        }
+    }
+    #endregion
 
     #region Set Functions
 
@@ -140,18 +189,29 @@ public class Movement : CoreComponent
             CurrentVelocity = Vector2.zero;
             return;
         }
+
+        if (velocityWorkspace == Vector2.zero && RB.sharedMaterial != core.CoreData.fullFrictionMaterial && Slope.IsOnSlope)
+        {
+            RB.sharedMaterial = core.CoreData.fullFrictionMaterial;
+        }
+        else if (velocityWorkspace != Vector2.zero && RB.sharedMaterial != core.CoreData.noFrictionMaterial)
+        {
+            RB.sharedMaterial = core.CoreData.noFrictionMaterial;
+        }
+
+
         if (CanSetVelocity)
         {
-            if(velocityWorkspace == Vector2.zero && RB.sharedMaterial != core.CoreData.fullFrictionMaterial && Slope.IsOnSlope)
+            if(stats.IsTimeSlowed)
             {
-                RB.sharedMaterial = core.CoreData.fullFrictionMaterial;
+                RB.velocity = velocityWorkspace * stats.TimeSlowMultiplier;
+                CurrentVelocity = velocityWorkspace * stats.TimeSlowMultiplier;
             }
-            else if(velocityWorkspace != Vector2.zero && RB.sharedMaterial != core.CoreData.noFrictionMaterial)
+            else
             {
-                RB.sharedMaterial = core.CoreData.noFrictionMaterial;
+                RB.velocity = velocityWorkspace;
+                CurrentVelocity = velocityWorkspace;
             }
-            RB.velocity = velocityWorkspace;
-            CurrentVelocity = velocityWorkspace;
         }
     }
 
@@ -172,15 +232,6 @@ public class Movement : CoreComponent
         RB.drag = orginalGrag;
     }
 
-    public void SetGravityZero()
-    {
-        RB.gravityScale = 0.0f;
-    }
-
-    public void SetGravityOrginal()
-    {
-        RB.gravityScale = orginalGravityScale;
-    }
 
     public void Flip()
     {

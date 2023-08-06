@@ -16,6 +16,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
     private bool hasHitGround;
     private bool countered;
     private bool damaged = false;
+    private Vector2 counterVelocity;
 
     private ProjectileDetails details;
     private Movement movement;
@@ -36,11 +37,21 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 
         isGravityOn = false;
         xStartPosition = transform.position.x;
+        Destroy(gameObject, 8f);
     }
     private void Update()
     {
         core.LogicUpdate();
 
+        if (!hasHitGround && !countered)
+        {
+            movement.SetVelocity(details.speed, transform.right);
+        }
+        if (!hasHitGround && countered)
+        {
+            movement.SetVelocity(counterVelocity);
+        }
+        /*
         if (!hasHitGround)
         {
             if (isGravityOn && !stats.IsTimeStopped)
@@ -48,13 +59,13 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
                 float angle = Mathf.Atan2(movement.CurrentVelocity.y, movement.CurrentVelocity.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
-        }
+            movement.SetVelocity(details.speed, transform.right);
+        }*/
 
     }
 
     private void FixedUpdate()
     {
-
         if (!hasHitGround)
         {
             /* Collider2D damageHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsPlayer);
@@ -86,12 +97,12 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 
                 Destroy(gameObject, 5f);
             }*/
-
+            /*
             if (Mathf.Abs(xStartPosition - transform.position.x) >= travelDistance && !isGravityOn)
             {
                 isGravityOn = true;
                 movement.SetGravityOrginal();
-            }
+            }*/
         }
     }
 
@@ -110,22 +121,41 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 
     public void Knockback(Vector2 angle, float force, int direction, Vector2 damagePosition, bool blockable = true)
     {
-        if (stats.IsTimeStopped && !countered)
+        if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered)
         {
             countered = true;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             whatIsPlayer = LayerMask.GetMask("Damageable");
             xStartPosition = transform.position.x;
 
-            if (facingDirection != direction)
+            if (stats.IsTimeStopped)
             {
-                movement.SetTimeStopVelocity(movement.TimeStopVelocity * -4f);
-                facingDirection = direction;
-                // movement.Turn();
+                if (facingDirection != direction)
+                {
+                    counterVelocity = movement.TimeStopVelocity * -4f;
+                    movement.SetTimeStopVelocity(counterVelocity);
+                    facingDirection = direction;
+                }
+                else
+                {
+                    movement.SetTimeStopVelocity(counterVelocity);
+                }
             }
-            else
+
+            else if (stats.IsTimeSlowed)
             {
-                movement.SetTimeStopVelocity(movement.TimeStopVelocity * 4f);
+                if (facingDirection != direction)
+                {
+                    counterVelocity = movement.CurrentVelocity * -4f;
+                    movement.SetVelocity(counterVelocity);
+                    facingDirection = direction;
+                    movement.Flip();
+                }
+                else
+                {
+                    counterVelocity = movement.CurrentVelocity * 4f;
+                    movement.SetTimeStopVelocity(counterVelocity);
+                }
             }
         }
     }

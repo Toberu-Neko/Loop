@@ -54,6 +54,29 @@ public class PlayerInputHandler : MonoBehaviour
         CheckDashInputHoldTime();
     }
 
+    public void ResetAllInput()
+    {
+        RawMovementInput = Vector2.zero;
+        NormInputX = 0;
+        NormInputY = 0;
+        JumpInput = false;
+        JumpInputStop = false;
+        GrabInput = false;
+        DashInput = false;
+        DashInputStop = false;
+        AttackInput = false;
+        HoldAttackInput = false;
+        BlockInput = false;
+        WeaponSkillInput = false;
+        WeaponSkillHoldInput = false;
+        ChangeWeapon1 = false;
+        ChangeWeapon2 = false;
+        ChangeWeapon3 = false;
+        TimeSkillInput = false;
+        TimeSkillHoldInput = false;
+        DebugInput = false;
+    }
+
     public void OnDebugInput(InputAction.CallbackContext context)
     {
         if (gameManager.IsPaused)

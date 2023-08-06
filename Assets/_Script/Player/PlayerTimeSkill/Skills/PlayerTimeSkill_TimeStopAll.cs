@@ -12,18 +12,18 @@ public class PlayerTimeSkill_TimeStopAll : PlayerTimeSkillBase
     {
         base.LogicUpdate();
 
-        if (player.InputHandler.TimeSkillInput && !GameManager.Instance.TimeStopEnemy && manager.CurrentEnergy >= data.timeStopAllCostPerSecond * Time.deltaTime)
+        if (player.InputHandler.TimeSkillInput && !GameManager.Instance.TimeStopAll && manager.CurrentEnergy >= data.timeStopAllCostPerSecond * Time.deltaTime)
         {
             player.InputHandler.UseTimeSkillInput();
             GameManager.Instance.SetTimeStopEnemyTrue();
         }
-        else if (player.InputHandler.TimeSkillInput && GameManager.Instance.TimeStopEnemy)
+        else if (player.InputHandler.TimeSkillInput && GameManager.Instance.TimeStopAll)
         {
             player.InputHandler.UseTimeSkillInput();
             GameManager.Instance.SetTimeStopEnemyFalse();
         }
 
-        if(GameManager.Instance.TimeStopEnemy)
+        if(GameManager.Instance.TimeStopAll)
         {
             manager.DecreaseEnergy(data.timeStopAllCostPerSecond * Time.deltaTime);
         }

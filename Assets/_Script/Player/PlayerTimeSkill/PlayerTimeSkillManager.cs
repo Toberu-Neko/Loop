@@ -13,6 +13,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
     public PlayerTimeSkill_TimeStopAll SkillTimeStopAll { get; private set; }  
     public PlayerTimeSkill_TimeStopThrow SkillTimeStopThrow { get; private set; }
     public PlayerTimeSkill_BookMark SkillBookMark { get; private set; }
+    public PlayerTimeSkill_BulletTimeAll SkillBulletTimeAll { get; private set; }
 
     public GameObject[] PredictLineObjects { get; private set; }
     public Transform[] PredictLineTransforms { get; set; }
@@ -47,7 +48,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
         SkillBookMark = new(player, this, StateMachine, data, "BookMark");
         SkillTimeStopAll = new(player, this, StateMachine, data, "TimeStopAll");
         SkillTimeStopThrow = new(player, this, StateMachine, data, "TimeStopThrow");
-
+        SkillBulletTimeAll = new(player, this, StateMachine, data, "BulletTimeAll");
 
         StateMachine.Initialize(SkillNone);
         OnStateChanged?.Invoke();
@@ -97,6 +98,12 @@ public class PlayerTimeSkillManager : MonoBehaviour
     public void ChangeToTimeStopThrowSkill()
     {
         StateMachine.ChangeState(SkillTimeStopThrow);
+        OnStateChanged?.Invoke();
+    }
+
+    public void ChangeToBulletTimeAllSkill()
+    {
+        StateMachine.ChangeState(SkillBulletTimeAll);
         OnStateChanged?.Invoke();
     }
 }

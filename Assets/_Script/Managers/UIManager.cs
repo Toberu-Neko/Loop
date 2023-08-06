@@ -74,7 +74,7 @@ public class UI_Manager : MonoBehaviour
     }
     private void HandleChangeSceneFinish()
     {
-        if(changeSceneAnimator.enabled)
+        if(changeSceneUI.activeInHierarchy)
             changeSceneAnimator.SetBool("finishLoading", true);
     }
 }

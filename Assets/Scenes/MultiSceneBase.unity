@@ -8501,6 +8501,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1446678359}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: ResetAllInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 642f6ac6-2aba-4688-b860-c0b0d5d55851
     m_ActionName: Gameplay/TriggerMenu[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
@@ -12908,6 +12920,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7295418535588177536, guid: f4cae856c18d769409b5507c90804446, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1446678366}
     - target: {fileID: 7534891924343060566, guid: f4cae856c18d769409b5507c90804446, type: 3}
       propertyPath: m_Name
       value: PauseUI

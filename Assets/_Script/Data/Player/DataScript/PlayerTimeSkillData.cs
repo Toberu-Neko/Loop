@@ -27,6 +27,9 @@ public class PlayerTimeSkillData : ScriptableObject
     public float timeStopAllCostPerSecond = 20f;
 
     [Header("Bullet Time All")]
+    public float bulletTimeAllDuration = 3f;
+    public float bulletTimeAllCost = 50f;
+    public float bulletTimeVelocityMultiplier = 0.2f;
 
     [Header("Time Stop Throw")]
     [Tooltip("每秒消耗能量")]

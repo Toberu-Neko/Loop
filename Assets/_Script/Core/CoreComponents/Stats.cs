@@ -22,11 +22,13 @@ public class Stats : CoreComponent
 
     public bool IsRewindingPosition { get; private set; } = false;
     public bool IsTimeStopped { get; private set; } = false;
-    public bool IsTimeSlowwed { get; private set; } = false;
+    public bool IsTimeSlowed { get; private set; } = false;
+    public float TimeSlowMultiplier { get; private set; } = 0f;
 
-    public event Action OnTimeStop;
-    public event Action OnTimeStart;
-    public event Action OnTimeSlow;
+    public event Action OnTimeStopStart;
+    public event Action OnTimeStopEnd;
+    public event Action OnTimeSlowStart;
+    public event Action OnTimeSlowEnd;
 
     private void Start()
     {
@@ -125,25 +127,26 @@ public class Stats : CoreComponent
     public void SeTimeStopTrue()
     {
         IsTimeStopped = true;
-        OnTimeStop?.Invoke();
+        OnTimeStopStart?.Invoke();
     }
 
     public void SetTimeStopFalse()
     {
         IsTimeStopped = false;
-        OnTimeStart?.Invoke();
+        OnTimeStopEnd?.Invoke();
     }
 
     public void SetTimeSlowTrue()
     {
-        IsTimeSlowwed = true;
-        OnTimeSlow?.Invoke();
+        IsTimeSlowed = true;
+        TimeSlowMultiplier = GameManager.Instance.TimeSlowMultiplier;
+        OnTimeSlowStart?.Invoke();
     }
 
     public void SetTimeSlowFalse()
     {
-        IsTimeSlowwed = false;
-        OnTimeStart?.Invoke();
+        IsTimeSlowed = false;
+        OnTimeSlowEnd?.Invoke();
     }
 
     public void SetAttackable(bool volume) => Attackable = volume;

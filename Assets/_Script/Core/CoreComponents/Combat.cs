@@ -57,13 +57,19 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         normalBlockKnockbakDirection = core.CoreData.normalBlockKnockbakDirection;
         normalBlockKnockbakMultiplier = core.CoreData.normalBlockKnockbakMultiplier;
 
-        stats.OnTimeStart += HandleStartTime;
+        stats.OnTimeStopEnd += HandleStartTime;
+        stats.OnTimeSlowStart += HandleTimeSlowStart;
+        stats.OnTimeSlowEnd += HandleTimeSlowEnd;
+
         OnPerfectBlock += HandlePerfectBlock;
         OnDamaged += HandleOnDamaged;
+
     }
     private void OnDisable()
     {
-        stats.OnTimeStart -= HandleStartTime;
+        stats.OnTimeStopEnd -= HandleStartTime;
+        stats.OnTimeSlowStart -= HandleTimeSlowStart;
+        stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
         OnPerfectBlock -= HandlePerfectBlock;
         OnDamaged -= HandleOnDamaged;
     }
@@ -123,6 +129,15 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     {
         stats.HandleOnDamaged();
         damagedThisFrame = true;
+    }
+
+    private  void HandleTimeSlowStart()
+    {
+        maxKnockbackTime /= stats.TimeSlowMultiplier;
+    }
+    private void HandleTimeSlowEnd()
+    {
+        maxKnockbackTime *= stats.TimeSlowMultiplier;
     }
     #endregion
 
@@ -259,7 +274,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             knockStrengthDelta += strength * direction;
             return;
         }
-
         movement.SetVelocity(strength, angle, direction);
         movement.CanSetVelocity = false;
         isKnockbackActive = true;

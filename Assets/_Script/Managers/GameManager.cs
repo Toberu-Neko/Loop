@@ -7,9 +7,15 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public bool IsPaused { get; private set; }
-    public bool TimeStopEnemy { get; private set; }
-    public event Action OnAllTimeStopEnemy;
-    public event Action OnAllTimeStartEnemy;
+    public bool TimeStopAll { get; private set; } = false;
+    public bool TimeSlowAll { get; private set; } = false;
+
+    public event Action OnAllTimeStopEnd;
+    public event Action OnAllTimeStopStart;
+
+    public float TimeSlowMultiplier { get; private set; } = 0.2f;
+    public event Action OnAllTimeSlowStart;
+    public event Action OnAllTimeSlowEnd;
 
     public event Action OnGamePaused;
     public event Action OnGameResumed;
@@ -32,8 +38,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         IsPaused = false;
+        TimeStopAll = false;
+        TimeSlowAll = false;
+
         changeSceneTriggers = new List<ChangeSceneTrigger>();
         enterSceneTriggers = new List<EnterSceneTrigger>();
     }
@@ -67,17 +75,39 @@ public class GameManager : MonoBehaviour
         OnGameResumed?.Invoke();
     }
 
+    public void StartAllTimeSlow(float duration, float multiplier)
+    {
+        if(TimeSlowAll)
+        {
+            Debug.LogError("TimeSlowAll is already true");
+        }
+        TimeSlowMultiplier = multiplier;
+        TimeSlowAll = true;
+        OnAllTimeSlowStart?.Invoke();
+
+        CancelInvoke(nameof(EndAllTimeSlow));
+        Invoke(nameof(EndAllTimeSlow), duration);
+    }
+
+    private void EndAllTimeSlow()
+    {
+        TimeSlowAll = false;
+        OnAllTimeSlowEnd?.Invoke();
+    }
+
     public void SetTimeStopEnemyTrue()
     {
-        TimeStopEnemy = true;
-        OnAllTimeStopEnemy?.Invoke();
+        TimeStopAll = true;
+        OnAllTimeStopStart?.Invoke();
     }
 
     public void SetTimeStopEnemyFalse()
     {
-        TimeStopEnemy = false;
-        OnAllTimeStartEnemy?.Invoke();
+        TimeStopAll = false;
+        OnAllTimeStopEnd?.Invoke();
     }
+
+    #region ChangeScene
 
     public void RegisterChangeSceneTrigger(ChangeSceneTrigger trigger)
     {
@@ -106,5 +136,5 @@ public class GameManager : MonoBehaviour
     {
         OnChangeSceneFinished?.Invoke();
     }
-
+    #endregion
 }
