@@ -135,6 +135,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
                     counterVelocity = movement.TimeStopVelocity * -4f;
                     movement.SetTimeStopVelocity(counterVelocity);
                     facingDirection = direction;
+                    movement.Turn();
                 }
                 else
                 {
@@ -149,7 +150,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
                     counterVelocity = movement.CurrentVelocity * -4f;
                     movement.SetVelocity(counterVelocity);
                     facingDirection = direction;
-                    movement.Flip();
+                    movement.Turn();
                 }
                 else
                 {

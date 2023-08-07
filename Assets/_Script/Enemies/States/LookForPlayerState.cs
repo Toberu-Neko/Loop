@@ -37,7 +37,7 @@ public class LookForPlayerState : State
         lastTurnTime = StartTime;
         amountOfTurnsDone = 0;
 
-        Movement.SetVelocityX(0f);
+        Movement.SetVelocityZero();
     }
 
     public override void Exit()
@@ -49,11 +49,15 @@ public class LookForPlayerState : State
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityX(0f);
+        Movement.SetVelocityZero();
 
         if (Stats.IsTimeStopped)
         {
             lastTurnTime += Time.deltaTime;
+        }
+        if (Stats.IsTimeSlowed)
+        {
+            lastTurnTime += Time.deltaTime * (1f- Stats.TimeSlowMultiplier);
         }
 
         if (turnImmediately && !Stats.IsTimeStopped)

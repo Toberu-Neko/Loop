@@ -121,7 +121,7 @@ public class Movement : CoreComponent
     }
     #endregion
 
-    #region Set Functions
+    #region Set Velocity
 
     public void SetPosition(Vector2 position, Quaternion rotation, int facingDirection)
     {
@@ -231,7 +231,7 @@ public class Movement : CoreComponent
     {
         RB.drag = orginalGrag;
     }
-
+    private Vector3 v3WorkSpace;
 
     public void Flip()
     {
@@ -239,7 +239,8 @@ public class Movement : CoreComponent
         RB.transform.Rotate(0.0f, 180, 0.0f);
 
         float roundedAngle = Mathf.Round(RB.transform.eulerAngles.y * 1000000f) / 1000000f;
-        RB.transform.eulerAngles = new Vector3(0f, roundedAngle, 0f);
+        v3WorkSpace.Set(0f, roundedAngle, 0f);
+        RB.transform.eulerAngles = v3WorkSpace;
 
         OnFlip?.Invoke();
         //TODO: Fixed Rotate, but remove if lag.
@@ -247,7 +248,8 @@ public class Movement : CoreComponent
 
     public void Turn()
     {
-        RB.transform.eulerAngles *= -1; 
+        v3WorkSpace.Set(0f, 0f, 180f);
+        RB.transform.eulerAngles += v3WorkSpace; 
     }
     #endregion
 }
