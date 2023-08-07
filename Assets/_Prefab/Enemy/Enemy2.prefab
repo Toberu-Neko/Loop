@@ -570,7 +570,7 @@ Transform:
   - {fileID: 1721487985452990222}
   - {fileID: 4606329102939636372}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7547773283138414722
 Animator:
@@ -825,18 +825,19 @@ MonoBehaviour:
   ceilingCheck: {fileID: 0}
   headCheck: {fileID: 0}
   groundCheckV2: {x: 0.47, y: 0.1}
+  slopeCheckV2: {x: 0.47, y: 0.8}
   ceilingCheckV2: {x: 0, y: 0}
   headCheckV2: {x: 0, y: 0}
   slopeCheckDistance: 0.5
   slopeMaxAngle: 0
   wallCheckDistance: 0.3
-  ledgeCheckDistance: 1
+  ledgeCheckDistance: 0.5
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   whatIsPlatform:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
 --- !u!1 &5067174258488580332
 GameObject:
   m_ObjectHideFlags: 0

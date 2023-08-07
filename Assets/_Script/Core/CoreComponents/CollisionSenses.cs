@@ -59,6 +59,7 @@ public class CollisionSenses : CoreComponent
 
     [Tooltip("這個的值要略小於Collider的寬度, 不然碰到牆壁時會卡住.")]
     [SerializeField] private Vector2 groundCheckV2;
+    [SerializeField] private Vector2 slopeCheckV2;
 
     [SerializeField] private Vector2 ceilingCheckV2;
     [SerializeField] private Vector2 headCheckV2;
@@ -86,7 +87,13 @@ public class CollisionSenses : CoreComponent
     }
     public bool Ground
     {
-        get => Physics2D.BoxCast(GroundCheck.position, groundCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
+        get
+        {
+            if(!Slope.IsOnSlope)
+                return Physics2D.BoxCast(GroundCheck.position, groundCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
+            else
+                return Physics2D.BoxCast(GroundCheck.position, slopeCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
+        }
     }
     public Slope Slope
     {
@@ -168,9 +175,12 @@ public class CollisionSenses : CoreComponent
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(GroundCheck.position, groundCheckV2);
+            Gizmos.color = Color.gray;
+            Gizmos.DrawWireCube(GroundCheck.position, slopeCheckV2);
         }
         if (GroundCheck && HeadCheck && CeilingCheck)
         {
+            Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(HeadCheck.position, headCheckV2);
             Gizmos.DrawWireCube(CeilingCheck.position, ceilingCheckV2);
         }

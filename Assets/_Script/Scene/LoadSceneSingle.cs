@@ -7,7 +7,7 @@ public class LoadSceneSingle : MonoBehaviour
 
     public void LoadScene()
     {
-        GameManager.Instance.ResumeGame();
+        Debug.Log("Loading scene: " + scene.name);
         SceneManager.LoadScene(scene.name);
     }
 }

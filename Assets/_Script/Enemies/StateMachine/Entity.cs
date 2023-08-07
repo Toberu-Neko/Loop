@@ -15,6 +15,7 @@ public class Entity : MonoBehaviour
     private CollisionSenses collisionSenses;
 
     public Animator Anim { get; private set; }
+    private float animSpeed;
     private WeaponAttackDetails collisionAttackDetails;
     public bool SkillCollideDamage { get; private set; }
 
@@ -28,6 +29,7 @@ public class Entity : MonoBehaviour
         collisionSenses = Core.GetCoreComponent<CollisionSenses>();
 
         Anim = GetComponent<Animator>();
+        animSpeed = 1f;
         collisionAttackDetails = EntityData.collisionAttackDetails;
 
         StateMachine = new();
@@ -55,13 +57,13 @@ public class Entity : MonoBehaviour
 
     private void HandleOnTimeStop()
     {
-        Anim.enabled = false;
+        Anim.speed = 0;
         StateMachine.SetCanChangeState(false);
     }
 
     private void HandleOnTimeStart()
     {
-        Anim.enabled = true;
+        Anim.speed = animSpeed;
         StateMachine.SetCanChangeState(true);
     }
 
