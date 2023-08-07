@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Eflatun.SceneReference;
 
 public class LoadScene : MonoBehaviour
 {
-    [SerializeField] private Object scene;
+    [SerializeField] private SceneReference scene;
     private bool isLoadedThisFram = false;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !SceneManager.GetSceneByName(scene.name).isLoaded && !isLoadedThisFram)
+        if (other.CompareTag("Player") && !SceneManager.GetSceneByName(scene.Name).isLoaded && !isLoadedThisFram)
         {
             isLoadedThisFram = true;
-            SceneManager.LoadSceneAsync(scene.name, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(scene.Name, LoadSceneMode.Additive);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

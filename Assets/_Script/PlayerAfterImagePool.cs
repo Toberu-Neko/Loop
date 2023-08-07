@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerAfterImagePool : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject afterImagePrefab;
+    [SerializeField] private GameObject afterImagePrefab;
+    [SerializeField] private SpriteRenderer playerSR;
 
     private Queue<GameObject> availableObjects = new();
 
@@ -20,15 +20,15 @@ public class PlayerAfterImagePool : MonoBehaviour
         }
 
         Instance = this;
-        // DontDestroyOnLoad(gameObject);
         GrowPool();
     }
+
 
     private void GrowPool()
     {
         for(int i = 0; i < 10; i++)
         {
-            var instanceToAdd = Instantiate(afterImagePrefab);
+            GameObject instanceToAdd = Instantiate(afterImagePrefab);
             instanceToAdd.transform.SetParent(transform);
             AddToPool(instanceToAdd);
         }
@@ -47,7 +47,7 @@ public class PlayerAfterImagePool : MonoBehaviour
             GrowPool();
         }
 
-        var instance = availableObjects.Dequeue();
+        GameObject instance = availableObjects.Dequeue();
         instance.SetActive(true);
         return instance;
     }

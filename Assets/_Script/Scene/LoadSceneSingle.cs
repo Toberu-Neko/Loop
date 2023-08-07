@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Eflatun.SceneReference;
 
 public class LoadSceneSingle : MonoBehaviour
 {
-    [SerializeField] private Object scene;
+    [SerializeField] private SceneReference scene;
 
     public void LoadScene()
     {
-        Debug.Log("Loading scene: " + scene.name);
-        SceneManager.LoadScene(scene.name);
+        SceneManager.LoadScene(scene.Name);
     }
 }

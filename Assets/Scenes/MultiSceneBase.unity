@@ -930,6 +930,22 @@ PrefabInstance:
       propertyPath: scene
       value: 
       objectReference: {fileID: 102900000, guid: 978162f4c20ab1b4ebc7924a091f6b16, type: 3}
+    - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
+      propertyPath: scene.guid
+      value: 978162f4c20ab1b4ebc7924a091f6b16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
+      propertyPath: scene.asset
+      value: 
+      objectReference: {fileID: 102900000, guid: 978162f4c20ab1b4ebc7924a091f6b16, type: 3}
+    - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
+      propertyPath: newScene.guid
+      value: 978162f4c20ab1b4ebc7924a091f6b16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
+      propertyPath: newScene.asset
+      value: 
+      objectReference: {fileID: 102900000, guid: 978162f4c20ab1b4ebc7924a091f6b16, type: 3}
     - target: {fileID: 6629223887420520686, guid: 06235240d8c80eb498a872b053458df8, type: 3}
       propertyPath: m_Name
       value: LoadLevelTrigger (1)
@@ -1009,7 +1025,7 @@ GameObject:
   - component: {fileID: 183069047}
   m_Layer: 10
   m_Name: WeaponHitbox
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1836,8 +1852,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7dce6396f1ee44a5583cbd82cbde2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftScene: {fileID: 102900000, guid: 74b014ca203ae854a93c2f50efb38417, type: 3}
-  rightScene: {fileID: 102900000, guid: 978162f4c20ab1b4ebc7924a091f6b16, type: 3}
+  leftScene:
+    asset: {fileID: 102900000, guid: 74b014ca203ae854a93c2f50efb38417, type: 3}
+    guid: 74b014ca203ae854a93c2f50efb38417
+  rightScene:
+    asset: {fileID: 102900000, guid: 978162f4c20ab1b4ebc7924a091f6b16, type: 3}
+    guid: 978162f4c20ab1b4ebc7924a091f6b16
   col: {fileID: 267825970}
 --- !u!61 &267825970
 BoxCollider2D:
@@ -2437,6 +2457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   afterImagePrefab: {fileID: 5533319139291640069, guid: 711b51473a43e114e9771db38144bbb4, type: 3}
+  playerSR: {fileID: 1446678358}
 --- !u!1 &409216854
 GameObject:
   m_ObjectHideFlags: 0
@@ -13343,6 +13364,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
       propertyPath: scene
+      value: 
+      objectReference: {fileID: 102900000, guid: 74b014ca203ae854a93c2f50efb38417, type: 3}
+    - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
+      propertyPath: scene.guid
+      value: 74b014ca203ae854a93c2f50efb38417
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
+      propertyPath: scene.asset
+      value: 
+      objectReference: {fileID: 102900000, guid: 74b014ca203ae854a93c2f50efb38417, type: 3}
+    - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
+      propertyPath: newScene.guid
+      value: 74b014ca203ae854a93c2f50efb38417
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632140976480557458, guid: 06235240d8c80eb498a872b053458df8, type: 3}
+      propertyPath: newScene.asset
       value: 
       objectReference: {fileID: 102900000, guid: 74b014ca203ae854a93c2f50efb38417, type: 3}
     - target: {fileID: 6629223887420520686, guid: 06235240d8c80eb498a872b053458df8, type: 3}

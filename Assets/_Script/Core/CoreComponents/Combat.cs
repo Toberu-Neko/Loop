@@ -106,7 +106,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         if (knockStrengthDelta < 0)
         {
             dir = -1;
-            knockStrengthDelta *= 1;
+            knockStrengthDelta *= -1;
 
         }
         else

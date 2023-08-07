@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Eflatun.SceneReference;
 
 public class ChangeSceneTrigger : MonoBehaviour
 {
-    [SerializeField] private UnityEngine.Object leftScene;
-    [SerializeField] private UnityEngine.Object rightScene;
+    [SerializeField] private SceneReference leftScene;
+    [SerializeField] private SceneReference rightScene;
     [SerializeField] private Collider2D col;
 
     private bool isUnloaded = false;
@@ -31,22 +32,22 @@ public class ChangeSceneTrigger : MonoBehaviour
         {
             Vector2 exitDirection = (collision.transform.position - col.bounds.center).normalized;
             if(exitDirection.x > 0 && enterPosX < 0 && 
-                SceneManager.GetSceneByName(leftScene.name).isLoaded)
+                SceneManager.GetSceneByName(leftScene.Name).isLoaded)
             {
                 if (!isUnloaded)
                 {
                     isUnloaded = true;
-                    SceneManager.UnloadSceneAsync(leftScene.name);
+                    SceneManager.UnloadSceneAsync(leftScene.Name);
                     OnChangeSceneGoRight?.Invoke();
                 }
             }
             else if(enterPosX > 0 && exitDirection.x < 0 &&
-                SceneManager.GetSceneByName(rightScene.name).isLoaded)
+                SceneManager.GetSceneByName(rightScene.Name).isLoaded)
             {
                 if (!isUnloaded)
                 {
                     isUnloaded = true;
-                    SceneManager.UnloadSceneAsync(rightScene.name);
+                    SceneManager.UnloadSceneAsync(rightScene.Name);
                     OnChangeSceneGoLeft?.Invoke();
                 }
             }
