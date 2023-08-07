@@ -66,6 +66,9 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 
     private void FixedUpdate()
     {
+        core.PhysicsUpdate();
+
+
         if (!hasHitGround)
         {
             /* Collider2D damageHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsPlayer);

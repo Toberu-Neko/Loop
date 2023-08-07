@@ -142,6 +142,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Core.PhysicsUpdate();
+
         StateMachine.CurrentState.PhysicsUpdate();
     }
 

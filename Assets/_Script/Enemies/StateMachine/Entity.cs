@@ -80,6 +80,8 @@ public class Entity : MonoBehaviour
     }
     public virtual void FixedUpdate()
     {
+        Core.PhysicsUpdate();
+
         StateMachine.CurrentState.DoChecks();
         StateMachine.CurrentState.PhysicsUpdate();
     }

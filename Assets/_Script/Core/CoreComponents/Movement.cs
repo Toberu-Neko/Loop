@@ -17,13 +17,15 @@ public class Movement : CoreComponent
     public Vector2 TimeStopVelocity { get; private set; }
     private float orginalGrag;
 
-
     public Vector2 TimeSlowVelocity { get; private set; }
     private float timeSlowOrgGravityScale;
     private float orginalGravityScale;
     private float gravityWorkspace;
 
+    private Vector2 previousPosition;
+
     public event Action OnFlip;
+    public event Action OnStuck;
 
     private Stats stats;
 
@@ -32,6 +34,8 @@ public class Movement : CoreComponent
         base.Awake();
 
         parentTransform = core.transform.parent;
+        previousPosition = Vector2.zero;
+        velocityWorkspace = Vector2.zero;
         RB = GetComponentInParent<Rigidbody2D>();
         stats = core.GetCoreComponent<Stats>();
 
@@ -40,6 +44,7 @@ public class Movement : CoreComponent
 
         FacingDirection = 1;
         CanSetVelocity = true;
+
         stats.OnTimeStopEnd += HandleTimeStopEnd;
         stats.OnTimeStopStart += HandleTimeStopStart;
 
@@ -56,7 +61,23 @@ public class Movement : CoreComponent
     }
     public override void LogicUpdate()
     {
+        base.LogicUpdate();
+
         CurrentVelocity = RB.velocity;
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+
+        if (velocityWorkspace != Vector2.zero)
+        {
+            if (previousPosition == (Vector2)parentTransform.position)
+            {
+                OnStuck?.Invoke();
+            }
+            previousPosition = parentTransform.position;
+        }
     }
 
     #region Time Stop
