@@ -20,6 +20,12 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
         pointsInTime = new();
         isRecording = false;
     }
+    public override void Exit()
+    {
+        base.Exit();
+
+        StopRewinding();
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();

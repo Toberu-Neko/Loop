@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTimeSkill_BulletTimeRanged : MonoBehaviour
+public class PlayerTimeSkill_BulletTimeRanged : PlayerTimeSkillBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public PlayerTimeSkill_BulletTimeRanged(Player player, PlayerTimeSkillManager manager, PlayerTimeSkillStateMachine stateMachine, PlayerTimeSkillData data, string animBoolName) : base(player, manager, stateMachine, data, animBoolName)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -23,6 +23,14 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
         throwVelocity = data.minThrowVelocity;
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        UnEquip();
+        HandleObjFlyBack();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

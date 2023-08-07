@@ -16,6 +16,13 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
 
         pointsInTime = new();
     }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        StopRewinding();
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();

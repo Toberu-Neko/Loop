@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class PlayerTimeSkill_TimeStopAll : PlayerTimeSkillBase
 {
+
     public PlayerTimeSkill_TimeStopAll(Player player, PlayerTimeSkillManager manager, PlayerTimeSkillStateMachine stateMachine, PlayerTimeSkillData data, string animBoolName) : base(player, manager, stateMachine, data, animBoolName)
     {
     }
+    public override void Enter()
+    {
+        base.Enter();
 
+        GameManager.Instance.OnChangeSceneFinished += HandleChangeScene;
+    }
+    public override void Exit()
+    {
+        base.Exit();
+
+        GameManager.Instance.SetTimeStopEnemyFalse();
+        GameManager.Instance.OnChangeSceneFinished -= HandleChangeScene;
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -27,5 +40,10 @@ public class PlayerTimeSkill_TimeStopAll : PlayerTimeSkillBase
         {
             manager.DecreaseEnergy(data.timeStopAllCostPerSecond * Time.deltaTime);
         }
+    }
+
+    private void HandleChangeScene()
+    {
+        GameManager.Instance.SetTimeStopEnemyFalse();
     }
 }

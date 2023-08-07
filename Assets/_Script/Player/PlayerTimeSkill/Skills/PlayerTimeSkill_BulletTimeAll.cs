@@ -16,6 +16,10 @@ public class PlayerTimeSkill_BulletTimeAll : PlayerTimeSkillBase
         started = false;
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
