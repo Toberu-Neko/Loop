@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerTimeSkillManager : MonoBehaviour
 {
     [SerializeField] private PlayerTimeSkillData data;
+    [SerializeField] private Core core;
+    private Combat combat;
+
     [field: SerializeField] public GameObject BulletTimeEffectObj { get; private set; }
     private Player player;
 
@@ -29,6 +32,9 @@ public class PlayerTimeSkillManager : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<Player>();
+        combat = core.GetCoreComponent<Combat>();
+
+        combat.OnPerfectBlock += HandleOnPerfectBlock;
 
         BulletTimeEffectObj.SetActive(false);
 
@@ -69,9 +75,31 @@ public class PlayerTimeSkillManager : MonoBehaviour
         StateMachine.CurrentState.PhysicsUpdate();
     }
 
+    private void OnDisable()
+    {
+        combat.OnPerfectBlock -= HandleOnPerfectBlock;
+    }
+
+    public void HandleOnAttack()
+    {
+        IncreaseEnergy(data.attackInvreaseEnergy);
+    }
+
+    private void HandleOnPerfectBlock()
+    {
+        IncreaseEnergy(data.perfectBolckIncreaseEnergy);
+    }
+
     public void DecreaseEnergy(float amount)
     {
         CurrentEnergy -= amount;
+        CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, maxEnergy);
+        OnStateChanged?.Invoke();
+    }
+
+    public void IncreaseEnergy(float amount)
+    {
+        CurrentEnergy += amount;
         CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, maxEnergy);
         OnStateChanged?.Invoke();
     }

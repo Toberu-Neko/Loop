@@ -10,6 +10,12 @@ public class PlayerPerfectBlockState : PlayerAttackState
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+    }
+
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
@@ -40,15 +46,5 @@ public class PlayerPerfectBlockState : PlayerAttackState
             }
             
         }
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
     }
 }

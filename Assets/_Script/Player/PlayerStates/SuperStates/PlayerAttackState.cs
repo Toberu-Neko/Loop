@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class PlayerAttackState : PlayerState
     private bool jumpInput;
     private bool jumpInputStop;
     private bool isJumping;
+
+    private event Action OnAttack;
 
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -30,12 +33,16 @@ public class PlayerAttackState : PlayerState
         Stats.SetCanChangeWeapon(false);
         isAttackDone = false;
         isJumping = false;
+        OnAttack += Combat.HandleOnAttack;
+        OnAttack += player.TimeSkillManager.HandleOnAttack;
     }
 
     public override void Exit()
     {
         base.Exit();
         Stats.SetCanChangeWeapon(true);
+        OnAttack -= Combat.HandleOnAttack;
+        OnAttack -= player.TimeSkillManager.HandleOnAttack;
     }
 
     public override void LogicUpdate()
@@ -62,6 +69,7 @@ public class PlayerAttackState : PlayerState
     {
         base.AnimationFinishTrigger();
 
+
         Combat.DetectedDamageables.Clear();
         Combat.DetectedKnockbackables.Clear();
         Combat.DetectedStaminaDamageables.Clear();
@@ -71,6 +79,7 @@ public class PlayerAttackState : PlayerState
     {
         if (Combat.DetectedDamageables.Count > 0)
         {
+            OnAttack?.Invoke();
             foreach (IDamageable damageable in Combat.DetectedDamageables.ToList())
             {
                 damageable.Damage(damageAmount, core.transform.position, blockable);

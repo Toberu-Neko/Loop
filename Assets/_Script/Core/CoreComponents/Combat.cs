@@ -94,6 +94,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     }
 
     #region Event Handlers
+    public void HandleOnAttack()
+    {
+
+    }
+
     private void HandleStartTime()
     {
         DecreaseHealth(healthDelta);

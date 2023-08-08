@@ -7,6 +7,9 @@ public class PlayerTimeSkillData : ScriptableObject
 {
     public float maxEnergy = 100f;
     public LayerMask whatIsInteractable;
+    public float attackInvreaseEnergy = 5f;
+    public float perfectBolckIncreaseEnergy = 20f;
+
 
     [Header("Rewind Player")]
     [Range(1,5)]

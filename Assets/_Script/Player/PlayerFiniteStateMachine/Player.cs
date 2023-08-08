@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Components
+    public PlayerTimeSkillManager TimeSkillManager { get; private set; }
     public Core Core { get; private set; }
 
     private Movement movement;
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour
     {
         Core = GetComponentInChildren<Core>();
 
+        TimeSkillManager = GetComponent<PlayerTimeSkillManager>();
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
