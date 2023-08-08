@@ -64,6 +64,15 @@ public class Movement : CoreComponent
         base.LogicUpdate();
 
         CurrentVelocity = RB.velocity;
+
+        if (Slope.IsOnSlope)
+        {
+            SetGravityZero();
+        }
+        else
+        {
+            SetGravityOrginal();
+        }
     }
 
     public override void PhysicsUpdate()

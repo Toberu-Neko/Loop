@@ -14,6 +14,7 @@ public class Stats : CoreComponent
     private float combatTimer = 2f;
     private float lastCombatTime;
 
+
     public bool PerfectBlockAttackable { get; private set; }
     public bool Invincible { get; private set; } = false;
     public bool InCombat { get; private set; } = false;
@@ -24,6 +25,7 @@ public class Stats : CoreComponent
     public bool IsTimeStopped { get; private set; } = false;
     public bool IsTimeSlowed { get; private set; } = false;
     public float TimeSlowMultiplier { get; private set; } = 0f;
+    public float AnimationSpeed { get; private set; } = 1f;
 
     public event Action OnTimeStopStart;
     public event Action OnTimeStopEnd;

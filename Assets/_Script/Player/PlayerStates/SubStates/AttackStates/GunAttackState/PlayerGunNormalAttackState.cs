@@ -47,6 +47,12 @@ public class PlayerGunNormalAttackState : PlayerAttackState
         else if (mouseDirectionInput.x > 0)
             Movement.CheckIfShouldFlip(1);
 
+        if (!attackInput)
+        {
+            isAttackDone = true;
+        }
+
+        /*
         CheckCanAttack();
 
         if (!attackInput)
@@ -57,6 +63,20 @@ public class PlayerGunNormalAttackState : PlayerAttackState
         {
             canAttack = false;
             lastAttackTime = Time.time;
+            player.PlayerWeaponManager.DecreaseEnergy();
+            player.PlayerWeaponManager.GunFired();
+
+            PlayerProjectile proj = GameObject.Instantiate(data.normalAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity).GetComponent<PlayerProjectile>();
+            proj.Fire(data.normalAttackDetails, mouseDirectionInput);
+        }*/
+    }
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        if(player.PlayerWeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
+        {
             player.PlayerWeaponManager.DecreaseEnergy();
             player.PlayerWeaponManager.GunFired();
 
