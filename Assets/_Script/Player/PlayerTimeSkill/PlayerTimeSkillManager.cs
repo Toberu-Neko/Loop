@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerTimeSkillManager : MonoBehaviour
 {
     [SerializeField] private PlayerTimeSkillData data;
+    [field: SerializeField] public GameObject BulletTimeEffectObj { get; private set; }
     private Player player;
 
     public PlayerTimeSkillStateMachine StateMachine { get; private set; }
@@ -14,6 +15,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
     public PlayerTimeSkill_TimeStopThrow SkillTimeStopThrow { get; private set; }
     public PlayerTimeSkill_BookMark SkillBookMark { get; private set; }
     public PlayerTimeSkill_BulletTimeAll SkillBulletTimeAll { get; private set; }
+    public PlayerTimeSkill_BulletTimeRanged SkillBulletTimeRanged { get; private set; }
 
     public GameObject[] PredictLineObjects { get; private set; }
     public Transform[] PredictLineTransforms { get; set; }
@@ -27,6 +29,8 @@ public class PlayerTimeSkillManager : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<Player>();
+
+        BulletTimeEffectObj.SetActive(false);
 
         maxEnergy = data.maxEnergy;
         CurrentEnergy = maxEnergy;
@@ -49,6 +53,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
         SkillTimeStopAll = new(player, this, StateMachine, data, "TimeStopAll");
         SkillTimeStopThrow = new(player, this, StateMachine, data, "TimeStopThrow");
         SkillBulletTimeAll = new(player, this, StateMachine, data, "BulletTimeAll");
+        SkillBulletTimeRanged = new(player, this, StateMachine, data, "BulletTimeRanged");
 
         StateMachine.Initialize(SkillNone);
         OnStateChanged?.Invoke();
@@ -105,6 +110,18 @@ public class PlayerTimeSkillManager : MonoBehaviour
     {
         StateMachine.ChangeState(SkillBulletTimeAll);
         OnStateChanged?.Invoke();
+    }
+
+    public void ChangeToBulletTimeRangedSkill()
+    {
+        StateMachine.ChangeState(SkillBulletTimeRanged);
+        OnStateChanged?.Invoke();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, data.bulletTimeRangedRadius);
     }
 }
 

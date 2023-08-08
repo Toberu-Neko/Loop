@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerTimeSkillData : ScriptableObject
 {
     public float maxEnergy = 100f;
+    public LayerMask whatIsInteractable;
 
     [Header("Rewind Player")]
     [Range(1,5)]
@@ -31,6 +32,11 @@ public class PlayerTimeSkillData : ScriptableObject
     public float bulletTimeAllCost = 50f;
     [Range(0.001f, 1f)]
     public float bulletTimeVelocityMultiplier = 0.2f;
+
+    [Header("Bullet Time Ranged")]
+    public float bulletTimeRangedDuration = 3f;
+    public float bulletTimeRangedCost = 50f;
+    public float bulletTimeRangedRadius = 3f;
 
     [Header("Time Stop Throw")]
     [Tooltip("每秒消耗能量")]

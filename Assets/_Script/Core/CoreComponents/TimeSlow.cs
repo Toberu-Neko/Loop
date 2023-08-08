@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class TimeSlow : CoreComponent, ITimeSlowable
 {
     private GameManager gameManager;
@@ -31,5 +33,10 @@ public class TimeSlow : CoreComponent, ITimeSlowable
     public void EndTimeSlow()
     {
         stats.SetTimeSlowFalse();
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 }

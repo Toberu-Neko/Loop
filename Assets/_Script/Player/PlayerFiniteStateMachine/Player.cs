@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public SpriteRenderer SR { get; private set; }
-    public Transform DashDirectionIndicator { get; private set; }
+    [field: SerializeField] public Transform DashDirectionIndicator { get; private set; }
     public BoxCollider2D MovementCollider { get; private set; }
     #endregion
 
@@ -77,7 +77,6 @@ public class Player : MonoBehaviour
         SR = GetComponent<SpriteRenderer>();
         MovementCollider = GetComponent<BoxCollider2D>();
         PlayerWeaponManager = GetComponent<PlayerWeaponManager>();
-        DashDirectionIndicator = transform.Find("DashDirectionIndicator");
 
         StateMachine = new PlayerStateMachine();
 

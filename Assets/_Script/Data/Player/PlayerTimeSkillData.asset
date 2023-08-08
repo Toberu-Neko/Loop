@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: PlayerTimeSkillData
   m_EditorClassIdentifier: 
   maxEnergy: 10000
+  whatIsInteractable:
+    serializedVersion: 2
+    m_Bits: 14592
   rewindPlaySpeed: 2
   rewindMaxTime: 10
   rewindCostPerSecond: 10
@@ -20,6 +23,12 @@ MonoBehaviour:
   bookmarkPlaySpeed: 3
   bookMarkPrefab: {fileID: 3712972217386022016, guid: b8ad57edcd138a9438af90482bfb8b38, type: 3}
   timeStopAllCostPerSecond: 20
+  bulletTimeAllDuration: 3
+  bulletTimeAllCost: 50
+  bulletTimeVelocityMultiplier: 0.2
+  bulletTimeRangedDuration: 3
+  bulletTimeRangedCost: 50
+  bulletTimeRangedRadius: 3
   timeStopThrowCost: 15
   timeStopThrowObj: {fileID: 6782782113917738760, guid: 3010318eda6f2cd4883cfe8d5060cf9e, type: 3}
   throwVelocityIncreaseRate: 8

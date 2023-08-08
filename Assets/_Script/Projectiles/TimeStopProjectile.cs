@@ -44,7 +44,6 @@ public class TimeStopProjectile : MonoBehaviour
 
             foreach(RaycastHit2D h in hit)
             {
-                // Debug.Log(h.collider.gameObject.name);
                 if(h.collider.gameObject.TryGetComponent(out ITimeStopable stopable))
                 {
                     stopable.DoTimeStop(stopTime);
