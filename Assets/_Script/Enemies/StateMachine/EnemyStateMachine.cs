@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class EnemyStateMachine
 {
-    public State CurrentState { get; private set; }
+    public EnemyState CurrentState { get; private set; }
     private bool canChangeState = true;
 
-    public void Initialize(State startingState)
+    public void Initialize(EnemyState startingState)
     {
         CurrentState = startingState;
         CurrentState.Enter();
     }
 
-    public void ChangeState(State newState)
+    public void ChangeState(EnemyState newState)
     {
         if (canChangeState)
         {

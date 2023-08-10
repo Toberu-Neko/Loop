@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LookForPlayerState : State
+public class LookForPlayerState : EnemyState
 {
     protected S_EnemyLookForPlayerState stateData;
 

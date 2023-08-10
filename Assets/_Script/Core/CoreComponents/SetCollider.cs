@@ -19,6 +19,7 @@ public class SetCollider : CoreComponent
         base.Awake();
 
         collisionSenses = core.GetCoreComponent<CollisionSenses>();
+
         movement = core.GetCoreComponent<Movement>();
         movement.OnStuck += HandleOnStuck;
 
@@ -35,7 +36,7 @@ public class SetCollider : CoreComponent
         if (!changed && collisionSenses.CanChangeCollider)
         {
             changed = true;
-            StartCoroutine(Change(0.7f));
+            StartCoroutine(Change(0.65f));
         }
     }
 
@@ -57,7 +58,7 @@ public class SetCollider : CoreComponent
         while(multiplier < 1f)
         {
             SetColliderHeight(orgHeight * multiplier);
-            multiplier += 0.07f;
+            multiplier += 0.15f;
             yield return new WaitForSeconds(Time.deltaTime);
         }
         SetColliderHeight(orgHeight);

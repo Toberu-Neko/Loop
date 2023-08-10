@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : State
+public class DeadState : EnemyState
 {
     protected S_EnemyDeadState stateData;
     public DeadState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyDeadState stateData) : base(entity, stateMachine, animBoolName)

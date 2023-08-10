@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class State
+public class EnemyState
 {
     protected EnemyStateMachine stateMachine;
     protected Entity entity;
@@ -26,7 +26,7 @@ public class State
     private Movement movement;
 
 
-    public State(Entity entity, EnemyStateMachine stateMachine, string animBoolName)
+    public EnemyState(Entity entity, EnemyStateMachine stateMachine, string animBoolName)
     {
         this.entity = entity;
         this.stateMachine = stateMachine;

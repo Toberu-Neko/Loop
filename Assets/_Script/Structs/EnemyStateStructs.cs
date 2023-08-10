@@ -20,6 +20,13 @@ public struct S_EnemyGroundMoveState
 }
 
 [Serializable]
+public struct S_PlayerDetectedMoveState
+{
+    [Tooltip("移動速度")]
+    public float movementSpeed;
+}
+
+[Serializable]
 public struct S_EnemyPlayerDetectedState
 {
     [Tooltip("偵測到玩家後, 執行下一個動作的延遲")]

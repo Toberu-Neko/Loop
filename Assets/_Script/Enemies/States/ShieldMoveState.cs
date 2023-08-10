@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldMoveState : State
+public class ShieldMoveState : EnemyState
 {
     S_EnemyShieldMoveState stateData;
     public ShieldMoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyShieldMoveState stateData) : base(entity, stateMachine, animBoolName)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DodgeState : State
+public class DodgeState : EnemyState
 {
     protected S_EnemyDodgeState stateData;
 

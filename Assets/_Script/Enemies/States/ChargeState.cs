@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChargeState : State
+public class ChargeState : EnemyState
 {
     protected S_EnemyChargeState stateData;
 
