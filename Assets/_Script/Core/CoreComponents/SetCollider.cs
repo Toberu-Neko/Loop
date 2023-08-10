@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SetCollider : CoreComponent
 {
     private Movement movement;
     private CollisionSenses collisionSenses;
+    private Stats stats;
 
     [SerializeField] private BoxCollider2D movementCollider;
     // [SerializeField] private float stuckColliderHeight = 0.5f;
@@ -19,16 +19,25 @@ public class SetCollider : CoreComponent
         base.Awake();
 
         collisionSenses = core.GetCoreComponent<CollisionSenses>();
+        stats = core.GetCoreComponent<Stats>();
 
         movement = core.GetCoreComponent<Movement>();
-        movement.OnStuck += HandleOnStuck;
 
         orgHeight = movementCollider.size.y;
         changed = false;
+
+        movement.OnStuck += HandleOnStuck;
+        stats.Health.OnCurrentValueZero += HandleHelthZero;
     }
     private void OnDisable()
     {
         movement.OnStuck -= HandleOnStuck;
+        stats.Health.OnCurrentValueZero -= HandleHelthZero;
+    }
+
+    private void HandleHelthZero()
+    {
+        this.enabled = false;
     }
 
     private void HandleOnStuck()
@@ -36,7 +45,7 @@ public class SetCollider : CoreComponent
         if (!changed && collisionSenses.CanChangeCollider)
         {
             changed = true;
-            StartCoroutine(Change(0.65f));
+            StartCoroutine(Change(0.75f));
         }
     }
 

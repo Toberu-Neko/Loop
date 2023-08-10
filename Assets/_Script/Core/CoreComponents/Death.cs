@@ -24,14 +24,15 @@ public class Death : CoreComponent
         core.transform.parent.gameObject.SetActive(false);
     }
 
+    /*
     private void OnEnable()
     {
-        //TODO: Modify this if need to go dead state first.
+        TODO: Modify this if need to go dead state first.
         Stats.Health.OnCurrentValueZero += Die;
     }
 
     private void OnDisable()
     {
         Stats.Health.OnCurrentValueZero -= Die;
-    }
+    }*/
 }

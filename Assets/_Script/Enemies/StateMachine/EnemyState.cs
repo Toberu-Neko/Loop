@@ -25,6 +25,9 @@ public class EnemyState
     protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
 
+    protected Death Death => death ? death : core.GetCoreComponent<Death>();
+    private Death death;
+
 
     public EnemyState(Entity entity, EnemyStateMachine stateMachine, string animBoolName)
     {

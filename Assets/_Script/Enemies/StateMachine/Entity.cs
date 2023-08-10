@@ -148,7 +148,7 @@ public class Entity : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player") && stats.Health.CurrentValue > 0f)
         {
             int direction;
             if (collision.gameObject.transform.position.x > GetPosition().x)
@@ -182,7 +182,7 @@ public class Entity : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player") && stats.Health.CurrentValue > 0f)
         {
             int direction;
             if (collision.gameObject.transform.position.x > GetPosition().x)
