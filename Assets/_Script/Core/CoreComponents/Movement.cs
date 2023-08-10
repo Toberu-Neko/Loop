@@ -11,7 +11,6 @@ public class Movement : CoreComponent
 
     public Vector2 CurrentVelocity { get; private set; }
     private Transform parentTransform;
-    public Slope Slope { get; set; } = new();
 
     private Vector2 velocityWorkspace;
     public Vector2 TimeStopVelocity { get; private set; }
@@ -27,6 +26,7 @@ public class Movement : CoreComponent
     public event Action OnFlip;
     public event Action OnStuck;
 
+    public Slope Slope { get; set; } = new();
     private Stats stats;
 
     protected override void Awake()
@@ -65,13 +65,16 @@ public class Movement : CoreComponent
 
         CurrentVelocity = RB.velocity;
 
-        if (Slope.IsOnSlope)
+        if (Slope.hasCollisionSenses)
         {
-            SetGravityZero();
-        }
-        else
-        {
-            SetGravityOrginal();
+            if (Slope.IsOnSlope)
+            {
+                SetGravityZero();
+            }
+            else
+            {
+                SetGravityOrginal();
+            }
         }
     }
 

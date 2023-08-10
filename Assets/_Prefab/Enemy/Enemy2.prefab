@@ -570,7 +570,7 @@ Transform:
   - {fileID: 1721487985452990222}
   - {fileID: 4606329102939636372}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7547773283138414722
 Animator:
@@ -818,6 +818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 7649680517899497259}
+  changeColliderWallCheck: {fileID: 1289162715146855501}
   wallCheck: {fileID: 1289162715146855501}
   ledgeCheckVertical: {fileID: 7714942035742334208}
   wallBackCheck: {fileID: 486920869444468760}
@@ -826,6 +827,7 @@ MonoBehaviour:
   headCheck: {fileID: 0}
   groundCheckV2: {x: 0.47, y: 0.1}
   slopeCheckV2: {x: 0.47, y: 0.8}
+  changeColliderWallCheckV2: {x: 0.63, y: 0.15}
   ceilingCheckV2: {x: 0, y: 0}
   headCheckV2: {x: 0, y: 0}
   slopeCheckDistance: 0.5

@@ -20,8 +20,8 @@ public class EnterSceneTrigger : MonoBehaviour
             if(CamManager.instance.CurrentCam != cam)
             {
                 CamManager.instance.SwitchCamera(cam);
+                OnChangeSceneFinished?.Invoke();
             }
-            OnChangeSceneFinished?.Invoke();
         }
     }
     private void OnDrawGizmos()

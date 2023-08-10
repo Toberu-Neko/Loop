@@ -415,7 +415,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementCollider: {fileID: 6900012096521706580}
-  stuckColliderHeight: 0.5
 --- !u!1 &3087538619045426681
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 5344101502204357654}
+  changeColliderWallCheck: {fileID: 5737240285001706272}
   wallCheck: {fileID: 5737240285001706272}
   ledgeCheckVertical: {fileID: 6806976322977369690}
   wallBackCheck: {fileID: 6891236593798068639}
@@ -630,6 +630,7 @@ MonoBehaviour:
   headCheck: {fileID: 0}
   groundCheckV2: {x: 1.6, y: 0.1}
   slopeCheckV2: {x: 1.6, y: 0.8}
+  changeColliderWallCheckV2: {x: 0.92, y: 0.95}
   ceilingCheckV2: {x: 0, y: 0}
   headCheckV2: {x: 0, y: 0}
   slopeCheckDistance: 1
@@ -710,7 +711,7 @@ Transform:
   - {fileID: 7037364650129472806}
   - {fileID: 2152292054292639666}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8206256782856453248
 SpriteRenderer:

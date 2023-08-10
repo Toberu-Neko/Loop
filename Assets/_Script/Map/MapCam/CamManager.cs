@@ -5,8 +5,35 @@ using UnityEngine;
 
 public class CamManager : MonoBehaviour
 {
+    public static CamManager instance;
+
     private List<CinemachineVirtualCamera> cams = new();
     public CinemachineVirtualCamera CurrentCam { get; private set; }
+    private CinemachineFramingTransposer framingTransposer;
+    
+    private CinemachineImpulseSource impulseSource;
+    [SerializeField] private float shakeForce = 1f;
+
+    private Coroutine lerpYPanCoroutine;
+    private Coroutine panCameraCoroutine;
+
+    private Vector2 startingTrackedObjectOffset;
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+    }
+
+    #region Register/Unregister Cams
     public void RegisterCam(CinemachineVirtualCamera vcam)
     {
         cams.Add(vcam);
@@ -16,6 +43,10 @@ public class CamManager : MonoBehaviour
     {
         cams.Remove(vcam);
     }
+    #endregion
+
+    #region Swap/Switch Cameras
+
     public void SwitchCamera(CinemachineVirtualCamera vcam)
     {
         CurrentCam = vcam;
@@ -25,24 +56,20 @@ public class CamManager : MonoBehaviour
         startingTrackedObjectOffset = framingTransposer.m_TrackedObjectOffset;
     }
 
-    public static CamManager instance;
-
-    private CinemachineFramingTransposer framingTransposer;
-
-    private Coroutine lerpYPanCoroutine;
-    private Coroutine panCameraCoroutine;
-
-    private Vector2 startingTrackedObjectOffset;
-    private void Awake()
+    public void SwapCamera(CinemachineVirtualCamera cameraLeft, CinemachineVirtualCamera cameraRight, Vector2 triggerExitDirection)
     {
-        if(instance == null)
-            instance = this;
-        else
+        if (CurrentCam == cameraLeft && triggerExitDirection.x > 0f)
         {
-            Destroy(gameObject);
-            Debug.LogError("There is more than one CamManager in the scene!");
+            cameraLeft.enabled = false;
+            SwitchCamera(cameraRight);
+        }
+        else if (CurrentCam == cameraRight && triggerExitDirection.x < 0f)
+        {
+            cameraRight.enabled = false;
+            SwitchCamera(cameraLeft);
         }
     }
+    #endregion
 
     #region Pan Camera
     public void PanCameraOnTrigger(float panDistance, float panTime, PanDirection panDirection, bool panToStartingPoint)
@@ -99,20 +126,9 @@ public class CamManager : MonoBehaviour
     }
     #endregion
 
-    #region Swap Cameras
-
-    public void SwapCamera(CinemachineVirtualCamera cameraLeft, CinemachineVirtualCamera cameraRight, Vector2 triggerExitDirection)
+    public void CameraShake()
     {
-        if (CurrentCam == cameraLeft && triggerExitDirection.x > 0f)
-        {
-            cameraLeft.enabled = false;
-            SwitchCamera(cameraRight);
-        }
-        else if (CurrentCam == cameraRight && triggerExitDirection.x < 0f)
-        {
-            cameraRight.enabled = false;
-            SwitchCamera(cameraLeft);
-        }
+        impulseSource.GenerateImpulseWithForce(shakeForce);
     }
-    #endregion
+
 }

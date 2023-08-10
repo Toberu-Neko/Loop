@@ -194,7 +194,7 @@ public class Player : MonoBehaviour
         Invoke(nameof(ChangeToIdleState), 0.25f);
     }
 
-    private void ChangeToIdleState() => StateMachine.ChangeState(IdleState);
+    private void ChangeToIdleState() => ChangeSceneState.SetCanChangeStateTrue();
 
     #endregion
 

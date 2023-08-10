@@ -154,6 +154,7 @@ Transform:
   m_Children:
   - {fileID: 1865131052}
   - {fileID: 134768215}
+  - {fileID: 1211599904}
   - {fileID: 1924555999}
   - {fileID: 1001875251}
   - {fileID: 848071890}
@@ -173,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 1865131052}
+  changeColliderWallCheck: {fileID: 1211599904}
   wallCheck: {fileID: 1924555999}
   ledgeCheckVertical: {fileID: 0}
   wallBackCheck: {fileID: 0}
@@ -181,6 +183,7 @@ MonoBehaviour:
   headCheck: {fileID: 134768215}
   groundCheckV2: {x: 0.7, y: 0.1}
   slopeCheckV2: {x: 0.7, y: 0.8}
+  changeColliderWallCheckV2: {x: 0.48, y: 1.35}
   ceilingCheckV2: {x: 0.7, y: 0.65}
   headCheckV2: {x: 0.8, y: 1.25}
   slopeCheckDistance: 0.8
@@ -1812,6 +1815,7 @@ GameObject:
   m_Component:
   - component: {fileID: 267308896}
   - component: {fileID: 267308897}
+  - component: {fileID: 267308898}
   m_Layer: 0
   m_Name: CamManager
   m_TagString: Untagged
@@ -1846,6 +1850,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcdfd149fdfac0c49bcc700ed1aa14b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeForce: 1
+--- !u!114 &267308898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267308895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: 0.05, z: 0}
 --- !u!1 &267825968
 GameObject:
   m_ObjectHideFlags: 0
@@ -4372,6 +4430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 702556316}
   - component: {fileID: 702556317}
+  - component: {fileID: 702556318}
   m_Layer: 7
   m_Name: Movement
   m_TagString: Untagged
@@ -4406,6 +4465,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27fa873bf39ae434a9bfd76fef35ad9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &702556318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702556315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e0e89b842633a4688862d1b63a3189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementCollider: {fileID: 1446678356}
 --- !u!1 &712838171
 GameObject:
   m_ObjectHideFlags: 0
@@ -6543,6 +6615,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1211599903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1211599904}
+  m_Layer: 7
+  m_Name: ChangeColliderWallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1211599904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211599903}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.383, y: -0.153, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 15143662}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1237896217
 GameObject:
   m_ObjectHideFlags: 0
@@ -12853,18 +12956,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Debug
       objectReference: {fileID: 0}
-    - target: {fileID: 3904342520581443230, guid: 6e4fcfa68da54924f8c8423de9f07ec8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3979728438300579219, guid: 6e4fcfa68da54924f8c8423de9f07ec8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8337004175426702460, guid: 6e4fcfa68da54924f8c8423de9f07ec8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13017,10 +13108,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1446678366}
-    - target: {fileID: 3242047225652983770, guid: f4cae856c18d769409b5507c90804446, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3623202693628904531, guid: f4cae856c18d769409b5507c90804446, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

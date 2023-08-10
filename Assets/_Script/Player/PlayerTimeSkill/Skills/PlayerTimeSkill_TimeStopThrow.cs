@@ -91,7 +91,10 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
     private void HandleObjFlyBack()
     {
         throwable = true;
-        script.OnReturnToPlayer -= HandleObjFlyBack;
+        if (script)
+        {
+            script.OnReturnToPlayer -= HandleObjFlyBack;        
+        }
     }
 
     private void UnEquip()
