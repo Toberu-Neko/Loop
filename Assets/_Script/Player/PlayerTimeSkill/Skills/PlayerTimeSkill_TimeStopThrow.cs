@@ -39,7 +39,6 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
         {
             player.InputHandler.UseTimeSkillInput();
             equipped = true;
-            // Debug.Log("Equipped");  
             Stats.SetAttackable(false);
         }
         else if(player.InputHandler.TimeSkillInput && equipped)
@@ -78,7 +77,7 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
                     manager.PredictLineTransforms[i].gameObject.SetActive(false);
                 }
 
-                GameObject obj = GameObject.Instantiate(data.timeStopThrowObj, player.transform.position, Quaternion.identity);
+                GameObject obj = ObjectPoolManager.SpawnObject(data.timeStopThrowObj, player.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
                 script = obj.GetComponent<TimeStopProjectile>();
                 script.Fire(throwVelocity, player.InputHandler.RawMouseDirectionInput, data.throwStopTime, data.gravityScale, manager.transform);
                 script.OnReturnToPlayer += HandleObjFlyBack;

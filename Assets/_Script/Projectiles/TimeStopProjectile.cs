@@ -23,21 +23,32 @@ public class TimeStopProjectile : MonoBehaviour
     private void Awake()
     {
         movement = core.GetCoreComponent<Movement>();
-        explodeRange.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        explodeRange.SetActive(false); 
         returnToPlayer = false;
+        col.isTrigger = false;
+        gameObject.layer = 12;
+    }
+
+    private void OnDisable()
+    {
+        returnVelocity = 5f;
     }
 
     public void Fire(float velocity, Vector2 direction, float stopTime, float gravityScale, Transform fireTransform)
     {
-        movement.SetVelocity(velocity, direction);
-        this.stopTime = stopTime;
-        RB.gravityScale = gravityScale;
         this.fireTransform = fireTransform;
+        this.stopTime = stopTime;
+
+        movement.SetVelocity(velocity, direction);
+        RB.gravityScale = gravityScale;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Debug.Log(collision.gameObject.name + "Layer = " + collision.gameObject.layer);
         if(collision.gameObject.layer == 6 || collision.gameObject.layer == 13)
         {
             RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, explodeRadius, Vector2.zero, 0, whatIsInteractable);
@@ -61,8 +72,7 @@ public class TimeStopProjectile : MonoBehaviour
     {
         if(collision.gameObject.layer == 7)
         {
-            OnReturnToPlayer?.Invoke();
-            Destroy(gameObject);
+            RetuenToPool();
         }
     }
     private void FixedUpdate()
@@ -86,8 +96,16 @@ public class TimeStopProjectile : MonoBehaviour
     {
         returnToPlayer = true;
         RB.simulated = true;
-        explodeRange.SetActive(false);
-        Destroy(gameObject, 3f);
+        explodeRange.SetActive(false); 
+        Invoke(nameof(RetuenToPool), 3f);
+    }
+
+    private void RetuenToPool()
+    {
+        CancelInvoke(nameof(RetuenToPool));
+        
+        OnReturnToPlayer?.Invoke();
+        ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 
     private void OnDrawGizmos()

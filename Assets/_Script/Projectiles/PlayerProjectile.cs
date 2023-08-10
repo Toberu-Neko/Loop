@@ -18,19 +18,16 @@ public class PlayerProjectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    public void Fire(ProjectileDetails details, Vector2 fireDirection)
     {
         rb.gravityScale = 0;
+        projectileDetails = details;
+        this.fireDirection = fireDirection;
         rb.velocity = fireDirection * projectileDetails.speed;
 
         Invoke(nameof(DestoryThis), projectileDetails.duration);
-    }
-    public void Fire(ProjectileDetails details, Vector2 fireDirection)
-    {
-        projectileDetails = details;
-        this.fireDirection = fireDirection;
 
-        if(fireDirection.x > 0)
+        if (fireDirection.x > 0)
         {
             knockbackDirection = 1;
         }
@@ -43,7 +40,8 @@ public class PlayerProjectile : MonoBehaviour
     private void DestoryThis()
     {
         CancelInvoke(nameof(DestoryThis));
-        Destroy(gameObject);
+        collidedObjects.Clear();
+        ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

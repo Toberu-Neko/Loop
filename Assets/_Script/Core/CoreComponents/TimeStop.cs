@@ -9,7 +9,10 @@ public class TimeStop : CoreComponent, ITimeStopable
     private void Start()
     {
         stats = core.GetCoreComponent<Stats>();
+    }
 
+    private void OnEnable()
+    {
         GameManager.Instance.OnAllTimeStopStart += HandleTimeStopStart;
         GameManager.Instance.OnAllTimeStopEnd += HandleTimeStopEnd;
     }

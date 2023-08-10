@@ -80,7 +80,7 @@ public class PlayerGunNormalAttackState : PlayerAttackState
             player.PlayerWeaponManager.DecreaseEnergy();
             player.PlayerWeaponManager.GunFired();
 
-            PlayerProjectile proj = GameObject.Instantiate(data.normalAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity).GetComponent<PlayerProjectile>();
+            PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.normalAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
             proj.Fire(data.normalAttackDetails, mouseDirectionInput);
         }
     }

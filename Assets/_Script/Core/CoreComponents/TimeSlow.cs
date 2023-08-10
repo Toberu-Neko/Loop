@@ -6,7 +6,7 @@ public class TimeSlow : CoreComponent, ITimeSlowable
     private GameManager gameManager;
     private Stats stats;
 
-    private void Start()
+    private void OnEnable()
     {
         stats = core.GetCoreComponent<Stats>();
         gameManager = GameManager.Instance;

@@ -23,12 +23,17 @@ public class SetCollider : CoreComponent
 
         movement = core.GetCoreComponent<Movement>();
 
+    }
+
+    private void OnEnable()
+    {
         orgHeight = movementCollider.size.y;
         changed = false;
 
         movement.OnStuck += HandleOnStuck;
         stats.Health.OnCurrentValueZero += HandleHelthZero;
     }
+
     private void OnDisable()
     {
         movement.OnStuck -= HandleOnStuck;
@@ -42,7 +47,7 @@ public class SetCollider : CoreComponent
 
     private void HandleOnStuck()
     {
-        if (!changed && collisionSenses.CanChangeCollider)
+        if (!changed && collisionSenses.CanChangeCollider && !stats.IsTimeStopped)
         {
             changed = true;
             StartCoroutine(Change(0.75f));

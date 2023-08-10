@@ -43,19 +43,42 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     private Vector2 knockbackAngleDelta = Vector2.zero;
     private Vector2 workspace = Vector2.zero;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         stats = core.GetCoreComponent<Stats>();
         movement = core.GetCoreComponent<Movement>();
         particleManager = core.GetCoreComponent<ParticleManager>();
         collisionSenses = core.GetCoreComponent<CollisionSenses>();
-
+    }
+    private void Start()
+    {
         damageParticles = core.CoreData.damageParticles;
         blockDamageMultiplier = core.CoreData.blockDamageMultiplier;
         blockStaminaMultiplier = core.CoreData.blockStaminaMultiplier;
         maxKnockbackTime = core.CoreData.maxKnockbackTime;
         normalBlockKnockbakDirection = core.CoreData.normalBlockKnockbakDirection;
         normalBlockKnockbakMultiplier = core.CoreData.normalBlockKnockbakMultiplier;
+
+    }
+    private void OnEnable()
+    {
+        workspace = Vector2.zero;
+        knockbackAngleDelta = Vector2.zero;
+        knockStrengthDelta = 0f;
+        healthDelta = 0f;
+        staminaDelta = 0f;
+        isKnockbackActive = false;
+        knockbackStartTime = 0f;
+        damagedThisFrame = false;
+        PerfectBlock = false;
+        normalBlock = false;
+
+        DetectedDamageables = new();
+        DetectedKnockbackables = new();
+        DetectedStaminaDamageables = new();
+
 
         stats.OnTimeStopEnd += HandleStartTime;
         stats.OnTimeSlowStart += HandleTimeSlowStart;
@@ -65,6 +88,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         OnDamaged += HandleOnDamaged;
 
     }
+
     private void OnDisable()
     {
         stats.OnTimeStopEnd -= HandleStartTime;

@@ -4,6 +4,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 {
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;
+    private LayerMask _whatIsPlayer;
     [SerializeField] private float damageRadius;
     [SerializeField] private Transform damagePosition;
     [SerializeField] private Collider2D col;
@@ -26,19 +27,8 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
     {
         movement = core.GetCoreComponent<Movement>();
         stats = core.GetCoreComponent<Stats>();
-
-        countered = false;
-        damaged = false;
     }
-    private void Start()
-    {
-        movement.SetGravityZero();
-        movement.SetVelocity(details.speed, transform.right);
 
-        isGravityOn = false;
-        xStartPosition = transform.position.x;
-        Destroy(gameObject, 8f);
-    }
     private void Update()
     {
         core.LogicUpdate();
@@ -113,6 +103,32 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
         this.details = details;
         this.travelDistance = travelDistance;
         this.facingDirection = facingDirection;
+
+        movement.SetGravityZero();
+        movement.SetVelocity(details.speed, transform.right);
+
+        isGravityOn = false;
+        hasHitGround = false;
+        damaged = false;
+        countered = false;
+        xStartPosition = transform.position.x;
+
+        gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
+        _whatIsPlayer = whatIsPlayer;
+        Invoke(nameof(ReturnToPool), 10f);
+    }
+
+    private void ReturnToPool()
+    {
+        CancelInvoke(nameof(ReturnToPool));
+        if (!stats.InCombat || damaged || hasHitGround)
+        {
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
+        }
+        else
+        {
+            Invoke(nameof(ReturnToPool), 3f);
+        }
     }
 
     private void OnDrawGizmos()
@@ -127,7 +143,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
         {
             countered = true;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
-            whatIsPlayer = LayerMask.GetMask("Damageable");
+            _whatIsPlayer = LayerMask.GetMask("Damageable");
             xStartPosition = transform.position.x;
 
             if (stats.IsTimeStopped)
@@ -166,7 +182,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & whatIsPlayer) != 0 && !hasHitGround && !damaged)
+        if (((1 << collision.gameObject.layer) & _whatIsPlayer) != 0 && !hasHitGround && !damaged)
         {
             damaged = true;
             if (collision.TryGetComponent(out IDamageable damageable))
@@ -182,7 +198,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
                 staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
             }
 
-            Destroy(gameObject);
+            ReturnToPool();
         }
 
         if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
@@ -191,7 +207,8 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
             movement.SetGravityZero();
             movement.SetVelocityZero();
 
-            Destroy(gameObject, 5f);
+            CancelInvoke(nameof(ReturnToPool));
+            Invoke(nameof(ReturnToPool), 10f);
         }
         
     } 

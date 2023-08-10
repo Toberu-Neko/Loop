@@ -26,7 +26,7 @@ public class Movement : CoreComponent
     public event Action OnFlip;
     public event Action OnStuck;
 
-    public Slope Slope { get; set; } = new();
+    public Slope Slope { get; set; }
     private Stats stats;
 
     protected override void Awake()
@@ -34,10 +34,18 @@ public class Movement : CoreComponent
         base.Awake();
 
         parentTransform = core.transform.parent;
-        previousPosition = Vector2.zero;
-        velocityWorkspace = Vector2.zero;
         RB = GetComponentInParent<Rigidbody2D>();
         stats = core.GetCoreComponent<Stats>();
+    }
+
+    private void OnEnable()
+    {
+        previousPosition = Vector2.zero;
+        velocityWorkspace = Vector2.zero;
+        TimeStopVelocity = Vector2.zero;
+        TimeSlowVelocity = Vector2.zero;
+        CurrentVelocity = Vector2.zero;
+        Slope = new();
 
         orginalGrag = RB.drag;
         orginalGravityScale = RB.gravityScale;
@@ -51,6 +59,7 @@ public class Movement : CoreComponent
         stats.OnTimeSlowStart += HandleTimeSlowStart;
         stats.OnTimeSlowEnd += HandleTimeSlowEnd;
     }
+
     private void OnDisable()
     {
         stats.OnTimeStopEnd -= HandleTimeStopEnd;

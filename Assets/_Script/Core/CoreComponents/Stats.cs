@@ -32,21 +32,9 @@ public class Stats : CoreComponent
     public event Action OnTimeSlowStart;
     public event Action OnTimeSlowEnd;
 
-    private void Start()
-    {
-        Health.MaxValue = core.CoreData.maxHealth;
-        Stamina.MaxValue = core.CoreData.maxStamina;
-        staminaRecoveryRate = core.CoreData.staminaRecoveryRate;
-        perfectBlockAttackDuration = core.CoreData.perfectBlockAttackDuration;
-        invincibleDurationAfterDamaged = core.CoreData.invincibleDurationAfterDamaged;
-        combatTimer = core.CoreData.combatTimer;
-
-        Health.Init();
-        Stamina.Init();
-    }
     private void Update()
     {
-        if (IsTimeStopped)
+        if (IsTimeStopped || IsTimeSlowed)
         {
             lastCombatTime += Time.deltaTime;
         }
@@ -62,11 +50,32 @@ public class Stats : CoreComponent
     }
     private void OnEnable()
     {
+        Health.MaxValue = core.CoreData.maxHealth;
+        Stamina.MaxValue = core.CoreData.maxStamina;
+        staminaRecoveryRate = core.CoreData.staminaRecoveryRate;
+        perfectBlockAttackDuration = core.CoreData.perfectBlockAttackDuration;
+        invincibleDurationAfterDamaged = core.CoreData.invincibleDurationAfterDamaged;
+        combatTimer = core.CoreData.combatTimer;
+
+        Invincible = false;
+        InCombat = false;
+        CanChangeWeapon = true;
+        Attackable = true;
+        IsRewindingPosition = false;
+        IsTimeStopped = false;
+        IsTimeSlowed = false;
+
+        Health.Init();
+        Stamina.Init();
+
         Stamina.OnCurrentValueZero += HandlePoiseZero;
     }
 
     private void OnDisable()
     {
+        SetTimeSlowFalse();
+        SetTimeStopFalse();
+
         Stamina.OnCurrentValueZero -= HandlePoiseZero;
     }
 
@@ -127,6 +136,8 @@ public class Stats : CoreComponent
 
     public void SeTimeStopTrue()
     {
+        InCombat = true;
+        lastCombatTime = Time.time;
         IsTimeStopped = true;
         OnTimeStopStart?.Invoke();
     }
@@ -139,6 +150,8 @@ public class Stats : CoreComponent
 
     public void SetTimeSlowTrue()
     {
+        InCombat = true;
+        lastCombatTime = Time.time;
         IsTimeSlowed = true;
         TimeSlowMultiplier = GameManager.Instance.TimeSlowMultiplier;
         OnTimeSlowStart?.Invoke();

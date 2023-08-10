@@ -37,7 +37,7 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
             player.InputHandler.UseTimeSkillInput();
             isRecording = true;
 
-            mark = GameObject.Instantiate(data.bookMarkPrefab, player.transform.position, Quaternion.identity);
+            mark = ObjectPoolManager.SpawnObject(data.bookMarkPrefab, player.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.GameObjects);
             SpriteRenderer ren = mark.GetComponent<SpriteRenderer>();
             ren.sprite = player.SR.sprite;
             if(Movement.FacingDirection == -1)
@@ -123,7 +123,7 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
         player.Anim.enabled = true;
         if (mark)
         {
-            GameObject.Destroy(mark);
+            ObjectPoolManager.ReturnObjectToPool(mark);
         }
 
         Stats.SetInvincibleFalse();
