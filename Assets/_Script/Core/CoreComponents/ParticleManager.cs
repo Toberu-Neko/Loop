@@ -12,7 +12,7 @@ public class ParticleManager : CoreComponent
 
     public GameObject StartParticles(GameObject particlePrefab, Vector2 position, Quaternion rotation)
     {
-        return Instantiate(particlePrefab, position, rotation, particleContainer);
+        return ObjectPoolManager.SpawnObject(particlePrefab, position, rotation, ObjectPoolManager.PoolType.ParticleSystem);
     }
 
     public GameObject StartParticles(GameObject particlePrefab)

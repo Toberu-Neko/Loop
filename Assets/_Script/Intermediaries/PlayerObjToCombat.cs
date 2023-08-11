@@ -11,7 +11,7 @@ public class PlayerObjToCombat : MonoBehaviour, IDamageable, IKnockbackable, ISt
         combat.Damage(damageAmount, damagePosition, blockable);
     }
 
-    public void Knockback(Vector2 angle, float force, int direction, Vector2 damagePosition, bool blockable = true)
+    public void Knockback(Vector2 angle, float force, int direction, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
     {
         combat.Knockback(angle, force, direction, damagePosition, blockable);
     }

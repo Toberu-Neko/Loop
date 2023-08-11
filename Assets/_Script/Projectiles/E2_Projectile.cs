@@ -137,7 +137,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
         Gizmos.DrawWireSphere(damagePosition.position, damageRadius);
     }
 
-    public void Knockback(Vector2 angle, float force, int direction, Vector2 damagePosition, bool blockable = true)
+    public void Knockback(Vector2 angle, float force, int direction, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
     {
         if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered)
         {

@@ -116,8 +116,6 @@ public class BasicEnemyController : MonoBehaviour
     //--Dead----------------------------------------------------------------------------------
     private void EnterDeadState()
     {
-        Instantiate(deathParticle, alive.transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
-        Instantiate(deathBloodParticle, alive.transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
 
         Destroy(gameObject);
     }
@@ -169,7 +167,6 @@ public class BasicEnemyController : MonoBehaviour
     {
         currentHealth -= damageAmount;
 
-        Instantiate(hitParticle, alive.transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
 
         if(currentHealth > 0f)
         {

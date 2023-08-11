@@ -45,6 +45,10 @@ public class PlayerAttackState : PlayerState
         OnAttack -= Combat.HandleOnAttack;
         OnAttack -= player.TimeSkillManager.HandleOnAttack;
         OnAttack -= CamManager.instance.CameraShake;
+
+        Combat.DetectedDamageables.Clear();
+        Combat.DetectedKnockbackables.Clear();
+        Combat.DetectedStaminaDamageables.Clear();
     }
 
     public override void LogicUpdate()
@@ -67,14 +71,16 @@ public class PlayerAttackState : PlayerState
         }
     }
 
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+    }
+
     public override void AnimationFinishTrigger()
     {
-        base.AnimationFinishTrigger();
+        base.AnimationFinishTrigger(); 
+        
 
-
-        Combat.DetectedDamageables.Clear();
-        Combat.DetectedKnockbackables.Clear();
-        Combat.DetectedStaminaDamageables.Clear();
     }
 
     public void DoDamageToDamageList(float damageAmount,float damageStaminaAmount ,Vector2 knockBackAngle, float knockBackForce, bool blockable = true)

@@ -52,9 +52,13 @@ public class PlayerFistSoulAttackState : PlayerAttackState
     {
         base.LogicUpdate();
 
-        if (isAnimationStartMovement)
+        if (isAnimationStartMovement && Combat.DetectedDamageables.Count == 0)
         {
             Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
+        }
+        else
+        {
+            Movement.SetVelocityX(0f);
         }
         if (doAttack)
         {
@@ -83,6 +87,7 @@ public class PlayerFistSoulAttackState : PlayerAttackState
         base.AnimationStopMovementTrigger();
 
         doAttack = false;
+        // Combat.Knockback(Vector2.one, 10f, -Movement.FacingDirection, Vector2.zero, false, true);
     }
 
     public override void AnimationFinishTrigger()
