@@ -1018,6 +1018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6021279904445618850}
   - component: {fileID: 2962977384945979538}
+  - component: {fileID: 7496160559325337183}
   m_Layer: 7
   m_Name: Death
   m_TagString: Untagged
@@ -1052,6 +1053,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8087907e9d261a49b8939661e1fc7b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7496160559325337183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8257887130808174628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd011d3dd7d0ede41b8979a718f33be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItemPrefab: {fileID: 8613436970086008002, guid: c40bd368776c0964082115cc60a49733, type: 3}
+  lootItems:
+  - lootdetails: {fileID: 11400000, guid: 7254e0bfe6362f44a9c813933c2895b1, type: 2}
+    amount: 1
+    dropChance: 100
 --- !u!1 &9061584774182645674
 GameObject:
   m_ObjectHideFlags: 0

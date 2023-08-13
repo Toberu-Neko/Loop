@@ -27,6 +27,10 @@ public class SetCollider : CoreComponent
 
     private void OnEnable()
     {
+        if (!movementCollider)
+        {
+            Debug.LogError("No collider set for " + core.transform.parent.name + " at " + this.name);
+        }
         orgHeight = movementCollider.size.y;
         changed = false;
 

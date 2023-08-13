@@ -1,14 +1,19 @@
+using System;
 using UnityEngine;
 
 public class Death : CoreComponent
 {
     private GameObject[] deathParticles;
+    public event Action OnDeath;
 
-    private Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
-    private Stats stats;
-
-    private ParticleManager ParticleManager => particleManager ? particleManager : core.GetCoreComponent<ParticleManager>();
     private ParticleManager particleManager;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        particleManager = core.GetCoreComponent<ParticleManager>();
+    }
 
     private void Start()
     {
@@ -16,23 +21,13 @@ public class Death : CoreComponent
     }
     public void Die()
     {
-        foreach(var particle in deathParticles)
+        OnDeath?.Invoke();
+
+        foreach (var particle in deathParticles)
         {
-            ParticleManager.StartParticles(particle);
+            particleManager.StartParticles(particle);
         }
 
         core.transform.parent.gameObject.SetActive(false);
     }
-
-    /*
-    private void OnEnable()
-    {
-        TODO: Modify this if need to go dead state first.
-        Stats.Health.OnCurrentValueZero += Die;
-    }
-
-    private void OnDisable()
-    {
-        Stats.Health.OnCurrentValueZero -= Die;
-    }*/
 }

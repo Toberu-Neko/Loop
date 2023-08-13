@@ -47,4 +47,7 @@ public class CoreData : ScriptableObject
     [Header("Death")]
     [Tooltip("死掉的時候會生成的粒子效果")]
     public GameObject[] deathParticles;
+    [Header("Loot, 如果物件不會掉東西, 不用填")]
+    public GameObject dropItemPrefab;
+    public List<LootItem> lootItems;
 }
