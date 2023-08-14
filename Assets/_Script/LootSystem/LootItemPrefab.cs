@@ -26,6 +26,7 @@ public class LootItemPrefab : MonoBehaviour
         gameObject.layer = 15;
         col.isTrigger = false;
         rb.isKinematic = false;
+        Invoke(nameof(Interectable), 2.5f);
     }
 
     private void OnDrawGizmos()
@@ -38,9 +39,7 @@ public class LootItemPrefab : MonoBehaviour
     {
         if (IsGrounded)
         {
-            col.isTrigger = true;
-            rb.isKinematic = true;
-            gameObject.layer = 14;
+            Interectable();
         }
     }
 
@@ -51,6 +50,14 @@ public class LootItemPrefab : MonoBehaviour
             Debug.Log("Collect " + lootDetails.name);
             ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
+    }
+
+    private void Interectable()
+    {
+        CancelInvoke(nameof(Interectable));
+        col.isTrigger = true;
+        rb.isKinematic = true;
+        gameObject.layer = 14;
     }
 }
 

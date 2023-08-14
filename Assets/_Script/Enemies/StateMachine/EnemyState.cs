@@ -28,6 +28,9 @@ public class EnemyState
     protected Death Death => death ? death : core.GetCoreComponent<Death>();
     private Death death;
 
+    protected CheckPlayerSenses CheckPlayerSenses => checkPlayerSenses ? checkPlayerSenses : core.GetCoreComponent<CheckPlayerSenses>();
+    private CheckPlayerSenses checkPlayerSenses;
+
 
     public EnemyState(Entity entity, EnemyStateMachine stateMachine, string animBoolName)
     {

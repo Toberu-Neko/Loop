@@ -21,7 +21,7 @@ public class E2_RangedAttackState : RangedAttackState
 
         if (isAnimationFinished)
         {
-            if(isPlayerInMinAgroRange)
+            if(isPlayerInMaxAgroRange)
             {
                 stateMachine.ChangeState(enemy.PlayerDetectedState);
             }

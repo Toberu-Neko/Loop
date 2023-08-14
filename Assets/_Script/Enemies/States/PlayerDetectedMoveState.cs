@@ -30,11 +30,11 @@ public class PlayerDetectedMoveState : EnemyState
     public override void DoChecks()
     {
         base.DoChecks(); 
-        isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
-        isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
+        isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
+        isPlayerInMaxAgroRange = CheckPlayerSenses.IsPlayerInMaxAgroRange;
         isDetectingLedge = CollisionSenses.LedgeVertical;
         isDetectingWall = CollisionSenses.WallFront;
-        performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
+        performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction;
     }
 
     public override void LogicUpdate()

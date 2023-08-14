@@ -25,11 +25,11 @@ public class ChargeState : EnemyState
     {
         base.DoChecks();
 
-        isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
+        isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
         isDetectingLedge = CollisionSenses.LedgeVertical;
         isDetectingWall = CollisionSenses.WallFront;
 
-        performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
+        performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction;
     }
 
     public override void Enter()

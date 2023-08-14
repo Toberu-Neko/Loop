@@ -46,9 +46,9 @@ public class PlayerDetectedState : EnemyState
     {
         base.DoChecks();
 
-        isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
-        isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
+        isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
+        isPlayerInMaxAgroRange = CheckPlayerSenses.IsPlayerInMaxAgroRange;
         isDetectingLedge = CollisionSenses.LedgeVertical;
-        performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
+        performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction;
     }
 }

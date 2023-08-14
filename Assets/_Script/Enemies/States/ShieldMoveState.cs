@@ -62,11 +62,11 @@ public class ShieldMoveState : EnemyState
     {
         base.DoChecks();
 
-        isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
+        isPlayerInMaxAgroRange = CheckPlayerSenses.IsPlayerInMaxAgroRange;
 
         if (!stopMovement)
         {
-            stopMovement = entity.CheckPlayerInCloseRangeAction();
+            stopMovement = CheckPlayerSenses.IsPlayerInCloseRangeAction;
             stopTime = Time.time;
         }
 

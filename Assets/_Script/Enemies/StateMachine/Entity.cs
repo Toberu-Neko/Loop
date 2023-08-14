@@ -3,8 +3,6 @@ using System.Linq;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] private Transform playerCheck;
-
     public EnemyStateMachine StateMachine { get; private set; }
     [SerializeField] private D_Entity EntityData;
 
@@ -86,24 +84,8 @@ public class Entity : MonoBehaviour
         StateMachine.CurrentState.PhysicsUpdate();
     }
 
-    public virtual bool CheckPlayerInMinAgroRange()
-    {
-        return Physics2D.Raycast(playerCheck.position, transform.right, EntityData.minAgroDistance, EntityData.whatIsPlayer);
-    }
-    public virtual bool CheckPlayerInMaxAgroRange()
-    {
-        return Physics2D.Raycast(playerCheck.position, transform.right, EntityData.maxAgroDistance, EntityData.whatIsPlayer);
-    }
-    public virtual bool CheckPlayerInCloseRangeAction()
-    {
-        return Physics2D.Raycast(playerCheck.position, transform.right, EntityData.closeRangeActionDistance, EntityData.whatIsPlayer);
-    }
-
     public virtual void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(transform.right * EntityData.closeRangeActionDistance), 0.2f);
-        Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(transform.right * EntityData.minAgroDistance), 0.2f);
-        Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(transform.right * EntityData.maxAgroDistance), 0.2f);
     }
     private void AnimationActionTrigger()
     {

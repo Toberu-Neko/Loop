@@ -25,7 +25,7 @@ public class LookForPlayerState : EnemyState
     {
         base.DoChecks();
 
-        isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
+        isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
     }
 
     public override void Enter()

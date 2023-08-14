@@ -22,11 +22,11 @@ public class DodgeState : EnemyState
     {
         base.DoChecks();
 
-        performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
-        isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
         isGrounded = CollisionSenses.Ground;
-        isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
-    }
+        performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction;
+        isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
+        isPlayerInMaxAgroRange = CheckPlayerSenses.IsPlayerInMaxAgroRange;
+    }   
 
     public override void Enter()
     {

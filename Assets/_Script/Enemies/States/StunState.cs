@@ -25,9 +25,9 @@ public class StunState : EnemyState
         base.DoChecks();
 
         isGrounded = CollisionSenses.Ground;
-        performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
-        isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
-        isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
+        performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction;
+        isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
+        isPlayerInMaxAgroRange = CheckPlayerSenses.IsPlayerInMaxAgroRange;
     }
 
     public override void Enter()
