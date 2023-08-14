@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 7635486405179578023}
   m_Layer: 13
   m_Name: E4 Melee Normal Human
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +67,7 @@ Transform:
   - {fileID: 559481802982330176}
   - {fileID: 8254786055507637349}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &671724138867124728
 SpriteRenderer:
@@ -226,9 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9703662dd30fd5447854303aeec8380e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMinAgroCheck: {fileID: 8800408579653460990}
-  playerMaxAgroCheck: {fileID: 6622924862146618564}
-  playerCloseRangeCheck: {fileID: 3093448071078296826}
   EntityData: {fileID: 11400000, guid: ecd68d7bcab6d044bb6f43f923c706ae, type: 2}
   stateData: {fileID: 11400000, guid: e8607b56315d1644fbf460f9ba721f62, type: 2}
   meleeAttackPosition: {fileID: 8254786055507637349}
@@ -304,20 +301,5 @@ PrefabInstance:
 --- !u!4 &559481802982330176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6317694935012530758, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
-  m_PrefabInstance: {fileID: 5795952050172482822}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3093448071078296826 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8827469850256828924, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
-  m_PrefabInstance: {fileID: 5795952050172482822}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6622924862146618564 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 830351992707641794, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
-  m_PrefabInstance: {fileID: 5795952050172482822}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8800408579653460990 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3048390852992907000, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
   m_PrefabInstance: {fileID: 5795952050172482822}
   m_PrefabAsset: {fileID: 0}
