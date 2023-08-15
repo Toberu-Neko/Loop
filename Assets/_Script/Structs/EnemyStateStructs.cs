@@ -71,6 +71,20 @@ public struct S_EnemyMeleeAttackState
 }
 
 [Serializable]
+public struct S_EnemySnipingState
+{
+    public LayerMask whatIsGround;
+    public float aimTime;
+    public float freazeTime;
+    public float reloadTime;
+
+    public Gradient aimColor;
+    public Gradient lockColor;
+
+    public ProjectileDetails projectileDetails;
+}
+
+[Serializable]
 public struct S_EnemyLookForPlayerState
 {
     [Tooltip("轉身次數(玩家偵測不到之後, 會向後轉?次)")]

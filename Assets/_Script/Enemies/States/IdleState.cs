@@ -9,6 +9,7 @@ public class IdleState : EnemyState
     protected bool flipAfterIdle;
     protected bool isIdleTimeOver;
     protected bool isPlayerInMinAgroRange;
+    protected bool isPlayerInMaxAgroRange;
 
     protected float idleTime;
 
@@ -35,6 +36,7 @@ public class IdleState : EnemyState
         {
             Movement.Flip();
         }
+        flipAfterIdle = false;
     }
 
     public override void LogicUpdate()
@@ -52,6 +54,7 @@ public class IdleState : EnemyState
     {
         base.DoChecks();
         isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
+        isPlayerInMaxAgroRange = CheckPlayerSenses.IsPlayerInMaxAgroRange;
     }
     public void SetFlipAfterIdle(bool flip)
     {

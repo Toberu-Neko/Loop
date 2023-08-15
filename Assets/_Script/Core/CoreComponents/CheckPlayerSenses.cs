@@ -23,7 +23,7 @@ public class CheckPlayerSenses : CoreComponent
         }
     }
 
-    public bool IsPlayerInMaxAgroRange
+    public RaycastHit2D IsPlayerInMaxAgroRange
     {
         get
         {

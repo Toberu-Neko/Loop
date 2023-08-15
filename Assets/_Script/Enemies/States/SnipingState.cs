@@ -1,0 +1,124 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SnipingState : AttackState
+{
+    S_EnemySnipingState stateData;
+    private Transform player;
+    protected bool goToIdleState;
+    private bool isAiming;
+    private bool isLocked;
+    private bool isReloading;
+    private Vector2 aimPointDelta;
+    private Vector3 v3WorkSpace;
+    private Vector2 v2WorkSpace;
+
+    private DrawWire drawWire;
+
+    public SnipingState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemySnipingState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    {
+        this.stateData = stateData;
+        drawWire = core.GetCoreComponent<DrawWire>();
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        isAiming = true;
+        isLocked = false;
+        isReloading = false;
+        goToIdleState = false;
+        player = null;
+        v3WorkSpace = Vector3.zero;
+        entity.Anim.SetBool("isAiming", true);
+    }
+    public override void Exit()
+    {
+        base.Exit();
+
+        drawWire.ClearPoints();
+    }
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (isAiming)
+        {
+            if(CheckPlayerSenses.IsPlayerInMaxAgroRange)
+                player = CheckPlayerSenses.IsPlayerInMaxAgroRange.collider.gameObject.transform;
+
+            if (player)
+            {
+                //TODO: Aim shake
+                float leftTime = stateData.aimTime - (Time.time - StartTime);
+                v2WorkSpace.Set(0f, leftTime);
+
+                aimPointDelta = ((Vector2)player.position + v2WorkSpace - (Vector2)attackPosition.position).normalized;
+
+                RaycastHit2D hit = Physics2D.Raycast(attackPosition.position, aimPointDelta, 30f, stateData.whatIsGround);
+                if (hit)
+                {
+                    drawWire.SetPoints(attackPosition.position, hit.point + (Vector2)v3WorkSpace);
+                }
+                else
+                {
+                    drawWire.SetPoints(attackPosition.position, attackPosition.position + ((Vector3)aimPointDelta * 100f)); 
+                }
+                drawWire.ChangeColor(stateData.aimColor);
+                drawWire.RenderLine();
+            }
+        }
+
+        if(isAiming && Time.time >= StartTime + stateData.aimTime)
+        {
+            isAiming = false;
+            isLocked = true;
+            StartTime = Time.time;
+            entity.Anim.SetBool("isAiming", false);
+
+            Lock();
+        }
+
+        else if (!isAiming && isLocked && Time.time >= StartTime + stateData.freazeTime)
+        {
+            isLocked = false;
+            isReloading = true;
+            StartTime = Time.time;
+            Shoot();
+        }
+
+        else if(!isAiming && !isLocked && Time.time >= StartTime + stateData.reloadTime)
+        {
+            isReloading = false;
+            entity.Anim.SetBool("isAiming", true);
+            isAiming = true;
+            StartTime = Time.time;
+        }
+
+        if (!isPlayerInMaxAgroRange && isReloading)
+        {
+            goToIdleState = true;
+        }
+    }
+
+    private void Lock()
+    {
+        Debug.Log("Lock");
+        drawWire.ChangeColor(stateData.lockColor);
+    }
+
+    private void Shoot()
+    {
+        Debug.Log("Shoot");
+        drawWire.ClearPoints();
+        drawWire.RenderLine();
+    }
+}
