@@ -77,6 +77,7 @@ public struct S_EnemySnipingState
     public float aimTime;
     public float freazeTime;
     public float reloadTime;
+    public AnimationCurve shakeCurve;
 
     public Gradient aimColor;
     public Gradient lockColor;

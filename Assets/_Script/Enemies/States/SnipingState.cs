@@ -11,8 +11,11 @@ public class SnipingState : AttackState
     private bool isLocked;
     private bool isReloading;
     private Vector2 aimPointDelta;
+    private Vector2 targetPos;
     private Vector3 v3WorkSpace;
     private Vector2 v2WorkSpace;
+
+    private float yOffset;
 
     private DrawWire drawWire;
 
@@ -31,6 +34,7 @@ public class SnipingState : AttackState
         isReloading = false;
         goToIdleState = false;
         player = null;
+        yOffset = 5f;
         v3WorkSpace = Vector3.zero;
         entity.Anim.SetBool("isAiming", true);
     }
@@ -52,16 +56,18 @@ public class SnipingState : AttackState
 
         if (isAiming)
         {
-            if(CheckPlayerSenses.IsPlayerInMaxAgroRange)
+            if (CheckPlayerSenses.IsPlayerInMaxAgroRange && !player)
+            {
                 player = CheckPlayerSenses.IsPlayerInMaxAgroRange.collider.gameObject.transform;
-
+                targetPos = player.position;
+            }
             if (player)
             {
-                //TODO: Aim shake
                 float leftTime = stateData.aimTime - (Time.time - StartTime);
-                v2WorkSpace.Set(0f, leftTime);
+                v2WorkSpace.Set(0f, stateData.shakeCurve.Evaluate(leftTime / stateData.aimTime) * 2f);
 
-                aimPointDelta = ((Vector2)player.position + v2WorkSpace - (Vector2)attackPosition.position).normalized;
+                targetPos = Vector3.Slerp((Vector3)targetPos, player.position, (stateData.aimTime - leftTime) / stateData.aimTime);
+                aimPointDelta = ((Vector2)targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized;
 
                 RaycastHit2D hit = Physics2D.Raycast(attackPosition.position, aimPointDelta, 30f, stateData.whatIsGround);
                 if (hit)
@@ -98,6 +104,7 @@ public class SnipingState : AttackState
         else if(!isAiming && !isLocked && Time.time >= StartTime + stateData.reloadTime)
         {
             isReloading = false;
+            player = null;
             entity.Anim.SetBool("isAiming", true);
             isAiming = true;
             StartTime = Time.time;
