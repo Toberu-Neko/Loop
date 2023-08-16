@@ -70,6 +70,24 @@ public class EnemyState
             StartTime += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
         }
     }
+
+    public float Timer(float timer)
+    {
+        if (Stats.IsTimeStopped)
+        {
+            timer += Time.deltaTime;
+            Movement.SetVelocityZero();
+            return timer;
+        }
+
+        if (Stats.IsTimeSlowed)
+        {
+            timer += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
+            return timer;
+        }
+        return timer;
+    }
+
     public virtual void PhysicsUpdate(){ }
     public virtual void DoChecks(){ }
     public virtual void AnimationActionTrigger() { }

@@ -15,7 +15,7 @@ public class SnipingState : AttackState
     private Vector3 v3WorkSpace;
     private Vector2 v2WorkSpace;
 
-    private float yOffset;
+    private float lastShootTime;
 
     private DrawWire drawWire;
 
@@ -23,6 +23,7 @@ public class SnipingState : AttackState
     {
         this.stateData = stateData;
         drawWire = core.GetCoreComponent<DrawWire>();
+        lastShootTime = 0f;
     }
 
     public override void Enter()
@@ -34,7 +35,6 @@ public class SnipingState : AttackState
         isReloading = false;
         goToIdleState = false;
         player = null;
-        yOffset = 5f;
         v3WorkSpace = Vector3.zero;
         entity.Anim.SetBool("isAiming", true);
     }
@@ -54,7 +54,7 @@ public class SnipingState : AttackState
     {
         base.LogicUpdate();
 
-        if (isAiming)
+        if (isAiming && Time.time >= lastShootTime + stateData.reloadTime)
         {
             if (CheckPlayerSenses.IsPlayerInMaxAgroRange && !player)
             {
@@ -97,11 +97,10 @@ public class SnipingState : AttackState
         {
             isLocked = false;
             isReloading = true;
-            StartTime = Time.time;
             Shoot();
         }
 
-        else if(!isAiming && !isLocked && Time.time >= StartTime + stateData.reloadTime)
+        else if(!isAiming && !isLocked && Time.time >= lastShootTime + stateData.reloadTime)
         {
             isReloading = false;
             player = null;
@@ -114,6 +113,8 @@ public class SnipingState : AttackState
         {
             goToIdleState = true;
         }
+
+        Timer(lastShootTime);
     }
 
     private void Lock()
@@ -125,6 +126,7 @@ public class SnipingState : AttackState
     private void Shoot()
     {
         Debug.Log("Shoot");
+        lastShootTime = Time.time;
         drawWire.ClearPoints();
         drawWire.RenderLine();
     }
