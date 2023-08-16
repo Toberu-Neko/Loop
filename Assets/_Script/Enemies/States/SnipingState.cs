@@ -88,7 +88,7 @@ public class SnipingState : AttackState
             isAiming = false;
             isLocked = true;
             StartTime = Time.time;
-            entity.Anim.SetBool("isAiming", false);
+            // entity.Anim.SetBool("isAiming", false);
 
             Lock();
         }
@@ -96,16 +96,15 @@ public class SnipingState : AttackState
         else if (!isAiming && isLocked && Time.time >= StartTime + stateData.freazeTime)
         {
             isLocked = false;
-            isReloading = true;
-            Shoot();
+            entity.Anim.SetTrigger("shoot");
         }
 
-        else if(!isAiming && !isLocked && Time.time >= lastShootTime + stateData.reloadTime)
+        else if(isReloading && !isAiming && !isLocked && Time.time >= lastShootTime + stateData.reloadTime)
         {
             isReloading = false;
             player = null;
-            entity.Anim.SetBool("isAiming", true);
             isAiming = true;
+            // entity.Anim.SetBool("isAiming", true);
             StartTime = Time.time;
         }
 
@@ -119,15 +118,24 @@ public class SnipingState : AttackState
 
     private void Lock()
     {
-        Debug.Log("Lock");
         drawWire.ChangeColor(stateData.lockColor);
     }
 
     private void Shoot()
     {
-        Debug.Log("Shoot");
+        isReloading = true;
         lastShootTime = Time.time;
         drawWire.ClearPoints();
         drawWire.RenderLine();
+
+        GameObject bulletObj = ObjectPoolManager.SpawnObject(stateData.bulletPrefab, attackPosition.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
+        EnemyProjectile script = bulletObj.GetComponent<EnemyProjectile>();
+        script.FireProjectile(stateData.bulletDetails, Movement.FacingDirection, aimPointDelta);
+    }
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+        Shoot();
     }
 }

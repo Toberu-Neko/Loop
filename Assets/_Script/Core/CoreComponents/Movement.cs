@@ -10,7 +10,7 @@ public class Movement : CoreComponent
     public bool CanSetVelocity { get; set; }
 
     public Vector2 CurrentVelocity { get; private set; }
-    private Transform parentTransform;
+    public Transform ParentTransform { get; private set; }
 
     private Vector2 velocityWorkspace;
     public Vector2 TimeStopVelocity { get; private set; }
@@ -33,7 +33,7 @@ public class Movement : CoreComponent
     {
         base.Awake();
 
-        parentTransform = core.transform.parent;
+        ParentTransform = core.transform.parent;
         RB = GetComponentInParent<Rigidbody2D>();
         stats = core.GetCoreComponent<Stats>();
     }
@@ -93,11 +93,11 @@ public class Movement : CoreComponent
 
         if (velocityWorkspace != Vector2.zero)
         {
-            if (previousPosition == (Vector2)parentTransform.position)
+            if (previousPosition == (Vector2)ParentTransform.position)
             {
                 OnStuck?.Invoke();
             }
-            previousPosition = parentTransform.position;
+            previousPosition = ParentTransform.position;
         }
     }
 
@@ -126,14 +126,21 @@ public class Movement : CoreComponent
     private void HandleTimeSlowStart()
     {
         gravityWorkspace = RB.gravityScale;
+        TimeSlowVelocity = CurrentVelocity;
         SetFinalGravity();
     }
 
     private void HandleTimeSlowEnd()
     {
         gravityWorkspace = timeSlowOrgGravityScale;
-        SetFinalGravity();
+        SetVelocity(TimeSlowVelocity);
     }
+
+    public void SetTimeSlowVelocity(Vector2 value)
+    {
+        TimeSlowVelocity = value;
+    }
+
     #endregion
 
     #region Set Gravity
@@ -167,7 +174,7 @@ public class Movement : CoreComponent
 
     public void SetPosition(Vector2 position, Quaternion rotation, int facingDirection)
     {
-        parentTransform.SetPositionAndRotation(position, rotation);
+        ParentTransform.SetPositionAndRotation(position, rotation);
         FacingDirection = facingDirection;
     }
 
@@ -273,6 +280,8 @@ public class Movement : CoreComponent
     {
         RB.drag = orginalGrag;
     }
+
+
     private Vector3 v3WorkSpace;
 
     public void Flip()

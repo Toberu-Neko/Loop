@@ -9,5 +9,11 @@ public class E5_DeadState : DeadState
     {
         this.enemy = enemy;
     }
+    public override void Enter()
+    {
+        base.Enter();
+
+        Death.Die();
+    }
 
 }

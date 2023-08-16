@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: PlayerTimeSkillData
   m_EditorClassIdentifier: 
   maxEnergy: 10000
+  whatIsInteractable:
+    serializedVersion: 2
+    m_Bits: 8448
+  attackInvreaseEnergy: 5
+  perfectBolckIncreaseEnergy: 20
   rewindPlaySpeed: 2
   rewindMaxTime: 10
   rewindCostPerSecond: 10
@@ -22,7 +27,10 @@ MonoBehaviour:
   timeStopAllCostPerSecond: 20
   bulletTimeAllDuration: 3
   bulletTimeAllCost: 50
-  bulletTimeVelocityMultiplier: 0.2
+  bulletTimeVelocityMultiplier: 0.1
+  bulletTimeRangedDuration: 3
+  bulletTimeRangedCost: 50
+  bulletTimeRangedRadius: 3
   timeStopThrowCost: 15
   timeStopThrowObj: {fileID: 6782782113917738760, guid: 3010318eda6f2cd4883cfe8d5060cf9e, type: 3}
   throwVelocityIncreaseRate: 8

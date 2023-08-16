@@ -41,8 +41,11 @@ public struct S_EnemyRangedAttackState
     public GameObject projectile;
     public ProjectileDetails projectileDetails;
 
+    /*
     [Tooltip("投擲物件無視重力飛行距離")]
     public float projectileTravelDistance;
+    */
+
     [Tooltip("投擲物件到被刪除為止的持續時間")]
     public float projectileLifeTime;
     [Tooltip("弓箭的頭的碰撞區域大小")]
@@ -74,6 +77,7 @@ public struct S_EnemyMeleeAttackState
 public struct S_EnemySnipingState
 {
     public LayerMask whatIsGround;
+    public GameObject bulletPrefab;
     public float aimTime;
     public float freazeTime;
     public float reloadTime;
@@ -82,7 +86,7 @@ public struct S_EnemySnipingState
     public Gradient aimColor;
     public Gradient lockColor;
 
-    public ProjectileDetails projectileDetails;
+    public ProjectileDetails bulletDetails;
 }
 
 [Serializable]

@@ -55,7 +55,7 @@ public class PlayerTimeSkill_BulletTimeRanged : PlayerTimeSkillBase
         {
             RaycastHit2D[] hit = Physics2D.CircleCastAll(player.transform.position, data.bulletTimeRangedRadius, Vector2.zero, 0f, data.whatIsInteractable);
 
-            if(hit != null)
+            if(hit.Length > 0)
             {
                 List<ITimeSlowable> t_slowables = new();
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class E2_Projectile : MonoBehaviour, IKnockbackable
+public class EnemyProjectile : MonoBehaviour, IKnockbackable
 {
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;
@@ -9,6 +9,8 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
     [SerializeField] private Transform damagePosition;
     [SerializeField] private Collider2D col;
     [SerializeField] private Core core;
+    [SerializeField] private Rigidbody2D rig;
+    private Vector2 fireDirection;
 
     private float travelDistance;
     private float xStartPosition;
@@ -18,6 +20,7 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
     private bool countered;
     private bool damaged = false;
     private Vector2 counterVelocity;
+
 
     private ProjectileDetails details;
     private Movement movement;
@@ -35,11 +38,15 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
 
         if (!hasHitGround && !countered)
         {
-            movement.SetVelocity(details.speed, transform.right);
+            movement.SetVelocity(details.speed, fireDirection);
         }
         if (!hasHitGround && countered)
         {
             movement.SetVelocity(counterVelocity);
+        }
+        if (hasHitGround)
+        {
+            movement.SetVelocityZero();
         }
         /*
         if (!hasHitGround)
@@ -57,55 +64,19 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
     private void FixedUpdate()
     {
         core.PhysicsUpdate();
-
-        if (!hasHitGround)
-        {
-            /* Collider2D damageHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsPlayer);
-            Collider2D groundHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsGround);
-
-            if (damageHit)
-            {
-                if (damageHit.TryGetComponent(out IDamageable damageable))
-                {
-                    damageable.Damage(details.damageAmount, transform.position);
-                }
-                if (damageHit.TryGetComponent(out IKnockbackable knockbackable))
-                {
-                    knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, facingDirection, transform.position);
-                }
-                if (damageHit.TryGetComponent(out IStaminaDamageable staminaDamageable))
-                {
-                    staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
-                }
-
-                Destroy(gameObject);
-            }
-
-           if (groundHit)
-            {
-                hasHitGround = true;
-                movement.SetGravityZero();
-                movement.SetVelocityZero();
-
-                Destroy(gameObject, 5f);
-            }*/
-            /*
-            if (Mathf.Abs(xStartPosition - transform.position.x) >= travelDistance && !isGravityOn)
-            {
-                isGravityOn = true;
-                movement.SetGravityOrginal();
-            }*/
-        }
     }
 
-    public void FireProjectile(ProjectileDetails details, float travelDistance, int facingDirection)
+    public void FireProjectile(ProjectileDetails details, int facingDirection, Vector2 fireDirection)
     {
         this.details = details;
-        this.travelDistance = travelDistance;
         this.facingDirection = facingDirection;
+        this.fireDirection = fireDirection;
 
+        Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
+
+        transform.rotation = targetRotation; 
         movement.SetGravityZero();
-        movement.SetVelocity(details.speed, transform.right);
+        movement.SetVelocity(details.speed, fireDirection);
 
         isGravityOn = false;
         hasHitGround = false;
@@ -165,15 +136,17 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
             {
                 if (facingDirection != direction)
                 {
-                    counterVelocity = movement.CurrentVelocity * -4f;
-                    movement.SetVelocity(counterVelocity);
+                    counterVelocity = movement.TimeSlowVelocity * -4f;
+                    movement.SetVelocity(-movement.CurrentVelocity);
+                    movement.SetTimeSlowVelocity(counterVelocity);
                     facingDirection = direction;
                     movement.Turn();
                 }
                 else
                 {
-                    counterVelocity = movement.CurrentVelocity * 4f;
-                    movement.SetTimeStopVelocity(counterVelocity);
+                    counterVelocity = movement.TimeSlowVelocity * 4f;
+                    movement.SetVelocity(movement.CurrentVelocity);
+                    movement.SetTimeSlowVelocity(counterVelocity);
                 }
             }
         }
@@ -204,11 +177,10 @@ public class E2_Projectile : MonoBehaviour, IKnockbackable
         if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
         {
             hasHitGround = true;
-            movement.SetGravityZero();
             movement.SetVelocityZero();
 
             CancelInvoke(nameof(ReturnToPool));
-            Invoke(nameof(ReturnToPool), 10f);
+            Invoke(nameof(ReturnToPool), 5f);
         }
         
     } 
