@@ -128,6 +128,7 @@ Transform:
   - {fileID: 3048390852992907000}
   - {fileID: 830351992707641794}
   - {fileID: 8827469850256828924}
+  - {fileID: 7406454105036247234}
   m_Father: {fileID: 6317694935012530758}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -146,9 +147,13 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 576
   playerMinAgroCheck: {fileID: 3048390852992907000}
   playerMaxAgroCheck: {fileID: 830351992707641794}
   playerCloseRangeCheck: {fileID: 8827469850256828924}
+  canSeePlayerCheck: {fileID: 7406454105036247234}
   minAgroV2: {x: 3.5, y: 1.5}
   maxAgroV2: {x: 5, y: 1.5}
   closeRangeActionV2: {x: 1, y: 1}
@@ -234,6 +239,37 @@ Transform:
   m_GameObject: {fileID: 1595741834018591098}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.2799997, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6616668798133203118}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2671696773608489146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7406454105036247234}
+  m_Layer: 0
+  m_Name: CanSeePlayerCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7406454105036247234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2671696773608489146}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

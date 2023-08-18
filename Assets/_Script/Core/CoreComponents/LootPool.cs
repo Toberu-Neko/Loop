@@ -41,12 +41,6 @@ public class LootPool : CoreComponent
             }
         }
     }
-    /*
-    private IEnumerator SpawnObjectsEnumerator()
-    {
-
-    }
-    */
     private List<LootItem> GetDroppedItems()
     {
         List<LootItem> droppedItems = new();
@@ -69,10 +63,9 @@ public class LootPool : CoreComponent
         dropItem.GetComponent<SpriteRenderer>().sprite = lootItem.lootdetails.lootSprite;
 
         float dropForce = 10f;
-        Vector2 dir = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(0.5f, 1f));
+        Vector2 dir = new(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(0.5f, 1f));
         Rigidbody2D rig = dropItem.GetComponent<Rigidbody2D>();
         rig.velocity = dir * dropForce;
-
 
         dropItem.GetComponent<LootItemPrefab>().lootDetails = lootItem.lootdetails;
     }

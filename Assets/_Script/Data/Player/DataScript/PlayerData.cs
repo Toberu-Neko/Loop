@@ -83,6 +83,7 @@ public class PlayerData : ScriptableObject
     public float distanceBetweenAfterImages = 0.5f;
 
     [Header("LedgeClimbState")]
+    public float grabCooldown = 0.5f;
     public Vector2 startOffset;
     public Vector2 stopOffset;
 }

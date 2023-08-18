@@ -13,14 +13,14 @@ public class PlayerSwordStrongAttackState : PlayerAttackState
     {
         base.Enter();
 
-        Combat.OnDamaged += () => isAttackDone = true;
+        Combat.OnDamaged += HandleOnDamaged;
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        Combat.OnDamaged -= () => isAttackDone = true;
+        Combat.OnDamaged -= HandleOnDamaged;
     }
     public override void AnimationActionTrigger()
     {
@@ -30,6 +30,11 @@ public class PlayerSwordStrongAttackState : PlayerAttackState
         GameObject projectile = ObjectPoolManager.SpawnObject(player.PlayerWeaponManager.SwordData.projectile, core.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
         PlayerProjectile projectileScript = projectile.GetComponent<PlayerProjectile>();
         projectileScript.Fire(weaponData.projectileDetails, new Vector2(Movement.FacingDirection, 0));
+    }
+
+    private void HandleOnDamaged()
+    {
+        isAttackDone = true;
     }
     public override void AnimationFinishTrigger()
     {

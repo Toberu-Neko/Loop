@@ -144,7 +144,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.FistHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist && 
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist &&
             player.PlayerWeaponManager.FistCurrentEnergy == player.PlayerWeaponManager.FistData.maxEnergy && Stats.Attackable)
         {
             player.FistSoulAttackState.SetStaticAttack(false);
@@ -152,7 +152,7 @@ public class PlayerInAirState : PlayerState
             player.FistSoulAttackState.SetSoulAmount(player.PlayerWeaponManager.FistData.maxEnergy - 1);
             stateMachine.ChangeState(player.FistSoulAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist && 
+        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist &&
             player.PlayerWeaponManager.FistCurrentEnergy == player.PlayerWeaponManager.FistData.maxEnergy && Stats.Attackable)
         {
             player.FistSoulAttackState.SetStaticAttack(true);
@@ -165,11 +165,11 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.BlockState);
         }
-        else if (isGrounded && !isJumping )
+        else if (isGrounded && !isJumping)
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (isTouchingWall && !isTouchingLedge && !isGrounded && !Stats.IsRewindingPosition)
+        else if (yInput >= 0 && player.LedgeClimbState.CheckCanGrabWall() && isTouchingWall && !isTouchingLedge && !isGrounded && !Stats.IsRewindingPosition)
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }

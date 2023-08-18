@@ -9,6 +9,8 @@ public class PlayerLedgeClimbState : PlayerState
 
     private Vector2 v2Workspace;
 
+    private float lastGrabTime;
+
     private bool isHanging;
     private bool isClimbing;
     private bool isTouchingCeiling;
@@ -20,6 +22,7 @@ public class PlayerLedgeClimbState : PlayerState
 
     public PlayerLedgeClimbState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        lastGrabTime = 0f;
     }
 
     public override void AnimationFinishTrigger()
@@ -63,6 +66,7 @@ public class PlayerLedgeClimbState : PlayerState
         }
 
         Combat.OnDamaged -= HandleOnDamaged;
+        lastGrabTime = Time.time;
     }
 
     public override void LogicUpdate()
@@ -89,29 +93,41 @@ public class PlayerLedgeClimbState : PlayerState
             Movement.SetVelocityZero();
             player.transform.position = startPosition;
 
-            if (Stats.IsRewindingPosition)
+            if (!isExitingState)
             {
-                stateMachine.ChangeState(player.InAirState);
-            }
-            else if (xInput == Movement.FacingDirection && isHanging && !isClimbing)
-            {
-                CheckForSpace();
-                isClimbing = true;
-                player.Anim.SetBool("climbLedge", true);
-            }
-            else if(yInput == -1 && isHanging && !isClimbing)
-            {
-                stateMachine.ChangeState(player.InAirState);
-            }
-            else if(jumpInput && !isClimbing)
-            {
-                player.WallJumpState.DetermineWallJumpDirection(true);
-                stateMachine.ChangeState(player.WallJumpState);
+                if (Stats.IsRewindingPosition)
+                {
+                    stateMachine.ChangeState(player.InAirState);
+                }
+                else if (xInput == Movement.FacingDirection && isHanging && !isClimbing)
+                {
+                    CheckForSpace();
+                    isClimbing = true;
+                    player.Anim.SetBool("climbLedge", true);
+                }
+                else if (yInput == -1 && isHanging && !isClimbing)
+                {
+                    stateMachine.ChangeState(player.InAirState);
+                }
+                else if (jumpInput && !isClimbing)
+                {
+                    player.WallJumpState.DetermineWallJumpDirection(true);
+                    stateMachine.ChangeState(player.WallJumpState);
+                }
+
             }
         }
     }
 
-    private void HandleOnDamaged() => stateMachine.ChangeState(player.InAirState);
+    private void HandleOnDamaged() 
+    {
+        stateMachine.ChangeState(player.InAirState);
+    }
+
+    public bool CheckCanGrabWall()
+    {
+        return Time.time >= lastGrabTime + playerData.grabCooldown;
+    }
 
     public void SetDetectedPosition(Vector2 pos) => detectedPosition = pos;
 

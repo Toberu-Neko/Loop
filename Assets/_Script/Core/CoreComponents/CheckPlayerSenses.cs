@@ -5,15 +5,30 @@ using UnityEngine;
 public class CheckPlayerSenses : CoreComponent
 {
     [SerializeField] private LayerMask whatIsPlayer;
+    [SerializeField] private LayerMask whatIsGround;
 
     [SerializeField] private Transform playerMinAgroCheck;
     [SerializeField] private Transform playerMaxAgroCheck;
     [SerializeField] private Transform playerCloseRangeCheck;
+    [SerializeField] private Transform canSeePlayerCheck;
 
     [SerializeField] private Vector2 minAgroV2 = Vector2.one;
     [SerializeField] private Vector2 maxAgroV2 = Vector2.one;
     [SerializeField] private Vector2 closeRangeActionV2 = Vector2.one;
 
+    public bool CanSeePlayer
+    {
+        get
+        {
+            if(!IsPlayerInMaxAgroRange)
+            {
+                return false;
+            }
+
+            Vector2 delta = IsPlayerInMaxAgroRange.point - (Vector2)transform.position;
+            return !Physics2D.Raycast(canSeePlayerCheck.position, delta.normalized, delta.magnitude, whatIsGround);
+        }
+    }
 
     public bool IsPlayerInMinAgroRange
     {

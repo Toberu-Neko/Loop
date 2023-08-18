@@ -12,8 +12,19 @@ public class SnipingState : AttackState
     private bool isReloading;
     private Vector2 aimPointDelta;
     private Vector2 targetPos;
-    private Vector3 v3WorkSpace;
+
     private Vector2 v2WorkSpace;
+
+    private bool firesShoot;
+    private bool startShooting;
+    private states state;
+    private enum states 
+    { 
+        aiming,
+        locked,
+        reloading
+    }
+
 
     private float lastShootTime;
 
@@ -30,12 +41,14 @@ public class SnipingState : AttackState
     {
         base.Enter();
 
+        startShooting = false;
         isAiming = true;
         isLocked = false;
         isReloading = false;
         goToIdleState = false;
         player = null;
-        v3WorkSpace = Vector3.zero;
+        firesShoot = true;
+        state = states.reloading;
         entity.Anim.SetBool("isAiming", true);
     }
     public override void Exit()
@@ -54,7 +67,13 @@ public class SnipingState : AttackState
     {
         base.LogicUpdate();
 
-        if (isAiming && Time.time >= lastShootTime + stateData.reloadTime)
+        if(state == states.reloading && Time.time >= lastShootTime + stateData.reloadTime)
+        {
+            state = states.aiming;
+            StartTime = Time.time;
+        }
+
+        if (state == states.aiming)
         {
             if (CheckPlayerSenses.IsPlayerInMaxAgroRange && !player)
             {
@@ -66,13 +85,17 @@ public class SnipingState : AttackState
                 float leftTime = stateData.aimTime - (Time.time - StartTime);
                 v2WorkSpace.Set(0f, stateData.shakeCurve.Evaluate(leftTime / stateData.aimTime) * 2f);
 
-                targetPos = Vector3.Slerp((Vector3)targetPos, player.position, (stateData.aimTime - leftTime) / stateData.aimTime);
-                aimPointDelta = ((Vector2)targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized;
+                if (CheckPlayerSenses.CanSeePlayer)
+                {
+                    targetPos = Vector3.Slerp((Vector3)targetPos, player.position, (stateData.aimTime - leftTime) / stateData.aimTime);
+                }
+                aimPointDelta = (targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized;
+
 
                 RaycastHit2D hit = Physics2D.Raycast(attackPosition.position, aimPointDelta, 30f, stateData.whatIsGround);
                 if (hit)
                 {
-                    drawWire.SetPoints(attackPosition.position, hit.point + (Vector2)v3WorkSpace);
+                    drawWire.SetPoints(attackPosition.position, hit.point);
                 }
                 else
                 {
@@ -83,8 +106,9 @@ public class SnipingState : AttackState
             }
         }
 
-        if(isAiming && Time.time >= StartTime + stateData.aimTime)
+        if(state == states.aiming && Time.time >= StartTime + stateData.aimTime)
         {
+            state = states.locked;
             isAiming = false;
             isLocked = true;
             StartTime = Time.time;
@@ -93,13 +117,14 @@ public class SnipingState : AttackState
             Lock();
         }
 
-        else if (!isAiming && isLocked && Time.time >= StartTime + stateData.freazeTime)
+        else if (state == states.locked && !startShooting && Time.time >= StartTime + stateData.freazeTime)
         {
+            startShooting = true;
             isLocked = false;
             entity.Anim.SetTrigger("shoot");
         }
 
-        else if(isReloading && !isAiming && !isLocked && Time.time >= lastShootTime + stateData.reloadTime)
+        else if(state == states.reloading && Time.time >= lastShootTime + stateData.reloadTime)
         {
             isReloading = false;
             player = null;
@@ -108,7 +133,7 @@ public class SnipingState : AttackState
             StartTime = Time.time;
         }
 
-        if (!isPlayerInMaxAgroRange && isReloading)
+        if (!CheckPlayerSenses.CanSeePlayer && state == states.reloading && !firesShoot)
         {
             goToIdleState = true;
         }
@@ -123,6 +148,9 @@ public class SnipingState : AttackState
 
     private void Shoot()
     {
+        state = states.reloading;
+        firesShoot = false;
+        startShooting = false;
         isReloading = true;
         lastShootTime = Time.time;
         drawWire.ClearPoints();

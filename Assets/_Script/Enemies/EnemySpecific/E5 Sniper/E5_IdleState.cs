@@ -14,7 +14,7 @@ public class E5_IdleState : IdleState
     {
         base.LogicUpdate();
 
-        if (isPlayerInMaxAgroRange)
+        if (CheckPlayerSenses.CanSeePlayer && isPlayerInMaxAgroRange)
         {
             stateMachine.ChangeState(enemy.SnipingState);
         }
