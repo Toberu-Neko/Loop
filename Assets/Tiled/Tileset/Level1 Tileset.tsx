@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset version="1.10" tiledversion="1.10.1" name="Level1 Tileset" tilewidth="256" tileheight="256" tilecount="56" columns="8" tilerendersize="grid">
+ <grid orientation="orthogonal" width="16" height="16"/>
+ <image source="../../2D/TileSets/NewTiles1.png" trans="9d9d9d" width="2048" height="1792"/>
+ <tile id="0">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="256" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="1">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="3" x="9" y="0" width="247" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="2">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="247" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="3">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="3" x="0" y="0">
+    <polygon points="0,0 256,0 256,125"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="4">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="2" x="0" y="0">
+    <polygon points="0,0 256,0 256,256 -2,126"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="5">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0">
+    <polygon points="0,0 256,0 255,126 0,256"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="6">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0">
+    <polygon points="0,0 256,0 0,127"/>
+   </object>
+  </objectgroup>
+ </tile>
+ <tile id="8">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="256" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="9">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="9" y="0" width="247" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="10">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="247" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="11">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="12">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="13">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="14">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="16">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="256" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="17">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="9" y="0" width="247" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="18">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="247" height="256"/>
+  </objectgroup>
+ </tile>
+ <tile id="19">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="20">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="21">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="22">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="24">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="171" width="256" height="85"/>
+  </objectgroup>
+ </tile>
+ <tile id="25">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="26">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="27">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="28">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="29">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="30">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="32">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="33">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="34">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="35">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="36">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="37">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="38">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="40">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="41">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="42">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="43">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="44">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="45">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="46">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="48">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="49">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="50">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="51">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="52">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="53">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+ <tile id="54">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
+ </tile>
+</tileset>
