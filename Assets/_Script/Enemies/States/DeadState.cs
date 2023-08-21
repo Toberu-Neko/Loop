@@ -13,7 +13,7 @@ public class DeadState : EnemyState
     {
         base.Enter();
 
-        Movement.CanSetVelocity = true;
+        Movement.SetCanSetVelocity(false);
         Movement.SetVelocityZero();
     }
 

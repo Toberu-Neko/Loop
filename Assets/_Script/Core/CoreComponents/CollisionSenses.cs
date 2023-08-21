@@ -88,6 +88,8 @@ public class CollisionSenses : CoreComponent
 
         Movement.Slope = Slope;
     }
+
+
     public bool SolidCeiling 
     {
         get => Physics2D.BoxCast(CeilingCheck.position, ceilingCheckV2, 0f, Vector2.up, 0.1f, whatIsGround - whatIsPlatform);

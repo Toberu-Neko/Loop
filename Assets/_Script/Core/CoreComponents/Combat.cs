@@ -60,8 +60,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         maxKnockbackTime = core.CoreData.maxKnockbackTime;
         normalBlockKnockbakDirection = core.CoreData.normalBlockKnockbakDirection;
         normalBlockKnockbakMultiplier = core.CoreData.normalBlockKnockbakMultiplier;
-
     }
+
     private void OnEnable()
     {
         workspace = Vector2.zero;
@@ -86,7 +86,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
         OnPerfectBlock += HandlePerfectBlock;
         OnDamaged += HandleOnDamaged;
-
     }
 
     private void OnDisable()
@@ -97,6 +96,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         OnPerfectBlock -= HandlePerfectBlock;
         OnDamaged -= HandleOnDamaged;
     }
+
 
     public override void LogicUpdate()
     {
@@ -308,7 +308,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             return;
         }
         movement.SetVelocity(strength, angle, direction);
-        movement.CanSetVelocity = false;
+        movement.SetCanSetVelocity(false);
         isKnockbackActive = true;
         knockbackStartTime = Time.time;
     }
@@ -317,7 +317,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     {
         if (isKnockbackActive && ((movement.CurrentVelocity.y <= 0.01f && collisionSenses.Ground) || Time.time >= knockbackStartTime + maxKnockbackTime))
         {
-            movement.CanSetVelocity = true;
+            movement.SetCanSetVelocity(true);
             isKnockbackActive = false;
         }
     }

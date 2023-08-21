@@ -7,7 +7,7 @@ public class Movement : CoreComponent
 
     public int FacingDirection { get; private set; }
 
-    public bool CanSetVelocity { get; set; }
+    public bool CanSetVelocity { get; private set; }
 
     public Vector2 CurrentVelocity { get; private set; }
     public Transform ParentTransform { get; private set; }
@@ -37,20 +37,20 @@ public class Movement : CoreComponent
         RB = GetComponentInParent<Rigidbody2D>();
         stats = core.GetCoreComponent<Stats>();
     }
-
     private void OnEnable()
     {
+        Slope = new();
         previousPosition = Vector2.zero;
         velocityWorkspace = Vector2.zero;
         TimeStopVelocity = Vector2.zero;
         TimeSlowVelocity = Vector2.zero;
         CurrentVelocity = Vector2.zero;
-        Slope = new();
 
         orginalGrag = RB.drag;
         orginalGravityScale = RB.gravityScale;
 
         FacingDirection = 1;
+
         CanSetVelocity = true;
 
         stats.OnTimeStopEnd += HandleTimeStopEnd;
@@ -60,6 +60,7 @@ public class Movement : CoreComponent
         stats.OnTimeSlowEnd += HandleTimeSlowEnd;
     }
 
+
     private void OnDisable()
     {
         stats.OnTimeStopEnd -= HandleTimeStopEnd;
@@ -68,6 +69,7 @@ public class Movement : CoreComponent
         stats.OnTimeSlowStart -= HandleTimeSlowStart;
         stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
     }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -279,6 +281,11 @@ public class Movement : CoreComponent
     public void SetDragOrginal()
     {
         RB.drag = orginalGrag;
+    }
+
+    public void SetCanSetVelocity(bool a)
+    {
+        CanSetVelocity = a;
     }
 
 

@@ -31,11 +31,8 @@ public class Entity : MonoBehaviour
         collisionAttackDetails = EntityData.collisionAttackDetails;
 
         StateMachine = new();
-        stats.OnTimeStopStart += HandleOnTimeStop;
-        stats.OnTimeStopEnd += HandleOnTimeStart;
-        stats.OnTimeSlowStart += HandleTimeSlowStart;
-        stats.OnTimeSlowEnd += HandleTimeSlowEnd;
     }
+
     protected virtual void OnDisable()
     {
         stats.OnTimeStopStart -= HandleOnTimeStop;
@@ -43,26 +40,12 @@ public class Entity : MonoBehaviour
         stats.OnTimeSlowStart -= HandleTimeSlowStart;
         stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
     }
-
-    private void HandleTimeSlowStart()
+    private void OnEnable()
     {
-        Anim.speed *= GameManager.Instance.TimeSlowMultiplier;
-    }
-    private void HandleTimeSlowEnd()
-    {
-        Anim.speed /= GameManager.Instance.TimeSlowMultiplier;
-    }
-
-    private void HandleOnTimeStop()
-    {
-        Anim.speed = 0;
-        StateMachine.SetCanChangeState(false);
-    }
-
-    private void HandleOnTimeStart()
-    {
-        Anim.speed = animSpeed;
-        StateMachine.SetCanChangeState(true);
+        stats.OnTimeStopStart += HandleOnTimeStop;
+        stats.OnTimeStopEnd += HandleOnTimeStart;
+        stats.OnTimeSlowStart += HandleTimeSlowStart;
+        stats.OnTimeSlowEnd += HandleTimeSlowEnd;
     }
 
     public virtual void Update()
@@ -87,6 +70,28 @@ public class Entity : MonoBehaviour
     public virtual void OnDrawGizmos()
     {
     }
+
+    private void HandleTimeSlowStart()
+    {
+        Anim.speed *= GameManager.Instance.TimeSlowMultiplier;
+    }
+    private void HandleTimeSlowEnd()
+    {
+        Anim.speed /= GameManager.Instance.TimeSlowMultiplier;
+    }
+
+    private void HandleOnTimeStop()
+    {
+        Anim.speed = 0;
+        StateMachine.SetCanChangeState(false);
+    }
+
+    private void HandleOnTimeStart()
+    {
+        Anim.speed = animSpeed;
+        StateMachine.SetCanChangeState(true);
+    }
+
     private void AnimationActionTrigger()
     {
         StateMachine.CurrentState.AnimationActionTrigger();

@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
     public Core Core { get; private set; }
 
     private Movement movement;
+    private Stats stats;
+
     public Animator Anim { get; private set; }
     public PlayerWeaponManager PlayerWeaponManager { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
@@ -71,6 +73,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Core = GetComponentInChildren<Core>();
+        stats = Core.GetCoreComponent<Stats>();
 
         TimeSkillManager = GetComponent<PlayerTimeSkillManager>();
         Anim = GetComponent<Animator>();
@@ -115,16 +118,21 @@ public class Player : MonoBehaviour
         FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
         FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, playerData, "fistNormalAttack");
         FistSoulAttackState = new PlayerFistSoulAttackState(this, StateMachine, playerData, "fistSoulAttack");
+
+        gameManager = GameManager.Instance;
+    }
+
+    private void OnEnable()
+    {
+        gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
+        gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
+        gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
     }
 
     private void Start()
     {
         StateMachine.Initialize(IdleState);
 
-        gameManager = GameManager.Instance;
-        gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
-        gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
-        gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
     }
 
     private void OnDisable()

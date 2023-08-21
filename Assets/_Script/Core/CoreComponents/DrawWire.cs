@@ -12,11 +12,13 @@ public class DrawWire : CoreComponent
         base.Awake();
 
         LR = GetComponent<LineRenderer>();
+        points = new();
     }
     private void OnEnable()
     {
         points = new();
     }
+
 
     public void ChangeColor(Gradient gradient)
     {

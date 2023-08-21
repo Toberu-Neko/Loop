@@ -48,22 +48,28 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         {
             movement.SetVelocityZero();
         }
-        /*
-        if (!hasHitGround)
-        {
-            if (isGravityOn && !stats.IsTimeStopped)
-            {
-                float angle = Mathf.Atan2(movement.CurrentVelocity.y, movement.CurrentVelocity.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            }
-            movement.SetVelocity(details.speed, transform.right);
-        }*/
+    }
 
+    private void LateUpdate()
+    {
+        core.LateLogicUpdate();
     }
 
     private void FixedUpdate()
     {
         core.PhysicsUpdate();
+    }
+
+    private void OnEnable()
+    {
+        isGravityOn = false;
+        hasHitGround = false;
+        damaged = false;
+        countered = false;
+    }
+
+    private void OnDisable()
+    {
     }
 
     public void FireProjectile(ProjectileDetails details, int facingDirection, Vector2 fireDirection)
@@ -78,10 +84,6 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         movement.SetGravityZero();
         movement.SetVelocity(details.speed, fireDirection);
 
-        isGravityOn = false;
-        hasHitGround = false;
-        damaged = false;
-        countered = false;
         xStartPosition = transform.position.x;
 
         gameObject.layer = LayerMask.NameToLayer("EnemyAttack");

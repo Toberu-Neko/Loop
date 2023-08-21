@@ -6,11 +6,17 @@ public class TimeSlow : CoreComponent, ITimeSlowable
     private GameManager gameManager;
     private Stats stats;
 
-    private void OnEnable()
+    protected override void Awake()
     {
+        base.Awake();
+
         stats = core.GetCoreComponent<Stats>();
         gameManager = GameManager.Instance;
+    }
 
+
+    private void OnEnable()
+    {
         gameManager.OnAllTimeSlowStart += DoTimeSlow;
         gameManager.OnAllTimeSlowEnd += EndTimeSlow;
 
@@ -19,11 +25,13 @@ public class TimeSlow : CoreComponent, ITimeSlowable
             DoTimeSlow();
         }
     }
+
     private void OnDisable()
     {
         gameManager.OnAllTimeSlowStart -= DoTimeSlow;
         gameManager.OnAllTimeSlowEnd -= EndTimeSlow;
     }
+
 
     public void DoTimeSlow()
     {

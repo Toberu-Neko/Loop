@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Stats : CoreComponent
@@ -32,13 +30,29 @@ public class Stats : CoreComponent
     public event Action OnTimeSlowStart;
     public event Action OnTimeSlowEnd;
 
-    private void Update()
+    #region Overrides
+
+    protected override void Awake()
     {
+        base.Awake();
+
+        Health.MaxValue = core.CoreData.maxHealth;
+        Stamina.MaxValue = core.CoreData.maxStamina;
+        staminaRecoveryRate = core.CoreData.staminaRecoveryRate;
+        perfectBlockAttackDuration = core.CoreData.perfectBlockAttackDuration;
+        invincibleDurationAfterDamaged = core.CoreData.invincibleDurationAfterDamaged;
+        combatTimer = core.CoreData.combatTimer;
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
         if (IsTimeStopped || IsTimeSlowed)
         {
             lastCombatTime += Time.deltaTime;
         }
-        if(InCombat && Time.time >= lastCombatTime + combatTimer)
+        if (InCombat && Time.time >= lastCombatTime + combatTimer)
         {
             InCombat = false;
         }
@@ -48,15 +62,10 @@ public class Stats : CoreComponent
             Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
         }
     }
+
+
     private void OnEnable()
     {
-        Health.MaxValue = core.CoreData.maxHealth;
-        Stamina.MaxValue = core.CoreData.maxStamina;
-        staminaRecoveryRate = core.CoreData.staminaRecoveryRate;
-        perfectBlockAttackDuration = core.CoreData.perfectBlockAttackDuration;
-        invincibleDurationAfterDamaged = core.CoreData.invincibleDurationAfterDamaged;
-        combatTimer = core.CoreData.combatTimer;
-
         Invincible = false;
         InCombat = false;
         CanChangeWeapon = true;
@@ -73,12 +82,15 @@ public class Stats : CoreComponent
 
     private void OnDisable()
     {
+
         SetTimeSlowFalse();
         SetTimeStopFalse();
 
         Stamina.OnCurrentValueZero -= HandlePoiseZero;
     }
+    #endregion
 
+    #region PerfectBlockAttack
     public void SetPerfectBlockAttackTrue()
     {
         PerfectBlockAttackable = true;
@@ -92,6 +104,8 @@ public class Stats : CoreComponent
         if(PerfectBlockAttackable)
             PerfectBlockAttackable = false;
     }
+    #endregion
+
     #region Invincible
 
     public void SetInvincibleTrue()
@@ -116,8 +130,7 @@ public class Stats : CoreComponent
     }
     #endregion
 
-    public void SetCanChangeWeapon(bool volume) => CanChangeWeapon = volume;
-
+    #region EventHandler
     public void HandleOnDamaged()
     {
         InCombat = true;
@@ -129,11 +142,9 @@ public class Stats : CoreComponent
         Stamina.Init();
         Stamina.decreaseable = false;
     }
+    #endregion
 
-    public void ResetPoiseDecreaseable() => Stamina.decreaseable = true;
-
-    public void SetRewindingPosition(bool volume) => IsRewindingPosition = volume;
-
+    #region TimeStop
     public void SeTimeStopTrue()
     {
         InCombat = true;
@@ -147,7 +158,9 @@ public class Stats : CoreComponent
         IsTimeStopped = false;
         OnTimeStopEnd?.Invoke();
     }
+    #endregion
 
+    #region TimeSlow
     public void SetTimeSlowTrue()
     {
         InCombat = true;
@@ -162,6 +175,10 @@ public class Stats : CoreComponent
         IsTimeSlowed = false;
         OnTimeSlowEnd?.Invoke();
     }
+    #endregion
 
     public void SetAttackable(bool volume) => Attackable = volume;
+    public void SetCanChangeWeapon(bool volume) => CanChangeWeapon = volume;
+    public void ResetPoiseDecreaseable() => Stamina.decreaseable = true;
+    public void SetRewindingPosition(bool volume) => IsRewindingPosition = volume;
 }
