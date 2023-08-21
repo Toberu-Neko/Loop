@@ -13,7 +13,10 @@ public class PlayerChangeSceneState : PlayerState
     {
         base.Enter();
 
-        Movement.CheckIfShouldFlip(facingDirection);
+        if(facingDirection != 0)
+        {
+            Movement.CheckIfShouldFlip(facingDirection);
+        }
         canChangeState = false;
     }
 
@@ -21,7 +24,15 @@ public class PlayerChangeSceneState : PlayerState
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityX(playerData.movementVelocity * facingDirection);
+
+        if (facingDirection != 0)
+        {
+            Movement.SetVelocityX(playerData.movementVelocity * facingDirection);
+        }
+        else
+        {
+            Movement.SetVelocityX(0f);
+        }
 
         if(canChangeState && CollisionSenses.Ground)
         {

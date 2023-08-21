@@ -35,6 +35,8 @@ public class UI_Manager : MonoBehaviour
         gameManager.OnGamePaused += OpenPauseMainUI;
         gameManager.OnGameResumed += ClosePauseMainUI;
 
+        gameManager.OnChangeSceneGoUp += HandleChangeSceneGoUp;
+        gameManager.OnChangeSceneGoDown += HandleChangeSceneGoDown;
         gameManager.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
         gameManager.OnChangeSceneGoRight += HandleChangeSceneGoRight;
         gameManager.OnChangeSceneFinished += HandleChangeSceneFinish;
@@ -45,6 +47,8 @@ public class UI_Manager : MonoBehaviour
         gameManager.OnGamePaused -= OpenPauseMainUI;
         gameManager.OnGameResumed -= ClosePauseMainUI;
 
+        gameManager.OnChangeSceneGoUp -= HandleChangeSceneGoUp;
+        gameManager.OnChangeSceneGoDown -= HandleChangeSceneGoDown;
         gameManager.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
         gameManager.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
         gameManager.OnChangeSceneFinished -= HandleChangeSceneFinish;
@@ -58,6 +62,20 @@ public class UI_Manager : MonoBehaviour
     private void ClosePauseMainUI()
     {
         pauseMainUI.SetActive(false);
+    }
+
+    private void HandleChangeSceneGoUp()
+    {
+        changeSceneUI.SetActive(true);
+        changeSceneAnimator.SetBool("finishLoading", false);
+        changeSceneAnimator.SetTrigger("toUp");
+    }
+
+    private void HandleChangeSceneGoDown()
+    {
+        changeSceneUI.SetActive(true);
+        changeSceneAnimator.SetBool("finishLoading", false);
+        changeSceneAnimator.SetTrigger("toDown");
     }
 
     private void HandleChangeSceneGoLeft()
@@ -74,7 +92,6 @@ public class UI_Manager : MonoBehaviour
     }
     private void HandleChangeSceneFinish()
     {
-        if(changeSceneUI.activeInHierarchy)
-            changeSceneAnimator.SetBool("finishLoading", true);
+        changeSceneAnimator.SetBool("finishLoading", true);
     }
 }

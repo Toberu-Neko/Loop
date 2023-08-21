@@ -124,6 +124,8 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
+        gameManager.OnChangeSceneGoUp += HandleChangeSceneToUp;
+        gameManager.OnChangeSceneGoDown += HandleChangeSceneToDown;
         gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
         gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
         gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
@@ -132,11 +134,12 @@ public class Player : MonoBehaviour
     private void Start()
     {
         StateMachine.Initialize(IdleState);
-
     }
 
     private void OnDisable()
     {
+        gameManager.OnChangeSceneGoUp -= HandleChangeSceneToUp;
+        gameManager.OnChangeSceneGoDown -= HandleChangeSceneToDown;
         gameManager.OnChangeSceneGoRight -= HandleChangeSceneToRight;
         gameManager.OnChangeSceneGoLeft -= HandleChangeSceneToLeft;
         gameManager.OnChangeSceneFinished -= HandleChangeSceneFinished;
@@ -185,6 +188,19 @@ public class Player : MonoBehaviour
 
     private void AnimationStopMovementTrigger() => StateMachine.CurrentState.AnimationStopMovementTrigger();
 
+    #region Change Scene
+    private void HandleChangeSceneToUp()
+    {
+        //TODO: Make transition
+        ChangeSceneState.SetFacingDirection(0);
+        StateMachine.ChangeState(ChangeSceneState);
+    }
+    private void HandleChangeSceneToDown()
+    {
+        //TODO: Make transition
+        ChangeSceneState.SetFacingDirection(0);
+        StateMachine.ChangeState(ChangeSceneState);
+    }
     private void HandleChangeSceneToRight()
     {
         ChangeSceneState.SetFacingDirection(1);
@@ -199,12 +215,16 @@ public class Player : MonoBehaviour
 
     private void HandleChangeSceneFinished()
     {
-        Invoke(nameof(ChangeToIdleState), 0.25f);
+        Invoke(nameof(ChangeToIdleState), 0.2f);
     }
-
-    private void ChangeToIdleState() => ChangeSceneState.SetCanChangeStateTrue();
-
     #endregion
+    private void ChangeToIdleState() => ChangeSceneState.SetCanChangeStateTrue();
+    #endregion
+
+    public void TeleportPlayer(Vector2 position)
+    {
+        movement.Teleport(position);
+    }
 
     private void OnDrawGizmos()
     {

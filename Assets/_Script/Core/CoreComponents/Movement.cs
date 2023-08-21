@@ -309,5 +309,10 @@ public class Movement : CoreComponent
         v3WorkSpace.Set(0f, 0f, 180f);
         RB.transform.eulerAngles += v3WorkSpace; 
     }
+
+    public void Teleport(Vector2 position)
+    {
+        RB.position = position;
+    }
     #endregion
 }

@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnterSceneTrigger : MonoBehaviour
 {
     [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
+    [SerializeField] private Transform teleportPosition;
 
     public event Action OnChangeSceneFinished;
     private void Start()
@@ -20,6 +19,7 @@ public class EnterSceneTrigger : MonoBehaviour
             if(CamManager.instance.CurrentCam != cam)
             {
                 CamManager.instance.SwitchCamera(cam);
+                collision.transform.position = teleportPosition.position;
                 OnChangeSceneFinished?.Invoke();
             }
         }

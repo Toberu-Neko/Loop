@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
 
     public event Action OnChangeSceneGoLeft;
     public event Action OnChangeSceneGoRight;
+    public event Action OnChangeSceneGoUp;
+    public event Action OnChangeSceneGoDown;
+
     public event Action OnChangeSceneFinished;
     private List<ChangeSceneTrigger> changeSceneTriggers;
     private List<EnterSceneTrigger> enterSceneTriggers;
@@ -49,6 +52,8 @@ public class GameManager : MonoBehaviour
     {
         foreach (var trigger in changeSceneTriggers)
         {
+            trigger.OnChangeSceneGoUp -= HandleChangeSceneGoUp;
+            trigger.OnChangeSceneGoDown -= HandleChangeSceneGoDown;
             trigger.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
             trigger.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
         }
@@ -114,6 +119,8 @@ public class GameManager : MonoBehaviour
         changeSceneTriggers.Add(trigger);
         trigger.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
         trigger.OnChangeSceneGoRight += HandleChangeSceneGoRight;
+        trigger.OnChangeSceneGoUp += HandleChangeSceneGoUp;
+        trigger.OnChangeSceneGoDown += HandleChangeSceneGoDown;
     }
 
     public void RegisterEnterSceneTrigger(EnterSceneTrigger trigger)
@@ -132,6 +139,15 @@ public class GameManager : MonoBehaviour
         OnChangeSceneGoRight?.Invoke();
     }
 
+    private void HandleChangeSceneGoUp()
+    {
+        OnChangeSceneGoUp?.Invoke();
+    }
+
+    private void HandleChangeSceneGoDown()
+    {
+        OnChangeSceneGoDown?.Invoke();
+    }
     private void HandleChangeSceneFinished()
     {
         OnChangeSceneFinished?.Invoke();

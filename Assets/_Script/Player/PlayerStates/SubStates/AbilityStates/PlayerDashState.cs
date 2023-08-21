@@ -49,6 +49,9 @@ public class PlayerDashState : PlayerAbilityState
         player.DashDirectionIndicator.gameObject.SetActive(false);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
+
+        player.RB.drag = 0f;
+        lastDashTime = Time.time;
     }
 
     public override void LogicUpdate()
