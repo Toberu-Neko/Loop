@@ -5,8 +5,13 @@ using System.Linq;
 
 public class DataPersistenceManager : MonoBehaviour
 {
+
+    [SerializeField] private string fileName;
+    [SerializeField] private bool useEncryption = false;
+
     private GameData gameData;
     private List<IDataPersistance> dataPersistanceObjects;
+    private FileDataHandler dataHandler;
 
     public static DataPersistenceManager Instance { get; private set; }
 
@@ -26,7 +31,9 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Start()
     {
+        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         dataPersistanceObjects = FindAllDataPersistenceObjects();
+        LoadGame();
     }
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()
@@ -35,22 +42,40 @@ public class DataPersistenceManager : MonoBehaviour
 
         return new List<IDataPersistance>(dataPersistanceObjects);
     }
+
     public void NewGame()
     {
         gameData = new GameData();
     }
 
+    private void OnApplicationQuit()
+    {
+        SaveGame();
+    }
+
     public void LoadGame()
     {
+        gameData = dataHandler.Load();
+
         if(gameData == null)
         {
-            Debug.LogError("No game data found, create a new one.");
+            Debug.LogWarning("No game data found, create a new one.");
             NewGame();
+        }
+
+        foreach (IDataPersistance dataPersistanceObject in dataPersistanceObjects)
+        {
+            dataPersistanceObject.LoadData(gameData);
         }
     }
 
     public void SaveGame()
     {
+        foreach (IDataPersistance dataPersistanceObject in dataPersistanceObjects)
+        {
+            dataPersistanceObject.SaveData(ref gameData);
+        }
 
+        dataHandler.Save(gameData);
     }
 }

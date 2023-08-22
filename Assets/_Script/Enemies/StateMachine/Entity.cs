@@ -1,8 +1,13 @@
 using UnityEngine;
 using System.Linq;
+using UnityEngine.VFX;
 
-public class Entity : MonoBehaviour
+public class Entity : MonoBehaviour, IDataPersistance
 {
+    public string ID;
+    public int isAdded { get; set; }
+    private bool isDefeated;
+
     public EnemyStateMachine StateMachine { get; private set; }
     [SerializeField] private D_Entity EntityData;
 
@@ -16,6 +21,12 @@ public class Entity : MonoBehaviour
     private float animSpeed;
     private WeaponAttackDetails collisionAttackDetails;
     public bool SkillCollideDamage { get; private set; }
+
+    [ContextMenu("Generate guid for id")]
+    private void GenerateID()
+    {
+        ID = System.Guid.NewGuid().ToString();
+    }
 
     public virtual void Awake()
     {
@@ -33,19 +44,24 @@ public class Entity : MonoBehaviour
         StateMachine = new();
     }
 
+    private void OnEnable()
+    {
+        isDefeated = false;
+
+        stats.OnTimeStopStart += HandleOnTimeStop;
+        stats.OnTimeStopEnd += HandleOnTimeStart;
+        stats.OnTimeSlowStart += HandleTimeSlowStart;
+        stats.OnTimeSlowEnd += HandleTimeSlowEnd;
+        stats.Health.OnCurrentValueZero += HandleHealthZero;
+    }
+
     protected virtual void OnDisable()
     {
         stats.OnTimeStopStart -= HandleOnTimeStop;
         stats.OnTimeStopEnd -= HandleOnTimeStart;
         stats.OnTimeSlowStart -= HandleTimeSlowStart;
         stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
-    }
-    private void OnEnable()
-    {
-        stats.OnTimeStopStart += HandleOnTimeStop;
-        stats.OnTimeStopEnd += HandleOnTimeStart;
-        stats.OnTimeSlowStart += HandleTimeSlowStart;
-        stats.OnTimeSlowEnd += HandleTimeSlowEnd;
+        stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
 
     public virtual void Update()
@@ -204,4 +220,28 @@ public class Entity : MonoBehaviour
 
     public void SetSkillCollideDamage(bool value) => SkillCollideDamage = value;
 
+    private void HandleHealthZero()
+    {
+        Debug.Log("Died!");
+        isDefeated = true;
+    }
+
+    public void LoadData(GameData data)
+    {
+        data.defeatedEnemies.TryGetValue(ID, out isDefeated);
+
+        if(isDefeated)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if(data.defeatedEnemies.ContainsKey(ID))
+        {
+            data.defeatedEnemies.Remove(ID);
+        }
+        data.defeatedEnemies.Add(ID, isDefeated);
+    }
 }

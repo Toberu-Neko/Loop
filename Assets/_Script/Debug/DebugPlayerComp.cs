@@ -9,9 +9,11 @@ public class DebugPlayerComp : MonoBehaviour
     [SerializeField] TextMeshProUGUI HpText;
     [SerializeField] TextMeshProUGUI weaponText;
     [SerializeField] TextMeshProUGUI timeText;
+    [SerializeField] TextMeshProUGUI debugInputCountText;
 
     private PlayerWeaponManager weaponManager;
     private PlayerTimeSkillManager timeSkillManager;
+    private PlayerSaveDataManager saveDataManager;
 
     private Core core;
 
@@ -25,6 +27,7 @@ public class DebugPlayerComp : MonoBehaviour
         core = GetComponentInChildren<Core>();
         weaponManager = GetComponent<PlayerWeaponManager>();
         timeSkillManager = GetComponent<PlayerTimeSkillManager>();
+        saveDataManager = GetComponent<PlayerSaveDataManager>();
 
         perfectBlockAttack.SetActive(false);
     }
@@ -33,6 +36,7 @@ public class DebugPlayerComp : MonoBehaviour
     {
         UpdateHpText();
         UpdateWeaponText();
+        UpdateDebugText();
     }
 
     private void OnEnable()
@@ -43,6 +47,7 @@ public class DebugPlayerComp : MonoBehaviour
         weaponManager.OnEnergyChanged += UpdateWeaponText;
         weaponManager.OnWeaponChanged += UpdateWeaponText;
         timeSkillManager.OnStateChanged += UpdateTimeSkillText;
+        saveDataManager.OnDebugInputCountChanged += UpdateDebugText;
     }
 
     private void OnDisable()
@@ -53,6 +58,7 @@ public class DebugPlayerComp : MonoBehaviour
         weaponManager.OnEnergyChanged -= UpdateWeaponText;
         weaponManager.OnWeaponChanged -= UpdateWeaponText;
         timeSkillManager.OnStateChanged -= UpdateTimeSkillText;
+        saveDataManager.OnDebugInputCountChanged -= UpdateDebugText;
     }
 
     void Update()
@@ -75,5 +81,10 @@ public class DebugPlayerComp : MonoBehaviour
     {
         timeText.text = "裝備技能: " + timeSkillManager.StateMachine.CurrentState.ToString()[16..] +
             "\n 能量: " + timeSkillManager.CurrentEnergy.ToString();
+    }
+
+    void UpdateDebugText()
+    {
+        debugInputCountText.text = "Count: " + saveDataManager.DebugInputCount.ToString();
     }
 }
