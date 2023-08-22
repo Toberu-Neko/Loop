@@ -7,9 +7,6 @@ public class SnipingState : AttackState
     S_EnemySnipingState stateData;
     private Transform player;
     protected bool goToIdleState;
-    private bool isAiming;
-    private bool isLocked;
-    private bool isReloading;
     private Vector2 aimPointDelta;
     private Vector2 targetPos;
 
@@ -42,9 +39,6 @@ public class SnipingState : AttackState
         base.Enter();
 
         startShooting = false;
-        isAiming = true;
-        isLocked = false;
-        isReloading = false;
         goToIdleState = false;
         player = null;
         firesShoot = true;
@@ -109,8 +103,6 @@ public class SnipingState : AttackState
         if(state == states.aiming && Time.time >= StartTime + stateData.aimTime)
         {
             state = states.locked;
-            isAiming = false;
-            isLocked = true;
             StartTime = Time.time;
             // entity.Anim.SetBool("isAiming", false);
 
@@ -120,15 +112,12 @@ public class SnipingState : AttackState
         else if (state == states.locked && !startShooting && Time.time >= StartTime + stateData.freazeTime)
         {
             startShooting = true;
-            isLocked = false;
             entity.Anim.SetTrigger("shoot");
         }
 
         else if(state == states.reloading && Time.time >= lastShootTime + stateData.reloadTime)
         {
-            isReloading = false;
             player = null;
-            isAiming = true;
             // entity.Anim.SetBool("isAiming", true);
             StartTime = Time.time;
         }
@@ -151,7 +140,6 @@ public class SnipingState : AttackState
         state = states.reloading;
         firesShoot = false;
         startShooting = false;
-        isReloading = true;
         lastShootTime = Time.time;
         drawWire.ClearPoints();
         drawWire.RenderLine();

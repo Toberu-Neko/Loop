@@ -80,7 +80,7 @@ public class CamManager : MonoBehaviour
     public IEnumerator PanCamera(float panDistance, float panTime, PanDirection panDirection, bool panToStartingPoint)
     {
         Vector2 endPosition = Vector2.zero;
-        Vector2 startPosition = Vector2.zero;
+        Vector2 startPosition;
 
         if (!panToStartingPoint)
         {

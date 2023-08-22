@@ -15,7 +15,6 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
     private float travelDistance;
     private float xStartPosition;
     private int facingDirection;
-    private bool isGravityOn;
     private bool hasHitGround;
     private bool countered;
     private bool damaged = false;
@@ -62,7 +61,6 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
 
     private void OnEnable()
     {
-        isGravityOn = false;
         hasHitGround = false;
         damaged = false;
         countered = false;
