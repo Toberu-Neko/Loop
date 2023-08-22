@@ -123,7 +123,8 @@ public class PlayerDashState : PlayerAbilityState
     }
     private void PlaceAfterImage()
     {
-        PlayerAfterImagePool.Instance.GetFromPool();
+        // PlayerAfterImagePool.Instance.GetFromPool();
+        ObjectPoolManager.SpawnObject(playerData.afterImagePrefab, player.transform.position, Quaternion.identity , ObjectPoolManager.PoolType.GameObjects);
         lastAfterImagePosition = player.transform.position;
     }
 

@@ -63,6 +63,7 @@ public class PlayerData : ScriptableObject
     public float standColliderHeight = 1.65f;
 
     [Header("DashState")]
+    public GameObject afterImagePrefab;
     [Tooltip("以45度為單位旋轉")]
     public bool useFixedDegreeAngle = true;
     [Tooltip("冷卻時間")]

@@ -17,11 +17,14 @@ public class PlayerAfterImageSprite : MonoBehaviour
 
     private Color color;
 
-    private void OnEnable()
+    private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerSR = player.GetComponent<SpriteRenderer>();
+    }
 
+    private void OnEnable()
+    {
         SR.sprite = playerSR.sprite;
         alpha = alphaSet;
         transform.SetPositionAndRotation(player.position, player.rotation);
@@ -36,7 +39,7 @@ public class PlayerAfterImageSprite : MonoBehaviour
 
         if(Time.time >= (timeActivated + activeTime))
         {
-            PlayerAfterImagePool.Instance.AddToPool(gameObject);
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }
 }
