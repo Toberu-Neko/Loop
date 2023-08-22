@@ -27,7 +27,7 @@ public class PlayerChangeSceneState : PlayerState
 
         if (facingDirection != 0)
         {
-            Movement.SetVelocityX(playerData.movementVelocity * facingDirection);
+            Movement.SetVelocityX(0f);
         }
         else
         {

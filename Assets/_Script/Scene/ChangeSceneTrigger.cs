@@ -9,6 +9,9 @@ public class ChangeSceneTrigger : MonoBehaviour
 {
     [SerializeField] private ChangeSceneDirection changeSceneDirection;
 
+    [SerializeField] private Transform teleport_LeftOrUp;
+    [SerializeField] private Transform teleport_RightOrDown;
+
     [Header("LR")]
     [SerializeField] private SceneReference leftScene;
     [SerializeField] private SceneReference rightScene;
@@ -72,6 +75,7 @@ public class ChangeSceneTrigger : MonoBehaviour
                     {
                         UnloadScene(leftScene.Name);
                         OnChangeSceneGoRight?.Invoke();
+                        collision.transform.position = teleport_RightOrDown.position;
                     }
                 }
                 else if (enterPosX > 0 && exitDirection.x < 0 &&
@@ -81,6 +85,7 @@ public class ChangeSceneTrigger : MonoBehaviour
                     {
                         UnloadScene(rightScene.Name);
                         OnChangeSceneGoLeft?.Invoke();
+                        collision.transform.position = teleport_LeftOrUp.position;
                     }
                 }
             }
@@ -94,6 +99,7 @@ public class ChangeSceneTrigger : MonoBehaviour
                     {
                         UnloadScene(downScene.Name);
                         OnChangeSceneGoUp?.Invoke();
+                        collision.transform.position = teleport_LeftOrUp.position;
                     }
                 }
                 else if (enterPosY > 0 && exitDirection.y < 0 &&
@@ -103,6 +109,7 @@ public class ChangeSceneTrigger : MonoBehaviour
                     {
                         UnloadScene(upScene.Name);
                         OnChangeSceneGoDown?.Invoke();
+                        collision.transform.position = teleport_RightOrDown.position;
                     }
                 }
             }

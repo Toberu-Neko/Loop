@@ -67,27 +67,23 @@ public class UI_Manager : MonoBehaviour
     private void HandleChangeSceneGoUp()
     {
         changeSceneUI.SetActive(true);
-        changeSceneAnimator.SetBool("finishLoading", false);
         changeSceneAnimator.SetTrigger("toUp");
     }
 
     private void HandleChangeSceneGoDown()
     {
         changeSceneUI.SetActive(true);
-        changeSceneAnimator.SetBool("finishLoading", false);
         changeSceneAnimator.SetTrigger("toDown");
     }
 
     private void HandleChangeSceneGoLeft()
     {
         changeSceneUI.SetActive(true);
-        changeSceneAnimator.SetBool("finishLoading", false);
         changeSceneAnimator.SetTrigger("toLeft");
     }
     private void HandleChangeSceneGoRight()
     {
         changeSceneUI.SetActive(true);
-        changeSceneAnimator.SetBool("finishLoading", false);
         changeSceneAnimator.SetTrigger("toRight");
     }
     private void HandleChangeSceneFinish()

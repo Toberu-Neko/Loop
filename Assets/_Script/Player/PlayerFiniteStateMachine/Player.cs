@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
         StateMachine = new PlayerStateMachine();
 
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
-        ChangeSceneState = new PlayerChangeSceneState(this, StateMachine, playerData, "move");
+        ChangeSceneState = new PlayerChangeSceneState(this, StateMachine, playerData, "idle");
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
