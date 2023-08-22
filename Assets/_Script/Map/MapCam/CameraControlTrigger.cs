@@ -13,7 +13,7 @@ public class CameraControlTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (camControlObjects.panCamOnContact)
+            if (camControlObjects.swapTriggerOption == CamControlObjects.SwapTriggerOption.pan)
             {
                 CamManager.instance.PanCameraOnTrigger(camControlObjects.panDistance, camControlObjects.panTime, camControlObjects.panDirection, false);
             }
@@ -26,11 +26,11 @@ public class CameraControlTrigger : MonoBehaviour
         {
             Vector2 exitDirection = (collision.transform.position - col.bounds.center).normalized;
 
-            if (camControlObjects.swapCam && camControlObjects.cameraOnLeft != null && camControlObjects.cameraOnRight != null)
+            if (camControlObjects.swapTriggerOption == CamControlObjects.SwapTriggerOption.swap && camControlObjects.cameraOnLeft != null && camControlObjects.cameraOnRight != null)
             {
                 CamManager.instance.SwapCamera(camControlObjects.cameraOnLeft, camControlObjects.cameraOnRight, exitDirection);
             }
-            if(camControlObjects.panCamOnContact)
+            if(camControlObjects.swapTriggerOption == CamControlObjects.SwapTriggerOption.pan)
             {
                 CamManager.instance.PanCameraOnTrigger(camControlObjects.panDistance, camControlObjects.panTime, camControlObjects.panDirection, true);
             }
@@ -51,8 +51,7 @@ public class CameraControlTrigger : MonoBehaviour
 [Serializable]
 public class CamControlObjects
 {
-    public bool swapCam = false;
-    public bool panCamOnContact = false;
+    public SwapTriggerOption swapTriggerOption;
 
     [HideInInspector] public CinemachineVirtualCamera cameraOnLeft;
     [HideInInspector] public CinemachineVirtualCamera cameraOnRight;
@@ -60,6 +59,12 @@ public class CamControlObjects
     [HideInInspector] public PanDirection panDirection;
     [HideInInspector] public float panDistance = 3f;
     [HideInInspector] public float panTime = 1f;
+
+    public enum SwapTriggerOption
+    {
+        swap,
+        pan
+    }
 }
 
 public enum PanDirection
@@ -85,7 +90,7 @@ public class CamControlEditor : Editor
     {
         base.OnInspectorGUI();
 
-        if (cameraControlTrigger.camControlObjects.swapCam)
+        if (cameraControlTrigger.camControlObjects.swapTriggerOption == CamControlObjects.SwapTriggerOption.swap)
         {
             cameraControlTrigger.camControlObjects.cameraOnLeft = 
                 (CinemachineVirtualCamera)EditorGUILayout.ObjectField("Camera On Left", cameraControlTrigger.camControlObjects.cameraOnLeft, typeof(CinemachineVirtualCamera), true);
@@ -94,7 +99,7 @@ public class CamControlEditor : Editor
                 (CinemachineVirtualCamera)EditorGUILayout.ObjectField("Camera On Right", cameraControlTrigger.camControlObjects.cameraOnRight, typeof(CinemachineVirtualCamera), true);
         }
 
-        if (cameraControlTrigger.camControlObjects.panCamOnContact)
+        if (cameraControlTrigger.camControlObjects.swapTriggerOption == CamControlObjects.SwapTriggerOption.pan)
         {
             cameraControlTrigger.camControlObjects.panDirection = (PanDirection)EditorGUILayout.EnumPopup("Pan Direction", cameraControlTrigger.camControlObjects.panDirection);
             cameraControlTrigger.camControlObjects.panDistance = EditorGUILayout.FloatField("Pan Distance", cameraControlTrigger.camControlObjects.panDistance);
