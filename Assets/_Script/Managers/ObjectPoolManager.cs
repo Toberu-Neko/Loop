@@ -5,6 +5,7 @@ using System.Linq;
 
 public class ObjectPoolManager : MonoBehaviour
 {
+    public static ObjectPoolManager Instance { get; private set; }
     public static List<PooledObjectInfo> ObjectPools = new();
 
     private GameObject objectPoolEmptyHolder;
@@ -24,6 +25,17 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void Awake()
     {
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            Debug.LogWarning("Found more than one object pool manager in the scene.");
+            return;
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         SetupEmpties();
     }
 
@@ -38,7 +50,9 @@ public class ObjectPoolManager : MonoBehaviour
         projectileEmpty.transform.SetParent(objectPoolEmptyHolder.transform);
 
         gameObjects = new GameObject("GameObjects");
-        projectileEmpty.transform.SetParent(objectPoolEmptyHolder.transform);
+        gameObjects.transform.SetParent(objectPoolEmptyHolder.transform);
+
+        DontDestroyOnLoad(objectPoolEmptyHolder);
     }
 
     public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation, PoolType poolType = PoolType.None)
