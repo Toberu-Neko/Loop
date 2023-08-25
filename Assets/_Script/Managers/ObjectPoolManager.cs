@@ -13,6 +13,7 @@ public class ObjectPoolManager : MonoBehaviour
     private static GameObject particleSystemEmpty;
     private static GameObject projectileEmpty;
     private static GameObject gameObjects;
+    private static GameObject none;
 
     public enum PoolType
     {
@@ -28,7 +29,7 @@ public class ObjectPoolManager : MonoBehaviour
         if(Instance != null)
         {
             Destroy(gameObject);
-            Debug.LogWarning("Found more than one object pool manager in the scene.");
+            // Debug.Log("Found more than one object pool manager in the scene, delete the new one.");
             return;
         }
         else
@@ -52,6 +53,9 @@ public class ObjectPoolManager : MonoBehaviour
         gameObjects = new GameObject("GameObjects");
         gameObjects.transform.SetParent(objectPoolEmptyHolder.transform);
 
+        none = new GameObject("None");
+        none.transform.SetParent(objectPoolEmptyHolder.transform);
+
         DontDestroyOnLoad(objectPoolEmptyHolder);
     }
 
@@ -71,6 +75,8 @@ public class ObjectPoolManager : MonoBehaviour
         {
             GameObject parentObject = SetParentObject(poolType);
             spawnableObj = Instantiate(objectToSpawn, spawnPosition, spawnRotation);
+            pool.ActiveObjects.Add(spawnableObj);
+
             if(parentObject != null)
                 spawnableObj.transform.SetParent(parentObject.transform);
         }
@@ -78,6 +84,7 @@ public class ObjectPoolManager : MonoBehaviour
         {
             spawnableObj.transform.SetPositionAndRotation(spawnPosition, spawnRotation);
             pool.InactiveObjects.Remove(spawnableObj);
+            pool.ActiveObjects.Add(spawnableObj);
             spawnableObj.SetActive(true);
         }
 
@@ -99,10 +106,12 @@ public class ObjectPoolManager : MonoBehaviour
         if (spawnableObj == null)
         {
             spawnableObj = Instantiate(objectToSpawn, parentTransform);
+            pool.ActiveObjects.Add(spawnableObj);
         }
         else
         {
             pool.InactiveObjects.Remove(spawnableObj);
+            pool.ActiveObjects.Add(spawnableObj);
             spawnableObj.SetActive(true);
         }
 
@@ -123,24 +132,33 @@ public class ObjectPoolManager : MonoBehaviour
         {
             obj.SetActive(false);
             pool.InactiveObjects.Add(obj);
+            pool.ActiveObjects.Remove(obj);
+        }
+    }
+
+    public static void ReturnAllObjectsToPool()
+    {
+        foreach(PooledObjectInfo pool in ObjectPools)
+        {
+            foreach(GameObject obj in pool.ActiveObjects)
+            {
+                obj.SetActive(false);
+                pool.InactiveObjects.Add(obj);
+            }
+            pool.ActiveObjects.Clear();
         }
     }
 
     private static GameObject SetParentObject(PoolType poolType)
     {
-        switch (poolType)
+        return poolType switch
         {
-            case PoolType.ParticleSystem:
-                return particleSystemEmpty;
-            case PoolType.Projectiles:
-                return projectileEmpty;
-            case PoolType.GameObjects:
-                return gameObjects;
-            case PoolType.None:
-                return null;
-            default:
-                return null;
-        }
+            PoolType.ParticleSystem => particleSystemEmpty,
+            PoolType.Projectiles => projectileEmpty,
+            PoolType.GameObjects => gameObjects,
+            PoolType.None => none,
+            _ => none,
+        };
     }
 }
 
@@ -148,4 +166,5 @@ public class PooledObjectInfo
 {
     public string LookupString;
     public List<GameObject> InactiveObjects = new();
+    public List<GameObject> ActiveObjects = new();
 }

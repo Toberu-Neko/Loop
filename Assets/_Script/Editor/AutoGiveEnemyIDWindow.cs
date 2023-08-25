@@ -5,10 +5,15 @@ using UnityEngine;
 public class AutoGiveEnemyIDWindow : EditorWindow
 {
 
-    [MenuItem("Window/AutoGiveEnemyIDWindow")]
+    [MenuItem("Window/Auto Enemy ID")]
     static void CreateWindow()
     {
-        EditorWindow.GetWindow<AutoGiveEnemyIDWindow>();
+        GetWindow<AutoGiveEnemyIDWindow>();
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Label("放置敵人時記得要開啟這個畫面", EditorStyles.label);
     }
 
     void OnHierarchyChange()
@@ -22,9 +27,13 @@ public class AutoGiveEnemyIDWindow : EditorWindow
 
             if (item.isAdded == 1)
             {
+                Debug.Log("Change!");
                 item.ID = System.Guid.NewGuid().ToString();
+                EditorUtility.SetDirty(item);
             }
             item.isAdded++;
+
+
         }
     }
 }

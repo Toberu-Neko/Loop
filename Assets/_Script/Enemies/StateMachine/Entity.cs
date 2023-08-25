@@ -222,7 +222,6 @@ public class Entity : MonoBehaviour, IDataPersistance
 
     private void HandleHealthZero()
     {
-        Debug.Log("Died!");
         isDefeated = true;
     }
 
@@ -236,7 +235,7 @@ public class Entity : MonoBehaviour, IDataPersistance
         }
     }
 
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
         if(data.defeatedEnemies.ContainsKey(ID))
         {

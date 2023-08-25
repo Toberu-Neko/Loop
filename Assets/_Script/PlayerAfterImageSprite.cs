@@ -9,25 +9,27 @@ public class PlayerAfterImageSprite : MonoBehaviour
     private float alpha;
     [SerializeField] private float alphaSet = 0.8f;
     [SerializeField] private float alphaMultiplier = 0.85f;
-
-    private Transform player;
-
     [SerializeField] private SpriteRenderer SR;
-    private SpriteRenderer playerSR;
 
     private Color color;
 
-    private void Awake()
+    public void SetPlayerSR(SpriteRenderer t_SR, int facingDir)
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        playerSR = player.GetComponent<SpriteRenderer>();
+        if (facingDir == -1)
+        {
+            this.SR.flipX = true;
+        }
+        else
+        {
+            this.SR.flipX = false;
+        }
+
+        this.SR.sprite = t_SR.sprite;
     }
 
     private void OnEnable()
     {
-        SR.sprite = playerSR.sprite;
         alpha = alphaSet;
-        transform.SetPositionAndRotation(player.position, player.rotation);
         timeActivated = Time.time;
     }
 
