@@ -35,6 +35,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool TimeSkillHoldInput { get; private set; }
 
     public bool DebugInput { get; private set; }
+    public bool InteractInput { get; private set; }
+    public bool ESCInput { get; private set; }
 
     [SerializeField] private float inputHoldTime = 0.2f;
 
@@ -75,7 +77,25 @@ public class PlayerInputHandler : MonoBehaviour
         TimeSkillInput = false;
         TimeSkillHoldInput = false;
         DebugInput = false;
+        InteractInput = false;
     }
+
+    #region ESC
+    public void OnESCInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ESCInput = true;
+        }
+        if (context.canceled)
+        {
+            ESCInput = false;
+        }
+    }
+
+    public void UseESCInput() => ESCInput = false;
+
+    #endregion
 
     public void OnDebugInput(InputAction.CallbackContext context)
     {
@@ -90,6 +110,26 @@ public class PlayerInputHandler : MonoBehaviour
         {
             DebugInput = false;
         }
+    }
+
+    public void OnInteractionInput(InputAction.CallbackContext context)
+    {
+        if (gameManager.IsPaused)
+            return;
+
+        if(context.started)
+        {
+            InteractInput = true;
+        }
+        if(context.canceled)
+        {
+            InteractInput = false;
+        }
+    }
+
+    public void UseInteractInput()
+    {
+        InteractInput = false;
     }
 
     public void OnTimeSkillInput(InputAction.CallbackContext context)

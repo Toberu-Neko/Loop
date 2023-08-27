@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -52,8 +51,7 @@ public class SaveSlotMenu : MenuFirstSelecter
         GameObject firstSelected = backButton.gameObject;
         foreach (SaveSlot saveSlot in saveSlots)
         {
-            GameData profileData = null;
-            profilesGameData.TryGetValue(saveSlot.GetProfileId(), out profileData);
+            profilesGameData.TryGetValue(saveSlot.GetProfileId(), out GameData profileData);
             saveSlot.SetData(profileData);
 
             if (profileData == null && isLoadingGame)

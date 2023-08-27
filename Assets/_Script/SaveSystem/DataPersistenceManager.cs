@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System;
+
 public class DataPersistenceManager : MonoBehaviour
 {
     [Header("Debugging")]
@@ -22,6 +24,8 @@ public class DataPersistenceManager : MonoBehaviour
     private string selectedProfileId = "";
 
     private float timer;
+
+    public event Action OnSave;
 
     public static DataPersistenceManager Instance { get; private set; }
 
@@ -75,12 +79,15 @@ public class DataPersistenceManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         dataPersistanceObjects = FindAllDataPersistenceObjects();
-        LoadGame();
+        if(scene.name == "MultiSceneBase")
+        {
+            LoadGame();
+        }
     }
 
     private void OnSceneUnloaded(Scene scene)
     {
-        SaveGame();
+        // SaveGame();
     }
     private List<IDataPersistance> FindAllDataPersistenceObjects()
     {
@@ -101,6 +108,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadGame()
     {
+        Debug.Log("Load");
         if (disableDataPersistance)
         {
             return;
@@ -131,6 +139,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        Debug.Log("Save");
         if (disableDataPersistance)
         {
             return;
@@ -141,6 +150,7 @@ public class DataPersistenceManager : MonoBehaviour
             Debug.LogWarning("No game data found, create a new one first.");
             return;
         }
+
         foreach (IDataPersistance dataPersistanceObject in dataPersistanceObjects)
         {
             dataPersistanceObject.SaveData(gameData);
@@ -151,6 +161,7 @@ public class DataPersistenceManager : MonoBehaviour
         timer = 0f;
 
         dataHandler.Save(gameData, selectedProfileId);
+        OnSave?.Invoke();
     }
 
     public void ChangeSelectedProfileId(string profileId)
@@ -160,7 +171,7 @@ public class DataPersistenceManager : MonoBehaviour
     }
     public bool HasGameData()
     {
-        return gameData != null;
+        return dataHandler.LoadAllProfiles().Count > 0;
     }
 
     public Dictionary<string, GameData> GetAllProfilesGameData()

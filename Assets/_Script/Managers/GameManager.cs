@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // Pause, TimeStop, TimeSlow, ChangeScene
+
     public static GameManager Instance { get; private set; }
 
     public bool IsPaused { get; private set; }
@@ -16,10 +18,6 @@ public class GameManager : MonoBehaviour
     public float TimeSlowMultiplier { get; private set; } = 0.2f;
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
-
-    public event Action OnGamePaused;
-    public event Action OnGameResumed;
-
 
     public event Action OnChangeSceneGoLeft;
     public event Action OnChangeSceneGoRight;
@@ -48,6 +46,7 @@ public class GameManager : MonoBehaviour
         changeSceneTriggers = new List<ChangeSceneTrigger>();
         enterSceneTriggers = new List<EnterSceneTrigger>();
     }
+
     private void OnDisable()
     {
         foreach (var trigger in changeSceneTriggers)
@@ -70,14 +69,12 @@ public class GameManager : MonoBehaviour
     {
         IsPaused = true;
         Time.timeScale = 0f;
-        OnGamePaused?.Invoke();
     }
 
     public void ResumeGame()
     {
         IsPaused = false;
         Time.timeScale = 1f;
-        OnGameResumed?.Invoke();
     }
 
     public void StartAllTimeSlow(float duration, float multiplier)

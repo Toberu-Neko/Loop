@@ -12,6 +12,7 @@ public class GameData
     public float timePlayed;
 
     public SerializableDictionary<string, bool> defeatedEnemies;
+    public SerializableDictionary<string, bool> activatedSavepoints;
 
     public GameData()
     {
@@ -19,6 +20,7 @@ public class GameData
         debugInputCount = 0;
         timePlayed = 0f;
 
+        activatedSavepoints = new SerializableDictionary<string, bool>();
         defeatedEnemies = new SerializableDictionary<string, bool>();
     }
 
