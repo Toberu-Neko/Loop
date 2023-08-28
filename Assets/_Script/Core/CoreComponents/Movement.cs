@@ -18,7 +18,7 @@ public class Movement : CoreComponent
 
     public Vector2 TimeSlowVelocity { get; private set; }
     private float timeSlowOrgGravityScale;
-    private float orginalGravityScale;
+    public float OrginalGravityScale { get; set; }
     private float gravityWorkspace;
 
     private Vector2 previousPosition;
@@ -37,6 +37,12 @@ public class Movement : CoreComponent
         RB = GetComponentInParent<Rigidbody2D>();
         stats = core.GetCoreComponent<Stats>();
     }
+
+    private void Start()
+    {
+        OrginalGravityScale = RB.gravityScale;
+    }
+
     private void OnEnable()
     {
         Slope = new();
@@ -47,7 +53,6 @@ public class Movement : CoreComponent
         CurrentVelocity = Vector2.zero;
 
         orginalGrag = RB.drag;
-        orginalGravityScale = RB.gravityScale;
 
         FacingDirection = 1;
 
@@ -63,6 +68,8 @@ public class Movement : CoreComponent
 
     private void OnDisable()
     {
+        SetGravityOrginal();
+
         stats.OnTimeStopEnd -= HandleTimeStopEnd;
         stats.OnTimeStopStart -= HandleTimeStopStart;
 
@@ -154,7 +161,7 @@ public class Movement : CoreComponent
 
     public void SetGravityOrginal()
     {
-        gravityWorkspace = orginalGravityScale;
+        gravityWorkspace = OrginalGravityScale;
         SetFinalGravity();
     }
 

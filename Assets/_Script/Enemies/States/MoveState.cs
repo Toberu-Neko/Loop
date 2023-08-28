@@ -31,6 +31,7 @@ public class MoveState : EnemyState
         base.LogicUpdate();
         Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
     }
+
     public override void DoChecks()
     {
         base.DoChecks();

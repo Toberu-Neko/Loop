@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -10,7 +9,7 @@ public class FileDataHandler
     private string dataFileName = "";
 
     private bool useEncryption = false;
-    private string encryptionPassword = "IronHeartCat";
+    private readonly string encryptionPassword = "IronHeartCat";
 
     public FileDataHandler(string dataDirectoryPath, string dataFileName, bool useEncryption)
     {

@@ -11,7 +11,7 @@ public class GameData
     public float maxHealth;
     public float timePlayed;
 
-    public SerializableDictionary<string, bool> defeatedEnemies;
+    // public SerializableDictionary<string, bool> defeatedEnemies;
     public SerializableDictionary<string, bool> activatedSavepoints;
 
     public GameData()
@@ -21,7 +21,7 @@ public class GameData
         timePlayed = 0f;
 
         activatedSavepoints = new SerializableDictionary<string, bool>();
-        defeatedEnemies = new SerializableDictionary<string, bool>();
+        // defeatedEnemies = new SerializableDictionary<string, bool>();
     }
 
     public int GetPercentageComplete()

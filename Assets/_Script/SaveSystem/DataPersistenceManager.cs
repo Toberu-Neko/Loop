@@ -156,7 +156,7 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistanceObject.SaveData(gameData);
         }
 
-        gameData.lastUpdated = System.DateTime.Now.ToBinary();
+        gameData.lastUpdated = DateTime.Now.ToBinary();
         gameData.timePlayed += timer;
         timer = 0f;
 

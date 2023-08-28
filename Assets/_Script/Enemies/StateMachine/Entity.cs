@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Linq;
 using UnityEngine.VFX;
+using System;
+using System.Collections;
 
-public class Entity : MonoBehaviour, IDataPersistance
+public class Entity : MonoBehaviour
 {
     public string ID;
     public int isAdded { get; set; }
@@ -21,6 +23,8 @@ public class Entity : MonoBehaviour, IDataPersistance
     private float animSpeed;
     private WeaponAttackDetails collisionAttackDetails;
     public bool SkillCollideDamage { get; private set; }
+
+    public event Action OnDefeated;
 
     [ContextMenu("Generate guid for id")]
     private void GenerateID()
@@ -41,10 +45,11 @@ public class Entity : MonoBehaviour, IDataPersistance
         animSpeed = 1f;
         collisionAttackDetails = EntityData.collisionAttackDetails;
 
+        movement.OrginalGravityScale = EntityData.gravityScale;
         StateMachine = new();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         isDefeated = false;
 
@@ -53,6 +58,14 @@ public class Entity : MonoBehaviour, IDataPersistance
         stats.OnTimeSlowStart += HandleTimeSlowStart;
         stats.OnTimeSlowEnd += HandleTimeSlowEnd;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
+
+        stats.Health.Init();
+        stats.Stamina.Init();
+    }
+
+    protected virtual void Start()
+    {
+
     }
 
     protected virtual void OnDisable()
@@ -71,10 +84,12 @@ public class Entity : MonoBehaviour, IDataPersistance
 
         Anim.SetFloat("yVelocity", movement.RB.velocity.y);
     }
+
     private void LateUpdate()
     {
         Core.LateLogicUpdate();
     }
+
     public virtual void FixedUpdate()
     {
         Core.PhysicsUpdate();
@@ -223,8 +238,9 @@ public class Entity : MonoBehaviour, IDataPersistance
     private void HandleHealthZero()
     {
         isDefeated = true;
+        OnDefeated?.Invoke();
     }
-
+    /*
     public void LoadData(GameData data)
     {
         data.defeatedEnemies.TryGetValue(ID, out isDefeated);
@@ -242,5 +258,5 @@ public class Entity : MonoBehaviour, IDataPersistance
             data.defeatedEnemies.Remove(ID);
         }
         data.defeatedEnemies.Add(ID, isDefeated);
-    }
+    }*/
 }

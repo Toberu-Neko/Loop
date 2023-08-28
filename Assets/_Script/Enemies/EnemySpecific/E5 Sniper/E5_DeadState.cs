@@ -13,6 +13,8 @@ public class E5_DeadState : DeadState
     {
         base.Enter();
 
+        stateMachine.ChangeState(enemy.IdleState);
+
         Death.Die();
     }
 

@@ -14,15 +14,17 @@ public class SetCollider : CoreComponent
     private float orgHeight;
     private Vector2 v2Workspace;
 
+    private bool changeable;
+
     protected override void Awake()
     {
         base.Awake();
 
         collisionSenses = core.GetCoreComponent<CollisionSenses>();
         stats = core.GetCoreComponent<Stats>();
-
         movement = core.GetCoreComponent<Movement>();
 
+        
     }
 
     private void OnEnable()
@@ -33,6 +35,7 @@ public class SetCollider : CoreComponent
         }
         orgHeight = movementCollider.size.y;
         changed = false;
+        changeable = true;
 
         movement.OnStuck += HandleOnStuck;
         stats.Health.OnCurrentValueZero += HandleHelthZero;
@@ -46,12 +49,12 @@ public class SetCollider : CoreComponent
 
     private void HandleHelthZero()
     {
-        this.enabled = false;
+        changeable = false;
     }
 
     private void HandleOnStuck()
     {
-        if (!changed && collisionSenses.CanChangeCollider && !stats.IsTimeStopped)
+        if (!changed && changeable && collisionSenses.CanChangeCollider && !stats.IsTimeStopped)
         {
             changed = true;
             StartCoroutine(Change(0.75f));
@@ -73,7 +76,7 @@ public class SetCollider : CoreComponent
 
     private IEnumerator Change(float multiplier)
     {
-        while(multiplier < 1f)
+        while(multiplier < 1f && changeable)
         {
             SetColliderHeight(orgHeight * multiplier);
             multiplier += 0.15f;

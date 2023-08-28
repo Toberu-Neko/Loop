@@ -21,12 +21,28 @@ public class Enemy5 : Entity
         DeadState = new E5_DeadState(this, StateMachine, "dead", data.deadStateData, this);
         SnipingState = new E5_SnipingState(this, StateMachine, "sniping", attackPosition, data.snipingStateData, this);
 
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        StateMachine.Initialize(IdleState);
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
         stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
+
     protected override void OnDisable()
     {
         base.OnDisable();
+
+        StateMachine.ChangeState(IdleState);
 
         stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
@@ -41,9 +57,4 @@ public class Enemy5 : Entity
     }
 
     private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
-
-    private void Start()
-    {
-        StateMachine.Initialize(IdleState);
-    }
 }

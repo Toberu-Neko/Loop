@@ -15,6 +15,8 @@ public class E3_DeadState : DeadState
     {
         base.Enter();
 
+        stateMachine.ChangeState(enemy.IdleState);
+
         Death.Die();
     }
 }

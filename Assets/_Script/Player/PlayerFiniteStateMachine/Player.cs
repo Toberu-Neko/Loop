@@ -74,6 +74,7 @@ public class Player : MonoBehaviour
     {
         Core = GetComponentInChildren<Core>();
         stats = Core.GetCoreComponent<Stats>();
+        movement = Core.GetCoreComponent<Movement>();
 
         TimeSkillManager = GetComponent<PlayerTimeSkillManager>();
         Anim = GetComponent<Animator>();
@@ -103,7 +104,6 @@ public class Player : MonoBehaviour
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
 
-
         SwordHubState = new PlayerSwordHubState(this, StateMachine, playerData, "swordAttack");
         SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, playerData, "swordNormalAttack");
         SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, playerData, "swordStrongAttack");
@@ -118,6 +118,8 @@ public class Player : MonoBehaviour
         FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
         FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, playerData, "fistNormalAttack");
         FistSoulAttackState = new PlayerFistSoulAttackState(this, StateMachine, playerData, "fistSoulAttack");
+
+        movement.OrginalGravityScale = playerData.gravityScale;
 
         gameManager = GameManager.Instance;
     }
