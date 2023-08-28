@@ -2,13 +2,6 @@ using UnityEngine;
 
 public class ParticleManager : CoreComponent
 {
-    private Transform particleContainer;
-    protected override void Awake()
-    {
-        base.Awake();
-
-        particleContainer = GameObject.FindGameObjectWithTag("ParticleContainer").transform;
-    }
 
     public GameObject StartParticles(GameObject particlePrefab, Vector2 position, Quaternion rotation)
     {
