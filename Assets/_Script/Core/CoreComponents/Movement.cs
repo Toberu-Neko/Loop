@@ -38,10 +38,6 @@ public class Movement : CoreComponent
         stats = core.GetCoreComponent<Stats>();
     }
 
-    private void Start()
-    {
-        OrginalGravityScale = RB.gravityScale;
-    }
 
     private void OnEnable()
     {

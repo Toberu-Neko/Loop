@@ -98,6 +98,8 @@ public class DataPersistenceManager : MonoBehaviour
     public void NewGame()
     {
         gameData = new GameData();
+        SaveGame();
+        Debug.Log("Creating new game");
     }
 
     private void OnApplicationQuit()

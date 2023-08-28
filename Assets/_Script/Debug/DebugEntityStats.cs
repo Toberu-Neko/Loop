@@ -22,13 +22,12 @@ public class DebugEntityStats : MonoBehaviour
         stats = core.GetCoreComponent<Stats>();
         combat = core.GetCoreComponent<Combat>();
 
-        cam = Camera.main;
-        canvas.worldCamera = cam;
     }
     void Start()
     {
-        UpdateText();
     }
+
+    
 
     private void Update()
     {
@@ -42,6 +41,12 @@ public class DebugEntityStats : MonoBehaviour
     {
         stats.Health.OnValueChanged += UpdateText;
         stats.Stamina.OnValueChanged += UpdateText;
+
+
+        UpdateText();
+
+        cam = Camera.main;
+        canvas.worldCamera = cam;
     }
 
     private void OnDisable()

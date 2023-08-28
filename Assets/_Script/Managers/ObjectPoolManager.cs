@@ -13,6 +13,7 @@ public class ObjectPoolManager : MonoBehaviour
     private static GameObject particleSystemEmpty;
     private static GameObject projectileEmpty;
     private static GameObject gameObjects;
+    private static GameObject enemies;
     private static GameObject none;
 
     public enum PoolType
@@ -20,6 +21,7 @@ public class ObjectPoolManager : MonoBehaviour
         ParticleSystem,
         Projectiles,
         GameObjects,
+        Enemies,
         None
     }
     public static PoolType PoolingType;
@@ -52,6 +54,9 @@ public class ObjectPoolManager : MonoBehaviour
 
         gameObjects = new GameObject("GameObjects");
         gameObjects.transform.SetParent(objectPoolEmptyHolder.transform);
+
+        enemies = new GameObject("Enemies");
+        enemies.transform.SetParent(objectPoolEmptyHolder.transform);
 
         none = new GameObject("None");
         none.transform.SetParent(objectPoolEmptyHolder.transform);
@@ -156,6 +161,7 @@ public class ObjectPoolManager : MonoBehaviour
             PoolType.ParticleSystem => particleSystemEmpty,
             PoolType.Projectiles => projectileEmpty,
             PoolType.GameObjects => gameObjects,
+            PoolType.Enemies => enemies,
             PoolType.None => none,
             _ => none,
         };

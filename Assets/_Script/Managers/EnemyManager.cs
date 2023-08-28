@@ -64,6 +64,12 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public void ResetTempData()
+    {
+        tempData = new();
+        SaveTempData();
+    }
+
     private void LoadTempData()
     {
         foreach (var obj in tempDataPersistences)

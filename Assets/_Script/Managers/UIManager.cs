@@ -126,6 +126,10 @@ public class UI_Manager : MonoBehaviour
     {
         savepointUI.ActiveMenu();
         savepointUI.SetSavepointNameText(savePointName);
+
+        EnemyManager.Instance.ResetTempData();
+        //TODO: Reset Scene
+
         gameManager.PauseGame();
     }
 

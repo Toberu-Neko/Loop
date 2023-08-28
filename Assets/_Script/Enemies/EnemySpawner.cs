@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour, ITempDataPersistence
     [SerializeField] private GameObject enemy;
     private Entity entity;
     [HideInInspector] public string SceneName { get; set;}
-    private SpriteRenderer SR;
+    [SerializeField] private SpriteRenderer SR;
     private bool isDefeated = false;
 
     private void Awake()
@@ -20,22 +20,17 @@ public class EnemySpawner : MonoBehaviour, ITempDataPersistence
             gameObject.SetActive(false);
             return;
         }
-
-        SR = GetComponent<SpriteRenderer>();
         SR.enabled = false;
     }
 
     public void StartSpawning()
     {
-        GameObject obj = ObjectPoolManager.SpawnObject(enemy, transform.position, Quaternion.identity);
+        GameObject obj = ObjectPoolManager.SpawnObject(enemy, transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Enemies);
         entity = obj.GetComponent<Entity>();
         entity.OnDefeated += HandleDefeated;
         EnemyManager.Instance.RegisterEnemy(obj, SceneName);
     }
 
-    private void OnEnable()
-    {
-    }
 
     private void OnDisable()
     {
