@@ -20,7 +20,9 @@ public class TimeStop : CoreComponent, ITimeStopable
     private void OnDisable()
     {
         GameManager.Instance.OnAllTimeStopStart -= HandleTimeStopStart;
-        GameManager.Instance.OnAllTimeStopEnd -= HandleTimeStopEnd;
+        GameManager.Instance.OnAllTimeStopEnd -= HandleTimeStopEnd; 
+        
+        CancelInvoke(nameof(HandleTimeStopEnd));
     }
 
     public void DoTimeStop(float stopTime)
@@ -35,6 +37,7 @@ public class TimeStop : CoreComponent, ITimeStopable
     {
         stats.SeTimeStopTrue();
     }
+
     private void HandleTimeStopEnd()
     {
         stats.SetTimeStopFalse();

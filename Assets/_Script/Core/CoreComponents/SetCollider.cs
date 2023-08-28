@@ -23,8 +23,6 @@ public class SetCollider : CoreComponent
         collisionSenses = core.GetCoreComponent<CollisionSenses>();
         stats = core.GetCoreComponent<Stats>();
         movement = core.GetCoreComponent<Movement>();
-
-        
     }
 
     private void OnEnable()

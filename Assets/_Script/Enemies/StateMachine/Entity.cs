@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Linq;
-using UnityEngine.VFX;
 using System;
-using System.Collections;
 
 public class Entity : MonoBehaviour
 {
@@ -75,6 +73,8 @@ public class Entity : MonoBehaviour
         stats.OnTimeSlowStart -= HandleTimeSlowStart;
         stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
+
+        Anim.speed = 1f;
     }
 
     public virtual void Update()
@@ -240,6 +240,7 @@ public class Entity : MonoBehaviour
         isDefeated = true;
         OnDefeated?.Invoke();
     }
+
     /*
     public void LoadData(GameData data)
     {

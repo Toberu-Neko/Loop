@@ -18,22 +18,34 @@ public class AutoGiveEnemyIDWindow : EditorWindow
 
     void OnHierarchyChange()
     {
-        var addedObjects = Resources.FindObjectsOfTypeAll<Entity>()
+        var spawnerObjects = Resources.FindObjectsOfTypeAll<EnemySpawner>()
                                     .Where(x => x.isAdded < 2);
 
-        foreach (var item in addedObjects)
+        foreach (var item in spawnerObjects)
         {
             //if (item.isAdded == 0) early setup
 
             if (item.isAdded == 1)
             {
-                Debug.Log("Change!");
                 item.ID = System.Guid.NewGuid().ToString();
                 EditorUtility.SetDirty(item);
             }
             item.isAdded++;
+        }
 
+        var entityObjs = Resources.FindObjectsOfTypeAll<Entity>()
+                                    .Where(x => x.isAdded < 2);
 
+        foreach (var item in entityObjs)
+        {
+            //if (item.isAdded == 0) early setup
+
+            if (item.isAdded == 1)
+            {
+                item.ID = System.Guid.NewGuid().ToString();
+                EditorUtility.SetDirty(item);
+            }
+            item.isAdded++;
         }
     }
 }

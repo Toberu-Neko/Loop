@@ -70,6 +70,7 @@ public class Movement : CoreComponent
     {
         SetGravityOrginal();
 
+
         stats.OnTimeStopEnd -= HandleTimeStopEnd;
         stats.OnTimeStopStart -= HandleTimeStopStart;
 

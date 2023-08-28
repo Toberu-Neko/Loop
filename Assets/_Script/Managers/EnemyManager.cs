@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,9 @@ public class EnemyManager : MonoBehaviour
 
     private List<EnemyData> enemyData;
 
+    private TempData tempData;
+    private List<ITempDataPersistence> tempDataPersistences;
+
     private void Awake()
     {
         if(Instance == null)
@@ -15,7 +19,9 @@ public class EnemyManager : MonoBehaviour
         else
             Destroy(gameObject);
 
+        tempData = new();
         enemyData = new();
+        tempDataPersistences = new();
     }
 
     private void OnEnable()
@@ -31,19 +37,19 @@ public class EnemyManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
+        tempDataPersistences = FindAllTempDataObjs();
+        LoadTempData();
     }
 
     private void OnSceneUnloaded(Scene scene)
     {
-        Debug.Log("Unload Scene: " + scene.name);
+        SaveTempData();
 
+        // Return all enemies to the pool
         List<EnemyData> enemiesToRemove = new();
 
         foreach (var obj in enemyData)
         {
-            Debug.Log(obj.sceneName + " is in EnemyManager");
-
             if (obj.sceneName == scene.name)
             {
                 ObjectPoolManager.ReturnObjectToPool(obj.enemy);
@@ -54,7 +60,28 @@ public class EnemyManager : MonoBehaviour
         foreach (var objToRemove in enemiesToRemove)
         {
             enemyData.Remove(objToRemove);
-            Debug.Log(objToRemove.enemy.name + " is removed from EnemyManager");
+            // Debug.Log(objToRemove.enemy.name + " is removed from EnemyManager");
+        }
+    }
+
+    private void LoadTempData()
+    {
+        foreach (var obj in tempDataPersistences)
+        {
+            obj.LoadTempData(tempData);
+        }
+
+        foreach(var obj in tempData.defeatedEnemies)
+        {
+            Debug.Log(obj.Key + " " + obj.Value);
+        }
+    }
+
+    private void SaveTempData()
+    {
+        foreach (var obj in tempDataPersistences)
+        {
+            obj.SaveTempData(tempData);
         }
     }
 
@@ -62,6 +89,13 @@ public class EnemyManager : MonoBehaviour
     {
         EnemyData enemyData = new(enemy, sceneName);
         this.enemyData.Add(enemyData);
+    }
+
+    private List<ITempDataPersistence> FindAllTempDataObjs()
+    {
+        IEnumerable<ITempDataPersistence> dataPersistences = FindObjectsOfType<MonoBehaviour>(true).OfType<ITempDataPersistence>();
+
+        return new List<ITempDataPersistence>(dataPersistences);
     }
 
     private class EnemyData

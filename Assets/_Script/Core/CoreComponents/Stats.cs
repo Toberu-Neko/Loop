@@ -82,9 +82,11 @@ public class Stats : CoreComponent
 
     private void OnDisable()
     {
-
         SetTimeSlowFalse();
         SetTimeStopFalse();
+
+        OnTimeStopEnd?.Invoke();
+        OnTimeSlowEnd?.Invoke();
 
         Stamina.OnCurrentValueZero -= HandlePoiseZero;
     }
