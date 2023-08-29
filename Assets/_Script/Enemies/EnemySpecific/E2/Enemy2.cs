@@ -53,12 +53,26 @@ public class Enemy2 : Entity
         DodgeState = new E2_DodgeState(this, StateMachine, "dodge", DodgeStateData, this);
         RangedAttackState = new E2_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
 
+    }
+    protected override void Start()
+    {
+        base.Start();
+
+        StateMachine.Initialize(IdleState);
+    }
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
         stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
+
     protected override void OnDisable()
     {
         base.OnDisable();
+
+        StateMachine.ChangeState(IdleState);
 
         stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
@@ -73,11 +87,6 @@ public class Enemy2 : Entity
 
     private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
 
-    private void Start()
-    {
-        StateMachine.Initialize(MoveState);
-        
-    }
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

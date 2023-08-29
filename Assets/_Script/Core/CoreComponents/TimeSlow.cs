@@ -30,6 +30,11 @@ public class TimeSlow : CoreComponent, ITimeSlowable
     {
         gameManager.OnAllTimeSlowStart -= DoTimeSlow;
         gameManager.OnAllTimeSlowEnd -= EndTimeSlow;
+
+        if(stats.IsTimeSlowed)
+        {
+            EndTimeSlow();
+        }
     }
 
 

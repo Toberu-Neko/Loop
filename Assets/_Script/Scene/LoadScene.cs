@@ -8,12 +8,20 @@ public class LoadScene : MonoBehaviour
 {
     [SerializeField] private SceneReference scene;
     private bool isLoadedThisFram = false;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && !SceneManager.GetSceneByName(scene.Name).isLoaded && !isLoadedThisFram)
         {
             isLoadedThisFram = true;
             SceneManager.LoadSceneAsync(scene.Name, LoadSceneMode.Additive);
+        }
+
+        if (other.CompareTag("EnemySpawner"))
+        {
+            EnemySpawner sc = other.GetComponent<EnemySpawner>();
+            sc.SceneName = scene.Name;
+            sc.StartSpawning();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

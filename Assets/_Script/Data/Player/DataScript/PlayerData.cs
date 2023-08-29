@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public LayerMask whatIsEnemy;
+    public float gravityScale = 5f;
 
     [Header("MoveState")]
     [Tooltip("²¾°Ê³t«×")]

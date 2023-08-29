@@ -35,7 +35,7 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
         DebugInputCount = data.debugInputCount;
     }
 
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
         data.debugInputCount = DebugInputCount;
     }

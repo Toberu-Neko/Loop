@@ -11,10 +11,11 @@ public class E4_DeadState : DeadState
     }
 
 
-
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
+
+        stateMachine.ChangeState(enemy.IdleState);
 
         Death.Die();
     }

@@ -10,4 +10,6 @@ public class D_Entity : ScriptableObject
     [Tooltip("撞到會不會扣血")]
     public bool collideDamage = true;
     public WeaponAttackDetails collisionAttackDetails;
+
+    public float gravityScale = 8f;
 }

@@ -54,6 +54,17 @@ public class Enemy4 : Entity
         DeadState = new E4_DeadState(this, StateMachine, "dead", deadStateData, this);
         PlayerDetectedMoveState = new E4_PlayerDetectedMoveState(this, StateMachine, "move", detectedPlayerMoveStateData, this);
         DodgeState = new E4_DodgeState(this, StateMachine, "dodge", dodgeStateData, this);
+    }
+    protected override void Start()
+    {
+        base.Start();
+
+        StateMachine.Initialize(IdleState);
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
 
         stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
@@ -61,6 +72,8 @@ public class Enemy4 : Entity
     protected override void OnDisable()
     {
         base.OnDisable();
+
+        StateMachine.ChangeState(IdleState);
 
         stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
@@ -75,16 +88,6 @@ public class Enemy4 : Entity
     }
 
     private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
-
-    private void Start()
-    {
-        StateMachine.Initialize(MoveState);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-    }
 
     public override void OnDrawGizmos()
     {

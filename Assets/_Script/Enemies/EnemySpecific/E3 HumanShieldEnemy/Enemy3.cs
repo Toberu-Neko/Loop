@@ -53,6 +53,16 @@ public class Enemy3 : Entity
         DeadState = new E3_DeadState(this, StateMachine, "dead", deadStateData, this);
         ShieldMoveState = new E3_ShieldMoveState(this, StateMachine, "shieldMove", shieldMoveStateData, this);
         ChargeState = new E3_ChargeState(this, StateMachine, "shieldMove", chargeStateData, this);
+    }
+    protected override void Start()
+    {
+        base.Start();
+
+        StateMachine.Initialize(IdleState);
+    }
+    protected override void OnEnable()
+    {
+        base.OnEnable();
 
         stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
@@ -60,6 +70,8 @@ public class Enemy3 : Entity
     protected override void OnDisable()
     {
         base.OnDisable();
+
+        StateMachine.ChangeState(IdleState);
 
         stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
@@ -75,15 +87,6 @@ public class Enemy3 : Entity
 
     private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
 
-    private void Start()
-    {
-        StateMachine.Initialize(MoveState);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-    }
 
     public override void OnDrawGizmos()
     {

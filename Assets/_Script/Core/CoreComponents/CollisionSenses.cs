@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CollisionSenses : CoreComponent
 {
-    private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
 
     #region Check Transforms
@@ -82,11 +81,18 @@ public class CollisionSenses : CoreComponent
 
     private Slope slope = new();
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        movement = core.GetCoreComponent<Movement>();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        Movement.Slope = Slope;
+        movement.Slope = Slope;
     }
 
 
@@ -109,8 +115,8 @@ public class CollisionSenses : CoreComponent
         get
         {
             RaycastHit2D hit = Physics2D.Raycast(GroundCheck.position, Vector2.down, slopeCheckDistance, whatIsGround);
-            RaycastHit2D hitFront = Physics2D.Raycast(GroundCheck.position, Vector2.right * Movement.FacingDirection, slopeCheckDistance, whatIsGround);
-            RaycastHit2D hitBack = Physics2D.Raycast(GroundCheck.position, Vector2.right * -Movement.FacingDirection, slopeCheckDistance, whatIsGround);
+            RaycastHit2D hitFront = Physics2D.Raycast(GroundCheck.position, Vector2.right * movement.FacingDirection, slopeCheckDistance, whatIsGround);
+            RaycastHit2D hitBack = Physics2D.Raycast(GroundCheck.position, Vector2.right * -movement.FacingDirection, slopeCheckDistance, whatIsGround);
             slope.hasCollisionSenses = true;
             if (hitFront)
             {
@@ -150,28 +156,28 @@ public class CollisionSenses : CoreComponent
     }
     public bool CanChangeCollider
     {
-        get => !Physics2D.BoxCast(ChangeColliderWallCheck.position, changeColliderWallCheckV2, 0f, Vector2.right * Movement.FacingDirection, 0.1f, whatIsGround);
+        get => !Physics2D.BoxCast(ChangeColliderWallCheck.position, changeColliderWallCheckV2, 0f, Vector2.right * movement.FacingDirection, 0.1f, whatIsGround);
     }
 
     public bool WallFront
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
     }
     public bool WallFrontLong
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance * 3f, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsGround - whatIsPlatform);
     }
     public bool WallBack
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
     }
     public bool WallBackLong
     {
-        get => Physics2D.Raycast(WallBackCheck.position, -Vector2.right * Movement.FacingDirection, wallCheckDistance * 3f, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(WallBackCheck.position, -Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsGround - whatIsPlatform);
     }
     public bool LedgeHorizontal
     {
-        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsGround);
     }
     public bool LedgeVertical
     {
