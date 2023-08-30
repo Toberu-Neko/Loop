@@ -1,11 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemySpawner : MonoBehaviour, ITempDataPersistence
 {
     public string ID;
-    [HideInInspector] public int isAdded = 0;
+    public bool isAddedID = false;
 
     [SerializeField] private GameObject enemy;
     private Entity entity;

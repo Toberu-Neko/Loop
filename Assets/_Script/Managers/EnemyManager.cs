@@ -79,7 +79,7 @@ public class EnemyManager : MonoBehaviour
 
         foreach(var obj in tempData.defeatedEnemies)
         {
-            Debug.Log(obj.Key + " " + obj.Value);
+            // Debug.Log(obj.Key + " " + obj.Value);
         }
     }
 

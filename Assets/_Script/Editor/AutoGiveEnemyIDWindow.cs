@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 public class AutoGiveEnemyIDWindow : EditorWindow
-{
+{/*
 
     [MenuItem("Window/Auto Enemy ID")]
     static void CreateWindow()
@@ -47,5 +47,5 @@ public class AutoGiveEnemyIDWindow : EditorWindow
             }
             item.isAdded++;
         }
-    }
+    }*/
 }
