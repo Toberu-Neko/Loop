@@ -51,7 +51,6 @@ public class PlayerDashState : PlayerAbilityState
 
         if (Time.time >= startTime + playerData.dashTime)
         {
-            Debug.Log("End");
             player.RB.drag = 0f;
             isAbilityDone = true;
             lastDashTime = Time.time;

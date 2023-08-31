@@ -8,8 +8,8 @@ using System;
 public class DataPersistenceManager : MonoBehaviour
 {
     [Header("Debugging")]
-    [SerializeField] private bool disableDataPersistance = false;
     [SerializeField] private bool initializeDataIfNull = false;
+    [field: SerializeField] public bool DisableDataPersistance { get; private set; } = false;
     [SerializeField] private bool overwriteSelectedProfile = false;
     [SerializeField] private string selectedProfileIdDebug = "";
 
@@ -47,9 +47,9 @@ public class DataPersistenceManager : MonoBehaviour
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();
 
-        if(disableDataPersistance)
+        if(DisableDataPersistance)
         {
-            Debug.LogWarning("Data persistance is disabled, this should only be used for debugging.");
+            Debug.LogError("Data persistance is disabled, this should only be used for debugging.");
         }
 
         if (overwriteSelectedProfile)
@@ -110,7 +110,7 @@ public class DataPersistenceManager : MonoBehaviour
     public void LoadGame()
     {
         Debug.Log("Load");
-        if (disableDataPersistance)
+        if (DisableDataPersistance)
         {
             return;
         }
@@ -141,7 +141,7 @@ public class DataPersistenceManager : MonoBehaviour
     public void SaveGame()
     {
         Debug.Log("Save");
-        if (disableDataPersistance)
+        if (DisableDataPersistance)
         {
             return;
         }

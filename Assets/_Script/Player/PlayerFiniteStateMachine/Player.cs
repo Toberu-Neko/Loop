@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public OldPlayerAttackState AttackState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
     public PlayerPerfectBlockState PerfectBlockState { get; private set; }
+    public PlayerDeadState DeadState { get; private set; }
     #endregion
 
     #region SwordStates
@@ -100,6 +101,8 @@ public class Player : MonoBehaviour
         DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
+        DeadState = new PlayerDeadState(this, StateMachine, playerData, "dead");
+
         AttackState = new OldPlayerAttackState(this, StateMachine, playerData, "attack");
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
@@ -131,6 +134,8 @@ public class Player : MonoBehaviour
         gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
         gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
         gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
+
+        stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
 
     private void Start()
@@ -222,6 +227,11 @@ public class Player : MonoBehaviour
     #endregion
     private void ChangeToIdleState() => ChangeSceneState.SetCanChangeStateTrue();
     #endregion
+
+    private void HandleHealthZero()
+    {
+        StateMachine.ChangeState(DeadState);
+    }
 
     public void TeleportPlayer(Vector2 position)
     {
