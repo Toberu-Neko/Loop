@@ -4,6 +4,8 @@ using UnityEngine;
 public class Savepoint : MonoBehaviour, IDataPersistance
 {
     [field: SerializeField] public string SavePointName { get; private set; }
+    [field: SerializeField] public Transform TeleportTransform { get; private set; }
+
     [SerializeField] private GameObject pressEObject;
     private PlayerInputHandler inputHandler;
 
@@ -34,10 +36,11 @@ public class Savepoint : MonoBehaviour, IDataPersistance
         {
             if (inputHandler.InteractInput)
             {
+                Debug.Log("E");
+                isSavePointActive = true;
                 inputHandler.UseInteractInput();
                 pressEObject.SetActive(false);
                 OnSavePointInteract?.Invoke(SavePointName);
-                isSavePointActive = true;
             }
         }
     }

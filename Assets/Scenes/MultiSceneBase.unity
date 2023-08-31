@@ -2563,7 +2563,7 @@ MonoBehaviour:
   changeSceneUI: {fileID: 800202392}
   changeSceneAnimator: {fileID: 800202394}
   pauseMainUI: {fileID: 456675492}
-  savepointUIObj: {fileID: 678853713}
+  savepointUIObj: {fileID: 25222055}
   savedObj: {fileID: 1778113425269909162}
 --- !u!1 &954510445
 GameObject:
@@ -3827,6 +3827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <SavePointName>k__BackingField: TestTestSaavepoint
+  <TeleportTransform>k__BackingField: {fileID: 0}
   pressEObject: {fileID: 1701183308}
 --- !u!61 &1361175575
 BoxCollider2D:
@@ -4689,8 +4690,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/TimeSkill[/Keyboard/t]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_InputManager, Assembly-CSharp
+      - m_Target: {fileID: 1446678359}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnESCInput
         m_Mode: 0
         m_Arguments:
@@ -4715,6 +4716,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 642f6ac6-2aba-4688-b860-c0b0d5d55851
     m_ActionName: Gameplay/TriggerMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1446678359}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnInteractionInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1446678359}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: ResetAllInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1b8eeb80-8987-4f65-988e-0aaa1da4e2a0
+    m_ActionName: Gameplay/Interaction[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 45ebe54b-9dc1-4392-aeba-4f4956bbae9f
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a3acc70b-6723-4644-ba96-06526d4d7de6
+    m_ActionName: UI/Choose[/Keyboard/w,/Keyboard/s,/Keyboard/d,/Keyboard/a,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: df6a7ed4-44a9-4c76-bddd-f7917df46afd
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ac07de65-ccdc-46fe-b24c-bf4d6b475c26
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ad894f01-bb22-45d0-9442-8c6e9fba32aa
+    m_ActionName: UI/Back[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

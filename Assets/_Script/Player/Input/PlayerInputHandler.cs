@@ -77,7 +77,6 @@ public class PlayerInputHandler : MonoBehaviour
         TimeSkillInput = false;
         TimeSkillHoldInput = false;
         DebugInput = false;
-        InteractInput = false;
     }
 
     #region ESC

@@ -124,6 +124,7 @@ public class UI_Manager : MonoBehaviour
 
     public void OpenSavePointUI(string savePointName)
     {
+        Debug.Log("Open Savepoint UI");
         savepointUI.ActiveMenu();
         savepointUI.SetSavepointNameText(savePointName);
 
