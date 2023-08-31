@@ -33,11 +33,14 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
     public void LoadData(GameData data)
     {
         DebugInputCount = data.debugInputCount;
+        if (data.playerPos != Vector3.zero)
+            transform.position = data.playerPos;
     }
 
     public void SaveData(GameData data)
     {
         data.debugInputCount = DebugInputCount;
+        data.playerPos = transform.position;
     }
 
 

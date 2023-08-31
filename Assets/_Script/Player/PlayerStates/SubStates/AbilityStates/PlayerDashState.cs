@@ -25,6 +25,48 @@ public class PlayerDashState : PlayerAbilityState
         CanDash = false;
         player.InputHandler.UseDashInput();
 
+        startTime = Time.time;
+        Stats.SetInvincibleTrue();
+        PlaceAfterImage();
+        player.RB.drag = playerData.drag;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        if (Movement.CurrentVelocity.y > 0)
+        {
+            Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
+        }
+        Stats.SetInvincibleFalse();
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        Movement.SetVelocityX(playerData.dashVelocity * Movement.FacingDirection);
+        CheckIfShouldPlaceAfterImage();
+
+        if (Time.time >= startTime + playerData.dashTime)
+        {
+            Debug.Log("End");
+            player.RB.drag = 0f;
+            isAbilityDone = true;
+            lastDashTime = Time.time;
+        }
+    }
+
+    #region Old
+    /*
+    public override void Enter()
+    {
+        base.Enter();
+
+        CanDash = false;
+        player.InputHandler.UseDashInput();
+
         isHolding = true;
 
         dashDirection = Vector2.right * Movement.FacingDirection;
@@ -79,7 +121,7 @@ public class PlayerDashState : PlayerAbilityState
                 }
 
                 float angle = Vector2.SignedAngle(Vector2.right, dashDirection);
-                
+
                 player.DashDirectionIndicator.rotation = Quaternion.Euler(0f, 0f, angle - 45f);
 
                 if(dashInputStop || Time.unscaledTime >= startTime + playerData.maxHoldTime)
@@ -110,10 +152,11 @@ public class PlayerDashState : PlayerAbilityState
                     lastDashTime = Time.time;
                 }
             }
-
-
         }
     }
+*/
+    #endregion
+
     private void CheckIfShouldPlaceAfterImage()
     {
         if(Vector2.Distance(player.transform.position, lastAfterImagePosition) >= playerData.distanceBetweenAfterImages)

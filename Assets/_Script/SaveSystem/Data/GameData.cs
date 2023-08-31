@@ -11,6 +11,8 @@ public class GameData
     public float maxHealth;
     public float timePlayed;
 
+    public Vector3 playerPos;
+
     // public SerializableDictionary<string, bool> defeatedEnemies;
     public SerializableDictionary<string, bool> activatedSavepoints;
 
@@ -19,6 +21,7 @@ public class GameData
         maxHealth = 100f;
         debugInputCount = 0;
         timePlayed = 0f;
+        playerPos = Vector3.zero;
 
         activatedSavepoints = new SerializableDictionary<string, bool>();
         // defeatedEnemies = new SerializableDictionary<string, bool>();
