@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Pause, TimeStop, TimeSlow, ChangeScene
+    // Pause, TimeStop, TimeSlow, ChangeScene, OnSavepoint
 
     public static GameManager Instance { get; private set; }
 
     public bool IsPaused { get; private set; }
     public bool TimeStopAll { get; private set; } = false;
     public bool TimeSlowAll { get; private set; } = false;
+
+    public event Action OnSavepointInteracted;
 
     public event Action OnAllTimeStopEnd;
     public event Action OnAllTimeStopStart;
@@ -19,14 +21,17 @@ public class GameManager : MonoBehaviour
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
 
+    #region Change Scene Variables
+
     public event Action OnChangeSceneGoLeft;
     public event Action OnChangeSceneGoRight;
     public event Action OnChangeSceneGoUp;
     public event Action OnChangeSceneGoDown;
-
     public event Action OnChangeSceneFinished;
     private List<ChangeSceneTrigger> changeSceneTriggers;
     private List<EnterSceneTrigger> enterSceneTriggers;
+
+    #endregion
 
     private void Awake()
     {
@@ -77,6 +82,18 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void SavePointInteracted()
+    {
+        OnSavepointInteracted?.Invoke();
+
+        DataPersistenceManager.Instance.SaveGame();
+        EnemyManager.Instance.ResetTempData();
+        PauseGame();
+
+    }
+
+    #region Time
+
     public void StartAllTimeSlow(float duration, float multiplier)
     {
         if(TimeSlowAll)
@@ -108,6 +125,7 @@ public class GameManager : MonoBehaviour
         TimeStopAll = false;
         OnAllTimeStopEnd?.Invoke();
     }
+    #endregion
 
     #region ChangeScene
 

@@ -7,9 +7,10 @@ public class Savepoint : MonoBehaviour, IDataPersistance
     [field: SerializeField] public Transform TeleportTransform { get; private set; }
 
     [SerializeField] private GameObject pressEObject;
+    public string SceneName { get; private set; }
     private PlayerInputHandler inputHandler;
 
-    public event Action<string> OnSavePointInteract;
+    public event Action<string, string> OnSavePointInteract;
 
     private bool inRange;
     private bool isSavePointActive = false;
@@ -36,11 +37,12 @@ public class Savepoint : MonoBehaviour, IDataPersistance
         {
             if (inputHandler.InteractInput)
             {
-                Debug.Log("E");
                 isSavePointActive = true;
                 inputHandler.UseInteractInput();
                 pressEObject.SetActive(false);
-                OnSavePointInteract?.Invoke(SavePointName);
+
+                // Go to UI manager
+                OnSavePointInteract?.Invoke(SavePointName, SceneName);
             }
         }
     }
@@ -64,6 +66,11 @@ public class Savepoint : MonoBehaviour, IDataPersistance
             pressEObject.SetActive(false);
             inRange = false;
         }
+    }
+
+    public void SetSceneName(string name)
+    {
+        SceneName = name;
     }
 
     public void LoadData(GameData data)

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class SavepointUI : MonoBehaviour
+public class SavepointUIMain : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI savepointNameText;
+    [SerializeField] private SavepointUIInventory savepointUIInventory;
     private GameManager gameManager;
 
     private void Start()
@@ -25,18 +26,29 @@ public class SavepointUI : MonoBehaviour
 
     public void OnClickBackButton()
     {
+        DeactiveAllMenu();
+    }
+
+    public void OnClickInventoryButton()
+    {
+        savepointUIInventory.ActiveMenu();
         DeactiveMenu();
     }
 
     public void ActiveMenu()
     {
-        DataPersistenceManager.Instance.SaveGame();
         gameObject.SetActive(true);
     }
 
     public void DeactiveMenu()
     {
         gameObject.SetActive(false);
+    }
+
+    public void DeactiveAllMenu()
+    {
+        gameObject.SetActive(false);
+        savepointUIInventory.DeactiveMenu();
         gameManager.ResumeGame();
     }
 }

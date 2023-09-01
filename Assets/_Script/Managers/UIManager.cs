@@ -13,12 +13,15 @@ public class UI_Manager : MonoBehaviour
 
     [SerializeField] private GameObject changeSceneUI;
     [SerializeField] private Animator changeSceneAnimator;
+    [SerializeField] private GameObject savedNotificationObj;
 
     [SerializeField] private GameObject pauseMainUI;
-    
+
     [SerializeField] private GameObject savepointUIObj;
-    [SerializeField] private GameObject savedObj;
-    private SavepointUI savepointUI;
+    [SerializeField] private GameObject savepointUIMainObj;
+    [SerializeField] private GameObject savepointUIInventoryObj;
+    private SavepointUIMain savepointUIMain;
+    private SavepointUIInventory savepointUIInventory;
 
     private List<Savepoint> savepoints = new();
     private List<string> savePointNames = new();
@@ -37,9 +40,13 @@ public class UI_Manager : MonoBehaviour
 
         pauseMainUI.SetActive(false);
         changeSceneUI.SetActive(false);
+        savepointUIMainObj.SetActive(false);
+        savedNotificationObj.SetActive(false);
+        savepointUIInventoryObj.SetActive(false);
         savepointUIObj.SetActive(false);
-        savedObj.SetActive(false);
-        savepointUI = savepointUIObj.GetComponent<SavepointUI>();
+
+        savepointUIMain = savepointUIMainObj.GetComponent<SavepointUIMain>();
+        savepointUIInventory = savepointUIInventoryObj.GetComponent<SavepointUIInventory>();
 
         savePointNames = new();
         savepoints = new();
@@ -66,6 +73,7 @@ public class UI_Manager : MonoBehaviour
         gameManager.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
         gameManager.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
         gameManager.OnChangeSceneFinished -= HandleChangeSceneFinish;
+
         dataPersistenceManager.OnSave -= HandleSave;
 
         foreach (var savepoint in savepoints)
@@ -80,7 +88,8 @@ public class UI_Manager : MonoBehaviour
         {
             inputHandler.UseESCInput();
 
-            if (!pauseMainUI.activeInHierarchy && !savepointUIObj.activeInHierarchy)
+            if (!pauseMainUI.activeInHierarchy && 
+                !savepointUIObj.activeInHierarchy)
             {
                 OpenPauseMainUI();
             }
@@ -90,7 +99,8 @@ public class UI_Manager : MonoBehaviour
             }
             else if (savepointUIObj.activeInHierarchy)
             {
-                CloseSavePointUI();
+                CloseAllSavePointUI();
+                savepointUIObj.SetActive(false);
             }
         }
     }
@@ -122,32 +132,24 @@ public class UI_Manager : MonoBehaviour
         gameManager.ResumeGame();
     }
 
-    public void OpenSavePointUI(string savePointName)
+
+    public void CloseAllSavePointUI()
     {
-        Debug.Log("Open Savepoint UI");
-        savepointUI.ActiveMenu();
-        savepointUI.SetSavepointNameText(savePointName);
-
-        EnemyManager.Instance.ResetTempData();
-        //TODO: Reset Scene
-
-        gameManager.PauseGame();
+        savepointUIMain.DeactiveAllMenu();
     }
 
-    public void CloseSavePointUI()
+    public void HandleSavePointInteraction(string savePointName, string sceneName)
     {
-        savepointUI.DeactiveMenu();
-        gameManager.ResumeGame();
-    }
+        savepointUIObj.SetActive(true);
+        savepointUIMain.ActiveMenu();
+        savepointUIMain.SetSavepointNameText(savePointName);
 
-    public void HandleSavePointInteraction(string savePointName)
-    {
-        OpenSavePointUI(savePointName);
+        gameManager.SavePointInteracted();
     }
 
     private void HandleSave()
     {
-        savedObj.SetActive(true);
+        savedNotificationObj.SetActive(true);
         StopCoroutine(nameof(DisableSavedObj));
         StartCoroutine(nameof(DisableSavedObj));
     }
@@ -155,7 +157,7 @@ public class UI_Manager : MonoBehaviour
     private IEnumerator DisableSavedObj()
     {
         yield return new WaitForSecondsRealtime(1f);
-        savedObj.SetActive(false);
+        savedNotificationObj.SetActive(false);
     }
 
     #region Change Scene

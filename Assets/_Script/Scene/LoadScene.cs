@@ -23,6 +23,12 @@ public class LoadScene : MonoBehaviour
             sc.SceneName = scene.Name;
             sc.StartSpawning();
         }
+
+        if (other.CompareTag("SavePoint"))
+        {
+            Savepoint sc = other.GetComponent<Savepoint>();
+            sc.SetSceneName(scene.Name);
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

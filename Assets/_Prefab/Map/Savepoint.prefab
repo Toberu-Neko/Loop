@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4303258215264212768}
   - component: {fileID: 5535344531240832082}
   - component: {fileID: 8409591871039354145}
+  - component: {fileID: 8426761570817936858}
   m_Layer: 0
   m_Name: Savepoint
-  m_TagString: Untagged
+  m_TagString: SavePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,6 +149,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.961894, y: 5.317669}
   m_EdgeRadius: 0
+--- !u!50 &8426761570817936858
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675274868305235517}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5261047058762411503
 GameObject:
   m_ObjectHideFlags: 0
