@@ -7,13 +7,11 @@ public class SavepointUIInventory : MonoBehaviour
     [SerializeField] private SavepointUIMain savepointUIMain;
 
     [SerializeField] private GameObject draggablePrefab;
-    private List<GameObject> draggableItems;
-
-    private LootSO[] lootSOs;
-    private Dictionary<string, Sprite> lootSODict;
 
     [SerializeField] private GameObject inventoryGrid;
-    private InventorySlot[] inventorySlots;
+
+    public InventorySlot[] InventorySlots { get; private set;}
+
     [SerializeField] private GameObject swordGrid;
     private EquipmentSlot[] swordSlots;
     [SerializeField] private GameObject gunGrid;
@@ -25,38 +23,13 @@ public class SavepointUIInventory : MonoBehaviour
 
     private void Awake()
     {
-        var lootSOs = Resources.LoadAll<LootSO>("LootSO");
-        this.lootSOs = lootSOs;
-        lootSODict = new();
-        foreach (var item in lootSOs)
-        {
-            lootSODict.Add(item.lootDetails.lootName, item.lootSprite);
-        }
+        InventorySlots = inventoryGrid.transform.GetComponentsInChildren<InventorySlot>();
 
-        inventorySlots = inventoryGrid.transform.GetComponentsInChildren<InventorySlot>();
+        swordSlots = swordGrid.transform.GetComponentsInChildren<EquipmentSlot>();
 
-        var slots = swordGrid.transform.GetComponentsInChildren<Transform>();
-        swordSlots = new EquipmentSlot[slots.Length - 1];
-        for (int i = 1; i < slots.Length; i++)
-        {
-            swordSlots[i - 1] = slots[i].gameObject.GetComponent<EquipmentSlot>();
-        }
+        gunSlots = gunGrid.transform.GetComponentsInChildren<EquipmentSlot>();
 
-        slots = gunGrid.transform.GetComponentsInChildren<Transform>();
-        gunSlots = new EquipmentSlot[slots.Length - 1];
-        for (int i = 1; i < slots.Length; i++)
-        {
-            gunSlots[i - 1] = slots[i].gameObject.GetComponent<EquipmentSlot>();
-        }
-
-        slots = fistGrid.transform.GetComponentsInChildren<Transform>();
-        fistSlots = new EquipmentSlot[slots.Length - 1];
-        for (int i = 1; i < slots.Length; i++)
-        {
-            fistSlots[i - 1] = slots[i].gameObject.GetComponent<EquipmentSlot>();
-        }
-
-        draggableItems = new();
+        fistSlots = fistGrid.transform.GetComponentsInChildren<EquipmentSlot>();
     }
 
     public void OnClickBackButton()
@@ -75,27 +48,61 @@ public class SavepointUIInventory : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        for(int i=0;i<inventorySlots.Length;i++)
+        if(InventorySlots != null)
         {
-            inventorySlots[i].DeactiveSlot();
+            for (int i = 0; i < InventorySlots.Length; i++)
+            {
+                InventorySlots[i].DeactiveSlot();
+            }
         }
+
+        DataPersistenceManager.Instance.SaveGame();
     }
 
     private void UpdateInventory()
     {
         inventory = PlayerInventoryManager.Instance.Inventory;
         int count = 0;
+
         foreach(var item in inventory)
         {
-            inventorySlots[count].ActiveSlot();
-            inventorySlots[count].SetValue(item.Value.itemCount, lootSODict[item.Value.lootDetails.lootName]);
+            LootSO so = ItemDataManager.Instance.LootSODict[item.Value.lootDetails.lootName];
+            int SOcount = 0;
+
+            foreach(EquipmentSlot equipmentSlot in swordSlots)
+            {
+                if(equipmentSlot.LootSO == so)
+                {
+                    SOcount++;
+                }
+            }
+
+            foreach (EquipmentSlot equipmentSlot in gunSlots)
+            {
+                if (equipmentSlot.LootSO == so)
+                {
+                    SOcount++;
+                }
+            }
+
+            foreach (EquipmentSlot equipmentSlot in fistSlots)
+            {
+                if (equipmentSlot.LootSO == so)
+                {
+                    SOcount++;
+                }
+            }
+
+
+            InventorySlots[count].ActiveSlot();
+            InventorySlots[count].SetValue(item.Value.itemCount - SOcount, so);
 
             count++;
         }
 
-        for (int i = count; i < inventorySlots.Length; i++)
+        for (int i = count; i < InventorySlots.Length; i++)
         {
-            inventorySlots[i].DeactiveSlot();
+            InventorySlots[i].DeactiveSlot();
         }
     }
 }

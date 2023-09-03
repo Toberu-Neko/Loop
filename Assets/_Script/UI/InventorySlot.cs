@@ -1,17 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private GameObject draggablePrefab;
     [SerializeField] private TextMeshProUGUI countText;
+
+    private DraggableItem previousItem;
+    private DraggableItem currentItem;
+    public LootSO LootSO { get; private set; }
     private List<DraggableItem> draggableItems;
-    private Sprite sprite;
-    private DraggableItem currentDraggableItem;
 
     public int Count { get; private set; }
 
@@ -24,36 +24,52 @@ public class InventorySlot : MonoBehaviour
     {
     }
 
-    private void OnDisable()
-    {
-    }
-
-    public void SetValue(int count, Sprite img)
+    public void SetCount(int count)
     {
         Count = count;
         countText.text = Count.ToString();
-        sprite = img;
-
-        SpawnDraggableObj();
     }
 
-    private void SpawnDraggableObj()
+    public void SetValue(int count, LootSO so)
+    {
+        SetCount(count);
+        LootSO = so;
+        SpawnDraggableObj(LootSO);
+        Debug.Log("Set Value");
+    }
+
+    private void SpawnDraggableObj(LootSO so)
     {
         GameObject obj = ObjectPoolManager.SpawnObject(draggablePrefab, spawnPoint);
         obj.transform.localPosition = Vector3.zero;
         DraggableItem script = obj.GetComponent<DraggableItem>();
-        currentDraggableItem = script;
-        script.OnReturnToOriginalParent += HandleReturnObject;
+        previousItem = currentItem;
+        currentItem = script;
+
+        script.OnReturnToOriginalParent += HandleNoTarget;
         script.OnStartDragging += HandleDragStart;
-        script.SetValue(sprite);
+        script.SetValue(so, Count);
         draggableItems.Add(script);
     }
 
     private void HandleDragStart()
     {
+        if (Count <= 0)
+        {
+            Debug.LogError("Count is 0");
+            return;
+        }
+        currentItem.OnStartDragging -= HandleDragStart;
+
+        if(previousItem != null)
+        {
+            previousItem.OnReturnToOriginalParent -= HandleNoTarget;
+        }
+
         Count--;
         countText.text = Count.ToString();
-        SpawnDraggableObj();
+        SpawnDraggableObj(LootSO);
+        Debug.Log("Handle Drag Start");
     }
 
     public void ActiveSlot()
@@ -67,16 +83,25 @@ public class InventorySlot : MonoBehaviour
         spawnPoint.gameObject.SetActive(false);
         countText.gameObject.SetActive(false);
 
-        if(currentDraggableItem != null)
-            currentDraggableItem.Deactivate();
+        if(draggableItems.Count > 0)
+        {
+            foreach(var item in draggableItems)
+            {
+                item.OnReturnToOriginalParent -= HandleNoTarget;
+                item.OnStartDragging -= HandleDragStart;
+                item.Deactivate();
+            }
+            draggableItems.Clear();
+        }
     }
 
-    private void HandleReturnObject(DraggableItem item)
+    private void HandleNoTarget(DraggableItem item)
     {
+        Debug.Log("Return!");
         Count++;
         countText.text = Count.ToString();
 
-        item.OnReturnToOriginalParent -= HandleReturnObject;
+        item.OnReturnToOriginalParent -= HandleNoTarget;
         item.OnStartDragging -= HandleDragStart;
 
         draggableItems.Remove(item);

@@ -3,20 +3,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private Image image;
     [HideInInspector] public Transform ParentAfterDrag { get; set; }
 
-    [Header("Equipment Type")]
-    [SerializeField, HideInInspector] private bool nothing;
-    [field: SerializeField] public bool CanEquipOnSword { get; private set; }
-    [field: SerializeField] public bool CanEquipOnGun { get; private set; }
-    [field: SerializeField] public bool CanEquipOnFist { get; private set; }
+    public bool CanEquipOnSword { get; private set; }
+    public bool CanEquipOnGun { get; private set; }
+    public bool CanEquipOnFist { get; private set; }
 
-    private bool isCopy;
+    private int count;
 
-    public bool ReturnToOriginalParent { get; set; } = true;
+    public bool DontHaveTarget { get; set; } = true;
+    public LootSO LootSO { get; private set;}
 
     public event Action<DraggableItem> OnReturnToOriginalParent;
     public event Action OnStartDragging;
@@ -24,21 +23,29 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void OnEnable()
     {
-        ReturnToOriginalParent = true;
+        DontHaveTarget = true;
         image.raycastTarget = true;
-        isCopy = false;
     }
 
-    public void SetValue(Sprite img)
+    public void SetValue(LootSO so, int count)
     {
-        image.sprite = img;
+        this.count = count;
+
+        image.sprite = so.lootSprite;
+        LootSO = so;
+        CanEquipOnSword = so.canEquipOnSword;
+        CanEquipOnGun = so.canEquipOnGun;
+        CanEquipOnFist = so.canEquipOnFist;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        OnStartDragging?.Invoke();
+        if(count <= 0)
+        {
+            return;
+        }
 
-        isCopy = true;
+        OnStartDragging?.Invoke();
 
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
@@ -47,35 +54,34 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (count <= 0)
+        {
+            return;
+        }
+
         transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (ReturnToOriginalParent)
+        if (count <= 0)
         {
-            OnReturnToOriginalParent?.Invoke(this);
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
-            // Destroy(gameObject);
             return;
         }
-        transform.SetParent(ParentAfterDrag);
-        image.raycastTarget = true;
-    }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (isCopy)
+        if (DontHaveTarget)
         {
             OnReturnToOriginalParent?.Invoke(this);
-            gameObject.transform.SetParent(transform.root);
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
-            // Destroy(gameObject);
+            Deactivate();
+            return;
         }
+        Deactivate();
     }
+
 
     public void Deactivate()
     {
+        gameObject.transform.SetParent(transform.root);
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 }

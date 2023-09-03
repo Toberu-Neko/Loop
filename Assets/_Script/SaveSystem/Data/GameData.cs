@@ -16,6 +16,7 @@ public class GameData
     // public SerializableDictionary<string, bool> defeatedEnemies;
     public SerializableDictionary<string, bool> activatedSavepoints;
     public SerializableDictionary<string, ItemData> inventory;
+    public SerializableDictionary<string, string> equipedItems;
 
     public GameData()
     {
@@ -26,6 +27,7 @@ public class GameData
 
         activatedSavepoints = new SerializableDictionary<string, bool>();
         inventory = new SerializableDictionary<string, ItemData>();
+        equipedItems = new();
         // defeatedEnemies = new SerializableDictionary<string, bool>();
     }
 
