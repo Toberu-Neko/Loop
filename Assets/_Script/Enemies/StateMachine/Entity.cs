@@ -4,8 +4,6 @@ using System;
 
 public class Entity : MonoBehaviour
 {
-    public string ID;
-    public int isAdded { get; set; }
     private bool isDefeated;
 
     public EnemyStateMachine StateMachine { get; private set; }
@@ -24,11 +22,6 @@ public class Entity : MonoBehaviour
 
     public event Action OnDefeated;
 
-    [ContextMenu("Generate guid for id")]
-    private void GenerateID()
-    {
-        ID = System.Guid.NewGuid().ToString();
-    }
 
     public virtual void Awake()
     {

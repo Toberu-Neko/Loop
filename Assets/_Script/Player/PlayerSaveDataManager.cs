@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
@@ -42,6 +39,4 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
         data.debugInputCount = DebugInputCount;
         data.playerPos = transform.position;
     }
-
-
 }

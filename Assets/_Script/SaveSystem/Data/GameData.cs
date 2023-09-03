@@ -15,6 +15,7 @@ public class GameData
 
     // public SerializableDictionary<string, bool> defeatedEnemies;
     public SerializableDictionary<string, bool> activatedSavepoints;
+    public SerializableDictionary<string, ItemData> inventory;
 
     public GameData()
     {
@@ -24,6 +25,7 @@ public class GameData
         playerPos = Vector3.zero;
 
         activatedSavepoints = new SerializableDictionary<string, bool>();
+        inventory = new SerializableDictionary<string, ItemData>();
         // defeatedEnemies = new SerializableDictionary<string, bool>();
     }
 
