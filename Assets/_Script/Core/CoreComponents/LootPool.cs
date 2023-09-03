@@ -67,14 +67,14 @@ public class LootPool : CoreComponent
         Rigidbody2D rig = dropItem.GetComponent<Rigidbody2D>();
         rig.velocity = dir * dropForce;
 
-        dropItem.GetComponent<LootItemPrefab>().lootDetails = lootItem.lootdetails;
+        dropItem.GetComponent<LootItemPrefab>().lootSO = lootItem.lootdetails;
     }
 }
 
 [Serializable]
 public class LootItem
 {
-    public LootDetails lootdetails;
+    public LootSO lootdetails;
     public int amount = 1;
 
     [Range(0f, 100f)]

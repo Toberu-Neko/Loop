@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LootItemPrefab : MonoBehaviour
 {
-    [HideInInspector] public LootDetails lootDetails;
+    [HideInInspector] public LootSO lootSO;
 
     [SerializeField] private Transform groundDetector;
     [SerializeField] private Vector2 groundDetectorSize;
@@ -12,6 +12,8 @@ public class LootItemPrefab : MonoBehaviour
 
     [SerializeField] private Collider2D col;
     [SerializeField] private Rigidbody2D rb;
+
+    private PlayerInventoryManager playerInventoryManager;
 
     private float startTime;
     private bool interactable;
@@ -53,7 +55,7 @@ public class LootItemPrefab : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Collect " + lootDetails.name);
+            PlayerInventoryManager.Instance.AddItem(lootSO.lootDetails);
             ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }

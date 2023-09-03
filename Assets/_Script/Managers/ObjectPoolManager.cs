@@ -111,12 +111,13 @@ public class ObjectPoolManager : MonoBehaviour
         if (spawnableObj == null)
         {
             spawnableObj = Instantiate(objectToSpawn, parentTransform);
-            pool.ActiveObjects.Add(spawnableObj);
+            // pool.ActiveObjects.Add(spawnableObj);
         }
         else
         {
             pool.InactiveObjects.Remove(spawnableObj);
-            pool.ActiveObjects.Add(spawnableObj);
+            // pool.ActiveObjects.Add(spawnableObj);
+            spawnableObj.transform.SetParent(parentTransform);
             spawnableObj.SetActive(true);
         }
 
