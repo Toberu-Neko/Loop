@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordSoulMaxAttackState : PlayerAttackState
+public class PlayerSwordSoulMaxAttackState : PlayerSwordAttackState
 {
     WeaponAttackDetails details;
     public PlayerSwordSoulMaxAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -14,7 +14,7 @@ public class PlayerSwordSoulMaxAttackState : PlayerAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
+        DoDamageToDamageList(WeaponType.Sword, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
     }
 
     public override void AnimationFinishTrigger()

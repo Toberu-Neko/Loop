@@ -22,7 +22,7 @@ public class ItemDataManager : MonoBehaviour
         LootSODict = new();
         foreach (var item in lootSOs)
         {
-            LootSODict.Add(item.lootDetails.lootName, item);
+            LootSODict.Add(item.itemDetails.lootName, item);
         }
     }
 }

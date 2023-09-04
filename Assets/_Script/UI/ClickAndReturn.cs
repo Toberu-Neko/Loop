@@ -10,7 +10,7 @@ public class ClickAndReturn : MonoBehaviour, IPointerClickHandler
 
     public void SetValue(LootSO so)
     {
-        image.sprite = so.lootSprite;
+        image.sprite = so.itemSprite;
     }
 
     public void OnPointerClick(PointerEventData eventData)

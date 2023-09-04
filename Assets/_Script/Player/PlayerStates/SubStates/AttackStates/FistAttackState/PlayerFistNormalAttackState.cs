@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFistNormalAttackState : PlayerAttackState
+public class PlayerFistNormalAttackState : PlayerFistAttackState
 {
     private int attackCounter;
     private SO_WeaponData_Fist fistData;
@@ -61,7 +61,7 @@ public class PlayerFistNormalAttackState : PlayerAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
+        DoDamageToDamageList(WeaponType.Fist, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
     }
     public override void AnimationStartMovementTrigger()
     {

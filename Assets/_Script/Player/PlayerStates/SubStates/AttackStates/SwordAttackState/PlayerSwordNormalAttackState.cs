@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordNormalAttackState : PlayerAttackState
+public class PlayerSwordNormalAttackState : PlayerSwordAttackState
 {
     private int attackCounter;
     private SO_WeaponData_Sword swordData;
@@ -58,7 +58,7 @@ public class PlayerSwordNormalAttackState : PlayerAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
+        DoDamageToDamageList(WeaponType.Sword, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
     }
 
     public override void AnimationStartMovementTrigger()

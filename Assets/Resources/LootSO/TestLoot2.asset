@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cb98a821d8359439b137b14628c1b7, type: 3}
   m_Name: TestLoot2
   m_EditorClassIdentifier: 
-  lootDetails:
+  itemDetails:
     lootName: test2222
-  lootSprite: {fileID: 21300000, guid: a99dee446f3dc7145b6e245387da76b8, type: 3}
+  itemSprite: {fileID: 9044786021765537137, guid: f7a5df46a3364f84a9213b761e6d1e88, type: 3}
+  itemDescription: +10% damage, +50% speed.
   canEquipOnSword: 1
   canEquipOnGun: 1
   canEquipOnFist: 1
-  attackMultiplier: 1
-  attackSpeedMultiplier: 1
+  multiplierData:
+    damageMultiplier: 10
+    attackSpeedMultiplier: 50
+    chargeSpeedMultiplier: 1

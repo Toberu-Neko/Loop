@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordStrongAttackState : PlayerAttackState
+public class PlayerSwordStrongAttackState : PlayerSwordAttackState
 {
     private SO_WeaponData_Sword weaponData;
     public PlayerSwordStrongAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -29,6 +29,8 @@ public class PlayerSwordStrongAttackState : PlayerAttackState
         CamManager.instance.CameraShake();
         GameObject projectile = ObjectPoolManager.SpawnObject(player.PlayerWeaponManager.SwordData.projectile, core.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
         PlayerProjectile projectileScript = projectile.GetComponent<PlayerProjectile>();
+        ProjectileDetails details = weaponData.projectileDetails;
+        details.damageAmount *= PlayerInventoryManager.Instance.SwordMultiplier.attackSpeedMultiplier;
         projectileScript.Fire(weaponData.projectileDetails, new Vector2(Movement.FacingDirection, 0));
     }
 

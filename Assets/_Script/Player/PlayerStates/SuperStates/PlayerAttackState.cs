@@ -83,8 +83,21 @@ public class PlayerAttackState : PlayerState
 
     }
 
-    public void DoDamageToDamageList(float damageAmount,float damageStaminaAmount ,Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
+    public void DoDamageToDamageList(WeaponType weaponType, float damageAmount,float damageStaminaAmount ,Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
     {
+        if(weaponType == WeaponType.Fist)
+        {
+            damageAmount *= PlayerInventoryManager.Instance.FistMultiplier.damageMultiplier;
+        }
+        else if(weaponType == WeaponType.Sword)
+        {
+            damageAmount *= PlayerInventoryManager.Instance.SwordMultiplier.damageMultiplier;
+        }
+        else if(weaponType == WeaponType.Gun)
+        {
+            damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
+        }
+
         if (Combat.DetectedDamageables.Count > 0)
         {
             OnAttack?.Invoke();
@@ -143,5 +156,11 @@ public class PlayerAttackState : PlayerState
             }
         }
     }
+}
 
+public enum WeaponType
+{
+    Sword,
+    Gun,
+    Fist
 }

@@ -55,7 +55,7 @@ public class LootItemPrefab : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerInventoryManager.Instance.AddItem(lootSO.lootDetails);
+            PlayerInventoryManager.Instance.AddItem(lootSO.itemDetails);
             ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }

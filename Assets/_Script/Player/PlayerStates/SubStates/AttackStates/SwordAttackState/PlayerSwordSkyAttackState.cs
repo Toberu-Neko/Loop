@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordSkyAttackState : PlayerAttackState
+public class PlayerSwordSkyAttackState : PlayerSwordAttackState
 {
     private WeaponAttackDetails details;
     public PlayerSwordSkyAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -36,7 +36,7 @@ public class PlayerSwordSkyAttackState : PlayerAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
+        DoDamageToDamageList(WeaponType.Sword, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
     }
 
     public override void AnimationFinishTrigger()

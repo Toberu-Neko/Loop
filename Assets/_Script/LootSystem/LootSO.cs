@@ -4,8 +4,9 @@ using UnityEngine;
 public class LootSO : ScriptableObject
 {
     [Header("Necessary Data")]
-    public LootDetails lootDetails;
-    public Sprite lootSprite;
+    public ItemDetails itemDetails;
+    public Sprite itemSprite;
+    [TextArea(5, 10)] public string itemDescription;
 
     [Header("Available Equipment Type")]
     public bool canEquipOnSword;
@@ -21,18 +22,20 @@ public class MultiplierData
 {
     public float damageMultiplier;
     public float attackSpeedMultiplier;
+    public float chargeSpeedMultiplier;
 
     public MultiplierData()
     {
         damageMultiplier = 1f;
         attackSpeedMultiplier = 1f;
+        chargeSpeedMultiplier = 1f;
     }
 }
 
+// for saving system
 [System.Serializable]
-public class LootDetails
+public class ItemDetails
 {
-    // for saving system
     public string lootName;
 }
 

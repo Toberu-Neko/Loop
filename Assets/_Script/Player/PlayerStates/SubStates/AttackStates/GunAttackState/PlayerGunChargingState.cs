@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows;
 
-public class PlayerGunChargingState : PlayerAttackState
+public class PlayerGunChargingState : PlayerGunAttackState
 {
     private bool holdSkillInput;
     private SO_WeaponData_Gun data;
@@ -71,6 +71,7 @@ public class PlayerGunChargingState : PlayerAttackState
             // Debug.Log("Shoot at " + Time.time);
             lastDamageTime = Time.time;
             DoDamageToDamageList(
+                WeaponType.Gun,
                 data.chargeAttackDamageAmount * chargeTime,
                 data.chargeAttackStaminaDamageAmount,
                 data.chargeAttackKnockbackAngle,

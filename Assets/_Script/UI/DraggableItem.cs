@@ -31,7 +31,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         this.count = count;
 
-        image.sprite = so.lootSprite;
+        image.sprite = so.itemSprite;
         LootSO = so;
         CanEquipOnSword = so.canEquipOnSword;
         CanEquipOnGun = so.canEquipOnGun;

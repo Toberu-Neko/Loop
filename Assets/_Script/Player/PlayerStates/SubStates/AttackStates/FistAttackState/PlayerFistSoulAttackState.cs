@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFistSoulAttackState : PlayerAttackState
+public class PlayerFistSoulAttackState : PlayerFistAttackState
 {
     private int soulAmount;
     private bool staticAttack;
@@ -63,9 +63,9 @@ public class PlayerFistSoulAttackState : PlayerAttackState
         if (doAttack)
         {
             if(soulAmount == 0)
-                DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
+                DoDamageToDamageList(WeaponType.Fist, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
             else
-                DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
+                DoDamageToDamageList(WeaponType.Fist, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
         }
     }
 

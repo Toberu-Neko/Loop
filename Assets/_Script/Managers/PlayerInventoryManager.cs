@@ -14,10 +14,10 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     private List<EquipedItem> equipedItems;
     private class EquipedItem
     {
-        public EquipmentType equipmentType;
+        public WeaponType equipmentType;
         public LootSO lootSO;
 
-        public EquipedItem(EquipmentType equipmentType, LootSO SO)
+        public EquipedItem(WeaponType equipmentType, LootSO SO)
         {
             this.equipmentType = equipmentType;
             lootSO = SO;
@@ -33,9 +33,12 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 
         Inventory = new();
         equipedItems = new();
+        SwordMultiplier = new();
+        GunMultiplier = new();
+        FistMultiplier = new();
     }
 
-    public void AddItem(LootDetails lootDetails, int amount = 1)
+    public void AddItem(ItemDetails lootDetails, int amount = 1)
     {
         if (Inventory.ContainsKey(lootDetails.lootName))
         {
@@ -58,15 +61,15 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             switch (item.equipmentType)
             {
-                case EquipmentType.Sword:
+                case WeaponType.Sword:
                     SwordMultiplier.attackSpeedMultiplier += item.lootSO.multiplierData.attackSpeedMultiplier / 100f;
                     SwordMultiplier.damageMultiplier += item.lootSO.multiplierData.damageMultiplier / 100f;
                     break;
-                case EquipmentType.Gun:
+                case WeaponType.Gun:
                     GunMultiplier.attackSpeedMultiplier += item.lootSO.multiplierData.attackSpeedMultiplier / 100f;
                     GunMultiplier.damageMultiplier += item.lootSO.multiplierData.damageMultiplier / 100f;
                     break;
-                case EquipmentType.Fist:
+                case WeaponType.Fist:
                     FistMultiplier.attackSpeedMultiplier += item.lootSO.multiplierData.attackSpeedMultiplier / 100f;
                     FistMultiplier.damageMultiplier += item.lootSO.multiplierData.damageMultiplier / 100f;
                     break;
@@ -82,13 +85,13 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         */
     }
 
-    public void EquipItem(LootSO SO, EquipmentType equipmentType)
+    public void EquipItem(LootSO SO, WeaponType equipmentType)
     {
         equipedItems.Add(new EquipedItem(equipmentType, SO));
         UpdateEquipedItem();
     }
 
-    public void UnEquipItem(LootSO SO, EquipmentType type)
+    public void UnEquipItem(LootSO SO, WeaponType type)
     {
         equipedItems.Remove(equipedItems.Find(x => x.equipmentType == type && x.lootSO == SO));
         UpdateEquipedItem();
@@ -109,6 +112,6 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 public class ItemData
 {
     public int itemCount;
-    public LootDetails lootDetails;
+    public ItemDetails lootDetails;
 }
 

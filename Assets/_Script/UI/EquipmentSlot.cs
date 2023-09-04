@@ -7,7 +7,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
     private SavepointUIInventory savepointUIInventory;
     private InventorySlot inventorySlot;
     [SerializeField] private GameObject clickAndReturnPrefab;
-    [SerializeField] private EquipmentType equipmentType;
+    [SerializeField] private WeaponType equipmentType;
     [SerializeField, Range(0, 3)] private int slotIndex;
 
     public LootSO LootSO { get; private set; }
@@ -28,11 +28,11 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
             return;
         }
 
-        if ((equipmentType == EquipmentType.Sword && draggableItem.CanEquipOnSword)
+        if ((equipmentType == WeaponType.Sword && draggableItem.CanEquipOnSword)
             ||
-            (equipmentType == EquipmentType.Gun && draggableItem.CanEquipOnGun)
+            (equipmentType == WeaponType.Gun && draggableItem.CanEquipOnGun)
             ||
-            (equipmentType == EquipmentType.Fist && draggableItem.CanEquipOnFist))
+            (equipmentType == WeaponType.Fist && draggableItem.CanEquipOnFist))
         {
             draggableItem.DontHaveTarget = false;
             draggableItem.ParentAfterDrag = transform;
@@ -62,7 +62,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         }
 
         if(LootSO != null)
-            data.equipedItems.Add(equipmentType.ToString() + slotIndex, LootSO.lootDetails.lootName);
+            data.equipedItems.Add(equipmentType.ToString() + slotIndex, LootSO.itemDetails.lootName);
         else
             data.equipedItems.Remove(equipmentType.ToString() + slotIndex);
     }
@@ -104,10 +104,4 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         clickAndReturn = null;
         LootSO = null;
     }
-}
-public enum EquipmentType
-{
-    Sword,
-    Gun,
-    Fist
 }

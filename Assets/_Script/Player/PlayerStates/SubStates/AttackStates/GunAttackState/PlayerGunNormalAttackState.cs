@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows;
 
-public class PlayerGunNormalAttackState : PlayerAttackState
+public class PlayerGunNormalAttackState : PlayerGunAttackState
 {
     private SO_WeaponData_Gun data;
 
@@ -81,6 +81,8 @@ public class PlayerGunNormalAttackState : PlayerAttackState
             player.PlayerWeaponManager.GunFired();
 
             PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.normalAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
+            ProjectileDetails details = data.normalAttackDetails;
+            details.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
             proj.Fire(data.normalAttackDetails, mouseDirectionInput);
         }
     }

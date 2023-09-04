@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFistHubState : PlayerAttackState
+public class PlayerFistHubState : PlayerFistAttackState
 {
     private SO_WeaponData_Fist data;
     private bool canAttack;

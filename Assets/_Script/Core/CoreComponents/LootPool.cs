@@ -60,7 +60,7 @@ public class LootPool : CoreComponent
     private void SpawnItem(Vector3 position, LootItem lootItem)
     {
         GameObject dropItem = ObjectPoolManager.SpawnObject(dropItemPrefab, position, Quaternion.identity, ObjectPoolManager.PoolType.GameObjects);
-        dropItem.GetComponent<SpriteRenderer>().sprite = lootItem.lootdetails.lootSprite;
+        dropItem.GetComponent<SpriteRenderer>().sprite = lootItem.lootdetails.itemSprite;
 
         float dropForce = 10f;
         Vector2 dir = new(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(0.5f, 1f));
