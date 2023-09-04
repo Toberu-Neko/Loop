@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTimeSkillManager : MonoBehaviour
+public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
 {
     [SerializeField] private PlayerTimeSkillData data;
     [SerializeField] private Core core;
@@ -34,8 +34,6 @@ public class PlayerTimeSkillManager : MonoBehaviour
         player = GetComponent<Player>();
         combat = core.GetCoreComponent<Combat>();
 
-        combat.OnPerfectBlock += HandleOnPerfectBlock;
-
         BulletTimeEffectObj.SetActive(false);
 
         maxEnergy = data.maxEnergy;
@@ -49,9 +47,7 @@ public class PlayerTimeSkillManager : MonoBehaviour
             PredictLineTransforms[i] = PredictLineObjects[i].transform;
             PredictLineObjects[i].SetActive(false);
         }
-    }
-    private void Start()
-    {
+
         StateMachine = new();
         SkillNone = new(player, this, StateMachine, data, "None");
         SkillRewindPlayer = new(player, this, StateMachine, data, "RewindPlayer");
@@ -73,6 +69,11 @@ public class PlayerTimeSkillManager : MonoBehaviour
     private void FixedUpdate()
     {
         StateMachine.CurrentState.PhysicsUpdate();
+    }
+
+    private void OnEnable()
+    {
+        combat.OnPerfectBlock += HandleOnPerfectBlock;
     }
 
     private void OnDisable()
@@ -150,6 +151,42 @@ public class PlayerTimeSkillManager : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, data.bulletTimeRangedRadius);
+    }
+
+    public void LoadData(GameData data)
+    {
+        switch (data.currentTimeSkill)
+        {
+            case "PlayerTimeSkill_None":
+                ChangeToNoneSkill();
+                break;
+            case "PlayerTimeSkill_RewindPlayer":
+                ChangeToRewindSkill();
+                break;
+            case "PlayerTimeSkill_BookMark":
+                ChangeToBookMarkSkill();
+                break;
+            case "PlayerTimeSkill_TimeStopAll":
+                ChangeToTimeStopSkill();
+                break;
+            case "PlayerTimeSkill_TimeStopThrow":
+                ChangeToTimeStopThrowSkill();
+                break;
+            case "PlayerTimeSkill_BulletTimeAll":
+                ChangeToBulletTimeAllSkill();
+                break;
+            case "PlayerTimeSkill_BulletTimeRanged":
+                ChangeToBulletTimeRangedSkill();
+                break;
+            default:
+                Debug.LogError("The current time skill name in gamedata is worng");
+                break;
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.currentTimeSkill = StateMachine.CurrentState.ToString();
     }
 }
 

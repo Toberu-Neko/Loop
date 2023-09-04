@@ -14,7 +14,7 @@ public class PlayerTimeSkillStateMachine
 
     public void ChangeState(PlayerTimeSkillBase newState)
     {
-        CurrentState.Exit();
+        CurrentState?.Exit();
         CurrentState = newState;
         
         // Debug.Log(newState.ToString());

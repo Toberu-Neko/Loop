@@ -13,6 +13,8 @@ public class GameData
 
     public Vector3 playerPos;
 
+    public string currentTimeSkill;
+
     // public SerializableDictionary<string, bool> defeatedEnemies;
     public SerializableDictionary<string, bool> activatedSavepoints;
     public SerializableDictionary<string, ItemData> inventory;
@@ -24,6 +26,7 @@ public class GameData
         debugInputCount = 0;
         timePlayed = 0f;
         playerPos = Vector3.zero;
+        currentTimeSkill = "SkillNone";
 
         activatedSavepoints = new SerializableDictionary<string, bool>();
         inventory = new SerializableDictionary<string, ItemData>();
