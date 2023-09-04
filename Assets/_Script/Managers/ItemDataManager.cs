@@ -12,6 +12,7 @@ public class ItemDataManager : MonoBehaviour
     {
         if(Instance != null)
         {
+            Destroy(gameObject);
             return;
         }
 
@@ -20,8 +21,21 @@ public class ItemDataManager : MonoBehaviour
 
         var lootSOs = Resources.LoadAll<LootSO>("LootSO");
         LootSODict = new();
+
         foreach (var item in lootSOs)
         {
+            if(LootSODict.ContainsKey(item.itemDetails.lootName))
+            {
+                Debug.LogError($"There are more than one loot with the same name: {item.name}");
+                continue;
+            }
+
+            if(item.itemDetails.lootName == "")
+            {
+                Debug.LogError($"There is a loot with no name, name: " + item.name);
+                continue;
+            }
+
             LootSODict.Add(item.itemDetails.lootName, item);
         }
     }

@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class SavepointUIMain : MonoBehaviour
 {
+    [SerializeField] private GameObject savepointUIObj;
     [SerializeField] private TextMeshProUGUI savepointNameText;
     [SerializeField] private SavepointUIInventory savepointUIInventory;
-    private GameManager gameManager;
 
-    private void Start()
-    {
-        gameManager = GameManager.Instance;
-    }
 
     public void SetSavepointNameText(string name)
     {
@@ -35,8 +29,13 @@ public class SavepointUIMain : MonoBehaviour
         DeactiveMenu();
     }
 
-    public void ActiveMenu()
+    public void ActiveMenu(bool init = false)
     {
+        if (init)
+        {
+            savepointUIObj.SetActive(true);
+            GameManager.Instance.PauseGame();
+        }
         gameObject.SetActive(true);
     }
 
@@ -47,8 +46,9 @@ public class SavepointUIMain : MonoBehaviour
 
     public void DeactiveAllMenu()
     {
-        gameObject.SetActive(false);
         savepointUIInventory.DeactiveMenu();
-        gameManager.ResumeGame();
+        savepointUIObj.SetActive(false);
+        GameManager.Instance.ResumeGame();
+        gameObject.SetActive(false);
     }
 }

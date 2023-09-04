@@ -10,13 +10,20 @@ public class UI_Manager : MonoBehaviour
     private DataPersistenceManager dataPersistenceManager;
 
     [SerializeField] private PlayerInputHandler inputHandler;
-
-    [SerializeField] private GameObject changeSceneUI;
-    [SerializeField] private Animator changeSceneAnimator;
     [SerializeField] private GameObject savedNotificationObj;
 
-    [SerializeField] private GameObject pauseMainUI;
+    [Header("Change Scene UI")]
+    [SerializeField] private GameObject changeSceneUI;
+    [SerializeField] private Animator changeSceneAnimator;
 
+    [Header("Pause UI")]
+    [SerializeField] private GameObject pauseUIObj;
+    [SerializeField] private GameObject pauseUIMainObj;
+    [SerializeField] private GameObject pauseUIChooseSkillObj;
+    [SerializeField] private GameObject pauseUIMapObj;
+    private PauseUIMain pauseUIMain;
+
+    [Header("Savepoint UI")]
     [SerializeField] private GameObject savepointUIObj;
     [SerializeField] private GameObject savepointUIMainObj;
     [SerializeField] private GameObject savepointUIInventoryObj;
@@ -38,12 +45,18 @@ public class UI_Manager : MonoBehaviour
             return;
         }
 
-        pauseMainUI.SetActive(false);
         changeSceneUI.SetActive(false);
-        savepointUIMainObj.SetActive(false);
         savedNotificationObj.SetActive(false);
-        savepointUIInventoryObj.SetActive(false);
+
+        pauseUIObj.SetActive(false);
+        pauseUIMainObj.SetActive(false);
+        pauseUIChooseSkillObj.SetActive(false);
+        pauseUIMapObj.SetActive(false);
+        pauseUIMain = pauseUIMainObj.GetComponent<PauseUIMain>();
+
         savepointUIObj.SetActive(false);
+        savepointUIMainObj.SetActive(false);
+        savepointUIInventoryObj.SetActive(false);
 
         savepointUIMain = savepointUIMainObj.GetComponent<SavepointUIMain>();
         savepointUIInventory = savepointUIInventoryObj.GetComponent<SavepointUIInventory>();
@@ -88,12 +101,12 @@ public class UI_Manager : MonoBehaviour
         {
             inputHandler.UseESCInput();
 
-            if (!pauseMainUI.activeInHierarchy && 
+            if (!pauseUIObj.activeInHierarchy && 
                 !savepointUIObj.activeInHierarchy)
             {
                 OpenPauseMainUI();
             }
-            else if (pauseMainUI.activeInHierarchy)
+            else if (pauseUIObj.activeInHierarchy)
             {
                 ClosePauseMainUI();
             }
@@ -122,14 +135,12 @@ public class UI_Manager : MonoBehaviour
 
     private void OpenPauseMainUI()
     {
-        pauseMainUI.SetActive(true);
-        gameManager.PauseGame();
+        pauseUIMain.ActivateMenu(true);
     }
 
     private void ClosePauseMainUI()
     {
-        pauseMainUI.SetActive(false);
-        gameManager.ResumeGame();
+        pauseUIMain.DeactiveAllMenu();
     }
 
 
@@ -140,8 +151,7 @@ public class UI_Manager : MonoBehaviour
 
     public void HandleSavePointInteraction(string savePointName, string sceneName)
     {
-        savepointUIObj.SetActive(true);
-        savepointUIMain.ActiveMenu();
+        savepointUIMain.ActiveMenu(true);
         savepointUIMain.SetSavepointNameText(savePointName);
 
         gameManager.SavePointInteracted();

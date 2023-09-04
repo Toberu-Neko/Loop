@@ -88,8 +88,6 @@ public class GameManager : MonoBehaviour
 
         DataPersistenceManager.Instance.SaveGame();
         EnemyManager.Instance.ResetTempData();
-        PauseGame();
-
     }
 
     #region Time
