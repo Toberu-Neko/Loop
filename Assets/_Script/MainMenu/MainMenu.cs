@@ -17,8 +17,6 @@ public class MainMenu : MenuFirstSelecter
 
     private void Start()
     {
-        ObjectPoolManager.ReturnAllObjectsToPool();
-
         if (!DataPersistenceManager.Instance.HasGameData())
         {
             continueGameButton.interactable = false;

@@ -37,7 +37,8 @@ public class LookForPlayerState : EnemyState
         lastTurnTime = StartTime;
         amountOfTurnsDone = 0;
 
-        Movement.SetVelocityZero();
+        if (CollisionSenses.Ground)
+            Movement.SetVelocityZero();
     }
 
     public override void Exit()
@@ -49,7 +50,8 @@ public class LookForPlayerState : EnemyState
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityZero();
+        if (CollisionSenses.Ground)
+            Movement.SetVelocityZero();
 
         if (Stats.IsTimeStopped)
         {

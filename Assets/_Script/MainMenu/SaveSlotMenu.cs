@@ -31,7 +31,7 @@ public class SaveSlotMenu : MenuFirstSelecter
             DataPersistenceManager.Instance.NewGame();
         }
 
-        SceneManager.LoadScene("MultiSceneBase");
+        DataPersistenceManager.Instance.ReloadBaseScene();
     }
 
     public void OnBackButtonClicked()

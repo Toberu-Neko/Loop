@@ -22,6 +22,12 @@ public class PauseUIMain : MonoBehaviour
         DataPersistenceManager.Instance.ReloadBaseScene();
     }
 
+    public void OnClickGoToMainMenu()
+    {
+        DeactiveAllMenu();
+        DataPersistenceManager.Instance.LoadMainMenuScene();
+    }
+
     public void ActivateMenu(bool init = false)
     {
         if(init)

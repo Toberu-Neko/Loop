@@ -17,7 +17,9 @@ public class DataPersistenceManager : MonoBehaviour
     [Header("Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption = false;
+
     [SerializeField] private SceneReference baseScene;
+    [SerializeField] private SceneReference mainMenuScene;
 
     private GameData gameData;
     private List<IDataPersistance> dataPersistanceObjects;
@@ -179,6 +181,12 @@ public class DataPersistenceManager : MonoBehaviour
     {
         ObjectPoolManager.ReturnAllObjectsToPool();
         SceneManager.LoadScene(baseScene.Name);
+    }
+
+    public void LoadMainMenuScene()
+    {
+        ObjectPoolManager.ReturnAllObjectsToPool();
+        SceneManager.LoadScene(mainMenuScene.Name);
     }
 
     public bool HasGameData()

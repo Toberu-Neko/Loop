@@ -137,6 +137,7 @@ public class ObjectPoolManager : MonoBehaviour
         else
         {
             obj.SetActive(false);
+            obj.transform.position = Vector3.zero;
             pool.InactiveObjects.Add(obj);
             pool.ActiveObjects.Remove(obj);
         }

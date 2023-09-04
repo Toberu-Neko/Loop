@@ -15,7 +15,9 @@ public class DeadState : EnemyState
         base.Enter();
 
         Movement.SetCanSetVelocity(false);
-        Movement.SetVelocityZero();
+
+        if (CollisionSenses.Ground)
+            Movement.SetVelocityZero();
     }
 
     public override void LogicUpdate()

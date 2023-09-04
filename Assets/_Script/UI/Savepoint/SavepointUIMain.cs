@@ -29,6 +29,12 @@ public class SavepointUIMain : MonoBehaviour
         DeactiveMenu();
     }
 
+    public void OnClickGoToMainMenu()
+    {
+        DeactiveAllMenu();
+        DataPersistenceManager.Instance.LoadMainMenuScene();
+    }
+
     public void ActiveMenu(bool init = false)
     {
         if (init)

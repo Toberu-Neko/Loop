@@ -21,7 +21,9 @@ public class PlayerDetectedState : EnemyState
     {
         base.Enter();
 
-        Movement.SetVelocityZero();
+        if(CollisionSenses.Ground)  
+            Movement.SetVelocityZero();
+
         performLongRangeAction = false;
     }
 
@@ -34,7 +36,8 @@ public class PlayerDetectedState : EnemyState
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityZero();
+        if (CollisionSenses.Ground)
+            Movement.SetVelocityZero();
 
         if (Time.time >= StartTime + stateData.delayTime) 
         {
