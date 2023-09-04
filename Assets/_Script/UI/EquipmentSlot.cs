@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -35,16 +36,22 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         {
             draggableItem.DontHaveTarget = false;
             draggableItem.ParentAfterDrag = transform;
-            LootSO = draggableItem.LootSO;
 
-
-            clickAndReturnObj = ObjectPoolManager.SpawnObject(clickAndReturnPrefab, transform);
-            clickAndReturn = clickAndReturnObj.GetComponent<ClickAndReturn>();
-            clickAndReturn.SetValue(LootSO);
-            clickAndReturn.OnReturn += HandleReturn;
-
-            clickAndReturnObj.transform.localPosition = Vector3.zero;
+            UpdateSlot(draggableItem.LootSO);
         }
+    }
+
+    private void UpdateSlot(LootSO SO)
+    {
+        LootSO = SO;
+        clickAndReturnObj = ObjectPoolManager.SpawnObject(clickAndReturnPrefab, transform);
+        clickAndReturn = clickAndReturnObj.GetComponent<ClickAndReturn>();
+        clickAndReturn.SetValue(SO);
+        clickAndReturn.OnReturn += HandleReturn;
+
+        clickAndReturnObj.transform.localPosition = Vector3.zero;
+
+        PlayerInventoryManager.Instance.EquipItem(SO, equipmentType);
     }
 
     public void SaveData(GameData data)
@@ -69,14 +76,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
 
             if(so != null)
             {
-                GameObject obj = ObjectPoolManager.SpawnObject(clickAndReturnPrefab, transform);
-                obj.transform.localPosition = Vector3.zero;
-                ClickAndReturn script = obj.GetComponent<ClickAndReturn>();
-                script.SetValue(so);
-                script.OnReturn += HandleReturn;
-                clickAndReturnObj = obj;
-                clickAndReturn = script;
-                LootSO = so;
+                UpdateSlot(so);
             }
         }
     }
@@ -98,6 +98,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         clickAndReturnObj.transform.SetParent(transform.root);
         inventorySlot.SetCount(inventorySlot.Count + 1);
         ObjectPoolManager.ReturnObjectToPool(clickAndReturnObj);
+        PlayerInventoryManager.Instance.UnEquipItem(LootSO, equipmentType);
 
         clickAndReturnObj = null;
         clickAndReturn = null;

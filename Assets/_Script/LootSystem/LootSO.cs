@@ -12,9 +12,21 @@ public class LootSO : ScriptableObject
     public bool canEquipOnGun;
     public bool canEquipOnFist;
 
-    [Header("Effects")]
-    public float attackMultiplier = 1f;
-    public float attackSpeedMultiplier = 1f;
+    [Header("Effects(%)")]
+    public MultiplierData multiplierData;
+}
+
+[System.Serializable]
+public class MultiplierData
+{
+    public float damageMultiplier;
+    public float attackSpeedMultiplier;
+
+    public MultiplierData()
+    {
+        damageMultiplier = 1f;
+        attackSpeedMultiplier = 1f;
+    }
 }
 
 [System.Serializable]

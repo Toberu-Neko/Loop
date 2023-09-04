@@ -35,7 +35,6 @@ public class InventorySlot : MonoBehaviour
         SetCount(count);
         LootSO = so;
         SpawnDraggableObj(LootSO);
-        Debug.Log("Set Value");
     }
 
     private void SpawnDraggableObj(LootSO so)
@@ -69,7 +68,6 @@ public class InventorySlot : MonoBehaviour
         Count--;
         countText.text = Count.ToString();
         SpawnDraggableObj(LootSO);
-        Debug.Log("Handle Drag Start");
     }
 
     public void ActiveSlot()
