@@ -144,13 +144,26 @@ public class ObjectPoolManager : MonoBehaviour
 
     public static void ReturnAllObjectsToPool()
     {
+        if(ObjectPools.Count == 0)
+        {
+            Debug.LogWarning("No objects in pool to return.");
+            return;
+        }
+
         foreach(PooledObjectInfo pool in ObjectPools)
         {
+            if(pool.ActiveObjects.Count == 0)
+            {
+                Debug.LogWarning("No inactive objects in pool to return.");
+                continue;
+            }
+
             foreach(GameObject obj in pool.ActiveObjects)
             {
                 obj.SetActive(false);
                 pool.InactiveObjects.Add(obj);
             }
+
             pool.ActiveObjects.Clear();
         }
     }

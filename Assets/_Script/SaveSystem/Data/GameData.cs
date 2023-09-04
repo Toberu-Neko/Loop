@@ -26,7 +26,7 @@ public class GameData
         debugInputCount = 0;
         timePlayed = 0f;
         playerPos = Vector3.zero;
-        currentTimeSkill = "SkillNone";
+        currentTimeSkill = "PlayerTimeSkill_None";
 
         activatedSavepoints = new();
         inventory = new();

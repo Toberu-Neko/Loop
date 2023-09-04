@@ -16,6 +16,12 @@ public class PauseUIMain : MonoBehaviour
         DeactivateMenu();
     }
 
+    public void OnClickGoToPreviousSavepoint()
+    {
+        DeactiveAllMenu();
+        DataPersistenceManager.Instance.ReloadBaseScene();
+    }
+
     public void ActivateMenu(bool init = false)
     {
         if(init)
@@ -34,6 +40,7 @@ public class PauseUIMain : MonoBehaviour
     public void DeactiveAllMenu()
     {
         GameManager.Instance.ResumeGame();
+        pauseUIObj.SetActive(false);
         pauseUIChangeSkill.Deactivate();
         DeactivateMenu();
     }

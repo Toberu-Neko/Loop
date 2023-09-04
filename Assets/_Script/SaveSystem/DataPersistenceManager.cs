@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using System;
+using Eflatun.SceneReference;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class DataPersistenceManager : MonoBehaviour
     [Header("Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption = false;
+    [SerializeField] private SceneReference baseScene;
 
     private GameData gameData;
     private List<IDataPersistance> dataPersistanceObjects;
@@ -78,8 +80,9 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // TODO: Load when enter boss room
         dataPersistanceObjects = FindAllDataPersistenceObjects();
-        if(scene.name == "MultiSceneBase")
+        if(scene.name == baseScene.Name)
         {
             LoadGame();
         }
@@ -88,6 +91,7 @@ public class DataPersistenceManager : MonoBehaviour
     private void OnSceneUnloaded(Scene scene)
     {
     }
+
     private List<IDataPersistance> FindAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistance> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistance>();
@@ -104,7 +108,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveGame();
+        // SaveGame();
     }
 
     public void LoadGame()
@@ -170,6 +174,13 @@ public class DataPersistenceManager : MonoBehaviour
         selectedProfileId = profileId;
         LoadGame();
     }
+
+    public void ReloadBaseScene()
+    {
+        ObjectPoolManager.ReturnAllObjectsToPool();
+        SceneManager.LoadScene(baseScene.Name);
+    }
+
     public bool HasGameData()
     {
         return dataHandler.LoadAllProfiles().Count > 0;

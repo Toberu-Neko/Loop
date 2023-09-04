@@ -5434,8 +5434,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1236792505}
-        m_TargetAssemblyTypeName: SavepointUIInventory, Assembly-CSharp
+      - m_Target: {fileID: 2133997638}
+        m_TargetAssemblyTypeName: PauseUIChangeSkill, Assembly-CSharp
         m_MethodName: OnClickBackButton
         m_Mode: 1
         m_Arguments:
@@ -7391,11 +7391,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1128170563}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 60322145}
+        m_TargetAssemblyTypeName: PauseUIMain, Assembly-CSharp
+        m_MethodName: OnClickGoToPreviousSavepoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1128170563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8722,8 +8734,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 161490561}
-  - {fileID: 743053224}
   - {fileID: 1128170561}
+  - {fileID: 743053224}
   - {fileID: 562119722}
   - {fileID: 2089095003}
   - {fileID: 3242047224842072336}
@@ -15358,7 +15370,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5730\u5716"
+  m_text: "\u66F4\u63DB\u6642\u9593\u6280\u80FD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d79eff70a340a75429de96da4e6412b0, type: 2}
   m_sharedMaterial: {fileID: -8656495201604484284, guid: d79eff70a340a75429de96da4e6412b0, type: 2}
