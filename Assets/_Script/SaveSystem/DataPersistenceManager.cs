@@ -21,7 +21,7 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private SceneReference baseScene;
     [SerializeField] private SceneReference mainMenuScene;
 
-    private GameData gameData;
+    public GameData GameData { get; private set;}
     private List<IDataPersistance> dataPersistanceObjects;
     private FileDataHandler dataHandler;
 
@@ -66,13 +66,11 @@ public class DataPersistenceManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     private void Update()
@@ -90,10 +88,6 @@ public class DataPersistenceManager : MonoBehaviour
         }
     }
 
-    private void OnSceneUnloaded(Scene scene)
-    {
-    }
-
     private List<IDataPersistance> FindAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistance> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistance>();
@@ -103,7 +97,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void NewGame()
     {
-        gameData = new GameData();
+        GameData = new GameData();
         SaveGame();
         Debug.Log("Creating new game");
     }
@@ -123,9 +117,9 @@ public class DataPersistenceManager : MonoBehaviour
 
         timer = 0f;
 
-        gameData = dataHandler.Load(selectedProfileId);
+        GameData = dataHandler.Load(selectedProfileId);
 
-        if(gameData == null)
+        if(GameData == null)
         {
             if (initializeDataIfNull)
             {
@@ -140,7 +134,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         foreach (IDataPersistance dataPersistanceObject in dataPersistanceObjects)
         {
-            dataPersistanceObject.LoadData(gameData);
+            dataPersistanceObject.LoadData(GameData);
         }
     }
 
@@ -152,7 +146,7 @@ public class DataPersistenceManager : MonoBehaviour
             return;
         }
 
-        if (gameData == null)
+        if (GameData == null)
         {
             Debug.LogWarning("No game data found, create a new one first.");
             return;
@@ -160,14 +154,14 @@ public class DataPersistenceManager : MonoBehaviour
 
         foreach (IDataPersistance dataPersistanceObject in dataPersistanceObjects)
         {
-            dataPersistanceObject.SaveData(gameData);
+            dataPersistanceObject.SaveData(GameData);
         }
 
-        gameData.lastUpdated = DateTime.Now.ToBinary();
-        gameData.timePlayed += timer;
+        GameData.lastUpdated = DateTime.Now.ToBinary();
+        GameData.timePlayed += timer;
         timer = 0f;
 
-        dataHandler.Save(gameData, selectedProfileId);
+        dataHandler.Save(GameData, selectedProfileId);
         OnSave?.Invoke();
     }
 
