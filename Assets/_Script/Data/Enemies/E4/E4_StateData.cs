@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "E4_StateData", menuName = "Data/Entity Data/E4 Human Melee Normal")]
-public class E4_StateData : D_BaseEnemyStateData
+public class E4_StateData : BaseEnemyStateData
 {
     [Header("Movement")]
     public S_EnemyIdleState idleStateData;

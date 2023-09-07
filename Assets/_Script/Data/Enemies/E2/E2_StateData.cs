@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "E2_StateData", menuName = "Data/Entity Data/E2 State Data")]
-public class E2_StateData : D_BaseEnemyStateData
+public class E2_StateData : BaseEnemyStateData
 {
     [Header("Movement")]
     public S_EnemyIdleState idleStateData;

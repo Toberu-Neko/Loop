@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss : Entity, IDataPersistance
+public class BossBase : Entity, IDataPersistance
 {
     [SerializeField] private string bossName;
     public override void Awake()
@@ -48,7 +48,7 @@ public class Boss : Entity, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        Debug.LogWarning("BossDataShouldn't be loaded in this function");
+        Debug.LogWarning("BossData Shouldn't be loaded in this function");
     }
 
     public void SaveData(GameData data)
