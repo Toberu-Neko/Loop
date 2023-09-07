@@ -15,7 +15,7 @@ public class CameraControlTrigger : MonoBehaviour
         {
             if (camControlObjects.swapTriggerOption == CamControlObjects.SwapTriggerOption.pan)
             {
-                CamManager.instance.PanCameraOnTrigger(camControlObjects.panDistance, camControlObjects.panTime, camControlObjects.panDirection, false);
+                CamManager.Instance.PanCameraOnTrigger(camControlObjects.panDistance, camControlObjects.panTime, camControlObjects.panDirection, false);
             }
         }
     }
@@ -28,11 +28,11 @@ public class CameraControlTrigger : MonoBehaviour
 
             if (camControlObjects.swapTriggerOption == CamControlObjects.SwapTriggerOption.swap && camControlObjects.cameraOnLeft != null && camControlObjects.cameraOnRight != null)
             {
-                CamManager.instance.SwapCamera(camControlObjects.cameraOnLeft, camControlObjects.cameraOnRight, exitDirection);
+                CamManager.Instance.SwapCamera(camControlObjects.cameraOnLeft, camControlObjects.cameraOnRight, exitDirection);
             }
             if(camControlObjects.swapTriggerOption == CamControlObjects.SwapTriggerOption.pan)
             {
-                CamManager.instance.PanCameraOnTrigger(camControlObjects.panDistance, camControlObjects.panTime, camControlObjects.panDirection, true);
+                CamManager.Instance.PanCameraOnTrigger(camControlObjects.panDistance, camControlObjects.panTime, camControlObjects.panDirection, true);
             }
         }
     }

@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class BossBase : Entity, IDataPersistance
 {
-    [SerializeField] private string bossName;
+    [field: SerializeField] public string BossName { get; private set;}
+    protected event Action OnEnterBossRoom;
     public override void Awake()
     {
         base.Awake();
@@ -28,9 +28,9 @@ public class BossBase : Entity, IDataPersistance
     {
         base.Start();
 
-        if(bossName != "")
+        if(BossName != "")
         {
-            if (DataPersistenceManager.Instance.GameData.defeatedBosses.TryGetValue(bossName, out bool defeated))
+            if (DataPersistenceManager.Instance.GameData.defeatedBosses.TryGetValue(BossName, out bool defeated))
             {
                 if (defeated)
                 {
@@ -46,6 +46,11 @@ public class BossBase : Entity, IDataPersistance
         DataPersistenceManager.Instance.SaveGame();
     }
 
+    public void HandleEnterBossRoom()
+    {
+        OnEnterBossRoom?.Invoke();
+    }
+
     public void LoadData(GameData data)
     {
         Debug.LogWarning("BossData Shouldn't be loaded in this function");
@@ -53,17 +58,17 @@ public class BossBase : Entity, IDataPersistance
 
     public void SaveData(GameData data)
     {
-        if(bossName == "")
+        if(BossName == "")
         {
             Debug.LogError("Boss name is empty, boss data not saved. Object: " + gameObject.name);
             return;
         }
 
-        if (data.defeatedBosses.ContainsKey(bossName))
+        if (data.defeatedBosses.ContainsKey(BossName))
         {
-            data.defeatedBosses.Remove(bossName);
+            data.defeatedBosses.Remove(BossName);
         }
 
-        data.defeatedBosses.Add(bossName, true);
+        data.defeatedBosses.Add(BossName, true);
     }
 }

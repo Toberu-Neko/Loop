@@ -15,9 +15,9 @@ public class EnterSceneTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if(CamManager.instance.CurrentCam != cam)
+            if(CamManager.Instance.CurrentCam != cam)
             {
-                CamManager.instance.SwitchCamera(cam);
+                CamManager.Instance.SwitchCamera(cam);
                 OnChangeSceneFinished?.Invoke();
             }
         }

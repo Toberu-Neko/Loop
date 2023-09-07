@@ -26,7 +26,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
     {
         base.AnimationActionTrigger();
 
-        CamManager.instance.CameraShake();
+        CamManager.Instance.CameraShake();
         GameObject projectile = ObjectPoolManager.SpawnObject(player.PlayerWeaponManager.SwordData.projectile, core.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
         PlayerProjectile projectileScript = projectile.GetComponent<PlayerProjectile>();
         ProjectileDetails details = weaponData.projectileDetails;

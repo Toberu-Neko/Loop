@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "E5_StateData", menuName = "Data/Entity Data/E5 Sniper")]
+[CreateAssetMenu(fileName = "E5_StateData", menuName = "Data/Entity Data/Enemies/E5 Sniper")]
 public class E5_StateData : BaseEnemyStateData
 {
     public S_EnemyIdleState idleStateData;

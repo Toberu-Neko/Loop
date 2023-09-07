@@ -43,20 +43,21 @@ public class Boss0 : BossBase
     {
         base.Awake();
 
-        stateData.idleStateData = idleStateData;
-        stateData.playerDetectedStateData = playerDetectedStateData;
-        stateData.playerDetectedMoveStateData = playerDetectedMoveStateData;
+        idleStateData = stateData.idleStateData;
+        playerDetectedStateData = stateData.playerDetectedStateData;
+        playerDetectedMoveStateData = stateData.playerDetectedMoveStateData;
+        
+        chargeStateData = stateData.chargeStateData;
+        bookmarkStateData = stateData.bookmarkStateData;
+        
+        normalAttackStateData = stateData.normalAttackStateData;
+        strongAttackStateData = stateData.strongAttackStateData;
+        multiAttackStateData = stateData.multiAttackStateData;
+        rangedAttackStateData = stateData.rangedAttackStateData;
+        
+        stunStateData = stateData.stunStateData;
+        deadStateData = stateData.deadStateData;
 
-        stateData.chargeStateData = chargeStateData;
-        stateData.bookmarkStateData = bookmarkStateData;
-
-        stateData.normalAttackStateData = normalAttackStateData;
-        stateData.strongAttackStateData = strongAttackStateData;
-        stateData.multiAttackStateData = multiAttackStateData;
-        stateData.rangedAttackStateData = rangedAttackStateData;
-
-        stateData.stunStateData = stunStateData;
-        stateData.deadStateData = deadStateData;
 
         IdleState = new B0_IdleState(this, StateMachine, "idle", idleStateData, this);
         PlayerDetectedState = new B0_PlayerDetectedState(this, StateMachine, "playerDetected", playerDetectedStateData, this);

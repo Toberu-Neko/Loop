@@ -35,7 +35,7 @@ public class PlayerAttackState : PlayerState
         isJumping = false;
         OnAttack += Combat.HandleOnAttack;
         OnAttack += player.TimeSkillManager.HandleOnAttack;
-        OnAttack += CamManager.instance.CameraShake;
+        OnAttack += CamManager.Instance.CameraShake;
     }
 
     public override void Exit()
@@ -44,7 +44,7 @@ public class PlayerAttackState : PlayerState
         Stats.SetCanChangeWeapon(true);
         OnAttack -= Combat.HandleOnAttack;
         OnAttack -= player.TimeSkillManager.HandleOnAttack;
-        OnAttack -= CamManager.instance.CameraShake;
+        OnAttack -= CamManager.Instance.CameraShake;
 
         Combat.DetectedDamageables.Clear();
         Combat.DetectedKnockbackables.Clear();

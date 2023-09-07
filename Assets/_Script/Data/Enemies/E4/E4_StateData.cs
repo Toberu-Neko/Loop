@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "E4_StateData", menuName = "Data/Entity Data/E4 Human Melee Normal")]
+[CreateAssetMenu(fileName = "E4_StateData", menuName = "Data/Entity Data/Enemies/E4 Human Melee Normal")]
 public class E4_StateData : BaseEnemyStateData
 {
     [Header("Movement")]
