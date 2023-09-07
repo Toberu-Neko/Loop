@@ -4,8 +4,6 @@ using System;
 
 public class Entity : MonoBehaviour
 {
-    private bool isDefeated;
-
     public EnemyStateMachine StateMachine { get; private set; }
     [SerializeField] private D_Entity EntityData;
 
@@ -42,8 +40,6 @@ public class Entity : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        isDefeated = false;
-
         stats.OnTimeStopStart += HandleOnTimeStop;
         stats.OnTimeStopEnd += HandleOnTimeStart;
         stats.OnTimeSlowStart += HandleTimeSlowStart;
@@ -230,7 +226,6 @@ public class Entity : MonoBehaviour
 
     private void HandleHealthZero()
     {
-        isDefeated = true;
         OnDefeated?.Invoke();
     }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CamRigister : MonoBehaviour
@@ -7,25 +5,13 @@ public class CamRigister : MonoBehaviour
     [SerializeField] private bool focusOnPlayer = true;
 
     [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
-    private Transform player;
 
-    private void Awake()
+    private void Start()
     {
-        // player = GameObject.Find("CameraFollowObject").transform;
-        player = GameObject.Find("Player/Misc/LookAt").transform;
-
-    }
-    private void OnEnable()
-    {
-        CamManager.instance.RegisterCam(cam);
-
         if (focusOnPlayer)
         {
-            cam.Follow = player;
+            cam.Follow = CamManager.Instance.PlayerLookat;
         }
-    }
-    private void OnDisable()
-    {
-        CamManager.instance.UnregisterCam(cam);
+        cam.enabled = false;
     }
 }

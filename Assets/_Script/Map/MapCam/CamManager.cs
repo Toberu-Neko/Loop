@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class CamManager : MonoBehaviour
 {
-    public static CamManager instance;
+    public static CamManager Instance { get; private set;}
 
-    private List<CinemachineVirtualCamera> cams = new();
+    // private List<CinemachineVirtualCamera> cams = new();
     public CinemachineVirtualCamera CurrentCam { get; private set; }
     private CinemachineFramingTransposer framingTransposer;
     
     private CinemachineImpulseSource impulseSource;
     [SerializeField] private float shakeForce = 1f;
+    [field: SerializeField] public Transform PlayerLookat { get; private set; }
 
     private Coroutine lerpYPanCoroutine;
     private Coroutine panCameraCoroutine;
@@ -20,9 +21,9 @@ public class CamManager : MonoBehaviour
     private Vector2 startingTrackedObjectOffset;
     private void Awake()
     {
-        if(instance == null)
+        if(Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
@@ -32,7 +33,7 @@ public class CamManager : MonoBehaviour
 
         impulseSource = GetComponent<CinemachineImpulseSource>();
     }
-
+    /*
     #region Register/Unregister Cams
     public void RegisterCam(CinemachineVirtualCamera vcam)
     {
@@ -44,7 +45,7 @@ public class CamManager : MonoBehaviour
         cams.Remove(vcam);
     }
     #endregion
-
+    */
     #region Swap/Switch Cameras
 
     public void SwitchCamera(CinemachineVirtualCamera vcam)

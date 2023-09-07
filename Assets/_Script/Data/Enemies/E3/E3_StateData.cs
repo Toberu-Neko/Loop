@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "E3_StateData", menuName = "Data/Entity Data/E3 Human Blockable Data")]
-public class E3_StateData : D_BaseEnemyStateData
+[CreateAssetMenu(fileName = "E3_StateData", menuName = "Data/Entity Data/Enemies/E3 Human Blockable Data")]
+public class E3_StateData : BaseEnemyStateData
 {
     [Header("Movement")]
     public S_EnemyIdleState idleStateData;

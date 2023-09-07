@@ -23,7 +23,7 @@ public class Enemy2 : Entity
     private S_EnemyLookForPlayerState lookForPlayerStateData;
     private S_EnemyStunState stunStateData;
     private S_EnemyDeadState deadStateData;
-    [HideInInspector] public S_EnemyDodgeState DodgeStateData;
+    private S_EnemyDodgeState dodgeStateData;
     private S_EnemyRangedAttackState rangedAttackStateData;
 
     [SerializeField] private Transform meleeAttackPosition;
@@ -40,7 +40,7 @@ public class Enemy2 : Entity
         lookForPlayerStateData = stateData.lookForPlayerStateData;
         stunStateData = stateData.stunStateData;
         deadStateData = stateData.deadStateData;
-        DodgeStateData = stateData.dodgeStateData;
+        dodgeStateData = stateData.dodgeStateData;
         rangedAttackStateData = stateData.rangedAttackStateData;
 
         IdleState = new E2_IdleState(this, StateMachine, "idle", idleStateData, this);
@@ -50,7 +50,7 @@ public class Enemy2 : Entity
         LookForPlayerState = new E2_LookForPlayerState(this, StateMachine, "idle", lookForPlayerStateData, this);
         StunState = new E2_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new E2_DeadState(this, StateMachine, "dead", deadStateData, this);
-        DodgeState = new E2_DodgeState(this, StateMachine, "dodge", DodgeStateData, this);
+        DodgeState = new E2_DodgeState(this, StateMachine, "dodge", dodgeStateData, this);
         RangedAttackState = new E2_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
 
     }
@@ -77,6 +77,7 @@ public class Enemy2 : Entity
         stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
+
     private void HandlePoiseZero()
     {
         if (stats.Health.CurrentValue <= 0)

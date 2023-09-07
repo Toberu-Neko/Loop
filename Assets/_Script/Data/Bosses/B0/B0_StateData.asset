@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f0bf0e282829241acfaeb7ff72510a, type: 3}
+  m_Name: B0_StateData
+  m_EditorClassIdentifier: 
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  idleStateData:
+    minIdleTime: 1
+    maxIdleTime: 3
+  playerDetectedStateData:
+    delayTime: 1
+  playerDetectedMoveStateData:
+    movementSpeed: 5
+  chargeStateData:
+    chargeCooldown: 2
+    finishChargeDelay: 1
+    chargeSpeed: 6
+    chargeTime: 2
+  normalAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 128
+    attackRadius: 0.5
+    attackDamage: 10
+    staminaAttackDamage: 3
+    attackCooldown: 1
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 10
+  strongAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 128
+    attackRadius: 0.5
+    attackDamage: 10
+    staminaAttackDamage: 3
+    attackCooldown: 1
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 10
+  multiAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 128
+    attackRadius: 0.5
+    attackDamage: 10
+    staminaAttackDamage: 3
+    attackCooldown: 1
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 10
+  rangedAttackStateData:
+    whatIsPlayer:
+      serializedVersion: 2
+      m_Bits: 128
+    projectile: {fileID: 8389792333474829002, guid: 8aa97abbe02d62a449913c9a7fa475a7, type: 3}
+    projectileDetails:
+      damageAmount: 10
+      staminaDamageAmount: 2
+      speed: 20
+      duration: 0
+      knockbackStrength: 12
+      knockbackAngle: {x: 1, y: 1}
+    projectileLifeTime: 8
+    rangedAttackRadius: 0.5
+  stunStateData:
+    stunTime: 3
+    stunKnockbackSpeed: 8
+    stunKnockbackAngle: {x: 1, y: 1}
+  deadStateData:
+    deathChunkParticle: {fileID: 514008935881032697, guid: 2b7e98a56000226409b0277c751f3f30, type: 3}
+    deathBloodParticle: {fileID: 2615349222246815121, guid: db18ab1de83847b4fa75fa59ee0730ce, type: 3}

@@ -17,7 +17,7 @@ public class E2_PlayerDetectedState : PlayerDetectedState
 
         if (performCloseRangeAction)
         {
-            if(Time.time >= enemy.DodgeState.StartTime + enemy.DodgeStateData.dodgeCooldown)
+            if(enemy.DodgeState.CheckCanDodge())
             {
                 stateMachine.ChangeState(enemy.DodgeState);
             }
