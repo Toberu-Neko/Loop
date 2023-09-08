@@ -7,4 +7,11 @@ public class B0_PlayerDetectedState : PlayerDetectedState
     {
         this.boss = boss;
     }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        stateMachine.ChangeState(boss.PlayerDetectedMoveState);
+    }
 }

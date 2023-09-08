@@ -198,13 +198,11 @@ public class Player : MonoBehaviour
     #region Change Scene
     private void HandleChangeSceneToUp()
     {
-        //TODO: Make transition
         ChangeSceneState.SetFacingDirection(0);
         StateMachine.ChangeState(ChangeSceneState);
     }
     private void HandleChangeSceneToDown()
     {
-        //TODO: Make transition
         ChangeSceneState.SetFacingDirection(0);
         StateMachine.ChangeState(ChangeSceneState);
     }

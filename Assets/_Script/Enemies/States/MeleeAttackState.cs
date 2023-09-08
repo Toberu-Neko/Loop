@@ -5,21 +5,20 @@ using UnityEngine;
 public class MeleeAttackState : AttackState
 {
     protected S_EnemyMeleeAttackState stateData;
-    private float startTime;
 
     public MeleeAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
     }
-    public override void Enter()
+
+    public override void Exit()
     {
-        base.Enter();
-        startTime = Time.time;
+        base.Exit();
     }
 
     public bool CheckCanAttack()
     {
-        return Time.time >= startTime + stateData.attackCooldown;
+        return Time.time >= EndTime + stateData.attackCooldown || EndTime == 0;
     }
 
     public override void AnimationActionTrigger()

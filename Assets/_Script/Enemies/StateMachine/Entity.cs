@@ -6,9 +6,10 @@ public class Entity : MonoBehaviour
 {
     public EnemyStateMachine StateMachine { get; private set; }
     [SerializeField] private D_Entity EntityData;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     public Core Core { get; private set; }
-    private Movement movement;
+    protected Movement movement;
     protected Stats stats;
     private Combat combat;
     private CollisionSenses collisionSenses;
@@ -227,6 +228,11 @@ public class Entity : MonoBehaviour
     private void HandleHealthZero()
     {
         OnDefeated?.Invoke();
+    }
+
+    public Sprite GetCurrentSprite()
+    {
+        return spriteRenderer.sprite;
     }
 
     /*

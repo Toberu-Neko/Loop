@@ -9,4 +9,11 @@ public class B0_DeadState : DeadState
     {
         this.boss = boss;
     }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        Death.Die();
+    }
 }

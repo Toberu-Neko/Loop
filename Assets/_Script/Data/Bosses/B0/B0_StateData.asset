@@ -19,48 +19,51 @@ MonoBehaviour:
     minIdleTime: 1
     maxIdleTime: 3
   playerDetectedStateData:
-    delayTime: 1
+    delayTime: 2
   playerDetectedMoveStateData:
-    movementSpeed: 5
+    movementSpeed: 3
   chargeStateData:
-    chargeCooldown: 2
+    chargeCooldown: 15
     finishChargeDelay: 1
-    chargeSpeed: 6
+    chargeSpeed: 12
     chargeTime: 2
+  bookmarkStateData:
+    bookmarkPrefab: {fileID: 3712972217386022016, guid: b8ad57edcd138a9438af90482bfb8b38, type: 3}
   normalAttackStateData:
     whatIsPlayer:
       serializedVersion: 2
       m_Bits: 128
-    attackRadius: 0.5
+    attackRadius: 1
     attackDamage: 10
     staminaAttackDamage: 3
-    attackCooldown: 1
+    attackCooldown: 2
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 10
   strongAttackStateData:
     whatIsPlayer:
       serializedVersion: 2
       m_Bits: 128
-    attackRadius: 0.5
+    attackRadius: 1
     attackDamage: 10
     staminaAttackDamage: 3
-    attackCooldown: 1
+    attackCooldown: 2
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 10
   multiAttackStateData:
     whatIsPlayer:
       serializedVersion: 2
       m_Bits: 128
-    attackRadius: 0.5
+    attackRadius: 1
     attackDamage: 10
     staminaAttackDamage: 3
-    attackCooldown: 1
-    knockbackAngle: {x: 1, y: 1}
-    knockbackStrength: 10
+    attackCooldown: 10
+    knockbackAngle: {x: 0, y: 1}
+    knockbackStrength: 8
   rangedAttackStateData:
     whatIsPlayer:
       serializedVersion: 2
       m_Bits: 128
+    attackCooldown: 10
     projectile: {fileID: 8389792333474829002, guid: 8aa97abbe02d62a449913c9a7fa475a7, type: 3}
     projectileDetails:
       damageAmount: 10

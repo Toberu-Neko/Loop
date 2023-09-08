@@ -11,9 +11,9 @@ public class Boss0 : BossBase
     public B0_ChargeState ChargeState { get; private set; }
     public B0_BookmarkState BookmarkState { get; private set; }
 
-    public B0_MeleeAttackState NormalAttackState { get; private set; }
-    public B0_MeleeAttackState StrongAttackState { get; private set; }
-    public B0_MeleeAttackState MultiAttackState { get; private set; }
+    public B0_NormalAttackState NormalAttackState { get; private set; }
+    public B0_StrongAttackState StrongAttackState { get; private set; }
+    public B0_MultiAttackState MultiAttackState { get; private set; }
     public B0_RangedAttackState RangedAttackState { get; private set; }
 
     public B0_StunState StunState { get; private set; }
@@ -66,9 +66,9 @@ public class Boss0 : BossBase
         ChargeState = new B0_ChargeState(this, StateMachine, "charge", chargeStateData, this);
         BookmarkState = new B0_BookmarkState(this, StateMachine, "bookmark", bookmarkStateData, this);
 
-        NormalAttackState = new B0_MeleeAttackState(this, StateMachine, "normalAttack", meleeAttackPosition, normalAttackStateData, this);
-        StrongAttackState = new B0_MeleeAttackState(this, StateMachine, "strongAttack", meleeAttackPosition, strongAttackStateData, this);
-        MultiAttackState = new B0_MeleeAttackState(this, StateMachine, "multiAttack", meleeAttackPosition, multiAttackStateData, this);
+        NormalAttackState = new B0_NormalAttackState(this, StateMachine, "normalAttack", meleeAttackPosition, normalAttackStateData, this);
+        StrongAttackState = new B0_StrongAttackState(this, StateMachine, "strongAttack", meleeAttackPosition, strongAttackStateData, this);
+        MultiAttackState = new B0_MultiAttackState(this, StateMachine, "multiAttack", meleeAttackPosition, multiAttackStateData, this);
         RangedAttackState = new B0_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
 
         StunState = new B0_StunState(this, StateMachine, "stun", stunStateData, this);
@@ -88,6 +88,7 @@ public class Boss0 : BossBase
 
         stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         stats.Health.OnCurrentValueZero += HandleHealthZero;
+        OnEnterBossRoom += HandleEnterBossRoom;
     }
 
     protected override void OnDisable()
@@ -98,6 +99,7 @@ public class Boss0 : BossBase
 
         stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
+        OnEnterBossRoom -= HandleEnterBossRoom;
     }
 
     private void HandlePoiseZero()
@@ -109,4 +111,21 @@ public class Boss0 : BossBase
     }
 
     private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
+
+    private new void HandleEnterBossRoom()
+    {
+        StateMachine.ChangeState(PlayerDetectedState);
+    }
+
+    public override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        Gizmos.color = Color.red;
+
+        if (normalAttackStateData != null)
+        {
+            Gizmos.DrawWireSphere(meleeAttackPosition.position, normalAttackStateData.attackRadius);
+        }
+    }
+
 }

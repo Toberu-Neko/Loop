@@ -52,11 +52,6 @@ public class SnipingState : AttackState
         drawWire.ClearPoints();
     }
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -153,5 +148,10 @@ public class SnipingState : AttackState
     {
         base.AnimationActionTrigger();
         Shoot();
+    }
+
+    public bool CheckCanAttack()
+    {
+        return Time.time >= lastShootTime + stateData.reloadTime || EndTime == 0f;
     }
 }

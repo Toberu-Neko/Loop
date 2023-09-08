@@ -39,7 +39,6 @@ public class BossRoomTrigger : MonoBehaviour
             if (!defeated)
             {
                 bossRoomDoor.SetActive(true);
-                // TODO: Change camera
                 CamManager.Instance.SwitchCamera(bossCamera);
                 boss.HandleEnterBossRoom();
 

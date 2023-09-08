@@ -7,4 +7,20 @@ public class B0_ChargeState : ChargeState
     {
         this.boss = boss;
     }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (performCloseRangeAction)
+        {
+            stateMachine.ChangeState(boss.StrongAttackState);
+        }
+        else if (StartTime + stateData.chargeTime < Time.time)
+        {
+            // TODO: what if player is not in range?
+            stateMachine.ChangeState(boss.StrongAttackState);
+        }
+    }
+
 }

@@ -38,6 +38,7 @@ public class S_EnemyRangedAttackState
 {
     [HideInInspector] public LayerMask whatIsPlayer;
 
+    public float attackCooldown = 1f;
     public GameObject projectile;
     public ProjectileDetails projectileDetails;
 
@@ -78,6 +79,8 @@ public class S_EnemySnipingState
 {
     public LayerMask whatIsGround;
     public GameObject bulletPrefab;
+
+    public float cooldown = 0f;
     public float aimTime = 1.2f;
     public float freazeTime = 0.8f;
     public float reloadTime = 2f;
@@ -87,6 +90,7 @@ public class S_EnemySnipingState
     public Gradient lockColor;
 
     public ProjectileDetails bulletDetails;
+
 }
 
 [Serializable]
@@ -153,5 +157,5 @@ public class S_EnemyShieldMoveState
 [Serializable]
 public class S_EnemyBookmarkState
 {
-
+    public GameObject bookmarkPrefab;
 }

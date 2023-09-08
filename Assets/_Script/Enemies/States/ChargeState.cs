@@ -12,12 +12,8 @@ public class ChargeState : EnemyState
     protected bool isChargeTimeOver;
     protected bool gotoNextState;
     protected bool performCloseRangeAction;
-
-    private float startTime;
-    private bool firstCharge;
     public ChargeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData) : base(entity, stateMachine, animBoolName)
     {
-        firstCharge = true;
         this.stateData = stateData;
     }
 
@@ -35,8 +31,6 @@ public class ChargeState : EnemyState
     public override void Enter()
     {
         base.Enter();
-
-        startTime = Time.time;
 
         Movement.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
         isChargeTimeOver = false;
@@ -75,12 +69,6 @@ public class ChargeState : EnemyState
 
     public bool CheckCanCharge()
     {
-        if (firstCharge)
-        {
-            firstCharge = false;
-            return true;
-        }
-
-        return Time.time >= startTime + stateData.chargeCooldown;
+        return Time.time > EndTime + stateData.chargeCooldown || EndTime == 0;
     }
 }

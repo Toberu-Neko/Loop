@@ -9,4 +9,14 @@ public class B0_StunState : StunState
     {
         this.boss = boss;
     }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if(isStunTimeOver)
+        {
+            stateMachine.ChangeState(boss.PlayerDetectedMoveState);
+        }
+    }
 }

@@ -9,7 +9,9 @@ public class EnemyState
 
 
     protected bool isAnimationFinished;
+
     public float StartTime { get; protected set;}
+    public float EndTime { get; protected set;}
 
     protected string animBoolName;
 
@@ -38,6 +40,7 @@ public class EnemyState
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
         core = entity.Core;
+        EndTime = 0;
     }
 
     public virtual void Enter()
@@ -49,6 +52,7 @@ public class EnemyState
     }
     public virtual void Exit()
     {
+        EndTime = Time.time;
         entity.Anim.SetBool(animBoolName, false);
     }
     public virtual void AnimationFinishTrigger()
@@ -58,16 +62,13 @@ public class EnemyState
 
     public virtual void LogicUpdate()
     {
+        Timer(StartTime);
+        Timer(EndTime);
+
         if (Stats.IsTimeStopped)
         {
-            StartTime += Time.deltaTime;
             Movement.SetVelocityZero();
             return;
-        }
-
-        if (Stats.IsTimeSlowed)
-        {
-            StartTime += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
         }
     }
 
@@ -76,7 +77,6 @@ public class EnemyState
         if (Stats.IsTimeStopped)
         {
             timer += Time.deltaTime;
-            Movement.SetVelocityZero();
             return timer;
         }
 
@@ -91,4 +91,9 @@ public class EnemyState
     public virtual void PhysicsUpdate(){ }
     public virtual void DoChecks(){ }
     public virtual void AnimationActionTrigger() { }
+
+    public float ReturnHealthPercentage()
+    {
+        return Stats.Health.CurrentValue / Stats.Health.MaxValue;
+    }
 }

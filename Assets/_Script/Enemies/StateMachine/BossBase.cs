@@ -5,6 +5,7 @@ public class BossBase : Entity, IDataPersistance
 {
     [field: SerializeField] public string BossName { get; private set;}
     protected event Action OnEnterBossRoom;
+    [SerializeField, Range(-1,1), Tooltip("1R, -1L")] private int initFacingPos = 1;
     public override void Awake()
     {
         base.Awake();
@@ -27,14 +28,15 @@ public class BossBase : Entity, IDataPersistance
     protected override void Start()
     {
         base.Start();
-
+        
+        movement.CheckIfShouldFlip(initFacingPos);
         if(BossName != "")
         {
             if (DataPersistenceManager.Instance.GameData.defeatedBosses.TryGetValue(BossName, out bool defeated))
             {
                 if (defeated)
                 {
-                    //TODO: Spawn a chest or something
+                    //TODO: Spawn a opened chest or something
                     gameObject.SetActive(false);
                 }
             }
