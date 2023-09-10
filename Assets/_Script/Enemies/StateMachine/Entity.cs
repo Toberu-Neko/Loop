@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour
 
     public Core Core { get; private set; }
     protected Movement movement;
-    protected Stats stats;
+    public Stats Stats { get; private set; }
     private Combat combat;
     private CollisionSenses collisionSenses;
 
@@ -27,7 +27,7 @@ public class Entity : MonoBehaviour
         Core = GetComponentInChildren<Core>();
 
         movement = Core.GetCoreComponent<Movement>();
-        stats = Core.GetCoreComponent<Stats>();
+        Stats = Core.GetCoreComponent<Stats>();
         combat = Core.GetCoreComponent<Combat>();
         collisionSenses = Core.GetCoreComponent<CollisionSenses>();
 
@@ -41,14 +41,14 @@ public class Entity : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        stats.OnTimeStopStart += HandleOnTimeStop;
-        stats.OnTimeStopEnd += HandleOnTimeStart;
-        stats.OnTimeSlowStart += HandleTimeSlowStart;
-        stats.OnTimeSlowEnd += HandleTimeSlowEnd;
-        stats.Health.OnCurrentValueZero += HandleHealthZero;
+        Stats.OnTimeStopStart += HandleOnTimeStop;
+        Stats.OnTimeStopEnd += HandleOnTimeStart;
+        Stats.OnTimeSlowStart += HandleTimeSlowStart;
+        Stats.OnTimeSlowEnd += HandleTimeSlowEnd;
+        Stats.Health.OnCurrentValueZero += HandleHealthZero;
 
-        stats.Health.Init();
-        stats.Stamina.Init();
+        Stats.Health.Init();
+        Stats.Stamina.Init();
     }
 
     protected virtual void Start()
@@ -58,11 +58,11 @@ public class Entity : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        stats.OnTimeStopStart -= HandleOnTimeStop;
-        stats.OnTimeStopEnd -= HandleOnTimeStart;
-        stats.OnTimeSlowStart -= HandleTimeSlowStart;
-        stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
-        stats.Health.OnCurrentValueZero -= HandleHealthZero;
+        Stats.OnTimeStopStart -= HandleOnTimeStop;
+        Stats.OnTimeStopEnd -= HandleOnTimeStart;
+        Stats.OnTimeSlowStart -= HandleTimeSlowStart;
+        Stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
+        Stats.Health.OnCurrentValueZero -= HandleHealthZero;
 
         Anim.speed = 1f;
     }
@@ -156,7 +156,7 @@ public class Entity : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player") && stats.Health.CurrentValue > 0f)
+        if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
         {
             int direction;
             if (collision.gameObject.transform.position.x > GetPosition().x)
@@ -190,7 +190,7 @@ public class Entity : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player") && stats.Health.CurrentValue > 0f)
+        if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
         {
             int direction;
             if (collision.gameObject.transform.position.x > GetPosition().x)

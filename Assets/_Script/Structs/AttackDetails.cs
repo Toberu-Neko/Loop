@@ -13,7 +13,7 @@ public struct WeaponAttackDetails
     [Tooltip("攻擊時的移動速度, 有些攻擊不會有")]
     public float movementSpeed;
     [Tooltip("擊退力道")]
-    [Range(8, 50)]
+    [Range(0, 30)]
     public float knockbackForce;
     [Tooltip("擊退角度")]
     public Vector2 knockbackAngle;

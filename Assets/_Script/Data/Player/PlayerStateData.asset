@@ -15,15 +15,16 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 2048
+  gravityScale: 5
   movementVelocity: 10
   jumpVelocity: 16
   amountOfJumps: 2
   maxJumpTime: 0.25
-  blockMovementMultiplier: 0.5
-  perfectBlockTime: 0.8
+  blockMovementMultiplier: 0.2
+  perfectBlockTime: 0.4
   blockCooldown: 0.6
   perfectBlockKnockbackRadius: 2.5
-  perfectBlockKnockbackForce: 15
+  perfectBlockKnockbackForce: 8
   perfectBlockKnockbackAngle: {x: 1, y: 1.5}
   wallJumpVelocity: 20
   wallJumpTime: 0.3
@@ -40,8 +41,8 @@ MonoBehaviour:
   dashCooldown: 0.5
   maxHoldTime: 2
   holdTimeScale: 0.25
-  dashTime: 0.2
-  dashVelocity: 30
+  dashTime: 0.25
+  dashVelocity: 23
   drag: 10
   dashEndYMultiplier: 0.2
   distanceBetweenAfterImages: 0.5

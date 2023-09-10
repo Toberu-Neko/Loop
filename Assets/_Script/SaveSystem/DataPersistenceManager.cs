@@ -22,7 +22,7 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private SceneReference mainMenuScene;
 
     public GameData GameData { get; private set;}
-    private List<IDataPersistance> dataPersistanceObjects;
+    public List<IDataPersistance> DataPersistanceObjects { get; private set; }
     private FileDataHandler dataHandler;
 
     private string selectedProfileId = "";
@@ -51,7 +51,8 @@ public class DataPersistenceManager : MonoBehaviour
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();
 
-        if(DisableDataPersistance)
+
+        if (DisableDataPersistance)
         {
             Debug.LogError("Data persistance is disabled, this should only be used for debugging.");
             GameData = new GameData();
@@ -81,12 +82,19 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        DataPersistanceObjects = FindAllDataPersistenceObjects();
         // TODO: Load when enter boss room
-        dataPersistanceObjects = FindAllDataPersistenceObjects();
-        if(scene.name == baseScene.Name)
+        if (scene.name == baseScene.Name)
         {
             LoadGame();
         }
+    }
+
+    public void AddDataPersistenceObj(IDataPersistance obj)
+    {
+        Debug.Log(DataPersistanceObjects.Count);
+        DataPersistanceObjects.Add(obj);
+        Debug.Log(DataPersistanceObjects.Count);
     }
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()
@@ -133,7 +141,7 @@ public class DataPersistenceManager : MonoBehaviour
             }
         }
 
-        foreach (IDataPersistance dataPersistanceObject in dataPersistanceObjects)
+        foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
         {
             dataPersistanceObject.LoadData(GameData);
         }
@@ -144,7 +152,7 @@ public class DataPersistenceManager : MonoBehaviour
         Debug.Log("Save");
         if (DisableDataPersistance)
         {
-            return;
+           // return;
         }
 
         if (GameData == null)
@@ -153,7 +161,7 @@ public class DataPersistenceManager : MonoBehaviour
             return;
         }
 
-        foreach (IDataPersistance dataPersistanceObject in dataPersistanceObjects)
+        foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
         {
             dataPersistanceObject.SaveData(GameData);
         }

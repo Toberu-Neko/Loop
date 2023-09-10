@@ -28,7 +28,7 @@ public class BossBase : Entity, IDataPersistance
     protected override void Start()
     {
         base.Start();
-        
+
         movement.CheckIfShouldFlip(initFacingPos);
         if(BossName != "")
         {
@@ -37,9 +37,12 @@ public class BossBase : Entity, IDataPersistance
                 if (defeated)
                 {
                     //TODO: Spawn a opened chest or something
+                    Debug.Log(gameObject.name);
                     gameObject.SetActive(false);
                 }
             }
+
+            DataPersistenceManager.Instance.AddDataPersistenceObj(this);
         }
     }
 
@@ -72,5 +75,6 @@ public class BossBase : Entity, IDataPersistance
         }
 
         data.defeatedBosses.Add(BossName, true);
+        Debug.Log(BossName + " defeated, saved. Result: " + data.defeatedBosses[BossName]);
     }
 }

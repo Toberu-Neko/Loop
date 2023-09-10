@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class E2_RangedAttackState : RangedAttackStraightState
+public class E2_RangedAttackState : RangedAttackState
 {
     private Enemy2 enemy;
     public E2_RangedAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyRangedAttackState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, attackPosition, stateData)

@@ -58,13 +58,11 @@ public class CheckPlayerSenses : CoreComponent
     {
         if (playerMinAgroCheck && playerMaxAgroCheck && playerCloseRangeCheck)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.black;
             Gizmos.DrawWireCube(playerMinAgroCheck.position, minAgroV2);
 
-            Gizmos.color = Color.green;
             Gizmos.DrawWireCube(playerMaxAgroCheck.position, maxAgroV2);
 
-            Gizmos.color = Color.blue;
             Gizmos.DrawWireCube(playerCloseRangeCheck.position, closeRangeActionV2);
 
         }

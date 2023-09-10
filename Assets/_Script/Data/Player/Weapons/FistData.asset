@@ -19,16 +19,16 @@ MonoBehaviour:
     damageAmount: 8
     staminaDamageAmount: 1
     movementSpeed: 3
-    knockbackForce: 10
+    knockbackForce: 0
     knockbackAngle: {x: 1, y: 0.2}
   - attackName: "\u91CD"
     damageAmount: 12
     staminaDamageAmount: 2
     movementSpeed: 3
-    knockbackForce: 15
+    knockbackForce: 5
     knockbackAngle: {x: 0.5, y: 1}
-  strongAttackHoldTime: 1
-  everySoulAddtionalHoldTime: 1
+  strongAttackHoldTime: 0.5
+  everySoulAddtionalHoldTime: 0.5
   soulAttackDetails:
   - attackName: "\u666E\u901A\u7684\u84C4\u529B"
     damageAmount: 3
@@ -60,10 +60,3 @@ MonoBehaviour:
     movementSpeed: 10
     knockbackForce: 20
     knockbackAngle: {x: 2, y: 0.3}
-  skillAttackDetails:
-    attackName: 
-    damageAmount: 0
-    staminaDamageAmount: 0
-    movementSpeed: 0
-    knockbackForce: 0
-    knockbackAngle: {x: 0, y: 0}
