@@ -37,12 +37,11 @@ public class BossBase : Entity, IDataPersistance
                 if (defeated)
                 {
                     //TODO: Spawn a opened chest or something
-                    Debug.Log(gameObject.name);
                     gameObject.SetActive(false);
                 }
             }
 
-            DataPersistenceManager.Instance.AddDataPersistenceObj(this);
+            // DataPersistenceManager.Instance.AddDataPersistenceObj(this);
         }
     }
 
