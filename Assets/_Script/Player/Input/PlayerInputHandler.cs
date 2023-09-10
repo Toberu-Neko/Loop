@@ -231,6 +231,11 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
+    public void UseChangeWeapon2()
+    {
+        ChangeWeapon2 = false;
+    }
+
     public void OnChangeWeapon3Input(InputAction.CallbackContext context)
     {
         if (gameManager.IsPaused)

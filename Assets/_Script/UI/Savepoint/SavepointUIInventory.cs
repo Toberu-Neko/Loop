@@ -34,8 +34,8 @@ public class SavepointUIInventory : MonoBehaviour
 
     public void OnClickBackButton()
     {
-        DeactiveMenu();
-        savepointUIMain.ActiveMenu();
+        Deactivate();
+        savepointUIMain.ActivateMenu();
     }
 
     public void ActiveMenu()
@@ -44,7 +44,7 @@ public class SavepointUIInventory : MonoBehaviour
         UpdateInventory();
     }
 
-    public void DeactiveMenu()
+    public void Deactivate()
     {
         gameObject.SetActive(false);
 

@@ -61,7 +61,7 @@ public class DataPersistenceManager : MonoBehaviour
         if (overwriteSelectedProfile)
         {
             selectedProfileId = selectedProfileIdDebug;
-            Debug.LogWarning("Overwriting selected profile id: " + selectedProfileId + ", this should only be used for debugging.");
+            Debug.LogError("Overwriting selected profile id: " + selectedProfileId + ", this should only be used for debugging.");
         }
     }
 
@@ -91,10 +91,8 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     public void AddDataPersistenceObj(IDataPersistance obj)
-    {
-        Debug.Log(DataPersistanceObjects.Count);
+    { 
         DataPersistanceObjects.Add(obj);
-        Debug.Log(DataPersistanceObjects.Count);
     }
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()
@@ -108,6 +106,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         GameData = new GameData();
         SaveGame();
+        LoadGame();
         Debug.Log("Creating new game");
     }
 
@@ -152,7 +151,7 @@ public class DataPersistenceManager : MonoBehaviour
         Debug.Log("Save");
         if (DisableDataPersistance)
         {
-           // return;
+           return;
         }
 
         if (GameData == null)

@@ -105,12 +105,12 @@ public class PlayerInAirState : PlayerState
         CheckJumpMultiplier();
 
         #region Sword
-        if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword &&
+        if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Sword &&
                     player.SwordHubState.CheckIfCanAttack() && Stats.Attackable)
         {
             stateMachine.ChangeState(player.SwordHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Sword
             && player.SwordHubState.CheckIfCanAttack() &&
             player.PlayerWeaponManager.SwordCurrentEnergy > 0 &&
             Stats.PerfectBlockAttackable &&
@@ -119,7 +119,7 @@ public class PlayerInAirState : PlayerState
             player.SwordHubState.SetCanAttackFalse();
             stateMachine.ChangeState(player.SwordSoulOneAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Sword &&
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Sword &&
             player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0
             && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy && Stats.Attackable)
         {
@@ -129,22 +129,22 @@ public class PlayerInAirState : PlayerState
         #endregion
 
         #region Gun
-        else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Gun && Stats.Attackable)
         {
             stateMachine.ChangeState(player.GunNormalAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Gun && Stats.Attackable)
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Gun && Stats.Attackable)
         {
             stateMachine.ChangeState(player.GunChargeAttackState);
         }
         #endregion
 
         #region Fist
-        else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Fist && Stats.Attackable)
         {
             stateMachine.ChangeState(player.FistHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist &&
+        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Fist &&
             player.PlayerWeaponManager.FistCurrentEnergy == player.PlayerWeaponManager.FistData.maxEnergy && Stats.Attackable)
         {
             player.FistSoulAttackState.SetStaticAttack(false);
@@ -152,7 +152,7 @@ public class PlayerInAirState : PlayerState
             player.FistSoulAttackState.SetSoulAmount(player.PlayerWeaponManager.FistData.maxEnergy - 1);
             stateMachine.ChangeState(player.FistSoulAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && player.PlayerWeaponManager.CurrentWeaponType == PlayerWeaponType.Fist &&
+        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Fist &&
             player.PlayerWeaponManager.FistCurrentEnergy == player.PlayerWeaponManager.FistData.maxEnergy && Stats.Attackable)
         {
             player.FistSoulAttackState.SetStaticAttack(true);

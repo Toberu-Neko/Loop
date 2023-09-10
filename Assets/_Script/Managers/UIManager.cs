@@ -164,7 +164,7 @@ public class UI_Manager : MonoBehaviour
 
     public void HandleSavePointInteraction(string savePointName, string sceneName)
     {
-        savepointUIMain.ActiveMenu(true);
+        savepointUIMain.ActivateMenu(true);
         savepointUIMain.SetSavepointNameText(savePointName);
 
         gameManager.SavePointInteracted();

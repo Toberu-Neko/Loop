@@ -64,12 +64,12 @@ public class PlayerGroundedState : PlayerState
         dashInput = player.InputHandler.DashInput;
 
         #region Sword
-        if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling && 
+        if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling && 
             player.SwordHubState.CheckIfCanAttack() && Stats.Attackable)
         {
             stateMachine.ChangeState(player.SwordHubState);
         }
-        else if(player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling 
+        else if(player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling 
             && player.SwordHubState.CheckIfCanAttack() && 
             weaponManager.SwordCurrentEnergy > 0 &&
             Stats.PerfectBlockAttackable && 
@@ -78,7 +78,7 @@ public class PlayerGroundedState : PlayerState
             player.SwordHubState.SetCanAttackFalse();
             stateMachine.ChangeState(player.SwordSoulOneAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == PlayerWeaponType.Sword && !isTouchingCeiling &&
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling &&
             player.SwordHubState.CheckIfCanAttack() && weaponManager.SwordCurrentEnergy > 0
             && weaponManager.SwordCurrentEnergy == weaponManager.SwordData.maxEnergy && Stats.Attackable)
         {
@@ -88,29 +88,29 @@ public class PlayerGroundedState : PlayerState
         #endregion
 
         #region Gun
-        else if(player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == PlayerWeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
+        else if(player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
         {
             stateMachine.ChangeState(player.GunNormalAttackState);
         }
-        else if(player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == PlayerWeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
+        else if(player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
         {
             stateMachine.ChangeState(player.GunChargeAttackState);
         }
         #endregion
 
         #region Fist
-        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == PlayerWeaponType.Fist && !isTouchingCeiling && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && Stats.Attackable)
         {
             stateMachine.ChangeState(player.FistHubState);
         }
-        else if(player.InputHandler.WeaponSkillInput && yInput >= 0 && weaponManager.CurrentWeaponType == PlayerWeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy && Stats.Attackable)
+        else if(player.InputHandler.WeaponSkillInput && yInput >= 0 && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy && Stats.Attackable)
         {
             player.FistSoulAttackState.SetStaticAttack(false);
             weaponManager.ClearCurrentEnergy();
             player.FistSoulAttackState.SetSoulAmount(weaponManager.FistData.maxEnergy - 1);
             stateMachine.ChangeState(player.FistSoulAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && weaponManager.CurrentWeaponType == PlayerWeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy && Stats.Attackable)
+        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy && Stats.Attackable)
         {
             player.FistSoulAttackState.SetStaticAttack(true);
             weaponManager.ClearCurrentEnergy();

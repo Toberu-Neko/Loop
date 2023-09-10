@@ -3,18 +3,12 @@ using UnityEngine;
 public class PauseUIMain : MonoBehaviour
 {
     [SerializeField] private GameObject pauseUIObj;
-    [SerializeField] private PauseUIChangeSkill pauseUIChangeSkill;
 
     public void OnClickResumeButton()
     {
         DeactiveAllMenu();
     }
 
-    public void OnClickChangeSkillButton()
-    {
-        pauseUIChangeSkill.Activate();
-        DeactivateMenu();
-    }
 
     public void OnClickGoToPreviousSavepoint()
     {
@@ -47,7 +41,6 @@ public class PauseUIMain : MonoBehaviour
     {
         GameManager.Instance.ResumeGame();
         pauseUIObj.SetActive(false);
-        pauseUIChangeSkill.Deactivate();
         DeactivateMenu();
     }
 
