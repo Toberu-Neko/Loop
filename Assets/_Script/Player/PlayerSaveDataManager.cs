@@ -33,11 +33,8 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 
         data.savepoints.TryGetValue(data.lastInteractedSavepoint, out SavepointDetails details);
 
-        Debug.Log("Load player position " + data.lastInteractedSavepoint);
-
         if (details != null)
         {
-            Debug.Log("Teleport player to " + details.teleportPosition);
             transform.position = details.teleportPosition;
         }
     }

@@ -32,8 +32,6 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         else
             Destroy(gameObject);
 
-        Inventory = new();
-        equipedItems = new();
         SwordMultiplier = new();
         GunMultiplier = new();
         FistMultiplier = new();
@@ -110,7 +108,10 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        if(data.equipedWeapon.Length == 0)
+        Inventory = new();
+        equipedItems = new();
+
+        if (data.equipedWeapon.Length == 0)
         {
             EquipedWeapon = new WeaponType[2];
             EquipedWeapon[0] = WeaponType.Sword;
@@ -120,14 +121,18 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             EquipedWeapon = data.equipedWeapon;
         }
-        Debug.Log("Load Player Inventory Data" + EquipedWeapon.Length);
+        Debug.Log("LoadData in inventorymanager = inventory: " + Inventory.Count + "& data: " + data.inventory.Count);
         Inventory = data.inventory;
     }
 
     public void SaveData(GameData data)
     {
-        data.inventory = Inventory;
-        data.equipedWeapon = EquipedWeapon;
+        if (Inventory != null && EquipedWeapon != null)
+        {
+            data.inventory = Inventory;
+            data.equipedWeapon = EquipedWeapon;
+            Debug.Log("SaveData in inventorymanager = " + data.inventory.Count);
+        }
     }
 }
 

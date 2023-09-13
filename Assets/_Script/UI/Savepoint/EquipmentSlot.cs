@@ -56,6 +56,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
 
     public void SaveData(GameData data)
     {
+        // Debug.Log("SaveSlot" + data.equipedItems.Count);
         if(data.equipedItems.ContainsKey(equipmentType.ToString() + slotIndex))
         {
             data.equipedItems.Remove(equipmentType.ToString() + slotIndex);
@@ -69,6 +70,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
 
     public void LoadData(GameData data)
     {
+        // Debug.Log("LoadSlot: " + data.equipedItems.Count);
         if(data.equipedItems.ContainsKey(equipmentType.ToString() + slotIndex))
         {
             string lootName = data.equipedItems[equipmentType.ToString() + slotIndex];

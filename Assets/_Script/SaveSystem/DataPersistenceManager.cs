@@ -87,7 +87,6 @@ public class DataPersistenceManager : MonoBehaviour
         // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
         {
-            Debug.Log("OnSceneLoaded");
             SaveGame();
             LoadGame();
         }
@@ -105,16 +104,12 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void NewGame()
     {
-        GameData = new GameData();
+        GameData = new();
         SaveGame();
         LoadGame();
         Debug.Log("Creating new game");
     }
 
-    private void OnApplicationQuit()
-    {
-        // SaveGame();
-    }
 
     public void LoadGame()
     {
@@ -122,6 +117,7 @@ public class DataPersistenceManager : MonoBehaviour
         if (DisableDataPersistance)
         {
             GameData = new();
+            Debug.Log("Game data reset.");
         }
         else
         {

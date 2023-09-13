@@ -90,12 +90,10 @@ public class Savepoint : MonoBehaviour, IDataPersistance
 
     public void SaveData(GameData data)
     {
-        Debug.Log("save savepoint to file: " + SavePointName);
         if(data.savepoints.ContainsKey(SavePointName))
         {
             data.savepoints.Remove(SavePointName);
         }
         data.savepoints.Add(SavePointName, new SavepointDetails(isSavePointActive, TeleportTransform.position));
-        Debug.Log(isSavePointActive);
     }
 }
