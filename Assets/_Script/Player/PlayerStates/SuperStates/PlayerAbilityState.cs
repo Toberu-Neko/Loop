@@ -56,6 +56,7 @@ public class PlayerAbilityState : PlayerState
         Combat.DetectedDamageables.Clear();
         Combat.DetectedKnockbackables.Clear();
         Combat.DetectedStaminaDamageables.Clear();
+        Combat.DetectedMapDamageableItems.Clear();
     }
 
     public override void PhysicsUpdate()
@@ -86,6 +87,14 @@ public class PlayerAbilityState : PlayerState
             foreach (IStaminaDamageable staminaDamageable in Combat.DetectedStaminaDamageables.ToList())
             {
                 staminaDamageable.TakeStaminaDamage(damageStaminaAmount, core.transform.position, blockable);
+            }
+        }
+
+        if(Combat.DetectedMapDamageableItems.Count > 0)
+        {
+            foreach (IMapDamageableItem mapDamageableItem in Combat.DetectedMapDamageableItems.ToList())
+            {
+                mapDamageableItem.TakeDamage((int)damageAmount);
             }
         }
     }

@@ -15,6 +15,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public List<IDamageable> DetectedDamageables { get; private set; } = new();
     public List<IKnockbackable> DetectedKnockbackables { get; private set; } = new();
     public List<IStaminaDamageable> DetectedStaminaDamageables { get; private set; } = new();
+    public List<IMapDamageableItem> DetectedMapDamageableItems { get; private set; } = new();
+
 
     public bool PerfectBlock { get; private set; }
     private bool normalBlock;
@@ -78,6 +80,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         DetectedDamageables = new();
         DetectedKnockbackables = new();
         DetectedStaminaDamageables = new();
+        DetectedMapDamageableItems = new();
 
 
         stats.OnTimeStopEnd += HandleStartTime;
@@ -118,10 +121,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     }
 
     #region Event Handlers
-    public void HandleOnAttack()
-    {
-
-    }
 
     private void HandleStartTime()
     {
@@ -353,37 +352,47 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     #region Attack
     public void AddToDetected(Collider2D collision)
     {
-        if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
+        if (collision.TryGetComponent(out IDamageable damageable))
         {
             DetectedDamageables.Add(damageable);
         }
 
-        if (collision.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
+        if (collision.TryGetComponent(out IKnockbackable knockbackable))
         {
             DetectedKnockbackables.Add(knockbackable);
         }
 
-        if(collision.TryGetComponent<IStaminaDamageable>(out IStaminaDamageable staminaDamageable))
+        if(collision.TryGetComponent(out IStaminaDamageable staminaDamageable))
         {
             DetectedStaminaDamageables.Add(staminaDamageable);
+        }
+
+        if(collision.TryGetComponent(out IMapDamageableItem mapDamageableItem))
+        {
+            DetectedMapDamageableItems.Add(mapDamageableItem);
         }
     }
 
     public void RemoveFromDetected(Collider2D collision)
     {
-        if (collision.TryGetComponent<IDamageable>(out IDamageable damageable))
+        if (collision.TryGetComponent(out IDamageable damageable))
         {
             DetectedDamageables.Remove(damageable);
         }
 
-        if (collision.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
+        if (collision.TryGetComponent(out IKnockbackable knockbackable))
         {
             DetectedKnockbackables.Remove(knockbackable);
         }
 
-        if(collision.TryGetComponent<IStaminaDamageable>(out IStaminaDamageable staminaDamageable))
+        if(collision.TryGetComponent(out IStaminaDamageable staminaDamageable))
         {
             DetectedStaminaDamageables.Remove(staminaDamageable);
+        }
+
+        if(collision.TryGetComponent(out IMapDamageableItem mapDamageableItem))
+        {
+            DetectedMapDamageableItems.Remove(mapDamageableItem);
         }
     }
     #endregion
