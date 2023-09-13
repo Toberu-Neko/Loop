@@ -87,9 +87,14 @@ public class DataPersistenceManager : MonoBehaviour
         // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
         {
+            Debug.Log("OnSceneLoaded");
+            SaveGame();
             LoadGame();
         }
     }
+
+   
+
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()
     {
@@ -116,12 +121,15 @@ public class DataPersistenceManager : MonoBehaviour
         Debug.Log("Load");
         if (DisableDataPersistance)
         {
-            return;
+            GameData = new();
+        }
+        else
+        {
+            GameData = dataHandler.Load(selectedProfileId);
         }
 
         timer = 0f;
 
-        GameData = dataHandler.Load(selectedProfileId);
 
         if(GameData == null)
         {
@@ -144,10 +152,16 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
-        Debug.Log("Save");
+        Debug.Log("Saved " + DataPersistanceObjects.Count + "Objects.");
         if (DisableDataPersistance)
         {
-           return;
+            foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
+            {
+                dataPersistanceObject.SaveData(GameData);
+            }
+            dataHandler.Save(GameData, "Temp");
+            OnSave?.Invoke();
+            return;
         }
 
         if (GameData == null)

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IMapDamageableItem
 {
-    void TakeDamage(int damage);
+    void TakeDamage(float damage);
 }

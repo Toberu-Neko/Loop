@@ -110,9 +110,18 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        Debug.Log("Load Player Inventory Data" + data.equipedWeapon.Length);
+        if(data.equipedWeapon.Length == 0)
+        {
+            EquipedWeapon = new WeaponType[2];
+            EquipedWeapon[0] = WeaponType.Sword;
+            EquipedWeapon[1] = WeaponType.Gun;
+        }
+        else
+        {
+            EquipedWeapon = data.equipedWeapon;
+        }
+        Debug.Log("Load Player Inventory Data" + EquipedWeapon.Length);
         Inventory = data.inventory;
-        EquipedWeapon = data.equipedWeapon;
     }
 
     public void SaveData(GameData data)

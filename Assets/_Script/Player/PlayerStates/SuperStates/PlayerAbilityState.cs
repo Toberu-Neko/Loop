@@ -94,7 +94,7 @@ public class PlayerAbilityState : PlayerState
         {
             foreach (IMapDamageableItem mapDamageableItem in Combat.DetectedMapDamageableItems.ToList())
             {
-                mapDamageableItem.TakeDamage((int)damageAmount);
+                mapDamageableItem.TakeDamage(damageAmount);
             }
         }
     }

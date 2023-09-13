@@ -83,6 +83,7 @@ public class UI_Manager : MonoBehaviour
         gameManager.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
         gameManager.OnChangeSceneGoRight += HandleChangeSceneGoRight;
         gameManager.OnChangeSceneFinished += HandleChangeSceneFinish;
+        gameManager.OnSavepointInteracted += HandleSavePointInteraction;
 
         dataPersistenceManager.OnSave += HandleSave;
     }
@@ -94,13 +95,9 @@ public class UI_Manager : MonoBehaviour
         gameManager.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
         gameManager.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
         gameManager.OnChangeSceneFinished -= HandleChangeSceneFinish;
+        gameManager.OnSavepointInteracted -= HandleSavePointInteraction;
 
         dataPersistenceManager.OnSave -= HandleSave;
-
-        foreach (var savepoint in savepoints)
-        {
-            savepoint.OnSavePointInteract -= HandleSavePointInteraction;
-        }
     }
 
     private void Update()
@@ -131,20 +128,6 @@ public class UI_Manager : MonoBehaviour
         bossFightUI.Active(bossBase);
     }
 
-    public void RegisterSavePoints(Savepoint savePoint)
-    {
-        savepoints.Add(savePoint);
-        if(savePointNames.Contains(savePoint.SavePointName))
-        {
-            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointName);
-            return;
-        }
-
-        savePointNames.Add(savePoint.SavePointName);
-
-
-        savePoint.OnSavePointInteract += HandleSavePointInteraction;
-    }
 
     private void OpenPauseMainUI()
     {
@@ -162,12 +145,10 @@ public class UI_Manager : MonoBehaviour
         savepointUIMain.DeactiveAllMenu();
     }
 
-    public void HandleSavePointInteraction(string savePointName, string sceneName)
+    public void HandleSavePointInteraction(string savePointName)
     {
         savepointUIMain.ActivateMenu(true);
         savepointUIMain.SetSavepointNameText(savePointName);
-
-        gameManager.SavePointInteracted();
     }
 
     private void HandleSave()

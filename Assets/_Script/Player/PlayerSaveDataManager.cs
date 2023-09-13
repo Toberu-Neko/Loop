@@ -30,8 +30,16 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
     public void LoadData(GameData data)
     {
         DebugInputCount = data.debugInputCount;
-        if (data.playerPos != Vector3.zero)
-            transform.position = data.playerPos;
+
+        data.savepoints.TryGetValue(data.lastInteractedSavepoint, out SavepointDetails details);
+
+        Debug.Log("Load player position " + data.lastInteractedSavepoint);
+
+        if (details != null)
+        {
+            Debug.Log("Teleport player to " + details.teleportPosition);
+            transform.position = details.teleportPosition;
+        }
     }
 
     public void SaveData(GameData data)

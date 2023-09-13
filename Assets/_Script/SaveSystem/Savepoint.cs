@@ -10,7 +10,7 @@ public class Savepoint : MonoBehaviour, IDataPersistance
     public string SceneName { get; private set; }
     private PlayerInputHandler inputHandler;
 
-    public event Action<string, string> OnSavePointInteract;
+    public event Action<string> OnSavePointInteract;
 
     private bool inRange;
     private bool isSavePointActive = false;
@@ -28,7 +28,7 @@ public class Savepoint : MonoBehaviour, IDataPersistance
 
     private void Start()
     {
-        UI_Manager.Instance.RegisterSavePoints(this);
+        GameManager.Instance.RegisterSavePoints(this);
     }
 
     private void Update()
@@ -41,8 +41,8 @@ public class Savepoint : MonoBehaviour, IDataPersistance
                 inputHandler.UseInteractInput();
                 pressEObject.SetActive(false);
 
-                // Go to UI manager
-                OnSavePointInteract?.Invoke(SavePointName, SceneName);
+                // Go to game manager
+                OnSavePointInteract?.Invoke(SavePointName);
             }
         }
     }
@@ -80,15 +80,22 @@ public class Savepoint : MonoBehaviour, IDataPersistance
             Debug.LogError("SavePointName is null");
             return;
         }
-        data.activatedSavepoints.TryGetValue(SavePointName, out isSavePointActive);
+        data.savepoints.TryGetValue(SavePointName, out SavepointDetails details);
+
+        if (details != null)
+        {
+            isSavePointActive = details.isActivated;
+        }
     }
 
     public void SaveData(GameData data)
     {
-        if(data.activatedSavepoints.ContainsKey(SavePointName))
+        Debug.Log("save savepoint to file: " + SavePointName);
+        if(data.savepoints.ContainsKey(SavePointName))
         {
-            data.activatedSavepoints.Remove(SavePointName);
+            data.savepoints.Remove(SavePointName);
         }
-        data.activatedSavepoints.Add(SavePointName, isSavePointActive);
+        data.savepoints.Add(SavePointName, new SavepointDetails(isSavePointActive, TeleportTransform.position));
+        Debug.Log(isSavePointActive);
     }
 }

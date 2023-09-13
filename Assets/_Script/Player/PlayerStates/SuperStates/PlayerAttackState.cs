@@ -133,7 +133,7 @@ public class PlayerAttackState : PlayerState
             OnAttackMapItems?.Invoke();
             foreach (IMapDamageableItem mapDamageableItem in Combat.DetectedMapDamageableItems.ToList())
             {
-                mapDamageableItem.TakeDamage((int)damageAmount);
+                mapDamageableItem.TakeDamage(damageAmount);
             }
         }
     }
