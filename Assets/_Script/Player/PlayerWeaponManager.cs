@@ -3,21 +3,15 @@ using UnityEngine;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
-    public PlayerWeaponType CurrentWeaponType { get; private set; }
+    public WeaponType CurrentWeaponType { get; private set; }
 
-    [Header("Sword")]
-    [SerializeField, HideInInspector] private int nothing;
     [field: SerializeField] public SO_WeaponData_Sword SwordData { get; private set; }
     public int SwordCurrentEnergy { get; private set; }
 
-    [Header("Fist")]
-    [SerializeField, HideInInspector] private int nothing2;
     [field: SerializeField] public SO_WeaponData_Fist FistData { get; private set; }
     public int FistCurrentEnergy { get; private set; }
 
 
-    [Header("Gun")]
-    [SerializeField, HideInInspector] private int nothing3;
     [field: SerializeField] public SO_WeaponData_Gun GunData { get; private set; }
     [field: SerializeField] public GunChargeAttackScript GunChargeAttackScript { get; private set; }
 
@@ -50,7 +44,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Start()
     {
-        CurrentWeaponType = PlayerWeaponType.Sword;
+        CurrentWeaponType = PlayerInventoryManager.Instance.EquipedWeapon[0];
         InitializeEnergy();
     }
 
@@ -59,12 +53,12 @@ public class PlayerWeaponManager : MonoBehaviour
        if(stats.CanChangeWeapon)
             ChangeWeapon();
 
-        if ((CurrentWeaponType == PlayerWeaponType.Sword || CurrentWeaponType == PlayerWeaponType.Fist) && perfectBlockThisFram)
+        if ((CurrentWeaponType == WeaponType.Sword || CurrentWeaponType == WeaponType.Fist) && perfectBlockThisFram)
         {
             IncreaseEnergy();
         }
 
-        if(CurrentWeaponType == PlayerWeaponType.Gun && GunEnergyRegenable)
+        if(CurrentWeaponType == WeaponType.Gun && GunEnergyRegenable)
         {
             IncreaseEnergy();
         }
@@ -77,19 +71,18 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void ChangeWeapon()
     {
-        if (inputHandler.ChangeWeapon1 && CurrentWeaponType != PlayerWeaponType.Sword)
+        if (inputHandler.ChangeWeapon2)
         {
-            CurrentWeaponType = PlayerWeaponType.Sword;
-            OnWeaponChanged?.Invoke();
-        }
-        else if (inputHandler.ChangeWeapon2 && CurrentWeaponType != PlayerWeaponType.Fist)
-        {
-            CurrentWeaponType = PlayerWeaponType.Fist;
-            OnWeaponChanged?.Invoke();
-        }
-        else if (inputHandler.ChangeWeapon3 && CurrentWeaponType != PlayerWeaponType.Gun)
-        {
-            CurrentWeaponType = PlayerWeaponType.Gun;
+            inputHandler.UseChangeWeapon2();
+            if(CurrentWeaponType == PlayerInventoryManager.Instance.EquipedWeapon[0])
+            {
+                CurrentWeaponType = PlayerInventoryManager.Instance.EquipedWeapon[1];
+            }
+            else
+            {
+                CurrentWeaponType = PlayerInventoryManager.Instance.EquipedWeapon[0];
+            }
+
             OnWeaponChanged?.Invoke();
         }
     }
@@ -105,11 +98,11 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         switch (CurrentWeaponType)
         {
-            case PlayerWeaponType.Sword:
+            case WeaponType.Sword:
                 return SwordCurrentEnergy.ToString();
-            case PlayerWeaponType.Fist:
+            case WeaponType.Fist:
                 return FistCurrentEnergy.ToString();
-            case PlayerWeaponType.Gun:
+            case WeaponType.Gun:
                 return GunCurrentEnergy.ToString();
         }
 
@@ -121,15 +114,15 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         switch (CurrentWeaponType)
         {
-            case PlayerWeaponType.Sword:
+            case WeaponType.Sword:
                 if (SwordCurrentEnergy < SwordData.maxEnergy)
                     SwordCurrentEnergy++;
                 break;
-            case PlayerWeaponType.Fist:
+            case WeaponType.Fist:
                 if(FistCurrentEnergy < FistData.maxEnergy)
                     FistCurrentEnergy++;
                 break;
-            case PlayerWeaponType.Gun:
+            case WeaponType.Gun:
                 if(GunCurrentEnergy < GunData.maxEnergy)
                     GunCurrentEnergy += GunData.energyRegen * Time.deltaTime;
 
@@ -145,13 +138,13 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         switch (CurrentWeaponType)
         {
-            case PlayerWeaponType.Sword:
+            case WeaponType.Sword:
                 SwordCurrentEnergy--;
                 break;
-            case PlayerWeaponType.Fist:
+            case WeaponType.Fist:
                 FistCurrentEnergy--;
                 break;
-            case PlayerWeaponType.Gun:
+            case WeaponType.Gun:
                 GunCurrentEnergy -= GunData.energyCostPerShot;
                 break;
         }
@@ -172,13 +165,13 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         switch (CurrentWeaponType)
         {
-            case PlayerWeaponType.Sword:
+            case WeaponType.Sword:
                 SwordCurrentEnergy = 0;
                 break;
-            case PlayerWeaponType.Fist:
+            case WeaponType.Fist:
                 FistCurrentEnergy = 0;
                 break;
-            case PlayerWeaponType.Gun:
+            case WeaponType.Gun:
                 GunCurrentEnergy = 0;
                 break;
         }
@@ -217,9 +210,3 @@ public class PlayerWeaponManager : MonoBehaviour
     }
 }
 
-public enum PlayerWeaponType
-{
-    Sword,
-    Fist,
-    Gun
-}

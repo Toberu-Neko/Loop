@@ -27,6 +27,11 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject savepointUIObj;
     [SerializeField] private GameObject savepointUIMainObj;
     [SerializeField] private GameObject savepointUIInventoryObj;
+
+    [Header("Boss Fight UI")]
+    [SerializeField] private GameObject bossFightUIObj;
+    private BossFightUI bossFightUI;
+
     private SavepointUIMain savepointUIMain;
     private SavepointUIInventory savepointUIInventory;
 
@@ -60,6 +65,9 @@ public class UI_Manager : MonoBehaviour
 
         savepointUIMain = savepointUIMainObj.GetComponent<SavepointUIMain>();
         savepointUIInventory = savepointUIInventoryObj.GetComponent<SavepointUIInventory>();
+
+        bossFightUIObj.SetActive(false);
+        bossFightUI = bossFightUIObj.GetComponent<BossFightUI>();
 
         savePointNames = new();
         savepoints = new();
@@ -118,6 +126,11 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    public void ActiveBossUI(BossBase bossBase)
+    {
+        bossFightUI.Active(bossBase);
+    }
+
     public void RegisterSavePoints(Savepoint savePoint)
     {
         savepoints.Add(savePoint);
@@ -151,7 +164,7 @@ public class UI_Manager : MonoBehaviour
 
     public void HandleSavePointInteraction(string savePointName, string sceneName)
     {
-        savepointUIMain.ActiveMenu(true);
+        savepointUIMain.ActivateMenu(true);
         savepointUIMain.SetSavepointNameText(savePointName);
 
         gameManager.SavePointInteracted();

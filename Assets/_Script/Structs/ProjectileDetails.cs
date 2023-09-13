@@ -15,7 +15,7 @@ public struct ProjectileDetails
     [Tooltip("持續時間")]
     public float duration;
     [Tooltip("擊退力道")]
-    [Range(8, 50)]
+    [Range(0, 30)]
     public float knockbackStrength;
     [Tooltip("擊退角度")]
     public Vector2 knockbackAngle;

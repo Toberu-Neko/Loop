@@ -19,6 +19,7 @@ public class GameData
     public SerializableDictionary<string, bool> activatedSavepoints;
     public SerializableDictionary<string, ItemData> inventory;
     public SerializableDictionary<string, string> equipedItems;
+    public WeaponType[] equipedWeapon = new WeaponType[2];
 
     public GameData()
     {
@@ -32,6 +33,9 @@ public class GameData
         inventory = new();
         equipedItems = new();
         defeatedBosses = new();
+
+        equipedWeapon[0] = WeaponType.Sword;
+        equipedWeapon[1] = WeaponType.Gun;
     }
 
     public int GetPercentageComplete()

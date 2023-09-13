@@ -64,8 +64,8 @@ public class Enemy2 : Entity
     {
         base.OnEnable();
 
-        stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
-        stats.Health.OnCurrentValueZero += HandleHealthZero;
+        Stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
+        Stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
 
     protected override void OnDisable()
@@ -74,13 +74,13 @@ public class Enemy2 : Entity
 
         StateMachine.ChangeState(IdleState);
 
-        stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
-        stats.Health.OnCurrentValueZero -= HandleHealthZero;
+        Stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
+        Stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }
 
     private void HandlePoiseZero()
     {
-        if (stats.Health.CurrentValue <= 0)
+        if (Stats.Health.CurrentValue <= 0)
             return;
 
         StateMachine.ChangeState(StunState);

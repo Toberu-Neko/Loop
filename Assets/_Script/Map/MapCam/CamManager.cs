@@ -13,6 +13,7 @@ public class CamManager : MonoBehaviour
     
     private CinemachineImpulseSource impulseSource;
     [SerializeField] private float shakeForce = 1f;
+    private bool canShackCamera = true;
     [field: SerializeField] public Transform PlayerLookat { get; private set; }
 
     private Coroutine lerpYPanCoroutine;
@@ -32,6 +33,7 @@ public class CamManager : MonoBehaviour
         }
 
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        canShackCamera = true;
     }
     /*
     #region Register/Unregister Cams
@@ -50,8 +52,11 @@ public class CamManager : MonoBehaviour
 
     public void SwitchCamera(CinemachineVirtualCamera vcam)
     {
+        if(CurrentCam)
+            CurrentCam.enabled = false;
+
         CurrentCam = vcam;
-        vcam.enabled = true;
+        CurrentCam.enabled = true;
 
         framingTransposer = CurrentCam.GetCinemachineComponent<CinemachineFramingTransposer>();
         startingTrackedObjectOffset = framingTransposer.m_TrackedObjectOffset;
@@ -129,7 +134,14 @@ public class CamManager : MonoBehaviour
 
     public void CameraShake()
     {
-        impulseSource.GenerateImpulseWithForce(shakeForce);
+        if (canShackCamera)
+        {
+            Invoke(nameof(ResetCanShakeCamera), 0.1f);
+            canShackCamera = false;
+            impulseSource.GenerateImpulseWithForce(shakeForce);
+        }
     }
+
+    private void ResetCanShakeCamera() => canShackCamera = true;
 
 }

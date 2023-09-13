@@ -17,10 +17,17 @@ public class EnemyStateMachine
     {
         if (canChangeState)
         {
-            CurrentState.Exit();
+            if(CurrentState == null)
+            {
+                Debug.LogWarning("Current state is null, this should not happen.");
+            }
+            else
+            {
+                CurrentState.Exit();
+            }
             CurrentState = newState;
 
-            Debug.Log(newState.ToString());
+           // Debug.Log(newState.ToString());
 
             CurrentState.Enter();
         }

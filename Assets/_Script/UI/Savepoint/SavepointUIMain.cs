@@ -6,6 +6,7 @@ public class SavepointUIMain : MonoBehaviour
     [SerializeField] private GameObject savepointUIObj;
     [SerializeField] private TextMeshProUGUI savepointNameText;
     [SerializeField] private SavepointUIInventory savepointUIInventory;
+    [SerializeField] private SavepointUIChangeSkill savepointUIChangeSkill;
 
 
     public void SetSavepointNameText(string name)
@@ -18,6 +19,12 @@ public class SavepointUIMain : MonoBehaviour
         DataPersistenceManager.Instance.SaveGame();
     }
 
+    public void OnClickChangeSkillWeapon()
+    {
+        DeactivateMenu();
+        savepointUIChangeSkill.Activate();
+    }
+
     public void OnClickBackButton()
     {
         DeactiveAllMenu();
@@ -26,7 +33,7 @@ public class SavepointUIMain : MonoBehaviour
     public void OnClickInventoryButton()
     {
         savepointUIInventory.ActiveMenu();
-        DeactiveMenu();
+        DeactivateMenu();
     }
 
     public void OnClickGoToMainMenu()
@@ -35,7 +42,7 @@ public class SavepointUIMain : MonoBehaviour
         DataPersistenceManager.Instance.LoadMainMenuScene();
     }
 
-    public void ActiveMenu(bool init = false)
+    public void ActivateMenu(bool init = false)
     {
         if (init)
         {
@@ -45,16 +52,18 @@ public class SavepointUIMain : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void DeactiveMenu()
+    public void DeactivateMenu()
     {
         gameObject.SetActive(false);
     }
 
     public void DeactiveAllMenu()
     {
-        savepointUIInventory.DeactiveMenu();
+        savepointUIInventory.Deactivate();
+        savepointUIChangeSkill.Deactivate();
         savepointUIObj.SetActive(false);
         GameManager.Instance.ResumeGame();
         gameObject.SetActive(false);
+        DataPersistenceManager.Instance.ReloadBaseScene();
     }
 }

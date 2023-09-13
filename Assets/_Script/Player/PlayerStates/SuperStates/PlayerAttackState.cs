@@ -13,6 +13,7 @@ public class PlayerAttackState : PlayerState
     private bool isJumping;
 
     private event Action OnAttack;
+    private event Action OnAttackMapItems;
 
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -33,22 +34,26 @@ public class PlayerAttackState : PlayerState
         Stats.SetCanChangeWeapon(false);
         isAttackDone = false;
         isJumping = false;
-        OnAttack += Combat.HandleOnAttack;
         OnAttack += player.TimeSkillManager.HandleOnAttack;
         OnAttack += CamManager.Instance.CameraShake;
+
+        OnAttackMapItems += CamManager.Instance.CameraShake;
     }
 
     public override void Exit()
     {
         base.Exit();
         Stats.SetCanChangeWeapon(true);
-        OnAttack -= Combat.HandleOnAttack;
         OnAttack -= player.TimeSkillManager.HandleOnAttack;
         OnAttack -= CamManager.Instance.CameraShake;
+
+        OnAttackMapItems -= CamManager.Instance.CameraShake;
+
 
         Combat.DetectedDamageables.Clear();
         Combat.DetectedKnockbackables.Clear();
         Combat.DetectedStaminaDamageables.Clear();
+        Combat.DetectedMapDamageableItems.Clear();
     }
 
     public override void LogicUpdate()
@@ -120,6 +125,15 @@ public class PlayerAttackState : PlayerState
             foreach (IStaminaDamageable staminaDamageable in Combat.DetectedStaminaDamageables.ToList())
             {
                 staminaDamageable.TakeStaminaDamage(damageStaminaAmount, core.transform.position, blockable);
+            }
+        }
+
+        if(Combat.DetectedMapDamageableItems.Count > 0)
+        {
+            OnAttackMapItems?.Invoke();
+            foreach (IMapDamageableItem mapDamageableItem in Combat.DetectedMapDamageableItems.ToList())
+            {
+                mapDamageableItem.TakeDamage((int)damageAmount);
             }
         }
     }

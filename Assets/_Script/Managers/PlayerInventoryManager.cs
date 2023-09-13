@@ -6,6 +6,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 {
     public static PlayerInventoryManager Instance { get; private set; }
     public SerializableDictionary<string, ItemData> Inventory { get; private set; }
+    public WeaponType[] EquipedWeapon { get; private set; }
 
     public MultiplierData SwordMultiplier { get; private set; }
     public MultiplierData GunMultiplier { get; private set; }
@@ -36,6 +37,16 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         SwordMultiplier = new();
         GunMultiplier = new();
         FistMultiplier = new();
+    }
+
+    public void ChangeEquipWeapon1(WeaponType type)
+    {
+        EquipedWeapon[0] = type;
+    }
+
+    public void ChangeEquipWeapon2(WeaponType type)
+    {
+        EquipedWeapon[1] = type;
     }
 
     public void AddItem(ItemDetails lootDetails, int amount = 1)
@@ -99,12 +110,15 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
+        Debug.Log("Load Player Inventory Data" + data.equipedWeapon.Length);
         Inventory = data.inventory;
+        EquipedWeapon = data.equipedWeapon;
     }
 
     public void SaveData(GameData data)
     {
         data.inventory = Inventory;
+        data.equipedWeapon = EquipedWeapon;
     }
 }
 

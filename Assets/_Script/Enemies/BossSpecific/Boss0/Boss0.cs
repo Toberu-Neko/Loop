@@ -86,8 +86,8 @@ public class Boss0 : BossBase
     {
         base.OnEnable();
 
-        stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
-        stats.Health.OnCurrentValueZero += HandleHealthZero;
+        Stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
+        Stats.Health.OnCurrentValueZero += HandleHealthZero;
         OnEnterBossRoom += HandleEnterBossRoom;
     }
 
@@ -97,14 +97,14 @@ public class Boss0 : BossBase
 
         StateMachine.ChangeState(IdleState);
 
-        stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
-        stats.Health.OnCurrentValueZero -= HandleHealthZero;
+        Stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
+        Stats.Health.OnCurrentValueZero -= HandleHealthZero;
         OnEnterBossRoom -= HandleEnterBossRoom;
     }
 
     private void HandlePoiseZero()
     {
-        if (stats.Health.CurrentValue <= 0)
+        if (Stats.Health.CurrentValue <= 0)
             return;
 
         StateMachine.ChangeState(StunState);
