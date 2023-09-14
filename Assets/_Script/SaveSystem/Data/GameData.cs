@@ -6,8 +6,8 @@ using UnityEngine;
 public class GameData
 {
     public long lastUpdated;
-    public int debugInputCount;
 
+    public int money;
     public float maxHealth;
     public float timePlayed;
 
@@ -27,8 +27,8 @@ public class GameData
     public GameData()
     {
         maxHealth = 100f;
-        debugInputCount = 0;
         timePlayed = 0f;
+        money = 0;
         playerPos = Vector3.zero;
         currentTimeSkill = "PlayerTimeSkill_None";
         lastInteractedSavepoint = "Defult";

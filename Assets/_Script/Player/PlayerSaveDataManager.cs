@@ -3,34 +3,19 @@ using UnityEngine;
 
 public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 {
-    private PlayerInputHandler playerInputHandler;
+    // Teleport, Money
+    public int Money { get; private set; } = 0;
 
-    public int DebugInputCount { get; private set; } = 0;
+    public event Action OnMoneyChanged;
 
-    public event Action OnDebugInputCountChanged;
-
-    private bool debugInput;
-    private void Awake()
+    public void AddMoney(int amount)
     {
-        playerInputHandler = GetComponent<PlayerInputHandler>();
-    }
-
-    private void Update()
-    {
-        debugInput = playerInputHandler.DebugInput;
-
-        if (debugInput)
-        {
-            debugInput = false;
-            DebugInputCount++;
-            OnDebugInputCountChanged?.Invoke();
-        }
+        Money += amount;
+        OnMoneyChanged?.Invoke();
     }
 
     public void LoadData(GameData data)
     {
-        DebugInputCount = data.debugInputCount;
-
         data.savepoints.TryGetValue(data.lastInteractedSavepoint, out SavepointDetails details);
 
         if (details != null)
@@ -41,7 +26,6 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 
     public void SaveData(GameData data)
     {
-        data.debugInputCount = DebugInputCount;
         data.playerPos = transform.position;
     }
 }

@@ -47,7 +47,7 @@ public class DebugPlayerComp : MonoBehaviour
         weaponManager.OnEnergyChanged += UpdateWeaponText;
         weaponManager.OnWeaponChanged += UpdateWeaponText;
         timeSkillManager.OnStateChanged += UpdateTimeSkillText;
-        saveDataManager.OnDebugInputCountChanged += UpdateDebugText;
+        saveDataManager.OnMoneyChanged += UpdateDebugText;
     }
 
     private void OnDisable()
@@ -58,7 +58,7 @@ public class DebugPlayerComp : MonoBehaviour
         weaponManager.OnEnergyChanged -= UpdateWeaponText;
         weaponManager.OnWeaponChanged -= UpdateWeaponText;
         timeSkillManager.OnStateChanged -= UpdateTimeSkillText;
-        saveDataManager.OnDebugInputCountChanged -= UpdateDebugText;
+        saveDataManager.OnMoneyChanged -= UpdateDebugText;
     }
 
     void Update()
@@ -85,6 +85,6 @@ public class DebugPlayerComp : MonoBehaviour
 
     void UpdateDebugText()
     {
-        debugInputCountText.text = "Count: " + saveDataManager.DebugInputCount.ToString();
+        debugInputCountText.text = "Money: " + saveDataManager.Money.ToString();
     }
 }

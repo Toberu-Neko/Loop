@@ -35,7 +35,6 @@ public class SaveSlot : MonoBehaviour
             hasDataContent.SetActive(true);
             percentageCompleteText.text = data.GetPercentageComplete() + "%";
             timePlayedText.text = data.timePlayed.ToString("0.00") + "s";
-            deathCountText.text = data.debugInputCount.ToString();
         }
     }
 
