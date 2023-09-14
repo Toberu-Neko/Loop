@@ -13,12 +13,8 @@ public class Savepoint : MonoBehaviour, IDataPersistance
     public event Action<string> OnSavePointInteract;
 
     private bool inRange;
-    private bool isSavePointActive = false;
+    private bool isSavePointActive;
 
-    private void Awake()
-    {
-        isSavePointActive = false;
-    }
 
     private void OnEnable()
     {

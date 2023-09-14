@@ -6,7 +6,6 @@ using UnityEngine;
 public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance { get; private set; }
-    private GameManager gameManager;
     private DataPersistenceManager dataPersistenceManager;
 
     [SerializeField] private PlayerInputHandler inputHandler;
@@ -75,27 +74,26 @@ public class UI_Manager : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
         dataPersistenceManager = DataPersistenceManager.Instance;
 
-        gameManager.OnChangeSceneGoUp += HandleChangeSceneGoUp;
-        gameManager.OnChangeSceneGoDown += HandleChangeSceneGoDown;
-        gameManager.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
-        gameManager.OnChangeSceneGoRight += HandleChangeSceneGoRight;
-        gameManager.OnChangeSceneFinished += HandleChangeSceneFinish;
-        gameManager.OnSavepointInteracted += HandleSavePointInteraction;
+        GameManager.Instance.OnChangeSceneGoUp += HandleChangeSceneGoUp;
+        GameManager.Instance.OnChangeSceneGoDown += HandleChangeSceneGoDown;
+        GameManager.Instance.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
+        GameManager.Instance.OnChangeSceneGoRight += HandleChangeSceneGoRight;
+        GameManager.Instance.OnChangeSceneFinished += HandleChangeSceneFinish;
+        GameManager.Instance.OnSavepointInteracted += HandleSavePointInteraction;
 
         dataPersistenceManager.OnSave += HandleSave;
     }
 
     private void OnDisable()
     {
-        gameManager.OnChangeSceneGoUp -= HandleChangeSceneGoUp;
-        gameManager.OnChangeSceneGoDown -= HandleChangeSceneGoDown;
-        gameManager.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
-        gameManager.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
-        gameManager.OnChangeSceneFinished -= HandleChangeSceneFinish;
-        gameManager.OnSavepointInteracted -= HandleSavePointInteraction;
+        GameManager.Instance.OnChangeSceneGoUp -= HandleChangeSceneGoUp;
+        GameManager.Instance.OnChangeSceneGoDown -= HandleChangeSceneGoDown;
+        GameManager.Instance.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
+        GameManager.Instance.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
+        GameManager.Instance.OnChangeSceneFinished -= HandleChangeSceneFinish;
+        GameManager.Instance.OnSavepointInteracted -= HandleSavePointInteraction;
 
         dataPersistenceManager.OnSave -= HandleSave;
     }

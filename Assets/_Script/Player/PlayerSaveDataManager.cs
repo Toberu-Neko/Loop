@@ -18,6 +18,6 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 
     public void SaveData(GameData data)
     {
-        data.playerPos = transform.position;
+        return;
     }
 }

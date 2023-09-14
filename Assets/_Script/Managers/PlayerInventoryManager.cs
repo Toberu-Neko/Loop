@@ -36,6 +36,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         else
             Destroy(gameObject);
 
+        equipedItems = new();
         SwordMultiplier = new();
         GunMultiplier = new();
         FistMultiplier = new();
@@ -144,8 +145,6 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public void LoadData(GameData data)
     {
         ChipInventory = new();
-        equipedItems = new();
-        Money = 0;
 
         if (data.equipedWeapon.Length == 0)
         {

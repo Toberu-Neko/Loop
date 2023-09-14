@@ -33,7 +33,6 @@ public class MainMenu : MenuFirstSelecter
 
     public void OnContinueGameClicked()
     {
-        DataPersistenceManager.Instance.LoadGame();
         SceneManager.LoadScene(gameBaseScene.Name);
     }
 

@@ -11,8 +11,6 @@ public class GameData
     public float maxHealth;
     public float timePlayed;
 
-    public Vector3 playerPos;
-
     public string currentTimeSkill;
     public string lastInteractedSavepoint;
 
@@ -29,7 +27,6 @@ public class GameData
         maxHealth = 100f;
         timePlayed = 0f;
         money = 0;
-        playerPos = Vector3.zero;
         currentTimeSkill = "PlayerTimeSkill_None";
         lastInteractedSavepoint = "Defult";
 

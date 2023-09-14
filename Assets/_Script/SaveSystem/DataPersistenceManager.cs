@@ -99,9 +99,6 @@ public class DataPersistenceManager : MonoBehaviour
         }
     }
 
-   
-
-
     private List<IDataPersistance> FindAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistance> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistance>();
@@ -119,7 +116,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadGame()
     {
-        Debug.Log("Load");
+        Debug.Log("Load " + DataPersistanceObjects.Count + " objects.");
         if (DisableDataPersistance)
         {
             return;
@@ -205,7 +202,6 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
-        firstTimeLoad = true;
         ObjectPoolManager.ReturnAllObjectsToPool();
         SceneManager.LoadScene(mainMenuScene.Name);
     }

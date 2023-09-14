@@ -95,7 +95,6 @@ public class InventorySlot : MonoBehaviour
 
     private void HandleNoTarget(DraggableItem item)
     {
-        Debug.Log("Return!");
         Count++;
         countText.text = Count.ToString();
 
