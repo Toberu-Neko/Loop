@@ -3,16 +3,8 @@ using UnityEngine;
 
 public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 {
-    // Teleport, Money
-    public int Money { get; private set; } = 0;
+    // Teleport
 
-    public event Action OnMoneyChanged;
-
-    public void AddMoney(int amount)
-    {
-        Money += amount;
-        OnMoneyChanged?.Invoke();
-    }
 
     public void LoadData(GameData data)
     {

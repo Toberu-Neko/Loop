@@ -51,7 +51,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
 
         clickAndReturnObj.transform.localPosition = Vector3.zero;
 
-        PlayerInventoryManager.Instance.EquipItem(SO, equipmentType);
+        PlayerInventoryManager.Instance.EquipChip(SO, equipmentType);
     }
 
     public void SaveData(GameData data)
@@ -100,7 +100,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         clickAndReturnObj.transform.SetParent(transform.root);
         inventorySlot.SetCount(inventorySlot.Count + 1);
         ObjectPoolManager.ReturnObjectToPool(clickAndReturnObj);
-        PlayerInventoryManager.Instance.UnEquipItem(LootSO, equipmentType);
+        PlayerInventoryManager.Instance.UnEquipChip(LootSO, equipmentType);
 
         clickAndReturnObj = null;
         clickAndReturn = null;

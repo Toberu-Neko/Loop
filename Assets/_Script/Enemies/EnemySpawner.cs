@@ -44,16 +44,16 @@ public class EnemySpawner : MonoBehaviour, ITempDataPersistence
 
     public void SaveTempData(TempData data)
     {
-        if (data.defeatedEnemies.ContainsKey(ID))
+        if (data.defeatedObjects.ContainsKey(ID))
         {
-            data.defeatedEnemies.Remove(ID);
+            data.defeatedObjects.Remove(ID);
         }
-        data.defeatedEnemies.Add(ID, isDefeated);
+        data.defeatedObjects.Add(ID, isDefeated);
     }
 
     public void LoadTempData(TempData data)
     {
-        data.defeatedEnemies.TryGetValue(ID, out isDefeated);
+        data.defeatedObjects.TryGetValue(ID, out isDefeated);
 
         if (isDefeated)
         {

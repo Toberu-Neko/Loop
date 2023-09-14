@@ -61,7 +61,7 @@ public class SavepointUIInventory : MonoBehaviour
 
     private void UpdateInventory()
     {
-        inventory = PlayerInventoryManager.Instance.Inventory;
+        inventory = PlayerInventoryManager.Instance.ChipInventory;
         int count = 0;
 
         foreach(var item in inventory)
