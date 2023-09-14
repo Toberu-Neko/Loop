@@ -44,9 +44,20 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Start()
     {
-        CurrentWeaponType = PlayerInventoryManager.Instance.EquipedWeapon[0];
+        DataPersistenceManager.Instance.OnLoad += InitWeapon;
         InitializeEnergy();
     }
+    private void OnEnable()
+    {
+        combat.OnPerfectBlock += () => perfectBlockThisFram = true;
+    }
+    private void OnDisable()
+    {
+        combat.OnPerfectBlock -= () => perfectBlockThisFram = true;
+        DataPersistenceManager.Instance.OnLoad -= InitWeapon;
+    }
+
+
 
     private void Update()
     {
@@ -67,6 +78,12 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             AllEnergyMax();
         }
+    }
+
+    private void InitWeapon()
+    {
+        CurrentWeaponType = PlayerInventoryManager.Instance.EquipedWeapon[0];
+        OnWeaponChanged?.Invoke();
     }
 
     private void ChangeWeapon()
@@ -200,13 +217,5 @@ public class PlayerWeaponManager : MonoBehaviour
     }
     private void SetGunRagenableTrue() => GunEnergyRegenable = true;
 
-    private void OnEnable()
-    {
-        combat.OnPerfectBlock += () => perfectBlockThisFram = true ;
-    }
-    private void OnDisable()
-    {
-        combat.OnPerfectBlock -= () => perfectBlockThisFram = true;
-    }
 }
 

@@ -36,6 +36,20 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         GunMultiplier = new();
         FistMultiplier = new();
     }
+    private void Start()
+    {
+        if (DataPersistenceManager.Instance.DisableDataPersistance)
+        {
+            Debug.LogError("Data persistance is disabled, so player can't change weapon.");
+            EquipedWeapon = new WeaponType[2];
+            EquipedWeapon[0] = WeaponType.Sword;
+            EquipedWeapon[1] = WeaponType.Gun;
+
+            Debug.LogError("Data persistance is disabled, so player can't save picked items.");
+            Inventory = new();
+            equipedItems = new();
+        }
+    }
 
     public void ChangeEquipWeapon1(WeaponType type)
     {
@@ -121,7 +135,6 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             EquipedWeapon = data.equipedWeapon;
         }
-        Debug.Log("LoadData in inventorymanager = inventory: " + Inventory.Count + "& data: " + data.inventory.Count);
         Inventory = data.inventory;
     }
 
@@ -131,7 +144,6 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             data.inventory = Inventory;
             data.equipedWeapon = EquipedWeapon;
-            Debug.Log("SaveData in inventorymanager = " + data.inventory.Count);
         }
     }
 }

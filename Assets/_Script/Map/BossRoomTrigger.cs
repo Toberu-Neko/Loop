@@ -37,7 +37,9 @@ public class BossRoomTrigger : MonoBehaviour
             Vector2 exitDirection = (collision.transform.position - col.bounds.center).normalized;
             if ((enterPosX < 0f && exitDirection.x < 0f)
                 ||
-                (enterPosX > 0f && exitDirection.x > 0f))
+                (enterPosX > 0f && exitDirection.x > 0f)
+                ||
+                (!boss.gameObject.activeInHierarchy))
             {
                 return;
             }

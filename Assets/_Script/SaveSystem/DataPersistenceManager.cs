@@ -30,6 +30,9 @@ public class DataPersistenceManager : MonoBehaviour
     private float timer;
 
     public event Action OnSave;
+    public event Action OnLoad;
+
+    private bool firstTimeLoad;
 
     public static DataPersistenceManager Instance { get; private set; }
 
@@ -50,11 +53,11 @@ public class DataPersistenceManager : MonoBehaviour
         timer = 0f;
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();
-
+        firstTimeLoad = true;
 
         if (DisableDataPersistance)
         {
-            Debug.LogError("Data persistance is disabled, this should only be used for debugging.");
+            Debug.LogError("Data persistance is disabled, this should only be used for debugging. And something will go wrong.");
             GameData = new GameData();
         }
 
@@ -87,7 +90,11 @@ public class DataPersistenceManager : MonoBehaviour
         // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
         {
-            SaveGame();
+            if (firstTimeLoad)
+            {
+                firstTimeLoad = false;
+                SaveGame();
+            }
             LoadGame();
         }
     }
@@ -105,9 +112,8 @@ public class DataPersistenceManager : MonoBehaviour
     public void NewGame()
     {
         GameData = new();
-        SaveGame();
-        LoadGame();
         Debug.Log("Creating new game");
+        firstTimeLoad = true;
     }
 
 
@@ -116,8 +122,12 @@ public class DataPersistenceManager : MonoBehaviour
         Debug.Log("Load");
         if (DisableDataPersistance)
         {
-            GameData = new();
-            Debug.Log("Game data reset.");
+            return;
+            if(GameData == null)
+            {
+                GameData = new();
+                Debug.Log("Temp game data reset.");
+            }
         }
         else
         {
@@ -144,13 +154,15 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistanceObject.LoadData(GameData);
         }
+        OnLoad?.Invoke();
     }
 
     public void SaveGame()
     {
-        Debug.Log("Saved " + DataPersistanceObjects.Count + "Objects.");
+        Debug.Log("Saved, " + DataPersistanceObjects.Count + "Objects.");
         if (DisableDataPersistance)
         {
+            return;
             foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
             {
                 dataPersistanceObject.SaveData(GameData);
@@ -193,6 +205,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
+        firstTimeLoad = true;
         ObjectPoolManager.ReturnAllObjectsToPool();
         SceneManager.LoadScene(mainMenuScene.Name);
     }
