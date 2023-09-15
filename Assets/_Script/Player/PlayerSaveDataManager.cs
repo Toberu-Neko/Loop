@@ -3,40 +3,21 @@ using UnityEngine;
 
 public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 {
-    private PlayerInputHandler playerInputHandler;
+    // Teleport
 
-    public int DebugInputCount { get; private set; } = 0;
-
-    public event Action OnDebugInputCountChanged;
-
-    private bool debugInput;
-    private void Awake()
-    {
-        playerInputHandler = GetComponent<PlayerInputHandler>();
-    }
-
-    private void Update()
-    {
-        debugInput = playerInputHandler.DebugInput;
-
-        if (debugInput)
-        {
-            debugInput = false;
-            DebugInputCount++;
-            OnDebugInputCountChanged?.Invoke();
-        }
-    }
 
     public void LoadData(GameData data)
     {
-        DebugInputCount = data.debugInputCount;
-        if (data.playerPos != Vector3.zero)
-            transform.position = data.playerPos;
+        data.savepoints.TryGetValue(data.lastInteractedSavepoint, out SavepointDetails details);
+
+        if (details != null)
+        {
+            transform.position = details.teleportPosition;
+        }
     }
 
     public void SaveData(GameData data)
     {
-        data.debugInputCount = DebugInputCount;
-        data.playerPos = transform.position;
+        return;
     }
 }

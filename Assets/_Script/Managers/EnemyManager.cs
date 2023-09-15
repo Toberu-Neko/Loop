@@ -77,7 +77,7 @@ public class EnemyManager : MonoBehaviour
             obj.LoadTempData(tempData);
         }
 
-        foreach(var obj in tempData.defeatedEnemies)
+        foreach(var obj in tempData.defeatedObjects)
         {
             // Debug.Log(obj.Key + " " + obj.Value);
         }
@@ -114,5 +114,14 @@ public class EnemyManager : MonoBehaviour
             this.enemy = enemy;
             this.sceneName = sceneName;
         }
+    }
+}
+public class TempData
+{
+    public Dictionary<string, bool> defeatedObjects;
+
+    public TempData()
+    {
+        defeatedObjects = new();
     }
 }

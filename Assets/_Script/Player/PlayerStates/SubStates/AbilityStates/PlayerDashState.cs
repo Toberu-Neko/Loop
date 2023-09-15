@@ -40,6 +40,7 @@ public class PlayerDashState : PlayerAbilityState
             Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
         }
         Stats.SetInvincibleFalse();
+        player.RB.drag = 0f;
     }
 
     public override void LogicUpdate()

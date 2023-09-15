@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,10 @@ using UnityEngine;
 public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 {
     public static PlayerInventoryManager Instance { get; private set; }
-    public SerializableDictionary<string, ItemData> Inventory { get; private set; }
+    public int Money { get; private set; }
+    public event Action OnMoneyChanged;
+
+    public SerializableDictionary<string, ItemData> ChipInventory { get; private set; }
     public WeaponType[] EquipedWeapon { get; private set; }
 
     public MultiplierData SwordMultiplier { get; private set; }
@@ -32,13 +36,29 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         else
             Destroy(gameObject);
 
-        Inventory = new();
         equipedItems = new();
         SwordMultiplier = new();
         GunMultiplier = new();
         FistMultiplier = new();
     }
 
+    private void Start()
+    {
+        if (DataPersistenceManager.Instance.DisableDataPersistance)
+        {
+            Debug.LogError("Data persistance is disabled, so player can't change weapon.");
+            EquipedWeapon = new WeaponType[2];
+            EquipedWeapon[0] = WeaponType.Sword;
+            EquipedWeapon[1] = WeaponType.Gun;
+
+            Debug.LogError("Data persistance is disabled, so player can't save picked items.");
+            ChipInventory = new();
+            equipedItems = new();
+            Money = 99999999;
+        }
+    }
+
+    #region Weapon
     public void ChangeEquipWeapon1(WeaponType type)
     {
         EquipedWeapon[0] = type;
@@ -48,21 +68,23 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     {
         EquipedWeapon[1] = type;
     }
+    #endregion
 
-    public void AddItem(ItemDetails lootDetails, int amount = 1)
+    #region Chip
+    public void AddChip(ItemDetails lootDetails, int amount = 1)
     {
-        if (Inventory.ContainsKey(lootDetails.lootName))
+        if (ChipInventory.ContainsKey(lootDetails.lootName))
         {
-            Inventory[lootDetails.lootName].itemCount += amount;
+            ChipInventory[lootDetails.lootName].itemCount += amount;
         }
         else
         {
-            Inventory.Add(lootDetails.lootName, new ItemData { lootDetails = lootDetails, itemCount = amount });
+            ChipInventory.Add(lootDetails.lootName, new ItemData { lootDetails = lootDetails, itemCount = amount });
         }
         // Debug.Log("You have " + Inventory[lootDetails.lootName].itemCount + " " + lootDetails.lootName + " in your inventory.");
     }
 
-    private void UpdateEquipedItem()
+    private void UpdateEquipedChips()
     {
         SwordMultiplier = new();
         GunMultiplier = new();
@@ -89,36 +111,68 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
                     break;
             }
         }
-        /*
-        Debug.Log("SwordMultiplier: " + SwordMultiplier.damageMultiplier + " " + SwordMultiplier.attackSpeedMultiplier);
-        Debug.Log("GunMultiplier: " + GunMultiplier.damageMultiplier + " " + GunMultiplier.attackSpeedMultiplier);
-        Debug.Log("FistMultiplier: " + FistMultiplier.damageMultiplier + " " + FistMultiplier.attackSpeedMultiplier);
-        */
     }
 
-    public void EquipItem(LootSO SO, WeaponType equipmentType)
+    public void EquipChip(LootSO SO, WeaponType equipmentType)
     {
         equipedItems.Add(new EquipedItem(equipmentType, SO));
-        UpdateEquipedItem();
+        UpdateEquipedChips();
     }
 
-    public void UnEquipItem(LootSO SO, WeaponType type)
+    public void UnEquipChip(LootSO SO, WeaponType type)
     {
         equipedItems.Remove(equipedItems.Find(x => x.equipmentType == type && x.lootSO == SO));
-        UpdateEquipedItem();
+        UpdateEquipedChips();
     }
+
+    #endregion
+
+    #region Money
+
+    public void AddMoney(int amount)
+    {
+        Money += amount;
+        OnMoneyChanged?.Invoke();
+    }
+
+    public void RemoveMoney(int amount)
+    {
+        Money -= amount;
+        OnMoneyChanged?.Invoke();
+    }
+    #endregion
 
     public void LoadData(GameData data)
     {
-        Debug.Log("Load Player Inventory Data" + data.equipedWeapon.Length);
-        Inventory = data.inventory;
-        EquipedWeapon = data.equipedWeapon;
+        ChipInventory = new();
+
+        if (data.equipedWeapon.Length == 0)
+        {
+            EquipedWeapon = new WeaponType[2];
+            EquipedWeapon[0] = WeaponType.Sword;
+            EquipedWeapon[1] = WeaponType.Gun;
+        }
+        else
+        {
+            EquipedWeapon = data.equipedWeapon;
+        }
+        ChipInventory = data.inventory;
+        Money = data.money;
     }
 
     public void SaveData(GameData data)
     {
-        data.inventory = Inventory;
-        data.equipedWeapon = EquipedWeapon;
+        if (ChipInventory != null)
+        {
+            data.inventory = ChipInventory;
+        }
+
+        if(EquipedWeapon != null)
+        {
+            data.equipedWeapon = EquipedWeapon;
+        }
+
+        data.money = Money;
     }
 }
 

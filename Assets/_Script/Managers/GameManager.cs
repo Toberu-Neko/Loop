@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public bool TimeStopAll { get; private set; } = false;
     public bool TimeSlowAll { get; private set; } = false;
 
-    public event Action OnSavepointInteracted;
+    public event Action<string> OnSavepointInteracted;
 
     public event Action OnAllTimeStopEnd;
     public event Action OnAllTimeStopStart;
@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public float TimeSlowMultiplier { get; private set; } = 0.2f;
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
+
+    private Dictionary<string, Savepoint> Savepoints;
 
     #region Change Scene Variables
 
@@ -50,7 +52,9 @@ public class GameManager : MonoBehaviour
 
         changeSceneTriggers = new List<ChangeSceneTrigger>();
         enterSceneTriggers = new List<EnterSceneTrigger>();
+        Savepoints = new();
     }
+
 
     private void OnDisable()
     {
@@ -66,8 +70,26 @@ public class GameManager : MonoBehaviour
         {
             trigger.OnChangeSceneFinished -= HandleChangeSceneFinished;
         }
-
         changeSceneTriggers.Clear();
+
+        foreach (var savepoint in Savepoints)
+        {
+            savepoint.Value.OnSavePointInteract -= HandleSavePointInteraction;
+        }
+        Savepoints.Clear();
+    }
+
+    public void RegisterSavePoints(Savepoint savePoint)
+    {
+        if (Savepoints.ContainsKey(savePoint.SavePointName))
+        {
+            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointName);
+            return;
+        }
+
+        Savepoints.Add(savePoint.SavePointName, savePoint);
+
+        savePoint.OnSavePointInteract += HandleSavePointInteraction;
     }
 
     public void PauseGame()
@@ -82,12 +104,18 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void SavePointInteracted()
+    public void HandleSavePointInteraction(string savepointName)
     {
-        OnSavepointInteracted?.Invoke();
+        OnSavepointInteracted?.Invoke(savepointName);
 
         DataPersistenceManager.Instance.SaveGame();
         EnemyManager.Instance.ResetTempData();
+    }
+
+    public Vector3 GetSavepointTeleportPos(string savepointName)
+    {
+        Savepoints.TryGetValue(savepointName, out Savepoint savepoint);
+        return savepoint.TeleportTransform.position;
     }
 
     #region Time

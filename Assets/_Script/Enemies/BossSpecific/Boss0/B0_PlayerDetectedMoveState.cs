@@ -27,7 +27,6 @@ public class B0_PlayerDetectedMoveState : PlayerDetectedMoveState
 
         if (performCloseRangeAction && boss.MultiAttackState.CheckCanAttack())
         {
-            Debug.Log("Skill!");
             stateMachine.ChangeState(boss.MultiAttackState);
         }
         else if (isPlayerInMinAgroRange && boss.ChargeState.CheckCanCharge() && ReturnHealthPercentage() > 0.5f)

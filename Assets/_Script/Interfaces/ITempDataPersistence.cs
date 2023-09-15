@@ -8,12 +8,3 @@ public interface ITempDataPersistence
     void LoadTempData(TempData data);
 }
 
-public class TempData
-{
-    public Dictionary<string, bool> defeatedEnemies;
-
-    public TempData()
-    {
-        defeatedEnemies = new();
-    }
-}

@@ -171,6 +171,14 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
                 staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
             }
 
+            if (countered)
+            {
+                if (collision.TryGetComponent(out IMapDamageableItem mapDamageableItem))
+                {
+                    mapDamageableItem.TakeDamage(details.damageAmount);
+                }
+            }
+
             ReturnToPool();
         }
 

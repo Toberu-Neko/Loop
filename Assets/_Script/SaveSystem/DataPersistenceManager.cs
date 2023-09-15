@@ -30,6 +30,9 @@ public class DataPersistenceManager : MonoBehaviour
     private float timer;
 
     public event Action OnSave;
+    public event Action OnLoad;
+
+    private bool firstTimeLoad;
 
     public static DataPersistenceManager Instance { get; private set; }
 
@@ -50,11 +53,11 @@ public class DataPersistenceManager : MonoBehaviour
         timer = 0f;
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();
-
+        firstTimeLoad = true;
 
         if (DisableDataPersistance)
         {
-            Debug.LogError("Data persistance is disabled, this should only be used for debugging.");
+            Debug.LogError("Data persistance is disabled, this should only be used for debugging. And something will go wrong.");
             GameData = new GameData();
         }
 
@@ -87,6 +90,11 @@ public class DataPersistenceManager : MonoBehaviour
         // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
         {
+            if (firstTimeLoad)
+            {
+                firstTimeLoad = false;
+                SaveGame();
+            }
             LoadGame();
         }
     }
@@ -100,28 +108,31 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void NewGame()
     {
-        GameData = new GameData();
-        SaveGame();
-        LoadGame();
+        GameData = new();
         Debug.Log("Creating new game");
+        firstTimeLoad = true;
     }
 
-    private void OnApplicationQuit()
-    {
-        // SaveGame();
-    }
 
     public void LoadGame()
     {
-        Debug.Log("Load");
+        Debug.Log("Load " + DataPersistanceObjects.Count + " objects.");
         if (DisableDataPersistance)
         {
             return;
+            if(GameData == null)
+            {
+                GameData = new();
+                Debug.Log("Temp game data reset.");
+            }
+        }
+        else
+        {
+            GameData = dataHandler.Load(selectedProfileId);
         }
 
         timer = 0f;
 
-        GameData = dataHandler.Load(selectedProfileId);
 
         if(GameData == null)
         {
@@ -140,14 +151,22 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistanceObject.LoadData(GameData);
         }
+        OnLoad?.Invoke();
     }
 
     public void SaveGame()
     {
-        Debug.Log("Save");
+        Debug.Log("Saved, " + DataPersistanceObjects.Count + "Objects.");
         if (DisableDataPersistance)
         {
-           return;
+            return;
+            foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
+            {
+                dataPersistanceObject.SaveData(GameData);
+            }
+            dataHandler.Save(GameData, "Temp");
+            OnSave?.Invoke();
+            return;
         }
 
         if (GameData == null)

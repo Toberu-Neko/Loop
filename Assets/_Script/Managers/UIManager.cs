@@ -6,7 +6,6 @@ using UnityEngine;
 public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance { get; private set; }
-    private GameManager gameManager;
     private DataPersistenceManager dataPersistenceManager;
 
     [SerializeField] private PlayerInputHandler inputHandler;
@@ -75,32 +74,28 @@ public class UI_Manager : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
         dataPersistenceManager = DataPersistenceManager.Instance;
 
-        gameManager.OnChangeSceneGoUp += HandleChangeSceneGoUp;
-        gameManager.OnChangeSceneGoDown += HandleChangeSceneGoDown;
-        gameManager.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
-        gameManager.OnChangeSceneGoRight += HandleChangeSceneGoRight;
-        gameManager.OnChangeSceneFinished += HandleChangeSceneFinish;
+        GameManager.Instance.OnChangeSceneGoUp += HandleChangeSceneGoUp;
+        GameManager.Instance.OnChangeSceneGoDown += HandleChangeSceneGoDown;
+        GameManager.Instance.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
+        GameManager.Instance.OnChangeSceneGoRight += HandleChangeSceneGoRight;
+        GameManager.Instance.OnChangeSceneFinished += HandleChangeSceneFinish;
+        GameManager.Instance.OnSavepointInteracted += HandleSavePointInteraction;
 
         dataPersistenceManager.OnSave += HandleSave;
     }
 
     private void OnDisable()
     {
-        gameManager.OnChangeSceneGoUp -= HandleChangeSceneGoUp;
-        gameManager.OnChangeSceneGoDown -= HandleChangeSceneGoDown;
-        gameManager.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
-        gameManager.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
-        gameManager.OnChangeSceneFinished -= HandleChangeSceneFinish;
+        GameManager.Instance.OnChangeSceneGoUp -= HandleChangeSceneGoUp;
+        GameManager.Instance.OnChangeSceneGoDown -= HandleChangeSceneGoDown;
+        GameManager.Instance.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
+        GameManager.Instance.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
+        GameManager.Instance.OnChangeSceneFinished -= HandleChangeSceneFinish;
+        GameManager.Instance.OnSavepointInteracted -= HandleSavePointInteraction;
 
         dataPersistenceManager.OnSave -= HandleSave;
-
-        foreach (var savepoint in savepoints)
-        {
-            savepoint.OnSavePointInteract -= HandleSavePointInteraction;
-        }
     }
 
     private void Update()
@@ -131,20 +126,6 @@ public class UI_Manager : MonoBehaviour
         bossFightUI.Active(bossBase);
     }
 
-    public void RegisterSavePoints(Savepoint savePoint)
-    {
-        savepoints.Add(savePoint);
-        if(savePointNames.Contains(savePoint.SavePointName))
-        {
-            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointName);
-            return;
-        }
-
-        savePointNames.Add(savePoint.SavePointName);
-
-
-        savePoint.OnSavePointInteract += HandleSavePointInteraction;
-    }
 
     private void OpenPauseMainUI()
     {
@@ -162,12 +143,10 @@ public class UI_Manager : MonoBehaviour
         savepointUIMain.DeactiveAllMenu();
     }
 
-    public void HandleSavePointInteraction(string savePointName, string sceneName)
+    public void HandleSavePointInteraction(string savePointName)
     {
         savepointUIMain.ActivateMenu(true);
         savepointUIMain.SetSavepointNameText(savePointName);
-
-        gameManager.SavePointInteracted();
     }
 
     private void HandleSave()

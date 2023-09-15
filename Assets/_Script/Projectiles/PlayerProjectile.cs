@@ -61,6 +61,10 @@ public class PlayerProjectile : MonoBehaviour
             {
                 staminaDamageable.TakeStaminaDamage(projectileDetails.staminaDamageAmount, transform.position, true);
             }
+            if(collision.TryGetComponent(out IMapDamageableItem mapDamageableItem))
+            {
+                mapDamageableItem.TakeDamage(projectileDetails.damageAmount);
+            }
 
             collidedObjects.Add(collision.gameObject);
 

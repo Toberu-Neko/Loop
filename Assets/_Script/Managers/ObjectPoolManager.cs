@@ -147,7 +147,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         if(ObjectPools.Count == 0)
         {
-            Debug.LogWarning("No objects in pool to return.");
+            // Debug.LogWarning("No objects in pool to return.");
             return;
         }
 
@@ -155,7 +155,7 @@ public class ObjectPoolManager : MonoBehaviour
         {
             if(pool.ActiveObjects.Count == 0)
             {
-                Debug.LogWarning("No inactive objects in pool to return.");
+                // Debug.LogWarning("No inactive objects in pool to return.");
                 continue;
             }
 
