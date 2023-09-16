@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image image;
     [HideInInspector] public Transform ParentAfterDrag { get; set; }
@@ -19,6 +19,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public event Action<DraggableItem> OnReturnToOriginalParent;
     public event Action OnStartDragging;
+    public event Action OnEnterTarget;
+    public event Action OnExitTarget;
 
 
     private void OnEnable()
@@ -46,6 +48,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
 
         OnStartDragging?.Invoke();
+        OnExitTarget?.Invoke();
 
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
@@ -83,5 +86,15 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         gameObject.transform.SetParent(transform.root);
         ObjectPoolManager.ReturnObjectToPool(gameObject);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnEnterTarget?.Invoke();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnExitTarget?.Invoke();
     }
 }

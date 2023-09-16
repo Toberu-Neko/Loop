@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,15 +14,14 @@ public class InventorySlot : MonoBehaviour
     public LootSO LootSO { get; private set; }
     private List<DraggableItem> draggableItems;
 
+    public event Action OnEnterTarget;
+    public event Action OnExitTarget;
+
     public int Count { get; private set; }
 
     private void Awake()
     {
         draggableItems = new();
-    }
-
-    private void OnEnable()
-    {
     }
 
     public void SetCount(int count)
@@ -47,8 +47,20 @@ public class InventorySlot : MonoBehaviour
 
         script.OnReturnToOriginalParent += HandleNoTarget;
         script.OnStartDragging += HandleDragStart;
+        script.OnEnterTarget += HandleHover;
+        script.OnExitTarget += HandleExit;
         script.SetValue(so, Count);
         draggableItems.Add(script);
+    }
+
+    private void HandleHover()
+    {
+        OnEnterTarget?.Invoke();
+    }
+
+    private void HandleExit() 
+    {
+        OnExitTarget?.Invoke();
     }
 
     private void HandleDragStart()
@@ -59,6 +71,8 @@ public class InventorySlot : MonoBehaviour
             return;
         }
         currentItem.OnStartDragging -= HandleDragStart;
+        currentItem.OnEnterTarget -= HandleHover;
+        currentItem.OnExitTarget -= HandleExit;
 
         if(previousItem != null)
         {

@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class SavepointUIInventory : MonoBehaviour
@@ -9,6 +8,10 @@ public class SavepointUIInventory : MonoBehaviour
     [SerializeField] private GameObject draggablePrefab;
 
     [SerializeField] private GameObject inventoryGrid;
+
+    [SerializeField] private GameObject descriptionUI;
+    [SerializeField] private TextMeshProUGUI descriptionNameText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
 
     public InventorySlot[] InventorySlots { get; private set;}
 
@@ -23,6 +26,8 @@ public class SavepointUIInventory : MonoBehaviour
 
     private void Awake()
     {
+        descriptionUI.SetActive(false);
+
         InventorySlots = inventoryGrid.transform.GetComponentsInChildren<InventorySlot>();
 
         swordSlots = swordGrid.transform.GetComponentsInChildren<EquipmentSlot>();
@@ -30,6 +35,20 @@ public class SavepointUIInventory : MonoBehaviour
         gunSlots = gunGrid.transform.GetComponentsInChildren<EquipmentSlot>();
 
         fistSlots = fistGrid.transform.GetComponentsInChildren<EquipmentSlot>();
+    }
+
+    public void ActiveDescriptionUI(string name, string description)
+    {
+        descriptionUI.SetActive(true);
+        descriptionNameText.text = name;
+        descriptionText.text = description;
+    }
+
+    public void DeactiveDescriptionUI()
+    {
+        descriptionUI.SetActive(false);
+        descriptionNameText.text = "";
+        descriptionText.text = "";
     }
 
     public void OnClickBackButton()
@@ -96,6 +115,8 @@ public class SavepointUIInventory : MonoBehaviour
 
             InventorySlots[count].ActiveSlot();
             InventorySlots[count].SetValue(item.Value.itemCount - SOcount, so);
+            InventorySlots[count].OnEnterTarget += HandleEnterTarget;
+            InventorySlots[count].OnExitTarget += HandleExitTarget;
 
             count++;
         }
@@ -104,5 +125,15 @@ public class SavepointUIInventory : MonoBehaviour
         {
             InventorySlots[i].DeactiveSlot();
         }
+    }
+
+    private void HandleEnterTarget()
+    {
+        Debug.Log("Enter Target");
+    }
+
+    private void HandleExitTarget()
+    {
+        Debug.Log("Exit Target");
     }
 }
