@@ -15,6 +15,11 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject changeSceneUI;
     [SerializeField] private Animator changeSceneAnimator;
 
+    [Header("Pickup Item UI")]
+    [SerializeField] private GameObject pickUpItemUIObj;
+    private PickupItemUI pickUpItemUI;
+
+
     [Header("Pause UI")]
     [SerializeField] private GameObject pauseUIObj;
     [SerializeField] private GameObject pauseUIMainObj;
@@ -68,6 +73,9 @@ public class UI_Manager : MonoBehaviour
         bossFightUIObj.SetActive(false);
         bossFightUI = bossFightUIObj.GetComponent<BossFightUI>();
 
+        pickUpItemUIObj.SetActive(false);
+        pickUpItemUI = pickUpItemUIObj.GetComponent<PickupItemUI>();
+
         savePointNames = new();
         savepoints = new();
     }
@@ -105,7 +113,8 @@ public class UI_Manager : MonoBehaviour
             inputHandler.UseESCInput();
 
             if (!pauseUIObj.activeInHierarchy && 
-                !savepointUIObj.activeInHierarchy)
+                !savepointUIObj.activeInHierarchy &&
+                !pickUpItemUIObj.activeInHierarchy)
             {
                 OpenPauseMainUI();
             }
@@ -118,6 +127,10 @@ public class UI_Manager : MonoBehaviour
                 CloseAllSavePointUI();
                 savepointUIObj.SetActive(false);
             }
+            else if (pickUpItemUIObj.activeInHierarchy)
+            {
+                pickUpItemUI.Deactive();
+            }
         }
     }
 
@@ -126,6 +139,10 @@ public class UI_Manager : MonoBehaviour
         bossFightUI.Active(bossBase);
     }
 
+    public void ActivePickupItemUI(string name, string description)
+    {
+        pickUpItemUI.Active(name, description);
+    }
 
     private void OpenPauseMainUI()
     {

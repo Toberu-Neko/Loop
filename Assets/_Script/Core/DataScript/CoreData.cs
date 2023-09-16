@@ -49,7 +49,6 @@ public class CoreData : ScriptableObject
     public GameObject[] deathParticles;
 
     [Header("Loot, 如果物件不會掉東西, 不用填")]
-    public GameObject dropItemPrefab;
     public List<LootItem> lootItems;
 
     [Header("Drop Money, 如果物件不會掉錢, 不用填")]

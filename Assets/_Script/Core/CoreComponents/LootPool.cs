@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LootPool : CoreComponent
 {
-    private GameObject dropItemPrefab;
+    [SerializeField] private GameObject dropItemPrefab;
     private List<LootItem> lootItems = new();
 
     private Death death;
@@ -15,7 +15,6 @@ public class LootPool : CoreComponent
 
         death = core.GetCoreComponent<Death>();
 
-        dropItemPrefab = core.CoreData.dropItemPrefab;
         lootItems = core.CoreData.lootItems;
     }
 
@@ -67,7 +66,7 @@ public class LootPool : CoreComponent
         Rigidbody2D rig = dropItem.GetComponent<Rigidbody2D>();
         rig.velocity = dir * dropForce;
 
-        dropItem.GetComponent<LootItemPrefab>().lootSO = lootItem.lootdetails;
+        dropItem.GetComponent<PickupChip>().lootSO = lootItem.lootdetails;
     }
 }
 

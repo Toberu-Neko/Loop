@@ -11,8 +11,6 @@ public class DropableItemBase : MonoBehaviour
     [SerializeField] private Collider2D col;
     [SerializeField] private Rigidbody2D rb;
 
-    private PlayerInventoryManager playerInventoryManager;
-
     private float startTime;
     private bool interactable;
     private bool IsGrounded
@@ -21,6 +19,10 @@ public class DropableItemBase : MonoBehaviour
         {
             return Physics2D.BoxCast((Vector2)groundDetector.position, groundDetectorSize, 0f, Vector2.down, 0.1f, whatIsGround) && Time.time > startTime + 0.2f;
         }
+    }
+
+    protected virtual void Awake()
+    {
     }
 
     protected virtual void OnEnable()
@@ -32,6 +34,11 @@ public class DropableItemBase : MonoBehaviour
         rb.isKinematic = false;
         rb.bodyType = RigidbodyType2D.Dynamic;
         Invoke(nameof(Interectable), 2.5f);
+    }
+
+    protected virtual void OnDisable()
+    {
+        CancelInvoke(nameof(Interectable));
     }
 
     protected virtual void Update()

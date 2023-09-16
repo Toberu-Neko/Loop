@@ -21,11 +21,6 @@ public class DebugEntityStats : MonoBehaviour
         combat = core.GetCoreComponent<Combat>();
 
     }
-    void Start()
-    {
-    }
-
-    
 
     private void Update()
     {
