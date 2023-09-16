@@ -5,6 +5,17 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 {
     // Teleport
 
+    private string recentSavepointName = "";
+
+    private void Start()
+    {
+        GameManager.Instance.OnSavepointInteracted += HandleSavepointInteract;
+    }
+
+    private void HandleSavepointInteract(string name)
+    {
+        recentSavepointName = name;
+    }
 
     public void LoadData(GameData data)
     {
@@ -18,6 +29,6 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 
     public void SaveData(GameData data)
     {
-        return;
+        data.lastInteractedSavepoint = recentSavepointName;
     }
 }
