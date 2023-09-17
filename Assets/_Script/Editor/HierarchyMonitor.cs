@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 [InitializeOnLoad]
 public static class HierarchyMonitor
 {
-    static List<string> IDs = new();
     static HierarchyMonitor()
     {
         EditorApplication.hierarchyChanged += OnHierarchyChanged;
@@ -14,45 +13,56 @@ public static class HierarchyMonitor
 
     static void OnHierarchyChanged()
     {
-        IDs = new();
-        AssignUniqueIDs<EnemySpawner>();
-        AssignUniqueIDs<BreakableWall>();
-        AssignUniqueIDs<PickupTreasure>();
-
-        CheckIfSame();
-    }
-
-    static void AssignUniqueIDs<T>() where T : MonoBehaviour, IUniqueID
-    {
-        var allObjects = GameObject.FindObjectsOfType<T>();
-
-        foreach (var item in allObjects)
+        var allSpawners = GameObject.FindObjectsOfType<EnemySpawner>();
+        foreach (var item in allSpawners)
         {
             if (!Application.isPlaying)
             {
-                var script = item.GetComponent<T>();
+                EnemySpawner script = item.GetComponent<EnemySpawner>();
 
-                if (script != null && !script.isAddedID)
+                if (!script.isAddedID)
                 {
                     script.isAddedID = true;
                     script.ID = System.Guid.NewGuid().ToString();
-                    IDs.Add(script.ID);
                     EditorUtility.SetDirty(item);
+                    // Debug.Log("Change spawner ID: " + spawner.name);
                 }
             }
         }
-    }
 
-    static void CheckIfSame()
-    {
-        foreach (string item in IDs)
+        var allWalls = GameObject.FindObjectsOfType<BreakableWall>();
+
+        foreach (var item in allWalls)
         {
-            string targetValue = item;
-            int count = IDs.Count(x => x == targetValue);
-
-            if (count > 1)
+            if (!Application.isPlaying)
             {
-                Debug.LogError("Duplicate ID: " + item);
+                BreakableWall script = item.GetComponent<BreakableWall>();
+
+                if (!script.isAddedID)
+                {
+                    script.isAddedID = true;
+                    script.ID = System.Guid.NewGuid().ToString();
+                    EditorUtility.SetDirty(item);
+                    // Debug.Log("Change spawner ID: " + spawner.name);
+                }
+            }
+        }
+
+        var allTreasures = GameObject.FindObjectsOfType<PickupTreasure>();
+
+        foreach (var item in allTreasures)
+        {
+            if (!Application.isPlaying)
+            {
+                PickupTreasure script = item.GetComponent<PickupTreasure>();
+
+                if (!script.isAddedID)
+                {
+                    script.isAddedID = true;
+                    script.ID = System.Guid.NewGuid().ToString();
+                    EditorUtility.SetDirty(item);
+                    // Debug.Log("Change spawner ID: " + spawner.name);
+                }
             }
         }
     }

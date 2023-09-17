@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableWall : MonoBehaviour, IMapDamageableItem, ITempDataPersistence, IUniqueID
+public class BreakableWall : MonoBehaviour, IMapDamageableItem, ITempDataPersistence
 {
-    public bool isAddedID { get; set; }
-    public string ID { get; set; }
+    [HideInInspector] public bool isAddedID;
+    [HideInInspector] public string ID;
     [SerializeField] private int health = 1;
 
     private bool isDefeated = false;

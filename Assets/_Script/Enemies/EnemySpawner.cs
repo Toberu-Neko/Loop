@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour, ITempDataPersistence, IUniqueID
+public class EnemySpawner : MonoBehaviour, ITempDataPersistence
 {
-    public bool isAddedID { get; set; }
-    public string ID { get; set; }
+    [HideInInspector] public bool isAddedID;
+    [HideInInspector] public string ID;
 
     [SerializeField] private GameObject enemy;
     private Entity entity;

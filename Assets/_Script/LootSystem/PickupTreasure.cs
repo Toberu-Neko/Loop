@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupTreasure : PressEPickItemBase, IDataPersistance, IUniqueID
+public class PickupTreasure : PressEPickItemBase, IDataPersistance
 {
-    public bool isAddedID { get; set; }
-    public string ID { get; set; }
+    [HideInInspector] public bool isAddedID;
+    [HideInInspector] public string ID;
 
     private bool ispicked;
 
@@ -41,8 +41,9 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance, IUniqueID
         UI_Manager.Instance.ActivePickupItemUI(lootSO.itemDetails.lootName, lootSO.itemDescription);
         PlayerInventoryManager.Instance.AddChip(lootSO.itemDetails);
         */
-        DataPersistenceManager.Instance.SaveGame();
         ispicked = true;
+        gameObject.SetActive(false);
+        DataPersistenceManager.Instance.SaveGame();
     }
 
     public void LoadData(GameData data)
