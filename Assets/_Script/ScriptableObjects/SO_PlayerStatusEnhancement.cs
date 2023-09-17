@@ -6,7 +6,7 @@ using UnityEngine;
 public class SO_PlayerStatusEnhancement : ScriptableObject
 {
     [Header("Necessary Data")]
-    public ItemDetails itemDetails;
+    public ItemDetails itemNameSerilizible;
     public Sprite itemSprite;
 
     [TextArea(5, 10)] public string itemDescription;

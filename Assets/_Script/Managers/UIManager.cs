@@ -6,7 +6,6 @@ using UnityEngine;
 public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance { get; private set; }
-    private DataPersistenceManager dataPersistenceManager;
 
     [SerializeField] private PlayerInputHandler inputHandler;
     [SerializeField] private GameObject savedNotificationObj;
@@ -31,6 +30,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject savepointUIObj;
     [SerializeField] private GameObject savepointUIMainObj;
     [SerializeField] private GameObject savepointUIInventoryObj;
+    [SerializeField] private GameObject savepointUITeleportObj;
 
     [Header("Boss Fight UI")]
     [SerializeField] private GameObject bossFightUIObj;
@@ -66,6 +66,7 @@ public class UI_Manager : MonoBehaviour
         savepointUIObj.SetActive(false);
         savepointUIMainObj.SetActive(false);
         savepointUIInventoryObj.SetActive(false);
+        savepointUITeleportObj.SetActive(false);
 
         savepointUIMain = savepointUIMainObj.GetComponent<SavepointUIMain>();
         savepointUIInventory = savepointUIInventoryObj.GetComponent<SavepointUIInventory>();
@@ -82,8 +83,6 @@ public class UI_Manager : MonoBehaviour
 
     private void Start()
     {
-        dataPersistenceManager = DataPersistenceManager.Instance;
-
         GameManager.Instance.OnChangeSceneGoUp += HandleChangeSceneGoUp;
         GameManager.Instance.OnChangeSceneGoDown += HandleChangeSceneGoDown;
         GameManager.Instance.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
@@ -91,7 +90,7 @@ public class UI_Manager : MonoBehaviour
         GameManager.Instance.OnChangeSceneFinished += HandleChangeSceneFinish;
         GameManager.Instance.OnSavepointInteracted += HandleSavePointInteraction;
 
-        dataPersistenceManager.OnSave += HandleSave;
+        DataPersistenceManager.Instance.OnSave += HandleSave;
     }
 
     private void OnDisable()
@@ -103,7 +102,7 @@ public class UI_Manager : MonoBehaviour
         GameManager.Instance.OnChangeSceneFinished -= HandleChangeSceneFinish;
         GameManager.Instance.OnSavepointInteracted -= HandleSavePointInteraction;
 
-        dataPersistenceManager.OnSave -= HandleSave;
+        DataPersistenceManager.Instance.OnSave -= HandleSave;
     }
 
     private void Update()

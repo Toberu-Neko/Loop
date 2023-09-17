@@ -4,9 +4,17 @@ using UnityEngine;
 public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 {
     // Teleport
+    public static PlayerSaveDataManager Instance { get; private set; }
+    public string RecentSavepointName { get; set; } = "";
 
-    private string recentSavepointName = "";
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
     private void Start()
     {
         GameManager.Instance.OnSavepointInteracted += HandleSavepointInteract;
@@ -14,7 +22,7 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 
     private void HandleSavepointInteract(string name)
     {
-        recentSavepointName = name;
+        RecentSavepointName = name;
     }
 
     public void LoadData(GameData data)
@@ -31,9 +39,9 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 
     public void SaveData(GameData data)
     {
-        if(recentSavepointName != "")
+        if(RecentSavepointName != "")
         {
-            data.lastInteractedSavepoint = recentSavepointName;
+            data.lastInteractedSavepoint = RecentSavepointName;
         }
     }
 }

@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
 
-    private Dictionary<string, Savepoint> Savepoints;
+    public Dictionary<string, Savepoint> Savepoints { get; private set; }
 
     #region Change Scene Variables
 

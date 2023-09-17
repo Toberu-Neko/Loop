@@ -7,6 +7,7 @@ public class SavepointUIMain : MonoBehaviour
     [SerializeField] private TextMeshProUGUI savepointNameText;
     [SerializeField] private SavepointUIInventory savepointUIInventory;
     [SerializeField] private SavepointUIChangeSkill savepointUIChangeSkill;
+    [SerializeField] private SavepointUITeleport savepointUITeleport;
 
 
     public void SetSavepointNameText(string name)
@@ -17,6 +18,12 @@ public class SavepointUIMain : MonoBehaviour
     public void OnClickSaveButton()
     {
         DataPersistenceManager.Instance.SaveGame();
+    }
+
+    public void OnClickTeleportButton()
+    {
+        DeactivateMenu();
+        savepointUITeleport.Activate();
     }
 
     public void OnClickChangeSkillWeapon()
@@ -61,6 +68,7 @@ public class SavepointUIMain : MonoBehaviour
     {
         savepointUIInventory.Deactivate();
         savepointUIChangeSkill.Deactivate();
+        savepointUITeleport.Deactivate();
         savepointUIObj.SetActive(false);
         GameManager.Instance.ResumeGame();
         gameObject.SetActive(false);
