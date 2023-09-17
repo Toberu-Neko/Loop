@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private GameObject draggablePrefab;
@@ -14,14 +15,19 @@ public class InventorySlot : MonoBehaviour
     public LootSO LootSO { get; private set; }
     private List<DraggableItem> draggableItems;
 
-    public event Action OnEnterTarget;
+    public event Action<string, string> OnEnterTarget;
     public event Action OnExitTarget;
 
+    private bool canOpenDescription;
+
     public int Count { get; private set; }
+
+    
 
     private void Awake()
     {
         draggableItems = new();
+        canOpenDescription = true;
     }
 
     public void SetCount(int count)
@@ -47,16 +53,12 @@ public class InventorySlot : MonoBehaviour
 
         script.OnReturnToOriginalParent += HandleNoTarget;
         script.OnStartDragging += HandleDragStart;
-        script.OnEnterTarget += HandleHover;
-        script.OnExitTarget += HandleExit;
+        script.OnEndDragging += HandleEndDragging;
+
         script.SetValue(so, Count);
         draggableItems.Add(script);
     }
 
-    private void HandleHover()
-    {
-        OnEnterTarget?.Invoke();
-    }
 
     private void HandleExit() 
     {
@@ -71,10 +73,11 @@ public class InventorySlot : MonoBehaviour
             return;
         }
         currentItem.OnStartDragging -= HandleDragStart;
-        currentItem.OnEnterTarget -= HandleHover;
-        currentItem.OnExitTarget -= HandleExit;
+        canOpenDescription = false;
 
-        if(previousItem != null)
+        HandleExit();
+
+        if (previousItem != null)
         {
             previousItem.OnReturnToOriginalParent -= HandleNoTarget;
         }
@@ -118,4 +121,22 @@ public class InventorySlot : MonoBehaviour
         draggableItems.Remove(item);
     }
 
+    private void HandleEndDragging(DraggableItem item)
+    {
+        item.OnEndDragging -= HandleEndDragging;
+        item.OnReturnToOriginalParent -= HandleNoTarget;
+
+        canOpenDescription = true;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(canOpenDescription)
+            OnEnterTarget?.Invoke(LootSO.itemDetails.lootName, LootSO.itemDescription);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnExitTarget?.Invoke();
+    }
 }

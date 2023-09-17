@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private Image image;
     [HideInInspector] public Transform ParentAfterDrag { get; set; }
@@ -19,8 +19,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public event Action<DraggableItem> OnReturnToOriginalParent;
     public event Action OnStartDragging;
-    public event Action OnEnterTarget;
-    public event Action OnExitTarget;
+    public event Action<DraggableItem> OnEndDragging;
 
 
     private void OnEnable()
@@ -48,7 +47,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
 
         OnStartDragging?.Invoke();
-        OnExitTarget?.Invoke();
 
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
@@ -75,9 +73,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (DontHaveTarget)
         {
             OnReturnToOriginalParent?.Invoke(this);
-            Deactivate();
-            return;
         }
+        OnEndDragging?.Invoke(this);
         Deactivate();
     }
 
@@ -88,13 +85,4 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        OnEnterTarget?.Invoke();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        OnExitTarget?.Invoke();
-    }
 }

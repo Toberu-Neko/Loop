@@ -127,13 +127,13 @@ public class SavepointUIInventory : MonoBehaviour
         }
     }
 
-    private void HandleEnterTarget()
+    private void HandleEnterTarget(string name, string description)
     {
-        Debug.Log("Enter Target");
+        ActiveDescriptionUI(name, description);
     }
 
     private void HandleExitTarget()
     {
-        Debug.Log("Exit Target");
+        DeactiveDescriptionUI();
     }
 }
