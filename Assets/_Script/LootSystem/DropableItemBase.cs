@@ -21,6 +21,11 @@ public class DropableItemBase : MonoBehaviour
         }
     }
 
+    protected virtual void Start()
+    {
+
+    }
+
     protected virtual void Awake()
     {
     }

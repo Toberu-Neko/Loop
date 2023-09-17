@@ -15,6 +15,7 @@ public class GameData
     public string lastInteractedSavepoint;
 
     public SerializableDictionary<string, bool> defeatedBosses;
+    public SerializableDictionary<string, bool> pickedTreasures;
     public SerializableDictionary<string, SavepointDetails> savepoints;
 
 
@@ -32,6 +33,7 @@ public class GameData
 
         savepoints = new();
         inventory = new();
+        pickedTreasures = new();
         equipedItems = new();
         defeatedBosses = new();
 

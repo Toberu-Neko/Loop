@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 [InitializeOnLoad]
 public static class HierarchyMonitor
 {
+    static List<string> IDs = new();
     static HierarchyMonitor()
     {
         EditorApplication.hierarchyChanged += OnHierarchyChanged;
@@ -13,38 +14,45 @@ public static class HierarchyMonitor
 
     static void OnHierarchyChanged()
     {
-        var allSpawners = GameObject.FindObjectsOfType<EnemySpawner>();
-        foreach (var item in allSpawners)
+        IDs = new();
+        AssignUniqueIDs<EnemySpawner>();
+        AssignUniqueIDs<BreakableWall>();
+        AssignUniqueIDs<PickupTreasure>();
+
+        CheckIfSame();
+    }
+
+    static void AssignUniqueIDs<T>() where T : MonoBehaviour, IUniqueID
+    {
+        var allObjects = GameObject.FindObjectsOfType<T>();
+
+        foreach (var item in allObjects)
         {
             if (!Application.isPlaying)
             {
-                EnemySpawner script = item.GetComponent<EnemySpawner>();
+                var script = item.GetComponent<T>();
 
-                if (!script.isAddedID)
+                if (script != null && !script.isAddedID)
                 {
                     script.isAddedID = true;
                     script.ID = System.Guid.NewGuid().ToString();
+                    IDs.Add(script.ID);
                     EditorUtility.SetDirty(item);
-                    // Debug.Log("Change spawner ID: " + spawner.name);
                 }
             }
         }
+    }
 
-        var allWalls = GameObject.FindObjectsOfType<BreakableWall>();
-
-        foreach (var item in allWalls)
+    static void CheckIfSame()
+    {
+        foreach (string item in IDs)
         {
-            if (!Application.isPlaying)
-            {
-                BreakableWall script = item.GetComponent<BreakableWall>();
+            string targetValue = item;
+            int count = IDs.Count(x => x == targetValue);
 
-                if (!script.isAddedID)
-                {
-                    script.isAddedID = true;
-                    script.ID = System.Guid.NewGuid().ToString();
-                    EditorUtility.SetDirty(item);
-                    // Debug.Log("Change spawner ID: " + spawner.name);
-                }
+            if (count > 1)
+            {
+                Debug.LogError("Duplicate ID: " + item);
             }
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PickupChip : PressEPickItemBase
 {
     [HideInInspector] public LootSO lootSO;
-
+    [HideInInspector] public bool isRetunToPool = false;
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -24,6 +24,8 @@ public class PickupChip : PressEPickItemBase
     {
         UI_Manager.Instance.ActivePickupItemUI(lootSO.itemDetails.lootName, lootSO.itemDescription);
         PlayerInventoryManager.Instance.AddChip(lootSO.itemDetails);
+
+
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 }
