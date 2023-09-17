@@ -31,7 +31,7 @@ public class PlayerTimeSkill_BulletTimeAll : PlayerTimeSkillBase
             manager.DecreaseEnergy(data.bulletTimeAllCost);
 
             player.InputHandler.UseTimeSkillInput();
-            GameManager.Instance.StartAllTimeSlow(data.bulletTimeAllDuration, data.bulletTimeVelocityMultiplier);
+            GameManager.Instance.StartAllTimeSlow(data.bulletTimeAllDuration);
         }
 
         if(started && Time.time - startTime >= data.bulletTimeAllDuration)

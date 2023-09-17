@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public event Action OnAllTimeStopEnd;
     public event Action OnAllTimeStopStart;
 
-    public float TimeSlowMultiplier { get; private set; } = 0.2f;
+    [field: SerializeField, Range(0.001f, 1f)] public float TimeSlowMultiplier { get; private set; } = 0.2f;
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
 
@@ -120,13 +120,12 @@ public class GameManager : MonoBehaviour
 
     #region Time
 
-    public void StartAllTimeSlow(float duration, float multiplier)
+    public void StartAllTimeSlow(float duration)
     {
         if(TimeSlowAll)
         {
             Debug.LogError("TimeSlowAll is already true");
         }
-        TimeSlowMultiplier = multiplier;
         TimeSlowAll = true;
         OnAllTimeSlowStart?.Invoke();
 

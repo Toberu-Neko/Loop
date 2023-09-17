@@ -27,7 +27,7 @@ public class EnemyStateMachine
             }
             CurrentState = newState;
 
-           // Debug.Log(newState.ToString());
+            // Debug.Log(newState.ToString());
 
             CurrentState.Enter();
         }

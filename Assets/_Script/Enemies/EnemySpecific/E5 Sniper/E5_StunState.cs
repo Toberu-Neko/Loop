@@ -9,4 +9,14 @@ public class E5_StunState : StunState
     {
         this.enemy = enemy;
     }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (isStunTimeOver)
+        {
+            stateMachine.ChangeState(enemy.IdleState);
+        }
+    }
 }

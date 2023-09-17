@@ -87,6 +87,7 @@ public class Enemy1 : Entity
     {
         base.OnDrawGizmos();
 
-        Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
+        if(meleeAttackStateData != null)
+            Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
     }
 }

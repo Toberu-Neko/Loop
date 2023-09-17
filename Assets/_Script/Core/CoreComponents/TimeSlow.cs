@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class TimeSlow : CoreComponent, ITimeSlowable
 {
-    private GameManager gameManager;
     private Stats stats;
 
     protected override void Awake()
@@ -11,16 +10,15 @@ public class TimeSlow : CoreComponent, ITimeSlowable
         base.Awake();
 
         stats = core.GetCoreComponent<Stats>();
-        gameManager = GameManager.Instance;
     }
 
 
     private void OnEnable()
     {
-        gameManager.OnAllTimeSlowStart += DoTimeSlow;
-        gameManager.OnAllTimeSlowEnd += EndTimeSlow;
+        GameManager.Instance.OnAllTimeSlowStart += DoTimeSlow;
+        GameManager.Instance.OnAllTimeSlowEnd += EndTimeSlow;
 
-        if (gameManager.TimeSlowAll)
+        if (GameManager.Instance.TimeSlowAll)
         {
             DoTimeSlow();
         }
@@ -28,8 +26,8 @@ public class TimeSlow : CoreComponent, ITimeSlowable
 
     private void OnDisable()
     {
-        gameManager.OnAllTimeSlowStart -= DoTimeSlow;
-        gameManager.OnAllTimeSlowEnd -= EndTimeSlow;
+        GameManager.Instance.OnAllTimeSlowStart -= DoTimeSlow;
+        GameManager.Instance.OnAllTimeSlowEnd -= EndTimeSlow;
 
         if(stats.IsTimeSlowed)
         {

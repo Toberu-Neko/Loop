@@ -66,10 +66,6 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         countered = false;
     }
 
-    private void OnDisable()
-    {
-    }
-
     public void FireProjectile(ProjectileDetails details, int facingDirection, Vector2 fireDirection)
     {
         this.details = details;
@@ -136,9 +132,8 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
             {
                 if (facingDirection != direction)
                 {
-                    counterVelocity = movement.TimeSlowVelocity * -4f;
-                    movement.SetVelocity(-movement.CurrentVelocity);
-                    movement.SetTimeSlowVelocity(counterVelocity);
+                    counterVelocity = -movement.CurrentVelocity / GameManager.Instance.TimeSlowMultiplier;
+                    movement.SetTimeSlowVelocity(counterVelocity / GameManager.Instance.TimeSlowMultiplier * 5f);
                     facingDirection = direction;
                     movement.Turn();
                 }
