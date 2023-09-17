@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PickupChip : PressEPickItemBase
 {
-    [HideInInspector] public LootSO lootSO;
+    [HideInInspector] public SO_Chip lootSO;
     [HideInInspector] public bool isRetunToPool = false;
     protected override void OnEnable()
     {

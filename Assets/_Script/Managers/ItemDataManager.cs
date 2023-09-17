@@ -6,7 +6,7 @@ public class ItemDataManager : MonoBehaviour
 {
     public static ItemDataManager Instance { get; private set; }
 
-    public Dictionary<string, LootSO> LootSODict { get; private set; }
+    public Dictionary<string, SO_Chip> LootSODict { get; private set; }
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class ItemDataManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        var lootSOs = Resources.LoadAll<LootSO>("LootSO");
+        var lootSOs = Resources.LoadAll<SO_Chip>("LootSO");
         LootSODict = new();
 
         foreach (var item in lootSOs)

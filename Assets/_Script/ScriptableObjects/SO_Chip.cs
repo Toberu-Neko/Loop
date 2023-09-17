@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Loot", menuName = "Loot System/New LootDetails")]
-public class LootSO : ScriptableObject
+public class SO_Chip : ScriptableObject
 {
     [Header("Necessary Data")]
     public ItemDetails itemDetails;

@@ -12,20 +12,21 @@ public class SO_Treasure : ScriptableObject
     public string treasureName = "Defult Item";
     public string treasureDescription = "Defult Description";
 
+    [Header("Chip")]
+    public SO_Chip chip;
+
     [Header("StoryItem")]
     public string storyItemName = "Defult Item";
     public string storyItemDescription = "Defult Description";
 
     [Header("PlayerStatusEnhancement")]
-    public float addMaxHealth = 10f;
+    public SO_PlayerStatusEnhancement playerStatusEnhancement;
 
     [Header("Skill")]
     public PlayerTimeSkills timeSkills;
 
     [Header("Movement")]
     public PlayerMovementSkills playerMovementSkills;
-
-
 
     public enum TreasureType
     {

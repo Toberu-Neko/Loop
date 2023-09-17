@@ -18,8 +18,8 @@ public class GameData
     public SerializableDictionary<string, bool> pickedTreasures;
     public SerializableDictionary<string, SavepointDetails> savepoints;
 
-
-    public SerializableDictionary<string, ItemData> inventory;
+    public SerializableDictionary<string, ItemData> statusEnhancementInventory;
+    public SerializableDictionary<string, ItemData> chipInventory;
     public SerializableDictionary<string, string> equipedItems;
     public WeaponType[] equipedWeapon = new WeaponType[2];
 
@@ -31,8 +31,9 @@ public class GameData
         currentTimeSkill = "PlayerTimeSkill_None";
         lastInteractedSavepoint = "Defult";
 
+        statusEnhancementInventory = new();
         savepoints = new();
-        inventory = new();
+        chipInventory = new();
         pickedTreasures = new();
         equipedItems = new();
         defeatedBosses = new();

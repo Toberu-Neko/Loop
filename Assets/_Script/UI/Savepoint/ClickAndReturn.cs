@@ -8,7 +8,7 @@ public class ClickAndReturn : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image image;
     public event Action OnReturn;
 
-    public void SetValue(LootSO so)
+    public void SetValue(SO_Chip so)
     {
         image.sprite = so.itemSprite;
     }

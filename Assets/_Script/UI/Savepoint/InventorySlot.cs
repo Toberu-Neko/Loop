@@ -12,7 +12,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private DraggableItem previousItem;
     private DraggableItem currentItem;
-    public LootSO LootSO { get; private set; }
+    public SO_Chip LootSO { get; private set; }
     private List<DraggableItem> draggableItems;
 
     public event Action<string, string> OnEnterTarget;
@@ -34,16 +34,19 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         Count = count;
         countText.text = Count.ToString();
+
+        if (currentItem != null)
+            currentItem.Count = count;
     }
 
-    public void SetValue(int count, LootSO so)
+    public void SetValue(int count, SO_Chip so)
     {
         SetCount(count);
         LootSO = so;
         SpawnDraggableObj(LootSO);
     }
 
-    private void SpawnDraggableObj(LootSO so)
+    private void SpawnDraggableObj(SO_Chip so)
     {
         GameObject obj = ObjectPoolManager.SpawnObject(draggablePrefab, spawnPoint);
         obj.transform.localPosition = Vector3.zero;

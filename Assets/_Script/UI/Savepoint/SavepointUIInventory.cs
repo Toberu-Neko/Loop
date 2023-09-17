@@ -85,7 +85,7 @@ public class SavepointUIInventory : MonoBehaviour
 
         foreach(var item in inventory)
         {
-            LootSO so = ItemDataManager.Instance.LootSODict[item.Value.lootDetails.lootName];
+            SO_Chip so = ItemDataManager.Instance.LootSODict[item.Value.lootDetails.lootName];
             int SOcount = 0;
 
             foreach(EquipmentSlot equipmentSlot in swordSlots)

@@ -10,7 +10,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
     [SerializeField] private WeaponType equipmentType;
     [SerializeField, Range(0, 3)] private int slotIndex;
 
-    public LootSO LootSO { get; private set; }
+    public SO_Chip LootSO { get; private set; }
     private GameObject clickAndReturnObj;
     private ClickAndReturn clickAndReturn;
     public void OnDrop(PointerEventData eventData)
@@ -23,7 +23,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         GameObject droppedItem = eventData.pointerDrag;
         droppedItem.TryGetComponent(out DraggableItem draggableItem);
 
-        if (draggableItem == null)
+        if (draggableItem == null || draggableItem.Count <= 0)
         {
             return;
         }
@@ -41,7 +41,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         }
     }
 
-    private void UpdateSlot(LootSO SO)
+    private void UpdateSlot(SO_Chip SO)
     {
         LootSO = SO;
         clickAndReturnObj = ObjectPoolManager.SpawnObject(clickAndReturnPrefab, transform);
@@ -74,7 +74,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         if(data.equipedItems.ContainsKey(equipmentType.ToString() + slotIndex))
         {
             string lootName = data.equipedItems[equipmentType.ToString() + slotIndex];
-            LootSO so = ItemDataManager.Instance.LootSODict[lootName];
+            SO_Chip so = ItemDataManager.Instance.LootSODict[lootName];
 
             if(so != null)
             {

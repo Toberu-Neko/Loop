@@ -12,10 +12,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public bool CanEquipOnGun { get; private set; }
     public bool CanEquipOnFist { get; private set; }
 
-    private int count;
+    public int Count { get; set; }
 
     public bool DontHaveTarget { get; set; } = true;
-    public LootSO LootSO { get; private set;}
+    public SO_Chip LootSO { get; private set;}
 
     public event Action<DraggableItem> OnReturnToOriginalParent;
     public event Action OnStartDragging;
@@ -28,9 +28,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.raycastTarget = true;
     }
 
-    public void SetValue(LootSO so, int count)
+    public void SetValue(SO_Chip so, int count)
     {
-        this.count = count;
+        this.Count = count;
 
         image.sprite = so.itemSprite;
         LootSO = so;
@@ -41,7 +41,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(count <= 0)
+        if(Count <= 0)
         {
             return;
         }
@@ -55,7 +55,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (count <= 0)
+        if (Count <= 0)
         {
             return;
         }
@@ -65,7 +65,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (count <= 0)
+        if (Count <= 0)
         {
             return;
         }

@@ -9,7 +9,10 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public int Money { get; private set; }
     public event Action OnMoneyChanged;
 
+    public SerializableDictionary<string, ItemData> StatusEnhancementInventory { get; private set; }
+    // public SerializableDictionary<string, ItemData> StoryItemInventory { get; private set; }
     public SerializableDictionary<string, ItemData> ChipInventory { get; private set; }
+
     public WeaponType[] EquipedWeapon { get; private set; }
 
     public MultiplierData SwordMultiplier { get; private set; }
@@ -20,9 +23,9 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     private class EquipedItem
     {
         public WeaponType equipmentType;
-        public LootSO lootSO;
+        public SO_Chip lootSO;
 
-        public EquipedItem(WeaponType equipmentType, LootSO SO)
+        public EquipedItem(WeaponType equipmentType, SO_Chip SO)
         {
             this.equipmentType = equipmentType;
             lootSO = SO;
@@ -58,6 +61,22 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
     }
 
+    #region PlayerStatusEnhancementInventory
+
+    public void AddPlayerStatusEnhancementItem(ItemDetails lootDetails, int amount = 1)
+    {
+        if (StatusEnhancementInventory.ContainsKey(lootDetails.lootName))
+        {
+            StatusEnhancementInventory[lootDetails.lootName].itemCount += amount;
+        }
+        else
+        {
+            StatusEnhancementInventory.Add(lootDetails.lootName, new ItemData { lootDetails = lootDetails, itemCount = amount });
+        }
+    }
+
+    #endregion
+
     #region Weapon
     public void ChangeEquipWeapon1(WeaponType type)
     {
@@ -81,7 +100,6 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             ChipInventory.Add(lootDetails.lootName, new ItemData { lootDetails = lootDetails, itemCount = amount });
         }
-        // Debug.Log("You have " + Inventory[lootDetails.lootName].itemCount + " " + lootDetails.lootName + " in your inventory.");
     }
 
     private void UpdateEquipedChips()
@@ -113,13 +131,13 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
     }
 
-    public void EquipChip(LootSO SO, WeaponType equipmentType)
+    public void EquipChip(SO_Chip SO, WeaponType equipmentType)
     {
         equipedItems.Add(new EquipedItem(equipmentType, SO));
         UpdateEquipedChips();
     }
 
-    public void UnEquipChip(LootSO SO, WeaponType type)
+    public void UnEquipChip(SO_Chip SO, WeaponType type)
     {
         equipedItems.Remove(equipedItems.Find(x => x.equipmentType == type && x.lootSO == SO));
         UpdateEquipedChips();
@@ -145,6 +163,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public void LoadData(GameData data)
     {
         ChipInventory = new();
+        StatusEnhancementInventory = new();
 
         if (data.equipedWeapon.Length == 0)
         {
@@ -156,15 +175,16 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             EquipedWeapon = data.equipedWeapon;
         }
-        ChipInventory = data.inventory;
+        ChipInventory = data.chipInventory;
         Money = data.money;
+        StatusEnhancementInventory = data.statusEnhancementInventory;
     }
 
     public void SaveData(GameData data)
     {
         if (ChipInventory != null)
         {
-            data.inventory = ChipInventory;
+            data.chipInventory = ChipInventory;
         }
 
         if(EquipedWeapon != null)
@@ -173,6 +193,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
 
         data.money = Money;
+        data.statusEnhancementInventory = StatusEnhancementInventory;
     }
 }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LootItemPrefab : DropableItemBase
 {
-    [HideInInspector] public LootSO lootSO;
+    [HideInInspector] public SO_Chip lootSO;
 
     private void OnTriggerEnter2D(Collider2D other)
     {

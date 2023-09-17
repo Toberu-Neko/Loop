@@ -42,7 +42,7 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
         switch(so.treasureType)
         {
             case SO_Treasure.TreasureType.Chip:
-                // PlayerInventoryManager.Instance.AddChip(so.addMaxHealth);
+                PlayerInventoryManager.Instance.AddChip(so.chip.itemDetails);
                 break;
             case SO_Treasure.TreasureType.StoryItem:
                 // PlayerInventoryManager.Instance.AddItem(so.addMaxHealth);
@@ -54,7 +54,7 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
                 // PlayerInventoryManager.Instance.AddTimeSkill(so.timeSkills);
                 break;
             case SO_Treasure.TreasureType.PlayerStatusEnhancement:
-                // PlayerInventoryManager.Instance.AddPlayerStatusEnhancement(so.addMaxHealth);
+                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(so.playerStatusEnhancement.itemDetails);
                 break;
         }
 

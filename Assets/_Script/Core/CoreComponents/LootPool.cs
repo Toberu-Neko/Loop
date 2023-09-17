@@ -73,7 +73,7 @@ public class LootPool : CoreComponent
 [Serializable]
 public class LootItem
 {
-    public LootSO lootdetails;
+    public SO_Chip lootdetails;
     public int amount = 1;
 
     [Range(0f, 100f)]
