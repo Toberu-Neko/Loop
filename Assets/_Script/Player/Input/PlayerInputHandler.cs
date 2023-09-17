@@ -13,6 +13,7 @@ public class PlayerInputHandler : MonoBehaviour
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
+    public bool RegenInput { get; private set; }
 
     public bool JumpInputStop { get; private set; }
     public bool GrabInput { get; private set; }
@@ -109,6 +110,26 @@ public class PlayerInputHandler : MonoBehaviour
         {
             DebugInput = false;
         }
+    }
+
+    public void OnRegenInput(InputAction.CallbackContext context)
+    {
+        if(gameManager.IsPaused)
+            return;
+
+        if(context.started)
+        {
+            RegenInput = true;
+        }
+        if(context.canceled)
+        {
+            RegenInput = false;
+        }
+    }
+
+    public void UseRegenInput()
+    {
+        RegenInput = false;
     }
 
     public void OnInteractionInput(InputAction.CallbackContext context)

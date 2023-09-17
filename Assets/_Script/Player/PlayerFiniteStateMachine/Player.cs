@@ -21,9 +21,9 @@ public class Player : MonoBehaviour
     public PlayerDashState DashState { get; private set; }
     public PlayerCrouchIdleState CrouchIdleState { get; private set; }
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
-    public OldPlayerAttackState AttackState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
     public PlayerPerfectBlockState PerfectBlockState { get; private set; }
+    public PlayerRegenState RegenState { get; private set; }
     public PlayerDeadState DeadState { get; private set; }
     #endregion
 
@@ -103,9 +103,9 @@ public class Player : MonoBehaviour
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
         DeadState = new PlayerDeadState(this, StateMachine, playerData, "dead");
 
-        AttackState = new OldPlayerAttackState(this, StateMachine, playerData, "attack");
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
+        RegenState = new PlayerRegenState(this, StateMachine, playerData, "regen");
 
         SwordHubState = new PlayerSwordHubState(this, StateMachine, playerData, "swordAttack");
         SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, playerData, "swordNormalAttack");

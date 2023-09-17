@@ -119,6 +119,12 @@ public class PlayerGroundedState : PlayerState
         }
         #endregion
 
+        else if (player.InputHandler.RegenInput && isGrounded && Stats.Health.CurrentValue < Stats.Health.MaxValue && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
+        {
+            player.InputHandler.UseRegenInput();
+            stateMachine.ChangeState(player.RegenState);
+        }
+
         else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock() && Stats.Attackable)
         {
             stateMachine.ChangeState(player.BlockState);

@@ -8,6 +8,10 @@ public class PlayerData : ScriptableObject
     public LayerMask whatIsEnemy;
     public float gravityScale = 5f;
 
+    [Header("Regen")]
+    public float regenCost = 10f;
+    public float regenAmount = 10f;
+
     [Header("MoveState")]
     [Tooltip("²¾°Ê³t«×")]
     public float movementVelocity = 10f;
