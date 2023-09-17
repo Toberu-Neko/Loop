@@ -37,5 +37,10 @@ public class MultiplierData
 public class ItemDetails
 {
     public string lootName;
+
+    public ItemDetails(string lootName)
+    {
+        this.lootName = lootName;
+    }
 }
 

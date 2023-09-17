@@ -9,7 +9,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public event Action OnMoneyChanged;
 
     public SerializableDictionary<string, ItemData> StatusEnhancementInventory { get; private set; }
-    // public SerializableDictionary<string, ItemData> StoryItemInventory { get; private set; }
+    public SerializableDictionary<string, ItemData> ConsumablesInventory { get; private set; }
     public SerializableDictionary<string, ItemData> ChipInventory { get; private set; }
 
     public WeaponType[] EquipedWeapon { get; private set; }
@@ -42,6 +42,10 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         SwordMultiplier = new();
         GunMultiplier = new();
         FistMultiplier = new();
+        ConsumablesInventory = new()
+        {
+            { "Medkit", new ItemData(3, "Medkit") }
+        };
     }
 
     private void Start()
@@ -56,6 +60,8 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
             Debug.LogError("Data persistance is disabled, so player can't save picked items.");
             ChipInventory = new();
             equipedItems = new();
+            StatusEnhancementInventory = new();
+            ConsumablesInventory = new();
             Money = 99999999;
         }
     }
@@ -66,11 +72,40 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     {
         if (StatusEnhancementInventory.ContainsKey(lootDetails.lootName))
         {
-            StatusEnhancementInventory[lootDetails.lootName].itemCount += amount;
+            StatusEnhancementInventory[lootDetails.lootName].IncreaseItemCount(amount);
         }
         else
         {
-            StatusEnhancementInventory.Add(lootDetails.lootName, new ItemData { lootDetails = lootDetails, itemCount = amount });
+            StatusEnhancementInventory.Add(lootDetails.lootName, new ItemData(amount, lootDetails.lootName));
+        }
+    }
+
+    public void AddConsumableItem(ItemDetails lootDetails, int amount = 1)
+    {
+        if (ConsumablesInventory.ContainsKey(lootDetails.lootName))
+        {
+            ConsumablesInventory[lootDetails.lootName].IncreaseItemCount(amount);
+        }
+        else
+        {
+            ConsumablesInventory.Add(lootDetails.lootName, new ItemData(amount, lootDetails.lootName));
+        }
+    }
+
+
+    public void RemoveConsumableItem(string name, int amount = 1)
+    {
+        if (ConsumablesInventory.ContainsKey(name))
+        {
+            ConsumablesInventory[name].ReduceItemCount(amount);
+            if (ConsumablesInventory[name].ItemCount <= 0)
+            {
+                Debug.LogError("Item count is less or equal to zero.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Item not found in inventory.");
         }
     }
 
@@ -93,11 +128,11 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     {
         if (ChipInventory.ContainsKey(lootDetails.lootName))
         {
-            ChipInventory[lootDetails.lootName].itemCount += amount;
+            ChipInventory[lootDetails.lootName].IncreaseItemCount(amount);
         }
         else
         {
-            ChipInventory.Add(lootDetails.lootName, new ItemData { lootDetails = lootDetails, itemCount = amount });
+            ChipInventory.Add(lootDetails.lootName, new ItemData (amount, lootDetails.lootName));
         }
     }
 
@@ -174,9 +209,12 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             EquipedWeapon = data.equipedWeapon;
         }
+        Debug.Log("data: " + data.consumablesInventory["Medkit"].ItemCount + " Local: " + ConsumablesInventory["Medkit"].ItemCount);
         ChipInventory = data.chipInventory;
         Money = data.money;
         StatusEnhancementInventory = data.statusEnhancementInventory;
+        ConsumablesInventory = data.consumablesInventory;
+        Debug.Log("data: " + data.consumablesInventory["Medkit"].ItemCount + " Local: " + ConsumablesInventory["Medkit"].ItemCount);
     }
 
     public void SaveData(GameData data)
@@ -193,13 +231,34 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 
         data.money = Money;
         data.statusEnhancementInventory = StatusEnhancementInventory;
+        data.consumablesInventory = ConsumablesInventory;
+        Debug.Log("data: " + data.consumablesInventory["Medkit"].ItemCount + " Local: " + ConsumablesInventory["Medkit"].ItemCount);
     }
 }
 
 [System.Serializable]
 public class ItemData
 {
-    public int itemCount;
+    public int ItemCount;
     public ItemDetails lootDetails;
+    public event Action OnValueChanged;
+
+    public ItemData(int count, string name)
+    {
+        ItemCount = count;
+        lootDetails = new(name);
+    }
+
+    public void ReduceItemCount(int amount)
+    {
+        ItemCount -= amount;
+        OnValueChanged?.Invoke();
+    }
+
+    public void IncreaseItemCount(int amount)
+    {
+        ItemCount += amount;
+        OnValueChanged?.Invoke();
+    }
 }
 

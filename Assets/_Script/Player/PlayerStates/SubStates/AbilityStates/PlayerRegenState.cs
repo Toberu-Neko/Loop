@@ -26,7 +26,14 @@ public class PlayerRegenState : PlayerAbilityState
     {
         base.AnimationFinishTrigger();
 
-        player.TimeSkillManager.DecreaseEnergy(playerData.regenCost);
+        if (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].ItemCount > 0)
+        {
+            PlayerInventoryManager.Instance.RemoveConsumableItem("Medkit");
+        }
+        else
+        {
+            player.TimeSkillManager.DecreaseEnergy(playerData.regenCost);
+        }
         Stats.Health.Increase(playerData.regenAmount);
 
         isAbilityDone = true;

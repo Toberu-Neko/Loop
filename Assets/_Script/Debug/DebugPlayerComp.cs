@@ -9,11 +9,10 @@ public class DebugPlayerComp : MonoBehaviour
     [SerializeField] TextMeshProUGUI HpText;
     [SerializeField] TextMeshProUGUI weaponText;
     [SerializeField] TextMeshProUGUI timeText;
-    [SerializeField] TextMeshProUGUI debugInputCountText;
+    [SerializeField] TextMeshProUGUI medkitText;
 
     private PlayerWeaponManager weaponManager;
     private PlayerTimeSkillManager timeSkillManager;
-    private PlayerSaveDataManager saveDataManager;
 
     private Core core;
 
@@ -27,16 +26,16 @@ public class DebugPlayerComp : MonoBehaviour
         core = GetComponentInChildren<Core>();
         weaponManager = GetComponent<PlayerWeaponManager>();
         timeSkillManager = GetComponent<PlayerTimeSkillManager>();
-        saveDataManager = GetComponent<PlayerSaveDataManager>();
 
         perfectBlockAttack.SetActive(false);
     }
 
     void Start()
     {
+        PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged += UpdateMedkitText;
+        UpdateMedkitText();
         UpdateHpText();
         UpdateWeaponText();
-        UpdateDebugText();
     }
 
     private void OnEnable()
@@ -51,6 +50,7 @@ public class DebugPlayerComp : MonoBehaviour
 
     private void OnDisable()
     {
+        PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged -= UpdateMedkitText;
         Combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
         Stats.Health.OnValueChanged -= UpdateHpText;
         Combat.OnDamaged -= UpdateHpText;
@@ -67,7 +67,15 @@ public class DebugPlayerComp : MonoBehaviour
         }
     }
 
-    void UpdateHpText() => HpText.text = "生命值: " + Stats.Health.CurrentValue.ToString();
+    void UpdateMedkitText()
+    {
+        medkitText.text = "血包" + PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].ItemCount.ToString();
+    }
+
+    void UpdateHpText()
+    {
+        HpText.text =  "\n生命值: " + Stats.Health.CurrentValue.ToString();
+    }
 
     void UpdateWeaponText()
     {
@@ -81,7 +89,4 @@ public class DebugPlayerComp : MonoBehaviour
             "\n 能量: " + timeSkillManager.CurrentEnergy.ToString();
     }
 
-    void UpdateDebugText()
-    {
-    }
 }

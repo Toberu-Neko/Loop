@@ -19,6 +19,7 @@ public class GameData
     public SerializableDictionary<string, SavepointDetails> savepoints;
 
     public SerializableDictionary<string, ItemData> statusEnhancementInventory;
+    public SerializableDictionary<string, ItemData> consumablesInventory;
     public SerializableDictionary<string, ItemData> chipInventory;
     public SerializableDictionary<string, string> equipedItems;
     public WeaponType[] equipedWeapon = new WeaponType[2];
@@ -37,6 +38,8 @@ public class GameData
         pickedTreasures = new();
         equipedItems = new();
         defeatedBosses = new();
+        consumablesInventory = new();
+        consumablesInventory.Add("Medkit", new ItemData(3, "Medkit"));
 
         equipedWeapon[0] = WeaponType.Sword;
         equipedWeapon[1] = WeaponType.Gun;

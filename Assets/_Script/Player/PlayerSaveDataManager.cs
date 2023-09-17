@@ -29,8 +29,6 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
     {
         data.savepoints.TryGetValue(data.lastInteractedSavepoint, out SavepointDetails details);
 
-        Debug.Log(data.lastInteractedSavepoint);
-
         if (details != null)
         {
             transform.position = details.teleportPosition;

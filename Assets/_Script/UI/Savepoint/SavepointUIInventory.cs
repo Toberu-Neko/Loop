@@ -114,7 +114,7 @@ public class SavepointUIInventory : MonoBehaviour
 
 
             InventorySlots[count].ActiveSlot();
-            InventorySlots[count].SetValue(item.Value.itemCount - SOcount, so);
+            InventorySlots[count].SetValue(item.Value.ItemCount - SOcount, so);
             InventorySlots[count].OnEnterTarget += HandleEnterTarget;
             InventorySlots[count].OnExitTarget += HandleExitTarget;
 

@@ -53,7 +53,7 @@ public class DataPersistenceManager : MonoBehaviour
         timer = 0f;
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();
-        firstTimeLoad = true;
+        firstTimeLoad = false;
 
         if (DisableDataPersistance)
         {
@@ -90,12 +90,13 @@ public class DataPersistenceManager : MonoBehaviour
         // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
         {
+            LoadGame();
             if (firstTimeLoad)
             {
                 firstTimeLoad = false;
                 SaveGame();
+                LoadGame();
             }
-            LoadGame();
         }
     }
 
@@ -109,6 +110,7 @@ public class DataPersistenceManager : MonoBehaviour
     public void NewGame()
     {
         GameData = new();
+        dataHandler.Save(GameData, selectedProfileId);
         Debug.Log("Creating new game");
         firstTimeLoad = true;
     }
@@ -126,15 +128,10 @@ public class DataPersistenceManager : MonoBehaviour
                 Debug.Log("Temp game data reset.");
             }
         }
-        else
-        {
-            GameData = dataHandler.Load(selectedProfileId);
-        }
 
-        timer = 0f;
+        GameData = dataHandler.Load(selectedProfileId);
 
-
-        if(GameData == null)
+        if (GameData == null)
         {
             if (initializeDataIfNull)
             {
@@ -146,6 +143,8 @@ public class DataPersistenceManager : MonoBehaviour
                 return;
             }
         }
+        timer = 0f;
+
 
         foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
         {
@@ -184,14 +183,15 @@ public class DataPersistenceManager : MonoBehaviour
         GameData.timePlayed += timer;
         timer = 0f;
 
+
         dataHandler.Save(GameData, selectedProfileId);
+
         OnSave?.Invoke();
     }
 
     public void ChangeSelectedProfileId(string profileId)
     {
         selectedProfileId = profileId;
-        LoadGame();
     }
 
     public void ReloadBaseScene()
