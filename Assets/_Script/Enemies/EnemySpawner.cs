@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour, ITempDataPersistence
 {
-    [HideInInspector] public bool isAddedID;
-    [HideInInspector] public string ID;
+    public bool isAddedID;
+    public string ID;
 
     [SerializeField] private GameObject enemy;
     private Entity entity;

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PickupTreasure : PressEPickItemBase, IDataPersistance
 {
-    [HideInInspector] public bool isAddedID;
-    [HideInInspector] public string ID;
+    public bool isAddedID;
+    public string ID;
+
+    [SerializeField] private SO_Treasure so;
 
     private bool ispicked;
 
@@ -37,6 +39,25 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
 
     private void HandlePickUp()
     {
+        switch(so.treasureType)
+        {
+            case SO_Treasure.TreasureType.Chip:
+                // PlayerInventoryManager.Instance.AddChip(so.addMaxHealth);
+                break;
+            case SO_Treasure.TreasureType.StoryItem:
+                // PlayerInventoryManager.Instance.AddItem(so.addMaxHealth);
+                break;
+            case SO_Treasure.TreasureType.Movement:
+                // PlayerInventoryManager.Instance.AddMovementSkill(so.playerMovementSkills);
+                break;
+            case SO_Treasure.TreasureType.TimeSkill:
+                // PlayerInventoryManager.Instance.AddTimeSkill(so.timeSkills);
+                break;
+            case SO_Treasure.TreasureType.PlayerStatusEnhancement:
+                // PlayerInventoryManager.Instance.AddPlayerStatusEnhancement(so.addMaxHealth);
+                break;
+        }
+
         /*
         UI_Manager.Instance.ActivePickupItemUI(lootSO.itemDetails.lootName, lootSO.itemDescription);
         PlayerInventoryManager.Instance.AddChip(lootSO.itemDetails);

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BreakableWall : MonoBehaviour, IMapDamageableItem, ITempDataPersistence
 {
-    [HideInInspector] public bool isAddedID;
-    [HideInInspector] public string ID;
+    public bool isAddedID;
+    public string ID;
     [SerializeField] private int health = 1;
 
     private bool isDefeated = false;

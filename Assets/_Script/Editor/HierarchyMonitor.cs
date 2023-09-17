@@ -11,6 +11,7 @@ public static class HierarchyMonitor
         EditorApplication.hierarchyChanged += OnHierarchyChanged;
     }
 
+
     static void OnHierarchyChanged()
     {
         var allSpawners = GameObject.FindObjectsOfType<EnemySpawner>();
@@ -25,7 +26,6 @@ public static class HierarchyMonitor
                     script.isAddedID = true;
                     script.ID = System.Guid.NewGuid().ToString();
                     EditorUtility.SetDirty(item);
-                    // Debug.Log("Change spawner ID: " + spawner.name);
                 }
             }
         }
@@ -43,7 +43,6 @@ public static class HierarchyMonitor
                     script.isAddedID = true;
                     script.ID = System.Guid.NewGuid().ToString();
                     EditorUtility.SetDirty(item);
-                    // Debug.Log("Change spawner ID: " + spawner.name);
                 }
             }
         }
@@ -61,7 +60,6 @@ public static class HierarchyMonitor
                     script.isAddedID = true;
                     script.ID = System.Guid.NewGuid().ToString();
                     EditorUtility.SetDirty(item);
-                    // Debug.Log("Change spawner ID: " + spawner.name);
                 }
             }
         }

@@ -60,3 +60,22 @@ public class SavepointDetails
         teleportPosition = teleportPos;
     }
 }
+
+[System.Serializable]
+public class PlayerTimeSkills
+{
+    public bool timeStopRanged = false;
+    public bool timeStopAll = false;
+    public bool timeSlowRanged = false;
+    public bool timeSlowAll = false;
+    public bool timeReverse = false;
+    public bool bookMark = false;
+}
+
+[System.Serializable]
+public class PlayerMovementSkills
+{
+    public bool doubleJump = false;
+    public bool dashInvincible = false;
+    public bool wallJump = false;
+}
