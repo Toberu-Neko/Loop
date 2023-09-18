@@ -74,7 +74,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         if(data.equipedItems.ContainsKey(equipmentType.ToString() + slotIndex))
         {
             string lootName = data.equipedItems[equipmentType.ToString() + slotIndex];
-            SO_Chip so = ItemDataManager.Instance.LootSODict[lootName];
+            SO_Chip so = ItemDataManager.Instance.ChipDict[lootName];
 
             if(so != null)
             {

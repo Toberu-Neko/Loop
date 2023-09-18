@@ -6,7 +6,11 @@ public class ItemDataManager : MonoBehaviour
 {
     public static ItemDataManager Instance { get; private set; }
 
-    public Dictionary<string, SO_Chip> LootSODict { get; private set; }
+    public Dictionary<string, SO_Chip> ChipDict { get; private set; }
+    public Dictionary<string, SO_MovementSkillItem> MovementSkillDict { get; private set; }
+    public Dictionary<string, SO_TimeSkillItem> TimeSkillDict { get; private set; }
+    public Dictionary<string, SO_PlayerStatusEnhancement> StatusEnhancementDict { get; private set; }
+    public Dictionary<string, SO_StoryItem> StoryItemDict { get; private set; }
 
     private void Awake()
     {
@@ -19,12 +23,12 @@ public class ItemDataManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        var lootSOs = Resources.LoadAll<SO_Chip>("LootSO");
-        LootSODict = new();
+        var chipSOs = Resources.LoadAll<SO_Chip>("ChipSO");
+        ChipDict = new();
 
-        foreach (var item in lootSOs)
+        foreach (var item in chipSOs)
         {
-            if(LootSODict.ContainsKey(item.itemDetails.lootName))
+            if(ChipDict.ContainsKey(item.itemDetails.lootName))
             {
                 Debug.LogError($"There are more than one loot with the same name: {item.name}");
                 continue;
@@ -36,7 +40,48 @@ public class ItemDataManager : MonoBehaviour
                 continue;
             }
 
-            LootSODict.Add(item.itemDetails.lootName, item);
+            ChipDict.Add(item.itemDetails.lootName, item);
         }
+
+        var movementSkillSOs = Resources.LoadAll<SO_MovementSkillItem>("MovementSkillSO");
+        MovementSkillDict = new();
+
+        foreach (var item in movementSkillSOs)
+        {
+            if (MovementSkillDict.ContainsKey(item.name))
+            {
+                Debug.LogError($"There are more than one loot with the same name: {item.name}");
+                continue;
+            }
+
+            if (item.name == "")
+            {
+                Debug.LogError($"There is a loot with no name, name: " + item.name);
+                continue;
+            }
+
+            MovementSkillDict.Add(item.name, item);
+        }
+
+        var timeSkillSOs = Resources.LoadAll<SO_TimeSkillItem>("TimeSkillSO");
+        TimeSkillDict = new();
+
+        foreach(var item in timeSkillSOs)
+        {
+            if (TimeSkillDict.ContainsKey(item.name))
+            {
+                Debug.LogError($"There are more than one loot with the same name: {item.name}");
+                continue;
+            }
+
+            if (item.name == "")
+            {
+                Debug.LogError($"There is a loot with no name, name: " + item.name);
+                continue;
+            }
+
+            TimeSkillDict.Add(item.name, item);
+        }
+
     }
 }
