@@ -135,7 +135,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(canOpenDescription)
-            OnEnterTarget?.Invoke(LootSO.itemDetails.lootName, LootSO.itemDescription);
+            OnEnterTarget?.Invoke(LootSO.itemName, LootSO.itemDescription);
     }
 
     public void OnPointerExit(PointerEventData eventData)

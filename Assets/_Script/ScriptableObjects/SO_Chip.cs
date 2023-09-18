@@ -1,12 +1,8 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Loot", menuName = "Loot System/New LootDetails")]
-public class SO_Chip : ScriptableObject
+[CreateAssetMenu(fileName = "New Chip", menuName = "Items/New Chip")]
+public class SO_Chip : SO_ItemsBase
 {
-    [Header("Necessary Data")]
-    public ItemDetails itemDetails;
-    public Sprite itemSprite;
-    [TextArea(5, 10)] public string itemDescription;
 
     [Header("Available Equipment Type")]
     public bool canEquipOnSword;

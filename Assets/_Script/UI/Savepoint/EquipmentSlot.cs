@@ -63,7 +63,7 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
         }
 
         if(LootSO != null)
-            data.equipedItems.Add(equipmentType.ToString() + slotIndex, LootSO.itemDetails.lootName);
+            data.equipedItems.Add(equipmentType.ToString() + slotIndex, LootSO.itemName);
         else
             data.equipedItems.Remove(equipmentType.ToString() + slotIndex);
     }

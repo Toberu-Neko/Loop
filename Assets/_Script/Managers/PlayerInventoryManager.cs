@@ -9,14 +9,20 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public event Action OnMoneyChanged;
 
     public SerializableDictionary<string, ItemData> StatusEnhancementInventory { get; private set; }
+    public SerializableDictionary<string, ItemData> StoryItemInventory { get; private set; }
+    public SerializableDictionary<string, ItemData> MovementSkillItemInventory { get; private set; }
+    public SerializableDictionary<string, ItemData> TimeSkillItemInventory { get; private set; }
     public SerializableDictionary<string, ItemData> ConsumablesInventory { get; private set; }
     public SerializableDictionary<string, ItemData> ChipInventory { get; private set; }
 
+    #region Weapon Variables
     public WeaponType[] EquipedWeapon { get; private set; }
 
     public MultiplierData SwordMultiplier { get; private set; }
     public MultiplierData GunMultiplier { get; private set; }
     public MultiplierData FistMultiplier { get; private set; }
+
+    #endregion
 
     private List<EquipedItem> equipedItems;
     private class EquipedItem
@@ -46,6 +52,10 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             { "Medkit", new ItemData(3, "Medkit") }
         };
+        StatusEnhancementInventory = new();
+        MovementSkillItemInventory = new();
+        TimeSkillItemInventory = new();
+        StoryItemInventory = new();
     }
 
     private void Start()
@@ -66,8 +76,6 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
     }
 
-    #region PlayerStatusEnhancementInventory
-
     public void AddPlayerStatusEnhancementItem(string name, int amount = 1)
     {
         if (StatusEnhancementInventory.ContainsKey(name))
@@ -80,6 +88,43 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
     }
 
+    public void AddMovemnetSkillItem(string name)
+    {
+        if(MovementSkillItemInventory.ContainsKey(name))
+        {
+            MovementSkillItemInventory[name].ItemCount = 1;
+        }
+        else
+        {
+            MovementSkillItemInventory.Add(name, new ItemData(1, name));
+        }
+    }
+
+    public void AddTimeSkillItem(string name)
+    {
+        if (TimeSkillItemInventory.ContainsKey(name))
+        {
+            TimeSkillItemInventory[name].ItemCount = 1;
+        }
+        else
+        {
+            TimeSkillItemInventory.Add(name, new ItemData(1, name));
+        }
+    }
+
+    public void AddStoryItem(string name)
+    {
+        if (StoryItemInventory.ContainsKey(name))
+        {
+            StoryItemInventory[name].ItemCount = 1;
+        }
+        else
+        {
+            StoryItemInventory.Add(name, new ItemData(1, name));
+        }
+    }
+
+    #region ConsumableItem
     public void AddConsumableItem(ItemDetails lootDetails, int amount = 1)
     {
         if (ConsumablesInventory.ContainsKey(lootDetails.lootName))
@@ -97,10 +142,18 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     {
         if (ConsumablesInventory.ContainsKey(name))
         {
-            ConsumablesInventory[name].ReduceItemCount(amount);
-            if (ConsumablesInventory[name].ItemCount <= 0)
+            if (ConsumablesInventory[name].ItemCount > 0)
             {
-                Debug.LogError("Item count is less or equal to zero.");
+                ConsumablesInventory[name].ReduceItemCount(amount);
+            }
+            else
+            {
+                Debug.LogError(name + " item count is less or equal to zero, and trying to reduce the amount of it.");
+            }
+
+            if (ConsumablesInventory[name].ItemCount < 0)
+            {
+                Debug.LogError("Item count is less than zero.");
             }
         }
         else
@@ -108,7 +161,6 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
             Debug.LogError("Item not found in inventory.");
         }
     }
-
     #endregion
 
     #region Weapon
@@ -124,15 +176,15 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     #endregion
 
     #region Chip
-    public void AddChip(ItemDetails lootDetails, int amount = 1)
+    public void AddChip(string name, int amount = 1)
     {
-        if (ChipInventory.ContainsKey(lootDetails.lootName))
+        if (ChipInventory.ContainsKey(name))
         {
-            ChipInventory[lootDetails.lootName].IncreaseItemCount(amount);
+            ChipInventory[name].IncreaseItemCount(amount);
         }
         else
         {
-            ChipInventory.Add(lootDetails.lootName, new ItemData (amount, lootDetails.lootName));
+            ChipInventory.Add(name, new ItemData (amount, name));
         }
     }
 
@@ -209,12 +261,14 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         {
             EquipedWeapon = data.equipedWeapon;
         }
-        Debug.Log("data: " + data.consumablesInventory["Medkit"].ItemCount + " Local: " + ConsumablesInventory["Medkit"].ItemCount);
+
         ChipInventory = data.chipInventory;
         Money = data.money;
         StatusEnhancementInventory = data.statusEnhancementInventory;
         ConsumablesInventory = data.consumablesInventory;
-        Debug.Log("data: " + data.consumablesInventory["Medkit"].ItemCount + " Local: " + ConsumablesInventory["Medkit"].ItemCount);
+        TimeSkillItemInventory = data.timeSkillItemInventory;
+        MovementSkillItemInventory = data.movementSkillItemInventory;
+        StoryItemInventory = data.storyItemInventory;
     }
 
     public void SaveData(GameData data)
@@ -232,7 +286,9 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         data.money = Money;
         data.statusEnhancementInventory = StatusEnhancementInventory;
         data.consumablesInventory = ConsumablesInventory;
-        Debug.Log("data: " + data.consumablesInventory["Medkit"].ItemCount + " Local: " + ConsumablesInventory["Medkit"].ItemCount);
+        data.timeSkillItemInventory = TimeSkillItemInventory;
+        data.movementSkillItemInventory = MovementSkillItemInventory;
+        data.storyItemInventory = StoryItemInventory;
     }
 }
 

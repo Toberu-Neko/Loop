@@ -66,7 +66,7 @@ public class LootPool : CoreComponent
         Rigidbody2D rig = dropItem.GetComponent<Rigidbody2D>();
         rig.velocity = dir * dropForce;
 
-        dropItem.GetComponent<PickupChip>().lootSO = lootItem.lootdetails;
+        dropItem.GetComponent<PickupChip>().chipSO = lootItem.lootdetails;
     }
 }
 

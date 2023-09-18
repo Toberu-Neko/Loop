@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DropableItemBase : MonoBehaviour
 {
+    [Header("DroppableItemBase")]
     [SerializeField] private Transform groundDetector;
     [SerializeField] private Vector2 groundDetectorSize;
     [SerializeField] private LayerMask whatIsGround;

@@ -25,6 +25,11 @@ public class GameData
     public SerializableDictionary<string, ItemData> statusEnhancementInventory;
     public SerializableDictionary<string, ItemData> consumablesInventory;
     public SerializableDictionary<string, ItemData> chipInventory;
+
+    public SerializableDictionary<string, ItemData> storyItemInventory;
+    public SerializableDictionary<string, ItemData> movementSkillItemInventory;
+    public SerializableDictionary<string, ItemData> timeSkillItemInventory;
+
     public SerializableDictionary<string, string> equipedItems;
     public WeaponType[] equipedWeapon = new WeaponType[2];
 
@@ -38,6 +43,10 @@ public class GameData
 
         unlockedMovementSkills = new();
         unlockedTimeSkills = new();
+
+        storyItemInventory = new();
+        movementSkillItemInventory = new();
+        timeSkillItemInventory = new();
 
         statusEnhancementInventory = new();
         savepoints = new();

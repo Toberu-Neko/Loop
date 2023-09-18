@@ -10,7 +10,7 @@ public class LootItemPrefab : DropableItemBase
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerInventoryManager.Instance.AddChip(lootSO.itemDetails);
+            PlayerInventoryManager.Instance.AddChip(lootSO.itemName);
             ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }

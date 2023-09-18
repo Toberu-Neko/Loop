@@ -1,13 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PickupTreasure : PressEPickItemBase, IDataPersistance
 {
+    [Header("ID")]
     public bool isAddedID;
     public string ID;
 
-    [SerializeField] private SO_Treasure so;
+    [Header("Treasure Data")]
+    [SerializeField] private TreasureType treasureType;
+
+    [Header("Chip")]
+    [SerializeField] private SO_Chip chip;
+
+    [Header("StoryItem")]
+    [SerializeField] private SO_StoryItem storyItem;
+
+    [Header("PlayerStatusEnhancement")]
+    [SerializeField] private SO_PlayerStatusEnhancement playerStatusEnhancement;
+
+    [Header("Skill")]
+    [SerializeField] private SO_TimeSkillItem timeSkills;
+
+    [Header("Movement")]
+    [SerializeField] private SO_MovementSkillItem movementSkills;
+
+    public enum TreasureType
+    {
+        Chip,
+        PlayerStatusEnhancement,
+        StoryItem,
+        Movement,
+        TimeSkill
+    }
 
     private bool ispicked;
 
@@ -39,31 +66,30 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
 
     private void HandlePickUp()
     {
-        switch(so.treasureType)
+        switch(treasureType)
         {
-            case SO_Treasure.TreasureType.Chip:
-                PlayerInventoryManager.Instance.AddChip(so.chip.itemDetails);
-                UI_Manager.Instance.ActivePickupItemUI(so.chip.itemDetails.lootName, so.chip.itemDescription);
+            case TreasureType.Chip:
+                PlayerInventoryManager.Instance.AddChip(chip.itemName);
+                UI_Manager.Instance.ActivePickupItemUI(chip.itemName, chip.itemDescription);
                 break;
-            case SO_Treasure.TreasureType.StoryItem:
-                // PlayerInventoryManager.Instance.AddItem(so.addMaxHealth);
+            case TreasureType.StoryItem:
+                PlayerInventoryManager.Instance.AddStoryItem(storyItem.itemName);
+                UI_Manager.Instance.ActivePickupItemUI(storyItem.itemName, storyItem.itemDescription);
                 break;
-            case SO_Treasure.TreasureType.Movement:
-                // PlayerInventoryManager.Instance.AddMovementSkill(so.playerMovementSkills);
+            case TreasureType.Movement:
+                PlayerInventoryManager.Instance.AddMovemnetSkillItem(movementSkills.itemName);
+                UI_Manager.Instance.ActivePickupItemUI(movementSkills.itemName, movementSkills.itemDescription);
                 break;
-            case SO_Treasure.TreasureType.TimeSkill:
-                // PlayerInventoryManager.Instance.AddTimeSkill(so.timeSkills);
+            case TreasureType.TimeSkill:
+                PlayerInventoryManager.Instance.AddTimeSkillItem(timeSkills.itemName);
+                UI_Manager.Instance.ActivePickupItemUI(timeSkills.itemName, timeSkills.itemDescription);
                 break;
-            case SO_Treasure.TreasureType.PlayerStatusEnhancement:
-                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(so.playerStatusEnhancement.itemName);
-                UI_Manager.Instance.ActivePickupItemUI(so.playerStatusEnhancement.itemName, so.playerStatusEnhancement.itemDescription);
+            case TreasureType.PlayerStatusEnhancement:
+                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(playerStatusEnhancement.itemName);
+                UI_Manager.Instance.ActivePickupItemUI(playerStatusEnhancement.itemName, playerStatusEnhancement.itemDescription);
                 break;
         }
 
-        /*
-        UI_Manager.Instance.ActivePickupItemUI(lootSO.itemDetails.lootName, lootSO.itemDescription);
-        PlayerInventoryManager.Instance.AddChip(lootSO.itemDetails);
-        */
         ispicked = true;
         gameObject.SetActive(false);
         DataPersistenceManager.Instance.SaveGame();
@@ -86,3 +112,58 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
         }
     }
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(PickupTreasure))]
+public class PickupTreasureEditor : Editor
+{
+    PickupTreasure treasure;
+
+    private void OnEnable()
+    {
+        treasure = (PickupTreasure)target;
+    }
+
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        /*
+        so.treasureType = (SO_Treasure.TreasureType) EditorGUILayout.EnumPopup("Treasure Type", so.treasureType);
+
+        if(so.treasureType == SO_Treasure.TreasureType.Chip)
+        {
+            EditorGUILayout.LabelField("Chip", EditorStyles.boldLabel);
+            so.chip = (SO_Chip)EditorGUILayout.ObjectField("Chip", so.chip, typeof(SO_Chip), true);
+        }
+
+        if (so.treasureType == SO_Treasure.TreasureType.StoryItem)
+        {
+            EditorGUILayout.LabelField("Story Item", EditorStyles.boldLabel);
+            so.storyItem = (SO_StoryItem)EditorGUILayout.ObjectField("Story Item", so.storyItem, typeof(SO_StoryItem), true);
+        }
+
+        if (so.treasureType == SO_Treasure.TreasureType.PlayerStatusEnhancement)
+        {
+            EditorGUILayout.LabelField("Player Status Enhancement", EditorStyles.boldLabel);
+            so.playerStatusEnhancement = (SO_PlayerStatusEnhancement)EditorGUILayout.ObjectField("Player Status Enhancement", so.playerStatusEnhancement, typeof(SO_PlayerStatusEnhancement), true);
+        }
+
+        if (so.treasureType == SO_Treasure.TreasureType.TimeSkill)
+        {
+            EditorGUILayout.LabelField("Time Skill", EditorStyles.boldLabel);
+            so.timeSkills = (SO_TimeSkillItem)EditorGUILayout.ObjectField("Time Skill", so.timeSkills, typeof(SO_TimeSkillItem), true);
+        }
+
+        if (so.treasureType == SO_Treasure.TreasureType.Movement)
+        {
+            EditorGUILayout.LabelField("Movement", EditorStyles.boldLabel);
+            so.movementSkills = (SO_MovementSkillItem)EditorGUILayout.ObjectField("Movement", so.movementSkills, typeof(SO_MovementSkillItem), true);
+        }
+        */
+
+        if (GUI.changed)
+            EditorUtility.SetDirty(treasure);
+    }
+}
+#endif
