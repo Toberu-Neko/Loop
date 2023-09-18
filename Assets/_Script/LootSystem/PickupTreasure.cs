@@ -55,8 +55,8 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
                 // PlayerInventoryManager.Instance.AddTimeSkill(so.timeSkills);
                 break;
             case SO_Treasure.TreasureType.PlayerStatusEnhancement:
-                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(so.playerStatusEnhancement.itemNameSerilizible);
-                UI_Manager.Instance.ActivePickupItemUI(so.playerStatusEnhancement.itemNameSerilizible.lootName, so.playerStatusEnhancement.itemDescription);
+                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(so.playerStatusEnhancement.itemName);
+                UI_Manager.Instance.ActivePickupItemUI(so.playerStatusEnhancement.itemName, so.playerStatusEnhancement.itemDescription);
                 break;
         }
 

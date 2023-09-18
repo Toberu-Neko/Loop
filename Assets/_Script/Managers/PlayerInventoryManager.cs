@@ -68,15 +68,15 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 
     #region PlayerStatusEnhancementInventory
 
-    public void AddPlayerStatusEnhancementItem(ItemDetails lootDetails, int amount = 1)
+    public void AddPlayerStatusEnhancementItem(string name, int amount = 1)
     {
-        if (StatusEnhancementInventory.ContainsKey(lootDetails.lootName))
+        if (StatusEnhancementInventory.ContainsKey(name))
         {
-            StatusEnhancementInventory[lootDetails.lootName].IncreaseItemCount(amount);
+            StatusEnhancementInventory[name].IncreaseItemCount(amount);
         }
         else
         {
-            StatusEnhancementInventory.Add(lootDetails.lootName, new ItemData(amount, lootDetails.lootName));
+            StatusEnhancementInventory.Add(name, new ItemData(amount, name));
         }
     }
 
