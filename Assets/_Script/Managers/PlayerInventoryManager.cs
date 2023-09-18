@@ -125,15 +125,15 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     }
 
     #region ConsumableItem
-    public void AddConsumableItem(ItemDetails lootDetails, int amount = 1)
+    public void AddConsumableItem(string name, int amount = 1)
     {
-        if (ConsumablesInventory.ContainsKey(lootDetails.lootName))
+        if (ConsumablesInventory.ContainsKey(name))
         {
-            ConsumablesInventory[lootDetails.lootName].IncreaseItemCount(amount);
+            ConsumablesInventory[name].IncreaseItemCount(amount);
         }
         else
         {
-            ConsumablesInventory.Add(lootDetails.lootName, new ItemData(amount, lootDetails.lootName));
+            ConsumablesInventory.Add(name, new ItemData(amount, name));
         }
     }
 

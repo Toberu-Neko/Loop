@@ -27,13 +27,17 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
     [Header("Movement")]
     [SerializeField] private SO_MovementSkillItem movementSkills;
 
+    [Header("Consumable")]
+    [SerializeField] private SO_ConsumeableItem consumeableItem;
+
     public enum TreasureType
     {
         Chip,
         PlayerStatusEnhancement,
         StoryItem,
         Movement,
-        TimeSkill
+        TimeSkill,
+        Consumable
     }
 
     private bool ispicked;
@@ -87,6 +91,10 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
             case TreasureType.PlayerStatusEnhancement:
                 PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(playerStatusEnhancement.itemName);
                 UI_Manager.Instance.ActivePickupItemUI(playerStatusEnhancement.itemName, playerStatusEnhancement.itemDescription);
+                break;
+            case TreasureType.Consumable:
+                PlayerInventoryManager.Instance.AddConsumableItem(consumeableItem.itemName);
+                UI_Manager.Instance.ActivePickupItemUI(consumeableItem.itemName, consumeableItem.itemDescription);
                 break;
         }
 

@@ -11,10 +11,12 @@ public class ItemDataManager : MonoBehaviour
     public Dictionary<string, SO_TimeSkillItem> TimeSkillDict { get; private set; }
     public Dictionary<string, SO_PlayerStatusEnhancement> StatusEnhancementDict { get; private set; }
     public Dictionary<string, SO_StoryItem> StoryItemDict { get; private set; }
+    public Dictionary<string, SO_ConsumeableItem> ConsumableItemDict { get; private set; }
+
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
@@ -28,13 +30,13 @@ public class ItemDataManager : MonoBehaviour
 
         foreach (var item in chipSOs)
         {
-            if(ChipDict.ContainsKey(item.itemName))
+            if (ChipDict.ContainsKey(item.itemName))
             {
                 Debug.LogError($"There are more than one loot with the same name: {item.name}");
                 continue;
             }
 
-            if(item.itemName == "")
+            if (item.itemName == "")
             {
                 Debug.LogError($"There is a loot with no name, name: " + item.name);
                 continue;
@@ -66,7 +68,7 @@ public class ItemDataManager : MonoBehaviour
         var timeSkillSOs = Resources.LoadAll<SO_TimeSkillItem>("TimeSkillSO");
         TimeSkillDict = new();
 
-        foreach(var item in timeSkillSOs)
+        foreach (var item in timeSkillSOs)
         {
             if (TimeSkillDict.ContainsKey(item.name))
             {
@@ -82,6 +84,73 @@ public class ItemDataManager : MonoBehaviour
 
             TimeSkillDict.Add(item.name, item);
         }
+
+        var statusEnhancementSOs = Resources.LoadAll<SO_PlayerStatusEnhancement>("StatusEnhancementSO");
+        StatusEnhancementDict = new();
+
+        foreach (var item in statusEnhancementSOs)
+        {
+            if (StatusEnhancementDict.ContainsKey(item.name))
+            {
+                Debug.LogError($"There are more than one loot with the same name: {item.name}");
+                continue;
+            }
+
+            if (item.name == "")
+            {
+                Debug.LogError($"There is a loot with no name, name: " + item.name);
+                continue;
+            }
+
+            StatusEnhancementDict.Add(item.name, item);
+        }
+
+        var storyItemSOs = Resources.LoadAll<SO_StoryItem>("StoryItemSO");
+        StoryItemDict = new();
+
+        foreach (var item in storyItemSOs)
+        {
+            if (StoryItemDict.ContainsKey(item.name))
+            {
+                Debug.LogError($"There are more than one loot with the same name: {item.name}");
+                continue;
+            }
+
+            if (item.name == "")
+            {
+                Debug.LogError($"There is a loot with no name, name: " + item.name);
+                continue;
+            }
+
+            StoryItemDict.Add(item.name, item);
+        }
+
+        var consumableItemSOs = Resources.LoadAll<SO_ConsumeableItem>("ConsumableItemSO");
+        ConsumableItemDict = new();
+
+        foreach (var item in consumableItemSOs)
+        {
+            if (ConsumableItemDict.ContainsKey(item.name))
+            {
+                Debug.LogError($"There are more than one loot with the same name: {item.name}");
+                continue;
+            }
+
+            if (item.name == "")
+            {
+                Debug.LogError($"There is a loot with no name, name: " + item.name);
+                continue;
+            }
+
+            ConsumableItemDict.Add(item.name, item);
+        }
+
+        Debug.Log(ConsumableItemDict.Count);
+        Debug.Log(StoryItemDict.Count);
+        Debug.Log(StatusEnhancementDict.Count);
+        Debug.Log(TimeSkillDict.Count);
+        Debug.Log(MovementSkillDict.Count);
+        Debug.Log(ChipDict.Count);
 
     }
 }

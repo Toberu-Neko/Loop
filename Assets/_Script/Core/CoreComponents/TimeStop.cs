@@ -6,8 +6,9 @@ public class TimeStop : CoreComponent, ITimeStopable
 {
     private Stats stats;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         stats = core.GetCoreComponent<Stats>();
     }
 
