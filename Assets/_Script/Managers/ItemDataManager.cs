@@ -38,14 +38,6 @@ public class ItemDataManager : MonoBehaviour
         LoadAndPopulateDictionary("StatusEnhancementSO", StatusEnhancementDict);
         LoadAndPopulateDictionary("StoryItemSO", StoryItemDict);
         LoadAndPopulateDictionary("ConsumableItemSO", ConsumableItemDict);
-
-        Debug.Log(ConsumableItemDict.Count);
-        Debug.Log(StoryItemDict.Count);
-        Debug.Log(StatusEnhancementDict.Count);
-        Debug.Log(TimeSkillDict.Count);
-        Debug.Log(MovementSkillDict.Count);
-        Debug.Log(ChipDict.Count);
-
     }
 
     private void LoadAndPopulateDictionary<T>(string folderName, Dictionary<string, T> targetDict) where T : SO_ItemsBase
