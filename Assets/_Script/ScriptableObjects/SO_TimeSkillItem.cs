@@ -5,17 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TimeSkillItem", menuName = "Items/TimeSkillItem")]
 public class SO_TimeSkillItem : SO_ItemsBase
 {
-    [Header("最下面那個加號不要按, 按了會壞")]
-
-    public List<UnlockSkillFields> unlockSkill = new()
-    {
-        {new("TimeStopRanged", false) },
-        {new("TimeStopAll", false) },
-        {new("TimeSlowRanged", false) },
-        {new("TimeSlowAll", false) },
-        {new("TimeReverse", false) },
-        {new("BookMark", false) }
-    };
+    public PlayerTimeSkills unlockedSkills;
 
 }
 

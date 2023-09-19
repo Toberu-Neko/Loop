@@ -152,37 +152,34 @@ public class SavepointUIChangeSkill : MonoBehaviour
             slot2FistButton.interactable = false;
         }
 
-        foreach (var item in playerTimeSkillManager.UnlockedTimeSkills.unlockedTimeSkills)
+        if(!playerTimeSkillManager.UnlockedTimeSkills.timeSlowAll)
         {
-            if (item.Value)
-            {
-                continue;
-            }
+            bulletTimeAllButton.interactable = false;
+        }
 
-            switch (item.Key)
-            {
-                case ("TimeStopRanged"):
-                    timeStopRangedButton.interactable = false;
-                    break;
-                case("TimeStopAll"):
-                    timeStopAllButton.interactable = false;
-                    break;
-                case("TimeSlowRanged"):
-                    bulletTimeRangedButton.interactable = false;
-                    break;
-                case("TimeSlowAll"):
-                    bulletTimeAllButton.interactable = false;
-                    break;
-                case("TimeReverse"):
-                    timeReverseButton.interactable = false;
-                    break;
-                case("BookMark"):
-                    bookMarkButton.interactable = false;
-                    break;
-                default:
-                    Debug.LogError("Time skill name not found in playerTimeSkillManager.UnlockedTimeSkills.unlockedTimeSkills.");
-                    break;
-            }
+        if(!playerTimeSkillManager.UnlockedTimeSkills.timeSlowRanged)
+        {
+            bulletTimeRangedButton.interactable = false;
+        }
+
+        if(!playerTimeSkillManager.UnlockedTimeSkills.timeStopAll)
+        {
+            timeStopAllButton.interactable = false;
+        }
+
+        if(!playerTimeSkillManager.UnlockedTimeSkills.timeStopRanged)
+        {
+            timeStopRangedButton.interactable = false;
+        }
+
+        if(!playerTimeSkillManager.UnlockedTimeSkills.timeReverse)
+        {
+            timeReverseButton.interactable = false;
+        }
+
+        if(!playerTimeSkillManager.UnlockedTimeSkills.bookMark)
+        {
+            bookMarkButton.interactable = false;
         }
     }
 

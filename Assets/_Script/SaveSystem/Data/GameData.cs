@@ -84,16 +84,12 @@ public class SavepointDetails
 [System.Serializable]
 public class PlayerTimeSkills
 {
-    [HideInInspector]
-    public SerializableDictionary<string, bool> unlockedTimeSkills = new()
-    {
-        { "TimeStopRanged", false },
-        { "TimeStopAll", false },
-        { "TimeSlowRanged", false },
-        { "TimeSlowAll", false },
-        { "TimeReverse", false },
-        { "BookMark", false }
-    };
+    public bool timeStopRanged = false;
+    public bool timeStopAll = false;
+    public bool timeSlowRanged = false;
+    public bool timeSlowAll = false;
+    public bool timeReverse = false;
+    public bool bookMark = false;
 
 }
 

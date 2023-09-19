@@ -78,32 +78,24 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
 
         foreach (var item in PlayerInventoryManager.Instance.TimeSkillItemInventory)
         {
-            ItemDataManager.Instance.TimeSkillDict.TryGetValue(item.Key, out SO_TimeSkillItem timeSkillItem);
-
-            if(timeSkillItem == null)
+            if (ItemDataManager.Instance.TimeSkillDict.TryGetValue(item.Key, out SO_TimeSkillItem timeSkillItem))
             {
-                Debug.LogError("The time skill item name in " + "PlayerInventoryManager.Instance.TimeSkillItemInventory" + " is wrong");
-                continue;
+                var unlockedSkills = timeSkillItem.unlockedSkills;
+
+                UnlockedTimeSkills.timeSlowRanged |= unlockedSkills.timeSlowRanged;
+                UnlockedTimeSkills.timeSlowAll |= unlockedSkills.timeSlowAll;
+                UnlockedTimeSkills.timeStopRanged |= unlockedSkills.timeStopRanged;
+                UnlockedTimeSkills.timeStopAll |= unlockedSkills.timeStopAll;
+                UnlockedTimeSkills.timeReverse |= unlockedSkills.timeReverse;
+                UnlockedTimeSkills.bookMark |= unlockedSkills.bookMark;
             }
-
-            foreach (var skill in timeSkillItem.unlockSkill)
+            else
             {
-                UnlockedTimeSkills.unlockedTimeSkills.TryGetValue(skill.name, out bool isUnlock);
-
-                if (!isUnlock && skill.unlock)
-                {
-                    UnlockedTimeSkills.unlockedTimeSkills[skill.name] = true;
-                }
+                Debug.LogError("The time skill item name in PlayerInventoryManager.Instance.TimeSkillItemInventory is wrong");
             }
         }
-
-
-        foreach (var item in UnlockedTimeSkills.unlockedTimeSkills)
-        {
-            Debug.Log(item.Key + " " + item.Value);
-        }
-
     }
+    
 
     private void Update()
     {

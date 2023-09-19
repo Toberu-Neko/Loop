@@ -15,16 +15,10 @@ MonoBehaviour:
   itemName: TimeSkillAll
   itemDescription: TimeSkillTest
   itemSprite: {fileID: 0}
-  unlockSkill:
-  - name: TimeStopRanged
-    unlock: 0
-  - name: TimeStopAll
-    unlock: 1
-  - name: TimeSlowRanged
-    unlock: 0
-  - name: TimeSlowAll
-    unlock: 0
-  - name: TimeReverse
-    unlock: 0
-  - name: BookMark
-    unlock: 0
+  unlockedSkills:
+    timeStopRanged: 0
+    timeStopAll: 1
+    timeSlowRanged: 1
+    timeSlowAll: 0
+    timeReverse: 0
+    bookMark: 0
