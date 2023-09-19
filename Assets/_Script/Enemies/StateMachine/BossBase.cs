@@ -74,6 +74,5 @@ public class BossBase : Entity, IDataPersistance
         }
 
         data.defeatedBosses.Add(BossName, true);
-        Debug.Log(BossName + " defeated, saved. Result: " + data.defeatedBosses[BossName]);
     }
 }

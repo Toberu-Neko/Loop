@@ -69,7 +69,7 @@ public class DebugPlayerComp : MonoBehaviour
 
     void UpdateMedkitText()
     {
-        medkitText.text = "¦å¥]" + PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].ItemCount.ToString();
+        medkitText.text = "¦å¥]" + PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount.ToString();
     }
 
     void UpdateHpText()

@@ -120,7 +120,7 @@ public class PlayerGroundedState : PlayerState
         #endregion
 
         else if (player.InputHandler.RegenInput && isGrounded && Stats.Health.CurrentValue < Stats.Health.MaxValue && 
-            (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].ItemCount > 0 ) // || can use time energy to regen && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
+            (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0 ) // || can use time energy to regen && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
             )
         {
             player.InputHandler.UseRegenInput();

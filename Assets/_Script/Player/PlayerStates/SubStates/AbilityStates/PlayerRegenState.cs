@@ -26,7 +26,7 @@ public class PlayerRegenState : PlayerAbilityState
     {
         base.AnimationFinishTrigger();
 
-        if (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].ItemCount > 0)
+        if (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0)
         {
             PlayerInventoryManager.Instance.RemoveConsumableItem("Medkit");
         }

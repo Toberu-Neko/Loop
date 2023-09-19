@@ -85,7 +85,7 @@ public class SavepointUIInventory : MonoBehaviour
 
         foreach(var item in inventory)
         {
-            SO_Chip so = ItemDataManager.Instance.ChipDict[item.Value.lootDetails.lootName];
+            SO_Chip so = ItemDataManager.Instance.ChipDict[item.Value.itemName];
             int SOcount = 0;
 
             foreach(EquipmentSlot equipmentSlot in swordSlots)
@@ -114,7 +114,7 @@ public class SavepointUIInventory : MonoBehaviour
 
 
             InventorySlots[count].ActiveSlot();
-            InventorySlots[count].SetValue(item.Value.ItemCount - SOcount, so);
+            InventorySlots[count].SetValue(item.Value.itemCount - SOcount, so);
             InventorySlots[count].OnEnterTarget += HandleEnterTarget;
             InventorySlots[count].OnExitTarget += HandleExitTarget;
 

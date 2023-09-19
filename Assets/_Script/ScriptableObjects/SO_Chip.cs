@@ -28,15 +28,4 @@ public class MultiplierData
     }
 }
 
-// for saving system
-[System.Serializable]
-public class ItemDetails
-{
-    public string lootName;
-
-    public ItemDetails(string lootName)
-    {
-        this.lootName = lootName;
-    }
-}
 

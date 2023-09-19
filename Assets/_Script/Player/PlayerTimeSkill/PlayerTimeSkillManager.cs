@@ -6,6 +6,9 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
 {
     [SerializeField] private PlayerTimeSkillData data;
     [SerializeField] private Core core;
+
+    public PlayerTimeSkills UnlockedTimeSkills { get; private set; }
+
     private Combat combat;
 
     [field: SerializeField] public GameObject BulletTimeEffectObj { get; private set; }
@@ -34,6 +37,7 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
         player = GetComponent<Player>();
         combat = core.GetCoreComponent<Combat>();
 
+
         BulletTimeEffectObj.SetActive(false);
 
         maxEnergy = data.maxEnergy;
@@ -61,6 +65,46 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
         OnStateChanged?.Invoke();
     }
 
+    private void Start()
+    {
+        PlayerInventoryManager.Instance.OnTimeSkillChanged += UpdateUnlockedSkills;
+        UpdateUnlockedSkills();
+
+    }
+
+    private void UpdateUnlockedSkills()
+    {
+        UnlockedTimeSkills = new();
+
+        foreach (var item in PlayerInventoryManager.Instance.TimeSkillItemInventory)
+        {
+            ItemDataManager.Instance.TimeSkillDict.TryGetValue(item.Key, out SO_TimeSkillItem timeSkillItem);
+
+            if(timeSkillItem == null)
+            {
+                Debug.LogError("The time skill item name in " + "PlayerInventoryManager.Instance.TimeSkillItemInventory" + " is wrong");
+                continue;
+            }
+
+            foreach (var skill in timeSkillItem.unlockSkill)
+            {
+                UnlockedTimeSkills.unlockedTimeSkills.TryGetValue(skill.name, out bool isUnlock);
+
+                if (!isUnlock && skill.unlock)
+                {
+                    UnlockedTimeSkills.unlockedTimeSkills[skill.name] = true;
+                }
+            }
+        }
+
+
+        foreach (var item in UnlockedTimeSkills.unlockedTimeSkills)
+        {
+            Debug.Log(item.Key + " " + item.Value);
+        }
+
+    }
+
     private void Update()
     {
         StateMachine.CurrentState.LogicUpdate();
@@ -79,6 +123,7 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
     private void OnDisable()
     {
         combat.OnPerfectBlock -= HandleOnPerfectBlock;
+        PlayerInventoryManager.Instance.OnTimeSkillChanged -= UpdateUnlockedSkills;
     }
 
     public void HandleOnAttack()

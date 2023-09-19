@@ -6,12 +6,22 @@ public class SavepointUIChangeSkill : MonoBehaviour
 {
     [SerializeField] private SavepointUIMain savepointUIMain;
 
+    [Header("Weapon")] 
     [SerializeField] private Button slot1SwordButton;
     [SerializeField] private Button slot1GunButton;
     [SerializeField] private Button slot1FistButton;
     [SerializeField] private Button slot2SwordButton;
     [SerializeField] private Button slot2GunButton;
     [SerializeField] private Button slot2FistButton;
+
+    [Header("TimeSkill")]
+    [SerializeField] private PlayerTimeSkillManager playerTimeSkillManager;
+    [SerializeField] private Button timeReverseButton;
+    [SerializeField] private Button bookMarkButton;
+    [SerializeField] private Button timeStopRangedButton;
+    [SerializeField] private Button timeStopAllButton;
+    [SerializeField] private Button bulletTimeAllButton;
+    [SerializeField] private Button bulletTimeRangedButton;
 
     private TextMeshProUGUI slot1SwordText;
     private TextMeshProUGUI slot1GunText;
@@ -88,6 +98,13 @@ public class SavepointUIChangeSkill : MonoBehaviour
         slot2SwordText.color = Color.black;
         slot2GunText.color = Color.black;
         slot2FistText.color = Color.black;
+
+        timeReverseButton.interactable = true;
+        bookMarkButton.interactable = true;
+        timeStopRangedButton.interactable = true;
+        timeStopAllButton.interactable = true;
+        bulletTimeAllButton.interactable = true;
+        bulletTimeRangedButton.interactable = true;
     }
 
     private void UpdateMenu()
@@ -133,6 +150,39 @@ public class SavepointUIChangeSkill : MonoBehaviour
             slot2FistText.color = Color.red;
             slot1FistButton.interactable = false;
             slot2FistButton.interactable = false;
+        }
+
+        foreach (var item in playerTimeSkillManager.UnlockedTimeSkills.unlockedTimeSkills)
+        {
+            if (item.Value)
+            {
+                continue;
+            }
+
+            switch (item.Key)
+            {
+                case ("TimeStopRanged"):
+                    timeStopRangedButton.interactable = false;
+                    break;
+                case("TimeStopAll"):
+                    timeStopAllButton.interactable = false;
+                    break;
+                case("TimeSlowRanged"):
+                    bulletTimeRangedButton.interactable = false;
+                    break;
+                case("TimeSlowAll"):
+                    bulletTimeAllButton.interactable = false;
+                    break;
+                case("TimeReverse"):
+                    timeReverseButton.interactable = false;
+                    break;
+                case("BookMark"):
+                    bookMarkButton.interactable = false;
+                    break;
+                default:
+                    Debug.LogError("Time skill name not found in playerTimeSkillManager.UnlockedTimeSkills.unlockedTimeSkills.");
+                    break;
+            }
         }
     }
 

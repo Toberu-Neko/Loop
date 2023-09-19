@@ -8,6 +8,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public int Money { get; private set; }
     public event Action OnMoneyChanged;
 
+    public event Action OnTimeSkillChanged;
     public SerializableDictionary<string, ItemData> StatusEnhancementInventory { get; private set; }
     public SerializableDictionary<string, ItemData> StoryItemInventory { get; private set; }
     public SerializableDictionary<string, ItemData> MovementSkillItemInventory { get; private set; }
@@ -92,7 +93,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     {
         if(MovementSkillItemInventory.ContainsKey(name))
         {
-            MovementSkillItemInventory[name].ItemCount = 1;
+            MovementSkillItemInventory[name].itemCount = 1;
         }
         else
         {
@@ -104,19 +105,21 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     {
         if (TimeSkillItemInventory.ContainsKey(name))
         {
-            TimeSkillItemInventory[name].ItemCount = 1;
+            TimeSkillItemInventory[name].itemCount = 1;
         }
         else
         {
             TimeSkillItemInventory.Add(name, new ItemData(1, name));
         }
+
+        OnTimeSkillChanged?.Invoke();
     }
 
     public void AddStoryItem(string name)
     {
         if (StoryItemInventory.ContainsKey(name))
         {
-            StoryItemInventory[name].ItemCount = 1;
+            StoryItemInventory[name].itemCount = 1;
         }
         else
         {
@@ -142,7 +145,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     {
         if (ConsumablesInventory.ContainsKey(name))
         {
-            if (ConsumablesInventory[name].ItemCount > 0)
+            if (ConsumablesInventory[name].itemCount > 0)
             {
                 ConsumablesInventory[name].ReduceItemCount(amount);
             }
@@ -151,7 +154,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
                 Debug.LogError(name + " item count is less or equal to zero, and trying to reduce the amount of it.");
             }
 
-            if (ConsumablesInventory[name].ItemCount < 0)
+            if (ConsumablesInventory[name].itemCount < 0)
             {
                 Debug.LogError("Item count is less than zero.");
             }
@@ -295,25 +298,25 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 [System.Serializable]
 public class ItemData
 {
-    public int ItemCount;
-    public ItemDetails lootDetails;
+    public int itemCount;
+    public string itemName;
     public event Action OnValueChanged;
 
     public ItemData(int count, string name)
     {
-        ItemCount = count;
-        lootDetails = new(name);
+        itemCount = count;
+        itemName = new(name);
     }
 
     public void ReduceItemCount(int amount)
     {
-        ItemCount -= amount;
+        itemCount -= amount;
         OnValueChanged?.Invoke();
     }
 
     public void IncreaseItemCount(int amount)
     {
-        ItemCount += amount;
+        itemCount += amount;
         OnValueChanged?.Invoke();
     }
 }
