@@ -124,6 +124,7 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
         }
     }
 
+    #region NextPoint
     private void GoRound()
     {
         if(count == points.Length - 1)
@@ -161,6 +162,8 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
         }
     }
 
+    #endregion
+
     private void Deactivate()
     {
         isDeactvating = true;
@@ -178,6 +181,7 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
             if(movementStyle == MovementStyle.AutoTrigger)
             {
                 Invoke(nameof(SetCanMoveTrue), delayTime);
+                //TODO: Delay & time stop
                 CamManager.Instance.CameraShake();
             }
 
@@ -229,6 +233,22 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
             }
             Gizmos.DrawLine(points[0].position, points[1].position);
         }
+    }
+
+    public float Timer(float timer)
+    {
+        if (timeStop)
+        {
+            timer += Time.deltaTime;
+            return timer;
+        }
+
+        if (timeSlow)
+        {
+            timer += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
+            return timer;
+        }
+        return timer;
     }
 
     public void DoTimeSlow()
