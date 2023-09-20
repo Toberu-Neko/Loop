@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
@@ -12,7 +9,8 @@ public class MovingPlatform : MonoBehaviour
         Circular,
         Trigger
     }
-    [SerializeField] private bool canMove;
+    private bool canMove;
+    [SerializeField] private float delayTime;
 
     [SerializeField] private float speed;
     [SerializeField] private int startPoint;
@@ -20,9 +18,10 @@ public class MovingPlatform : MonoBehaviour
 
 
     [SerializeField] private Transform originalParent;
+    [SerializeField] private Transform motherTransform;
     private int count;
     private bool reverse;
-    private Collision2D playerCollision;
+    private Collider2D playerCollider;
     private bool isDeactvating;
 
     private void Awake()
@@ -134,38 +133,43 @@ public class MovingPlatform : MonoBehaviour
     private void Deactivate()
     {
         isDeactvating = true;
-        playerCollision?.transform.SetParent(null);
+        playerCollider?.transform.SetParent(null);
 
-        Destroy(gameObject);
+        Destroy(motherTransform.gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.CompareTag("Player") && movementStyle == MovementStyle.Trigger)
+        if (collider.gameObject.CompareTag("Player"))
         {
-            canMove = true;
+            if(movementStyle == MovementStyle.Trigger)
+            {
+                Invoke(nameof(SetCanMoveTrue), delayTime);
+                CamManager.Instance.CameraShake();
+            }
+
+            playerCollider = collider;
+            motherTransform.transform.SetParent(BaseTempParent.Instance.transform);
+            collider.transform.SetParent(transform);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void SetCanMoveTrue()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            playerCollision = collision;
-            gameObject.transform.SetParent(BaseTempParent.Instance.transform);
-            collision.transform.SetParent(transform);
-        }
+        CancelInvoke(nameof(SetCanMoveTrue));
+        canMove = true;
     }
+
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerCollision = collision;
+            CancelInvoke(nameof(SetCanMoveTrue));
             collision.transform.SetParent(null);
             if(originalParent != null)
             {
-                gameObject.transform.SetParent(originalParent);
+                motherTransform.transform.SetParent(originalParent);
             }
             else
             {
@@ -174,7 +178,7 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
         if (points.Length > 1)

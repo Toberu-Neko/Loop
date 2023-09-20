@@ -14,14 +14,12 @@ public class Savepoint : MonoBehaviour, IDataPersistance
 
     private bool inRange;
     private bool isSavePointActive;
-    private bool isMostRecentSavepoint;
 
 
     private void OnEnable()
     {
         pressEObject.SetActive(false);
         inRange = false;
-        isMostRecentSavepoint = false;
     }
 
     private void Start()
@@ -36,7 +34,6 @@ public class Savepoint : MonoBehaviour, IDataPersistance
             if (inputHandler.InteractInput)
             {
                 isSavePointActive = true;
-                isMostRecentSavepoint = true;
                 inputHandler.UseInteractInput();
                 pressEObject.SetActive(false);
 
