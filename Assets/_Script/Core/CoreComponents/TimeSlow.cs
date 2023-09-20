@@ -45,9 +45,4 @@ public class TimeSlow : CoreComponent, ITimeSlowable
     {
         stats.SetTimeSlowFalse();
     }
-
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
 }

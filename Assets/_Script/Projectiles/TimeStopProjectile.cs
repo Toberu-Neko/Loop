@@ -57,7 +57,7 @@ public class TimeStopProjectile : MonoBehaviour
             {
                 if(h.collider.gameObject.TryGetComponent(out ITimeStopable stopable))
                 {
-                    stopable.DoTimeStop(stopTime);
+                    stopable.DoTimeStopWithTime(stopTime);
                 }
             }
             explodeRange.SetActive(true);

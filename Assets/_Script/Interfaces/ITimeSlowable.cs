@@ -6,6 +6,5 @@ public interface ITimeSlowable
 {
     void DoTimeSlow();
     void EndTimeSlow();
-    GameObject GetGameObject();
 
 }

@@ -1,13 +1,15 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class MovingPlatform : MonoBehaviour
+public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
 {
     [SerializeField] private MovementStyle movementStyle;
     private enum MovementStyle
     {
         Constant,
         Circular,
-        Trigger
+        AutoTrigger,
+        PressETrigger
     }
     private bool canMove;
     [SerializeField] private float delayTime;
@@ -24,6 +26,9 @@ public class MovingPlatform : MonoBehaviour
     private Collider2D playerCollider;
     private bool isDeactvating;
 
+    private bool timeStop;
+    private bool timeSlow;
+
     private void Awake()
     {
         transform.position = points[startPoint].position;
@@ -32,31 +37,43 @@ public class MovingPlatform : MonoBehaviour
         isDeactvating = false;
     }
 
+    private void OnEnable()
+    {
+        timeStop = false;
+        timeSlow = false;
+
+        GameManager.Instance.OnAllTimeSlowStart += DoTimeSlow;
+        GameManager.Instance.OnAllTimeSlowEnd += EndTimeSlow;
+        GameManager.Instance.OnAllTimeStopStart += DoTimeStop;
+        GameManager.Instance.OnAllTimeStopEnd += EndTimeStop;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnAllTimeSlowStart -= DoTimeSlow;
+        GameManager.Instance.OnAllTimeSlowEnd -= EndTimeSlow;
+        GameManager.Instance.OnAllTimeStopStart -= DoTimeStop;
+        GameManager.Instance.OnAllTimeStopEnd -= EndTimeStop;
+        
+    }
+
     private void Update()
     {
-        foreach (var item in points)
+        switch (movementStyle)
         {
-            if (item == null && !isDeactvating)
-            {
-                Deactivate();
-                return;
-            }
-        }
+            case MovementStyle.Constant:
+                ConstantMovement();
+                break;
+            case MovementStyle.AutoTrigger:
+                TriggerMovement();
+                break;
+            case MovementStyle.Circular:
+                CircularMovement();
+                break;
+            case MovementStyle.PressETrigger:
+                break;
 
-        if (movementStyle == MovementStyle.Constant)
-        {
-            ConstantMovement();
         }
-        else if(movementStyle == MovementStyle.Trigger)
-        {
-            TriggerMovement();
-        }
-        else if(movementStyle == MovementStyle.Circular)
-        {
-            CircularMovement();
-        }
-
-
     }
 
     private void ConstantMovement()
@@ -66,7 +83,7 @@ public class MovingPlatform : MonoBehaviour
             CheckNextPoint();
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, points[count].position, speed * Time.deltaTime);
+        Movement();
     }
 
     private void TriggerMovement()
@@ -79,7 +96,7 @@ public class MovingPlatform : MonoBehaviour
 
         if (canMove)
         {
-            transform.position = Vector2.MoveTowards(transform.position, points[count].position, speed * Time.deltaTime);
+            Movement();
         }
     }
 
@@ -89,8 +106,22 @@ public class MovingPlatform : MonoBehaviour
         {
             GoRound();
         }
+        Movement();
+    }
 
-        transform.position = Vector2.MoveTowards(transform.position, points[count].position, speed * Time.deltaTime);
+    private void Movement()
+    {
+        if (!timeStop)
+        {
+            if (timeSlow)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, points[count].position, speed * Time.deltaTime * GameManager.Instance.TimeSlowMultiplier);
+            }
+            else
+            {
+                transform.position = Vector2.MoveTowards(transform.position, points[count].position, speed * Time.deltaTime);
+            }
+        }
     }
 
     private void GoRound()
@@ -133,7 +164,9 @@ public class MovingPlatform : MonoBehaviour
     private void Deactivate()
     {
         isDeactvating = true;
-        playerCollider?.transform.SetParent(null);
+
+        if(playerCollider!= null)
+            playerCollider.transform.SetParent(null);
 
         Destroy(motherTransform.gameObject);
     }
@@ -142,7 +175,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            if(movementStyle == MovementStyle.Trigger)
+            if(movementStyle == MovementStyle.AutoTrigger)
             {
                 Invoke(nameof(SetCanMoveTrue), delayTime);
                 CamManager.Instance.CameraShake();
@@ -196,5 +229,32 @@ public class MovingPlatform : MonoBehaviour
             }
             Gizmos.DrawLine(points[0].position, points[1].position);
         }
+    }
+
+    public void DoTimeSlow()
+    {
+        Debug.Log("DoTimeSlow");
+        timeSlow = true;
+    }
+
+    public void EndTimeSlow()
+    {
+        timeSlow = false;
+    }
+    public void DoTimeStop()
+    {
+        timeStop = true;
+    }
+    public void DoTimeStopWithTime(float stopTime)
+    {
+        timeStop = true;
+
+        CancelInvoke(nameof(EndTimeStop));
+        Invoke(nameof(EndTimeStop), stopTime);
+
+    }
+    public void EndTimeStop()
+    {
+        timeStop = false;
     }
 }
