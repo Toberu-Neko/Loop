@@ -133,7 +133,10 @@ public class PlayerGroundedState : PlayerState
         }
         else if(jumpInput && yInput < 0 && CollisionSenses.GroundPlatform)
         {
-            Physics2D.IgnoreCollision(player.MovementCollider, CollisionSenses.GroundPlatform.collider, true);
+            if (!CollisionSenses.GroundPlatform.collider.CompareTag("Elevator"))
+            {
+                Physics2D.IgnoreCollision(player.MovementCollider, CollisionSenses.GroundPlatform.collider, true);
+            }
         }
         else if (jumpInput && yInput >= 0 && player.JumpState.CanJump() && !isTouchingCeiling)
         {
