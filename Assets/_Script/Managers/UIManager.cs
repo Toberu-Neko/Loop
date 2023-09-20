@@ -146,6 +146,7 @@ public class UI_Manager : MonoBehaviour
     private void OpenPauseMainUI()
     {
         pauseUIMain.ActivateMenu(true);
+        inputHandler.NResetAllInput();
     }
 
     private void ClosePauseMainUI()
@@ -163,6 +164,8 @@ public class UI_Manager : MonoBehaviour
     {
         savepointUIMain.ActivateMenu(true);
         savepointUIMain.SetSavepointNameText(savePointName);
+
+        inputHandler.NResetAllInput();
     }
 
     private void HandleSave()
@@ -204,6 +207,7 @@ public class UI_Manager : MonoBehaviour
     }
     private void HandleChangeSceneFinish()
     {
+        Debug.Log("Finish in UIManager");
         if(changeSceneUI.activeInHierarchy)
             changeSceneAnimator.SetBool("finishLoading", true);
     }

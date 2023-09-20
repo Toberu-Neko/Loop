@@ -86,6 +86,11 @@ public class SavepointUIInventory : MonoBehaviour
         foreach(var item in inventory)
         {
             SO_Chip so = ItemDataManager.Instance.ChipDict[item.Value.itemName];
+            if (so == null) 
+            {
+                Debug.LogError("ItemDataManager.Instance.ChipDict[item.Value.itemName] == null");
+                continue;
+            }
             int SOcount = 0;
 
             foreach(EquipmentSlot equipmentSlot in swordSlots)

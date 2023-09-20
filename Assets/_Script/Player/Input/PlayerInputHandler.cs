@@ -57,7 +57,7 @@ public class PlayerInputHandler : MonoBehaviour
         CheckDashInputHoldTime();
     }
 
-    public void ResetAllInput()
+    public void NResetAllInput()
     {
         RawMovementInput = Vector2.zero;
         NormInputX = 0;

@@ -36,16 +36,18 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
         reverse = false;
         isDeactvating = false;
     }
+    private void Start()
+    {
+        GameManager.Instance.OnAllTimeSlowStart += DoTimeSlow;
+        GameManager.Instance.OnAllTimeSlowEnd += EndTimeSlow;
+        GameManager.Instance.OnAllTimeStopStart += DoTimeStop;
+        GameManager.Instance.OnAllTimeStopEnd += EndTimeStop;
+    }
 
     private void OnEnable()
     {
         timeStop = false;
         timeSlow = false;
-
-        GameManager.Instance.OnAllTimeSlowStart += DoTimeSlow;
-        GameManager.Instance.OnAllTimeSlowEnd += EndTimeSlow;
-        GameManager.Instance.OnAllTimeStopStart += DoTimeStop;
-        GameManager.Instance.OnAllTimeStopEnd += EndTimeStop;
     }
 
     private void OnDisable()
@@ -164,6 +166,12 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
 
     #endregion
 
+    private void SetCanMoveTrue()
+    {
+        CancelInvoke(nameof(SetCanMoveTrue));
+        canMove = true;
+    }
+
     private void Deactivate()
     {
         isDeactvating = true;
@@ -191,20 +199,13 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
         }
     }
 
-    private void SetCanMoveTrue()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        CancelInvoke(nameof(SetCanMoveTrue));
-        canMove = true;
-    }
-
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             CancelInvoke(nameof(SetCanMoveTrue));
-            collision.transform.SetParent(null);
-            if(originalParent != null)
+            other.transform.SetParent(null);
+            if (originalParent != null)
             {
                 motherTransform.transform.SetParent(originalParent);
             }
@@ -214,6 +215,7 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
             }
         }
     }
+
 
     private void OnDrawGizmos()
     {
@@ -253,7 +255,6 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
 
     public void DoTimeSlow()
     {
-        Debug.Log("DoTimeSlow");
         timeSlow = true;
     }
 
