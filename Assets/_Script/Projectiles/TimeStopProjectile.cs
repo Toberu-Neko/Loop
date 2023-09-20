@@ -49,7 +49,7 @@ public class TimeStopProjectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 6 || collision.gameObject.layer == 13)
+        if(collision.gameObject.layer == 6 || collision.gameObject.layer == 9 || collision.gameObject.layer == 13 || collision.gameObject.layer == 16)
         {
             RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, explodeRadius, Vector2.zero, 0, whatIsInteractable);
 
