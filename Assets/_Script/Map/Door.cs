@@ -9,7 +9,7 @@ public class Door : MonoBehaviour, ITimeSlowable, ITimeStopable
 
 
     [SerializeField] private bool goingUp;
-    [SerializeField] private DoorTrigger doorTrigger;
+    [SerializeField] private DoorTrigger[] doorTriggers;
     private bool goingDown;
 
     private bool timeStop;
@@ -35,12 +35,18 @@ public class Door : MonoBehaviour, ITimeSlowable, ITimeStopable
 
     private void OnEnable()
     {
-        doorTrigger.OnDoorTriggered += HandleDoorTriggered;
+        foreach(var trigger in doorTriggers)
+        {
+            trigger.OnDoorTriggered += HandleDoorTriggered;
+        }
     }
 
     private void OnDisable()
     {
-        doorTrigger.OnDoorTriggered -= HandleDoorTriggered;
+        foreach (var trigger in doorTriggers)
+        {
+            trigger.OnDoorTriggered -= HandleDoorTriggered;
+        }
 
         GameManager.Instance.OnAllTimeSlowStart -= DoTimeSlow;
         GameManager.Instance.OnAllTimeSlowEnd -= EndTimeSlow;

@@ -199,15 +199,13 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
         }
     }
 
-
-
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             CancelInvoke(nameof(SetCanMoveTrue));
-            collision.transform.SetParent(null);
-            if(originalParent != null)
+            other.transform.SetParent(null);
+            if (originalParent != null)
             {
                 motherTransform.transform.SetParent(originalParent);
             }
@@ -217,6 +215,7 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
             }
         }
     }
+
 
     private void OnDrawGizmos()
     {
