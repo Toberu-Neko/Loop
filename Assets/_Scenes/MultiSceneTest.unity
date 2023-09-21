@@ -313,6 +313,11 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 762392795334535855, guid: 034d2d2732c7dd44f919bfee203aaeb2, type: 3}
   m_PrefabInstance: {fileID: 20620069}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &115072088 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
+  m_PrefabInstance: {fileID: 355418382}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &161506564 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
@@ -403,15 +408,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1936849506}
     m_Modifications:
     - target: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -101
+      value: -44.09
       objectReference: {fileID: 0}
     - target: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -24.5
+      value: -8.370003
       objectReference: {fileID: 0}
     - target: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -423,15 +428,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1620426941406957249, guid: 3d12d1132a0521940b29a333b7af7dd0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2239,7 +2244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1936849506}
   m_Layer: 0
-  m_Name: TempDataPersist
+  m_Name: Enemies and wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2258,6 +2263,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 115072088}
   - {fileID: 406277345}
   - {fileID: 314201582}
   - {fileID: 686631159}
@@ -2763,7 +2769,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 355418382}
   - {fileID: 1663882546}
   - {fileID: 1900369416}
   - {fileID: 4091981741361982611}

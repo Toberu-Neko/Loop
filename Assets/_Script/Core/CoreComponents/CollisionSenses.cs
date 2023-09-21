@@ -178,7 +178,7 @@ public class CollisionSenses : CoreComponent
     }
     public bool LedgeHorizontal
     {
-        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
     }
     public bool LedgeVertical
     {
