@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour, IKnockbackable
@@ -10,6 +11,7 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
     [SerializeField] private Collider2D col;
     [SerializeField] private Core core;
     [SerializeField] private Rigidbody2D rig;
+    [SerializeField] private Animator anim;
     private Vector2 fireDirection;
 
     private float travelDistance;
@@ -30,6 +32,7 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         movement = core.GetCoreComponent<Movement>();
         stats = core.GetCoreComponent<Stats>();
     }
+
 
     private void Update()
     {
@@ -64,13 +67,40 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         hasHitGround = false;
         damaged = false;
         countered = false;
+
+        stats.OnTimeSlowStart += HandleChangeAnimSlow;
+        stats.OnTimeSlowEnd += HandleChangeAnimOrigin;
+        stats.OnTimeStopStart += HandleChangeAnimSlow;
+        stats.OnTimeStopEnd += HandleChangeAnimOrigin;
     }
 
-    public void FireProjectile(ProjectileDetails details, int facingDirection, Vector2 fireDirection)
+    private void OnDisable()
+    {
+        anim.SetBool("timeSlow", false);
+
+        stats.OnTimeStopStart -= HandleChangeAnimSlow;
+        stats.OnTimeStopEnd -= HandleChangeAnimOrigin;
+        stats.OnTimeSlowStart -= HandleChangeAnimSlow;
+        stats.OnTimeSlowEnd -= HandleChangeAnimOrigin;
+    }
+
+    private void HandleChangeAnimSlow()
+    {
+        anim.SetBool("timeSlow", true);
+    }
+
+    private void HandleChangeAnimOrigin()
+    {
+        anim.SetBool("timeSlow", false);
+    }
+
+    public void FireProjectile(ProjectileDetails details, int facingDirection, Vector2 fireDirection, AnimatorController animatorController)
     {
         this.details = details;
         this.facingDirection = facingDirection;
         this.fireDirection = fireDirection;
+        anim.runtimeAnimatorController = animatorController;
+
 
         Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
 

@@ -1,11 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 [Serializable]
 public struct ProjectileDetails
 {
+    public AnimatorController animator;
     [Tooltip("¶Ë®`")]
     public float damageAmount;
     [Tooltip("­@¤O¶Ë®`")]

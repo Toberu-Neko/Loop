@@ -38,6 +38,7 @@ public class S_EnemyRangedAttackState
 {
     [HideInInspector] public LayerMask whatIsPlayer;
 
+
     public bool aimPlayer = false;
     public float attackCooldown = 1f;
     public GameObject projectile;
