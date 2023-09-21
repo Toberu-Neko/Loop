@@ -68,6 +68,15 @@ public class Enemy1 : Entity
 
         StateMachine.ChangeState(IdleState);
 
+        MoveState.Disable();
+        IdleState.Disable();
+        PlayerDetectedState.Disable();
+        ChargeState.Disable();
+        LookForPlayerState.Disable();
+        MeleeAttackState.Disable();
+        StunState.Disable();
+        DeadState.Disable();
+
         Stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         Stats.Health.OnCurrentValueZero -= HandleHealthZero;
     }

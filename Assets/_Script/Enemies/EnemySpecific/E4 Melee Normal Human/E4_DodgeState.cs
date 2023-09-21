@@ -21,7 +21,7 @@ public class E4_DodgeState : DodgeState
             }
             else if (isPlayerInMaxAgroRange && !performCloseRangeAction)
             {
-
+                stateMachine.ChangeState(enemy.PlayerDetectedMoveState);
             }
             else if (!isPlayerInMaxAgroRange)
             {

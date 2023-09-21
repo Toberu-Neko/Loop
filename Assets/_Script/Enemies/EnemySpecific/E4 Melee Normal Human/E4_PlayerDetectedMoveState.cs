@@ -14,7 +14,11 @@ public class E4_PlayerDetectedMoveState : PlayerDetectedMoveState
     {
         base.LogicUpdate();
 
-        if (performCloseRangeAction && enemy.MeleeAttackState.CheckCanAttack())
+        if (performCloseRangeAction && enemy.DodgeState.CheckCanDodge())
+        {
+            stateMachine.ChangeState(enemy.DodgeState);
+        }
+        else if (performCloseRangeAction && enemy.MeleeAttackState.CheckCanAttack())
         {
             stateMachine.ChangeState(enemy.MeleeAttackState);
         }

@@ -77,6 +77,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private float ledgeCheckDistance = 1f;
 
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private LayerMask whatIsPlatform;
 
     private Slope slope = new();
@@ -161,19 +162,19 @@ public class CollisionSenses : CoreComponent
 
     public bool WallFront
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsWall);
     }
     public bool WallFrontLong
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsWall);
     }
     public bool WallBack
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -movement.FacingDirection, wallCheckDistance, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -movement.FacingDirection, wallCheckDistance, whatIsWall);
     }
     public bool WallBackLong
     {
-        get => Physics2D.Raycast(WallBackCheck.position, -Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(WallBackCheck.position, -Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsWall);
     }
     public bool LedgeHorizontal
     {
@@ -181,7 +182,7 @@ public class CollisionSenses : CoreComponent
     }
     public bool LedgeVertical
     {
-        get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, ledgeCheckDistance, whatIsGround - whatIsPlatform);
+        get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, ledgeCheckDistance, whatIsGround);
     }
 
     private void OnDrawGizmos()

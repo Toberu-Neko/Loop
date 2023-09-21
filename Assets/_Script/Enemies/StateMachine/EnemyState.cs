@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyState
@@ -40,7 +41,8 @@ public class EnemyState
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
         core = entity.Core;
-        EndTime = 0;
+        StartTime = 0f;
+        EndTime = 0f;
     }
 
     public virtual void Enter()
@@ -91,6 +93,12 @@ public class EnemyState
     public virtual void PhysicsUpdate(){ }
     public virtual void DoChecks(){ }
     public virtual void AnimationActionTrigger() { }
+
+    public virtual void Disable()
+    {
+        StartTime = 0f;
+        EndTime = 0f;
+    }
 
     public float ReturnHealthPercentage()
     {

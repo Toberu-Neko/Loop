@@ -9,13 +9,14 @@ public class E5_DeadState : DeadState
     {
         this.enemy = enemy;
     }
-    public override void Enter()
-    {
-        base.Enter();
 
-        stateMachine.ChangeState(enemy.IdleState);
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
 
         Death.Die();
+
+        stateMachine.ChangeState(enemy.IdleState);
     }
 
 }

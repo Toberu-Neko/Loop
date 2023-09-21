@@ -12,7 +12,6 @@ public class DodgeState : EnemyState
     protected bool isGrounded;
     protected bool isDodgeOver;
 
-    float startTime = 0f;
 
     public DodgeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyDodgeState stateData) : base(entity, stateMachine, animBoolName)
     {
@@ -33,7 +32,6 @@ public class DodgeState : EnemyState
     {
         base.Enter();
 
-        startTime = Time.time;
         isDodgeOver = false;
         Combat.Knockback(stateData.dodgeAngle, stateData.dodgeSpeed, -Movement.FacingDirection, Vector2.zero, false);
         // Movement.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -Movement.FacingDirection);
@@ -56,6 +54,6 @@ public class DodgeState : EnemyState
 
     public bool CheckCanDodge()
     {
-        return Time.time >= startTime + stateData.dodgeCooldown;
+        return Time.time >= StartTime + stateData.dodgeCooldown || StartTime == 0;
     }
 }
