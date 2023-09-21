@@ -19,11 +19,11 @@ public class RangedAttackState : AttackState
         if (CheckPlayerSenses.IsPlayerInMaxAgroRange && stateData.aimPlayer)
         {
             Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.collider.bounds.center) - (Vector2)Movement.ParentTransform.position;
-            projectileScript.FireProjectile(stateData.projectileDetails, Movement.FacingDirection, delta.normalized, stateData.projectileDetails.animator);
+            projectileScript.FireProjectile(stateData.projectileDetails, Movement.FacingDirection, delta.normalized);
         }
         else
         {
-            projectileScript.FireProjectile(stateData.projectileDetails, Movement.FacingDirection, Movement.ParentTransform.right, stateData.projectileDetails.animator);
+            projectileScript.FireProjectile(stateData.projectileDetails, Movement.FacingDirection, Movement.ParentTransform.right);
         }
     }
 

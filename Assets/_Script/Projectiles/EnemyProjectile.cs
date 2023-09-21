@@ -1,4 +1,3 @@
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour, IKnockbackable
@@ -94,12 +93,11 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         anim.SetBool("timeSlow", false);
     }
 
-    public void FireProjectile(ProjectileDetails details, int facingDirection, Vector2 fireDirection, AnimatorController animatorController)
+    public void FireProjectile(ProjectileDetails details, int facingDirection, Vector2 fireDirection)
     {
         this.details = details;
         this.facingDirection = facingDirection;
         this.fireDirection = fireDirection;
-        anim.runtimeAnimatorController = animatorController;
 
 
         Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
