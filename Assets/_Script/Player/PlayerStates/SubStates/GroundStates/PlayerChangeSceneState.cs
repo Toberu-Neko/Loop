@@ -14,6 +14,8 @@ public class PlayerChangeSceneState : PlayerState
         base.Enter();
 
         Movement.SetVelocityZero();
+
+        canChangeState = false;
     }
 
     public override void LogicUpdate()

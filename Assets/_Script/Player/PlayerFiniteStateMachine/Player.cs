@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        StateMachine.Initialize(IdleState);
+        StateMachine.Initialize(ChangeSceneState);
     }
 
     private void OnDisable()
@@ -220,10 +220,14 @@ public class Player : MonoBehaviour
 
     private void HandleChangeSceneFinished()
     {
-        Invoke(nameof(ChangeToIdleState), 0.2f);
+        Invoke(nameof(ChangeToIdleState), 0.15f);
     }
     #endregion
-    private void ChangeToIdleState() => ChangeSceneState.SetCanChangeStateTrue();
+    private void ChangeToIdleState()
+    {
+        CancelInvoke(nameof(ChangeToIdleState));
+        ChangeSceneState.SetCanChangeStateTrue();
+    }
     #endregion
 
     private void HandleHealthZero()
