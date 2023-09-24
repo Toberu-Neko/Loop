@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeAttackState : AttackState
+public class StrongAttackState : AttackState
 {
     protected S_EnemyMeleeAttackState stateData;
-
-    public MeleeAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public StrongAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
     }
@@ -20,7 +19,7 @@ public class MeleeAttackState : AttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(stateData.attackDamage, stateData.staminaAttackDamage, stateData.knockbackAngle, stateData.knockbackStrength, true);
+        DoDamageToDamageList(stateData.attackDamage, stateData.staminaAttackDamage, stateData.knockbackAngle, stateData.knockbackStrength, false);
 
     }
 }

@@ -117,15 +117,4 @@ public class Boss0 : BossBase
         StateMachine.ChangeState(PlayerDetectedState);
     }
 
-    public override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-        Gizmos.color = Color.red;
-
-        if (normalAttackStateData != null)
-        {
-            Gizmos.DrawWireSphere(meleeAttackPosition.position, normalAttackStateData.attackRadius);
-        }
-    }
-
 }

@@ -89,11 +89,4 @@ public class Enemy4 : Entity
 
     private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
 
-    public override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-
-        if (meleeAttackStateData != null)
-            Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
-    }
 }

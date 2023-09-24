@@ -60,8 +60,6 @@ public class S_EnemyMeleeAttackState
 {
     [HideInInspector]public LayerMask whatIsPlayer;
 
-    [Tooltip("§ğÀ»¥b®|")]
-    public float attackRadius = 0.5f;
     [Tooltip("§ğÀ»¶Ë®`")]
     public float attackDamage = 10f;
     [Tooltip("§ğÀ»­@¤O¶Ë®`")]

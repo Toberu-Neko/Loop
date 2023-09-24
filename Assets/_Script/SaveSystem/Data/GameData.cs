@@ -54,8 +54,10 @@ public class GameData
         pickedTreasures = new();
         equipedItems = new();
         defeatedBosses = new();
-        consumablesInventory = new();
-        consumablesInventory.Add("Medkit", new ItemData(3, "Medkit"));
+        consumablesInventory = new()
+        {
+            { "Medkit", new ItemData(3, "Medkit") }
+        };
 
         equipedWeapon[0] = WeaponType.Sword;
         equipedWeapon[1] = WeaponType.Gun;
@@ -96,10 +98,7 @@ public class PlayerTimeSkills
 [System.Serializable]
 public class PlayerMovementSkills
 {
-    public SerializableDictionary<string, bool> unlockedMovementSkills = new()
-    {
-        {"DoubleJump", false },
-        {"Dash", false },
-        {"WallJump", false }
-    };
+    public bool doubleJump = false;
+    public bool dash = false;
+    public bool wallJump = false;
 }
