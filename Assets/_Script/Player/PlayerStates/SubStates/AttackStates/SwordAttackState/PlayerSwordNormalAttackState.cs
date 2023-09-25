@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerSwordNormalAttackState : PlayerSwordAttackState
 {
     private int attackCounter;
-    private SO_WeaponData_Sword swordData;
     private WeaponAttackDetails details;
 
     private float lastAttackTime;
@@ -13,7 +12,6 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
 
     public PlayerSwordNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        swordData = player.PlayerWeaponManager.SwordData;
         attackCounter = 0;
         lastAttackTime = 0;
     }
@@ -34,7 +32,6 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
     public override void Exit()
     {
         base.Exit();
-
 
         Combat.OnDamaged -= () => isAttackDone = true;
         attackCounter++;

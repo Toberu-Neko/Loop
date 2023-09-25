@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerSwordAttackState : PlayerAttackState
 {
+    protected SO_WeaponData_Sword swordData;
     public PlayerSwordAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        swordData = player.PlayerWeaponManager.SwordData;
     }
     public override void Enter()
     {

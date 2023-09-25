@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     public PlayerSwordNormalAttackState SwordNormalAttackState { get; private set; }
     public PlayerSwordStrongAttackState SwordStrongAttackState { get; private set; }
     public PlayerSwordSkyAttackState SwordSkyAttackState { get; private set; }
-    public PlayerSwordSoulOneAttackState SwordCounterAttackState { get; private set; }
+    public PlayerSwordCounterAttackState SwordCounterAttackState { get; private set; }
     public PlayerSwordSoulOneAttackState SwordSoulOneAttackState { get; private set; }
     public PlayerSwordSoulMaxAttackState SwordSoulMaxAttackState { get; private set; }
     #endregion
@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
         SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, playerData, "swordNormalAttack");
         SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, playerData, "swordStrongAttack");
         SwordSkyAttackState = new PlayerSwordSkyAttackState(this, StateMachine, playerData, "swordSkyAttack");
-        SwordCounterAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordCounterAttack");
+        SwordCounterAttackState = new PlayerSwordCounterAttackState(this, StateMachine, playerData, "swordCounterAttack");
         SwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordSoulOneAttack");
         SwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
 

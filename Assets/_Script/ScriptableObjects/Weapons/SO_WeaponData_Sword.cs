@@ -23,6 +23,10 @@ public class SO_WeaponData_Sword : SO_WeaponData
 
     public ProjectileDetails projectileDetails;
 
+
+    [Header("Counter Attack")]
+    public WeaponAttackDetails counterAttackDetails;
+
     [Header("Soul One Attack")]
     public WeaponAttackDetails soulOneAttackDetails;
 
