@@ -14,7 +14,18 @@ public class E5_IdleState : IdleState
     {
         base.LogicUpdate();
 
-        if (CheckPlayerSenses.CanSeePlayer && isPlayerInMaxAgroRange)
+        float angle;
+        if (CheckPlayerSenses.IsPlayerInMaxAgroRange)
+        {
+            angle = Vector2.Angle((Vector2)(CheckPlayerSenses.IsPlayerInMaxAgroRange.collider.transform.position - Movement.ParentTransform.position).normalized , Movement.ParentTransform.right);
+            // Debug.Log("ID Angle: " + angle);
+        }
+        else
+        {
+            angle = 180;
+        }
+
+        if (CheckPlayerSenses.CanSeePlayer && isPlayerInMaxAgroRange && angle < 30f)
         {
             stateMachine.ChangeState(enemy.SnipingState);
         }

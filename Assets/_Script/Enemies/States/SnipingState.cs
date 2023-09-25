@@ -74,10 +74,12 @@ public class SnipingState : AttackState
                 float leftTime = stateData.aimTime - (Time.time - StartTime);
                 v2WorkSpace.Set(0f, stateData.shakeCurve.Evaluate(leftTime / stateData.aimTime) * 2f);
 
-                if (CheckPlayerSenses.CanSeePlayer)
+                // Debug.Log("Angle: " + Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right));
+                if (CheckPlayerSenses.CanSeePlayer && Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right) < 30f)
                 {
                     targetPos = Vector3.Slerp((Vector3)targetPos, player.position, (stateData.aimTime - leftTime) / stateData.aimTime);
                 }
+
                 aimPointDelta = (targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized;
 
 

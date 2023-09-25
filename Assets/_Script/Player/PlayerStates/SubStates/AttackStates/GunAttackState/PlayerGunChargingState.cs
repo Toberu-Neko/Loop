@@ -15,6 +15,7 @@ public class PlayerGunChargingState : PlayerGunAttackState
     private float chargeTime;
     private float lastDamageTime;
     private int xInput;
+
     public PlayerGunChargingState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         data = player.PlayerWeaponManager.GunData;
@@ -34,6 +35,7 @@ public class PlayerGunChargingState : PlayerGunAttackState
         moveable = true;
         shot = false;
     }
+
     public override void Exit()
     {
         base.Exit();
@@ -42,6 +44,7 @@ public class PlayerGunChargingState : PlayerGunAttackState
         player.Anim.SetBool("gunChargeShoot", false);
         chargeAttack.gameObject.SetActive(false);
     }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
