@@ -11,12 +11,8 @@ public class PlayerProjectile : MonoBehaviour
     private Vector2 fireDirection;
     private int knockbackDirection;
 
-    private Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D rb;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
 
     public void Fire(ProjectileDetails details, Vector2 fireDirection)
     {
@@ -24,6 +20,10 @@ public class PlayerProjectile : MonoBehaviour
         projectileDetails = details;
         this.fireDirection = fireDirection;
         rb.velocity = fireDirection * projectileDetails.speed;
+
+        Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
+        transform.rotation = targetRotation;
+
 
         Invoke(nameof(DestoryThis), projectileDetails.duration);
 

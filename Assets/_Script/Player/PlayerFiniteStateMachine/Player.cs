@@ -38,8 +38,11 @@ public class Player : MonoBehaviour
     #endregion
 
     #region GunStates
+    public PlayerGunHubState GunHubState { get; private set; }
     public PlayerGunNormalAttackState GunNormalAttackState { get; private set; }
     public PlayerGunChargingState GunChargeAttackState { get; private set; }
+    public PlayerGunCounterState GunCounterAttackState { get; private set; }
+
     #endregion
 
     #region FistStates
@@ -115,8 +118,10 @@ public class Player : MonoBehaviour
         SwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordSoulOneAttack");
         SwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
 
+        GunHubState = new PlayerGunHubState(this, StateMachine, playerData, "gunAttack");
         GunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, playerData, "gunNormalAttack");
         GunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
+        GunCounterAttackState = new PlayerGunCounterState(this, StateMachine, playerData, "gunCounterAttack");
 
         FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
         FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, playerData, "fistNormalAttack");

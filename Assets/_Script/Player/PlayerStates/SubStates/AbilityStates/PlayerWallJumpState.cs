@@ -26,7 +26,7 @@ public class PlayerWallJumpState : PlayerAbilityState
         player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
         player.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
 
-        if(Time.time >= startTime + playerData.wallJumpTime)
+        if(Time.time >= StartTime + playerData.wallJumpTime)
         {
             isAbilityDone = true;
         }

@@ -61,7 +61,7 @@ public class DebugPlayerComp : MonoBehaviour
 
     void Update()
     {
-        if(!Stats.PerfectBlockAttackable && perfectBlockAttack.activeInHierarchy)
+        if(!Stats.CounterAttackable && perfectBlockAttack.activeInHierarchy)
         {
             perfectBlockAttack.SetActive(false);
         }

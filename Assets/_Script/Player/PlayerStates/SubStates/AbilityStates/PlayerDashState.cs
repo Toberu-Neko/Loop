@@ -25,7 +25,7 @@ public class PlayerDashState : PlayerAbilityState
         CanDash = false;
         player.InputHandler.UseDashInput();
 
-        startTime = Time.time;
+        StartTime = Time.time;
         Stats.SetInvincibleTrue();
         PlaceAfterImage();
         player.RB.drag = playerData.drag;
@@ -50,7 +50,7 @@ public class PlayerDashState : PlayerAbilityState
         Movement.SetVelocityX(playerData.dashVelocity * Movement.FacingDirection);
         CheckIfShouldPlaceAfterImage();
 
-        if (Time.time >= startTime + playerData.dashTime)
+        if (Time.time >= StartTime + playerData.dashTime)
         {
             player.RB.drag = 0f;
             isAbilityDone = true;

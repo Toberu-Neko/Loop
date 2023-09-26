@@ -58,7 +58,7 @@ public class PlayerFistHubState : PlayerFistAttackState
 
         Movement.CheckIfShouldFlip(xInput);
 
-        if(chargeStage == 0 && Time.time >= startTime + strongAttackHoldTime)
+        if(chargeStage == 0 && Time.time >= StartTime + strongAttackHoldTime)
         {
             chargeStage = 1;
             lastChargeTime = Time.time;

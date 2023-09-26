@@ -18,7 +18,7 @@ public class PlayerState
     protected bool isAnimationStartMovement;
     protected bool isExitingState;
 
-    protected float startTime;
+    protected float StartTime;
 
     private string animBoolName;
     public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
@@ -33,11 +33,12 @@ public class PlayerState
         Movement = player.Core.GetCoreComponent<Movement>();
         Stats = player.Core.GetCoreComponent<Stats>();
         CollisionSenses = player.Core.GetCoreComponent<CollisionSenses>();
+        StartTime = 0f;
     }
     public virtual void Enter()
     {
         DoChecks();
-        startTime = Time.time;
+        StartTime = Time.time;
         player.Anim.SetBool(animBoolName, true);
                 
         isAnimationFinished = false;

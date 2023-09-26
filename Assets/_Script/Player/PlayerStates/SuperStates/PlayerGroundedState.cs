@@ -80,13 +80,14 @@ public class PlayerGroundedState : PlayerState
         #endregion
 
         #region Gun
-        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable
+            && player.GunNormalAttackState.CheckCanAttack() && !Stats.CounterAttackable)
         {
-            stateMachine.ChangeState(player.GunNormalAttackState);
+            stateMachine.ChangeState(player.GunHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable && Stats.CounterAttackable)
         {
-            stateMachine.ChangeState(player.GunChargeAttackState);
+            stateMachine.ChangeState(player.GunCounterAttackState);
         }
         #endregion
 

@@ -16,45 +16,45 @@ MonoBehaviour:
   resetAttackTime: 4
   normalAttackDetails:
   - attackName: "\u8F15\u653B\u64CA"
-    damageAmount: 20
+    damageAmount: 10
     staminaDamageAmount: 5
     movementSpeed: 1
     knockbackForce: 0
-    knockbackAngle: {x: 1, y: 1}
+    knockbackAngle: {x: 0, y: 0}
   - attackName: "\u8F15\u653B\u64CA"
-    damageAmount: 20
+    damageAmount: 10
     staminaDamageAmount: 5
     movementSpeed: 1
     knockbackForce: 0
     knockbackAngle: {x: 1, y: 1}
   - attackName: "\u91CD\u653B\u64CA"
-    damageAmount: 40
+    damageAmount: 15
     staminaDamageAmount: 10
     movementSpeed: 3
-    knockbackForce: 20
+    knockbackForce: 0
     knockbackAngle: {x: 1, y: 2}
   skyAttackDetails:
     attackName: 
-    damageAmount: 50
-    staminaDamageAmount: 5
+    damageAmount: 10
+    staminaDamageAmount: 20
     movementSpeed: 0
-    knockbackForce: 10
-    knockbackAngle: {x: 2, y: 1}
+    knockbackForce: 9
+    knockbackAngle: {x: 1, y: 1}
   strongAttackDetails:
     attackName: Strong normal
-    damageAmount: 25
-    staminaDamageAmount: 5
+    damageAmount: 20
+    staminaDamageAmount: 15
     movementSpeed: 10
-    knockbackForce: 8
+    knockbackForce: 10
     knockbackAngle: {x: 1, y: 1}
+  strongAttackHoldTime: 0.75
   strongAttackEnergyCost: 1
   projectile: {fileID: 7587280026452555047, guid: 550bf30c55b84ea4b84c80455626ff6d, type: 3}
-  strongAttackHoldTime: 1
   projectileDetails:
-    damageAmount: 50
-    staminaDamageAmount: 1
+    damageAmount: 30
+    staminaDamageAmount: 15
     speed: 10
-    duration: 1.5
+    duration: 2
     knockbackStrength: 18
     knockbackAngle: {x: 2, y: 1}
   counterAttackDetails:
@@ -62,7 +62,7 @@ MonoBehaviour:
     damageAmount: 40
     staminaDamageAmount: 10
     movementSpeed: 0
-    knockbackForce: 10
+    knockbackForce: 12
     knockbackAngle: {x: 1, y: 1}
   soulOneAttackDetails:
     attackName: "\u5200\u9B42\u4E00 \u6539\u81F3\u53CD\u64CA"

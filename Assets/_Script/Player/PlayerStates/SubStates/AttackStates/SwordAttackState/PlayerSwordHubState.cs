@@ -43,7 +43,7 @@ public class PlayerSwordHubState : PlayerSwordAttackState
         holdAttackInput = player.InputHandler.HoldAttackInput;
         xInput = player.InputHandler.NormInputX;
 
-        if (!holdEnough && Time.time >= startTime + holdAttackTime)
+        if (!holdEnough && Time.time >= StartTime + holdAttackTime)
         {
             player.Anim.SetBool("swordHoldAttack", true);
             holdEnough = true;
@@ -55,7 +55,7 @@ public class PlayerSwordHubState : PlayerSwordAttackState
 
         Movement.CheckIfShouldFlip(xInput);
 
-        if (Stats.PerfectBlockAttackable)
+        if (Stats.CounterAttackable)
         {
             Stats.SetPerfectBlockAttackFalse();
             stateMachine.ChangeState(player.SwordCounterAttackState);
@@ -64,11 +64,11 @@ public class PlayerSwordHubState : PlayerSwordAttackState
         {
             stateMachine.ChangeState(player.SwordSkyAttackState);
         }
-        else if (!holdAttackInput && Time.time < startTime + holdAttackTime) 
+        else if (!holdAttackInput && Time.time < StartTime + holdAttackTime) 
         {
             stateMachine.ChangeState(player.SwordNormalAttackState);
         }
-        else if (!holdAttackInput && Time.time >= startTime + holdAttackTime)
+        else if (!holdAttackInput && Time.time >= StartTime + holdAttackTime)
         {
             stateMachine.ChangeState(player.SwordStrongAttackState);
         }

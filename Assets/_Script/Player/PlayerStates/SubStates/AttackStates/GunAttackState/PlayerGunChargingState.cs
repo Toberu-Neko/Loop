@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerGunChargingState : PlayerGunAttackState
 {
-    private bool holdSkillInput;
+    private bool holdAttackInput;
     private SO_WeaponData_Gun data;
     private GunChargeAttackScript chargeAttack;
     private bool shootable;
@@ -27,8 +24,8 @@ public class PlayerGunChargingState : PlayerGunAttackState
         base.Enter();
         Combat.OnDamaged += () => isAttackDone = true;
 
-        player.InputHandler.UseWeaponSkillInput();
         player.PlayerWeaponManager.SetGunRegenable(false);
+        player.PlayerWeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond);
 
         lastDamageTime = 0;
         shootable = true;
@@ -50,7 +47,7 @@ public class PlayerGunChargingState : PlayerGunAttackState
         base.LogicUpdate();
         
         xInput = player.InputHandler.NormInputX;
-        holdSkillInput = player.InputHandler.WeaponSkillHoldInput;
+        holdAttackInput = player.InputHandler.HoldAttackInput;
 
         if (moveable)
         {
@@ -58,11 +55,11 @@ public class PlayerGunChargingState : PlayerGunAttackState
             Movement.SetVelocityX(playerData.movementVelocity * data.chargeMovementSpeedMultiplier * xInput);
         }
 
-        if ((holdSkillInput || Time.time < startTime + data.minChargeTime) && player.PlayerWeaponManager.GunCurrentEnergy > 0)
+        if (holdAttackInput && player.PlayerWeaponManager.GunCurrentEnergy > 0)
         {
             player.PlayerWeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond * Time.deltaTime);
         }
-        else if(Time.time >= startTime + data.minChargeTime && shootable)
+        else if(shootable)
         {
             player.Anim.SetBool("gunChargeShoot", true);
             shootable = false;
@@ -99,11 +96,11 @@ public class PlayerGunChargingState : PlayerGunAttackState
     {
         base.AnimationActionTrigger();
 
-        chargeTime = Time.time - startTime;
+        chargeTime = Time.time - StartTime;
         chargeAttack.Init(new Vector2(chargeTime * data.chargeAttackWidthPerSecond, data.chargeAttackHeight));
         chargeAttack.gameObject.SetActive(true);
 
-        player.PlayerWeaponManager.GunFired();
+        player.PlayerWeaponManager.GunFiredRegenDelay();
         shot = true;
     }
 

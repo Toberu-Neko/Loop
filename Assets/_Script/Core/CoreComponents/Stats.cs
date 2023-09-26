@@ -13,7 +13,7 @@ public class Stats : CoreComponent
     private float lastCombatTime;
 
 
-    public bool PerfectBlockAttackable { get; private set; }
+    public bool CounterAttackable { get; private set; }
     public bool Invincible { get; private set; } = false;
     public bool InCombat { get; private set; } = false;
     public bool CanChangeWeapon { get; private set; } = true;
@@ -95,7 +95,7 @@ public class Stats : CoreComponent
     #region PerfectBlockAttack
     public void SetPerfectBlockAttackTrue()
     {
-        PerfectBlockAttackable = true;
+        CounterAttackable = true;
 
         CancelInvoke(nameof(SetPerfectBlockAttackFalse));
         Invoke(nameof(SetPerfectBlockAttackFalse), perfectBlockAttackDuration);
@@ -103,8 +103,8 @@ public class Stats : CoreComponent
 
     public void SetPerfectBlockAttackFalse()
     {
-        if(PerfectBlockAttackable)
-            PerfectBlockAttackable = false;
+        if(CounterAttackable)
+            CounterAttackable = false;
     }
     #endregion
 

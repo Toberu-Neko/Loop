@@ -9,16 +9,21 @@ public class SO_WeaponData_Gun : SO_WeaponData
     public float energyRegen;
     public float energyRegenDelay;
 
+    public GameObject bulletObject;
+
+    public float minChargeTime;
+
     [Header("NormalAttack")]
-    public GameObject normalAttackObject;
+    public float attackSpeed = 0.5f;
     public float energyCostPerShot;
-    public float attackSpeed;
     public ProjectileDetails normalAttackDetails;
+
+    [Header("CounterAttack")]
+    public ProjectileDetails counterAttackDetails;
 
     [Header("ChargeAttack")]
     public float chargeMovementSpeedMultiplier = 0.3f;
     public float chargeAttackBackFireVelocity = 3f;
-    public float minChargeTime;
     public float chargeAttackHeight = 1f;
     public float chargeAttackWidthPerSecond = 0.5f;
     public float chargeAttackEnergyCostPerSecond;

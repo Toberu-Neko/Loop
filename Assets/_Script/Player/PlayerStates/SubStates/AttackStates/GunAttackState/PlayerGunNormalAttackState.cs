@@ -1,20 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerGunNormalAttackState : PlayerGunAttackState
 {
     private SO_WeaponData_Gun data;
 
-    private bool attackInput;
-    private bool canAttack;
-    private float lastAttackTime = 0f;
-
     private int xInput;
-
     private Vector2 mouseDirectionInput;
-
 
     public PlayerGunNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -24,17 +15,15 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
     public override void Enter()
     {
         base.Enter();
-    }
-    public override void Exit()
-    {
-        base.Exit();
+
+        mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
+        xInput = player.InputHandler.NormInputX;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        attackInput = player.InputHandler.AttackInput;
         mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
         xInput = player.InputHandler.NormInputX;
 
@@ -46,29 +35,6 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
             Movement.CheckIfShouldFlip(-1);
         else if (mouseDirectionInput.x > 0)
             Movement.CheckIfShouldFlip(1);
-
-        if (!attackInput)
-        {
-            isAttackDone = true;
-        }
-
-        /*
-        CheckCanAttack();
-
-        if (!attackInput)
-        {
-            isAttackDone = true;
-        }
-        else if(canAttack && player.PlayerWeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
-        {
-            canAttack = false;
-            lastAttackTime = Time.time;
-            player.PlayerWeaponManager.DecreaseEnergy();
-            player.PlayerWeaponManager.GunFired();
-
-            PlayerProjectile proj = GameObject.Instantiate(data.normalAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity).GetComponent<PlayerProjectile>();
-            proj.Fire(data.normalAttackDetails, mouseDirectionInput);
-        }*/
     }
 
     public override void AnimationActionTrigger()
@@ -78,20 +44,24 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
         if(player.PlayerWeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
         {
             player.PlayerWeaponManager.DecreaseEnergy();
-            player.PlayerWeaponManager.GunFired();
+            player.PlayerWeaponManager.GunFiredRegenDelay();
 
-            PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.normalAttackObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
+            PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
             ProjectileDetails details = data.normalAttackDetails;
             details.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
-            proj.Fire(data.normalAttackDetails, mouseDirectionInput);
+            proj.Fire(details, mouseDirectionInput);
         }
     }
 
-    public void CheckCanAttack()
+    public override void AnimationFinishTrigger()
     {
-        if (Time.time >= lastAttackTime + data.attackSpeed)
-        {
-            canAttack = true;
-        }
+        base.AnimationFinishTrigger();
+
+        isAttackDone = true;
+    }
+
+    public bool CheckCanAttack()
+    {
+        return (StartTime == 0f || Time.time >= StartTime + data.attackSpeed) && player.PlayerWeaponManager.GunCurrentEnergy >= data.energyCostPerShot;
     }
 }

@@ -209,7 +209,7 @@ public class PlayerWeaponManager : MonoBehaviour
         GunEnergyRegenable = regenable;
     }
 
-    public void GunFired()
+    public void GunFiredRegenDelay()
     {
         GunEnergyRegenable = false;
         CancelInvoke(nameof(SetGunRagenableTrue));
