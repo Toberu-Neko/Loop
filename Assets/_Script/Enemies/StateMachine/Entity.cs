@@ -49,6 +49,7 @@ public class Entity : MonoBehaviour
 
         Stats.Health.Init();
         Stats.Stamina.Init();
+
     }
 
     protected virtual void Start()
@@ -120,6 +121,16 @@ public class Entity : MonoBehaviour
     private void AnimationFinishTrigger()
     {
         StateMachine.CurrentState.AnimationFinishTrigger();
+    }
+
+    public void SetFacingDirection(int dir)
+    {
+        if(movement == null)
+        {
+            Debug.LogError("movement is null");
+            return;
+        }
+        movement.CheckIfShouldFlip(dir);
     }
 
     public Vector2 GetPosition()

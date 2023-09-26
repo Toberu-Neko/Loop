@@ -6,7 +6,14 @@ public class EnemySpawner : MonoBehaviour, ITempDataPersistence
     public string ID;
 
     [SerializeField] private GameObject enemy;
+    [SerializeField] private FacingDir facingDir;
+    private enum FacingDir
+    {
+        right,
+        left
+    }
     private Entity entity;
+    
     [HideInInspector] public string SceneName { get; set;}
     [SerializeField] private SpriteRenderer SR;
     private bool isDefeated = false;
@@ -25,6 +32,16 @@ public class EnemySpawner : MonoBehaviour, ITempDataPersistence
     {
         GameObject obj = ObjectPoolManager.SpawnObject(enemy, transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Enemies);
         entity = obj.GetComponent<Entity>();
+
+        if(facingDir == FacingDir.left)
+        {
+            entity.SetFacingDirection(-1);
+        }
+        else
+        {
+            entity.SetFacingDirection(1);
+        }
+
         entity.OnDefeated += HandleDefeated;
         EnemyManager.Instance.RegisterEnemy(obj, SceneName);
     }
