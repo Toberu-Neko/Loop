@@ -64,35 +64,34 @@ public class PlayerGroundedState : PlayerState
         dashInput = player.InputHandler.DashInput;
 
         #region Sword
-        if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling && 
+        if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling &&
             player.SwordHubState.CheckIfCanAttack() && Stats.Attackable)
         {
             stateMachine.ChangeState(player.SwordHubState);
         }
-        else if(player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling 
-            && player.SwordHubState.CheckIfCanAttack() && 
-            weaponManager.SwordCurrentEnergy > 0 &&
-            Stats.PerfectBlockAttackable && 
-            weaponManager.SwordCurrentEnergy < weaponManager.SwordData.maxEnergy && Stats.Attackable)
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling
+            && player.SwordHubState.CheckIfCanAttack() && weaponManager.SwordCurrentEnergy > 0 &&
+            Stats.Attackable)
         {
-            player.SwordHubState.SetCanAttackFalse();
-            stateMachine.ChangeState(player.SwordSoulOneAttackState);
-        }
-        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling &&
-            player.SwordHubState.CheckIfCanAttack() && weaponManager.SwordCurrentEnergy > 0
-            && weaponManager.SwordCurrentEnergy == weaponManager.SwordData.maxEnergy && Stats.Attackable)
-        {
-            player.SwordHubState.SetCanAttackFalse();
-            stateMachine.ChangeState(player.SwordSoulMaxAttackState);
+            if (weaponManager.SwordCurrentEnergy < weaponManager.SwordData.maxEnergy)
+            {
+                player.SwordHubState.SetCanAttackFalse();
+                stateMachine.ChangeState(player.SwordSoulOneAttackState);
+            }
+            else if (weaponManager.SwordCurrentEnergy == weaponManager.SwordData.maxEnergy)
+            {
+                player.SwordHubState.SetCanAttackFalse();
+                stateMachine.ChangeState(player.SwordSoulMaxAttackState);
+            }
         }
         #endregion
 
         #region Gun
-        else if(player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
         {
             stateMachine.ChangeState(player.GunNormalAttackState);
         }
-        else if(player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && !isTouchingCeiling && Stats.Attackable)
         {
             stateMachine.ChangeState(player.GunChargeAttackState);
         }
@@ -103,7 +102,7 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.FistHubState);
         }
-        else if(player.InputHandler.WeaponSkillInput && yInput >= 0 && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy && Stats.Attackable)
+        else if (player.InputHandler.WeaponSkillInput && yInput >= 0 && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy && Stats.Attackable)
         {
             player.FistSoulAttackState.SetStaticAttack(false);
             weaponManager.ClearCurrentEnergy();
@@ -119,8 +118,8 @@ public class PlayerGroundedState : PlayerState
         }
         #endregion
 
-        else if (player.InputHandler.RegenInput && isGrounded && Stats.Health.CurrentValue < Stats.Health.MaxValue && 
-            (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0 ) // || can use time energy to regen && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
+        else if (player.InputHandler.RegenInput && isGrounded && Stats.Health.CurrentValue < Stats.Health.MaxValue &&
+            (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0) // || can use time energy to regen && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
             )
         {
             player.InputHandler.UseRegenInput();
@@ -131,7 +130,7 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.BlockState);
         }
-        else if(jumpInput && yInput < 0 && CollisionSenses.GroundPlatform)
+        else if (jumpInput && yInput < 0 && CollisionSenses.GroundPlatform)
         {
             if (!CollisionSenses.GroundPlatform.collider.CompareTag("Elevator"))
             {
@@ -147,7 +146,7 @@ public class PlayerGroundedState : PlayerState
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
         }
-        else if(isTouchingWall && grabInput && isTouchingLedge)
+        else if (isTouchingWall && grabInput && isTouchingLedge)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }

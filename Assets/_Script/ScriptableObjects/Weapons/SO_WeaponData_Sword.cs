@@ -16,11 +16,11 @@ public class SO_WeaponData_Sword : SO_WeaponData
     public WeaponAttackDetails skyAttackDetails;
 
     [Header("Strong Attack")]
-    [Tooltip("蓄力攻擊劍氣")]
-    public GameObject projectile;
+    public WeaponAttackDetails strongAttackDetails;
     [Tooltip("蓄力攻擊時間")]
     public float strongAttackHoldTime;
-
+    public int strongAttackEnergyCost;
+    public GameObject projectile;
     public ProjectileDetails projectileDetails;
 
 
