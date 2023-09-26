@@ -71,18 +71,11 @@ public class PlayerGroundedState : PlayerState
         }
         else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling
             && player.SwordHubState.CheckIfCanAttack() && weaponManager.SwordCurrentEnergy > 0 &&
-            Stats.Attackable)
+            Stats.Attackable &&
+            weaponManager.SwordCurrentEnergy == weaponManager.SwordData.maxEnergy)
         {
-            if (weaponManager.SwordCurrentEnergy < weaponManager.SwordData.maxEnergy)
-            {
-                player.SwordHubState.SetCanAttackFalse();
-                stateMachine.ChangeState(player.SwordSoulOneAttackState);
-            }
-            else if (weaponManager.SwordCurrentEnergy == weaponManager.SwordData.maxEnergy)
-            {
-                player.SwordHubState.SetCanAttackFalse();
-                stateMachine.ChangeState(player.SwordSoulMaxAttackState);
-            }
+            player.SwordHubState.SetCanAttackFalse();
+            stateMachine.ChangeState(player.SwordSoulMaxAttackState);
         }
         #endregion
 

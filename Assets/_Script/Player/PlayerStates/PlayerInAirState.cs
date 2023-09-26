@@ -110,15 +110,6 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.SwordHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Sword
-            && player.SwordHubState.CheckIfCanAttack() &&
-            player.PlayerWeaponManager.SwordCurrentEnergy > 0 &&
-            Stats.PerfectBlockAttackable &&
-            player.PlayerWeaponManager.SwordCurrentEnergy < player.PlayerWeaponManager.SwordData.maxEnergy && Stats.Attackable)
-        {
-            player.SwordHubState.SetCanAttackFalse();
-            stateMachine.ChangeState(player.SwordSoulOneAttackState);
-        }
         else if (player.InputHandler.WeaponSkillInput && player.PlayerWeaponManager.CurrentWeaponType == WeaponType.Sword &&
             player.SwordHubState.CheckIfCanAttack() && player.PlayerWeaponManager.SwordCurrentEnergy > 0
             && player.PlayerWeaponManager.SwordCurrentEnergy == player.PlayerWeaponManager.SwordData.maxEnergy && Stats.Attackable)
