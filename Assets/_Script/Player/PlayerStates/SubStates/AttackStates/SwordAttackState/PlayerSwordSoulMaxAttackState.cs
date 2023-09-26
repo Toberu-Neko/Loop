@@ -7,7 +7,7 @@ public class PlayerSwordSoulMaxAttackState : PlayerSwordAttackState
     WeaponAttackDetails details;
     public PlayerSwordSoulMaxAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        details = player.PlayerWeaponManager.SwordData.soulThreeAttackDetails;
+        details = player.WeaponManager.SwordData.soulThreeAttackDetails;
     }
 
     public override void AnimationActionTrigger()
@@ -28,7 +28,7 @@ public class PlayerSwordSoulMaxAttackState : PlayerSwordAttackState
     {
         base.Enter();
 
-        player.PlayerWeaponManager.ClearCurrentEnergy();
+        player.WeaponManager.ClearCurrentEnergy();
     }
 
 }

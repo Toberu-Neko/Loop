@@ -12,7 +12,7 @@ public class PlayerGunHubState : PlayerGunAttackState
     private bool attackInput;
     public PlayerGunHubState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        data = player.PlayerWeaponManager.GunData;
+        data = player.WeaponManager.GunData;
     }
 
     public override void LogicUpdate()

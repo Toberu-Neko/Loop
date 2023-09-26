@@ -18,6 +18,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [field: SerializeField] public Transform ProjectileStartPos { get; private set; }
     public float GunCurrentEnergy { get; private set; }
+    public int GrenadeCount { get; private set; }
     public bool GunEnergyRegenable { get; private set; }
     
     
@@ -64,14 +65,14 @@ public class PlayerWeaponManager : MonoBehaviour
        if(stats.CanChangeWeapon)
             ChangeWeapon();
 
-        if ((CurrentWeaponType == WeaponType.Sword || CurrentWeaponType == WeaponType.Fist) && perfectBlockThisFram)
+        if (perfectBlockThisFram)
         {
             IncreaseEnergy();
         }
 
         if(CurrentWeaponType == WeaponType.Gun && GunEnergyRegenable)
         {
-            IncreaseEnergy();
+            IncreaseGunEnergy();
         }
 
         if (player.InputHandler.DebugInput)
@@ -109,6 +110,7 @@ public class PlayerWeaponManager : MonoBehaviour
         SwordCurrentEnergy = 0;
         FistCurrentEnergy = 0;
         GunCurrentEnergy = GunData.maxEnergy;
+        GrenadeCount = 0;
         GunEnergyRegenable = true;
     }
     public string GetCurrentTypeEnergyStr()
@@ -140,16 +142,25 @@ public class PlayerWeaponManager : MonoBehaviour
                     FistCurrentEnergy++;
                 break;
             case WeaponType.Gun:
-                if(GunCurrentEnergy < GunData.maxEnergy)
-                    GunCurrentEnergy += GunData.energyRegen * Time.deltaTime;
-
-                if (GunCurrentEnergy > GunData.maxEnergy)
-                    GunCurrentEnergy = GunData.maxEnergy;
+                if(GrenadeCount < GunData.maxGrenade)
+                    GrenadeCount++;
                 break;
         }
         perfectBlockThisFram = false;
         OnEnergyChanged?.Invoke();
     }
+
+    private void IncreaseGunEnergy()
+    {
+        if (GunCurrentEnergy < GunData.maxEnergy)
+            GunCurrentEnergy += GunData.energyRegen * Time.deltaTime;
+
+        if (GunCurrentEnergy > GunData.maxEnergy)
+            GunCurrentEnergy = GunData.maxEnergy;
+
+        OnEnergyChanged?.Invoke();
+    }
+
 
     public void DecreaseEnergy()
     {
@@ -162,10 +173,15 @@ public class PlayerWeaponManager : MonoBehaviour
                 FistCurrentEnergy--;
                 break;
             case WeaponType.Gun:
-                GunCurrentEnergy -= GunData.energyCostPerShot;
+                GrenadeCount--;
                 break;
         }
         OnEnergyChanged?.Invoke();
+    }
+
+    public void DecreaseGunEnergy()
+    {
+        GunCurrentEnergy -= GunData.energyCostPerShot;
     }
 
     public void DecreaseGunEnergy(float amount)
@@ -200,6 +216,7 @@ public class PlayerWeaponManager : MonoBehaviour
         SwordCurrentEnergy = SwordData.maxEnergy;
         FistCurrentEnergy = FistData.maxEnergy;
         GunCurrentEnergy = GunData.maxEnergy;
+        GrenadeCount = GunData.maxGrenade;
 
         OnEnergyChanged?.Invoke();
     }

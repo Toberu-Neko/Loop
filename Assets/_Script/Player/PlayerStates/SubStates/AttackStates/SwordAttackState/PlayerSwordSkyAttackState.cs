@@ -7,7 +7,7 @@ public class PlayerSwordSkyAttackState : PlayerSwordAttackState
     private WeaponAttackDetails details;
     public PlayerSwordSkyAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        details = player.PlayerWeaponManager.SwordData.skyAttackDetails;
+        details = player.WeaponManager.SwordData.skyAttackDetails;
     }
 
     public override void Enter()

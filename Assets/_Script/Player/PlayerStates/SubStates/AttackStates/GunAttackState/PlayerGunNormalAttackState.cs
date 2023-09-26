@@ -9,7 +9,7 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
     public PlayerGunNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        data = player.PlayerWeaponManager.GunData;
+        data = player.WeaponManager.GunData;
     }
 
     public override void Enter()
@@ -41,12 +41,12 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
     {
         base.AnimationActionTrigger();
 
-        if(player.PlayerWeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
+        if(player.WeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
         {
-            player.PlayerWeaponManager.DecreaseEnergy();
-            player.PlayerWeaponManager.GunFiredRegenDelay();
+            player.WeaponManager.DecreaseGunEnergy();
+            player.WeaponManager.GunFiredRegenDelay();
 
-            PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
+            PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.WeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
             ProjectileDetails details = data.normalAttackDetails;
             details.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
             proj.Fire(details, mouseDirectionInput);
@@ -62,6 +62,6 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
     public bool CheckCanAttack()
     {
-        return (StartTime == 0f || Time.time >= StartTime + data.attackSpeed) && player.PlayerWeaponManager.GunCurrentEnergy >= data.energyCostPerShot;
+        return (StartTime == 0f || Time.time >= StartTime + data.attackSpeed) && player.WeaponManager.GunCurrentEnergy >= data.energyCostPerShot;
     }
 }

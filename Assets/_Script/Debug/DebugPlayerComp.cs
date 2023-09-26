@@ -79,8 +79,16 @@ public class DebugPlayerComp : MonoBehaviour
 
     void UpdateWeaponText()
     {
-        weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
-            "\n 能量: " + weaponManager.GetCurrentTypeEnergyStr();
+        if(weaponManager.CurrentWeaponType != WeaponType.Gun)
+        {
+            weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
+                "\n 能量: " + weaponManager.GetCurrentTypeEnergyStr();
+        }
+        else
+        {
+            weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
+                "\n 能量: " + weaponManager.GetCurrentTypeEnergyStr() + ", 手榴彈: " + weaponManager.GrenadeCount;
+        }
     }
 
     void UpdateTimeSkillText()

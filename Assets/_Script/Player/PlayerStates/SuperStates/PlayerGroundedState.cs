@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerGroundedState : PlayerState
 {
@@ -23,7 +20,7 @@ public class PlayerGroundedState : PlayerState
 
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        weaponManager = player.PlayerWeaponManager;
+        weaponManager = player.WeaponManager;
     }
 
     public override void DoChecks()
@@ -89,6 +86,11 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.GunCounterAttackState);
         }
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && weaponManager.GrenadeCount > 0)
+        {
+            player.InputHandler.UseWeaponSkillInput();
+            stateMachine.ChangeState(player.GunThrowGrenadeState);
+        }
         #endregion
 
         #region Fist
@@ -149,4 +151,5 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.DashState);
         }
     }
+
 }

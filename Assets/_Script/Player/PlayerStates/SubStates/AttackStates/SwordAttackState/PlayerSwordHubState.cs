@@ -15,7 +15,7 @@ public class PlayerSwordHubState : PlayerSwordAttackState
     private bool canAttack;
     public PlayerSwordHubState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        holdAttackTime = player.PlayerWeaponManager.SwordData.strongAttackHoldTime;
+        holdAttackTime = player.WeaponManager.SwordData.strongAttackHoldTime;
     }
 
     public override void Enter()

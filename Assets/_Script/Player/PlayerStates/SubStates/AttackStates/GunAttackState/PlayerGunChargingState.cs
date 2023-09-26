@@ -15,8 +15,8 @@ public class PlayerGunChargingState : PlayerGunAttackState
 
     public PlayerGunChargingState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        data = player.PlayerWeaponManager.GunData;
-        chargeAttack = player.PlayerWeaponManager.GunChargeAttackScript;
+        data = player.WeaponManager.GunData;
+        chargeAttack = player.WeaponManager.GunChargeAttackScript;
     }
 
     public override void Enter()
@@ -24,8 +24,8 @@ public class PlayerGunChargingState : PlayerGunAttackState
         base.Enter();
         Combat.OnDamaged += () => isAttackDone = true;
 
-        player.PlayerWeaponManager.SetGunRegenable(false);
-        player.PlayerWeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond);
+        player.WeaponManager.SetGunRegenable(false);
+        player.WeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond);
 
         lastDamageTime = 0;
         shootable = true;
@@ -55,9 +55,9 @@ public class PlayerGunChargingState : PlayerGunAttackState
             Movement.SetVelocityX(playerData.movementVelocity * data.chargeMovementSpeedMultiplier * xInput);
         }
 
-        if (holdAttackInput && player.PlayerWeaponManager.GunCurrentEnergy > 0)
+        if (holdAttackInput && player.WeaponManager.GunCurrentEnergy > 0)
         {
-            player.PlayerWeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond * Time.deltaTime);
+            player.WeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond * Time.deltaTime);
         }
         else if(shootable)
         {
@@ -100,7 +100,7 @@ public class PlayerGunChargingState : PlayerGunAttackState
         chargeAttack.Init(new Vector2(chargeTime * data.chargeAttackWidthPerSecond, data.chargeAttackHeight));
         chargeAttack.gameObject.SetActive(true);
 
-        player.PlayerWeaponManager.GunFiredRegenDelay();
+        player.WeaponManager.GunFiredRegenDelay();
         shot = true;
     }
 

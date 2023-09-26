@@ -9,7 +9,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
     private bool fireObj;
     public PlayerSwordStrongAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        weaponData = player.PlayerWeaponManager.SwordData;
+        weaponData = player.WeaponManager.SwordData;
     }
     public override void Enter()
     {
@@ -19,7 +19,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
         startMovement = false;
         fireObj = false;
 
-        if (player.PlayerWeaponManager.SwordCurrentEnergy >= weaponData.strongAttackEnergyCost)
+        if (player.WeaponManager.SwordCurrentEnergy >= weaponData.strongAttackEnergyCost)
         {
             fireObj = true;
         }
@@ -60,9 +60,9 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
 
         if(fireObj)
         {
-            player.PlayerWeaponManager.DecreaseEnergy();
+            player.WeaponManager.DecreaseEnergy();
             CamManager.Instance.CameraShake();
-            GameObject projectile = ObjectPoolManager.SpawnObject(player.PlayerWeaponManager.SwordData.projectile, core.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
+            GameObject projectile = ObjectPoolManager.SpawnObject(player.WeaponManager.SwordData.projectile, core.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
             PlayerProjectile projectileScript = projectile.GetComponent<PlayerProjectile>();
             ProjectileDetails details = weaponData.projectileDetails;
             details.damageAmount *= PlayerInventoryManager.Instance.SwordMultiplier.attackSpeedMultiplier;

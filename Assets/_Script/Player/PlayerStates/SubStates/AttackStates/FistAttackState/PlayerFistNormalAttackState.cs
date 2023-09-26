@@ -12,7 +12,7 @@ public class PlayerFistNormalAttackState : PlayerFistAttackState
 
     public PlayerFistNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        fistData = player.PlayerWeaponManager.FistData;
+        fistData = player.WeaponManager.FistData;
         attackCounter = 0;
         lastAttackTime = 0;
     }

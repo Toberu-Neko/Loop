@@ -19,7 +19,7 @@ public class PlayerFistHubState : PlayerFistAttackState
     
     public PlayerFistHubState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        data = player.PlayerWeaponManager.FistData;
+        data = player.WeaponManager.FistData;
         strongAttackHoldTime = data.strongAttackHoldTime;
         useSoulTime = data.everySoulAddtionalHoldTime;
     }
@@ -64,19 +64,19 @@ public class PlayerFistHubState : PlayerFistAttackState
             lastChargeTime = Time.time;
             player.Anim.SetInteger("fistHubChargeStage", chargeStage);
         }
-        if (chargeStage == 1 && Time.time >= lastChargeTime + useSoulTime && player.PlayerWeaponManager.FistCurrentEnergy >= 2)
+        if (chargeStage == 1 && Time.time >= lastChargeTime + useSoulTime && player.WeaponManager.FistCurrentEnergy >= 2)
         {
             chargeStage = 2;
-            player.PlayerWeaponManager.DecreaseEnergy();
-            player.PlayerWeaponManager.DecreaseEnergy(); 
+            player.WeaponManager.DecreaseEnergy();
+            player.WeaponManager.DecreaseEnergy(); 
             lastChargeTime = Time.time;
             player.Anim.SetInteger("fistHubChargeStage", chargeStage);
         }
-        if (chargeStage >= 2 && Time.time >= lastChargeTime + useSoulTime && chargeStage < data.maxEnergy && player.PlayerWeaponManager.FistCurrentEnergy > 0) 
+        if (chargeStage >= 2 && Time.time >= lastChargeTime + useSoulTime && chargeStage < data.maxEnergy && player.WeaponManager.FistCurrentEnergy > 0) 
         {
             chargeStage++;
             lastChargeTime = Time.time;
-            player.PlayerWeaponManager.DecreaseEnergy();
+            player.WeaponManager.DecreaseEnergy();
             player.Anim.SetInteger("fistHubChargeStage", chargeStage);
         }
 

@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     public PlayerGunNormalAttackState GunNormalAttackState { get; private set; }
     public PlayerGunChargingState GunChargeAttackState { get; private set; }
     public PlayerGunCounterState GunCounterAttackState { get; private set; }
+    public PlayerThrowGrenadeState GunThrowGrenadeState { get; private set; }
 
     #endregion
 
@@ -59,7 +60,7 @@ public class Player : MonoBehaviour
     private Stats stats;
 
     public Animator Anim { get; private set; }
-    public PlayerWeaponManager PlayerWeaponManager { get; private set; }
+    public PlayerWeaponManager WeaponManager { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public SpriteRenderer SR { get; private set; }
@@ -86,7 +87,7 @@ public class Player : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         SR = GetComponent<SpriteRenderer>();
         MovementCollider = GetComponent<BoxCollider2D>();
-        PlayerWeaponManager = GetComponent<PlayerWeaponManager>();
+        WeaponManager = GetComponent<PlayerWeaponManager>();
 
         StateMachine = new PlayerStateMachine();
 
@@ -122,6 +123,7 @@ public class Player : MonoBehaviour
         GunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, playerData, "gunNormalAttack");
         GunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
         GunCounterAttackState = new PlayerGunCounterState(this, StateMachine, playerData, "gunCounterAttack");
+        GunThrowGrenadeState = new PlayerThrowGrenadeState(this, StateMachine, playerData, "gunThrowGrenade");
 
         FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
         FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, playerData, "fistNormalAttack");

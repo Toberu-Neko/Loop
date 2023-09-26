@@ -7,7 +7,7 @@ public class PlayerSwordSoulOneAttackState : PlayerSwordAttackState
     WeaponAttackDetails details;
     public PlayerSwordSoulOneAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        details = player.PlayerWeaponManager.SwordData.soulOneAttackDetails;
+        details = player.WeaponManager.SwordData.soulOneAttackDetails;
     }
 
     public override void Enter()
@@ -15,7 +15,7 @@ public class PlayerSwordSoulOneAttackState : PlayerSwordAttackState
         base.Enter();
 
         Stats.SetPerfectBlockAttackFalse();
-        player.PlayerWeaponManager.DecreaseEnergy();
+        player.WeaponManager.DecreaseEnergy();
     }
     public override void LogicUpdate()
     {

@@ -9,6 +9,8 @@ public class SO_WeaponData_Gun : SO_WeaponData
     public float energyRegen;
     public float energyRegenDelay;
 
+    public int maxGrenade = 3;
+
     public GameObject bulletObject;
 
     public float minChargeTime;
@@ -20,6 +22,10 @@ public class SO_WeaponData_Gun : SO_WeaponData
 
     [Header("CounterAttack")]
     public ProjectileDetails counterAttackDetails;
+
+    [Header("Grenade")]
+    public GameObject grenadeObj;
+    public ProjectileDetails grenadeDetails;
 
     [Header("ChargeAttack")]
     public float chargeMovementSpeedMultiplier = 0.3f;

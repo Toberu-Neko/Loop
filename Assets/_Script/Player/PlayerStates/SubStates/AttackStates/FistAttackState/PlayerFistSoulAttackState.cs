@@ -13,7 +13,7 @@ public class PlayerFistSoulAttackState : PlayerFistAttackState
     private bool startMovement;
     public PlayerFistSoulAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        data = player.PlayerWeaponManager.FistData;
+        data = player.WeaponManager.FistData;
         soulAmount = 0;
     }
     public override void Enter()

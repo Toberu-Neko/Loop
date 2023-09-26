@@ -15,6 +15,7 @@ MonoBehaviour:
   maxEnergy: 100
   energyRegen: 5
   energyRegenDelay: 1
+  maxGrenade: 3
   bulletObject: {fileID: 4763303106170138442, guid: 017f74101e07e384a9eaac15ff7d27db, type: 3}
   minChargeTime: 1
   attackSpeed: 0.5
@@ -32,6 +33,14 @@ MonoBehaviour:
     speed: 30
     duration: 5
     knockbackStrength: 20
+    knockbackAngle: {x: 1, y: 1}
+  grenadeObj: {fileID: 7089407954526637746, guid: 70ab74009c2fd46498fe1552b17658c2, type: 3}
+  grenadeDetails:
+    damageAmount: 20
+    staminaDamageAmount: 30
+    speed: 8
+    duration: 3
+    knockbackStrength: 15
     knockbackAngle: {x: 1, y: 1}
   chargeMovementSpeedMultiplier: 0.3
   chargeAttackBackFireVelocity: 1.5

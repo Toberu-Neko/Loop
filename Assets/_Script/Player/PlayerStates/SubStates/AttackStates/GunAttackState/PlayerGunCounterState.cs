@@ -9,7 +9,7 @@ public class PlayerGunCounterState : PlayerGunAttackState
     private Vector2 mouseDirectionInput;
     public PlayerGunCounterState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        data = player.PlayerWeaponManager.GunData;
+        data = player.WeaponManager.GunData;
     }
 
     public override void Enter()
@@ -43,9 +43,9 @@ public class PlayerGunCounterState : PlayerGunAttackState
         base.AnimationActionTrigger();
         shot = true;
 
-        player.PlayerWeaponManager.GunFiredRegenDelay();
+        player.WeaponManager.GunFiredRegenDelay();
 
-        PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.PlayerWeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
+        PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.WeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
         ProjectileDetails details = data.counterAttackDetails;
         details.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
         proj.Fire(details, mouseDirectionInput);
