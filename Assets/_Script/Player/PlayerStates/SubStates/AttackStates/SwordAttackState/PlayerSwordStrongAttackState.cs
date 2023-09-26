@@ -6,6 +6,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
 {
     private SO_WeaponData_Sword weaponData;
     private bool startMovement;
+    private bool fireObj;
     public PlayerSwordStrongAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         weaponData = player.PlayerWeaponManager.SwordData;
@@ -16,6 +17,12 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
 
         Combat.OnDamaged += HandleOnDamaged;
         startMovement = false;
+        fireObj = false;
+
+        if (player.PlayerWeaponManager.SwordCurrentEnergy >= weaponData.strongAttackEnergyCost)
+        {
+            fireObj = true;
+        }
     }
 
     public override void Exit()
@@ -23,6 +30,16 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
         base.Exit();
 
         Combat.OnDamaged -= HandleOnDamaged;
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (startMovement && !fireObj)
+        {
+            Movement.SetVelocityX(weaponData.strongAttackDetails.movementSpeed * Movement.FacingDirection);
+        }
     }
 
     public override void AnimationStartMovementTrigger()
@@ -41,7 +58,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
     {
         base.AnimationActionTrigger();
 
-        if(player.PlayerWeaponManager.SwordCurrentEnergy >= weaponData.strongAttackEnergyCost)
+        if(fireObj)
         {
             player.PlayerWeaponManager.DecreaseEnergy();
             CamManager.Instance.CameraShake();
