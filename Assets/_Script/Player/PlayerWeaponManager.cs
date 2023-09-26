@@ -182,6 +182,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public void DecreaseGunEnergy()
     {
         GunCurrentEnergy -= GunData.energyCostPerShot;
+        OnEnergyChanged?.Invoke();
     }
 
     public void DecreaseGunEnergy(float amount)

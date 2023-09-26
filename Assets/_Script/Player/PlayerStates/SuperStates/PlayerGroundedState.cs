@@ -86,7 +86,7 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.GunCounterAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && weaponManager.GrenadeCount > 0)
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && weaponManager.GrenadeCount > 0 && Stats.Attackable)
         {
             player.InputHandler.UseWeaponSkillInput();
             stateMachine.ChangeState(player.GunThrowGrenadeState);

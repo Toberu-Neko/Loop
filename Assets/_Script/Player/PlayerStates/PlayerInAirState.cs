@@ -129,6 +129,11 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.GunCounterAttackState);
         }
+        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Gun && Stats.Attackable && player.WeaponManager.GrenadeCount > 0)
+        {
+            player.InputHandler.UseWeaponSkillInput();
+            stateMachine.ChangeState(player.GunThrowGrenadeState);
+        }
         #endregion
 
         #region Fist

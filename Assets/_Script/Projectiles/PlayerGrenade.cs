@@ -6,8 +6,13 @@ public class PlayerGrenade : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rig;
     [SerializeField] private float radius = 3f;
+    [SerializeField] private GameObject explodeObj;
     private ProjectileDetails details;
 
+    private void OnEnable()
+    {
+        explodeObj.SetActive(false);
+    }
     public void Throw(ProjectileDetails details, int direction)
     {
         if(direction == 1)
@@ -27,6 +32,7 @@ public class PlayerGrenade : MonoBehaviour
     private void Explode()
     {
         CancelInvoke(nameof(Explode));
+        explodeObj.SetActive(true);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
 
@@ -57,6 +63,12 @@ public class PlayerGrenade : MonoBehaviour
 
         }
 
+
+        Invoke(nameof(DestoryThis), 0.25f);
+    }
+
+    private void DestoryThis()
+    {
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 
