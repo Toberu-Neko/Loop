@@ -8,6 +8,21 @@ public class PlayerSwordCounterAttackState : PlayerSwordAttackState
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        Time.timeScale = 0.5f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+    }
 
     public override void LogicUpdate()
     {
@@ -24,5 +39,12 @@ public class PlayerSwordCounterAttackState : PlayerSwordAttackState
         base.AnimationActionTrigger();
 
         DoDamageToDamageList(WeaponType.Sword, swordData.counterAttackDetails.damageAmount, swordData.counterAttackDetails.staminaDamageAmount, swordData.counterAttackDetails.knockbackAngle, swordData.counterAttackDetails.knockbackForce); 
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        isAttackDone = true;
     }
 }
