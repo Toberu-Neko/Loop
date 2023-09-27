@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d84dec53e7c491e4ea26558965f79e73, type: 3}
   m_Name: FistData
   m_EditorClassIdentifier: 
-  maxEnergy: 5
+  maxEnergy: 3
   resetAttackTime: 3
   normalAttackDetails:
   - attackName: "\u8F15"
@@ -28,38 +28,63 @@ MonoBehaviour:
     knockbackForce: 5
     knockbackAngle: {x: 0.5, y: 1}
   counterAttackDetails:
-    attackName: Defult
+    attackName: "\u53CD\u64CA"
     damageAmount: 20
     staminaDamageAmount: 4
     movementSpeed: 6
-    knockbackForce: 8
+    knockbackForce: 18
     knockbackAngle: {x: 1, y: 1}
   strongAttackHoldTime: 0.5
   strongAttackDetail:
-    attackName: 
+    attackName: "\u5F37"
     damageAmount: 4
     staminaDamageAmount: 0
     movementSpeed: 14
     knockbackForce: 14
     knockbackAngle: {x: 1, y: 1}
   soulAttackDetail:
-    attackName: Defult
+    attackName: "\u9B421"
     damageAmount: 8
     staminaDamageAmount: 100
     movementSpeed: 14
     knockbackForce: 6
     knockbackAngle: {x: 1, y: 1}
   staticStrongAttackDetail:
-    attackName: Defult
-    damageAmount: 10
+    attackName: "\u5F37"
+    damageAmount: 20
     staminaDamageAmount: 3
     movementSpeed: 0
-    knockbackForce: 8
-    knockbackAngle: {x: 0, y: 0}
+    knockbackForce: 10
+    knockbackAngle: {x: 1, y: 1}
   staticSoulAttackDetail:
-    attackName: Defult
-    damageAmount: 10
-    staminaDamageAmount: 3
+    attackName: "\u9B421"
+    damageAmount: 30
+    staminaDamageAmount: 50
     movementSpeed: 0
-    knockbackForce: 8
+    knockbackForce: 14
+    knockbackAngle: {x: 1, y: 1}
+  soulThreeAttackDetails:
+  - attackName: 
+    damageAmount: 0
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: 
+    damageAmount: 0
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: 
+    damageAmount: 0
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: 
+    damageAmount: 0
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 0
     knockbackAngle: {x: 0, y: 0}
