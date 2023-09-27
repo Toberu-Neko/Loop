@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerChangeSceneState : PlayerState
 {
-    private int facingDirection;
     private bool canChangeState;
     public PlayerChangeSceneState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -14,8 +13,16 @@ public class PlayerChangeSceneState : PlayerState
         base.Enter();
 
         Movement.SetVelocityZero();
+        Movement.SetRBKinematic();
 
         canChangeState = false;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        Movement.SetRBDynamic();
     }
 
     public override void LogicUpdate()
@@ -28,10 +35,6 @@ public class PlayerChangeSceneState : PlayerState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-    }
-    public void SetFacingDirection(int direction)
-    {
-        facingDirection = direction;
     }
 
     public void SetCanChangeStateTrue()

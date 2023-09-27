@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwordCounterAttackState : PlayerSwordAttackState
+public class PlayerFistCounterAttackState : PlayerFistAttackState
 {
-    public PlayerSwordCounterAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    private SO_WeaponData_Fist data;
+    public PlayerFistCounterAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        data = player.WeaponManager.FistData;
     }
 
     public override void Enter()
     {
         base.Enter();
 
+        Stats.SetPerfectBlockAttackFalse();
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        Stats.SetPerfectBlockAttackFalse();
     }
 
     public override void Exit()
@@ -31,7 +33,7 @@ public class PlayerSwordCounterAttackState : PlayerSwordAttackState
 
         if (isAnimationStartMovement)
         {
-            Movement.SetVelocityX(swordData.counterAttackDetails.movementSpeed * Movement.FacingDirection);
+            Movement.SetVelocityX(data.counterAttackDetails.movementSpeed * Movement.FacingDirection);
         }
     }
 
@@ -39,7 +41,7 @@ public class PlayerSwordCounterAttackState : PlayerSwordAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(WeaponType.Sword, swordData.counterAttackDetails.damageAmount, swordData.counterAttackDetails.staminaDamageAmount, swordData.counterAttackDetails.knockbackAngle, swordData.counterAttackDetails.knockbackForce); 
+        DoDamageToDamageList(WeaponType.Fist, data.counterAttackDetails.damageAmount, data.counterAttackDetails.staminaDamageAmount, data.counterAttackDetails.knockbackAngle, data.counterAttackDetails.knockbackForce);
     }
 
     public override void AnimationFinishTrigger()

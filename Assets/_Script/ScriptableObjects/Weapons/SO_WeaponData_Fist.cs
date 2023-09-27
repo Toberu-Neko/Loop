@@ -13,12 +13,18 @@ public class SO_WeaponData_Fist : SO_WeaponData
     public float resetAttackTime;
     [SerializeField] private WeaponAttackDetails[] normalAttackDetails;
 
+    [Header("Counter Attack")]
+    public WeaponAttackDetails counterAttackDetails;
+
     [Header("Strong Attack")]
-    [Tooltip("觸發第一次蓄力攻擊所需的時間")]
+    [Tooltip("蓄力攻擊所需的續力時間")]
     public float strongAttackHoldTime;
-    [Tooltip("每次充能鬥魂所需的時間")]
-    public float everySoulAddtionalHoldTime;
-    public WeaponAttackDetails[] soulAttackDetails;
+    public WeaponAttackDetails strongAttackDetail;
+    public WeaponAttackDetails soulAttackDetail;
+
+    [Header("Static Strong Attack")]
+    public WeaponAttackDetails staticStrongAttackDetail;
+    public WeaponAttackDetails staticSoulAttackDetail;
 
     public WeaponAttackDetails[] NormalAttackDetails { get => normalAttackDetails; private set => normalAttackDetails = value; }
     private void OnEnable()

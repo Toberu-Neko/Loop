@@ -94,28 +94,18 @@ public class PlayerGroundedState : PlayerState
         #endregion
 
         #region Fist
-        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && Stats.Attackable && !Stats.CounterAttackable)
         {
             stateMachine.ChangeState(player.FistHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && yInput >= 0 && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && Stats.Attackable && Stats.CounterAttackable)
         {
-            player.FistSoulAttackState.SetStaticAttack(false);
-            weaponManager.ClearCurrentEnergy();
-            player.FistSoulAttackState.SetSoulAmount(weaponManager.FistData.maxEnergy - 1);
-            stateMachine.ChangeState(player.FistSoulAttackState);
-        }
-        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy && Stats.Attackable)
-        {
-            player.FistSoulAttackState.SetStaticAttack(true);
-            weaponManager.ClearCurrentEnergy();
-            player.FistSoulAttackState.SetSoulAmount(weaponManager.FistData.maxEnergy - 1);
-            stateMachine.ChangeState(player.FistSoulAttackState);
+            stateMachine.ChangeState(player.FistCounterAttackState);
         }
         #endregion
 
         else if (player.InputHandler.RegenInput && isGrounded && Stats.Health.CurrentValue < Stats.Health.MaxValue &&
-            (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0) // || can use time energy to regen && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
+            (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0) //TODO: || can use time energy to regen && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
             )
         {
             player.InputHandler.UseRegenInput();

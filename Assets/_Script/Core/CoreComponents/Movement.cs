@@ -317,4 +317,14 @@ public class Movement : CoreComponent
         RB.position = position;
     }
     #endregion
+
+    public void SetRBKinematic()
+    {
+        RB.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    public void SetRBDynamic()
+    {
+        RB.bodyType = RigidbodyType2D.Dynamic;
+    }
 }

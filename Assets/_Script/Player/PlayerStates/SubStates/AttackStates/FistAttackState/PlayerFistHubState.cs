@@ -12,7 +12,6 @@ public class PlayerFistHubState : PlayerFistAttackState
     private bool holdAttackInput;
 
     private float strongAttackHoldTime;
-    private float useSoulTime;
 
     private int chargeStage;
     private float lastChargeTime;
@@ -21,7 +20,6 @@ public class PlayerFistHubState : PlayerFistAttackState
     {
         data = player.WeaponManager.FistData;
         strongAttackHoldTime = data.strongAttackHoldTime;
-        useSoulTime = data.everySoulAddtionalHoldTime;
     }
 
     public override void Enter()
@@ -31,7 +29,6 @@ public class PlayerFistHubState : PlayerFistAttackState
         Combat.OnDamaged += () => isAttackDone = true;
         player.InputHandler.UseAttackInput();
         canAttack = false;
-        chargeStage = 0;
         lastChargeTime = 0;
         player.Anim.SetInteger("fistHubChargeStage", chargeStage);
     }
@@ -58,76 +55,18 @@ public class PlayerFistHubState : PlayerFistAttackState
 
         Movement.CheckIfShouldFlip(xInput);
 
-        if(chargeStage == 0 && Time.time >= StartTime + strongAttackHoldTime)
+        if(!holdAttackInput && Time.time < StartTime + strongAttackHoldTime)
         {
-            chargeStage = 1;
-            lastChargeTime = Time.time;
-            player.Anim.SetInteger("fistHubChargeStage", chargeStage);
+            stateMachine.ChangeState(player.FistNormalAttackState);
         }
-        if (chargeStage == 1 && Time.time >= lastChargeTime + useSoulTime && player.WeaponManager.FistCurrentEnergy >= 2)
+        else if (!holdAttackInput && yInput == 0f && Time.time >= StartTime + strongAttackHoldTime)
         {
-            chargeStage = 2;
-            player.WeaponManager.DecreaseEnergy();
-            player.WeaponManager.DecreaseEnergy(); 
-            lastChargeTime = Time.time;
-            player.Anim.SetInteger("fistHubChargeStage", chargeStage);
+            stateMachine.ChangeState(player.FistStrongAttackState);
         }
-        if (chargeStage >= 2 && Time.time >= lastChargeTime + useSoulTime && chargeStage < data.maxEnergy && player.WeaponManager.FistCurrentEnergy > 0) 
+        else if(holdAttackInput && yInput < 0f && Time.time >= StartTime + strongAttackHoldTime)
         {
-            chargeStage++;
-            lastChargeTime = Time.time;
-            player.WeaponManager.DecreaseEnergy();
-            player.Anim.SetInteger("fistHubChargeStage", chargeStage);
+            stateMachine.ChangeState(player.FistStaticStrongAttackState);
         }
-
-        if(yInput < 0)
-        {
-            switch (chargeStage)
-            {
-                case 0:
-                    stateMachine.ChangeState(player.FistNormalAttackState);
-                    break;
-                case 1:// Strong Attack
-                case 2:// C2
-                case 3:// C3
-                case 4:// C4
-                case 5:// C5
-                    player.FistSoulAttackState.SetStaticAttack(true);
-                    player.FistSoulAttackState.SetSoulAmount(chargeStage - 1);
-                    stateMachine.ChangeState(player.FistSoulAttackState);
-                    break;
-
-                default:
-                    Debug.LogError("error at counting fist charge");
-                    isAttackDone = true;
-                    break;
-            }
-        }
-        if (!holdAttackInput)
-        {
-            switch (chargeStage)
-            {
-                case 0:
-                    stateMachine.ChangeState(player.FistNormalAttackState);
-                    break;
-                case 1:// Strong Attack
-                case 2:// C2
-                case 3:// C3
-                case 4:// C4
-                case 5:// C5
-                    player.FistSoulAttackState.SetStaticAttack(false);
-                    player.FistSoulAttackState.SetSoulAmount(chargeStage - 1);
-                    stateMachine.ChangeState(player.FistSoulAttackState);
-                    break;
-
-                default:
-                    Debug.LogError("error at counting fist charge");
-                    isAttackDone = true;
-                    break;
-            }
-        }
-
-
     }
 
     public bool CheckIfCanAttack() => canAttack;

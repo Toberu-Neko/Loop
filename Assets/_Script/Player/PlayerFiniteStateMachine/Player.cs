@@ -49,7 +49,9 @@ public class Player : MonoBehaviour
     #region FistStates
     public PlayerFistHubState FistHubState { get; private set; }
     public PlayerFistNormalAttackState FistNormalAttackState { get; private set; }
-    public PlayerFistSoulAttackState FistSoulAttackState { get; private set; }
+    public PlayerFistStrongAttackState FistStrongAttackState { get; private set; }
+    public PlayerFistStaticStrongAttackState FistStaticStrongAttackState { get; private set; }
+    public PlayerFistCounterAttackState FistCounterAttackState { get; private set; }
     #endregion
 
     #region Components
@@ -127,7 +129,9 @@ public class Player : MonoBehaviour
 
         FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
         FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, playerData, "fistNormalAttack");
-        FistSoulAttackState = new PlayerFistSoulAttackState(this, StateMachine, playerData, "fistSoulAttack");
+        FistStrongAttackState = new PlayerFistStrongAttackState(this, StateMachine, playerData, "fistStrongAttack");
+        FistStaticStrongAttackState = new PlayerFistStaticStrongAttackState(this, StateMachine, playerData, "fistStaticStrongAttack");
+        FistCounterAttackState = new PlayerFistCounterAttackState(this, StateMachine, playerData, "fistCounterAttack");
 
         movement.OrginalGravityScale = playerData.gravityScale;
 
@@ -205,23 +209,18 @@ public class Player : MonoBehaviour
     #region Change Scene
     private void HandleChangeSceneToUp()
     {
-        ChangeSceneState.SetFacingDirection(0);
         StateMachine.ChangeState(ChangeSceneState);
     }
     private void HandleChangeSceneToDown()
     {
-        ChangeSceneState.SetFacingDirection(0);
         StateMachine.ChangeState(ChangeSceneState);
     }
     private void HandleChangeSceneToRight()
     {
-        ChangeSceneState.SetFacingDirection(1);
         StateMachine.ChangeState(ChangeSceneState);
     }
-
     private void HandleChangeSceneToLeft()
     {
-        ChangeSceneState.SetFacingDirection(-1);
         StateMachine.ChangeState(ChangeSceneState);
     }
 

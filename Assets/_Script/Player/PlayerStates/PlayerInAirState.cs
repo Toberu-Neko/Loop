@@ -137,25 +137,13 @@ public class PlayerInAirState : PlayerState
         #endregion
 
         #region Fist
-        else if (player.InputHandler.AttackInput && player.WeaponManager.CurrentWeaponType == WeaponType.Fist && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && player.WeaponManager.CurrentWeaponType == WeaponType.Fist && Stats.Attackable && !Stats.CounterAttackable)
         {
             stateMachine.ChangeState(player.FistHubState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Fist &&
-            player.WeaponManager.FistCurrentEnergy == player.WeaponManager.FistData.maxEnergy && Stats.Attackable)
+        else if (player.InputHandler.AttackInput && player.WeaponManager.CurrentWeaponType == WeaponType.Fist && Stats.Attackable && Stats.CounterAttackable)
         {
-            player.FistSoulAttackState.SetStaticAttack(false);
-            player.WeaponManager.ClearCurrentEnergy();
-            player.FistSoulAttackState.SetSoulAmount(player.WeaponManager.FistData.maxEnergy - 1);
-            stateMachine.ChangeState(player.FistSoulAttackState);
-        }
-        else if (player.InputHandler.WeaponSkillInput && yInput < 0 && player.WeaponManager.CurrentWeaponType == WeaponType.Fist &&
-            player.WeaponManager.FistCurrentEnergy == player.WeaponManager.FistData.maxEnergy && Stats.Attackable)
-        {
-            player.FistSoulAttackState.SetStaticAttack(true);
-            player.WeaponManager.ClearCurrentEnergy();
-            player.FistSoulAttackState.SetSoulAmount(player.WeaponManager.FistData.maxEnergy - 1);
-            stateMachine.ChangeState(player.FistSoulAttackState);
+            stateMachine.ChangeState(player.FistCounterAttackState);
         }
         #endregion
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock() && Stats.Attackable)

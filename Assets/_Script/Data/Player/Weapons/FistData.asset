@@ -27,36 +27,39 @@ MonoBehaviour:
     movementSpeed: 1
     knockbackForce: 5
     knockbackAngle: {x: 0.5, y: 1}
+  counterAttackDetails:
+    attackName: Defult
+    damageAmount: 20
+    staminaDamageAmount: 4
+    movementSpeed: 6
+    knockbackForce: 8
+    knockbackAngle: {x: 1, y: 1}
   strongAttackHoldTime: 0.5
-  everySoulAddtionalHoldTime: 0.5
-  soulAttackDetails:
-  - attackName: "\u666E\u901A\u7684\u84C4\u529B"
-    damageAmount: 3
+  strongAttackDetail:
+    attackName: 
+    damageAmount: 4
     staminaDamageAmount: 0
-    movementSpeed: 10
-    knockbackForce: 20
-    knockbackAngle: {x: 3, y: 0.3}
-  - attackName: "\u9B422"
-    damageAmount: 3
+    movementSpeed: 14
+    knockbackForce: 14
+    knockbackAngle: {x: 1, y: 1}
+  soulAttackDetail:
+    attackName: Defult
+    damageAmount: 8
     staminaDamageAmount: 100
-    movementSpeed: 10
-    knockbackForce: 20
-    knockbackAngle: {x: 2, y: 0.3}
-  - attackName: "\u9B423"
-    damageAmount: 5
-    staminaDamageAmount: 100
-    movementSpeed: 10
-    knockbackForce: 20
-    knockbackAngle: {x: 2, y: 0.3}
-  - attackName: "\u9B424"
-    damageAmount: 5
-    staminaDamageAmount: 100
-    movementSpeed: 10
-    knockbackForce: 20
-    knockbackAngle: {x: 2, y: 0.3}
-  - attackName: "\u9B425"
-    damageAmount: 5
-    staminaDamageAmount: 100
-    movementSpeed: 10
-    knockbackForce: 20
-    knockbackAngle: {x: 2, y: 0.3}
+    movementSpeed: 14
+    knockbackForce: 6
+    knockbackAngle: {x: 1, y: 1}
+  staticStrongAttackDetail:
+    attackName: Defult
+    damageAmount: 10
+    staminaDamageAmount: 3
+    movementSpeed: 0
+    knockbackForce: 8
+    knockbackAngle: {x: 0, y: 0}
+  staticSoulAttackDetail:
+    attackName: Defult
+    damageAmount: 10
+    staminaDamageAmount: 3
+    movementSpeed: 0
+    knockbackForce: 8
+    knockbackAngle: {x: 0, y: 0}
