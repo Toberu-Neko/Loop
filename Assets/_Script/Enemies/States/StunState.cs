@@ -36,7 +36,7 @@ public class StunState : EnemyState
 
         isStunTimeOver = false;
         isMovementStopped = false;
-        Movement.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle);
+        //TODO: Remove knockback in entity stun state Movement.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle);
     }
 
     public override void Exit()
