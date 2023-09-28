@@ -21,8 +21,8 @@ public class PlayerObjToCombat : MonoBehaviour, IDamageable, IKnockbackable, ISt
         combat.TakeStaminaDamage(damageAmount, damagePosition, blockable);
     }
 
-    public Vector2 GetPosition()
+    public GameObject GetGameObject()
     {
-        return transform.position;
+        return gameObject;
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestructibleObject : MonoBehaviour, IDamageable
+public class DestructibleObject : MonoBehaviour, IMapDamageableItem
 {
 	[SerializeField] private float life = 3;
 
@@ -36,7 +36,8 @@ public class DestructibleObject : MonoBehaviour, IDamageable
 		}
 	}
 
-    public void Damage(float damageAmount, Vector2 damagePosition, bool blockable = true)
+
+    public void TakeDamage(float damage)
     {
         life -= 1;
         shakeDuration = maxShakeDuration;

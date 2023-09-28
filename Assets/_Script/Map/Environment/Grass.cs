@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grass : MonoBehaviour, IDamageable
+public class Grass : MonoBehaviour, IMapDamageableItem
 {
     [SerializeField] private ParticleSystem leafParticle;
     private Animator animator;
@@ -22,7 +22,7 @@ public class Grass : MonoBehaviour, IDamageable
         }
     }
 
-    public void Damage(float damageAmount, Vector2 damagePosition, bool blockable = true)
+    public void TakeDamage(float damage)
     {
         Instantiate(leafParticle, transform.position, Quaternion.identity);
         Destroy(gameObject);

@@ -238,6 +238,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         OnDamaged?.Invoke();
     }
 
+    public GameObject GetGameObject()
+    {
+        return movement.ParentTransform.gameObject;
+    }
+
     private void DecreaseHealth(float damageAmount)
     {
         if (stats.IsTimeStopped)

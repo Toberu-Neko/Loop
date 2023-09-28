@@ -18,4 +18,9 @@ public class CombatTestDummy : MonoBehaviour, IDamageable
     {
         anim = GetComponent<Animator>();
     }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
 }

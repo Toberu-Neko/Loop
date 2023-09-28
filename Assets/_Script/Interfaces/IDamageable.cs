@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IDamageable
 {
     void Damage(float damageAmount, Vector2 damagePosition, bool blockable = true);
+
+    GameObject GetGameObject();
 }
