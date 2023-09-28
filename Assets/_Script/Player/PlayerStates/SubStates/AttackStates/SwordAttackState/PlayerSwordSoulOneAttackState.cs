@@ -30,7 +30,7 @@ public class PlayerSwordSoulOneAttackState : PlayerSwordAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(WeaponType.Sword, details.damageAmount,details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
+        DoDamageToDamageList(WeaponType.Sword, details, false);
     }
 
     public override void AnimationFinishTrigger()

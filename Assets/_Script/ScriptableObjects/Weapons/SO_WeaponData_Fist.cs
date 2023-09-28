@@ -27,8 +27,9 @@ public class SO_WeaponData_Fist : SO_WeaponData
     public WeaponAttackDetails staticSoulAttackDetail;
 
     [Header("Soul Max Attack")]
-    public float chargeSpeed;
-    public float chargeTime;
+    public float s3ChargeSpeed;
+    public float s3MaxChargeTime;
+    public float s3GoUpVelocity;
     public WeaponAttackDetails[] soulThreeAttackDetails;
 
     public WeaponAttackDetails[] NormalAttackDetails { get => normalAttackDetails; private set => normalAttackDetails = value; }

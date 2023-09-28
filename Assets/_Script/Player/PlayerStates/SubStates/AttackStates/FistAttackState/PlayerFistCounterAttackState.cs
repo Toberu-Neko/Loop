@@ -39,7 +39,7 @@ public class PlayerFistCounterAttackState : PlayerFistAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(WeaponType.Fist, data.counterAttackDetails.damageAmount, data.counterAttackDetails.staminaDamageAmount, data.counterAttackDetails.knockbackAngle, data.counterAttackDetails.knockbackForce);
+        DoDamageToDamageList(WeaponType.Fist, data.counterAttackDetails);
     }
 
     public override void AnimationFinishTrigger()

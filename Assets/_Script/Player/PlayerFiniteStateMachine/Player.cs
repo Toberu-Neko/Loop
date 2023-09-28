@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
     public PlayerFistStrongAttackState FistStrongAttackState { get; private set; }
     public PlayerFistStaticStrongAttackState FistStaticStrongAttackState { get; private set; }
     public PlayerFistCounterAttackState FistCounterAttackState { get; private set; }
+    public PlayerFistS3ChargeState FistS3ChargeState { get; private set; }
+    public PlayerFistS3AttackState FistS3AttackState { get; private set; }
     #endregion
 
     #region Components
@@ -132,6 +134,9 @@ public class Player : MonoBehaviour
         FistStrongAttackState = new PlayerFistStrongAttackState(this, StateMachine, playerData, "fistStrongAttack");
         FistStaticStrongAttackState = new PlayerFistStaticStrongAttackState(this, StateMachine, playerData, "fistStaticStrongAttack");
         FistCounterAttackState = new PlayerFistCounterAttackState(this, StateMachine, playerData, "fistCounterAttack");
+        FistS3ChargeState = new PlayerFistS3ChargeState(this, StateMachine, playerData, "fistS3Charge");
+        FistS3AttackState = new PlayerFistS3AttackState(this, StateMachine, playerData, "fistS3Attack");
+        
 
         movement.OrginalGravityScale = playerData.gravityScale;
 

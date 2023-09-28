@@ -36,7 +36,7 @@ public class PlayerSwordSkyAttackState : PlayerSwordAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(WeaponType.Sword, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
+        DoDamageToDamageList(WeaponType.Sword, details);
     }
 
     public override void AnimationFinishTrigger()

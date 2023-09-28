@@ -61,7 +61,7 @@ public class PlayerFistNormalAttackState : PlayerFistAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(WeaponType.Fist, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce);
+        DoDamageToDamageList(WeaponType.Fist, details);
     }
     public override void AnimationStartMovementTrigger()
     {

@@ -12,6 +12,7 @@ public class Enemy1 : Entity
     public E1_MeleeAttackState MeleeAttackState { get; private set; }
     public E1_StunState StunState { get; private set; }
     public E1_DeadState DeadState { get; private set; }
+    public E1_KinematicState KinematicState { get; private set; }
 
     [SerializeField] private E1_StateData stateData;
 
@@ -47,6 +48,7 @@ public class Enemy1 : Entity
         MeleeAttackState = new E1_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackPosition, meleeAttackStateData, this);
         StunState = new E1_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new E1_DeadState(this, StateMachine, "dead", deadStateData, this);
+        KinematicState = new E1_KinematicState(this, StateMachine, "kinematic", this);
     }
     protected override void Start()
     {
@@ -83,7 +85,7 @@ public class Enemy1 : Entity
 
     private void HandlePoiseZero()
     {
-        if (Stats.Health.CurrentValue <= 0)
+        if (Stats.Health.CurrentValue <= 0 && StateMachine.CurrentState != KinematicState)
             return;
 
         StateMachine.ChangeState(StunState);

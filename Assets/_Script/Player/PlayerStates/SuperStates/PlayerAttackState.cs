@@ -88,9 +88,14 @@ public class PlayerAttackState : PlayerState
 
     }
 
-    public void DoDamageToDamageList(WeaponType weaponType, float damageAmount,float damageStaminaAmount ,Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
+    public void DoDamageToDamageList(WeaponType weaponType, WeaponAttackDetails details , bool blockable = true)
     {
-        if(weaponType == WeaponType.Fist)
+        float damageAmount = details.damageAmount;
+        float damageStaminaAmount = details.staminaDamageAmount;
+        Vector2 knockBackAngle = details.knockbackAngle;
+        float knockBackForce = details.knockbackForce;
+
+        if (weaponType == WeaponType.Fist)
         {
             damageAmount *= PlayerInventoryManager.Instance.FistMultiplier.damageMultiplier;
         }

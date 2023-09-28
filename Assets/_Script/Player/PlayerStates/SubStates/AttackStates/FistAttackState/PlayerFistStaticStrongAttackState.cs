@@ -30,11 +30,11 @@ public class PlayerFistStaticStrongAttackState : PlayerFistAttackState
 
         if (doSoulAttack)
         {
-            DoDamageToDamageList(WeaponType.Fist, data.staticSoulAttackDetail.damageAmount, data.staticSoulAttackDetail.staminaDamageAmount, data.staticSoulAttackDetail.knockbackAngle, data.staticSoulAttackDetail.knockbackForce, false); 
+            DoDamageToDamageList(WeaponType.Fist, data.staticSoulAttackDetail, false); 
         }
         else
         {
-            DoDamageToDamageList(WeaponType.Fist, data.staticStrongAttackDetail.damageAmount, data.staticStrongAttackDetail.staminaDamageAmount, data.staticStrongAttackDetail.knockbackAngle, data.staticStrongAttackDetail.knockbackForce);
+            DoDamageToDamageList(WeaponType.Fist, data.staticStrongAttackDetail);
         }
     }
 

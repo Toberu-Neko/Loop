@@ -70,7 +70,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
         }
         else
         {
-            DoDamageToDamageList(WeaponType.Sword, weaponData.strongAttackDetails.damageAmount, weaponData.strongAttackDetails.staminaDamageAmount, weaponData.strongAttackDetails.knockbackAngle, weaponData.strongAttackDetails.knockbackForce);
+            DoDamageToDamageList(WeaponType.Sword, weaponData.strongAttackDetails);
         }
     }
 

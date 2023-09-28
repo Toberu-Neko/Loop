@@ -102,6 +102,11 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.FistCounterAttackState);
         }
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Fist && !isTouchingCeiling && Stats.Attackable &&
+            weaponManager.FistCurrentEnergy == weaponManager.FistData.maxEnergy)
+        {
+            stateMachine.ChangeState(player.FistS3ChargeState);
+        }
         #endregion
 
         else if (player.InputHandler.RegenInput && isGrounded && Stats.Health.CurrentValue < Stats.Health.MaxValue &&

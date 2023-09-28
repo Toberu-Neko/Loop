@@ -17,4 +17,12 @@ public class WeaponAttackDetails
     public float knockbackForce = 8f;
     [Tooltip("À»°h¨¤«×")]
     public Vector2 knockbackAngle;
+
+    public WeaponAttackDetails(float damageAmount, float staminaDamageAmount, Vector2 knockbackAngle, float knockbackForce)
+    {
+        this.damageAmount = damageAmount;
+        this.staminaDamageAmount = staminaDamageAmount;
+        this.knockbackForce = knockbackForce;
+        this.knockbackAngle = knockbackAngle;
+    }
 }

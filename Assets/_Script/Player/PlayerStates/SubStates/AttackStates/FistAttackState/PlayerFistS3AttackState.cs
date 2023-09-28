@@ -4,13 +4,57 @@ using UnityEngine;
 
 public class PlayerFistS3AttackState : PlayerFistAttackState
 {
-    SO_WeaponData_Fist data;
+    private SO_WeaponData_Fist data;
     private WeaponAttackDetails[] details;
+    private int count = 0;
     public PlayerFistS3AttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         data = player.WeaponManager.FistData;
         details = data.soulThreeAttackDetails;
     }
 
-    
+    public override void Enter()
+    {
+        base.Enter();
+
+        count = 0;
+        Movement.SetRBKinematic();
+        Stats.SetInvincibleTrue();
+
+        Movement.SetVelocityZero();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        Movement.SetRBDynamic();
+        Stats.SetInvincibleFalse();
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (isAnimationStartMovement && !CollisionSenses.SolidCeiling)
+        {
+            Movement.SetVelocityY(data.s3GoUpVelocity);
+        }
+    }
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        DoDamageToDamageList(WeaponType.Fist,details[count]);
+        count++;
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        isAttackDone = true;
+    }
+
 }

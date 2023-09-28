@@ -25,7 +25,7 @@ public class PlayerSwordSoulMaxAttackState : PlayerSwordAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(WeaponType.Sword, details[count].damageAmount, details[count].staminaDamageAmount, details[count].knockbackAngle, details[count].knockbackForce, false);
+        DoDamageToDamageList(WeaponType.Sword, details[count], false);
         count++;
     }
 

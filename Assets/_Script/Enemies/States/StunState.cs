@@ -43,6 +43,7 @@ public class StunState : EnemyState
     {
         base.Exit();
 
+        Stats.Stamina.Init();
         Stats.ResetPoiseDecreaseable();
     }
 

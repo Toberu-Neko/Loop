@@ -141,7 +141,6 @@ public class Stats : CoreComponent
 
     private void HandlePoiseZero()
     {
-        Stamina.Init();
         Stamina.decreaseable = false;
     }
     #endregion

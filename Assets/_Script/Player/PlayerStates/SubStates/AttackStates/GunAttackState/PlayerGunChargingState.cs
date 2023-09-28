@@ -70,12 +70,8 @@ public class PlayerGunChargingState : PlayerGunAttackState
         {
             // Debug.Log("Shoot at " + Time.time);
             lastDamageTime = Time.time;
-            DoDamageToDamageList(
-                WeaponType.Gun,
-                data.chargeAttackDamageAmount * chargeTime,
-                data.chargeAttackStaminaDamageAmount,
-                data.chargeAttackKnockbackAngle,
-                data.chargeAttackKnockbackForce);
+            WeaponAttackDetails details = new(data.chargeAttackDamageAmount * chargeTime, data.chargeAttackStaminaDamageAmount, data.chargeAttackKnockbackAngle, data.chargeAttackKnockbackForce);
+            DoDamageToDamageList(WeaponType.Gun, details);
         }
     }
 

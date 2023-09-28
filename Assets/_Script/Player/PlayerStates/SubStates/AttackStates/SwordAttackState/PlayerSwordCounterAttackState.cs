@@ -39,7 +39,7 @@ public class PlayerSwordCounterAttackState : PlayerSwordAttackState
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(WeaponType.Sword, swordData.counterAttackDetails.damageAmount, swordData.counterAttackDetails.staminaDamageAmount, swordData.counterAttackDetails.knockbackAngle, swordData.counterAttackDetails.knockbackForce); 
+        DoDamageToDamageList(WeaponType.Sword, swordData.counterAttackDetails); 
     }
 
     public override void AnimationFinishTrigger()

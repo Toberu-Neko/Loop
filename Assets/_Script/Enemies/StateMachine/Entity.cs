@@ -184,26 +184,6 @@ public class Entity : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
         {
-            int direction;
-            if (collision.gameObject.transform.position.x > GetPosition().x)
-            {
-                direction = 1;
-            }
-            else
-            {
-                direction = -1;
-            }
-
-            if (collisionSenses.WallFrontLong)
-            {
-                direction = -movement.FacingDirection;
-            }
-
-            if(collisionSenses.WallBackLong)
-            {
-                direction = movement.FacingDirection;
-            }
-
             if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
             {
                 knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, movement.ParentTransform.position, false);
@@ -226,24 +206,4 @@ public class Entity : MonoBehaviour
     {
         return spriteRenderer.sprite;
     }
-
-    /*
-    public void LoadData(GameData data)
-    {
-        data.defeatedEnemies.TryGetValue(ID, out isDefeated);
-
-        if(isDefeated)
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
-    public void SaveData(GameData data)
-    {
-        if(data.defeatedEnemies.ContainsKey(ID))
-        {
-            data.defeatedEnemies.Remove(ID);
-        }
-        data.defeatedEnemies.Add(ID, isDefeated);
-    }*/
 }
