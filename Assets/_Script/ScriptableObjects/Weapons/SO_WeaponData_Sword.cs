@@ -27,11 +27,8 @@ public class SO_WeaponData_Sword : SO_WeaponData
     [Header("Counter Attack")]
     public WeaponAttackDetails counterAttackDetails;
 
-    [Header("Soul One Attack")]
-    public WeaponAttackDetails soulOneAttackDetails;
-
     [Header("Soul Three Attack")]
-    public WeaponAttackDetails soulThreeAttackDetails;
+    public WeaponAttackDetails[] soulThreeAttackDetails;
 
     public WeaponAttackDetails[] NormalAttackDetails { get => normalAttackDetails; private set => normalAttackDetails = value; }
     private void OnEnable()

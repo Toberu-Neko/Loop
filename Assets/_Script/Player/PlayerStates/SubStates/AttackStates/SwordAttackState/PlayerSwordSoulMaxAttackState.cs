@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class PlayerSwordSoulMaxAttackState : PlayerSwordAttackState
 {
-    WeaponAttackDetails details;
+    WeaponAttackDetails[] details;
+    private int count;
     public PlayerSwordSoulMaxAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         details = player.WeaponManager.SwordData.soulThreeAttackDetails;
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (CollisionSenses.Ground)
+        {
+            Movement.SetVelocityZero();
+        }
     }
 
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
 
-        DoDamageToDamageList(WeaponType.Sword, details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);
+        DoDamageToDamageList(WeaponType.Sword, details[count].damageAmount, details[count].staminaDamageAmount, details[count].knockbackAngle, details[count].knockbackForce, false);
+        count++;
     }
 
     public override void AnimationFinishTrigger()
@@ -29,6 +41,15 @@ public class PlayerSwordSoulMaxAttackState : PlayerSwordAttackState
         base.Enter();
 
         player.WeaponManager.ClearCurrentEnergy();
+        count = 0;
+
+        Stats.SetInvincibleTrue();
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        Stats.SetInvincibleFalse();
+    }
 }

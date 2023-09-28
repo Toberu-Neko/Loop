@@ -40,7 +40,7 @@ public class OldAggressiveWeapon : OldWeapon
 
         foreach (IKnockbackable item in detectedKnockbackables.ToList())
         {
-            item.Knockback(details.knockbackAngle, details.knockbackForce, Movement.FacingDirection, (Vector2)core.transform.position);
+            item.Knockback(details.knockbackAngle, details.knockbackForce, Movement.ParentTransform.position);
         }
 
     }

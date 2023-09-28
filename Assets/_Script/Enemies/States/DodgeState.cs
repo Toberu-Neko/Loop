@@ -33,7 +33,7 @@ public class DodgeState : EnemyState
         base.Enter();
 
         isDodgeOver = false;
-        Combat.Knockback(stateData.dodgeAngle, stateData.dodgeSpeed, -Movement.FacingDirection, Vector2.zero, false);
+        Combat.Knockback(stateData.dodgeAngle, stateData.dodgeSpeed, Movement.ParentTransform.position + Movement.ParentTransform.right, false);
         // Movement.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -Movement.FacingDirection);
     }
 

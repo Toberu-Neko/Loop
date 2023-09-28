@@ -55,7 +55,7 @@ public class PlayerProjectile : MonoBehaviour
             }
             if(collision.TryGetComponent(out IKnockbackable knockbackable))
             {
-                knockbackable.Knockback(projectileDetails.knockbackAngle, projectileDetails.knockbackStrength, knockbackDirection, transform.position);
+                knockbackable.Knockback(projectileDetails.knockbackAngle, projectileDetails.knockbackStrength, transform.position);
             }
             if(collision.TryGetComponent(out IStaminaDamageable staminaDamageable))
             {

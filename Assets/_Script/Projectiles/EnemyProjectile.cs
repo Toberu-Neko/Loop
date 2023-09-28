@@ -132,7 +132,7 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         Gizmos.DrawWireSphere(damagePosition.position, damageRadius);
     }
 
-    public void Knockback(Vector2 angle, float force, int direction, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    public void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
     {
         if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered)
         {
@@ -140,6 +140,8 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             _whatIsPlayer = LayerMask.GetMask("Damageable");
             xStartPosition = transform.position.x;
+
+            int direction = transform.position.x < damagePosition.x ? -1 : 1;
 
             if (stats.IsTimeStopped)
             {
@@ -187,7 +189,7 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
             }
             if (collision.TryGetComponent(out IKnockbackable knockbackable))
             {
-                knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, facingDirection, transform.position);
+                knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, transform.position);
             }
             if (collision.TryGetComponent(out IStaminaDamageable staminaDamageable))
             {
@@ -215,5 +217,6 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         }
         
     } 
+
 }
 

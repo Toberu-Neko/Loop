@@ -7,7 +7,7 @@ public class PlayerSwordSoulOneAttackState : PlayerSwordAttackState
     WeaponAttackDetails details;
     public PlayerSwordSoulOneAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        details = player.WeaponManager.SwordData.soulOneAttackDetails;
+
     }
 
     public override void Enter()

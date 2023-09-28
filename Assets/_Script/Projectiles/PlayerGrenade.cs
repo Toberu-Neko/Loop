@@ -47,8 +47,7 @@ public class PlayerGrenade : MonoBehaviour
 
             if (hit.TryGetComponent(out IKnockbackable knock))
             {
-                int direction = transform.position.x < hit.transform.position.x ? 1 : -1;
-                knock.Knockback(details.knockbackAngle, details.knockbackStrength, direction, transform.position);
+                knock.Knockback(details.knockbackAngle, details.knockbackStrength, transform.position);
             }
 
             if (hit.TryGetComponent(out IStaminaDamageable damStamina))

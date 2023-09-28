@@ -31,7 +31,6 @@ public class PlayerFistStrongAttackState : PlayerFistAttackState
         }
 
         doAttack = false;
-        Debug.Log(doSoulAttack);
     }
 
     public override void Exit()

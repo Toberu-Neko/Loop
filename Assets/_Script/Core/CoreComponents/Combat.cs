@@ -258,9 +258,20 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     #region Knockback
 
-    public void Knockback(Vector2 angle, float strength, int direction, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    public void Knockback(Vector2 angle, float strength, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
     {
         angle = angle.normalized;
+        int direction;
+
+        if(damagePosition.x - movement.ParentTransform.position.x > 0)
+        {
+            direction = -1;
+        }
+        else
+        {
+            direction = 1;
+        }
+
         if (stats.Invincible && !forceKnockback)
         {
             return;
@@ -311,6 +322,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         isKnockbackActive = true;
         knockbackStartTime = Time.time;
     }
+
 
     private void CheckKnockback()
     {

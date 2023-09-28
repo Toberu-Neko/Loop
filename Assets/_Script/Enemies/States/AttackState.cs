@@ -62,7 +62,7 @@ public class AttackState : EnemyState
 
             foreach (IKnockbackable knockbackable in Combat.DetectedKnockbackables.ToList())
             {
-                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.FacingDirection, (Vector2)core.transform.position, blockable);
+                knockbackable.Knockback(knockBackAngle, knockBackForce, Movement.ParentTransform.position, blockable);
             }
 
             foreach (IStaminaDamageable staminaDamageable in Combat.DetectedStaminaDamageables.ToList())

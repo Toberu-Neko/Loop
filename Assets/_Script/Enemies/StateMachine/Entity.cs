@@ -152,7 +152,7 @@ public class Entity : MonoBehaviour
         {
             foreach (IKnockbackable knockbackable in combat.DetectedKnockbackables.ToList())
             {
-                knockbackable.Knockback(knockBackAngle, knockBackForce, movement.FacingDirection, GetPosition(), blockable);
+                knockbackable.Knockback(knockBackAngle, knockBackForce, movement.ParentTransform.position, blockable);
             }
         }
 
@@ -169,29 +169,10 @@ public class Entity : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
         {
-            int direction;
-            if (collision.gameObject.transform.position.x > GetPosition().x)
-            {
-                direction = 1;
-            }
-            else
-            {
-                direction = -1;
-            }
-
-            if (collisionSenses.WallFrontLong)
-            {
-                direction = -movement.FacingDirection;
-            }
-
-            if (collisionSenses.WallBackLong)
-            {
-                direction = movement.FacingDirection;
-            }
 
             if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
             {
-                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, direction, GetPosition(), false);
+                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, movement.ParentTransform.position, false);
             }
             if(collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
             {
@@ -225,7 +206,7 @@ public class Entity : MonoBehaviour
 
             if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
             {
-                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, direction, GetPosition(), false);
+                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, movement.ParentTransform.position, false);
             }
             if (collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
             {

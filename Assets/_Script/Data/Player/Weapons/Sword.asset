@@ -64,17 +64,22 @@ MonoBehaviour:
     movementSpeed: 0
     knockbackForce: 12
     knockbackAngle: {x: 1, y: 1}
-  soulOneAttackDetails:
-    attackName: "\u5200\u9B42\u4E00 \u6539\u81F3\u53CD\u64CA"
-    damageAmount: 100
-    staminaDamageAmount: 25
-    movementSpeed: 5
-    knockbackForce: 25
-    knockbackAngle: {x: 2, y: 1}
   soulThreeAttackDetails:
-    attackName: "\u5200\u9B42\u4E09"
-    damageAmount: 200
-    staminaDamageAmount: 25
+  - attackName: Defult
+    damageAmount: 25
+    staminaDamageAmount: 500
     movementSpeed: 0
-    knockbackForce: 25
-    knockbackAngle: {x: 1, y: 3}
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: Defult
+    damageAmount: 25
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: Defult
+    damageAmount: 30
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 18
+    knockbackAngle: {x: 1, y: 1}
