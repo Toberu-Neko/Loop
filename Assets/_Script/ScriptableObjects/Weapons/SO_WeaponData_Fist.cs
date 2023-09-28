@@ -26,6 +26,9 @@ public class SO_WeaponData_Fist : SO_WeaponData
     public WeaponAttackDetails staticStrongAttackDetail;
     public WeaponAttackDetails staticSoulAttackDetail;
 
+    [Header("Soul Max Attack")]
+    public WeaponAttackDetails[] soulThreeAttackDetails;
+
     public WeaponAttackDetails[] NormalAttackDetails { get => normalAttackDetails; private set => normalAttackDetails = value; }
     private void OnEnable()
     {
