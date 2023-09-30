@@ -23,4 +23,14 @@ public class CombatTestDummy : MonoBehaviour, IDamageable
     {
         return gameObject;
     }
+
+    public void GotoKinematicState(float time)
+    {
+        Debug.LogError("CombatTestDummy don't have kinematic state!");
+    }
+
+    public void GoToStunState()
+    {
+        Debug.LogError("CombatTestDummy don't have kinematic state!");
+    }
 }

@@ -11,8 +11,7 @@ public class Entity : MonoBehaviour
     public Core Core { get; private set; }
     protected Movement movement;
     public Stats Stats { get; private set; }
-    private Combat combat;
-    private CollisionSenses collisionSenses;
+    protected Combat Combat { get;private set; }
 
     public Animator Anim { get; private set; }
     private float animSpeed;
@@ -28,8 +27,7 @@ public class Entity : MonoBehaviour
 
         movement = Core.GetCoreComponent<Movement>();
         Stats = Core.GetCoreComponent<Stats>();
-        combat = Core.GetCoreComponent<Combat>();
-        collisionSenses = Core.GetCoreComponent<CollisionSenses>();
+        Combat = Core.GetCoreComponent<Combat>();
 
         Anim = GetComponent<Animator>();
         animSpeed = 1f;
@@ -140,25 +138,25 @@ public class Entity : MonoBehaviour
 
     public void DoDamageToDamageList(float damageAmount, float damageStaminaAmount, Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
     {
-        if (combat.DetectedDamageables.Count > 0)
+        if (Combat.DetectedDamageables.Count > 0)
         {
-            foreach (IDamageable damageable in combat.DetectedDamageables.ToList())
+            foreach (IDamageable damageable in Combat.DetectedDamageables.ToList())
             {
                 damageable.Damage(damageAmount, GetPosition(), blockable);
             }
         }
 
-        if (combat.DetectedKnockbackables.Count > 0)
+        if (Combat.DetectedKnockbackables.Count > 0)
         {
-            foreach (IKnockbackable knockbackable in combat.DetectedKnockbackables.ToList())
+            foreach (IKnockbackable knockbackable in Combat.DetectedKnockbackables.ToList())
             {
                 knockbackable.Knockback(knockBackAngle, knockBackForce, movement.ParentTransform.position, blockable);
             }
         }
 
-        if (combat.DetectedStaminaDamageables.Count > 0)
+        if (Combat.DetectedStaminaDamageables.Count > 0)
         {
-            foreach (IStaminaDamageable staminaDamageable in combat.DetectedStaminaDamageables.ToList())
+            foreach (IStaminaDamageable staminaDamageable in Combat.DetectedStaminaDamageables.ToList())
             {
                 staminaDamageable.TakeStaminaDamage(damageStaminaAmount, GetPosition(), blockable);
             }

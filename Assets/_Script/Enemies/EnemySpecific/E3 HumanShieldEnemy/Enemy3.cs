@@ -13,6 +13,7 @@ public class Enemy3 : Entity
     public E3_DeadState DeadState { get; private set; }
     public E3_ShieldMoveState ShieldMoveState { get; private set; }
     public E3_ChargeState ChargeState { get; private set; }
+    public E3_KinematicState KinematicState { get; private set; }
 
 
     [SerializeField] private E3_StateData stateData;
@@ -53,6 +54,7 @@ public class Enemy3 : Entity
         DeadState = new E3_DeadState(this, StateMachine, "dead", deadStateData, this);
         ShieldMoveState = new E3_ShieldMoveState(this, StateMachine, "shieldMove", shieldMoveStateData, this);
         ChargeState = new E3_ChargeState(this, StateMachine, "shieldMove", chargeStateData, this);
+        KinematicState = new E3_KinematicState(this, StateMachine, "kinematic", this);
     }
     protected override void Start()
     {
@@ -66,6 +68,9 @@ public class Enemy3 : Entity
 
         Stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         Stats.Health.OnCurrentValueZero += HandleHealthZero;
+
+        Combat.OnGoToKinematicState += GotoKinematicState;
+        Combat.OnGoToStunState += OnGotoStunState;
     }
     protected override void OnDisable()
     {
@@ -75,11 +80,23 @@ public class Enemy3 : Entity
 
         Stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         Stats.Health.OnCurrentValueZero -= HandleHealthZero;
+
+        Combat.OnGoToKinematicState -= GotoKinematicState;
+        Combat.OnGoToStunState -= OnGotoStunState;
     }
 
+    private void OnGotoStunState()
+    {
+        StateMachine.ChangeState(StunState);
+    }
+    private void GotoKinematicState(float time)
+    {
+        KinematicState.SetTimer(time);
+        StateMachine.ChangeState(KinematicState);
+    }
     private void HandlePoiseZero()
     {
-        if (Stats.Health.CurrentValue <= 0)
+        if (Stats.Health.CurrentValue <= 0 && StateMachine.CurrentState != KinematicState)
             return;
 
         StateMachine.ChangeState(StunState);

@@ -62,6 +62,9 @@ public class Enemy1 : Entity
 
         Stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         Stats.Health.OnCurrentValueZero += HandleHealthZero;
+
+        Combat.OnGoToKinematicState += GotoKinematicState;
+        Combat.OnGoToStunState += OnGotoStunState;
     }
 
     protected override void OnDisable()
@@ -81,6 +84,19 @@ public class Enemy1 : Entity
 
         Stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         Stats.Health.OnCurrentValueZero -= HandleHealthZero;
+
+        Combat.OnGoToKinematicState -= GotoKinematicState;
+        Combat.OnGoToStunState -= OnGotoStunState;
+    }
+
+    private void OnGotoStunState()
+    {
+        StateMachine.ChangeState(StunState);
+    }
+    private void GotoKinematicState(float time)
+    {
+        KinematicState.SetTimer(time);
+        StateMachine.ChangeState(KinematicState);
     }
 
     private void HandlePoiseZero()

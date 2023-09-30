@@ -15,6 +15,7 @@ public class Boss0 : BossBase
     public B0_StrongAttackState StrongAttackState { get; private set; }
     public B0_MultiAttackState MultiAttackState { get; private set; }
     public B0_RangedAttackState RangedAttackState { get; private set; }
+    public B0_KinematicState KinematicState { get; private set; }
 
     public B0_StunState StunState { get; private set; }
     public B0_DeadState DeadState { get; private set; }
@@ -73,6 +74,8 @@ public class Boss0 : BossBase
 
         StunState = new B0_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new B0_DeadState(this, StateMachine, "dead", deadStateData, this);
+
+        KinematicState = new B0_KinematicState(this, StateMachine, "kinematic", this);
     }
 
     protected override void Start()
@@ -89,6 +92,9 @@ public class Boss0 : BossBase
         Stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         Stats.Health.OnCurrentValueZero += HandleHealthZero;
         OnEnterBossRoom += HandleEnterBossRoom;
+
+        Combat.OnGoToKinematicState += GotoKinematicState;
+        Combat.OnGoToStunState += OnGotoStunState;
     }
 
     protected override void OnDisable()
@@ -100,17 +106,35 @@ public class Boss0 : BossBase
         Stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         Stats.Health.OnCurrentValueZero -= HandleHealthZero;
         OnEnterBossRoom -= HandleEnterBossRoom;
+
+        Combat.OnGoToKinematicState -= GotoKinematicState;
+        Combat.OnGoToStunState -= OnGotoStunState;
+    }
+
+
+    private void GotoKinematicState(float time)
+    {
+        KinematicState.SetTimer(time);
+        StateMachine.ChangeState(KinematicState);
+    }
+
+    private void OnGotoStunState()
+    {
+        StateMachine.ChangeState(StunState);
     }
 
     private void HandlePoiseZero()
     {
-        if (Stats.Health.CurrentValue <= 0)
+        if (Stats.Health.CurrentValue <= 0 && StateMachine.CurrentState != KinematicState)
             return;
 
         StateMachine.ChangeState(StunState);
     }
 
-    private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
+    private void HandleHealthZero()
+    {
+        StateMachine.ChangeState(DeadState);
+    }
 
     private new void HandleEnterBossRoom()
     {

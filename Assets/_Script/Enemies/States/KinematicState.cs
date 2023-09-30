@@ -13,6 +13,7 @@ public class KinematicState : EnemyState
         base.Enter();
 
         gotoStunState = false;
+        Movement.SetVelocityZero();
         Movement.SetRBKinematic();
     }
 

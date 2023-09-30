@@ -37,6 +37,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public event Action OnDamaged;
     public event Action OnKnockback;
     public event Action OnStaminaDamaged;
+    public event Action<float> OnGoToKinematicState;
+    public event Action OnGoToStunState;
 
     // time
     private float staminaDelta = 0f;
@@ -241,6 +243,16 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public GameObject GetGameObject()
     {
         return movement.ParentTransform.gameObject;
+    }
+
+    public void GotoKinematicState(float time = -1)
+    {
+        OnGoToKinematicState?.Invoke(time);
+    }
+
+    public void GoToStunState()
+    {
+        OnGoToStunState?.Invoke();
     }
 
     private void DecreaseHealth(float damageAmount)

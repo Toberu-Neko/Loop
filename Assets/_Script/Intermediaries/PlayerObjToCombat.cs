@@ -25,4 +25,14 @@ public class PlayerObjToCombat : MonoBehaviour, IDamageable, IKnockbackable, ISt
     {
         return gameObject;
     }
+
+    public void GotoKinematicState(float time)
+    {
+        Debug.LogError("Player don't have kinematic state!");
+    }
+
+    public void GoToStunState()
+    {
+        Debug.LogError("Player don't have kinematic state!");
+    }
 }

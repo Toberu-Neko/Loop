@@ -30,12 +30,13 @@ public class PlayerFistS3ChargeState : PlayerFistAttackState
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityX(data.s3ChargeSpeed);
+        Movement.SetVelocityX(data.s3ChargeSpeed * Movement.FacingDirection);
 
-        if (Combat.DetectedDamageables.Count > 0 && Combat.DetectedStaminaDamageables.Count > 0)
+        if (Combat.DetectedDamageables.Count > 0)
         {
+            player.FistS3AttackState.SetTargetObj(Combat.DetectedDamageables[0].GetGameObject(), Combat.DetectedDamageables[0]);
             Combat.DetectedDamageables[0].GetGameObject().transform.SetParent(player.transform);
-            Combat.DetectedStaminaDamageables[0].TakeStaminaDamage(1000, Movement.ParentTransform.position, false);
+            Combat.DetectedDamageables[0].GotoKinematicState();
             stateMachine.ChangeState(player.FistS3AttackState);
         }
         else if(Time.time >= StartTime + data.s3MaxChargeTime)

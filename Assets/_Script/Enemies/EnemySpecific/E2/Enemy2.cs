@@ -13,6 +13,8 @@ public class Enemy2 : Entity
     public E2_DeadState DeadState { get; private set; }
     public E2_DodgeState DodgeState { get; private set; }
     public E2_RangedAttackState RangedAttackState { get; private set; }
+    public E2_KinematicState KinematicState { get; private set; }
+
 
     [SerializeField] private E2_StateData stateData;
 
@@ -52,6 +54,7 @@ public class Enemy2 : Entity
         DeadState = new E2_DeadState(this, StateMachine, "dead", deadStateData, this);
         DodgeState = new E2_DodgeState(this, StateMachine, "dodge", dodgeStateData, this);
         RangedAttackState = new E2_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
+        KinematicState = new E2_KinematicState(this, StateMachine, "kinematic", this);
 
     }
     protected override void Start()
@@ -66,6 +69,9 @@ public class Enemy2 : Entity
 
         Stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         Stats.Health.OnCurrentValueZero += HandleHealthZero;
+
+        Combat.OnGoToKinematicState += GotoKinematicState;
+        Combat.OnGoToStunState += OnGotoStunState;
     }
 
     protected override void OnDisable()
@@ -76,11 +82,23 @@ public class Enemy2 : Entity
 
         Stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         Stats.Health.OnCurrentValueZero -= HandleHealthZero;
+
+        Combat.OnGoToKinematicState -= GotoKinematicState;
+        Combat.OnGoToStunState -= OnGotoStunState;
+    }
+    private void GotoKinematicState(float time)
+    {
+        KinematicState.SetTimer(time);
+        StateMachine.ChangeState(KinematicState);
+    }
+    private void OnGotoStunState()
+    {
+        StateMachine.ChangeState(StunState);
     }
 
     private void HandlePoiseZero()
     {
-        if (Stats.Health.CurrentValue <= 0)
+        if (Stats.Health.CurrentValue <= 0 && StateMachine.CurrentState != KinematicState)
             return;
 
         StateMachine.ChangeState(StunState);

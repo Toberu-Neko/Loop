@@ -6,6 +6,8 @@ public class PlayerFistS3AttackState : PlayerFistAttackState
 {
     private SO_WeaponData_Fist data;
     private WeaponAttackDetails[] details;
+    private GameObject target;
+    private IDamageable damageable;
     private int count = 0;
     public PlayerFistS3AttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -54,7 +56,15 @@ public class PlayerFistS3AttackState : PlayerFistAttackState
     {
         base.AnimationFinishTrigger();
 
+        damageable.GoToStunState();
+        target.transform.SetParent(null);
         isAttackDone = true;
+    }
+
+    public void SetTargetObj(GameObject target, IDamageable dam)
+    {
+        this.target = target;
+        damageable = dam;
     }
 
 }
