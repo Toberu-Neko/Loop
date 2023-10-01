@@ -93,17 +93,25 @@ public class Enemy2 : Entity
     }
     private void OnGotoStunState()
     {
-        StateMachine.ChangeState(StunState);
+        if (Stats.Health.CurrentValue > 0)
+            StateMachine.ChangeState(StunState);
+        else
+            StateMachine.ChangeState(DeadState);
     }
 
     private void HandlePoiseZero()
     {
-        if (Stats.Health.CurrentValue <= 0 && StateMachine.CurrentState != KinematicState)
+        if (Stats.Health.CurrentValue <= 0 && StateMachine.CurrentState == KinematicState)
             return;
 
         StateMachine.ChangeState(StunState);
     }
 
-    private void HandleHealthZero() => StateMachine.ChangeState(DeadState);
+    private void HandleHealthZero()
+    {
+        if (StateMachine.CurrentState == KinematicState)
+            return;
+        StateMachine.ChangeState(DeadState);
+    }
 
 }

@@ -318,6 +318,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     private void HandleKnockback(float strength, Vector2 angle, int direction)
     {
+        if(strength == 0f || angle == Vector2.zero)
+        {
+            return;
+        }
+
         if(stats.IsTimeStopped)
         {
             if(knockbackAngleDelta.x < angle.x)
@@ -333,6 +338,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
             knockStrengthDelta += strength * direction;
             return;
+        }
+
+        if(movement.RB.bodyType == RigidbodyType2D.Kinematic)
+        {
+            movement.SetRBDynamic();
         }
         movement.SetVelocity(strength, angle, direction);
         movement.SetCanSetVelocity(false);
