@@ -129,10 +129,16 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.GunCounterAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Gun && Stats.Attackable && player.WeaponManager.GrenadeCount > 0)
+        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Gun && Stats.Attackable && player.WeaponManager.GrenadeCount > 0 && player.WeaponManager.GrenadeCount < player.WeaponManager.GunData.maxGrenade)
         {
             player.InputHandler.UseWeaponSkillInput();
             stateMachine.ChangeState(player.GunThrowGrenadeState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Gun && player.WeaponManager.GrenadeCount == player.WeaponManager.GunData.maxGrenade && Stats.Attackable)
+        {
+            player.InputHandler.UseWeaponSkillInput();
+            stateMachine.ChangeState(player.GunS3State);
+
         }
         #endregion
 
@@ -144,6 +150,11 @@ public class PlayerInAirState : PlayerState
         else if (player.InputHandler.AttackInput && player.WeaponManager.CurrentWeaponType == WeaponType.Fist && Stats.Attackable && Stats.CounterAttackable)
         {
             stateMachine.ChangeState(player.FistCounterAttackState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Fist && Stats.Attackable &&
+            player.WeaponManager.FistCurrentEnergy == player.WeaponManager.FistData.maxEnergy)
+        {
+            stateMachine.ChangeState(player.FistS3ChargeState);
         }
         #endregion
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock() && Stats.Attackable)
