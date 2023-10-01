@@ -128,8 +128,13 @@ public class Boss0 : BossBase
 
     private void HandlePoiseZero()
     {
-        if (Stats.Health.CurrentValue <= 0 && StateMachine.CurrentState == KinematicState)
+        if (Stats.Health.CurrentValue <= 0 || StateMachine.CurrentState == KinematicState)
             return;
+
+        if(Stats.Health.CurrentValue <= 0)
+        {
+            StateMachine.ChangeState(DeadState);
+        }
 
         StateMachine.ChangeState(StunState);
     }

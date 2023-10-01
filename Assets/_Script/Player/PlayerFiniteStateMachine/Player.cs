@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     public PlayerGunChargingState GunChargeAttackState { get; private set; }
     public PlayerGunCounterState GunCounterAttackState { get; private set; }
     public PlayerThrowGrenadeState GunThrowGrenadeState { get; private set; }
+    public PlayerGunS3State GunS3State { get; private set; }
 
     #endregion
 
@@ -128,6 +129,7 @@ public class Player : MonoBehaviour
         GunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
         GunCounterAttackState = new PlayerGunCounterState(this, StateMachine, playerData, "gunCounterAttack");
         GunThrowGrenadeState = new PlayerThrowGrenadeState(this, StateMachine, playerData, "gunThrowGrenade");
+        GunS3State = new PlayerGunS3State(this, StateMachine, playerData, "gunS3Attack");
 
         FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
         FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, playerData, "fistNormalAttack");

@@ -206,7 +206,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 FistCurrentEnergy = 0;
                 break;
             case WeaponType.Gun:
-                GunCurrentEnergy = 0;
+                GrenadeCount = 0;
                 break;
         }
         OnEnergyChanged?.Invoke();

@@ -102,7 +102,7 @@ public class Enemy4 : Entity
     }
     private void HandlePoiseZero()
     {
-        if (Stats.Health.CurrentValue <= 0 && StateMachine.CurrentState == KinematicState)
+        if (Stats.Health.CurrentValue <= 0 || StateMachine.CurrentState == KinematicState)
             return;
 
         StateMachine.ChangeState(StunState);

@@ -27,6 +27,11 @@ public class SO_WeaponData_Gun : SO_WeaponData
     public GameObject grenadeObj;
     public ProjectileDetails grenadeDetails;
 
+    [Header("S3Attack")]
+    public float s3UpVelocity = 15f;
+    public WeaponAttackDetails[] s3AttackDetails;
+    
+
     [Header("ChargeAttack")]
     public float chargeMovementSpeedMultiplier = 0.3f;
     public float chargeAttackBackFireVelocity = 3f;

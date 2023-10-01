@@ -71,7 +71,6 @@ public class PlayerGroundedState : PlayerState
             Stats.Attackable &&
             weaponManager.SwordCurrentEnergy == weaponManager.SwordData.maxEnergy)
         {
-            player.SwordHubState.SetCanAttackFalse();
             stateMachine.ChangeState(player.SwordSoulMaxAttackState);
         }
         #endregion
@@ -86,10 +85,17 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.GunCounterAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && weaponManager.GrenadeCount > 0 && Stats.Attackable)
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && 
+            weaponManager.GrenadeCount > 0 && weaponManager.GrenadeCount < weaponManager.GunData.maxGrenade && Stats.Attackable)
         {
             player.InputHandler.UseWeaponSkillInput();
             stateMachine.ChangeState(player.GunThrowGrenadeState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && weaponManager.GrenadeCount == weaponManager.GunData.maxGrenade && Stats.Attackable)
+        {
+            player.InputHandler.UseWeaponSkillInput();
+            stateMachine.ChangeState(player.GunS3State);
+
         }
         #endregion
 

@@ -38,8 +38,6 @@ public class PlayerGrenade : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            Debug.Log(hit.name);
-
             if (hit.TryGetComponent(out IDamageable dam))
             {
                 dam.Damage(details.damageAmount, transform.position);

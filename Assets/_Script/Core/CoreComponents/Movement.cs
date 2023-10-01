@@ -5,7 +5,7 @@ public class Movement : CoreComponent
 {
     public Rigidbody2D RB { get; private set; }
 
-    public int FacingDirection { get; private set; } = 1;
+    public int FacingDirection { get; private set; }
 
     public bool CanSetVelocity { get; private set; }
 
@@ -47,6 +47,7 @@ public class Movement : CoreComponent
         TimeStopVelocity = Vector2.zero;
         TimeSlowVelocity = Vector2.zero;
         CurrentVelocity = Vector2.zero;
+        FacingDirection = 1;
 
         orginalGrag = RB.drag;
 
