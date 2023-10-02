@@ -6,7 +6,7 @@ public class E4_MoveState : MoveState
 {
     private Enemy4 enemy;
 
-    public E4_MoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyGroundMoveState stateData, Enemy4 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E4_MoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyGroundMoveState stateData, Enemy4 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class EnemyBookmarkState : EnemyState
 {
-    protected S_EnemyBookmarkState stateData;
+    protected ED_EnemyBookmarkState stateData;
 
     public Vector2 bookmarkPosition;
     private GameObject bookmarkObj;
     public bool isBookmarkActive { get; private set; }
-    public EnemyBookmarkState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyBookmarkState stateData) : base(entity, stateMachine, animBoolName)
+    public EnemyBookmarkState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyBookmarkState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
         bookmarkPosition = Vector2.zero;

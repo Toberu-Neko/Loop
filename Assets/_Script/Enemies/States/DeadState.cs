@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DeadState : EnemyState
 {
-    protected S_EnemyDeadState stateData;
+    protected ED_EnemyDeadState stateData;
 
-    public DeadState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyDeadState stateData) : base(entity, stateMachine, animBoolName)
+    public DeadState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyDeadState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

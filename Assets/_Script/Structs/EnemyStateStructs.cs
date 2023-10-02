@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class S_EnemyStunState
+public class ED_EnemyStunState
 {
     [Tooltip("暈眩持續時間")]
     public float stunTime = 1f;
@@ -13,28 +13,28 @@ public class S_EnemyStunState
 }
 
 [Serializable]
-public class S_EnemyGroundMoveState
+public class ED_EnemyGroundMoveState
 {
     [Tooltip("移動速度")]
     public float movementSpeed = 3f;
 }
 
 [Serializable]
-public class S_PlayerDetectedMoveState
+public class ED_PlayerDetectedMoveState
 {
     [Tooltip("移動速度")]
     public float movementSpeed = 5f;
 }
 
 [Serializable]
-public class S_EnemyPlayerDetectedState
+public class ED_EnemyPlayerDetectedState
 {
     [Tooltip("偵測到玩家後, 執行下一個動作的延遲")]
     public float delayTime = 1f;
 }
 
 [Serializable]
-public class S_EnemyRangedAttackState
+public class ED_EnemyRangedAttackState
 {
     [HideInInspector] public LayerMask whatIsPlayer;
 
@@ -56,7 +56,7 @@ public class S_EnemyRangedAttackState
 }
 
 [Serializable]
-public class S_EnemyMeleeAttackState
+public class ED_EnemyMeleeAttackState
 {
     [HideInInspector]public LayerMask whatIsPlayer;
 
@@ -75,7 +75,7 @@ public class S_EnemyMeleeAttackState
 }
 
 [Serializable]
-public class S_EnemySnipingState
+public class ED_EnemySnipingState
 {
     public LayerMask whatIsGround;
     public GameObject bulletPrefab;
@@ -94,7 +94,7 @@ public class S_EnemySnipingState
 }
 
 [Serializable]
-public class S_EnemyLookForPlayerState
+public class ED_EnemyLookForPlayerState
 {
     [Tooltip("轉身次數(玩家偵測不到之後, 會向後轉?次)")]
     public int amountOfTurns = 2;
@@ -103,7 +103,7 @@ public class S_EnemyLookForPlayerState
 }
 
 [Serializable]
-public class S_EnemyIdleState
+public class ED_EnemyIdleState
 {
     [Tooltip("最小閒置時間")]
     public float minIdleTime = 1f;
@@ -112,7 +112,7 @@ public class S_EnemyIdleState
 }
 
 [Serializable]
-public class S_EnemyDodgeState
+public class ED_EnemyDodgeState
 {
     [Tooltip("閃避速度")]
     public float dodgeSpeed = 15f;
@@ -123,14 +123,14 @@ public class S_EnemyDodgeState
 }
 
 [Serializable]
-public class S_EnemyDeadState
+public class ED_EnemyDeadState
 {
     public GameObject deathChunkParticle;
     public GameObject deathBloodParticle;
 }
 
 [Serializable]
-public class S_EnemyChargeState
+public class ED_EnemyChargeState
 {
     [Tooltip("冷卻時間, 從開始衝刺起算。")]
     public float chargeCooldown = 2f;
@@ -146,7 +146,7 @@ public class S_EnemyChargeState
 }
 
 [Serializable]
-public class S_EnemyShieldMoveState
+public class ED_EnemyShieldMoveState
 {
     [Tooltip("持盾移動速度")]
     public float movementSpeed = 1f;
@@ -155,7 +155,21 @@ public class S_EnemyShieldMoveState
 }
 
 [Serializable]
-public class S_EnemyBookmarkState
+public class ED_EnemyBookmarkState
 {
     public GameObject bookmarkPrefab;
+}
+
+[Serializable]
+public class ED_EnemyMultiShootState
+{
+    public float attackCooldown = 5f;
+    public float attackVelocity = 10f;
+    public ObjContainer[] bullet;
+
+    public class ObjContainer
+    {
+        public GameObject obj;
+        public ProjectileDetails details;
+    }
 }

@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "E5_StateData", menuName = "Data/Entity Data/Enemies/E5 Sniper")]
 public class E5_StateData : BaseEnemyStateData
 {
-    public S_EnemyIdleState idleStateData;
-    public S_EnemySnipingState snipingStateData;
-    public S_EnemyStunState stunStateData;
-    public S_EnemyDeadState deadStateData;
+    public ED_EnemyIdleState idleStateData;
+    public ED_EnemySnipingState snipingStateData;
+    public ED_EnemyStunState stunStateData;
+    public ED_EnemyDeadState deadStateData;
 
     private void OnEnable()
     {

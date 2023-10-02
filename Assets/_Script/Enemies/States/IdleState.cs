@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IdleState : EnemyState
 {
-    protected S_EnemyIdleState stateData;
+    protected ED_EnemyIdleState stateData;
 
     protected bool flipAfterIdle;
     protected bool isIdleTimeOver;
@@ -13,7 +13,7 @@ public class IdleState : EnemyState
 
     protected float idleTime;
 
-    public IdleState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyIdleState stateData) : base(entity, stateMachine, animBoolName)
+    public IdleState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyIdleState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

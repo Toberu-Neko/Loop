@@ -213,31 +213,31 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     {
         if (stats.Invincible)
         {
-            Debug.Log("invincible");
+            // Debug.Log("invincible");
             return;
         }
         else if (!blockable || !FacingDamgePosition(damagePosition))
         {
             DecreaseHealth(damageAmount);
-            Debug.Log("!FacingDamgePosition(damagePosition)");
+            // Debug.Log("!FacingDamgePosition(damagePosition)");
 
             particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         else if (PerfectBlock)
         {
-            Debug.Log("PerfectBlock");
+            // Debug.Log("PerfectBlock");
             OnPerfectBlock?.Invoke();
         }
         else if(normalBlock)
         {
-            Debug.Log("normalBlock");
+            // Debug.Log("normalBlock");
             DecreaseHealth(damageAmount * blockDamageMultiplier);
 
             particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         else
         {
-            Debug.Log("else");
+            // Debug.Log("else");
             DecreaseHealth(damageAmount);
 
             particleManager.StartParticlesWithRandomRotation(damageParticles);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class E4_StunState : StunState
 {
     private Enemy4 enemy;
-    public E4_StunState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyStunState stateData, Enemy4 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E4_StunState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyStunState stateData, Enemy4 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

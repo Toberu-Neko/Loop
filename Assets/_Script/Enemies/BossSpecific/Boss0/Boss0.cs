@@ -22,20 +22,20 @@ public class Boss0 : BossBase
 
     [SerializeField] private B0_StateData stateData;
 
-    private S_EnemyIdleState idleStateData;
-    private S_EnemyPlayerDetectedState playerDetectedStateData;
-    private S_PlayerDetectedMoveState playerDetectedMoveStateData;
+    private ED_EnemyIdleState idleStateData;
+    private ED_EnemyPlayerDetectedState playerDetectedStateData;
+    private ED_PlayerDetectedMoveState playerDetectedMoveStateData;
 
-    private S_EnemyChargeState chargeStateData;
-    private S_EnemyBookmarkState bookmarkStateData;
+    private ED_EnemyChargeState chargeStateData;
+    private ED_EnemyBookmarkState bookmarkStateData;
 
-    private S_EnemyMeleeAttackState normalAttackStateData;
-    private S_EnemyMeleeAttackState strongAttackStateData;
-    private S_EnemyMeleeAttackState multiAttackStateData;
-    private S_EnemyRangedAttackState rangedAttackStateData;
+    private ED_EnemyMeleeAttackState normalAttackStateData;
+    private ED_EnemyMeleeAttackState strongAttackStateData;
+    private ED_EnemyMeleeAttackState multiAttackStateData;
+    private ED_EnemyRangedAttackState rangedAttackStateData;
 
-    private S_EnemyStunState stunStateData;
-    private S_EnemyDeadState deadStateData; 
+    private ED_EnemyStunState stunStateData;
+    private ED_EnemyDeadState deadStateData; 
     
     [SerializeField] private Transform meleeAttackPosition;
     [SerializeField] private Transform rangedAttackPosition;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StunState : EnemyState
 {
-    protected S_EnemyStunState stateData;
+    protected ED_EnemyStunState stateData;
 
     protected bool isStunTimeOver;
     protected bool isGrounded;
@@ -15,7 +15,7 @@ public class StunState : EnemyState
     protected bool isPlayerInMaxAgroRange;
 
 
-    public StunState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyStunState stateData) : base(entity, stateMachine, animBoolName)
+    public StunState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyStunState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

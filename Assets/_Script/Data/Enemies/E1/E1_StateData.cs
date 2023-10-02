@@ -6,18 +6,18 @@ using UnityEngine;
 public class E1_StateData : BaseEnemyStateData
 {
     [Header("Movement")]
-    public S_EnemyIdleState idleStateData;
-    public S_EnemyGroundMoveState groundMoveStateData;
-    public S_EnemyPlayerDetectedState playerDetectedStateData;
+    public ED_EnemyIdleState idleStateData;
+    public ED_EnemyGroundMoveState groundMoveStateData;
+    public ED_EnemyPlayerDetectedState playerDetectedStateData;
     
     [Header("Attack")]
-    public S_EnemyChargeState chargeStateData;
-    public S_EnemyLookForPlayerState lookForPlayerStateData;
-    public S_EnemyMeleeAttackState meleeAttackStateData;
+    public ED_EnemyChargeState chargeStateData;
+    public ED_EnemyLookForPlayerState lookForPlayerStateData;
+    public ED_EnemyMeleeAttackState meleeAttackStateData;
 
     [Header("Combat")]
-    public S_EnemyStunState stunStateData;
-    public S_EnemyDeadState deadStateData;
+    public ED_EnemyStunState stunStateData;
+    public ED_EnemyDeadState deadStateData;
 
     private void OnEnable()
     {

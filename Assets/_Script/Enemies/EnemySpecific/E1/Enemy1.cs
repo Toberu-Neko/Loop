@@ -16,14 +16,14 @@ public class Enemy1 : Entity
 
     [SerializeField] private E1_StateData stateData;
 
-    private S_EnemyIdleState idleStateData;
-    private S_EnemyGroundMoveState moveStateData;
-    private S_EnemyPlayerDetectedState playerDetectedStateData;
-    private S_EnemyChargeState chargeStateData;
-    private S_EnemyLookForPlayerState lookForPlayerStateData;
-    private S_EnemyMeleeAttackState meleeAttackStateData;
-    private S_EnemyStunState stunStateData;
-    private S_EnemyDeadState deadStateData;
+    private ED_EnemyIdleState idleStateData;
+    private ED_EnemyGroundMoveState moveStateData;
+    private ED_EnemyPlayerDetectedState playerDetectedStateData;
+    private ED_EnemyChargeState chargeStateData;
+    private ED_EnemyLookForPlayerState lookForPlayerStateData;
+    private ED_EnemyMeleeAttackState meleeAttackStateData;
+    private ED_EnemyStunState stunStateData;
+    private ED_EnemyDeadState deadStateData;
 
     [SerializeField] private Transform meleeAttackPosition;
 

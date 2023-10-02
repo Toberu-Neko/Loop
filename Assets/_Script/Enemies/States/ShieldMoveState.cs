@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ShieldMoveState : EnemyState
 {
-    S_EnemyShieldMoveState stateData;
-    public ShieldMoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyShieldMoveState stateData) : base(entity, stateMachine, animBoolName)
+    ED_EnemyShieldMoveState stateData;
+    public ShieldMoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyShieldMoveState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

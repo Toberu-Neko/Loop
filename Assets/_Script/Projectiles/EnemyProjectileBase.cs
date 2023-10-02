@@ -1,39 +1,33 @@
+using System;
 using UnityEngine;
 
-public class EnemyProjectile : MonoBehaviour, IKnockbackable
+public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
 {
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;
     private LayerMask _whatIsPlayer;
-    [SerializeField] private float damageRadius;
-    [SerializeField] private Transform damagePosition;
-    [SerializeField] private Collider2D col;
-    [SerializeField] private Core core;
-    [SerializeField] private Rigidbody2D rig;
+    [SerializeField] protected Core core;
+    protected Movement movement;
+    protected Stats stats;
+
+    protected event Action<Collider2D> OnAction;
+
     [SerializeField] private Animator anim;
+
+    protected bool hasHitGround;
+    protected bool countered;
+    private bool interected = false;
+    protected ProjectileDetails details;
+
+    private Vector2 counterVelocity;
     private Vector2 fireDirection;
 
-    private float travelDistance;
-    private float xStartPosition;
-    private int facingDirection;
-    private bool hasHitGround;
-    private bool countered;
-    private bool damaged = false;
-    private Vector2 counterVelocity;
-
-
-    private ProjectileDetails details;
-    private Movement movement;
-    private Stats stats;
-
-    private void Awake()
+    protected virtual void Awake()
     {
         movement = core.GetCoreComponent<Movement>();
         stats = core.GetCoreComponent<Stats>();
     }
-
-
-    private void Update()
+    protected virtual void Update()
     {
         core.LogicUpdate();
 
@@ -51,29 +45,34 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         }
     }
 
-    private void LateUpdate()
+    protected virtual void LateUpdate()
     {
         core.LateLogicUpdate();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         core.PhysicsUpdate();
     }
 
-    private void OnEnable()
+
+    protected virtual void OnEnable()
     {
+        gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
+        _whatIsPlayer = whatIsPlayer;
+
         hasHitGround = false;
-        damaged = false;
+        interected = false;
         countered = false;
 
         stats.OnTimeSlowStart += HandleChangeAnimSlow;
         stats.OnTimeSlowEnd += HandleChangeAnimOrigin;
         stats.OnTimeStopStart += HandleChangeAnimSlow;
         stats.OnTimeStopEnd += HandleChangeAnimOrigin;
+
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         anim.SetBool("timeSlow", false);
 
@@ -81,6 +80,7 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         stats.OnTimeStopEnd -= HandleChangeAnimOrigin;
         stats.OnTimeSlowStart -= HandleChangeAnimSlow;
         stats.OnTimeSlowEnd -= HandleChangeAnimOrigin;
+
     }
 
     private void HandleChangeAnimSlow()
@@ -92,44 +92,19 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
     {
         anim.SetBool("timeSlow", false);
     }
-
-    public void FireProjectile(ProjectileDetails details, int facingDirection, Vector2 fireDirection)
+    public void Fire(Vector2 fireDirection, ProjectileDetails details)
     {
         this.details = details;
-        this.facingDirection = facingDirection;
         this.fireDirection = fireDirection;
-
+        _whatIsPlayer = whatIsPlayer;
 
         Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
 
-        transform.rotation = targetRotation; 
+        transform.rotation = targetRotation;
         movement.SetGravityZero();
         movement.SetVelocity(details.speed, fireDirection);
 
-        xStartPosition = transform.position.x;
-
-        gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
-        _whatIsPlayer = whatIsPlayer;
         Invoke(nameof(ReturnToPool), 10f);
-    }
-
-    private void ReturnToPool()
-    {
-        CancelInvoke(nameof(ReturnToPool));
-        if (!stats.InCombat || damaged || hasHitGround)
-        {
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
-        }
-        else
-        {
-            Invoke(nameof(ReturnToPool), 3f);
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(damagePosition.position, damageRadius);
     }
 
     public void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
@@ -139,9 +114,19 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
             countered = true;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             _whatIsPlayer = LayerMask.GetMask("Damageable");
-            xStartPosition = transform.position.x;
 
             int direction = transform.position.x < damagePosition.x ? -1 : 1;
+            int facingDirection;
+
+            if (fireDirection.x >= 0f)
+            {
+                facingDirection = 1;
+            }
+            else
+            {
+                facingDirection = -1;
+            }
+
 
             if (stats.IsTimeStopped)
             {
@@ -149,7 +134,6 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
                 {
                     counterVelocity = movement.TimeStopVelocity * -4f;
                     movement.SetTimeStopVelocity(counterVelocity);
-                    facingDirection = direction;
                     movement.Turn();
                 }
                 else
@@ -164,7 +148,6 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
                 {
                     counterVelocity = -movement.CurrentVelocity / GameManager.Instance.TimeSlowMultiplier;
                     movement.SetTimeSlowVelocity(counterVelocity / GameManager.Instance.TimeSlowMultiplier * 5f);
-                    facingDirection = direction;
                     movement.Turn();
                 }
                 else
@@ -177,34 +160,13 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & _whatIsPlayer) != 0 && !hasHitGround && !damaged)
+        if (((1 << collision.gameObject.layer) & _whatIsPlayer) != 0 && !hasHitGround && !interected)
         {
-            damaged = true;
-            if (collision.TryGetComponent(out IDamageable damageable))
-            {
-                damageable.Damage(details.damageAmount, transform.position);
-            }
-            if (collision.TryGetComponent(out IKnockbackable knockbackable))
-            {
-                knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, transform.position);
-            }
-            if (collision.TryGetComponent(out IStaminaDamageable staminaDamageable))
-            {
-                staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
-            }
-
-            if (countered)
-            {
-                if (collision.TryGetComponent(out IMapDamageableItem mapDamageableItem))
-                {
-                    mapDamageableItem.TakeDamage(details.damageAmount);
-                }
-            }
-
-            ReturnToPool();
+            Debug.Log("Interected!");
+            interected = true;
+            OnAction?.Invoke(collision);
         }
 
         if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
@@ -215,8 +177,19 @@ public class EnemyProjectile : MonoBehaviour, IKnockbackable
             CancelInvoke(nameof(ReturnToPool));
             Invoke(nameof(ReturnToPool), 5f);
         }
-        
-    } 
 
+    }
+
+    protected void ReturnToPool()
+    {
+        CancelInvoke(nameof(ReturnToPool));
+        if (!stats.InCombat || interected || hasHitGround)
+        {
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
+        }
+        else
+        {
+            Invoke(nameof(ReturnToPool), 3f);
+        }
+    }
 }
-

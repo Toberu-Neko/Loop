@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RangedAttackState : AttackState
 {
-    private S_EnemyRangedAttackState stateData;
+    private ED_EnemyRangedAttackState stateData;
 
-    public RangedAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyRangedAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public RangedAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemyRangedAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
     }
@@ -15,15 +15,15 @@ public class RangedAttackState : AttackState
         base.AnimationActionTrigger();
 
         GameObject projectile = ObjectPoolManager.SpawnObject(stateData.projectile, attackPosition.position, attackPosition.rotation, ObjectPoolManager.PoolType.Projectiles);
-        EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
+        EnemyProjectile_Damage projectileScript = projectile.GetComponent<EnemyProjectile_Damage>();
         if (CheckPlayerSenses.IsPlayerInMaxAgroRange && stateData.aimPlayer)
         {
-            Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.collider.bounds.center) - (Vector2)Movement.ParentTransform.position;
-            projectileScript.FireProjectile(stateData.projectileDetails, Movement.FacingDirection, delta.normalized);
+            Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPosition.position;
+            projectileScript.Fire(delta.normalized, stateData.projectileDetails);
         }
         else
         {
-            projectileScript.FireProjectile(stateData.projectileDetails, Movement.FacingDirection, Movement.ParentTransform.right);
+            projectileScript.Fire(Movement.ParentTransform.right, stateData.projectileDetails);
         }
     }
 

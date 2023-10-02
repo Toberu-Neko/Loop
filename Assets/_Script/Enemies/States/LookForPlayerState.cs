@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LookForPlayerState : EnemyState
 {
-    protected S_EnemyLookForPlayerState stateData;
+    protected ED_EnemyLookForPlayerState stateData;
 
     protected bool turnImmediately;
     protected bool isPlayerInMinAgroRange;
@@ -16,7 +16,7 @@ public class LookForPlayerState : EnemyState
     protected int amountOfTurnsDone;
 
 
-    public LookForPlayerState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData) : base(entity, stateMachine, animBoolName)
+    public LookForPlayerState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyLookForPlayerState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChargeState : EnemyState
 {
-    protected S_EnemyChargeState stateData;
+    protected ED_EnemyChargeState stateData;
 
     protected bool isPlayerInMinAgroRange;
     protected bool isDetectingLedge;
@@ -12,7 +12,7 @@ public class ChargeState : EnemyState
     protected bool isChargeTimeOver;
     protected bool gotoNextState;
     protected bool performCloseRangeAction;
-    public ChargeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyChargeState stateData) : base(entity, stateMachine, animBoolName)
+    public ChargeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyChargeState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }

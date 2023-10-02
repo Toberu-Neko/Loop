@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StrongAttackState : AttackState
 {
-    protected S_EnemyMeleeAttackState stateData;
-    public StrongAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    protected ED_EnemyMeleeAttackState stateData;
+    public StrongAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
     }

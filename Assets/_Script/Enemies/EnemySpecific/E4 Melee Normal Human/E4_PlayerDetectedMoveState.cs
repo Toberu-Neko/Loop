@@ -5,7 +5,7 @@ using UnityEngine;
 public class E4_PlayerDetectedMoveState : PlayerDetectedMoveState
 {
     private Enemy4 enemy;
-    public E4_PlayerDetectedMoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_PlayerDetectedMoveState stateData, Enemy4 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E4_PlayerDetectedMoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_PlayerDetectedMoveState stateData, Enemy4 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class E2_LookForPlayerState : LookForPlayerState
 {
     private Enemy2 enemy;
-    public E2_LookForPlayerState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyLookForPlayerState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E2_LookForPlayerState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyLookForPlayerState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

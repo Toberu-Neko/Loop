@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SnipingState : AttackState
 {
-    S_EnemySnipingState stateData;
+    ED_EnemySnipingState stateData;
     private Transform player;
     protected bool goToIdleState;
     private Vector2 aimPointDelta;
@@ -27,7 +27,7 @@ public class SnipingState : AttackState
 
     private DrawWire drawWire;
 
-    public SnipingState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemySnipingState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public SnipingState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemySnipingState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
         drawWire = core.GetCoreComponent<DrawWire>();
@@ -142,8 +142,8 @@ public class SnipingState : AttackState
         drawWire.RenderLine();
 
         GameObject bulletObj = ObjectPoolManager.SpawnObject(stateData.bulletPrefab, attackPosition.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
-        EnemyProjectile script = bulletObj.GetComponent<EnemyProjectile>();
-        script.FireProjectile(stateData.bulletDetails, Movement.FacingDirection, aimPointDelta);
+        EnemyProjectile_Damage script = bulletObj.GetComponent<EnemyProjectile_Damage>();
+        script.Fire(aimPointDelta, stateData.bulletDetails);
     }
 
     public override void AnimationActionTrigger()

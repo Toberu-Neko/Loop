@@ -6,7 +6,7 @@ public class E5_SnipingState : SnipingState
 {
     private Enemy5 enemy;
 
-    public E5_SnipingState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, S_EnemySnipingState stateData, Enemy5 enemy) : base(entity, stateMachine, animBoolName, attackPosition, stateData)
+    public E5_SnipingState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemySnipingState stateData, Enemy5 enemy) : base(entity, stateMachine, animBoolName, attackPosition, stateData)
     {
         this.enemy = enemy;
     }

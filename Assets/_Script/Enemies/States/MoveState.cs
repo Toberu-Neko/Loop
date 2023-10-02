@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MoveState : EnemyState
 {
-    protected S_EnemyGroundMoveState stateData;
+    protected ED_EnemyGroundMoveState stateData;
 
     protected bool isDetectingWall;
     protected bool isDetectingLedge;
     protected bool isPlayerInMinAgroRange;
 
 
-    public MoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, S_EnemyGroundMoveState stateData) : base(entity, stateMachine, animBoolName)
+    public MoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyGroundMoveState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
