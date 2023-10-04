@@ -212,5 +212,11 @@ public class UI_Manager : MonoBehaviour
             changeSceneAnimator.SetBool("finishLoading", true);
     }
 
+    public void BlockPlayerSight()
+    {
+        changeSceneUI.SetActive(true);
+        changeSceneAnimator.SetTrigger("block");
+    }
+
     #endregion
 }
