@@ -204,4 +204,5 @@ public class Entity : MonoBehaviour
     {
         return spriteRenderer.sprite;
     }
+
 }

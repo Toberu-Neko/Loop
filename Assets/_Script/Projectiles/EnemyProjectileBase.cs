@@ -164,7 +164,6 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
     {
         if (((1 << collision.gameObject.layer) & _whatIsPlayer) != 0 && !hasHitGround && !interected)
         {
-            Debug.Log("Interected!");
             interected = true;
             OnAction?.Invoke(collision);
         }
