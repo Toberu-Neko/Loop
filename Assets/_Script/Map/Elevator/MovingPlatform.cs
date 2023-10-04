@@ -24,7 +24,6 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
     private int count;
     private bool reverse;
     private Collider2D playerCollider;
-    private bool isDeactvating;
 
     private bool timeStop;
     private bool timeSlow;
@@ -34,7 +33,6 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
         transform.position = points[startPoint].position;
         count = startPoint;
         reverse = false;
-        isDeactvating = false;
     }
     private void Start()
     {
@@ -174,8 +172,6 @@ public class MovingPlatform : MonoBehaviour, ITimeSlowable, ITimeStopable
 
     private void Deactivate()
     {
-        isDeactvating = true;
-
         if(playerCollider!= null)
             playerCollider.transform.SetParent(null);
 

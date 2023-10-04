@@ -14,7 +14,6 @@ public class PlayerFistHubState : PlayerFistAttackState
     private float strongAttackHoldTime;
 
     private int chargeStage;
-    private float lastChargeTime;
     
     public PlayerFistHubState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -29,7 +28,6 @@ public class PlayerFistHubState : PlayerFistAttackState
         Combat.OnDamaged += () => isAttackDone = true;
         player.InputHandler.UseAttackInput();
         canAttack = false;
-        lastChargeTime = 0;
         player.Anim.SetInteger("fistHubChargeStage", chargeStage);
     }
 

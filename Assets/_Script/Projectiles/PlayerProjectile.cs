@@ -9,7 +9,6 @@ public class PlayerProjectile : MonoBehaviour
     private ProjectileDetails projectileDetails;
 
     private Vector2 fireDirection;
-    private int knockbackDirection;
 
     [SerializeField] private Rigidbody2D rb;
 
@@ -26,15 +25,6 @@ public class PlayerProjectile : MonoBehaviour
 
 
         Invoke(nameof(DestoryThis), projectileDetails.duration);
-
-        if (fireDirection.x > 0)
-        {
-            knockbackDirection = 1;
-        }
-        else
-        {
-            knockbackDirection = -1;
-        }
     }
 
     private void DestoryThis()
