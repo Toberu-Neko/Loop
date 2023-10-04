@@ -10,6 +10,7 @@ public class EnemyState
 
 
     protected bool isAnimationFinished;
+    protected bool isAnimationStartMovement;
 
     public float StartTime { get; protected set;}
     public float EndTime { get; protected set;}
@@ -57,10 +58,6 @@ public class EnemyState
         EndTime = Time.time;
         entity.Anim.SetBool(animBoolName, false);
     }
-    public virtual void AnimationFinishTrigger()
-    {
-        isAnimationFinished = true;
-    }
 
     public virtual void LogicUpdate()
     {
@@ -72,6 +69,22 @@ public class EnemyState
             Movement.SetVelocityZero();
             return;
         }
+    }
+
+    public virtual void PhysicsUpdate(){ }
+    public virtual void DoChecks(){ }
+    public virtual void AnimationActionTrigger() { }
+    public virtual void AnimationFinishTrigger()
+    {
+        isAnimationFinished = true;
+    }
+    public virtual void AnimationStartMovementTrigger() { isAnimationStartMovement = true; }
+    public virtual void AnimationStopMovementTrigger() { isAnimationStartMovement = false; }
+
+    public virtual void Disable()
+    {
+        StartTime = 0f;
+        EndTime = 0f;
     }
 
     public float Timer(float timer)
@@ -88,16 +101,6 @@ public class EnemyState
             return timer;
         }
         return timer;
-    }
-
-    public virtual void PhysicsUpdate(){ }
-    public virtual void DoChecks(){ }
-    public virtual void AnimationActionTrigger() { }
-
-    public virtual void Disable()
-    {
-        StartTime = 0f;
-        EndTime = 0f;
     }
 
     public float ReturnHealthPercentage()

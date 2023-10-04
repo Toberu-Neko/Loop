@@ -6,8 +6,8 @@ public class ED_EnemyStunState
 {
     [Tooltip("暈眩持續時間")]
     public float stunTime = 1f;
-    [Tooltip("暈眩擊退速度(還要加上武器的擊退, 所以不要調太高比較好)")]
-    public float stunKnockbackSpeed = 20f;
+    [Tooltip("暈眩擊退速度")]
+    public float stunKnockbackSpeed = 0f;
     [Tooltip("暈眩擊退角度")]
     public Vector2 stunKnockbackAngle;
 }
@@ -24,6 +24,9 @@ public class ED_PlayerDetectedMoveState
 {
     [Tooltip("移動速度")]
     public float movementSpeed = 5f;
+
+    public float minInStateTime = 3f;
+    public float maxInStateTime = 5f;
 }
 
 [Serializable]
@@ -167,6 +170,23 @@ public class ED_EnemyMultiShootState
     public float attackVelocity = 10f;
     public ObjContainer[] bullet;
 
+    public class ObjContainer
+    {
+        public GameObject obj;
+        public ProjectileDetails details;
+    }
+}
+
+[Serializable]
+public class ED_EnemyJumpAndMultiAttackState
+{
+    public Vector2 jumpAngle;
+    public float jumpForce = 15f;
+    public float attackCooldown = 10f;
+    public float attackVelocity = 20f;
+    public ObjContainer[] bullet;
+
+    [Serializable]
     public class ObjContainer
     {
         public GameObject obj;

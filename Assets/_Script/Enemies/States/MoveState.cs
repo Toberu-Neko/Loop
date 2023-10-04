@@ -29,6 +29,7 @@ public class MoveState : EnemyState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
         Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
     }
 

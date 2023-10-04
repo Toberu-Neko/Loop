@@ -21,8 +21,6 @@ public class PlayerDetectedMoveState : EnemyState
         base.Enter();
 
         performCloseRangeAction = false;
-
-        Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
     }
 
     public override void DoChecks()
@@ -39,12 +37,19 @@ public class PlayerDetectedMoveState : EnemyState
     {
         base.LogicUpdate();
 
-        if (isPlayerInMaxAgroRange)
+        if (isPlayerInMaxAgroRange && CollisionSenses.Ground)
         {
-            if(CollisionSenses.Ground)
-                Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
-
+            Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
         }
+        else
+        {
+            Movement.SetVelocityX(0f);
+        }
+    }
+
+    public bool CanChangeState()
+    {
+        return Time.time - StartTime > Random.Range(stateData.minInStateTime, stateData.maxInStateTime);
     }
 
 }

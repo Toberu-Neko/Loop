@@ -8,7 +8,6 @@ public class E5_StateData : BaseEnemyStateData
     public ED_EnemyIdleState idleStateData;
     public ED_EnemySnipingState snipingStateData;
     public ED_EnemyStunState stunStateData;
-    public ED_EnemyDeadState deadStateData;
 
     private void OnEnable()
     {

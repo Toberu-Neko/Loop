@@ -17,7 +17,7 @@ public class Enemy5 : Entity
 
         IdleState = new E5_IdleState(this, StateMachine, "idle", data.idleStateData, this);
         StunState = new E5_StunState(this, StateMachine, "stun", data.stunStateData, this);
-        DeadState = new E5_DeadState(this, StateMachine, "dead", data.deadStateData, this);
+        DeadState = new E5_DeadState(this, StateMachine, "dead", this);
         SnipingState = new E5_SnipingState(this, StateMachine, "sniping", attackPosition, data.snipingStateData, this);
         KinematicState = new E5_KinematicState(this, StateMachine, "kinematic", this);
 

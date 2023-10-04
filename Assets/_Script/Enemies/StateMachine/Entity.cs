@@ -120,6 +120,15 @@ public class Entity : MonoBehaviour
     {
         StateMachine.CurrentState.AnimationFinishTrigger();
     }
+    private void AnimationStartMovement()
+    {
+        StateMachine.CurrentState.AnimationStartMovementTrigger();
+    }
+    private void AnimationStopMovement()
+    {
+        StateMachine.CurrentState.AnimationStopMovementTrigger();
+    }
+
 
     public void SetFacingDirection(int dir)
     {
