@@ -5,7 +5,7 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
 {
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;
-    protected LayerMask _whatIsPlayer;
+    protected LayerMask whatIsTargetLayer;
     [SerializeField] protected Core core;
     protected Movement movement;
     protected Stats stats;
@@ -42,7 +42,7 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
         {
             movement.SetVelocity(counterVelocity);
         }
-        if (hasHitGround)
+        if (hasHitGround || interected)
         {
             movement.SetVelocityZero();
         }
@@ -68,7 +68,7 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
     protected virtual void OnEnable()
     {
         gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
-        _whatIsPlayer = whatIsPlayer;
+        whatIsTargetLayer = whatIsPlayer;
 
         hasHitGround = false;
         interected = false;
@@ -102,11 +102,11 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
         anim.SetBool("timeSlow", false);
     }
 
-    public void Fire(Vector2 fireDirection, ProjectileDetails details)
+    public virtual void Fire(Vector2 fireDirection, ProjectileDetails details)
     {
         this.details = details;
         this.fireDirection = fireDirection;
-        _whatIsPlayer = whatIsPlayer;
+        whatIsTargetLayer = whatIsPlayer;
 
         Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
 
@@ -117,13 +117,13 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
 
     }
 
-    public void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    public virtual void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
     {
-        if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered)
+        if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered && !interected)
         {
             countered = true;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
-            _whatIsPlayer = LayerMask.GetMask("Damageable");
+            whatIsTargetLayer = LayerMask.GetMask("Damageable");
 
             startTime = Time.time; 
 
@@ -174,7 +174,7 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & _whatIsPlayer) != 0 && !hasHitGround && !interected)
+        if (((1 << collision.gameObject.layer) & whatIsTargetLayer) != 0 && !hasHitGround && !interected)
         {
             interected = true;
             OnHitTargetAction?.Invoke(collision);

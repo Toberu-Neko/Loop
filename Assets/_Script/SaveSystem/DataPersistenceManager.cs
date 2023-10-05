@@ -85,7 +85,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        DataPersistanceObjects = FindAllDataPersistenceObjects();
+        // DataPersistanceObjects = FindAllDataPersistenceObjects();
 
         // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
@@ -118,6 +118,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadGame()
     {
+        DataPersistanceObjects = FindAllDataPersistenceObjects();
         Debug.Log("Load " + DataPersistanceObjects.Count + " objects.");
         if (DisableDataPersistance)
         {
@@ -157,6 +158,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        DataPersistanceObjects = FindAllDataPersistenceObjects();
         Debug.Log("Saved, " + DataPersistanceObjects.Count + "Objects.");
         if (DisableDataPersistance)
         {

@@ -23,6 +23,5 @@ public class E2_StateData : BaseEnemyStateData
     private void OnEnable()
     {
         meleeAttackStateData.whatIsPlayer = base.whatIsPlayer;
-        rangedAttackStateData.whatIsPlayer = base.whatIsPlayer;
     }
 }

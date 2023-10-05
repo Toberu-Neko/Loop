@@ -15,7 +15,7 @@ public class RangedAttackState : AttackState
         base.AnimationActionTrigger();
 
         GameObject projectile = ObjectPoolManager.SpawnObject(stateData.projectile, attackPosition.position, attackPosition.rotation, ObjectPoolManager.PoolType.Projectiles);
-        EnemyProjectile_Damage projectileScript = projectile.GetComponent<EnemyProjectile_Damage>();
+        IFireable projectileScript = projectile.GetComponent<IFireable>();
         if (CheckPlayerSenses.IsPlayerInMaxAgroRange && stateData.aimPlayer)
         {
             Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPosition.position;

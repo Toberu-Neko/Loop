@@ -39,23 +39,10 @@ public class ED_EnemyPlayerDetectedState
 [Serializable]
 public class ED_EnemyRangedAttackState
 {
-    [HideInInspector] public LayerMask whatIsPlayer;
-
-
     public bool aimPlayer = false;
     public float attackCooldown = 1f;
     public GameObject projectile;
     public ProjectileDetails projectileDetails;
-
-    /*
-    [Tooltip("投擲物件無視重力飛行距離")]
-    public float projectileTravelDistance;
-    */
-
-    [Tooltip("投擲物件到被刪除為止的持續時間")]
-    public float projectileLifeTime = 8f;
-    [Tooltip("弓箭的頭的碰撞區域大小")]
-    public float rangedAttackRadius = 0.5f;
 }
 
 [Serializable]
@@ -192,4 +179,10 @@ public class ED_EnemyJumpAndMultiAttackState
         public GameObject obj;
         public ProjectileDetails details;
     }
+}
+
+[Serializable]
+public class ED_ChooseRandomBulletState
+{
+    public int randomCount = 3;
 }

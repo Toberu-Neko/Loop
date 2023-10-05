@@ -8,9 +8,21 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
     [SerializeField] private float expandRate = 1f;
     [SerializeField] private float duration = 5f;
     [SerializeField] private float damagePace = 0.33f;
+    
+    [SerializeField] private GameObject sphereObj;
+    private Vector3 sphereOrgScale;
 
-    private float currentRadius;
+    private float currentRadius = 1f;
+    private float startMagicTime;
+    private float lastDamageTime;
     private bool startMagic;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        sphereOrgScale = sphereObj.transform.localScale;
+    }
 
     protected override void OnEnable()
     {
@@ -21,7 +33,10 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
         OnDuration += HandleHitGround;
 
         startMagic = false;
+        sphereObj.SetActive(false);
         currentRadius = startRadius;
+        lastDamageTime = 0f;
+        startMagicTime = 0f;
     }
 
     protected override void OnDisable()
@@ -31,6 +46,7 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
         OnHitTargetAction -= HandleHitTarget;
         OnHitGroundAction -= HandleHitGround;
         OnDuration -= HandleHitGround;
+
     }
 
     protected override void Update()
@@ -39,6 +55,9 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
 
         if (startMagic)
         {
+            startMagicTime = Timer(startMagicTime);
+            lastDamageTime = Timer(lastDamageTime);
+
             if (stats.IsTimeSlowed)
             {
                 currentRadius += expandRate * Time.deltaTime * GameManager.Instance.TimeSlowMultiplier;
@@ -47,11 +66,32 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
             {
                 currentRadius += expandRate * Time.deltaTime;
             }
+
+            sphereObj.transform.localScale = sphereOrgScale  * currentRadius;
+
+            if(Time.time >= lastDamageTime + damagePace)
+            {
+                DoDamage();
+            }
+
+            if(Time.time >= startMagicTime + duration)
+            {
+                ReturnToPool();
+            }
         }
+    }
+
+    public override void Fire(Vector2 fireDirection, ProjectileDetails details)
+    {
+        base.Fire(fireDirection, details);
     }
 
     private void HandleHitTarget(Collider2D collider)
     {
+        if (collider.TryGetComponent(out IDamageable damageable))
+        {
+            damageable.Damage(0.1f, transform.position, true);
+        }
         HandleHitGround();
     }
 
@@ -60,6 +100,9 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
         if (!startMagic)
         {
             startMagic = true;
+            startMagicTime = Time.time;
+
+            sphereObj.SetActive(true);
 
             DoDamage();
         }
@@ -67,18 +110,22 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
 
     private void DoDamage()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, currentRadius, Vector2.zero, 0f, _whatIsPlayer);
+        lastDamageTime = Time.time;
+        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, currentRadius, whatIsTargetLayer);
 
-        foreach(var hit in hits)
+        foreach (var col in cols)
         {
-            hit.transform.TryGetComponent(out IDamageable damageable);
+            col.transform.TryGetComponent(out IDamageable damageable);
             damageable?.Damage(details.damageAmount, transform.position, false);
 
-            hit.transform.TryGetComponent(out IStaminaDamageable staminaDamageable);
+            col.transform.TryGetComponent(out IStaminaDamageable staminaDamageable);
             staminaDamageable?.TakeStaminaDamage(details.staminaDamageAmount, transform.position, false);
         }
+    }
 
-        Invoke(nameof(DoDamage), damagePace);
+    public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    {
+        base.Knockback(angle, force, damagePosition, blockable, forceKnockback);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

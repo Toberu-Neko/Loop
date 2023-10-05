@@ -23,13 +23,9 @@ public class B1_PlayerDetectedMoveState : PlayerDetectedMoveState
         {
             stateMachine.ChangeState(boss.JumpAndMultiAttackState);
         }
-        else if (performCloseRangeAction)
+        else if (isPlayerInMaxAgroRange && (CanChangeState() || performCloseRangeAction))
         {
-            //TODO: Block
-        }
-        else if (CanChangeState())
-        {
-            //TODO: DORO
+            stateMachine.ChangeState(boss.ChooseRandomBulletState);
         }
 
     }

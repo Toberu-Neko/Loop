@@ -29,6 +29,5 @@ public class B0_StateData : BaseEnemyStateData
         normalAttackStateData.whatIsPlayer = base.whatIsPlayer;
         strongAttackStateData.whatIsPlayer = base.whatIsPlayer;
         multiAttackStateData.whatIsPlayer = base.whatIsPlayer;
-        rangedAttackStateData.whatIsPlayer = base.whatIsPlayer;
     }
 }
