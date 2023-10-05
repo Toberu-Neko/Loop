@@ -26,27 +26,20 @@ MonoBehaviour:
     amountOfTurns: 2
     timeBetweenTurns: 0.75
   rangedAttackStateData:
-    whatIsPlayer:
-      serializedVersion: 2
-      m_Bits: 128
     aimPlayer: 0
     attackCooldown: 1
     projectile: {fileID: 8389792333474829002, guid: 8aa97abbe02d62a449913c9a7fa475a7, type: 3}
     projectileDetails:
-      animator: {fileID: 9100000, guid: 026751fe91e1d244eacec5d35c45ab1c, type: 2}
       damageAmount: 10
       staminaDamageAmount: 2
       speed: 20
       duration: 0
       knockbackStrength: 12
       knockbackAngle: {x: 1, y: 1}
-    projectileLifeTime: 5
-    rangedAttackRadius: 0.5
   meleeAttackStateData:
     whatIsPlayer:
       serializedVersion: 2
       m_Bits: 128
-    attackRadius: 0.5
     attackDamage: 10
     staminaAttackDamage: 3
     attackCooldown: 1
@@ -54,7 +47,7 @@ MonoBehaviour:
     knockbackStrength: 10
   stunStateData:
     stunTime: 3
-    stunKnockbackSpeed: 8
+    stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 1, y: 1}
   deadStateData:
     deathChunkParticle: {fileID: 514008935881032697, guid: 2b7e98a56000226409b0277c751f3f30, type: 3}

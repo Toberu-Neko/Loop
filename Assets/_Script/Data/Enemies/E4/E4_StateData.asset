@@ -26,7 +26,6 @@ MonoBehaviour:
     whatIsPlayer:
       serializedVersion: 2
       m_Bits: 128
-    attackRadius: 0.5
     attackDamage: 10
     staminaAttackDamage: 3
     attackCooldown: 1
@@ -41,9 +40,11 @@ MonoBehaviour:
     dodgeAngle: {x: 1, y: 1}
   detectedPlayerMoveStateData:
     movementSpeed: 5
+    minInStateTime: 3
+    maxInStateTime: 5
   stunStateData:
     stunTime: 3
-    stunKnockbackSpeed: 8
+    stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 1, y: 1}
   deadStateData:
     deathChunkParticle: {fileID: 514008935881032697, guid: 2b7e98a56000226409b0277c751f3f30, type: 3}
