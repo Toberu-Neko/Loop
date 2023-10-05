@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0138, y: 2.0138, z: 2.0138}
+  m_LocalScale: {x: 4.0116906, y: 4.0116906, z: 4.0116906}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8389792333474829001}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.3160377, g: 0.6067947, b: 1, a: 0.72156864}
+  m_Color: {r: 1, g: 0.35069525, b: 0.3176471, a: 0.35686275}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -289,12 +289,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8389792333474829001}
   - component: {fileID: 8389792333474829000}
-  - component: {fileID: -6832558508854507688}
+  - component: {fileID: 1714866594619023080}
   - component: {fileID: 8389792333474829003}
   - component: {fileID: 7924324024540842114}
   - component: {fileID: 1235707335898099278}
   m_Layer: 8
-  m_Name: BossProjectile_Blue
+  m_Name: BossProjectile_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,7 +359,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 40590759072971c4ab6fd49234e44c4a, type: 3}
-  m_Color: {r: 0, g: 0.17089081, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -369,7 +369,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-6832558508854507688
+--- !u!114 &1714866594619023080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8389792333474829002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d20fcb54219ad5a42b4c9023a89ae3c2, type: 3}
+  m_Script: {fileID: 11500000, guid: c91ad480657a1bf498ec95c1aedfd019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatIsGround:
@@ -390,11 +390,8 @@ MonoBehaviour:
   core: {fileID: 3049410540354384412}
   SR: {fileID: 8389792333474829000}
   anim: {fileID: 1235707335898099278}
-  startRadius: 1.1
-  expandRate: 0.4
-  duration: 4
-  damagePace: 0.4
-  slowMultiplier: 0.5
+  startRadius: 2
+  duration: 0.5
   sphereObj: {fileID: 1542367791616914004}
 --- !u!50 &8389792333474829003
 Rigidbody2D:

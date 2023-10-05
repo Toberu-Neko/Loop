@@ -7,6 +7,7 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
     [SerializeField] private LayerMask whatIsPlayer;
     protected LayerMask whatIsTargetLayer;
     [SerializeField] protected Core core;
+    [SerializeField] protected SpriteRenderer SR;
     protected Movement movement;
     protected Stats stats;
 

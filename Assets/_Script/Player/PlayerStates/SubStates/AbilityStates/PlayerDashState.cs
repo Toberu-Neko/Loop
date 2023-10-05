@@ -5,13 +5,8 @@ using UnityEngine;
 public class PlayerDashState : PlayerAbilityState
 {
     public bool CanDash { get; private set; }
-    private bool isHolding;
-    private bool dashInputStop;
 
     private float lastDashTime;
-
-    private Vector2 dashDirectionInput;
-    private Vector2 dashDirection;
     private Vector2 lastAfterImagePosition;
 
     public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -27,6 +22,8 @@ public class PlayerDashState : PlayerAbilityState
 
         StartTime = Time.time;
         Stats.SetInvincibleTrue();
+        Movement.SetVelocityY(0f);
+        Movement.SetGravityZero();
         PlaceAfterImage();
         player.RB.drag = playerData.drag;
     }
@@ -39,7 +36,9 @@ public class PlayerDashState : PlayerAbilityState
         {
             Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
         }
+
         Stats.SetInvincibleFalse();
+        Movement.SetGravityOrginal();
         player.RB.drag = 0f;
     }
 
@@ -47,7 +46,15 @@ public class PlayerDashState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityX(playerData.dashVelocity * Movement.FacingDirection);
+        if (CollisionSenses.CanChangeCollider)
+        {
+            Movement.SetVelocityX(playerData.dashVelocity * Movement.FacingDirection);
+        }
+        else
+        {
+            Movement.SetVelocityX(0f);
+        }
+
         CheckIfShouldPlaceAfterImage();
 
         if (Time.time >= StartTime + playerData.dashTime)

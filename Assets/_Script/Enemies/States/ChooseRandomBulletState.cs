@@ -25,12 +25,16 @@ public class ChooseRandomBulletState : EnemyState
         {
             gotoFirstState = false;
             bulletIndex = 0;
+            entity.Anim.SetInteger("bulletIndex", bulletIndex);
+            return;
         }
 
         if (gotoSecondState)
         {
             gotoSecondState = false;
             bulletIndex = 1;
+            entity.Anim.SetInteger("bulletIndex", bulletIndex);
+            return;
         }
         entity.Anim.SetInteger("bulletIndex", bulletIndex);
     }

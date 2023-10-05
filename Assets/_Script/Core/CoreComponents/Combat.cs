@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamageable
+public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamageable, ISlowable
 {
     private GameObject damageParticles;
     private float blockDamageMultiplier = 0.5f;
@@ -17,7 +17,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public List<IStaminaDamageable> DetectedStaminaDamageables { get; private set; } = new();
     public List<IMapDamageableItem> DetectedMapDamageableItems { get; private set; } = new();
 
-    public float MovementSpeedMultiplier { get; private set; }
 
     public bool PerfectBlock { get; private set; }
     private bool normalBlock;
@@ -76,7 +75,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         staminaDelta = 0f;
         isKnockbackActive = false;
         knockbackStartTime = 0f;
-        MovementSpeedMultiplier = 1f;
         damagedThisFrame = false;
         PerfectBlock = false;
         normalBlock = false;
@@ -448,9 +446,21 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     }
     #endregion
 
-    public void SetMovementSpeed(float multiplier)
+    public void MultiplyMovementMultiplier(float multiplier)
     {
-        MovementSpeedMultiplier *= multiplier;
+        stats.MovementSpeedMultiplier *= multiplier;
+    }
+
+    private float tempMovementMultiplier;
+    public void DevideMovementMultiplier(float multiplier, float delayTime = 0f)
+    {
+        tempMovementMultiplier = multiplier;
+        Invoke(nameof(DevideMovementMultiplier), delayTime);
+    }
+
+    private void DevideMovementMultiplier()
+    {
+        stats.MovementSpeedMultiplier /= tempMovementMultiplier;
     }
 
 }

@@ -10,6 +10,31 @@ public class PlayerPerfectBlockState : PlayerAttackState
     {
         base.Enter();
 
+        Collider2D[] enemy = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemy);
+
+        foreach (Collider2D enemyCollider in enemy)
+        {
+            IKnockbackable knockbackable = enemyCollider.GetComponentInChildren<IKnockbackable>();
+            knockbackable?.Knockback(playerData.perfectBlockKnockbackAngle, playerData.perfectBlockKnockbackForce, Movement.ParentTransform.position);
+        }
+
+        Collider2D[] projectiles = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemyProjectile);
+
+        foreach (var item in projectiles)
+        {
+            item.TryGetComponent(out IFireable fireable);
+            fireable?.HandlePerfectBlock();
+        }
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if(player.InputHandler.AttackInput || player.InputHandler.NormInputX != 0)
+        {
+            isAttackDone = true;
+        }
     }
 
     public override void AnimationFinishTrigger()
@@ -17,26 +42,5 @@ public class PlayerPerfectBlockState : PlayerAttackState
         base.AnimationFinishTrigger();
 
         isAttackDone = true;
-    }
-
-    public override void AnimationActionTrigger()
-    {
-        base.AnimationActionTrigger();
-
-        Collider2D[] enemy = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemy);
-
-        foreach (Collider2D enemyCollider in enemy)
-        {
-            IKnockbackable knockbackable = enemyCollider.GetComponentInChildren<IKnockbackable>();
-            knockbackable?.Knockback(playerData.perfectBlockKnockbackAngle ,playerData.perfectBlockKnockbackForce, Movement.ParentTransform.position);    
-        }
-
-        Collider2D[] projectiles = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemyProjectile);
-
-        foreach(var item in projectiles)
-        {
-            item.TryGetComponent(out IFireable fireable);
-            fireable?.HandlePerfectBlock();
-        }
     }
 }

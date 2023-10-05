@@ -237,6 +237,10 @@ public class Movement : CoreComponent
 
     private void SetFinalVelocity()
     {
+        if (stats.IsTimeSlowed)
+        {
+            SetTimeSlowVelocity(velocityWorkspace);
+        }
         if(stats.IsTimeStopped)
         {
             RB.velocity = Vector2.zero;
@@ -256,15 +260,16 @@ public class Movement : CoreComponent
 
         if (CanSetVelocity)
         {
+            Vector2 velocity = new(velocityWorkspace.x * stats.MovementSpeedMultiplier, velocityWorkspace.y);
             if(stats.IsTimeSlowed)
             {
-                RB.velocity = velocityWorkspace * stats.TimeSlowMultiplier;
-                CurrentVelocity = velocityWorkspace * stats.TimeSlowMultiplier;
+                RB.velocity = velocity * stats.TimeSlowMultiplier;
+                CurrentVelocity = velocity * stats.TimeSlowMultiplier;
             }
             else
             {
-                RB.velocity = velocityWorkspace;
-                CurrentVelocity = velocityWorkspace;
+                RB.velocity = velocity;
+                CurrentVelocity = velocity;
             }
         }
     }

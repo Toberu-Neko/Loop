@@ -23,7 +23,7 @@ MonoBehaviour:
     minInStateTime: 3
     maxInStateTime: 5
   chooseRandomBulletStateData:
-    randomCount: 3
+    randomCount: 2
   blueRangedAttackStateData:
     aimPlayer: 1
     attackCooldown: 0
@@ -38,13 +38,13 @@ MonoBehaviour:
   redRangedAttackStateData:
     aimPlayer: 1
     attackCooldown: 0
-    projectile: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
+    projectile: {fileID: 8389792333474829002, guid: 9301c4eae8fbf7c42a4dcfa4d088a044, type: 3}
     projectileDetails:
-      damageAmount: 3
-      staminaDamageAmount: 1
-      speed: 20
+      damageAmount: 20
+      staminaDamageAmount: 15
+      speed: 25
       duration: 3
-      knockbackStrength: 0
+      knockbackStrength: 15
       knockbackAngle: {x: 0, y: 0}
   jumpAndMultiAttackStateData:
     jumpAngle: {x: 1, y: 2.5}
