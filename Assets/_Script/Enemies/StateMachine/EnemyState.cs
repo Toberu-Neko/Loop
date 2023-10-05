@@ -61,8 +61,8 @@ public class EnemyState
 
     public virtual void LogicUpdate()
     {
-        Timer(StartTime);
-        Timer(EndTime);
+        StartTime = Timer(StartTime);
+        EndTime = Timer(EndTime);
 
         if (Stats.IsTimeStopped)
         {

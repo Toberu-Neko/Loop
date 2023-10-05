@@ -5,17 +5,20 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
 {
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;
-    private LayerMask _whatIsPlayer;
+    protected LayerMask _whatIsPlayer;
     [SerializeField] protected Core core;
     protected Movement movement;
     protected Stats stats;
 
-    protected event Action<Collider2D> OnAction;
+    protected event Action<Collider2D> OnHitTargetAction;
+    protected event Action OnHitGroundAction;
+    protected event Action OnDuration;
 
     [SerializeField] private Animator anim;
 
     protected bool hasHitGround;
     protected bool countered;
+    protected float startTime;
     private bool interected = false;
     protected ProjectileDetails details;
 
@@ -43,6 +46,13 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
         {
             movement.SetVelocityZero();
         }
+
+        startTime = Timer(startTime);
+
+        if(Time.time >= startTime + details.duration)
+        {
+            HandleDuration();
+        }
     }
 
     protected virtual void LateUpdate()
@@ -54,7 +64,6 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
     {
         core.PhysicsUpdate();
     }
-
 
     protected virtual void OnEnable()
     {
@@ -92,6 +101,7 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
     {
         anim.SetBool("timeSlow", false);
     }
+
     public void Fire(Vector2 fireDirection, ProjectileDetails details)
     {
         this.details = details;
@@ -100,11 +110,11 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
 
         Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
 
+        startTime = Time.time;
         transform.rotation = targetRotation;
         movement.SetGravityZero();
         movement.SetVelocity(details.speed, fireDirection);
 
-        Invoke(nameof(ReturnToPool), 10f);
     }
 
     public void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
@@ -114,6 +124,8 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
             countered = true;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             _whatIsPlayer = LayerMask.GetMask("Damageable");
+
+            startTime = Time.time; 
 
             int direction = transform.position.x < damagePosition.x ? -1 : 1;
             int facingDirection;
@@ -160,12 +172,12 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (((1 << collision.gameObject.layer) & _whatIsPlayer) != 0 && !hasHitGround && !interected)
         {
             interected = true;
-            OnAction?.Invoke(collision);
+            OnHitTargetAction?.Invoke(collision);
         }
 
         if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
@@ -173,22 +185,34 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
             hasHitGround = true;
             movement.SetVelocityZero();
 
-            CancelInvoke(nameof(ReturnToPool));
-            Invoke(nameof(ReturnToPool), 5f);
+            OnHitGroundAction?.Invoke();
         }
+    }
 
+    private void HandleDuration()
+    {
+        OnDuration?.Invoke();
     }
 
     protected void ReturnToPool()
     {
         CancelInvoke(nameof(ReturnToPool));
-        if (!stats.InCombat || interected || hasHitGround)
+        ObjectPoolManager.ReturnObjectToPool(gameObject);
+    }
+
+    public float Timer(float timer)
+    {
+        if (stats.IsTimeStopped)
         {
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
+            timer += Time.deltaTime;
+            return timer;
         }
-        else
+
+        if (stats.IsTimeSlowed)
         {
-            Invoke(nameof(ReturnToPool), 3f);
+            timer += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
+            return timer;
         }
+        return timer;
     }
 }

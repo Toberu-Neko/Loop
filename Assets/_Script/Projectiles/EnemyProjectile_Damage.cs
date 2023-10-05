@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class EnemyProjectile_Damage : EnemyProjectileBase
 {
-    [SerializeField] private float damageRadius;
-    [SerializeField] private Transform damagePosition;
-    [SerializeField] private Collider2D col;
-    [SerializeField] private Rigidbody2D rig;
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
-        OnAction += HandleAction;
+        OnHitTargetAction += HandleHitTarget;
+        OnHitGroundAction += HandleHitGround;
+        OnDuration += ReturnToPool;
     }
 
     protected override void OnDisable()
     {
         base.OnEnable();
 
-        OnAction -= HandleAction;
+        OnHitTargetAction -= HandleHitTarget;
+        OnHitGroundAction -= HandleHitGround;
+        OnDuration -= ReturnToPool;
     }
 
-    private void HandleAction(Collider2D collider)
+    private void HandleHitTarget(Collider2D collider)
     {
 
         if (collider.TryGetComponent(out IDamageable damageable))
@@ -48,12 +48,9 @@ public class EnemyProjectile_Damage : EnemyProjectileBase
         ReturnToPool();
     }
 
-    private void OnDrawGizmos()
+    private void HandleHitGround()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(damagePosition.position, damageRadius);
+        ReturnToPool();
     }
-
-
 }
 
