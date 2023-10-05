@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IFireable
 {
     void Fire(Vector2 fireDirection, ProjectileDetails details);
+    void HandlePerfectBlock();
 }

@@ -17,6 +17,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public List<IStaminaDamageable> DetectedStaminaDamageables { get; private set; } = new();
     public List<IMapDamageableItem> DetectedMapDamageableItems { get; private set; } = new();
 
+    public float MovementSpeedMultiplier { get; private set; }
 
     public bool PerfectBlock { get; private set; }
     private bool normalBlock;
@@ -75,6 +76,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         staminaDelta = 0f;
         isKnockbackActive = false;
         knockbackStartTime = 0f;
+        MovementSpeedMultiplier = 1f;
         damagedThisFrame = false;
         PerfectBlock = false;
         normalBlock = false;
@@ -274,6 +276,10 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
 
         Debug.Log(movement.ParentTransform.gameObject.name + " damaged for " + damageAmount + " damage");
+        if(movement.ParentTransform.gameObject.CompareTag("Player"))
+        {
+            CamManager.Instance.CameraShake();
+        }
         stats.Health.Decrease(damageAmount);
         particleManager.StartParticlesWithRandomRotation(damageParticles);
     }
@@ -441,5 +447,10 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
     }
     #endregion
+
+    public void SetMovementSpeed(float multiplier)
+    {
+        MovementSpeedMultiplier *= multiplier;
+    }
 
 }

@@ -15,6 +15,9 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 2048
+  whatIsEnemyProjectile:
+    serializedVersion: 2
+    m_Bits: 256
   gravityScale: 5
   regenCost: 10
   regenAmount: 10
@@ -25,9 +28,9 @@ MonoBehaviour:
   blockMovementMultiplier: 0.2
   perfectBlockTime: 0.4
   blockCooldown: 0.6
-  perfectBlockKnockbackRadius: 2.5
-  perfectBlockKnockbackForce: 8
-  perfectBlockKnockbackAngle: {x: 1, y: 1.5}
+  perfectBlockKnockbackRadius: 1.8
+  perfectBlockKnockbackForce: 6
+  perfectBlockKnockbackAngle: {x: 0, y: 1}
   wallJumpVelocity: 20
   wallJumpTime: 0.3
   wallJumpAngle: {x: 1, y: 2}

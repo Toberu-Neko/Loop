@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerPerfectBlockState : PlayerAttackState
@@ -32,8 +28,15 @@ public class PlayerPerfectBlockState : PlayerAttackState
         foreach (Collider2D enemyCollider in enemy)
         {
             IKnockbackable knockbackable = enemyCollider.GetComponentInChildren<IKnockbackable>();
-            knockbackable?.Knockback(playerData.perfectBlockKnockbackAngle ,playerData.perfectBlockKnockbackForce, Movement.ParentTransform.position);
-            
+            knockbackable?.Knockback(playerData.perfectBlockKnockbackAngle ,playerData.perfectBlockKnockbackForce, Movement.ParentTransform.position);    
+        }
+
+        Collider2D[] projectiles = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemyProjectile);
+
+        foreach(var item in projectiles)
+        {
+            item.TryGetComponent(out IFireable fireable);
+            fireable?.HandlePerfectBlock();
         }
     }
 }

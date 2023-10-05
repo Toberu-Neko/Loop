@@ -117,6 +117,11 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
 
     }
 
+    public virtual void HandlePerfectBlock()
+    {
+        ReturnToPool();
+    }
+
     public virtual void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
     {
         if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered && !interected)

@@ -12,7 +12,6 @@ public class CamManager : MonoBehaviour
     private CinemachineFramingTransposer framingTransposer;
     
     private CinemachineImpulseSource impulseSource;
-    [SerializeField] private float shakeForce = 1f;
     private bool canShackCamera = true;
     [field: SerializeField] public Transform PlayerLookat { get; private set; }
 
@@ -132,7 +131,7 @@ public class CamManager : MonoBehaviour
     }
     #endregion
 
-    public void CameraShake()
+    public void CameraShake(float shakeForce = 1f)
     {
         if (canShackCamera)
         {

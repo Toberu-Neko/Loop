@@ -35,9 +35,9 @@ public class PlayerAttackState : PlayerState
         isAttackDone = false;
         isJumping = false;
         OnAttack += player.TimeSkillManager.HandleOnAttack;
-        OnAttack += CamManager.Instance.CameraShake;
+        OnAttack += HandleOnAttack;
 
-        OnAttackMapItems += CamManager.Instance.CameraShake;
+        OnAttackMapItems += HandleOnAttack;
     }
 
     public override void Exit()
@@ -45,9 +45,9 @@ public class PlayerAttackState : PlayerState
         base.Exit();
         Stats.SetCanChangeWeapon(true);
         OnAttack -= player.TimeSkillManager.HandleOnAttack;
-        OnAttack -= CamManager.Instance.CameraShake;
+        OnAttack -= HandleOnAttack;
 
-        OnAttackMapItems -= CamManager.Instance.CameraShake;
+        OnAttackMapItems -= HandleOnAttack;
 
 
         Combat.DetectedDamageables.Clear();
@@ -84,8 +84,11 @@ public class PlayerAttackState : PlayerState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger(); 
-        
+    }
 
+    private void HandleOnAttack()
+    {
+        CamManager.Instance.CameraShake();
     }
 
     public void DoDamageToDamageList(WeaponType weaponType, WeaponAttackDetails details , bool blockable = true)
