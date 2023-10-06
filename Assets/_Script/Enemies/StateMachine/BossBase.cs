@@ -6,6 +6,7 @@ public class BossBase : Entity, IDataPersistance
     [field: SerializeField] public string BossName { get; private set;}
     protected event Action OnEnterBossRoom;
     [SerializeField, Range(-1,1), Tooltip("1R, -1L")] private int initFacingPos = 1;
+    private bool defeated = false;
     public override void Awake()
     {
         base.Awake();
@@ -32,7 +33,7 @@ public class BossBase : Entity, IDataPersistance
         movement.CheckIfShouldFlip(initFacingPos);
         if(BossName != "")
         {
-            if (DataPersistenceManager.Instance.GameData.defeatedBosses.TryGetValue(BossName, out bool defeated))
+            if (DataPersistenceManager.Instance.GameData.defeatedBosses.TryGetValue(BossName, out defeated))
             {
                 if (defeated)
                 {
@@ -47,6 +48,7 @@ public class BossBase : Entity, IDataPersistance
 
     protected void HandleDefeated()
     {
+        defeated = true;
         DataPersistenceManager.Instance.SaveGame();
     }
 
@@ -73,6 +75,6 @@ public class BossBase : Entity, IDataPersistance
             data.defeatedBosses.Remove(BossName);
         }
 
-        data.defeatedBosses.Add(BossName, true);
+        data.defeatedBosses.Add(BossName, defeated);
     }
 }
