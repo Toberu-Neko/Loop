@@ -5,10 +5,12 @@ using UnityEngine;
 public class JumpAndMultiAttackState : EnemyState
 {
     protected ED_EnemyJumpAndMultiAttackState stateData;
+    private Transform attackPos;
 
-    public JumpAndMultiAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyJumpAndMultiAttackState stateData) : base(entity, stateMachine, animBoolName)
+    public JumpAndMultiAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyJumpAndMultiAttackState stateData, Transform attackPos) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
+        this.attackPos = attackPos;
     }
 
     public override void Enter()
@@ -49,7 +51,23 @@ public class JumpAndMultiAttackState : EnemyState
 
         Movement.SetRBDynamic();
         Movement.SetVelocity(15f, Vector2.one, -Movement.FacingDirection);
+
         //TODO: Shoot four bullets
+        for (int i = 0; i < stateData.attackAmount; i++)
+        {
+            ShootBullet();
+        }
+    }
+
+    private void ShootBullet()
+    {
+        int index = Random.Range(0, stateData.bullets.Length);
+        GameObject projectile = ObjectPoolManager.SpawnObject(stateData.bullets[index].obj, attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
+        IFireable projectileScript = projectile.GetComponent<IFireable>();
+
+        Vector2 shootAngle = new(Random.Range(0.1f, 0.94f) * Movement.FacingDirection, Random.Range(-0.3f, -0.15f));
+
+        projectileScript.Fire(shootAngle.normalized, stateData.bullets[index].details);
     }
 
     public bool CanChangeState()

@@ -56,7 +56,7 @@ public class EnemyProjectile_RedMagic : EnemyProjectileBase
     {
         if (collider.TryGetComponent(out IDamageable damageable))
         {
-            damageable.Damage(0.1f, transform.position, true);
+            damageable.Damage(0f, transform.position, true);
         }
         HandleHitGround();
     }
@@ -86,7 +86,7 @@ public class EnemyProjectile_RedMagic : EnemyProjectileBase
             staminaDamageable?.TakeStaminaDamage(details.staminaDamageAmount, transform.position, false);
 
             col.transform.TryGetComponent(out IKnockbackable knockbackable);
-            knockbackable?.Knockback(transform.position, details.knockbackStrength, details.knockbackAngle, false);
+            knockbackable?.Knockback(details.knockbackAngle, details.knockbackStrength, transform.position, false);
         }
     }
 

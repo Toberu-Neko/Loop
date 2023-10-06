@@ -221,7 +221,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             DecreaseHealth(damageAmount);
             // Debug.Log("!FacingDamgePosition(damagePosition)");
 
-            particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         else if (PerfectBlock)
         {
@@ -232,15 +231,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         {
             // Debug.Log("normalBlock");
             DecreaseHealth(damageAmount * blockDamageMultiplier);
-
-            particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         else
         {
             // Debug.Log("else");
             DecreaseHealth(damageAmount);
-
-            particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
         OnDamaged?.Invoke();
     }
@@ -268,18 +263,17 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             return;
         }
 
-        if(damageAmount == 0f)
-        {
-            return;
-        }
-
         Debug.Log(movement.ParentTransform.gameObject.name + " damaged for " + damageAmount + " damage");
-        if(movement.ParentTransform.gameObject.CompareTag("Player"))
+        if(damageAmount > 0)
         {
-            CamManager.Instance.CameraShake();
+            stats.Health.Decrease(damageAmount);
+            particleManager.StartParticlesWithRandomRotation(damageParticles);
+
+            if (movement.ParentTransform.gameObject.CompareTag("Player"))
+            {
+                CamManager.Instance.CameraShake();
+            }
         }
-        stats.Health.Decrease(damageAmount);
-        particleManager.StartParticlesWithRandomRotation(damageParticles);
     }
     #endregion
 
@@ -299,7 +293,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             direction = 1;
         }
 
-        if (stats.Invincible && !forceKnockback)
+        if (stats.Invincible && forceKnockback)
         {
             return;
         }
@@ -446,21 +440,20 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     }
     #endregion
 
-    public void MultiplyMovementMultiplier(float multiplier)
-    {
-        stats.MovementSpeedMultiplier *= multiplier;
-    }
-
     private float tempMovementMultiplier;
-    public void DevideMovementMultiplier(float multiplier, float delayTime = 0f)
+
+    public void MultiplyMovementMultiplier(float multiplier, float delayTime)
     {
-        tempMovementMultiplier = multiplier;
-        Invoke(nameof(DevideMovementMultiplier), delayTime);
+        if(multiplier < stats.MovementSpeedMultiplier)
+        {
+            stats.MovementSpeedMultiplier = multiplier;
+            Invoke(nameof(ReturnMovementMultiplier), delayTime);
+        }
     }
 
-    private void DevideMovementMultiplier()
+    private void ReturnMovementMultiplier()
     {
-        stats.MovementSpeedMultiplier /= tempMovementMultiplier;
+        stats.MovementSpeedMultiplier = 1f;
     }
 
 }

@@ -509,6 +509,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: -2695619058785784247, guid: 03f2f5d2037371f48887d57562b956e7, type: 3}
+--- !u!1 &1690019698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1690019699}
+  m_Layer: 0
+  m_Name: 'JumpAttackPosition '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1690019699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690019698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.06, y: -1.18, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6971737168732697012}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1854701259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,6 +1349,7 @@ Transform:
   - {fileID: 3901911838875276946}
   - {fileID: 4802041281841129739}
   - {fileID: 4355530884200358867}
+  - {fileID: 1690019699}
   - {fileID: 8819892956315183401}
   - {fileID: 2159230626317569233}
   - {fileID: 1854701260}
@@ -1509,6 +1541,7 @@ MonoBehaviour:
   initFacingPos: -1
   <StateData>k__BackingField: {fileID: 11400000, guid: adedabab4d8c01c4f8d6fdc7443fe776, type: 2}
   rangedAttackPosition: {fileID: 4355530884200358867}
+  jumpAttackPosition: {fileID: 1690019699}
 --- !u!1001 &8435301788600582347
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,7 +4,5 @@ using UnityEngine;
 
 public interface ISlowable
 {
-    void MultiplyMovementMultiplier(float multiplier);
-
-    void DevideMovementMultiplier(float multiplier, float delayTime = 0f);
+    void MultiplyMovementMultiplier(float multiplier, float delayTime);
 }

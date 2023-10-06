@@ -171,7 +171,8 @@ public class ED_EnemyJumpAndMultiAttackState
     public float jumpForce = 15f;
     public float attackCooldown = 10f;
     public float attackVelocity = 20f;
-    public ObjContainer[] bullet;
+    public int attackAmount = 4;
+    public ObjContainer[] bullets;
 
     [Serializable]
     public class ObjContainer

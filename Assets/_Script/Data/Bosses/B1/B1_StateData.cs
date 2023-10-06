@@ -9,11 +9,12 @@ public class B1_StateData : BaseEnemyStateData
     public ED_EnemyIdleState idleStateData;
     public ED_PlayerDetectedMoveState playerDetectedMoveStateData;
 
-    public ED_ChooseRandomBulletState chooseRandomBulletStateData;
+    [Header("Attack")]
     public ED_EnemyRangedAttackState blueRangedAttackStateData;
     public ED_EnemyRangedAttackState redRangedAttackStateData;
 
     [Header("Skill")]
+    public ED_ChooseRandomBulletState chooseRandomBulletStateData;
     public ED_EnemyJumpAndMultiAttackState jumpAndMultiAttackStateData;
 
 

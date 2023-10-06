@@ -13,13 +13,13 @@ public class Boss1 : BossBase
 
     public B1_JumpAndMultiAttackState JumpAndMultiAttackState { get; private set; }
 
-
     public B1_StunState StunState { get; private set; }
     public B1_KinematicState KinematicState { get; private set; }
     public B1_DeadState DeadState { get; private set; }
 
     [field: SerializeField] public B1_StateData StateData { get; private set; }
     [SerializeField] private Transform rangedAttackPosition;
+    [SerializeField] private Transform jumpAttackPosition;
 
     public override void Awake()
     {
@@ -30,7 +30,7 @@ public class Boss1 : BossBase
 
         PlayerDetectedMoveState = new B1_PlayerDetectedMoveState(this, StateMachine, "move", StateData.playerDetectedMoveStateData, this);
 
-        JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, this);
+        JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
 
         ChooseRandomBulletState = new B1_ChooseRandomBulletState(this, StateMachine, "chooseRandomBullet", StateData.chooseRandomBulletStateData, this);
         BlueRangedAttackState = new B1_RangedAttackState(this, StateMachine, "blueRangedAttack", rangedAttackPosition, StateData.blueRangedAttackStateData, this);

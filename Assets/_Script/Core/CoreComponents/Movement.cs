@@ -166,7 +166,7 @@ public class Movement : CoreComponent
         if (stats.IsTimeSlowed)
         {
             timeSlowOrgGravityScale = gravityWorkspace;
-            RB.gravityScale = gravityWorkspace * stats.TimeSlowMultiplier * stats.TimeSlowMultiplier;
+            RB.gravityScale = gravityWorkspace * stats.TimeSlowMultiplier;
         }
         else
         {
