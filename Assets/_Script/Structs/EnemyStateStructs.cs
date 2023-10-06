@@ -187,3 +187,11 @@ public class ED_ChooseRandomBulletState
 {
     public int randomCount = 3;
 }
+
+[SerializeField]
+public class ED_EnemyPerfectBlockState
+{
+    public float radius = 1.5f;
+    public float knockbackForce = 10f;
+    public Vector2 knockbackAngle;
+}

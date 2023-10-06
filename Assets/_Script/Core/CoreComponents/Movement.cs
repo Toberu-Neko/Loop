@@ -263,7 +263,7 @@ public class Movement : CoreComponent
             Vector2 velocity = new(velocityWorkspace.x * stats.MovementSpeedMultiplier, velocityWorkspace.y);
             if(stats.IsTimeSlowed)
             {
-                RB.velocity = velocity * stats.TimeSlowMultiplier;
+                RB.velocity =  velocity * stats.TimeSlowMultiplier;
                 CurrentVelocity = velocity * stats.TimeSlowMultiplier;
             }
             else

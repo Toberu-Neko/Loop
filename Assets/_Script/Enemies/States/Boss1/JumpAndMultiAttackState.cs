@@ -65,7 +65,7 @@ public class JumpAndMultiAttackState : EnemyState
         GameObject projectile = ObjectPoolManager.SpawnObject(stateData.bullets[index].obj, attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
         IFireable projectileScript = projectile.GetComponent<IFireable>();
 
-        Vector2 shootAngle = new(Random.Range(0.1f, 0.94f) * Movement.FacingDirection, Random.Range(-0.3f, -0.15f));
+        Vector2 shootAngle = new(Random.Range(0.1f, 0.94f) * Movement.FacingDirection, Random.Range(-0.25f, -0.19f));
 
         projectileScript.Fire(shootAngle.normalized, stateData.bullets[index].details);
     }

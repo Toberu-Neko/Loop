@@ -22,7 +22,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     private bool normalBlock;
 
     //Core
-    // private Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
     private Movement movement;
     private CollisionSenses collisionSenses;
     private Stats stats;

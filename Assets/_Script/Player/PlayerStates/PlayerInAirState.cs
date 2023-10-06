@@ -157,6 +157,7 @@ public class PlayerInAirState : PlayerState
             stateMachine.ChangeState(player.FistS3ChargeState);
         }
         #endregion
+
         else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock() && Stats.Attackable)
         {
             stateMachine.ChangeState(player.BlockState);
