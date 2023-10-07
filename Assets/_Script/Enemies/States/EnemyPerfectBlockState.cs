@@ -5,7 +5,9 @@ using UnityEngine;
 public class EnemyPerfectBlockState : EnemyState
 {
     protected bool gotoNextState;
+    protected bool gotoCounterState;
     private ED_EnemyPerfectBlockState stateData;
+    private int actionCounter = 0;
     public EnemyPerfectBlockState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyPerfectBlockState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -15,21 +17,12 @@ public class EnemyPerfectBlockState : EnemyState
     {
         base.Enter();
 
+        Movement.SetVelocityZero();
         Combat.OnPerfectBlock += Combat_OnPerfectBlock;
-        Combat.SetPerfectBlock(true);
         gotoNextState = false;
+        actionCounter = 0;
     }
 
-    private void Combat_OnPerfectBlock()
-    {
-        foreach (var item in Combat.DetectedKnockbackables)
-        {
-            item.Knockback(stateData.knockbackAngle, stateData.knockbackForce, Movement.ParentTransform.position, false);
-        }
-
-        gotoNextState = true;
-        //TODO: Counter!!!!
-    }
 
     public override void Exit()
     {
@@ -39,10 +32,53 @@ public class EnemyPerfectBlockState : EnemyState
         Combat.SetPerfectBlock(false);
     }
 
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (CollisionSenses.Ground)
+        {
+            Movement.SetVelocityZero();
+        }
+    }
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        switch (actionCounter)
+        {
+            case 0:
+                Combat.SetPerfectBlock(true);
+                break;
+            case 1:
+                Combat.SetPerfectBlock(false);
+                break;
+            default:
+                break;
+        }
+
+        actionCounter++;
+    }
+
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
-        Combat.SetPerfectBlock(false);
         gotoNextState = true;
+    }
+
+    private void Combat_OnPerfectBlock()
+    {
+        foreach (var item in Combat.DetectedKnockbackables)
+        {
+            item.Knockback(stateData.knockbackAngle, stateData.knockbackForce, Movement.ParentTransform.position, false);
+        }
+
+        gotoCounterState = true;
+    }
+
+    public bool CanChangeState()
+    {
+        return EndTime == 0f || Time.time >= EndTime + stateData.cooldown;
     }
 }

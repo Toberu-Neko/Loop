@@ -19,5 +19,9 @@ public class B1_EnemyPerfectBlockState : EnemyPerfectBlockState
         {
             stateMachine.ChangeState(boss.PlayerDetectedMoveState);
         }
+        else if (gotoCounterState)
+        {
+            //TODO: goto counter state
+        }
     }
 }

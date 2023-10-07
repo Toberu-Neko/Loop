@@ -10,6 +10,7 @@ public class Boss1 : BossBase
     public B1_ChooseRandomBulletState ChooseRandomBulletState { get; private set; }
     public B1_RangedAttackState BlueRangedAttackState { get; private set; }
     public B1_RangedAttackState RedRangedAttackState { get; private set; }
+    public B1_EnemyPerfectBlockState PerfectBlockState { get; private set; }
 
     public B1_JumpAndMultiAttackState JumpAndMultiAttackState { get; private set; }
 
@@ -30,11 +31,12 @@ public class Boss1 : BossBase
 
         PlayerDetectedMoveState = new B1_PlayerDetectedMoveState(this, StateMachine, "move", StateData.playerDetectedMoveStateData, this);
 
-        JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
-
         ChooseRandomBulletState = new B1_ChooseRandomBulletState(this, StateMachine, "chooseRandomBullet", StateData.chooseRandomBulletStateData, this);
         BlueRangedAttackState = new B1_RangedAttackState(this, StateMachine, "blueRangedAttack", rangedAttackPosition, StateData.blueRangedAttackStateData, this);
         RedRangedAttackState = new B1_RangedAttackState(this, StateMachine, "redRangedAttack", rangedAttackPosition, StateData.redRangedAttackStateData, this);
+        PerfectBlockState = new B1_EnemyPerfectBlockState(this, StateMachine, "perfectBlock", StateData.perfectBlockStateData, this);
+
+        JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
 
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);

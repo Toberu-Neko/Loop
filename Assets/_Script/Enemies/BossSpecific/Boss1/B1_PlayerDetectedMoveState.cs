@@ -19,9 +19,16 @@ public class B1_PlayerDetectedMoveState : PlayerDetectedMoveState
             Movement.Flip();
         }
 
-        if (performCloseRangeAction && (boss.JumpAndMultiAttackState.CanChangeState()))
+        if (performCloseRangeAction && (boss.JumpAndMultiAttackState.CanChangeState() || boss.PerfectBlockState.CanChangeState()))
         {
-            stateMachine.ChangeState(boss.JumpAndMultiAttackState);
+            if (boss.JumpAndMultiAttackState.CanChangeState())
+            {
+                stateMachine.ChangeState(boss.JumpAndMultiAttackState);
+            }
+            else if (boss.PerfectBlockState.CanChangeState())
+            {
+                stateMachine.ChangeState(boss.PerfectBlockState);
+            }
         }
         else if (isPlayerInMaxAgroRange && CanChangeState())
         {

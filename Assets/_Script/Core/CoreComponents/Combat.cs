@@ -262,7 +262,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             return;
         }
 
-        Debug.Log(movement.ParentTransform.gameObject.name + " damaged for " + damageAmount + " damage");
         if(damageAmount > 0)
         {
             stats.Health.Decrease(damageAmount);
