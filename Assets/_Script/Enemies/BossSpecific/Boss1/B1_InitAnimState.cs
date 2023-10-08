@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class B1_InitAnimState : BossInitAnimState
+public class B1_InitAnimState : EnemyWaitForAnimFinishState
 {
     private Boss1 boss1;
     public B1_InitAnimState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Boss1 boss1) : base(entity, stateMachine, animBoolName)

@@ -42,7 +42,7 @@ public class EnemyProjectile_RedMagic : EnemyProjectileBase
 
         if (startMagic)
         {
-            startMagicTime = Timer(startMagicTime);
+            startMagicTime = stats.Timer(startMagicTime);
 
             if (Time.time >= startMagicTime + duration)
             {
@@ -93,5 +93,40 @@ public class EnemyProjectile_RedMagic : EnemyProjectileBase
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, startRadius);
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+    }
+
+    public override void Fire(Vector2 fireDirection, ProjectileDetails details)
+    {
+        base.Fire(fireDirection, details);
+    }
+
+    public override void HandlePerfectBlock()
+    {
+        base.HandlePerfectBlock();
+    }
+
+    public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    {
+        base.Knockback(angle, force, damagePosition, blockable, forceKnockback);
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
     }
 }

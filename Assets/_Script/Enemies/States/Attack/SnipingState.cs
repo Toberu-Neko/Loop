@@ -124,7 +124,7 @@ public class SnipingState : AttackState
             goToIdleState = true;
         }
 
-        Timer(lastShootTime);
+        Stats.Timer(lastShootTime);
     }
 
     private void Lock()

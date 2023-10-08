@@ -13,6 +13,7 @@ public class B1_StateData : BaseEnemyStateData
     public ED_EnemyRangedAttackState blueRangedAttackStateData;
     public ED_EnemyRangedAttackState redRangedAttackStateData;
     public ED_EnemyPerfectBlockState perfectBlockStateData;
+    public ED_EnemyProjectiles counterAttackObjsData;
 
     [Header("Skill")]
     public ED_ChooseRandomBulletState chooseRandomBulletStateData;

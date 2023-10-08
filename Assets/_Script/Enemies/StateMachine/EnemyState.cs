@@ -17,23 +17,17 @@ public class EnemyState
 
     protected string animBoolName;
 
-    protected Stats Stats => stats ? stats : core.GetCoreComponent<Stats>();
-    private Stats stats;
+    protected Stats Stats { get; private set; }
 
-    protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent<CollisionSenses>();
-    private CollisionSenses collisionSenses;
+    protected CollisionSenses CollisionSenses { get; private set; }
 
-    protected Combat Combat => combat ? combat : core.GetCoreComponent<Combat>();
-    private Combat combat;
+    protected Combat Combat { get; private set; }
 
-    protected Movement Movement => movement ? movement : core.GetCoreComponent<Movement>();
-    private Movement movement;
+    protected Movement Movement { get; private set; }
 
-    protected Death Death => death ? death : core.GetCoreComponent<Death>();
-    private Death death;
+    protected Death Death { get; private set; }
 
-    protected CheckPlayerSenses CheckPlayerSenses => checkPlayerSenses ? checkPlayerSenses : core.GetCoreComponent<CheckPlayerSenses>();
-    private CheckPlayerSenses checkPlayerSenses;
+    protected CheckPlayerSenses CheckPlayerSenses { get; private set; }
 
 
     public EnemyState(Entity entity, EnemyStateMachine stateMachine, string animBoolName)
@@ -41,7 +35,15 @@ public class EnemyState
         this.entity = entity;
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
+
         core = entity.Core;
+        CheckPlayerSenses = core.GetCoreComponent<CheckPlayerSenses>();
+        Death = core.GetCoreComponent<Death>();
+        Movement = core.GetCoreComponent<Movement>();
+        Combat = core.GetCoreComponent<Combat>();
+        CollisionSenses = core.GetCoreComponent<CollisionSenses>();
+        Stats = core.GetCoreComponent<Stats>();
+
         StartTime = 0f;
         EndTime = 0f;
     }
@@ -61,8 +63,8 @@ public class EnemyState
 
     public virtual void LogicUpdate()
     {
-        StartTime = Timer(StartTime);
-        EndTime = Timer(EndTime);
+        StartTime = Stats.Timer(StartTime);
+        EndTime = Stats.Timer(EndTime);
 
         if (Stats.IsTimeStopped)
         {
@@ -87,21 +89,6 @@ public class EnemyState
         EndTime = 0f;
     }
 
-    public float Timer(float timer)
-    {
-        if (Stats.IsTimeStopped)
-        {
-            timer += Time.deltaTime;
-            return timer;
-        }
-
-        if (Stats.IsTimeSlowed)
-        {
-            timer += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
-            return timer;
-        }
-        return timer;
-    }
 
     public float ReturnHealthPercentage()
     {

@@ -48,7 +48,7 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
             movement.SetVelocityZero();
         }
 
-        startTime = Timer(startTime);
+        startTime = stats.Timer(startTime);
 
         if(Time.time >= startTime + details.duration)
         {
@@ -204,21 +204,5 @@ public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
     {
         CancelInvoke(nameof(ReturnToPool));
         ObjectPoolManager.ReturnObjectToPool(gameObject);
-    }
-
-    public float Timer(float timer)
-    {
-        if (stats.IsTimeStopped)
-        {
-            timer += Time.deltaTime;
-            return timer;
-        }
-
-        if (stats.IsTimeSlowed)
-        {
-            timer += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
-            return timer;
-        }
-        return timer;
     }
 }

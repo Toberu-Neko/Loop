@@ -18,8 +18,10 @@ public class EnemyPerfectBlockState : EnemyState
         base.Enter();
 
         Movement.SetVelocityZero();
-        Combat.OnPerfectBlock += Combat_OnPerfectBlock;
         gotoNextState = false;
+        gotoCounterState = false;
+
+        Combat.OnPerfectBlock += Combat_OnPerfectBlock;
         actionCounter = 0;
     }
 

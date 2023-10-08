@@ -1,48 +1,32 @@
 using TMPro;
 using UnityEngine;
 
-public class DebugEntityStats : MonoBehaviour
+public class DebugEntityStats : WorldCanvasBase
 {
     [SerializeField] TextMeshProUGUI hpText;
-    private Canvas canvas;
     private Core core;
-
-    private Movement movement;
     private Stats stats;
-    private Combat combat;
 
-    private Camera cam;
-    private void Awake()
+    protected override void Awake()
     {
-        canvas = GetComponent<Canvas>();
+        base.Awake();
+
         core = GetComponentInParent<Core>();
-        movement = core.GetCoreComponent<Movement>();
         stats = core.GetCoreComponent<Stats>();
-        combat = core.GetCoreComponent<Combat>();
-
     }
 
-    private void Update()
-    {
-        if(transform.rotation != cam.transform.rotation)
-        {
-            transform.rotation = cam.transform.rotation;
-        }
-    }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         stats.Health.OnValueChanged += UpdateText;
         stats.Stamina.OnValueChanged += UpdateText;
 
-
         UpdateText();
-
-        cam = Camera.main;
-        canvas.worldCamera = cam;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         stats.Health.OnValueChanged -= UpdateText;
         stats.Stamina.OnValueChanged -= UpdateText;

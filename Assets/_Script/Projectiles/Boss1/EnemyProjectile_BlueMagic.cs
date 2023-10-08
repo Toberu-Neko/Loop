@@ -58,8 +58,8 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
 
         if (startMagic)
         {
-            startMagicTime = Timer(startMagicTime);
-            lastDamageTime = Timer(lastDamageTime);
+            startMagicTime = stats.Timer(startMagicTime);
+            lastDamageTime = stats.Timer(lastDamageTime);
 
             if (stats.IsTimeSlowed)
             {
@@ -135,5 +135,20 @@ public class EnemyProjectile_BlueMagic : EnemyProjectileBase
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, currentRadius);
+    }
+
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
     }
 }

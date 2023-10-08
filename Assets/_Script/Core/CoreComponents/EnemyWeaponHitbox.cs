@@ -16,7 +16,6 @@ public class EnemyWeaponHitbox : CoreComponent
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Player detected");
             combat.AddToDetected(collision);
         }
     }
@@ -25,7 +24,6 @@ public class EnemyWeaponHitbox : CoreComponent
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Player lost");
             combat.RemoveFromDetected(collision);
         }
     }

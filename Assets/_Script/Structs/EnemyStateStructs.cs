@@ -196,3 +196,9 @@ public class ED_EnemyPerfectBlockState
     public float knockbackForce = 10f;
     public Vector2 knockbackAngle;
 }
+
+[Serializable]
+public class ED_EnemyProjectiles
+{
+    public GameObject[] pasteItems;
+}

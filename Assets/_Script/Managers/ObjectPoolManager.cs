@@ -118,6 +118,7 @@ public class ObjectPoolManager : MonoBehaviour
             pool.InactiveObjects.Remove(spawnableObj);
             // pool.ActiveObjects.Add(spawnableObj);
             spawnableObj.transform.SetParent(parentTransform);
+            spawnableObj.transform.SetPositionAndRotation(parentTransform.position, parentTransform.rotation);
             spawnableObj.SetActive(true);
         }
 

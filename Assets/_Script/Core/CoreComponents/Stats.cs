@@ -185,4 +185,20 @@ public class Stats : CoreComponent
     public void SetCanChangeWeapon(bool volume) => CanChangeWeapon = volume;
     public void ResetPoiseDecreaseable() => Stamina.decreaseable = true;
     public void SetRewindingPosition(bool volume) => IsRewindingPosition = volume;
+
+    public float Timer(float timer)
+    {
+        if (IsTimeStopped)
+        {
+            timer += Time.deltaTime;
+            return timer;
+        }
+
+        if (IsTimeSlowed)
+        {
+            timer += Time.deltaTime * (1f - GameManager.Instance.TimeSlowMultiplier);
+            return timer;
+        }
+        return timer;
+    }
 }

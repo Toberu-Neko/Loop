@@ -10,7 +10,9 @@ public class Boss1 : BossBase
     public B1_ChooseRandomBulletState ChooseRandomBulletState { get; private set; }
     public B1_RangedAttackState BlueRangedAttackState { get; private set; }
     public B1_RangedAttackState RedRangedAttackState { get; private set; }
+
     public B1_EnemyPerfectBlockState PerfectBlockState { get; private set; }
+    public B1_CounterAttackState CounterAttackState { get; private set; }
 
     public B1_JumpAndMultiAttackState JumpAndMultiAttackState { get; private set; }
 
@@ -34,7 +36,9 @@ public class Boss1 : BossBase
         ChooseRandomBulletState = new B1_ChooseRandomBulletState(this, StateMachine, "chooseRandomBullet", StateData.chooseRandomBulletStateData, this);
         BlueRangedAttackState = new B1_RangedAttackState(this, StateMachine, "blueRangedAttack", rangedAttackPosition, StateData.blueRangedAttackStateData, this);
         RedRangedAttackState = new B1_RangedAttackState(this, StateMachine, "redRangedAttack", rangedAttackPosition, StateData.redRangedAttackStateData, this);
+
         PerfectBlockState = new B1_EnemyPerfectBlockState(this, StateMachine, "perfectBlock", StateData.perfectBlockStateData, this);
+        CounterAttackState = new B1_CounterAttackState(this, StateMachine, "counterAttack", this);
 
         JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
 
