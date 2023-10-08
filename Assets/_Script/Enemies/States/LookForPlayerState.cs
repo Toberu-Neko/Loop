@@ -50,17 +50,11 @@ public class LookForPlayerState : EnemyState
     {
         base.LogicUpdate();
 
+        lastTurnTime = Stats.Timer(lastTurnTime);
+
         if (CollisionSenses.Ground)
             Movement.SetVelocityZero();
 
-        if (Stats.IsTimeStopped)
-        {
-            lastTurnTime += Time.deltaTime;
-        }
-        if (Stats.IsTimeSlowed)
-        {
-            lastTurnTime += Time.deltaTime * (1f- Stats.TimeSlowMultiplier);
-        }
 
         if (turnImmediately && !Stats.IsTimeStopped)
         {
@@ -86,6 +80,7 @@ public class LookForPlayerState : EnemyState
             isAllTurnsTimeDone = true;
         }
     }
+
     public void SetTurnImmediately(bool flip)
     {
         turnImmediately = flip;

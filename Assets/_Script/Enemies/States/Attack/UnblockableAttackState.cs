@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrongAttackState : AttackState
+public class UnblockableAttackState : AttackState
 {
     protected ED_EnemyMeleeAttackState stateData;
-    public StrongAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public UnblockableAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemyMeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
     }

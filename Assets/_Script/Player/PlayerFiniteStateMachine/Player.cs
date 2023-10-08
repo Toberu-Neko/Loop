@@ -4,6 +4,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
     private GameManager gameManager;
+
     #region ControlerStates
     public PlayerStateMachine StateMachine { get; private set; }
 

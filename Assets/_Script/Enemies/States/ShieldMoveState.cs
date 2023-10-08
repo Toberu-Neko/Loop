@@ -15,8 +15,6 @@ public class ShieldMoveState : EnemyState
     protected bool isDetectingLedge;
 
     protected bool stopMovement;
-    protected float stopTime;
-
     protected bool goToStunState;
     
     public override void Enter()
@@ -29,7 +27,6 @@ public class ShieldMoveState : EnemyState
         stopMovement = false;
         performCloseRangeAction = false;
         goToStunState = false;
-        stopTime = 0;
     }
 
     public override void Exit()
@@ -47,7 +44,7 @@ public class ShieldMoveState : EnemyState
         {
             Movement.SetVelocityX(0f);
 
-            if(Time.time >= stopTime + stateData.removeShieldTime)
+            if(Time.time >= EndTime + stateData.removeShieldTime)
             {
                 performCloseRangeAction = true;
             }
@@ -67,7 +64,6 @@ public class ShieldMoveState : EnemyState
         if (!stopMovement)
         {
             stopMovement = CheckPlayerSenses.IsPlayerInCloseRangeAction;
-            stopTime = Time.time;
         }
 
         isDetectingLedge = CollisionSenses.LedgeVertical;

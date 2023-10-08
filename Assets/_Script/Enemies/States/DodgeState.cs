@@ -54,6 +54,6 @@ public class DodgeState : EnemyState
 
     public bool CheckCanDodge()
     {
-        return Time.time >= StartTime + stateData.dodgeCooldown || StartTime == 0;
+        return Time.time >= EndTime + stateData.dodgeCooldown || EndTime == 0;
     }
 }

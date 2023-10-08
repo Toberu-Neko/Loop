@@ -14,21 +14,14 @@ public class EnemyState
 
     public float StartTime { get; protected set;}
     public float EndTime { get; protected set;}
-
     protected string animBoolName;
 
     protected Stats Stats { get; private set; }
-
     protected CollisionSenses CollisionSenses { get; private set; }
-
     protected Combat Combat { get; private set; }
-
     protected Movement Movement { get; private set; }
-
     protected Death Death { get; private set; }
-
     protected CheckPlayerSenses CheckPlayerSenses { get; private set; }
-
 
     public EnemyState(Entity entity, EnemyStateMachine stateMachine, string animBoolName)
     {

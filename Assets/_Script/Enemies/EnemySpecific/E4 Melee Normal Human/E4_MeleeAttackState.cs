@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E4_MeleeAttackState : MeleeAttackState
+public class E4_MeleeAttackState : SingleMeleeAttackState
 {
     private Enemy4 enemy;
 

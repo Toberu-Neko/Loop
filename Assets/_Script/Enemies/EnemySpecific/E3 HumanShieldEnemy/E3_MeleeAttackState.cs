@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E3_MeleeAttackState : MeleeAttackState
+public class E3_MeleeAttackState : SingleMeleeAttackState
 {
     private Enemy3 enemy;
 
