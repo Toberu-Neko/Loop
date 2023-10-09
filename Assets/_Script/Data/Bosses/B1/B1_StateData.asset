@@ -22,6 +22,14 @@ MonoBehaviour:
     movementSpeed: 2
     minInStateTime: 3
     maxInStateTime: 5
+  flyingMovementStateData:
+    minMoveCount: 1
+    maxMoveCount: 3
+    moveTime: 2
+    movementSpeed: 5
+  flyingIdleStateData:
+    minIdleTime: 1
+    maxIdleTime: 3
   blueRangedAttackStateData:
     aimPlayer: 1
     attackCooldown: 0
@@ -54,7 +62,7 @@ MonoBehaviour:
     - {fileID: 8389792333474829002, guid: 9c4adab34b3bac444bad1d8ebe21e4a4, type: 3}
     - {fileID: 8389792333474829002, guid: e0da44ac2feaebb4c86a8b7f33102206, type: 3}
   chooseRandomBulletStateData:
-    randomCount: 2
+    randomCount: 3
   jumpAndMultiAttackStateData:
     jumpAngle: {x: 1, y: 2.5}
     jumpForce: 33

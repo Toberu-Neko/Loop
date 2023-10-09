@@ -202,3 +202,13 @@ public class ED_EnemyProjectiles
 {
     public GameObject[] pasteItems;
 }
+
+[Serializable]
+public class ED_FlyingMovementState
+{
+    public int minMoveCount = 1;
+    public int maxMoveCount = 3;
+
+    public float moveTime = 2f;
+    public float movementSpeed = 5f;
+}

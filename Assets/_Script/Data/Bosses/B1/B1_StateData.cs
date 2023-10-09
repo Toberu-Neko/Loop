@@ -8,6 +8,8 @@ public class B1_StateData : BaseEnemyStateData
     [Header("Normal")]
     public ED_EnemyIdleState idleStateData;
     public ED_PlayerDetectedMoveState playerDetectedMoveStateData;
+    public ED_FlyingMovementState flyingMovementStateData;
+    public ED_EnemyIdleState flyingIdleStateData;
 
     [Header("Attack")]
     public ED_EnemyRangedAttackState blueRangedAttackStateData;
@@ -18,7 +20,6 @@ public class B1_StateData : BaseEnemyStateData
     [Header("Skill")]
     public ED_ChooseRandomBulletState chooseRandomBulletStateData;
     public ED_EnemyJumpAndMultiAttackState jumpAndMultiAttackStateData;
-
 
     [Header("Other")]
     public ED_EnemyStunState stunStateData;

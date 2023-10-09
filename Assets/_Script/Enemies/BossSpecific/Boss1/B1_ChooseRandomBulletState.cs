@@ -42,8 +42,8 @@ public class B1_ChooseRandomBulletState : ChooseRandomBulletState
                 stateMachine.ChangeState(boss.RedRangedAttackState);
                 break;
             case 2:
-                Debug.LogError("TODO: Green magic");
-                stateMachine.ChangeState(boss.PlayerDetectedMoveState);
+                boss.transform.position = boss.teleportPos.position;
+                stateMachine.ChangeState(boss.FlyingIdleState);
                 break;
             default:
                 Debug.LogError("Bullet index out of range");

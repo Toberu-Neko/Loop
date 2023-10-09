@@ -108,6 +108,7 @@ public class CollisionSenses : CoreComponent
                 return Physics2D.BoxCast(GroundCheck.position, slopeCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
         }
     }
+
     public Slope Slope
     {
         get
@@ -180,6 +181,11 @@ public class CollisionSenses : CoreComponent
     public bool LedgeVertical
     {
         get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, ledgeCheckDistance, whatIsGround);
+    }
+
+    public bool IsDetectingWall(Vector2 direction, float distance)
+    {
+        return Physics2D.Raycast(movement.ParentTransform.position, direction, distance, whatIsWall);
     }
 
     private void OnDrawGizmos()
