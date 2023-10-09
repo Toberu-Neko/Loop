@@ -50,7 +50,10 @@ public class PlayerState
         player.Anim.SetBool(animBoolName, false);
         isExitingState = true;
     }
-    public virtual void LogicUpdate() { }
+    public virtual void LogicUpdate() 
+    {
+        player.Anim.speed = Stats.AnimationSpeed;
+    }
 
     public virtual void PhysicsUpdate()
     {

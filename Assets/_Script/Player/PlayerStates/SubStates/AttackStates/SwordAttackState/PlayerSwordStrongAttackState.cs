@@ -15,7 +15,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
     {
         base.Enter();
 
-        Combat.OnDamaged += HandleOnDamaged;
+        Combat.OnKnockback += HandleOnKnockback;
         startMovement = false;
         fireObj = false;
 
@@ -29,7 +29,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
     {
         base.Exit();
 
-        Combat.OnDamaged -= HandleOnDamaged;
+        Combat.OnKnockback -= HandleOnKnockback;
     }
 
     public override void LogicUpdate()
@@ -74,7 +74,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
         }
     }
 
-    private void HandleOnDamaged()
+    private void HandleOnKnockback()
     {
         isAttackDone = true;
     }

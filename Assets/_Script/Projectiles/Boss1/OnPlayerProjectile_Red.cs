@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class OnPlayerProjectile_Red : OnPlayerProjectileBase
 {
+    [Header("Damage")]
     [SerializeField] private float damage = 10f;
     [SerializeField] private float knockbackForce = 10f;
     [SerializeField] private Vector2 knockbackDirection = Vector2.one;
@@ -31,6 +32,7 @@ public class OnPlayerProjectile_Red : OnPlayerProjectileBase
         if(player.StateMachine.CurrentState == player.IdleState || player.StateMachine.CurrentState == player.CrouchIdleState)
         {
             ReturnToPool();
+            return;
         }
         else
         {

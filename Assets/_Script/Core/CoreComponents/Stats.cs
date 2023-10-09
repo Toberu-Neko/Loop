@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Stats : CoreComponent
 {
@@ -24,8 +25,28 @@ public class Stats : CoreComponent
     public bool IsTimeSlowed { get; private set; } = false;
     public float TimeSlowMultiplier { get; private set; } = 0f;
 
-    public float MovementSpeedMultiplier { get; set; } = 1f;
-    public float AnimationSpeed { get; private set; } = 1f;
+    public float DebuffActionSpeedMultiplier { get; set; } = 1f;
+
+    public float AnimationSpeed
+    {
+        get
+        {
+            if (Invincible)
+            {
+                return orgAnimationSpeed;
+            }
+            else
+            {
+                return orgAnimationSpeed * DebuffActionSpeedMultiplier;
+            }
+        }
+        set
+        {
+            orgAnimationSpeed = value;
+        }
+    }
+
+    private float orgAnimationSpeed = 1f;
 
     public event Action OnTimeStopStart;
     public event Action OnTimeStopEnd;
@@ -75,7 +96,7 @@ public class Stats : CoreComponent
         IsRewindingPosition = false;
         IsTimeStopped = false;
         IsTimeSlowed = false;
-        MovementSpeedMultiplier = 1f;
+        DebuffActionSpeedMultiplier = 1f;
 
         Health.Init();
         Stamina.Init();

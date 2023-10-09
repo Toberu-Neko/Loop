@@ -41,18 +41,18 @@ public class PlayerTouchingWallState : PlayerState
         base.Enter();
 
         damaged = false;
-        Combat.OnDamaged += HandleOnDamaged;
+        Combat.OnKnockback += HandleOnKnockback;
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        Combat.OnDamaged -= HandleOnDamaged;
+        Combat.OnKnockback -= HandleOnKnockback;
         endTime = Time.time;
     }
 
-    private void HandleOnDamaged()
+    private void HandleOnKnockback()
     {
         damaged = true;
     }

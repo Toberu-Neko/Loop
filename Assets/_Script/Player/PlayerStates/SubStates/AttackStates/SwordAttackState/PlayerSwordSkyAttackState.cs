@@ -14,14 +14,14 @@ public class PlayerSwordSkyAttackState : PlayerSwordAttackState
     {
         base.Enter();
 
-        Combat.OnDamaged += () => isAttackDone = true;
+        Combat.OnKnockback += () => isAttackDone = true;
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        Combat.OnDamaged -= () => isAttackDone = true;
+        Combat.OnKnockback -= () => isAttackDone = true;
     }
     public override void LogicUpdate()
     {

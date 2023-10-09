@@ -236,7 +236,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             // Debug.Log("else");
             DecreaseHealth(damageAmount);
         }
-        OnDamaged?.Invoke();
     }
 
     public GameObject GetGameObject()
@@ -262,7 +261,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             return;
         }
 
-        if(damageAmount > 0)
+        OnDamaged?.Invoke();
+
+        if (damageAmount > 0)
         {
             stats.Health.Decrease(damageAmount);
             particleManager.StartParticlesWithRandomRotation(damageParticles);
@@ -315,7 +316,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         {
             HandleKnockback(strength, angle, direction);
         }
-        OnKnockback?.Invoke();
     }
 
     private void HandleKnockback(float strength, Vector2 angle, int direction)
@@ -325,7 +325,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             return;
         }
 
-        if(stats.IsTimeStopped)
+        OnKnockback?.Invoke();
+
+        if (stats.IsTimeStopped)
         {
             if(knockbackAngleDelta.x < angle.x)
             {
@@ -440,18 +442,19 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     private float tempMovementMultiplier;
 
-    public void MultiplyMovementMultiplier(float multiplier, float delayTime)
+    public void SetActionSpeedMultiplier(float multiplier, float delayTime)
     {
-        if(multiplier < stats.MovementSpeedMultiplier)
+        if(multiplier <= stats.DebuffActionSpeedMultiplier)
         {
-            stats.MovementSpeedMultiplier = multiplier;
+            stats.DebuffActionSpeedMultiplier = multiplier;
+            CancelInvoke(nameof(ReturnMovementMultiplier));
             Invoke(nameof(ReturnMovementMultiplier), delayTime);
         }
     }
 
     private void ReturnMovementMultiplier()
     {
-        stats.MovementSpeedMultiplier = 1f;
+        stats.DebuffActionSpeedMultiplier = 1f;
     }
 
 }

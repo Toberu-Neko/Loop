@@ -25,7 +25,7 @@ public class PlayerFistHubState : PlayerFistAttackState
     {
         base.Enter();
 
-        Combat.OnDamaged += () => isAttackDone = true;
+        Combat.OnKnockback += () => isAttackDone = true;
         player.InputHandler.UseAttackInput();
         canAttack = false;
         player.Anim.SetInteger("fistHubChargeStage", chargeStage);
@@ -35,7 +35,7 @@ public class PlayerFistHubState : PlayerFistAttackState
     {
         base.Exit();
 
-        Combat.OnDamaged -= () => isAttackDone = true;
+        Combat.OnKnockback -= () => isAttackDone = true;
     }
 
     public override void LogicUpdate()

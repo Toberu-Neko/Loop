@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class OnPlayerProjectileBase : MonoBehaviour
 {
+    [Header("Base")]
     [SerializeField] protected Core core;
     protected Stats stats;
 
@@ -31,7 +32,6 @@ public class OnPlayerProjectileBase : MonoBehaviour
         countDownText.text = duration.ToString("F1");
 
         combatCol = Physics2D.OverlapCircle(transform.position, 2f, whatIsPlayer);
-        Debug.Log(transform.position);
 
         if(combatCol == null)
         {

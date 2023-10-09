@@ -72,6 +72,7 @@ public class Entity : MonoBehaviour
         StateMachine.CurrentState.LogicUpdate();
 
         Anim.SetFloat("yVelocity", movement.RB.velocity.y);
+        Anim.speed = Stats.AnimationSpeed;
     }
 
     private void LateUpdate()

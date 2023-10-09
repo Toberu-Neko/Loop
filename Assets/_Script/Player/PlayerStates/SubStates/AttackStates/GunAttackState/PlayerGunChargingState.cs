@@ -22,7 +22,7 @@ public class PlayerGunChargingState : PlayerGunAttackState
     public override void Enter()
     {
         base.Enter();
-        Combat.OnDamaged += () => isAttackDone = true;
+        Combat.OnKnockback += () => isAttackDone = true;
 
         player.WeaponManager.SetGunRegenable(false);
         player.WeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond);
@@ -36,7 +36,7 @@ public class PlayerGunChargingState : PlayerGunAttackState
     public override void Exit()
     {
         base.Exit();
-        Combat.OnDamaged -= () => isAttackDone = true;
+        Combat.OnKnockback -= () => isAttackDone = true;
 
         player.Anim.SetBool("gunChargeShoot", false);
         chargeAttack.gameObject.SetActive(false);

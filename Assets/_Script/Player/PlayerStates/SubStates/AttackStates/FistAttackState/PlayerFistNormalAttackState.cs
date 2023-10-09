@@ -21,7 +21,7 @@ public class PlayerFistNormalAttackState : PlayerFistAttackState
     {
         base.Enter();
 
-        Combat.OnDamaged += () => isAttackDone = true;
+        Combat.OnKnockback += () => isAttackDone = true;
 
         if (Time.time >= lastAttackTime + fistData.resetAttackTime)
         {
@@ -37,7 +37,7 @@ public class PlayerFistNormalAttackState : PlayerFistAttackState
         base.Exit();
 
 
-        Combat.OnDamaged -= () => isAttackDone = true;
+        Combat.OnKnockback -= () => isAttackDone = true;
         attackCounter++;
         lastAttackTime = Time.time;
 

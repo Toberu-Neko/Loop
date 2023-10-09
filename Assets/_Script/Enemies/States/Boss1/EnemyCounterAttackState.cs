@@ -13,7 +13,6 @@ public class EnemyCounterAttackState : EnemyState
     public override void Enter()
     {
         base.Enter();
-
     }
 
 }

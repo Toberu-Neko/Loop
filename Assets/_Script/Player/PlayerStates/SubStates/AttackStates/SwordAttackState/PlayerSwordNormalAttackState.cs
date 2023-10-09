@@ -19,7 +19,7 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
     {
         base.Enter();
 
-        Combat.OnDamaged += () => isAttackDone = true;
+        Combat.OnKnockback += () => isAttackDone = true;
 
         if (Time.time >= lastAttackTime + swordData.resetAttackTime)
         {
@@ -33,7 +33,7 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
     {
         base.Exit();
 
-        Combat.OnDamaged -= () => isAttackDone = true;
+        Combat.OnKnockback -= () => isAttackDone = true;
         attackCounter++;
         lastAttackTime = Time.time;
 

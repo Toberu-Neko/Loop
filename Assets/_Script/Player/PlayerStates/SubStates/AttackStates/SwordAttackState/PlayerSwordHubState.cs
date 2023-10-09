@@ -22,7 +22,7 @@ public class PlayerSwordHubState : PlayerSwordAttackState
     {
         base.Enter();
 
-        Combat.OnDamaged += () => isAttackDone = true;
+        Combat.OnKnockback += () => isAttackDone = true;
         player.InputHandler.UseAttackInput();
         holdEnough = false;
         canAttack = false;
@@ -32,7 +32,7 @@ public class PlayerSwordHubState : PlayerSwordAttackState
     {
         base.Exit();
 
-        Combat.OnDamaged -= () => isAttackDone = true;
+        Combat.OnKnockback -= () => isAttackDone = true;
         player.Anim.SetBool("swordHoldAttack", false);
     }
 

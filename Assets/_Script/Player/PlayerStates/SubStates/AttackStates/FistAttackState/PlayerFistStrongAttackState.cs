@@ -27,7 +27,7 @@ public class PlayerFistStrongAttackState : PlayerFistAttackState
         }
         else
         {
-            Combat.OnDamaged += () => isAttackDone = true;
+            Combat.OnKnockback += () => isAttackDone = true;
         }
 
         doAttack = false;
@@ -39,7 +39,7 @@ public class PlayerFistStrongAttackState : PlayerFistAttackState
 
         if(!doSoulAttack)
         {
-            Combat.OnDamaged -= () => isAttackDone = true;
+            Combat.OnKnockback -= () => isAttackDone = true;
         }
         else
         {

@@ -11,12 +11,17 @@ public class PlayerFistAttackState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
-        player.Anim.speed = PlayerInventoryManager.Instance.FistMultiplier.attackSpeedMultiplier;
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        player.Anim.speed = PlayerInventoryManager.Instance.FistMultiplier.attackSpeedMultiplier * Stats.AnimationSpeed;
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.Anim.speed = 1f;
     }
 }
