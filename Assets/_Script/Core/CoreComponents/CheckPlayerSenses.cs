@@ -11,7 +11,9 @@ public class CheckPlayerSenses : CoreComponent
     [SerializeField] private Transform playerMaxAgroCheck;
     [SerializeField] private Transform playerCloseRangeCheck;
     [SerializeField] private Transform canSeePlayerCheck;
+    [SerializeField] private Transform allRangeCheck;
 
+    [SerializeField] private Vector2 allRangeV2;
     [SerializeField] private Vector2 minAgroV2 = Vector2.one;
     [SerializeField] private Vector2 maxAgroV2 = Vector2.one;
     [SerializeField] private Vector2 closeRangeActionV2 = Vector2.one;
@@ -46,6 +48,14 @@ public class CheckPlayerSenses : CoreComponent
         }
     }
 
+    public RaycastHit2D AllRnagePlayerRaycast
+    {
+        get
+        {
+            return Physics2D.BoxCast(allRangeCheck.position, allRangeV2, 0f, transform.right, 0.1f, whatIsPlayer);
+        }
+    }
+
     public bool IsPlayerInCloseRangeAction
     {
         get
@@ -53,6 +63,8 @@ public class CheckPlayerSenses : CoreComponent
             return Physics2D.BoxCast(playerCloseRangeCheck.position, closeRangeActionV2, 0f, transform.right, 0.1f, whatIsPlayer);
         }
     }
+
+
 
     public virtual void OnDrawGizmos()
     {
@@ -64,6 +76,9 @@ public class CheckPlayerSenses : CoreComponent
             Gizmos.DrawWireCube(playerMaxAgroCheck.position, maxAgroV2);
 
             Gizmos.DrawWireCube(playerCloseRangeCheck.position, closeRangeActionV2);
+
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireCube(allRangeCheck.position, allRangeV2);
 
         }
     }

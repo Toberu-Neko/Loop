@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EnemyProjectileBase : MonoBehaviour, IKnockbackable, IFireable
+public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 {
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;

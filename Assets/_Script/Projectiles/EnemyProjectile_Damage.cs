@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyProjectile_Damage : EnemyProjectileBase
+public class EnemyProjectile_Damage : EnemyProjectile_Base
 {
 
     protected override void OnEnable()

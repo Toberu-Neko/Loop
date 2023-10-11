@@ -131,6 +131,7 @@ Transform:
   - {fileID: 830351992707641794}
   - {fileID: 8827469850256828924}
   - {fileID: 7406454105036247234}
+  - {fileID: 7095584824494400123}
   m_Father: {fileID: 6317694935012530758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8814559117030986534
@@ -155,6 +156,8 @@ MonoBehaviour:
   playerMaxAgroCheck: {fileID: 830351992707641794}
   playerCloseRangeCheck: {fileID: 8827469850256828924}
   canSeePlayerCheck: {fileID: 7406454105036247234}
+  allRangeCheck: {fileID: 7095584824494400123}
+  allRangeV2: {x: 53.6, y: 34.3}
   minAgroV2: {x: 3.5, y: 1.5}
   maxAgroV2: {x: 5, y: 1.5}
   closeRangeActionV2: {x: 1, y: 1}
@@ -932,6 +935,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementCollider: {fileID: 0}
+--- !u!1 &7990351854176527934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7095584824494400123}
+  m_Layer: 0
+  m_Name: AllRangeCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7095584824494400123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990351854176527934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6616668798133203118}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8747230433081730626
 GameObject:
   m_ObjectHideFlags: 0

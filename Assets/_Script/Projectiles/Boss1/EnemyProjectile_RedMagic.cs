@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectile_RedMagic : EnemyProjectileBase
+public class EnemyProjectile_RedMagic : EnemyProjectile_Base
 {
     [SerializeField] private float startRadius = 2f;
     [SerializeField] private float duration = 0.5f;

@@ -20,6 +20,15 @@ public class B1_FlyingIdleState : EnemyFlyingIdleState
             {
                 boss.FlyingMovementState.ResetMoveCount();
                 //TODO: Go to attack state
+                if (!boss.FourSkyAttackState.IsAttackDone)
+                {
+                    stateMachine.ChangeState(boss.FourSkyAttackState);
+                }
+                else
+                {
+                    boss.FourSkyAttackState.ResetAttack();
+//                    stateMachine.ChangeState(boss);
+                }
             }
             else
             {

@@ -20,6 +20,8 @@ public class B1_StateData : BaseEnemyStateData
     [Header("Skill")]
     public ED_ChooseRandomBulletState chooseRandomBulletStateData;
     public ED_EnemyJumpAndMultiAttackState jumpAndMultiAttackStateData;
+    public ED_FourSkyAttackState fourSkyAttackStateData;
+
 
     [Header("Other")]
     public ED_EnemyStunState stunStateData;

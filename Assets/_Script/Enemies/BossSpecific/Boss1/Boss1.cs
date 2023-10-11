@@ -17,7 +17,9 @@ public class Boss1 : BossBase
     public B1_EnemyPerfectBlockState PerfectBlockState { get; private set; }
     public B1_CounterAttackState CounterAttackState { get; private set; }
 
+    //Skill
     public B1_JumpAndMultiAttackState JumpAndMultiAttackState { get; private set; }
+    public B1_FourSkyAttackState FourSkyAttackState { get; private set; }
 
     public B1_StunState StunState { get; private set; }
     public B1_KinematicState KinematicState { get; private set; }
@@ -49,6 +51,7 @@ public class Boss1 : BossBase
         CounterAttackState = new B1_CounterAttackState(this, StateMachine, "counterAttack", this);
 
         JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
+        FourSkyAttackState = new B1_FourSkyAttackState(this, StateMachine, "fourSkyAttack", StateData.fourSkyAttackStateData, this);
 
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);

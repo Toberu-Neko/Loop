@@ -212,3 +212,14 @@ public class ED_FlyingMovementState
     public float moveTime = 2f;
     public float movementSpeed = 5f;
 }
+
+[Serializable]
+public class ED_FourSkyAttackState
+{
+    public GameObject[] projectileObjs;
+    public ProjectileDetails details;
+
+    public float spawnDelay = 0.5f;
+    public float fireDelay = 0.5f;
+    public float attackDistance = 10f;
+}
