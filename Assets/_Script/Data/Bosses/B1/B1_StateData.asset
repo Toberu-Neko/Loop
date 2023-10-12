@@ -20,8 +20,8 @@ MonoBehaviour:
     maxIdleTime: 3
   playerDetectedMoveStateData:
     movementSpeed: 2
-    minInStateTime: 3
-    maxInStateTime: 5
+    minInStateTime: 1
+    maxInStateTime: 2
   flyingMovementStateData:
     minMoveCount: 1
     maxMoveCount: 3
@@ -86,6 +86,19 @@ MonoBehaviour:
         duration: 3
         knockbackStrength: 0
         knockbackAngle: {x: 0, y: 0}
+  fourSkyAttackStateData:
+    projectileObjs:
+    - {fileID: 8389792333474829002, guid: a20559c03b9a5994483d45b940b5c14b, type: 3}
+    details:
+      damageAmount: 5
+      staminaDamageAmount: 1
+      speed: 15
+      duration: 5
+      knockbackStrength: 8
+      knockbackAngle: {x: 1, y: 1}
+    spawnDelay: 0.5
+    fireDelay: 0.5
+    attackDistance: 8
   stunStateData:
     stunTime: 2
     stunKnockbackSpeed: 0

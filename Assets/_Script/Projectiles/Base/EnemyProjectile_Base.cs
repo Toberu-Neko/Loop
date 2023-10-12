@@ -23,8 +23,9 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     private bool interected = false;
     protected ProjectileDetails details;
 
+    protected Vector2 startPos;
     private Vector2 counterVelocity;
-    private Vector2 fireDirection;
+    protected Vector2 fireDirection;
 
     protected virtual void Awake()
     {
@@ -108,6 +109,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         this.details = details;
         this.fireDirection = fireDirection;
         whatIsTargetLayer = whatIsPlayer;
+        startPos = transform.position;
 
         Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
 
@@ -115,7 +117,6 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         transform.rotation = targetRotation;
         movement.SetGravityZero();
         movement.SetVelocity(details.speed, fireDirection);
-
     }
 
     public virtual void HandlePerfectBlock()

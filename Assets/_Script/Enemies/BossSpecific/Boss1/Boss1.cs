@@ -51,7 +51,7 @@ public class Boss1 : BossBase
         CounterAttackState = new B1_CounterAttackState(this, StateMachine, "counterAttack", this);
 
         JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
-        FourSkyAttackState = new B1_FourSkyAttackState(this, StateMachine, "fourSkyAttack", StateData.fourSkyAttackStateData, this);
+        FourSkyAttackState = new B1_FourSkyAttackState(this, StateMachine, "counterAttack", StateData.fourSkyAttackStateData, this); //TODO: Anim
 
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);
