@@ -27,6 +27,8 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
 
     public void Rewind(bool doRewind = true)
     {
+        if (!gameObject.activeInHierarchy)
+            return;
         if (doRewind)
         {
             startRewind = true;

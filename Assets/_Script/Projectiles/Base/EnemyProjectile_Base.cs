@@ -20,7 +20,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     public bool HasHitGround { get; private set; }
     protected bool countered;
     protected float startTime;
-    private bool interected = false;
+    private bool interected;
     protected ProjectileDetails details;
 
     protected Vector2 startPos;

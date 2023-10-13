@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyFlyingIdleState : EnemyState
+public class EnemyFlyingIdleState : EnemyFlyingStateBase
 {
     protected ED_EnemyIdleState stateData;
 
@@ -16,11 +16,11 @@ public class EnemyFlyingIdleState : EnemyState
     {
         base.Enter();
 
-        Movement.SetRBKinematic();
         Movement.SetVelocityZero();
         gotoNextState = false;
         idleTime = Random.Range(stateData.minIdleTime, stateData.maxIdleTime);
     }
+
 
     public override void LogicUpdate()
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FourSkyAttackState : EnemyState
+public class FourSkyAttackState : EnemyFlyingStateBase
 {
     protected ED_FourSkyAttackState stateData;
 
@@ -52,6 +52,7 @@ public class FourSkyAttackState : EnemyState
         base.LogicUpdate();
 
         Stats.Timer(spawnTime);
+        Movement.SetVelocityZero();
 
         if(Time.time >= spawnTime + stateData.spawnDelay && attackCount < attackPos.Length && !fireObjs)
         {

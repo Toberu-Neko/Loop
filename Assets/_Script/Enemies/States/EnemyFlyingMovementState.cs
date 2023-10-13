@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFlyingMovementState : EnemyState
+public class EnemyFlyingMovementState : EnemyFlyingStateBase
 {
     protected ED_FlyingMovementState stateData;
 
@@ -26,8 +26,10 @@ public class EnemyFlyingMovementState : EnemyState
 
         movementFinished = false;
         gotoIdleState = false;
+
         direction = GetDirection().normalized;
     }
+
 
     public override void LogicUpdate()
     {

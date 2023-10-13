@@ -66,7 +66,7 @@ public class PlayerBlockState : PlayerAttackState
         {
             if (perfectBlock)
             {
-                lastBlockTime = Time.time;
+                lastBlockTime = 0f;
                 CamManager.Instance.CameraShake();
                 stateMachine.ChangeState(player.PerfectBlockState);
             }
@@ -77,7 +77,7 @@ public class PlayerBlockState : PlayerAttackState
             }
             else if (!blockInput)
             {
-                lastBlockTime = 0;
+                lastBlockTime = Time.time;
                 isAttackDone = true;
             }
         }
