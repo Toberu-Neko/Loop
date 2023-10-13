@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IKnockbackable
 {
-    void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false);
+    void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true);
 
 }

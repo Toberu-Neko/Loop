@@ -20,7 +20,7 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
         base.HandlePerfectBlock();
     }
 
-    public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
     {
         ReturnToPool();
     }
@@ -91,7 +91,7 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
                 ReturnToPool();
             }
         }
-        else if (!hasHitGround && fire)
+        else if (!HasHitGround && fire)
         {
             movement.SetVelocity(details.speed, fireDirection);
         }

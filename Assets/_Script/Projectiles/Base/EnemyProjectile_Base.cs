@@ -17,7 +17,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
     [SerializeField] private Animator anim;
 
-    protected bool hasHitGround;
+    public bool HasHitGround { get; private set; }
     protected bool countered;
     protected float startTime;
     private bool interected = false;
@@ -36,15 +36,15 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     {
         core.LogicUpdate();
 
-        if (!hasHitGround && !countered)
+        if (!HasHitGround && !countered)
         {
             movement.SetVelocity(details.speed, fireDirection);
         }
-        if (!hasHitGround && countered)
+        if (!HasHitGround && countered)
         {
             movement.SetVelocity(counterVelocity);
         }
-        if (hasHitGround || interected)
+        if (HasHitGround || interected)
         {
             movement.SetVelocityZero();
         }
@@ -72,7 +72,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
         whatIsTargetLayer = whatIsPlayer;
 
-        hasHitGround = false;
+        HasHitGround = false;
         interected = false;
         countered = false;
 
@@ -124,7 +124,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         ReturnToPool();
     }
 
-    public virtual void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    public virtual void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
     {
         if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered && !interected)
         {
@@ -181,7 +181,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & whatIsTargetLayer) != 0 && !hasHitGround && !interected)
+        if (((1 << collision.gameObject.layer) & whatIsTargetLayer) != 0 && !HasHitGround && !interected)
         {
             interected = true;
             OnHitTargetAction?.Invoke(collision);
@@ -189,7 +189,9 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
         if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
         {
-            hasHitGround = true;
+            Debug.Log("HitGround");
+            HasHitGround = true;
+            
             movement.SetVelocityZero();
 
             OnHitGroundAction?.Invoke();
@@ -204,6 +206,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     protected void ReturnToPool()
     {
         CancelInvoke(nameof(ReturnToPool));
+        HasHitGround = true;
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 }

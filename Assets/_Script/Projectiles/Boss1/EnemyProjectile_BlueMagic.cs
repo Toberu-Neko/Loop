@@ -127,9 +127,9 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
             slowable?.SetActionSpeedMultiplier(slowMultiplier, damagePace);
         }
     }
-    public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
     {
-        base.Knockback(angle, force, damagePosition, blockable, forceKnockback);
+        base.Knockback(angle, force, damagePosition, blockable);
     }
 
     private void OnDrawGizmos()

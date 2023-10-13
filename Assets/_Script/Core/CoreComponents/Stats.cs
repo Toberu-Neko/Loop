@@ -19,6 +19,7 @@ public class Stats : CoreComponent
     public bool InCombat { get; private set; } = false;
     public bool CanChangeWeapon { get; private set; } = true;
     public bool Attackable { get; private set; } = true;
+    public bool Knockable { get; private set; } = true;
 
     public bool IsRewindingPosition { get; private set; } = false;
     public bool IsTimeStopped { get; private set; } = false;
@@ -96,6 +97,7 @@ public class Stats : CoreComponent
         IsRewindingPosition = false;
         IsTimeStopped = false;
         IsTimeSlowed = false;
+        Knockable = true;
         DebuffActionSpeedMultiplier = 1f;
 
         Health.Init();

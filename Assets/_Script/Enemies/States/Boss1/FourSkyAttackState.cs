@@ -10,11 +10,12 @@ public class FourSkyAttackState : EnemyState
 
     private Transform playerPos;
     private Vector2[] attackPos;
-    private IFireable[] fireables;
-    private IRewindable[] rewindables;
+    private EnemyProjectile_Rewind[] projectiles;
 
     private int attackCount = 0;
     private float spawnTime = 0f;
+    private float allGroundedTime = 0f;
+    private bool firstTimeAllGrounded;
     private bool fireObjs;
 
     private bool startRewind;
@@ -32,11 +33,12 @@ public class FourSkyAttackState : EnemyState
         playerPos = CheckPlayerSenses.AllRnagePlayerRaycast.transform;
         attackCount= 0;
         spawnTime = 0f;
+        allGroundedTime = 0f;
         fireObjs = false;
         startRewind = false;
+        firstTimeAllGrounded = false;
 
-        fireables = new IFireable[4];
-        rewindables = new IRewindable[4];
+        projectiles = new EnemyProjectile_Rewind[4];
 
         attackPos = new Vector2[4];
         attackPos[0] = (Vector2)playerPos.position + Vector2.right * stateData.attackDistance;
@@ -66,7 +68,7 @@ public class FourSkyAttackState : EnemyState
 
         if(fireObjs && Time.time >= spawnTime + stateData.fireDelay && !startRewind)
         {
-            fireables[attackCount].Fire((Vector2)playerPos.position - attackPos[attackCount], stateData.details);
+            projectiles[attackCount].Fire((Vector2)playerPos.position - attackPos[attackCount], stateData.details);
             Debug.Log("Fire" + attackCount);
 
             attackCount++;
@@ -76,40 +78,63 @@ public class FourSkyAttackState : EnemyState
             {
                 attackCount = 0;
 
+                startRewind = true;
+            }
+        }
+
+
+        if (startRewind)
+        {
+            bool allGrounded = true;
+
+            foreach (var item in projectiles)
+            {
+                if (!item.HasHitGround)
+                {
+                    allGrounded = false;
+                }
+            }
+            if (allGrounded && !firstTimeAllGrounded)
+            {
+                Debug.Log("All Grounded");
+                firstTimeAllGrounded = true;
+                allGroundedTime = Time.time;
+            }
+
+            if (Time.time >= allGroundedTime + stateData.fireDelay && firstTimeAllGrounded)
+            {
                 if (!doRewind)
                 {
-                    foreach (var item in rewindables)
+                    foreach (var item in projectiles)
                     {
                         item.Rewind(false);
                     }
 
                     IsAttackDone = true;
                 }
+
                 else
                 {
-                    startRewind = true;
+                    projectiles[attackCount].Rewind();
+                    allGroundedTime = Time.time;
+                    attackCount++;
+
+                    if (attackCount == attackPos.Length)
+                    {
+                        IsAttackDone = true;
+                    }
                 }
+
             }
         }
 
-        if (startRewind && Time.time >= spawnTime + stateData.fireDelay)
-        {
-            rewindables[attackCount].Rewind();
-            spawnTime = Time.time;
-            attackCount++;
 
-            if(attackCount == attackPos.Length)
-            {
-                IsAttackDone = true;
-            }
-        }
     }
 
     private void SpawnObj(int index)
     {
         GameObject obj = ObjectPoolManager.SpawnObject(stateData.projectileObjs[Random.Range(0, stateData.projectileObjs.Length)], attackPos[index], Quaternion.identity);
-        fireables[index] = obj.GetComponent<IFireable>();
-        rewindables[index] = obj.GetComponent<IRewindable>();
+        projectiles[index] = obj.GetComponent<EnemyProjectile_Rewind>();
     }
 
     public void ResetAttack() => IsAttackDone = false;

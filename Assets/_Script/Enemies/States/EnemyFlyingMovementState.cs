@@ -36,15 +36,8 @@ public class EnemyFlyingMovementState : EnemyState
         int dir = direction.x > 0 ? 1 : -1;
 
         Movement.CheckIfShouldFlip(dir);
+        Movement.SetVelocity(stateData.movementSpeed * direction);
 
-        if (!CollisionSenses.Ground)
-        {
-            Movement.SetVelocity(stateData.movementSpeed * direction);
-        }
-        else
-        {
-            Movement.SetVelocityZero();
-        }
 
         if (Time.time >= StartTime + stateData.moveTime)
         {

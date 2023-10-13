@@ -120,9 +120,9 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
         base.HandlePerfectBlock();
     }
 
-    public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true, bool forceKnockback = false)
+    public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
     {
-        base.Knockback(angle, force, damagePosition, blockable, forceKnockback);
+        base.Knockback(angle, force, damagePosition, blockable);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
