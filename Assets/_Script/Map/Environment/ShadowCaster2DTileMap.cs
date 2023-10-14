@@ -110,5 +110,5 @@ public class ShadowCastersGeneratorEditor : Editor
 
         }
     }
-#endif
 }
+#endif
