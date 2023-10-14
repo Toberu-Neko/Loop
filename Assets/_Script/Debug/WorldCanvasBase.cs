@@ -26,8 +26,12 @@ public class WorldCanvasBase : MonoBehaviour
     {
         if(Cam == null)
         {
-            Debug.LogError("No main camera found when onenable.");
-            return;
+            if(Camera.main == null)
+            {
+                Debug.LogError("No main camera found when onenable.");
+                return;
+            }
+            Cam = Camera.main;
         }
         Canvas.worldCamera = Cam;
     }

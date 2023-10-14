@@ -67,7 +67,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Vector2 ceilingCheckV2;
     [SerializeField] private Vector2 headCheckV2;
 
-    [SerializeField] private float slopeCheckDistance = 0.5f;
+    [SerializeField] private float slopeCheckDistance = 1.2f;
     [SerializeField] private float slopeMaxAngle;
     
     [SerializeField] private float wallCheckDistance;
@@ -103,9 +103,13 @@ public class CollisionSenses : CoreComponent
         get
         {
             if(!Slope.IsOnSlope)
+            {
                 return Physics2D.BoxCast(GroundCheck.position, groundCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
+            }
             else
+            {
                 return Physics2D.BoxCast(GroundCheck.position, slopeCheckV2, 0f, Vector2.down, 0.1f, whatIsGround);
+            }
         }
     }
 
@@ -208,6 +212,8 @@ public class CollisionSenses : CoreComponent
             Gizmos.DrawWireCube(GroundCheck.position, groundCheckV2);
             Gizmos.color = Color.gray;
             Gizmos.DrawWireCube(GroundCheck.position, slopeCheckV2);
+            Gizmos.DrawLine(GroundCheck.position, GroundCheck.position + Vector3.down * slopeCheckDistance);
+            Gizmos.DrawLine(GroundCheck.position, GroundCheck.position + Vector3.right * slopeCheckDistance);
         }
         if (GroundCheck && HeadCheck && CeilingCheck)
         {
