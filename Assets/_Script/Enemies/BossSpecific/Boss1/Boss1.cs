@@ -21,6 +21,7 @@ public class Boss1 : BossBase
     //Skill
     public B1_JumpAndMultiAttackState JumpAndMultiAttackState { get; private set; }
     public B1_FourSkyAttackState FourSkyAttackState { get; private set; }
+    public B1_SliceRoomAndExplodeState SliceRoomAndExplodeState { get; private set; }
 
     public B1_StunState StunState { get; private set; }
     public B1_KinematicState KinematicState { get; private set; }
@@ -34,6 +35,7 @@ public class Boss1 : BossBase
 
     [field: SerializeField] public Transform SkyTeleportPos { get; private set; }
     [field: SerializeField] public Transform GroundTeleportPos { get; private set; }
+    [field: SerializeField] public BoxCollider2D BossRoomCollider { get; private set; }
 
     public override void Awake()
     {
@@ -56,6 +58,7 @@ public class Boss1 : BossBase
 
         JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
         FourSkyAttackState = new B1_FourSkyAttackState(this, StateMachine, "counterAttack", StateData.fourSkyAttackStateData, this); //TODO: Anim
+        SliceRoomAndExplodeState = new B1_SliceRoomAndExplodeState(this, StateMachine, "sliceRoomAndExplode", StateData.sliceRoomAndExplodeStateData, BossRoomCollider, this);
 
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);

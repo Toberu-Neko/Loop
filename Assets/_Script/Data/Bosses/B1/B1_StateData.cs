@@ -22,7 +22,8 @@ public class B1_StateData : BaseEnemyStateData
     public ED_ChooseRandomBulletState chooseRandomBulletStateData;
     public ED_EnemyJumpAndMultiAttackState jumpAndMultiAttackStateData;
     public ED_FourSkyAttackState fourSkyAttackStateData;
-
+    public ED_SliceRoomAndExplodeState sliceRoomAndExplodeStateData;
+    public ED_AbovePlayerAttackState abovePlayerAttackStateData;
 
     [Header("Other")]
     public ED_EnemyStunState stunStateData;

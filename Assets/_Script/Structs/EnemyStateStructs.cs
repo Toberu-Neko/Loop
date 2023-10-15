@@ -230,3 +230,24 @@ public class  ED_BackToIdleState
 {
     public float stunTime = 3f;
 }
+
+[Serializable] 
+public class ED_SliceRoomAndExplodeState
+{
+    public GameObject[] bullets;
+    public ProjectileDetails details;
+    public int row = 5;
+    public int column = 5;
+}
+
+[Serializable]
+public class ED_AbovePlayerAttackState
+{
+    public GameObject[] projectileObjs;
+    public ProjectileDetails details;
+
+    public float fireDelay = 0.5f;
+    public float rewindDelay = 0.25f;
+    public float attackDistance = 7.5f;
+
+}

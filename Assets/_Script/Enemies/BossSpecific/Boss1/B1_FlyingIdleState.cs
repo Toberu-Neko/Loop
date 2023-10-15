@@ -19,15 +19,47 @@ public class B1_FlyingIdleState : EnemyFlyingIdleState
             if(boss.FlyingMovementState.RemainMoveCount == 0)
             {
                 boss.FlyingMovementState.ResetMoveCount();
-                //TODO: Go to attack state
+
+                int attackDoneCount = 0;
+
                 if (!boss.FourSkyAttackState.IsAttackDone)
+                    attackDoneCount++;
+
+                if (!boss.SliceRoomAndExplodeState.IsAttackDone)
+                    attackDoneCount++;
+
+
+
+                switch (attackDoneCount)
                 {
-                    stateMachine.ChangeState(boss.FourSkyAttackState);
-                }
-                else
-                {
-                    boss.FourSkyAttackState.ResetAttack();
+                    case 2:
+                        switch (Random.Range(0, 2))
+                        {
+                            case 0:
+                                stateMachine.ChangeState(boss.SliceRoomAndExplodeState);
+                                break;
+                            case 1:
+                                stateMachine.ChangeState(boss.FourSkyAttackState);
+                                break;
+                        }
+                        break;
+                    case 1:
+                        if (!boss.FourSkyAttackState.IsAttackDone)
+                        {
+                            stateMachine.ChangeState(boss.FourSkyAttackState);
+                        }
+                        else if (!boss.SliceRoomAndExplodeState.IsAttackDone)
+                        {
+                            stateMachine.ChangeState(boss.SliceRoomAndExplodeState);
+                        }
+                        break;
+                    case 0:
+                        boss.FourSkyAttackState.ResetAttack();
 //                     stateMachine.ChangeState(boss.BackToGroundState);
+                        break;
+                    default:
+                        Debug.LogError("B1_FlyingIdleState: attackDoneCount is not 0, 1, 2");
+                        break;
                 }
             }
             else

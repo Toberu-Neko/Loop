@@ -18,6 +18,8 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
         mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
         xInput = player.InputHandler.NormInputX;
+
+        Shoot();
     }
 
     public override void LogicUpdate()
@@ -41,7 +43,18 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
     {
         base.AnimationActionTrigger();
 
-        if(player.WeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        isAttackDone = true;
+    }
+
+    private void Shoot()
+    {
+        if (player.WeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
         {
             player.WeaponManager.DecreaseGunEnergy();
             player.WeaponManager.GunFiredRegenDelay();
@@ -51,13 +64,7 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
             details.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
             proj.Fire(details, mouseDirectionInput);
         }
-    }
 
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-
-        isAttackDone = true;
     }
 
     public bool CheckCanAttack()
