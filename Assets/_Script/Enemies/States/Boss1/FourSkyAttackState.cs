@@ -31,6 +31,13 @@ public class FourSkyAttackState : EnemyFlyingStateBase
         base.Enter();
 
         playerPos = CheckPlayerSenses.AllRnagePlayerRaycast.transform;
+
+        if(playerPos == null)
+        {
+            Debug.LogError("FourSkyAttackState: PlayerPos is null");
+            IsAttackDone = true;
+            return;
+        }
         attackCount= 0;
         spawnTime = 0f;
         allGroundedTime = 0f;
@@ -136,6 +143,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
     {
         GameObject obj = ObjectPoolManager.SpawnObject(stateData.projectileObjs[Random.Range(0, stateData.projectileObjs.Length)], attackPos[index], Quaternion.identity);
         projectiles[index] = obj.GetComponent<EnemyProjectile_Rewind>();
+        projectiles[index].SetDetails(stateData.details);
     }
 
     public void ResetAttack() => IsAttackDone = false;

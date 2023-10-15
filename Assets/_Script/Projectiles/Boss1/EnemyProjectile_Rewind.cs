@@ -103,6 +103,11 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
         }
     }
 
+    public void SetDetails(ProjectileDetails details)
+    {
+        this.details = details;
+    }
+
 
     private void HandleHitTarget(Collider2D collider)
     {

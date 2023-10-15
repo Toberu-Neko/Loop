@@ -10,6 +10,7 @@ public class B1_StateData : BaseEnemyStateData
     public ED_PlayerDetectedMoveState playerDetectedMoveStateData;
     public ED_FlyingMovementState flyingMovementStateData;
     public ED_EnemyIdleState flyingIdleStateData;
+    public ED_BackToIdleState backToIdleStateData;
 
     [Header("Attack")]
     public ED_EnemyRangedAttackState blueRangedAttackStateData;

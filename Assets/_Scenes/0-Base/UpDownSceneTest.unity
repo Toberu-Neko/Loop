@@ -123,6 +123,82 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &298549022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 298549023}
+  - component: {fileID: 298549024}
+  m_Layer: 0
+  m_Name: BossRoomLookat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &298549023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298549022}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.24, y: 5.93, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5863642904394374051}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &298549024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298549022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09a5b725ffdeba44b4dc2b4a1590899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss: {fileID: 6971737168732697012}
+--- !u!1 &387832878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 387832879}
+  m_Layer: 0
+  m_Name: TeleportPosGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &387832879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387832878}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.24, y: 5.93, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5863642904394374051}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &615976782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -550,7 +626,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1745355985}
   m_Layer: 0
-  m_Name: TeleportPos
+  m_Name: TeleportPosSky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1314,6 +1390,14 @@ PrefabInstance:
       value: 3.52
       objectReference: {fileID: 0}
     - target: {fileID: 8814559117030986534, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: allRangeV2.x
+      value: 90.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8814559117030986534, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: allRangeV2.y
+      value: 58
+      objectReference: {fileID: 0}
+    - target: {fileID: 8814559117030986534, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: closeRangeActionV2.x
       value: 1.06
       objectReference: {fileID: 0}
@@ -1375,7 +1459,7 @@ Transform:
   m_GameObject: {fileID: 3813312222340492225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.018751591}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 13.475, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1473,6 +1557,8 @@ Transform:
   - {fileID: 6971737168732697012}
   - {fileID: 8435301788600582348}
   - {fileID: 1745355985}
+  - {fileID: 387832879}
+  - {fileID: 298549023}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5871800492707918573
@@ -1611,6 +1697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 8360536206008582882}
+  camLookat: {fileID: 298549024}
   bossRoomDoor: {fileID: 3813312222340492225}
   bossCamera: {fileID: 8435301788600582349}
   orgCamera: {fileID: 615976783}
@@ -1752,7 +1839,8 @@ MonoBehaviour:
   <StateData>k__BackingField: {fileID: 11400000, guid: adedabab4d8c01c4f8d6fdc7443fe776, type: 2}
   rangedAttackPosition: {fileID: 4355530884200358867}
   jumpAttackPosition: {fileID: 1690019699}
-  <teleportPos>k__BackingField: {fileID: 1745355985}
+  <SkyTeleportPos>k__BackingField: {fileID: 1745355985}
+  <GroundTeleportPos>k__BackingField: {fileID: 387832879}
 --- !u!1001 &8435301788600582347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1776,6 +1864,14 @@ PrefabInstance:
     - target: {fileID: 762392795334535855, guid: 034d2d2732c7dd44f919bfee203aaeb2, type: 3}
       propertyPath: m_Offset.y
       value: 1.2743626
+      objectReference: {fileID: 0}
+    - target: {fileID: 6724404637796324551, guid: 034d2d2732c7dd44f919bfee203aaeb2, type: 3}
+      propertyPath: lookAt
+      value: 
+      objectReference: {fileID: 298549023}
+    - target: {fileID: 6724404637796324551, guid: 034d2d2732c7dd44f919bfee203aaeb2, type: 3}
+      propertyPath: focusOnPlayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6724404638285626580, guid: 034d2d2732c7dd44f919bfee203aaeb2, type: 3}
       propertyPath: m_RootOrder

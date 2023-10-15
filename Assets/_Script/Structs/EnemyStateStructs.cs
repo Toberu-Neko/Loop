@@ -223,3 +223,9 @@ public class ED_FourSkyAttackState
     public float fireDelay = 0.5f;
     public float attackDistance = 10f;
 }
+
+[Serializable]
+public class  ED_BackToIdleState
+{
+    public float stunTime = 3f;
+}

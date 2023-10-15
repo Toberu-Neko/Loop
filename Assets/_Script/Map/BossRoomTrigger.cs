@@ -4,6 +4,7 @@ using UnityEngine;
 public class BossRoomTrigger : MonoBehaviour
 {
     [SerializeField] private BossBase boss;
+    [SerializeField] private BossRoomCamLookat camLookat;
     [SerializeField] private GameObject bossRoomDoor;
     [SerializeField] private CinemachineVirtualCamera bossCamera;
     [SerializeField] private CinemachineVirtualCamera orgCamera;
@@ -27,6 +28,7 @@ public class BossRoomTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             enterPosX = (collision.transform.position - col.bounds.center).normalized.x;
+            camLookat.SetPlayer(collision.transform);
         }
     }
 

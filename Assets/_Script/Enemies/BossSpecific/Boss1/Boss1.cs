@@ -29,7 +29,8 @@ public class Boss1 : BossBase
     [SerializeField] private Transform rangedAttackPosition;
     [SerializeField] private Transform jumpAttackPosition;
 
-    [field: SerializeField] public Transform teleportPos { get; private set; }
+    [field: SerializeField] public Transform SkyTeleportPos { get; private set; }
+    [field: SerializeField] public Transform GroundTeleportPos { get; private set; }
 
     public override void Awake()
     {

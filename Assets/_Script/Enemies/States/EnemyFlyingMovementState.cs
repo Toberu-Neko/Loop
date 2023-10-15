@@ -49,7 +49,7 @@ public class EnemyFlyingMovementState : EnemyFlyingStateBase
 
     private Vector2 GetDirection()
     {
-        Vector2 direction = new(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        Vector2 direction = new(Random.Range(-1f, 1f), Random.Range(-0.4f, 1f));
         int count = 0;
 
         while (CollisionSenses.IsDetectingWall(direction, stateData.movementSpeed * stateData.moveTime))
@@ -61,7 +61,7 @@ public class EnemyFlyingMovementState : EnemyFlyingStateBase
             }
 
             count++;
-            direction = new(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+            direction = new(Random.Range(-1f, 1f), Random.Range(-0.4f, 1f));
         }
 
         return direction;

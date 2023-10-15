@@ -42,7 +42,7 @@ public class B1_ChooseRandomBulletState : ChooseRandomBulletState
                 stateMachine.ChangeState(boss.RedRangedAttackState);
                 break;
             case 2:
-                boss.transform.position = boss.teleportPos.position;
+                boss.transform.position = boss.SkyTeleportPos.position;
                 stateMachine.ChangeState(boss.FlyingIdleState);
                 break;
             default:
