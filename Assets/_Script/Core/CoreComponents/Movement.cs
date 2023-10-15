@@ -28,6 +28,7 @@ public class Movement : CoreComponent
 
     public Slope Slope { get; set; }
     private Stats stats;
+    private bool inKinematicState;
 
     protected override void Awake()
     {
@@ -48,6 +49,7 @@ public class Movement : CoreComponent
         TimeSlowVelocity = Vector2.zero;
         CurrentVelocity = Vector2.zero;
         FacingDirection = 1;
+        inKinematicState = false;
 
         orginalGrag = RB.drag;
 
@@ -325,13 +327,29 @@ public class Movement : CoreComponent
     }
     #endregion
 
+
     public void SetRBKinematic()
     {
+        inKinematicState = true;
         RB.bodyType = RigidbodyType2D.Kinematic;
     }
 
     public void SetRBDynamic()
     {
+        inKinematicState = false;
         RB.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    public void SetKnockbackDynamic()
+    {
+        RB.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    public void SetKnockbackKinematic()
+    {
+        if(inKinematicState)
+        {
+            RB.bodyType = RigidbodyType2D.Kinematic;
+        }
     }
 }

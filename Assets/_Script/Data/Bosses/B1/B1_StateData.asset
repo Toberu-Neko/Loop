@@ -30,6 +30,8 @@ MonoBehaviour:
   flyingIdleStateData:
     minIdleTime: 1
     maxIdleTime: 3
+  backToIdleStateData:
+    stunTime: 3
   blueRangedAttackStateData:
     aimPlayer: 1
     attackCooldown: 0
@@ -92,12 +94,13 @@ MonoBehaviour:
     details:
       damageAmount: 5
       staminaDamageAmount: 1
-      speed: 8
+      speed: 71.8
       duration: 5
       knockbackStrength: 8
       knockbackAngle: {x: 1, y: 1}
     spawnDelay: 0.75
     fireDelay: 1
+    rewindDelay: 0.25
     attackDistance: 8
   stunStateData:
     stunTime: 2

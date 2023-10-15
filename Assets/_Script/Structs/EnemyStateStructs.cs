@@ -221,6 +221,7 @@ public class ED_FourSkyAttackState
 
     public float spawnDelay = 0.5f;
     public float fireDelay = 0.5f;
+    public float rewindDelay = 0.25f;
     public float attackDistance = 10f;
 }
 

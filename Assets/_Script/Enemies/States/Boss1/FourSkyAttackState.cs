@@ -76,8 +76,8 @@ public class FourSkyAttackState : EnemyFlyingStateBase
 
         if(fireObjs && Time.time >= spawnTime + stateData.fireDelay && !startRewind)
         {
-            projectiles[attackCount].Fire((Vector2)playerPos.position - attackPos[attackCount], stateData.details);
-            Debug.Log("Fire" + attackCount);
+            Vector2 dir = (Vector2)playerPos.position - attackPos[attackCount];
+            projectiles[attackCount].Fire(dir.normalized, stateData.details);
 
             attackCount++;
             spawnTime = Time.time;
@@ -109,7 +109,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
                 allGroundedTime = Time.time;
             }
 
-            if (Time.time >= allGroundedTime + stateData.fireDelay && firstTimeAllGrounded)
+            if (Time.time >= allGroundedTime + stateData.rewindDelay && firstTimeAllGrounded)
             {
                 if (!doRewind)
                 {
@@ -142,8 +142,9 @@ public class FourSkyAttackState : EnemyFlyingStateBase
     private void SpawnObj(int index)
     {
         GameObject obj = ObjectPoolManager.SpawnObject(stateData.projectileObjs[Random.Range(0, stateData.projectileObjs.Length)], attackPos[index], Quaternion.identity);
+
         projectiles[index] = obj.GetComponent<EnemyProjectile_Rewind>();
-        projectiles[index].SetDetails(stateData.details);
+        projectiles[index].SetDetails(stateData.details, doRewind);
     }
 
     public void ResetAttack() => IsAttackDone = false;

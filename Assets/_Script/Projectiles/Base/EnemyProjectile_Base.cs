@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 {
-    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] protected LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;
     protected LayerMask whatIsTargetLayer;
     [SerializeField] protected Core core;
@@ -17,7 +17,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
     [SerializeField] private Animator anim;
 
-    public bool HasHitGround { get; private set; }
+    public bool HasHitGround { get; protected set; }
     protected bool countered;
     protected float startTime;
     private bool interected;
@@ -110,7 +110,6 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         this.fireDirection = fireDirection;
         whatIsTargetLayer = whatIsPlayer;
         startPos = transform.position;
-
         Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
 
         startTime = Time.time;
@@ -203,7 +202,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         OnDuration?.Invoke();
     }
 
-    protected void ReturnToPool()
+    protected virtual void ReturnToPool()
     {
         CancelInvoke(nameof(ReturnToPool));
         HasHitGround = true;

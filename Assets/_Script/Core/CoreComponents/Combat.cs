@@ -314,6 +314,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
     }
 
+
     private void HandleKnockback(float strength, Vector2 angle, int direction)
     {
         if(strength == 0f || angle == Vector2.zero)
@@ -342,8 +343,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
         if(movement.RB.bodyType == RigidbodyType2D.Kinematic)
         {
-            movement.SetRBDynamic();
+            movement.SetKnockbackDynamic();
         }
+
         movement.SetVelocity(strength, angle, direction);
         movement.SetCanSetVelocity(false);
         isKnockbackActive = true;
@@ -356,6 +358,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         if (isKnockbackActive && ((movement.CurrentVelocity.y <= 0.01f && collisionSenses.Ground) || Time.time >= knockbackStartTime + maxKnockbackTime))
         {
             movement.SetCanSetVelocity(true);
+
+            movement.SetKnockbackKinematic();
+
             isKnockbackActive = false;
         }
     }

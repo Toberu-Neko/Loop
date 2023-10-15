@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
 {
+    [SerializeField] private GameObject bookmarkPrefab;
+    [SerializeField] private Collider2D col;
+    private GameObject bookmarkObj;
     private bool startRewind = false;
-    private bool hitPlayer = false;
     private bool fire = false;
 
     public override void Fire(Vector2 fireDirection, ProjectileDetails details)
@@ -13,6 +15,7 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
         base.Fire(fireDirection, details);
 
         fire = true;
+        Invoke(nameof(SetHasGrounded), 2f);
     }
 
     public override void HandlePerfectBlock()
@@ -23,6 +26,7 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
     public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
     {
         ReturnToPool();
+
     }
 
     public void Rewind(bool doRewind = true)
@@ -31,7 +35,9 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
             return;
         if (doRewind)
         {
+            col.enabled = true;
             startRewind = true;
+            HasHitGround = false;
         }
         else
         {
@@ -57,26 +63,32 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
     protected override void OnDisable()
     {
         base.OnDisable();
-
-        OnHitTargetAction -= HandleHitTarget;
-        OnHitGroundAction -= HandleHitGround;
+        CancelInvoke(nameof(SetHasGrounded));
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
-        hitPlayer = false;
-        startRewind = false;
         fire = false;
-
-        OnHitTargetAction += HandleHitTarget;
-        OnHitGroundAction += HandleHitGround;
+        startRewind = false;
+        HasHitGround = false;
+        bookmarkObj = null;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
+        if (((1 << collision.gameObject.layer) & whatIsTargetLayer) != 0 && !HasHitGround)
+        {
+            HandleHitTarget(collision);
+        }
+
+        if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
+        {
+            HasHitGround = true;
+            CancelInvoke(nameof(SetHasGrounded));
+            movement.SetVelocityZero();
+        }
     }
 
     protected override void Update()
@@ -103,17 +115,29 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
         }
     }
 
-    public void SetDetails(ProjectileDetails details)
+    public void SetDetails(ProjectileDetails details, bool doRewind)
     {
         this.details = details;
+
+        if (doRewind)
+        {
+            bookmarkObj = ObjectPoolManager.SpawnObject(bookmarkPrefab, transform.position, transform.rotation);
+            bookmarkObj.GetComponent<SpriteRenderer>().sprite = SR.sprite;
+        }
+    }
+
+    private void SetHasGrounded()
+    {
+        if (!HasHitGround)
+        {
+            col.enabled = false;
+            HasHitGround = true;
+        }
     }
 
 
     private void HandleHitTarget(Collider2D collider)
     {
-        if (hitPlayer)
-            return;
-
         if (collider.TryGetComponent(out IDamageable damageable))
         {
             damageable.Damage(details.damageAmount, transform.position);
@@ -128,8 +152,13 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
         }
     }
 
-    private void HandleHitGround()
+    protected override void ReturnToPool()
     {
-        hitPlayer = false;
+        base.ReturnToPool();
+
+        if(bookmarkObj != null)
+        {
+            ObjectPoolManager.ReturnObjectToPool(bookmarkObj);
+        }   
     }
 }

@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class Boss1 : BossBase
 {
+
     public B1_IdleState IdleState { get; private set; }
     public B1_InitAnimState InitAnimState { get; private set; }
 
     public B1_PlayerDetectedMoveState PlayerDetectedMoveState { get; private set; }
     public B1_FlyingIdleState FlyingIdleState { get; private set; }
     public B1_FlyingMovementState FlyingMovementState { get; private set; }
-    
+    public B1_BackToGroundState BackToGroundState { get; private set; }
 
     public B1_ChooseRandomBulletState ChooseRandomBulletState { get; private set; }
     public B1_RangedAttackState BlueRangedAttackState { get; private set; }
@@ -26,6 +27,8 @@ public class Boss1 : BossBase
     public B1_DeadState DeadState { get; private set; }
 
     [field: SerializeField] public B1_StateData StateData { get; private set; }
+
+    [Header("Positions")]
     [SerializeField] private Transform rangedAttackPosition;
     [SerializeField] private Transform jumpAttackPosition;
 
@@ -42,7 +45,7 @@ public class Boss1 : BossBase
         PlayerDetectedMoveState = new B1_PlayerDetectedMoveState(this, StateMachine, "move", StateData.playerDetectedMoveStateData, this);
         FlyingIdleState = new B1_FlyingIdleState(this, StateMachine, "idle", StateData.flyingIdleStateData, this);
         FlyingMovementState = new B1_FlyingMovementState(this, StateMachine, "move", StateData.flyingMovementStateData, this);
-
+        BackToGroundState = new B1_BackToGroundState(this, StateMachine, "backToGround", StateData.backToIdleStateData, this);
 
         ChooseRandomBulletState = new B1_ChooseRandomBulletState(this, StateMachine, "chooseRandomBullet", StateData.chooseRandomBulletStateData, this);
         BlueRangedAttackState = new B1_RangedAttackState(this, StateMachine, "blueRangedAttack", rangedAttackPosition, StateData.blueRangedAttackStateData, this);

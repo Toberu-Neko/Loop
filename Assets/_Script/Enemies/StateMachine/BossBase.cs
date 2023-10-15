@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class BossBase : Entity, IDataPersistance
 {
+    [Header("Boss Basic")]
+    [SerializeField, Range(-1, 1), Tooltip("1R, -1L")] private int initFacingPos = 1;
     [field: SerializeField] public string BossName { get; private set;}
     protected event Action OnEnterBossRoom;
-    [SerializeField, Range(-1,1), Tooltip("1R, -1L")] private int initFacingPos = 1;
     private bool defeated = false;
     public override void Awake()
     {
