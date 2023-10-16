@@ -9,14 +9,12 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     public bool IsAttackDone { get; private set; }
     private bool doRewind = false;
 
-    private BoxCollider2D bossRoom;
     private Vector2[,] explosivePositions;
 
     //ROW = LR COL = UD
     public SliceRoomAndExplodeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_SliceRoomAndExplodeState stateData, BoxCollider2D bossRoom) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
-        this.bossRoom = bossRoom;
         IsAttackDone = false;
         doRewind = false;
 
