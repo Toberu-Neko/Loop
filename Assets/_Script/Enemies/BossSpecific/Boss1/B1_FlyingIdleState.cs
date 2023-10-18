@@ -33,7 +33,7 @@ public class B1_FlyingIdleState : EnemyFlyingIdleState
                 switch (attackDoneCount)
                 {
                     case 2:
-                        switch (Random.Range(0, 2))
+                        switch (Random.Range(0, 1))
                         {
                             case 0:
                                 stateMachine.ChangeState(boss.SliceRoomAndExplodeState);

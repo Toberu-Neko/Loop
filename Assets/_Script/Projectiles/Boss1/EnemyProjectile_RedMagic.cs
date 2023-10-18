@@ -29,7 +29,7 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
 
     protected override void OnDisable()
     {
-        base.OnEnable();
+        base.OnDisable();
 
         OnHitTargetAction -= HandleHitTarget;
         OnHitGroundAction -= HandleHitGround;

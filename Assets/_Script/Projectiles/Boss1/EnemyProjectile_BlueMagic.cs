@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
 {
-    [SerializeField] private float startRadius = 1f;
-    [SerializeField] private float expandRate = 1f;
-    [SerializeField] private float duration = 5f;
-    [SerializeField] private float damagePace = 0.33f;
-    [SerializeField] private float slowMultiplier = 0.5f;
+    [Header("Blue Magic")]
+    [SerializeField] private BlueMagicVariables variables;
     
     [SerializeField] private GameObject sphereObj;
     private Vector3 sphereOrgScale;
@@ -35,7 +31,7 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
 
         startMagic = false;
         sphereObj.SetActive(false);
-        currentRadius = startRadius;
+        currentRadius = variables.startRadius;
         lastDamageTime = 0f;
         startMagicTime = 0f;
 
@@ -44,7 +40,7 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
 
     protected override void OnDisable()
     {
-        base.OnEnable();
+        base.OnDisable();
 
         OnHitTargetAction -= HandleHitTarget;
         OnHitGroundAction -= HandleHitGround;
@@ -61,27 +57,32 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
             startMagicTime = stats.Timer(startMagicTime);
             lastDamageTime = stats.Timer(lastDamageTime);
 
-            if (stats.IsTimeSlowed)
-            {
-                currentRadius += expandRate * Time.deltaTime * GameManager.Instance.TimeSlowMultiplier;
-            }
-            else if (!stats.IsTimeStopped)
-            {
-                currentRadius += expandRate * Time.deltaTime;
-            }
+            ExpandRadius();
 
-            sphereObj.transform.localScale = sphereOrgScale  * currentRadius;
-
-            if(Time.time >= lastDamageTime + damagePace)
+            if (Time.time >= lastDamageTime + variables.damagePace)
             {
                 DoDamage();
             }
 
-            if(Time.time >= startMagicTime + duration)
+            if(Time.time >= startMagicTime + variables.duration)
             {
                 ReturnToPool();
             }
         }
+    }
+
+    private void ExpandRadius()
+    {
+        if (stats.IsTimeSlowed)
+        {
+            currentRadius += variables.expandRate * Time.deltaTime * GameManager.Instance.TimeSlowMultiplier;
+        }
+        else if (!stats.IsTimeStopped)
+        {
+            currentRadius += variables.expandRate * Time.deltaTime;
+        }
+
+        sphereObj.transform.localScale = sphereOrgScale * currentRadius;
     }
 
     public override void Fire(Vector2 fireDirection, ProjectileDetails details)
@@ -91,6 +92,7 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
 
     private void HandleHitTarget(Collider2D collider)
     {
+
         if (collider.TryGetComponent(out IDamageable damageable))
         {
             damageable.Damage(0.1f, transform.position, true);
@@ -124,7 +126,7 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
             staminaDamageable?.TakeStaminaDamage(details.staminaDamageAmount, transform.position, false);
 
             col.transform.TryGetComponent(out ISlowable slowable);
-            slowable?.SetActionSpeedMultiplier(slowMultiplier, damagePace);
+            slowable?.SetActionSpeedMultiplier(variables.slowMultiplier, variables.damagePace);
         }
     }
     public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
@@ -151,4 +153,14 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
     {
         base.OnTriggerEnter2D(collision);
     }
+}
+
+[Serializable]
+public class BlueMagicVariables
+{
+    public float startRadius = 1.1f;
+    public float expandRate = 0.4f;
+    public float duration = 4f;
+    public float damagePace = 0.33f;
+    public float slowMultiplier = 0.5f;
 }

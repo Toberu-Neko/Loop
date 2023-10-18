@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SliceRoomAndExplodeState : EnemyFlyingStateBase
@@ -9,12 +7,14 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     public bool IsAttackDone { get; private set; }
     private bool doRewind = false;
 
+    private Transform attackPos;
     private Vector2[,] explosivePositions;
 
     //ROW = LR COL = UD
-    public SliceRoomAndExplodeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_SliceRoomAndExplodeState stateData, BoxCollider2D bossRoom) : base(entity, stateMachine, animBoolName)
+    public SliceRoomAndExplodeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_SliceRoomAndExplodeState stateData, BoxCollider2D bossRoom, Transform attackPos) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
+        this.attackPos = attackPos;
         IsAttackDone = false;
         doRewind = false;
 
@@ -44,9 +44,12 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         {
             for (int j = 0; j < stateData.column; j++)
             {
-                GameObject obj = ObjectPoolManager.SpawnObject(stateData.bullets[0], explosivePositions[i, j], Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
-                IFireable fireable = obj.GetComponent<IFireable>();
-                fireable.Fire(Vector2.zero, stateData.details);
+                GameObject obj = ObjectPoolManager.SpawnObject(stateData.bullets[0], attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
+                EP_BlueStatic fireable = obj.GetComponent<EP_BlueStatic>();
+
+                Vector2 direction = explosivePositions[i, j] - (Vector2)attackPos.position;
+                fireable.Fire(direction.normalized, stateData.details);
+                fireable.Init(explosivePositions[i, j], 3f);
             }
         }
     }

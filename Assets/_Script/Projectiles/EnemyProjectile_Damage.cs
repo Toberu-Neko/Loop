@@ -7,7 +7,6 @@ public class EnemyProjectile_Damage : EnemyProjectile_Base
     {
         base.OnEnable();
 
-        OnHitTargetAction += HandleHitTarget;
         OnHitGroundAction += HandleHitGround;
         OnDuration += ReturnToPool;
     }
@@ -16,13 +15,13 @@ public class EnemyProjectile_Damage : EnemyProjectile_Base
     {
         base.OnEnable();
 
-        OnHitTargetAction -= HandleHitTarget;
         OnHitGroundAction -= HandleHitGround;
         OnDuration -= ReturnToPool;
     }
 
-    private void HandleHitTarget(Collider2D collider)
+    protected override void OnTriggerEnter2D(Collider2D collider)
     {
+        base.OnTriggerEnter2D(collider);
 
         if (collider.TryGetComponent(out IDamageable damageable))
         {

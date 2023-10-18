@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 {
+    [Header("Base")]
     [SerializeField] protected LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsPlayer;
     protected LayerMask whatIsTargetLayer;
@@ -178,17 +179,16 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         }
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
-        if (((1 << collision.gameObject.layer) & whatIsTargetLayer) != 0 && !HasHitGround && !interected)
+        if (((1 << collider.gameObject.layer) & whatIsTargetLayer) != 0 && !HasHitGround && !interected)
         {
             interected = true;
-            OnHitTargetAction?.Invoke(collision);
+            OnHitTargetAction?.Invoke(collider);
         }
 
-        if (((1 << collision.gameObject.layer) & whatIsGround) != 0)
+        if (((1 << collider.gameObject.layer) & whatIsGround) != 0)
         {
-            Debug.Log("HitGround");
             HasHitGround = true;
             
             movement.SetVelocityZero();
