@@ -13,6 +13,7 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     private List<Vector2> explosivePositions;
     private int objPerSpawn;
     private int objCount = 0;
+    private int currentSpawnCount;
     
 
     private float spawnTime = 0f;
@@ -30,8 +31,8 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         this.stateData = stateData;
         this.attackPos = attackPos;
         IsAttackDone = false;
-        doRewind = false;
-        objPerSpawn = stateData.row * stateData.column / 3;
+        doRewind = true;
+        objPerSpawn = stateData.row * stateData.column / stateData.spawnCount;
         orgExplosivePositions = new();
 
         for (int i = 0; i < stateData.row; i++)
@@ -56,6 +57,7 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         Movement.SetVelocityZero();
         state = State.Spawn;
         objCount = 0;
+        currentSpawnCount = 1;
     }
 
     public override void LogicUpdate()
@@ -71,7 +73,24 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
 
                 if (Time.time >= spawnTime + stateData.spawnDelay && (stateData.row * stateData.column - objCount >= objPerSpawn))
                 {
-                    Spawn();
+                    if (!doRewind)
+                    {
+                        Spawn(stateData.explodeDelay);
+
+                        //2 - 0.5 - 0.5
+                        //2 - 0.5
+                        //2
+                    }
+                    else
+                    {
+                        float firstDelay = stateData.explodeDelay - stateData.spawnDelay * (stateData.spawnCount - 1);
+
+                        Spawn(firstDelay + stateData.spawnDelay * (stateData.spawnCount - currentSpawnCount) * 2f);
+
+                        //2 + 0.5 +0.5
+                        //1.5 + 0.5
+                        //1
+                    }
                 }
                 else if(stateData.row * stateData.column - objCount < objPerSpawn)
                 {
@@ -85,26 +104,31 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
 
     }
 
-    private void Spawn()
+    private void Spawn(float delay)
     {
         spawnTime = Time.time;
+        currentSpawnCount++;
         for (int i = 0; i < objPerSpawn; i++)
         {
             objCount++;
             Vector2 targetPos = explosivePositions[Random.Range(0, explosivePositions.Count)];
-            SpawnSingleObj(targetPos);
+            SpawnSingleObj(targetPos, delay);
             explosivePositions.Remove(targetPos);
         }
     }
 
-    private void SpawnSingleObj(Vector2 targetPosition)
+    private void SpawnSingleObj(Vector2 targetPosition, float delay)
     {
         GameObject obj = ObjectPoolManager.SpawnObject(stateData.bullets[0], attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
         EP_BlueStatic fireable = obj.GetComponent<EP_BlueStatic>();
 
         Vector2 direction = targetPosition - (Vector2)attackPos.position;
+        float distance = Vector2.Distance(targetPosition, (Vector2)attackPos.position);
+        distance = Mathf.Log(distance);
+
+
         fireable.Fire(direction.normalized, stateData.details);
-        fireable.Init(targetPosition, 3f);
+        fireable.Init(targetPosition, delay);
     }
 
     public void ResetAttack() => IsAttackDone = false;

@@ -239,7 +239,11 @@ public class ED_SliceRoomAndExplodeState
     public int row = 5;
     public int column = 5;
 
+    public int spawnCount = 3;
     public float spawnDelay = 0.5f;
+    public float explodeDelay = 2f;
+    public float rewindExplodeDelay = 1f;
+    public float explodeInterval = 0.25f;
 }
 
 [Serializable]
