@@ -154,7 +154,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
             {
                 if (facingDirection != direction)
                 {
-                    counterVelocity = movement.TimeStopVelocity * -4f;
+                    counterVelocity = -speed * fireDirection * -4f;
                     movement.SetTimeStopVelocity(counterVelocity);
                     movement.Turn();
                 }
@@ -168,8 +168,8 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
             {
                 if (facingDirection != direction)
                 {
-                    counterVelocity = -movement.CurrentVelocity / GameManager.Instance.TimeSlowMultiplier;
-                    movement.SetTimeSlowVelocity(counterVelocity / GameManager.Instance.TimeSlowMultiplier * 5f);
+                    counterVelocity = -speed * fireDirection;
+                    movement.SetTimeSlowVelocity(counterVelocity);
                     movement.Turn();
                 }
                 else

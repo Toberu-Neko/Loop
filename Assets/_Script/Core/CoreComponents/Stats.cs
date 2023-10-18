@@ -27,6 +27,7 @@ public class Stats : CoreComponent
     public float TimeSlowMultiplier { get; private set; } = 0f;
 
     public float DebuffActionSpeedMultiplier { get; set; } = 1f;
+    public float TimeEffectMultiplier { get; set; } = 1f;
 
     public float AnimationSpeed
     {
@@ -38,7 +39,7 @@ public class Stats : CoreComponent
             }
             else
             {
-                return orgAnimationSpeed * DebuffActionSpeedMultiplier;
+                return orgAnimationSpeed * DebuffActionSpeedMultiplier * TimeEffectMultiplier;
             }
         }
         set
@@ -99,6 +100,7 @@ public class Stats : CoreComponent
         IsTimeSlowed = false;
         Knockable = true;
         DebuffActionSpeedMultiplier = 1f;
+        TimeEffectMultiplier = 1f;
 
         Health.Init();
         Stamina.Init();
@@ -177,12 +179,16 @@ public class Stats : CoreComponent
         InCombat = true;
         lastCombatTime = Time.time;
         IsTimeStopped = true;
+        TimeEffectMultiplier = 0f;
+
         OnTimeStopStart?.Invoke();
     }
 
     public void SetTimeStopFalse()
     {
         IsTimeStopped = false;
+        TimeEffectMultiplier = 1f;
+
         OnTimeStopEnd?.Invoke();
     }
     #endregion
@@ -193,6 +199,8 @@ public class Stats : CoreComponent
         InCombat = true;
         lastCombatTime = Time.time;
         IsTimeSlowed = true;
+
+        TimeEffectMultiplier = GameManager.Instance.TimeSlowMultiplier;
         TimeSlowMultiplier = GameManager.Instance.TimeSlowMultiplier;
         OnTimeSlowStart?.Invoke();
     }
@@ -200,6 +208,7 @@ public class Stats : CoreComponent
     public void SetTimeSlowFalse()
     {
         IsTimeSlowed = false;
+        TimeEffectMultiplier = 1f;
         OnTimeSlowEnd?.Invoke();
     }
     #endregion

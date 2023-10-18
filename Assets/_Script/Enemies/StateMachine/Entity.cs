@@ -14,7 +14,6 @@ public class Entity : MonoBehaviour
     protected Combat Combat { get;private set; }
 
     public Animator Anim { get; private set; }
-    private float animSpeed;
     private WeaponAttackDetails collisionAttackDetails;
     public bool SkillCollideDamage { get; private set; }
 
@@ -30,7 +29,6 @@ public class Entity : MonoBehaviour
         Combat = Core.GetCoreComponent<Combat>();
 
         Anim = GetComponent<Animator>();
-        animSpeed = 1f;
         collisionAttackDetails = EntityData.collisionAttackDetails;
 
         movement.OrginalGravityScale = EntityData.gravityScale;
@@ -41,8 +39,6 @@ public class Entity : MonoBehaviour
     {
         Stats.OnTimeStopStart += HandleOnTimeStop;
         Stats.OnTimeStopEnd += HandleOnTimeStart;
-        Stats.OnTimeSlowStart += HandleTimeSlowStart;
-        Stats.OnTimeSlowEnd += HandleTimeSlowEnd;
         Stats.Health.OnCurrentValueZero += HandleHealthZero;
 
         Stats.Health.Init();
@@ -59,8 +55,6 @@ public class Entity : MonoBehaviour
     {
         Stats.OnTimeStopStart -= HandleOnTimeStop;
         Stats.OnTimeStopEnd -= HandleOnTimeStart;
-        Stats.OnTimeSlowStart -= HandleTimeSlowStart;
-        Stats.OnTimeSlowEnd -= HandleTimeSlowEnd;
         Stats.Health.OnCurrentValueZero -= HandleHealthZero;
 
         Anim.speed = 1f;
@@ -92,24 +86,14 @@ public class Entity : MonoBehaviour
     {
     }
 
-    private void HandleTimeSlowStart()
-    {
-        Anim.speed *= GameManager.Instance.TimeSlowMultiplier;
-    }
-    private void HandleTimeSlowEnd()
-    {
-        Anim.speed /= GameManager.Instance.TimeSlowMultiplier;
-    }
 
     private void HandleOnTimeStop()
     {
-        Anim.speed = 0;
         StateMachine.SetCanChangeState(false);
     }
 
     private void HandleOnTimeStart()
     {
-        Anim.speed = animSpeed;
         StateMachine.SetCanChangeState(true);
     }
 
