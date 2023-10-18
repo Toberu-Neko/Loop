@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EP_BlueStatic : EnemyProjectile_Base
+public class EP_BlueStatic : EP_StaticBase
 {
     [Header("Blue Magic")]
     [SerializeField] private BlueMagicVariables variables;
@@ -12,52 +12,35 @@ public class EP_BlueStatic : EnemyProjectile_Base
     private float startMagicTime;
     private float lastDamageTime;
 
-    private Vector2 destination;
-    private float explodeTime;
-    private float startWaitingTime;
-
-    private State state;
-    private enum State
-    {
-        Moving,
-        Waiting,
-        Explode
-    }
-
-
     protected override void Awake()
     {
         base.Awake();
         sphereOrgScale = sphereObj.transform.localScale;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        sphereObj.SetActive(false);
+        currentRadius = variables.startRadius;
+        lastDamageTime = 0f;
+        startMagicTime = 0f;
+
+        SR.enabled = true;
+        OnExplodeAction += HandleExplodeAction;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        OnExplodeAction -= HandleExplodeAction;
+    }
+
     protected override void Update()
     {
         base.Update();
-
-        if(Vector2.Distance(transform.position, destination) < 1f && state == State.Moving)
-        {
-            state = State.Waiting;
-            startWaitingTime = Time.time;
-        }
-
-        if(state != State.Moving)
-        {
-            movement.SetVelocityZero();
-        }
-
-        if(state == State.Waiting)
-        {
-            startWaitingTime = stats.Timer(startWaitingTime);
-
-            if(Time.time >= startWaitingTime + explodeTime)
-            {
-                state = State.Explode;
-                sphereObj.SetActive(true);
-                lastDamageTime = 0f;
-                startMagicTime = Time.time;
-            }
-        }
 
         if (state == State.Explode)
         {
@@ -76,9 +59,14 @@ public class EP_BlueStatic : EnemyProjectile_Base
                 ReturnToPool();
             }
         }
-
-
     }
+    private void HandleExplodeAction()
+    {
+        sphereObj.SetActive(true);
+        lastDamageTime = 0f;
+        startMagicTime = Time.time;
+    }
+
     private void ExpandRadius()
     {
         if (stats.IsTimeSlowed)
@@ -100,10 +88,10 @@ public class EP_BlueStatic : EnemyProjectile_Base
         foreach (var col in cols)
         {
             col.transform.TryGetComponent(out IDamageable damageable);
-            damageable?.Damage(details.damageAmount, transform.position, false);
+            damageable?.Damage(details.combatDetails.damageAmount, transform.position, false);
 
             col.transform.TryGetComponent(out IStaminaDamageable staminaDamageable);
-            staminaDamageable?.TakeStaminaDamage(details.staminaDamageAmount, transform.position, false);
+            staminaDamageable?.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position, false);
 
             col.transform.TryGetComponent(out ISlowable slowable);
             slowable?.SetActionSpeedMultiplier(variables.slowMultiplier, variables.damagePace);
@@ -120,22 +108,6 @@ public class EP_BlueStatic : EnemyProjectile_Base
         base.LateUpdate();
     }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-
-        sphereObj.SetActive(false);
-        currentRadius = variables.startRadius;
-        lastDamageTime = 0f;
-        startMagicTime = 0f;
-
-        SR.enabled = true;
-    }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -149,29 +121,15 @@ public class EP_BlueStatic : EnemyProjectile_Base
             base.Knockback(angle, force, damagePosition, blockable);
         }
     }
-    public override void Fire(Vector2 fireDirection, ProjectileDetails details)
+    public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
-        base.Fire(fireDirection, details);
+        base.Fire(fireDirection, speed, details);
 
         state = State.Moving;
-
     }
-
-    public override void HandlePerfectBlock()
+    public override void Init(Vector2 destination, float explodeTime)
     {
-        base.HandlePerfectBlock();
-    }
-
-    public void Init(Vector2 destination, float explodeTime)
-    {
-        this.destination = destination;
-        this.explodeTime = explodeTime;
-    }
-
-
-    protected override void ReturnToPool()
-    {
-        base.ReturnToPool();
+        base.Init(destination, explodeTime);
     }
 
 }

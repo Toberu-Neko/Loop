@@ -65,7 +65,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
             GameObject projectile = ObjectPoolManager.SpawnObject(player.WeaponManager.SwordData.projectile, core.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
             PlayerProjectile projectileScript = projectile.GetComponent<PlayerProjectile>();
             ProjectileDetails details = weaponData.projectileDetails;
-            details.damageAmount *= PlayerInventoryManager.Instance.SwordMultiplier.attackSpeedMultiplier;
+            details.combatDetails.damageAmount *= PlayerInventoryManager.Instance.SwordMultiplier.attackSpeedMultiplier;
             projectileScript.Fire(weaponData.projectileDetails, new Vector2(Movement.FacingDirection, 0));
         }
         else

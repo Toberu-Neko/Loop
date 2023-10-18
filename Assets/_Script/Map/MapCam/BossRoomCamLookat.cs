@@ -7,7 +7,7 @@ public class BossRoomCamLookat : MonoBehaviour
     [SerializeField] private Transform boss;
     private Transform player;
 
-    private float mivFOVDistance = 15f;
+    [SerializeField] private float mivFOVDistance = 15f;
 
     private Vector2 workspace = new();
     private float orgFOV;
@@ -28,7 +28,7 @@ public class BossRoomCamLookat : MonoBehaviour
             }
             else
             {
-                CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV + Vector2.Distance(player.position, boss.position), Time.deltaTime * 5f);
+                CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV + Vector2.Distance(player.position, boss.position) / 2f, Time.deltaTime * 20f);
             }
         }
 

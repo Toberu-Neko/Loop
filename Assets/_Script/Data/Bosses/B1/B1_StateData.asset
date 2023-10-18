@@ -37,23 +37,25 @@ MonoBehaviour:
     attackCooldown: 0
     projectile: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
     projectileDetails:
-      damageAmount: 3
-      staminaDamageAmount: 1
+      duration: 4
       speed: 20
-      duration: 3
-      knockbackStrength: 0
-      knockbackAngle: {x: 0, y: 0}
+      combatDetails:
+        damageAmount: 5
+        staminaDamageAmount: 1
+        knockbackStrength: 5
+        knockbackAngle: {x: 0, y: 0}
   redRangedAttackStateData:
     aimPlayer: 1
     attackCooldown: 0
     projectile: {fileID: 8389792333474829002, guid: 9301c4eae8fbf7c42a4dcfa4d088a044, type: 3}
     projectileDetails:
-      damageAmount: 20
-      staminaDamageAmount: 15
-      speed: 25
       duration: 3
-      knockbackStrength: 15
-      knockbackAngle: {x: 1, y: 2}
+      speed: 25
+      combatDetails:
+        damageAmount: 5
+        staminaDamageAmount: 1
+        knockbackStrength: 8
+        knockbackAngle: {x: 1, y: 1}
   perfectBlockStateData:
     cooldown: 10
     radius: 1.5
@@ -74,60 +76,73 @@ MonoBehaviour:
     bullets:
     - obj: {fileID: 8389792333474829002, guid: 9301c4eae8fbf7c42a4dcfa4d088a044, type: 3}
       details:
-        damageAmount: 20
-        staminaDamageAmount: 15
-        speed: 25
         duration: 3
-        knockbackStrength: 15
-        knockbackAngle: {x: 1, y: 2}
+        speed: 25
+        combatDetails:
+          damageAmount: 5
+          staminaDamageAmount: 1
+          knockbackStrength: 5
+          knockbackAngle: {x: 0, y: 0}
     - obj: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
       details:
-        damageAmount: 3
-        staminaDamageAmount: 1
-        speed: 20
         duration: 3
-        knockbackStrength: 0
-        knockbackAngle: {x: 0, y: 0}
+        speed: 20
+        combatDetails:
+          damageAmount: 5
+          staminaDamageAmount: 1
+          knockbackStrength: 5
+          knockbackAngle: {x: 0, y: 0}
   fourSkyAttackStateData:
     projectileObjs:
     - {fileID: 8389792333474829002, guid: a20559c03b9a5994483d45b940b5c14b, type: 3}
     details:
-      damageAmount: 5
-      staminaDamageAmount: 1
-      speed: 71.8
       duration: 5
-      knockbackStrength: 8
-      knockbackAngle: {x: 1, y: 1}
+      speed: 71.8
+      combatDetails:
+        damageAmount: 5
+        staminaDamageAmount: 1
+        knockbackStrength: 5
+        knockbackAngle: {x: 0, y: 0}
     spawnDelay: 0.75
     fireDelay: 1
     rewindDelay: 0.25
     attackDistance: 8
   sliceRoomAndExplodeStateData:
     bullets:
-    - {fileID: 8389792333474829002, guid: d8b08c52d2474cc45af4dfb0e64cefcd, type: 3}
-    details:
-      damageAmount: 3
-      staminaDamageAmount: 1
-      speed: 80
-      duration: 3
-      knockbackStrength: 0
-      knockbackAngle: {x: 0, y: 0}
-    row: 4
-    column: 3
+    - obj: {fileID: 8389792333474829002, guid: d8b08c52d2474cc45af4dfb0e64cefcd, type: 3}
+      details:
+        duration: 4
+        speed: 10
+        combatDetails:
+          damageAmount: 5
+          staminaDamageAmount: 1
+          knockbackStrength: 0
+          knockbackAngle: {x: 0, y: 0}
+    - obj: {fileID: 8389792333474829002, guid: c3536fb594d7edd4c830504f87649d81, type: 3}
+      details:
+        duration: 5
+        speed: 10
+        combatDetails:
+          damageAmount: 20
+          staminaDamageAmount: 10
+          knockbackStrength: 12
+          knockbackAngle: {x: 1, y: 1}
+    row: 5
+    column: 4
     spawnCount: 3
+    flyTime: 0.5
     spawnDelay: 0.5
     explodeDelay: 2
-    rewindExplodeDelay: 1
-    explodeInterval: 0.25
   abovePlayerAttackStateData:
     projectileObjs: []
     details:
-      damageAmount: 5
-      staminaDamageAmount: 1
-      speed: 10
       duration: 5
-      knockbackStrength: 5
-      knockbackAngle: {x: 0, y: 0}
+      speed: 10
+      combatDetails:
+        damageAmount: 5
+        staminaDamageAmount: 1
+        knockbackStrength: 5
+        knockbackAngle: {x: 0, y: 0}
     fireDelay: 0.5
     rewindDelay: 0.25
     attackDistance: 7.5

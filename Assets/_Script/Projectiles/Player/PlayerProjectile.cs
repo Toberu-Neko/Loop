@@ -41,19 +41,19 @@ public class PlayerProjectile : MonoBehaviour
         {
             if(collision.TryGetComponent(out IDamageable damageable))
             {
-                damageable.Damage(projectileDetails.damageAmount, transform.position, true);
+                damageable.Damage(projectileDetails.combatDetails.damageAmount, transform.position, true);
             }
             if(collision.TryGetComponent(out IKnockbackable knockbackable))
             {
-                knockbackable.Knockback(projectileDetails.knockbackAngle, projectileDetails.knockbackStrength, transform.position);
+                knockbackable.Knockback(projectileDetails.combatDetails.knockbackAngle, projectileDetails.combatDetails.knockbackStrength, transform.position);
             }
             if(collision.TryGetComponent(out IStaminaDamageable staminaDamageable))
             {
-                staminaDamageable.TakeStaminaDamage(projectileDetails.staminaDamageAmount, transform.position, true);
+                staminaDamageable.TakeStaminaDamage(projectileDetails.combatDetails.staminaDamageAmount, transform.position, true);
             }
             if(collision.TryGetComponent(out IMapDamageableItem mapDamageableItem))
             {
-                mapDamageableItem.TakeDamage(projectileDetails.damageAmount);
+                mapDamageableItem.TakeDamage(projectileDetails.combatDetails.damageAmount);
             }
 
             collidedObjects.Add(collision.gameObject);

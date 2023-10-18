@@ -172,14 +172,16 @@ public class ED_EnemyJumpAndMultiAttackState
     public float attackCooldown = 10f;
     public float attackVelocity = 20f;
     public int attackAmount = 4;
-    public ObjContainer[] bullets;
+    public MultiProjectileObjContainer[] bullets;
 
-    [Serializable]
-    public class ObjContainer
-    {
-        public GameObject obj;
-        public ProjectileDetails details;
-    }
+    
+}
+
+[Serializable]
+public class MultiProjectileObjContainer
+{
+    public GameObject obj;
+    public ProjectileDetails details;
 }
 
 [Serializable]
@@ -234,16 +236,14 @@ public class  ED_BackToIdleState
 [Serializable] 
 public class ED_SliceRoomAndExplodeState
 {
-    public GameObject[] bullets;
-    public ProjectileDetails details;
+    public MultiProjectileObjContainer[] bullets;
     public int row = 5;
     public int column = 5;
 
     public int spawnCount = 3;
+    public float flyTime = 0.5f;
     public float spawnDelay = 0.5f;
     public float explodeDelay = 2f;
-    public float rewindExplodeDelay = 1f;
-    public float explodeInterval = 0.25f;
 }
 
 [Serializable]

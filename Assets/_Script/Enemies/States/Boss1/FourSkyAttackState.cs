@@ -10,7 +10,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
 
     private Transform playerPos;
     private Vector2[] attackPos;
-    private EnemyProjectile_Rewind[] projectiles;
+    private EP_Rewind[] projectiles;
 
     private int attackCount = 0;
     private float spawnTime = 0f;
@@ -45,7 +45,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
         startRewind = false;
         firstTimeAllGrounded = false;
 
-        projectiles = new EnemyProjectile_Rewind[4];
+        projectiles = new EP_Rewind[4];
 
         attackPos = new Vector2[4];
         attackPos[0] = (Vector2)playerPos.position + Vector2.right * stateData.attackDistance;
@@ -77,7 +77,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
         if(fireObjs && Time.time >= spawnTime + stateData.fireDelay && !startRewind)
         {
             Vector2 dir = (Vector2)playerPos.position - attackPos[attackCount];
-            projectiles[attackCount].Fire(dir.normalized, stateData.details);
+            projectiles[attackCount].Fire(dir.normalized, stateData.details.speed, stateData.details);
 
             attackCount++;
             spawnTime = Time.time;
@@ -143,7 +143,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
     {
         GameObject obj = ObjectPoolManager.SpawnObject(stateData.projectileObjs[Random.Range(0, stateData.projectileObjs.Length)], attackPos[index], Quaternion.identity);
 
-        projectiles[index] = obj.GetComponent<EnemyProjectile_Rewind>();
+        projectiles[index] = obj.GetComponent<EP_Rewind>();
         projectiles[index].SetDetails(stateData.details, doRewind);
     }
 

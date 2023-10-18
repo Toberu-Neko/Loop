@@ -143,7 +143,7 @@ public class SnipingState : AttackState
 
         GameObject bulletObj = ObjectPoolManager.SpawnObject(stateData.bulletPrefab, attackPosition.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
         EnemyProjectile_Damage script = bulletObj.GetComponent<EnemyProjectile_Damage>();
-        script.Fire(aimPointDelta, stateData.bulletDetails);
+        script.Fire(aimPointDelta, stateData.bulletDetails.speed, stateData.bulletDetails);
     }
 
     public override void AnimationActionTrigger()

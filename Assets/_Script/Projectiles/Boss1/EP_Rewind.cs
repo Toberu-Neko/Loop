@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
+public class EP_Rewind : EnemyProjectile_Base, IRewindable
 {
     [SerializeField] private GameObject bookmarkPrefab;
     [SerializeField] private Collider2D col;
@@ -10,11 +10,15 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
     private bool startRewind = false;
     private bool fire = false;
 
-    public override void Fire(Vector2 fireDirection, ProjectileDetails details)
+    public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
-        base.Fire(fireDirection, details);
+        base.Fire(fireDirection, speed, details);
 
         fire = true;
+        if (HasHitGround)
+        {
+            HasHitGround = false;
+        }
         Invoke(nameof(SetHasGrounded), 2f);
     }
 
@@ -26,7 +30,6 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
     public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
     {
         ReturnToPool();
-
     }
 
     public void Rewind(bool doRewind = true)
@@ -98,7 +101,7 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
 
         if (startRewind)
         {
-            movement.SetVelocity(details.speed * -fireDirection);
+            movement.SetVelocity(speed * -fireDirection);
 
             if (Vector2.Distance((Vector2)transform.position, startPos) < 0.1f)
             {
@@ -107,7 +110,7 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
         }
         else if (!HasHitGround && fire)
         {
-            movement.SetVelocity(details.speed, fireDirection);
+            movement.SetVelocity(speed, fireDirection);
         }
         else
         {
@@ -140,15 +143,15 @@ public class EnemyProjectile_Rewind : EnemyProjectile_Base, IRewindable
     {
         if (collider.TryGetComponent(out IDamageable damageable))
         {
-            damageable.Damage(details.damageAmount, transform.position);
+            damageable.Damage(details.combatDetails.damageAmount, transform.position);
         }
         if (collider.TryGetComponent(out IKnockbackable knockbackable))
         {
-            knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, transform.position);
+            knockbackable.Knockback(details.combatDetails.knockbackAngle, details.combatDetails.knockbackStrength, transform.position);
         }
         if (collider.TryGetComponent(out IStaminaDamageable staminaDamageable))
         {
-            staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
+            staminaDamageable.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position);
         }
     }
 

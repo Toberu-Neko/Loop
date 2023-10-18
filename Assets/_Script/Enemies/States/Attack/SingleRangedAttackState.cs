@@ -16,14 +16,15 @@ public class SingleRangedAttackState : AttackState
 
         GameObject projectile = ObjectPoolManager.SpawnObject(stateData.projectile, attackPosition.position, attackPosition.rotation, ObjectPoolManager.PoolType.Projectiles);
         IFireable projectileScript = projectile.GetComponent<IFireable>();
+
         if (CheckPlayerSenses.IsPlayerInMaxAgroRange && stateData.aimPlayer)
         {
             Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPosition.position;
-            projectileScript.Fire(delta.normalized, stateData.projectileDetails);
+            projectileScript.Fire(delta.normalized, stateData.projectileDetails.speed, stateData.projectileDetails);
         }
         else
         {
-            projectileScript.Fire(Movement.ParentTransform.right, stateData.projectileDetails);
+            projectileScript.Fire(Movement.ParentTransform.right, stateData.projectileDetails.speed, stateData.projectileDetails);
         }
     }
 

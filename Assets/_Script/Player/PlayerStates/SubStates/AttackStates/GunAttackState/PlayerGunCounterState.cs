@@ -47,7 +47,7 @@ public class PlayerGunCounterState : PlayerGunAttackState
 
         PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.WeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
         ProjectileDetails details = data.counterAttackDetails;
-        details.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
+        details.combatDetails.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
         proj.Fire(details, mouseDirectionInput);
     }
 

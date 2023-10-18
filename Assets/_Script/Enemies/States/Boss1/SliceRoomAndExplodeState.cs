@@ -15,7 +15,6 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     private int objCount = 0;
     private int currentSpawnCount;
     
-
     private float spawnTime = 0f;
 
     private State state;
@@ -31,7 +30,7 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         this.stateData = stateData;
         this.attackPos = attackPos;
         IsAttackDone = false;
-        doRewind = true;
+        doRewind = false;
         objPerSpawn = stateData.row * stateData.column / stateData.spawnCount;
         orgExplosivePositions = new();
 
@@ -119,16 +118,19 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
 
     private void SpawnSingleObj(Vector2 targetPosition, float delay)
     {
-        GameObject obj = ObjectPoolManager.SpawnObject(stateData.bullets[0], attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
-        EP_BlueStatic fireable = obj.GetComponent<EP_BlueStatic>();
+        int index = Random.Range(0, stateData.bullets.Length);
+        GameObject obj = ObjectPoolManager.SpawnObject(stateData.bullets[index].obj, attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
+        IFireable fireable = obj.GetComponent<IFireable>();
+        IStaticProjectile staticScript = obj.GetComponent<IStaticProjectile>();
 
         Vector2 direction = targetPosition - (Vector2)attackPos.position;
+
         float distance = Vector2.Distance(targetPosition, (Vector2)attackPos.position);
-        distance = Mathf.Log(distance);
 
+        float speed = distance / stateData.flyTime;
 
-        fireable.Fire(direction.normalized, stateData.details);
-        fireable.Init(targetPosition, delay);
+        fireable.Fire(direction.normalized, speed, stateData.bullets[index].details);
+        staticScript.Init(targetPosition, delay);
     }
 
     public void ResetAttack() => IsAttackDone = false;

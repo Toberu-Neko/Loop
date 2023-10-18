@@ -25,22 +25,22 @@ public class EnemyProjectile_Damage : EnemyProjectile_Base
 
         if (collider.TryGetComponent(out IDamageable damageable))
         {
-            damageable.Damage(details.damageAmount, transform.position);
+            damageable.Damage(details.combatDetails.damageAmount, transform.position);
         }
         if (collider.TryGetComponent(out IKnockbackable knockbackable))
         {
-            knockbackable.Knockback(details.knockbackAngle, details.knockbackStrength, transform.position);
+            knockbackable.Knockback(details.combatDetails.knockbackAngle, details.combatDetails.knockbackStrength, transform.position);
         }
         if (collider.TryGetComponent(out IStaminaDamageable staminaDamageable))
         {
-            staminaDamageable.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
+            staminaDamageable.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position);
         }
 
         if (countered)
         {
             if (collider.TryGetComponent(out IMapDamageableItem mapDamageableItem))
             {
-                mapDamageableItem.TakeDamage(details.damageAmount);
+                mapDamageableItem.TakeDamage(details.combatDetails.damageAmount);
             }
         }
 

@@ -1,75 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectile_RedMagic : EnemyProjectile_Base
+public class EP_RedStatic : EP_StaticBase
 {
-    [SerializeField] private float startRadius = 2f;
+    [SerializeField] private float startRadius = 5f;
     [SerializeField] private float duration = 0.5f;
 
     [SerializeField] private GameObject sphereObj;
 
-    private float startMagicTime;
-    private bool startMagic;
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
-        OnHitTargetAction += HandleHitTarget;
-        OnHitGroundAction += HandleHitGround;
-        OnDuration += HandleHitGround;
+        OnExplodeAction += HandleExplode;
 
         sphereObj.SetActive(false);
 
         SR.enabled = true;
-        startMagic = false;
-        startMagicTime = 0f;
     }
 
-    protected override void OnDisable()
+
+    private void HandleExplode()
     {
-        base.OnDisable();
-
-        OnHitTargetAction -= HandleHitTarget;
-        OnHitGroundAction -= HandleHitGround;
-        OnDuration -= HandleHitGround;
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (startMagic)
-        {
-            startMagicTime = stats.Timer(startMagicTime);
-
-            if (Time.time >= startMagicTime + duration)
-            {
-                DoDamage();
-                ReturnToPool();
-            }
-        }
-    }
-
-    private void HandleHitTarget(Collider2D collider)
-    {
-        if (collider.TryGetComponent(out IDamageable damageable))
-        {
-            damageable.Damage(0f, transform.position, true);
-        }
-        HandleHitGround();
-    }
-
-    private void HandleHitGround()
-    {
-        if (!startMagic)
-        {
-            startMagic = true;
-            startMagicTime = Time.time;
-
-            sphereObj.SetActive(true);
-        }
+        sphereObj.SetActive(true);
+        SR.enabled = false;
+        DoDamage();
+        Invoke(nameof(ReturnToPool), 0.5f);
     }
 
     private void DoDamage()
@@ -110,6 +66,13 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
         base.FixedUpdate();
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        OnExplodeAction -= HandleExplode;
+    }
+
     public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
         base.Fire(fireDirection, speed, details);
@@ -122,11 +85,28 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
 
     public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
     {
-        base.Knockback(angle, force, damagePosition, blockable);
+        if (state == State.Moving)
+        {
+            base.Knockback(angle, force, damagePosition, blockable);
+        }
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collider)
     {
-        base.OnTriggerEnter2D(collision);
+    }
+
+    protected override void ReturnToPool()
+    {
+        base.ReturnToPool();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    public override void Init(Vector2 destination, float explodeTime)
+    {
+        base.Init(destination, explodeTime);
     }
 }

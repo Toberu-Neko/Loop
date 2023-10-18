@@ -85,9 +85,9 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
         sphereObj.transform.localScale = sphereOrgScale * currentRadius;
     }
 
-    public override void Fire(Vector2 fireDirection, ProjectileDetails details)
+    public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
-        base.Fire(fireDirection, details);
+        base.Fire(fireDirection, speed, details);
     }
 
     private void HandleHitTarget(Collider2D collider)
@@ -120,10 +120,10 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
         foreach (var col in cols)
         {
             col.transform.TryGetComponent(out IDamageable damageable);
-            damageable?.Damage(details.damageAmount, transform.position, false);
+            damageable?.Damage(details.combatDetails.damageAmount, transform.position, false);
 
             col.transform.TryGetComponent(out IStaminaDamageable staminaDamageable);
-            staminaDamageable?.TakeStaminaDamage(details.staminaDamageAmount, transform.position, false);
+            staminaDamageable?.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position, false);
 
             col.transform.TryGetComponent(out ISlowable slowable);
             slowable?.SetActionSpeedMultiplier(variables.slowMultiplier, variables.damagePace);

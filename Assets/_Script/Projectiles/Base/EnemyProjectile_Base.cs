@@ -24,6 +24,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     private bool interected;
     protected ProjectileDetails details;
 
+    protected float speed;
     protected Vector2 startPos;
     private Vector2 counterVelocity;
     protected Vector2 fireDirection;
@@ -39,7 +40,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
         if (!HasHitGround && !countered)
         {
-            movement.SetVelocity(details.speed, fireDirection);
+            movement.SetVelocity(speed, fireDirection);
         }
         if (!HasHitGround && countered)
         {
@@ -105,10 +106,11 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         anim.SetBool("timeSlow", false);
     }
 
-    public virtual void Fire(Vector2 fireDirection, ProjectileDetails details)
+    public virtual void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
-        this.details = details;
         this.fireDirection = fireDirection;
+        this.speed = speed;
+        this.details = details;
         whatIsTargetLayer = whatIsPlayer;
         startPos = transform.position;
         Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
@@ -116,8 +118,9 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         startTime = Time.time;
         transform.rotation = targetRotation;
         movement.SetGravityZero();
-        movement.SetVelocity(details.speed, fireDirection);
+        movement.SetVelocity(speed, fireDirection);
     }
+
 
     public virtual void HandlePerfectBlock()
     {

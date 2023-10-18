@@ -40,22 +40,22 @@ public class PlayerGrenade : MonoBehaviour
         {
             if (hit.TryGetComponent(out IDamageable dam))
             {
-                dam.Damage(details.damageAmount, transform.position);
+                dam.Damage(details.combatDetails.damageAmount, transform.position);
             }
 
             if (hit.TryGetComponent(out IKnockbackable knock))
             {
-                knock.Knockback(details.knockbackAngle, details.knockbackStrength, transform.position);
+                knock.Knockback(details.combatDetails.knockbackAngle, details.combatDetails.knockbackStrength, transform.position);
             }
 
             if (hit.TryGetComponent(out IStaminaDamageable damStamina))
             {
-                damStamina.TakeStaminaDamage(details.staminaDamageAmount, transform.position);
+                damStamina.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position);
             }
 
             if (hit.TryGetComponent(out IMapDamageableItem mapItem))
             {
-                mapItem.TakeDamage(details.damageAmount);
+                mapItem.TakeDamage(details.combatDetails.damageAmount);
             }
 
         }
