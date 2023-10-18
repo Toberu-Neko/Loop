@@ -10,4 +10,14 @@ public class B1_SliceRoomAndExplodeState : SliceRoomAndExplodeState
     {
         this.boss = boss;
     }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (IsAttackDone)
+        {
+            stateMachine.ChangeState(boss.FlyingIdleState);
+        }
+    }
 }

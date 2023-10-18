@@ -16,6 +16,7 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     private int currentSpawnCount;
     
     private float spawnTime = 0f;
+    private List<IStaticProjectile> projectiles;
 
     private State state;
     private enum State
@@ -52,7 +53,10 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     {
         base.Enter();
 
+        projectiles = new();
+
         explosivePositions = orgExplosivePositions;
+
         Movement.SetVelocityZero();
         state = State.Spawn;
         objCount = 0;
@@ -90,6 +94,25 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
                 break;
 
             case State.Wait:
+                List<IStaticProjectile> temp = new();
+
+                foreach (var item in projectiles)
+                {
+                    if (item.Exploded())
+                    {
+                        temp.Add(item);
+                    }
+                }
+
+                foreach (var item in temp)
+                {
+                    projectiles.Remove(item);
+                }
+
+                if(projectiles.Count == 0)
+                {
+                    IsAttackDone = true;
+                }
                 break;
         }
 
@@ -114,6 +137,8 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         GameObject obj = ObjectPoolManager.SpawnObject(stateData.bullets[index].obj, attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
         IFireable fireable = obj.GetComponent<IFireable>();
         IStaticProjectile staticScript = obj.GetComponent<IStaticProjectile>();
+
+        projectiles.Add(staticScript);
 
         Vector2 direction = targetPosition - (Vector2)attackPos.position;
 

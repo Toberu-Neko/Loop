@@ -12,11 +12,20 @@ public class EP_StaticBase : EnemyProjectile_Base, IStaticProjectile
     protected event Action OnExplodeAction;
     protected event Action OnStopAction;
 
+    private bool returnedToPool;
+
     protected enum State
     {
         Moving,
         Waiting,
         Explode
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        returnedToPool = false;
     }
 
     protected override void Update()
@@ -43,6 +52,7 @@ public class EP_StaticBase : EnemyProjectile_Base, IStaticProjectile
             {
                 OnExplodeAction?.Invoke();
                 state = State.Explode;
+                CamManager.Instance.CameraShake(2f);
             }
         }
     }
@@ -58,5 +68,17 @@ public class EP_StaticBase : EnemyProjectile_Base, IStaticProjectile
         base.Fire(fireDirection, speed, details);
 
         state = State.Moving;
+    }
+
+    public virtual bool Exploded()
+    {
+        return returnedToPool;
+    }
+
+    protected override void ReturnToPool()
+    {
+        base.ReturnToPool();
+
+        returnedToPool = true;
     }
 }
