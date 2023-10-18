@@ -238,6 +238,8 @@ public class ED_SliceRoomAndExplodeState
     public ProjectileDetails details;
     public int row = 5;
     public int column = 5;
+
+    public float spawnDelay = 0.5f;
 }
 
 [Serializable]

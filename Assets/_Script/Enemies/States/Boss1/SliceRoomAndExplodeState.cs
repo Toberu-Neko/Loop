@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SliceRoomAndExplodeState : EnemyFlyingStateBase
@@ -8,7 +9,20 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     private bool doRewind = false;
 
     private Transform attackPos;
-    private Vector2[,] explosivePositions;
+    private List<Vector2> orgExplosivePositions;
+    private List<Vector2> explosivePositions;
+    private int objPerSpawn;
+    private int objCount = 0;
+    
+
+    private float spawnTime = 0f;
+
+    private State state;
+    private enum State
+    {
+        Spawn,
+        Wait
+    }
 
     //ROW = LR COL = UD
     public SliceRoomAndExplodeState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_SliceRoomAndExplodeState stateData, BoxCollider2D bossRoom, Transform attackPos) : base(entity, stateMachine, animBoolName)
@@ -17,10 +31,10 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         this.attackPos = attackPos;
         IsAttackDone = false;
         doRewind = false;
+        objPerSpawn = stateData.row * stateData.column / 3;
+        orgExplosivePositions = new();
 
-        explosivePositions = new Vector2[stateData.row, stateData.column];
-
-        for(int i = 0; i < stateData.row; i++)
+        for (int i = 0; i < stateData.row; i++)
         {
             for (int j = 0; j < stateData.column; j++)
             {
@@ -29,7 +43,7 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
                 float x = bossRoom.bounds.min.x + bossRoom.bounds.size.x / stateData.row * i + xPerUnit / 2f;
                 float y = bossRoom.bounds.min.y + bossRoom.bounds.size.y / stateData.column * j + yPerUnit / 2f;
 
-                explosivePositions[i, j] = new Vector2(x, y);
+                orgExplosivePositions.Add(new Vector2(x, y));
             }
         }
     }
@@ -38,20 +52,10 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     {
         base.Enter();
 
+        explosivePositions = orgExplosivePositions;
         Movement.SetVelocityZero();
-
-        for(int i = 0; i < stateData.row; i++)
-        {
-            for (int j = 0; j < stateData.column; j++)
-            {
-                GameObject obj = ObjectPoolManager.SpawnObject(stateData.bullets[0], attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
-                EP_BlueStatic fireable = obj.GetComponent<EP_BlueStatic>();
-
-                Vector2 direction = explosivePositions[i, j] - (Vector2)attackPos.position;
-                fireable.Fire(direction.normalized, stateData.details);
-                fireable.Init(explosivePositions[i, j], 3f);
-            }
-        }
+        state = State.Spawn;
+        objCount = 0;
     }
 
     public override void LogicUpdate()
@@ -59,6 +63,48 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         base.LogicUpdate();
 
         Movement.SetVelocityZero();
+
+        switch (state)
+        {
+            case State.Spawn:
+                spawnTime = Stats.Timer(spawnTime);
+
+                if (Time.time >= spawnTime + stateData.spawnDelay && (stateData.row * stateData.column - objCount >= objPerSpawn))
+                {
+                    Spawn();
+                }
+                else if(stateData.row * stateData.column - objCount < objPerSpawn)
+                {
+                    state = State.Wait;
+                }
+                break;
+
+            case State.Wait:
+                break;
+        }
+
+    }
+
+    private void Spawn()
+    {
+        spawnTime = Time.time;
+        for (int i = 0; i < objPerSpawn; i++)
+        {
+            objCount++;
+            Vector2 targetPos = explosivePositions[Random.Range(0, explosivePositions.Count)];
+            SpawnSingleObj(targetPos);
+            explosivePositions.Remove(targetPos);
+        }
+    }
+
+    private void SpawnSingleObj(Vector2 targetPosition)
+    {
+        GameObject obj = ObjectPoolManager.SpawnObject(stateData.bullets[0], attackPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
+        EP_BlueStatic fireable = obj.GetComponent<EP_BlueStatic>();
+
+        Vector2 direction = targetPosition - (Vector2)attackPos.position;
+        fireable.Fire(direction.normalized, stateData.details);
+        fireable.Init(targetPosition, 3f);
     }
 
     public void ResetAttack() => IsAttackDone = false;
