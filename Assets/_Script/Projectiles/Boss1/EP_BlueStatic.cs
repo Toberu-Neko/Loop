@@ -124,8 +124,6 @@ public class EP_BlueStatic : EP_StaticBase
     public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
         base.Fire(fireDirection, speed, details);
-
-        state = State.Moving;
     }
     public override void Init(Vector2 destination, float explodeTime)
     {

@@ -207,7 +207,6 @@ public class UI_Manager : MonoBehaviour
     }
     private void HandleChangeSceneFinish()
     {
-        Debug.Log("Finish in UIManager");
         if(changeSceneUI.activeInHierarchy)
             changeSceneAnimator.SetBool("finishLoading", true);
     }

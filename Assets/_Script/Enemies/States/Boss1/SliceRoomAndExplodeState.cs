@@ -30,7 +30,7 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         this.stateData = stateData;
         this.attackPos = attackPos;
         IsAttackDone = false;
-        doRewind = false;
+        doRewind = true;
         objPerSpawn = stateData.row * stateData.column / stateData.spawnCount;
         orgExplosivePositions = new();
 
@@ -75,20 +75,12 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
                     if (!doRewind)
                     {
                         Spawn(stateData.explodeDelay);
-
-                        //2 - 0.5 - 0.5
-                        //2 - 0.5
-                        //2
                     }
                     else
                     {
                         float firstDelay = stateData.explodeDelay - stateData.spawnDelay * (stateData.spawnCount - 1);
 
                         Spawn(firstDelay + stateData.spawnDelay * (stateData.spawnCount - currentSpawnCount) * 2f);
-
-                        //2 + 0.5 +0.5
-                        //1.5 + 0.5
-                        //1
                     }
                 }
                 else if(stateData.row * stateData.column - objCount < objPerSpawn)
