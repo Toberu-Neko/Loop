@@ -36,6 +36,7 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
     {
         if (!gameObject.activeInHierarchy)
             return;
+
         if (doRewind)
         {
             col.enabled = true;

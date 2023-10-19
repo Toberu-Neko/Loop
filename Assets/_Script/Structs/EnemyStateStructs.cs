@@ -252,6 +252,9 @@ public class ED_AbovePlayerAttackState
     public GameObject[] projectileObjs;
     public ProjectileDetails details;
 
+    public int spawnCount = 4;
+    public float spawnDelay = 1f;
+
     public float fireDelay = 0.5f;
     public float rewindDelay = 0.25f;
     public float attackDistance = 7.5f;

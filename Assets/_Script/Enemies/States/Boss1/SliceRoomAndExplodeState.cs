@@ -31,7 +31,7 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         this.stateData = stateData;
         this.attackPos = attackPos;
         IsAttackDone = false;
-        doRewind = true;
+        doRewind = false;
         objPerSpawn = stateData.row * stateData.column / stateData.spawnCount;
         orgExplosivePositions = new();
 
