@@ -15,6 +15,7 @@ public class TimeSlow : CoreComponent, ITimeSlowable
 
     private void OnEnable()
     {
+        //TODO: Gamemanager bug
         GameManager.Instance.OnAllTimeSlowStart += DoTimeSlow;
         GameManager.Instance.OnAllTimeSlowEnd += EndTimeSlow;
 
@@ -34,6 +35,7 @@ public class TimeSlow : CoreComponent, ITimeSlowable
             EndTimeSlow();
         }
     }
+
 
 
     public void DoTimeSlow()
