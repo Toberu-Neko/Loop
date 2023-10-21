@@ -134,18 +134,21 @@ MonoBehaviour:
     spawnDelay: 0.5
     explodeDelay: 2
   abovePlayerAttackStateData:
-    projectileObjs: []
+    projectileObjs:
+    - {fileID: 8389792333474829002, guid: a20559c03b9a5994483d45b940b5c14b, type: 3}
     details:
       duration: 5
-      speed: 10
+      speed: 60
       combatDetails:
         damageAmount: 5
         staminaDamageAmount: 1
-        knockbackStrength: 5
-        knockbackAngle: {x: 0, y: 0}
-    fireDelay: 0.5
-    rewindDelay: 0.25
-    attackDistance: 7.5
+        knockbackStrength: 8
+        knockbackAngle: {x: 1, y: 1}
+    spawnCount: 4
+    spawnDelay: 0.75
+    fireDelay: 0.25
+    rewindDelay: 0.5
+    attackDistance: 6
   stunStateData:
     stunTime: 2
     stunKnockbackSpeed: 0

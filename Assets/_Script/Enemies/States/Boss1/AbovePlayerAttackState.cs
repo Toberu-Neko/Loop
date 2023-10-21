@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbovePlayerAttackState : EnemyState
+public class AbovePlayerAttackState : EnemySkyAttackBase
 {
     private ED_AbovePlayerAttackState stateData;
-    public bool IsAttackDone { get; private set; }
 
     private Transform playerPos;
     private Vector2[] attackPos;
@@ -14,7 +13,6 @@ public class AbovePlayerAttackState : EnemyState
     private bool canSpawn = true;
     private float fireTime;
     private int spawnCount;
-    private bool doRewind = false;
     private State state;
 
     private enum State
@@ -26,6 +24,7 @@ public class AbovePlayerAttackState : EnemyState
     public AbovePlayerAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_AbovePlayerAttackState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
+        doRewind = true;
     }
 
     public override void Enter()
@@ -38,14 +37,13 @@ public class AbovePlayerAttackState : EnemyState
         if (playerPos == null)
         {
             Debug.LogError("FourSkyAttackState: PlayerPos is null");
-            IsAttackDone = true;
+            isAttackDone = true;
             return;
         }
 
         state = State.attack;
 
         canSpawn = true;
-        doRewind = false;
         spawnCount = 0;
         fireTime = 0f;
 
@@ -93,31 +91,42 @@ public class AbovePlayerAttackState : EnemyState
             {
                 foreach (EP_Rewind obj in projectiles)
                 {
+                    if (!obj.HasHitGround)
+                    {
+                        return;
+                    }
+                }
+
+                foreach (EP_Rewind obj in projectiles)
+                {
                     obj.Rewind(doRewind);
                 }
-            }
 
-            if (doRewind)
-            {
-                state = State.end;
-            }
-            else
-            {
-                IsAttackDone = true;
+                if (doRewind)
+                {
+                    state = State.end;
+                }
+                else
+                {
+                    isAttackDone = true;
+                }
             }
         }
 
         if(state == State.end)
         {
-            if(Time.time >= fireTime + stateData.rewindDelay)
+            foreach (EP_Rewind obj in projectiles)
             {
-                IsAttackDone = true;
+                if (obj.gameObject.activeInHierarchy)
+                {
+                    return;
+                }
             }
+
+            isAttackDone = true;
         }
 
     }
-    public void ResetAttack() => IsAttackDone = false;
-    public void SetDoRewindTrue() => doRewind = true;
 
     private void SpawnObj(int index, Vector2 attackPos)
     {

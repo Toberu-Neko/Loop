@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FourSkyAttackState : EnemyFlyingStateBase
+public class FourSkyAttackState : EnemySkyAttackBase
 {
     protected ED_FourSkyAttackState stateData;
-
-    public bool IsAttackDone { get; private set; }
 
     private Transform playerPos;
     private Vector2[] attackPos;
@@ -35,7 +33,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
         if(playerPos == null)
         {
             Debug.LogError("FourSkyAttackState: PlayerPos is null");
-            IsAttackDone = true;
+            isAttackDone = true;
             return;
         }
         attackCount= 0;
@@ -118,7 +116,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
                         item.Rewind(false);
                     }
 
-                    IsAttackDone = true;
+                    isAttackDone = true;
                 }
 
                 else
@@ -129,7 +127,7 @@ public class FourSkyAttackState : EnemyFlyingStateBase
 
                     if (attackCount == attackPos.Length)
                     {
-                        IsAttackDone = true;
+                        isAttackDone = true;
                     }
                 }
 
@@ -146,7 +144,4 @@ public class FourSkyAttackState : EnemyFlyingStateBase
         projectiles[index] = obj.GetComponent<EP_Rewind>();
         projectiles[index].SetDetails(stateData.details, doRewind);
     }
-
-    public void ResetAttack() => IsAttackDone = false;
-    public void SetDoRewindTrue() => doRewind = true;
 }

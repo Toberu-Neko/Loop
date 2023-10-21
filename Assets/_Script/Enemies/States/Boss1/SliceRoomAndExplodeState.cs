@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SliceRoomAndExplodeState : EnemyFlyingStateBase
+public class SliceRoomAndExplodeState : EnemySkyAttackBase
 {
     private ED_SliceRoomAndExplodeState stateData;
-
-    public bool IsAttackDone { get; private set; }
-    private bool doRewind = false;
 
     private Transform attackPos;
     private List<Vector2> orgExplosivePositions;
@@ -30,8 +27,6 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
     {
         this.stateData = stateData;
         this.attackPos = attackPos;
-        IsAttackDone = false;
-        doRewind = false;
         objPerSpawn = stateData.row * stateData.column / stateData.spawnCount;
         orgExplosivePositions = new();
 
@@ -111,7 +106,7 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
 
                 if(projectiles.Count == 0)
                 {
-                    IsAttackDone = true;
+                    isAttackDone = true;
                 }
                 break;
         }
@@ -149,7 +144,4 @@ public class SliceRoomAndExplodeState : EnemyFlyingStateBase
         fireable.Fire(direction.normalized, speed, stateData.bullets[index].details);
         staticScript.Init(targetPosition, delay);
     }
-
-    public void ResetAttack() => IsAttackDone = false;
-    public void SetDoRewindTrue() => doRewind = true;
 }

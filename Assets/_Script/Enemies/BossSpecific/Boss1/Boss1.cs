@@ -22,6 +22,7 @@ public class Boss1 : BossBase
     public B1_JumpAndMultiAttackState JumpAndMultiAttackState { get; private set; }
     public B1_FourSkyAttackState FourSkyAttackState { get; private set; }
     public B1_SliceRoomAndExplodeState SliceRoomAndExplodeState { get; private set; }
+    public B1_AbovePlayerAttackState AbovePlayerAttackState { get; private set; }
 
     public B1_StunState StunState { get; private set; }
     public B1_KinematicState KinematicState { get; private set; }
@@ -59,6 +60,7 @@ public class Boss1 : BossBase
         JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
         FourSkyAttackState = new B1_FourSkyAttackState(this, StateMachine, "counterAttack", StateData.fourSkyAttackStateData, this); //TODO: Anim
         SliceRoomAndExplodeState = new B1_SliceRoomAndExplodeState(this, StateMachine, "sliceRoomAndExplode", StateData.sliceRoomAndExplodeStateData, BossRoomCollider, rangedAttackPosition, this);
+        AbovePlayerAttackState = new B1_AbovePlayerAttackState(this, StateMachine, "abovePlayerAttack", StateData.abovePlayerAttackStateData, this);
 
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);

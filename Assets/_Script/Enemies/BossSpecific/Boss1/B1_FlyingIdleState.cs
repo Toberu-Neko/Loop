@@ -20,46 +20,22 @@ public class B1_FlyingIdleState : EnemyFlyingIdleState
             {
                 boss.FlyingMovementState.ResetMoveCount();
 
-                int attackDoneCount = 0;
+                List<EnemySkyAttackBase> unfinishedAttacks = new();
 
-                if (!boss.FourSkyAttackState.IsAttackDone)
-                    attackDoneCount++;
+                if (!boss.FourSkyAttackState.isAttackDone)
+                    unfinishedAttacks.Add(boss.FourSkyAttackState);
 
-                if (!boss.SliceRoomAndExplodeState.IsAttackDone)
-                    attackDoneCount++;
+                if (!boss.SliceRoomAndExplodeState.isAttackDone)
+                    unfinishedAttacks.Add(boss.SliceRoomAndExplodeState);
+
+                if (!boss.AbovePlayerAttackState.isAttackDone)
+                    unfinishedAttacks.Add(boss.AbovePlayerAttackState);
 
 
-
-                switch (attackDoneCount)
+                if (unfinishedAttacks.Count > 0)
                 {
-                    case 2:
-                        switch (Random.Range(0, 1))
-                        {
-                            case 0:
-                                stateMachine.ChangeState(boss.SliceRoomAndExplodeState);
-                                break;
-                            case 1:
-                                stateMachine.ChangeState(boss.FourSkyAttackState);
-                                break;
-                        }
-                        break;
-                    case 1:
-                        if (!boss.FourSkyAttackState.IsAttackDone)
-                        {
-                            stateMachine.ChangeState(boss.FourSkyAttackState);
-                        }
-                        else if (!boss.SliceRoomAndExplodeState.IsAttackDone)
-                        {
-                            stateMachine.ChangeState(boss.SliceRoomAndExplodeState);
-                        }
-                        break;
-                    case 0:
-                        boss.FourSkyAttackState.ResetAttack();
-//                     stateMachine.ChangeState(boss.BackToGroundState);
-                        break;
-                    default:
-                        Debug.LogError("B1_FlyingIdleState: attackDoneCount is not 0, 1, 2");
-                        break;
+                    int randomIndex = Random.Range(0, unfinishedAttacks.Count);
+                    stateMachine.ChangeState(unfinishedAttacks[randomIndex]);
                 }
             }
             else

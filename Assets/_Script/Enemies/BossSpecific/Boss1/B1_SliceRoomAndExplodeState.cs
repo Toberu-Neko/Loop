@@ -15,7 +15,7 @@ public class B1_SliceRoomAndExplodeState : SliceRoomAndExplodeState
     {
         base.LogicUpdate();
 
-        if (IsAttackDone)
+        if (isAttackDone)
         {
             stateMachine.ChangeState(boss.FlyingIdleState);
         }
