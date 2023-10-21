@@ -5,6 +5,7 @@ public class Boss1 : BossBase
 
     public B1_IdleState IdleState { get; private set; }
     public B1_InitAnimState InitAnimState { get; private set; }
+    public B1_AngryState AngryState { get; private set; }
 
     public B1_PlayerDetectedMoveState PlayerDetectedMoveState { get; private set; }
     public B1_FlyingIdleState FlyingIdleState { get; private set; }
@@ -44,6 +45,7 @@ public class Boss1 : BossBase
 
         IdleState = new B1_IdleState(this, StateMachine, "idle", StateData.idleStateData, this);
         InitAnimState = new B1_InitAnimState(this, StateMachine, "init", this);
+        AngryState = new B1_AngryState(this, StateMachine, "angry", this);
 
         PlayerDetectedMoveState = new B1_PlayerDetectedMoveState(this, StateMachine, "move", StateData.playerDetectedMoveStateData, this);
         FlyingIdleState = new B1_FlyingIdleState(this, StateMachine, "idle", StateData.flyingIdleStateData, this);
@@ -82,6 +84,21 @@ public class Boss1 : BossBase
 
         Combat.OnGoToKinematicState += GotoKinematicState;
         Combat.OnGoToStunState += OnGotoStunState;
+
+        StateMachine.OnChangeState += HandleChangeState;
+    }
+
+    private void HandleChangeState()
+    {
+        if(Stats.Health.CurrentValuePercentage <= 0.5f && !Stats.IsAngry && 
+            StateMachine.CurrentState != AngryState && 
+            StateMachine.CurrentState != BackToGroundState &&
+            StateMachine.CurrentState != KinematicState &&
+            StateMachine.CurrentState != StunState &&
+            StateMachine.CurrentState is not EnemyFlyingStateBase)
+        {
+            StateMachine.ChangeState(AngryState);
+        }
     }
 
     protected override void OnDisable()
@@ -96,6 +113,8 @@ public class Boss1 : BossBase
 
         Combat.OnGoToKinematicState -= GotoKinematicState;
         Combat.OnGoToStunState -= OnGotoStunState;
+
+        StateMachine.OnChangeState -= HandleChangeState;
     }
 
     private void GotoKinematicState(float time)

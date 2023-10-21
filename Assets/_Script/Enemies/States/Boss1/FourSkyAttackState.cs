@@ -17,7 +17,6 @@ public class FourSkyAttackState : EnemySkyAttackBase
     private bool fireObjs;
 
     private bool startRewind;
-    private bool doRewind = false;
     public FourSkyAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_FourSkyAttackState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;

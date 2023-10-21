@@ -11,6 +11,12 @@ public class EnemySkyAttackBase : EnemyFlyingStateBase
         isAttackDone = false;
         doRewind = false;
     }
+    public override void Enter()
+    {
+        base.Enter();
+
+        doRewind = Stats.IsAngry;
+    }
     public void ResetAttack() => isAttackDone = false;
     public void SetDoRewindTrue() => doRewind = true;
 }

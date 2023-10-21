@@ -26,6 +26,8 @@ public class CoreStatSystem
         }
     }
 
+    public float CurrentValuePercentage => CurrentValue / MaxValue;
+
     [HideInInspector] public bool decreaseable = true;
     private float currentValue;
 

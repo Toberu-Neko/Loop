@@ -50,7 +50,12 @@ public class SliceRoomAndExplodeState : EnemySkyAttackBase
 
         projectiles = new();
 
-        explosivePositions = orgExplosivePositions;
+        explosivePositions = new();
+
+        foreach (var item in orgExplosivePositions)
+        {
+            explosivePositions.Add(item);
+        }
 
         Movement.SetVelocityZero();
         state = State.Spawn;
@@ -120,7 +125,9 @@ public class SliceRoomAndExplodeState : EnemySkyAttackBase
         for (int i = 0; i < objPerSpawn; i++)
         {
             objCount++;
-            Vector2 targetPos = explosivePositions[Random.Range(0, explosivePositions.Count)];
+            int random = Random.Range(0, explosivePositions.Count);
+            Vector2 targetPos = explosivePositions[random];
+            // Debug.Log("random: " + random + ", copy count: " + explosivePositions.Count + ", org count: " + orgExplosivePositions.Count);
             SpawnSingleObj(targetPos, delay);
             explosivePositions.Remove(targetPos);
         }

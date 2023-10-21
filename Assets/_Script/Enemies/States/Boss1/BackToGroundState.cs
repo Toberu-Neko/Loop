@@ -6,6 +6,8 @@ public class BackToGroundState : EnemyState
 {
     private ED_BackToIdleState stateData;
 
+    private float stunTime;
+    protected bool startStun;
     protected bool gotoNextState;
     public BackToGroundState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_BackToIdleState stateData) : base(entity, stateMachine, animBoolName)
     {
@@ -17,15 +19,26 @@ public class BackToGroundState : EnemyState
         base.Enter();
 
         Movement.SetVelocityZero();
+        Movement.SetRBKinematic();
 
         gotoNextState = false;
+        startStun = false;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        Movement.SetRBDynamic();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if(Time.time >= StartTime + stateData.stunTime)
+        Movement.SetVelocityZero();
+
+        if(Time.time >= stunTime + stateData.stunTime && startStun)
         {
             gotoNextState = true;
         }
@@ -35,6 +48,8 @@ public class BackToGroundState : EnemyState
     {
         base.AnimationActionTrigger();
 
-        StartTime = Time.time;
+        Movement.SetRBDynamic();
+        startStun = true;
+        stunTime = Time.time;
     }
 }

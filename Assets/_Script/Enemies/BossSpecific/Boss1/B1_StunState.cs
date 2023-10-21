@@ -16,7 +16,15 @@ public class B1_StunState : StunState
 
         if(isStunTimeOver)
         {
-            stateMachine.ChangeState(boss.PlayerDetectedMoveState);
+            if(stateMachine.PreviousState is EnemyFlyingStateBase)
+            {
+                boss.transform.position = boss.SkyTeleportPos.position;
+                stateMachine.ChangeState(boss.FlyingIdleState);
+            }
+            else
+            {
+                stateMachine.ChangeState(boss.PlayerDetectedMoveState);
+            }
         }
     }
 }

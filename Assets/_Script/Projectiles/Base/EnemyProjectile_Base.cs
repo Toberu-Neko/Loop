@@ -208,7 +208,12 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     protected virtual void ReturnToPool()
     {
         CancelInvoke(nameof(ReturnToPool));
-        HasHitGround = true;
-        ObjectPoolManager.ReturnObjectToPool(gameObject);
+
+        if (gameObject.activeInHierarchy)
+        {
+            HasHitGround = true;
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
+        }
+
     }
 }

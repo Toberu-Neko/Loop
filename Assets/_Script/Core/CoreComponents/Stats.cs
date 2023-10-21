@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Stats : CoreComponent
 {
@@ -14,11 +13,13 @@ public class Stats : CoreComponent
     private float lastCombatTime;
 
 
-    public bool CounterAttackable { get; private set; }
-    public bool Invincible { get; private set; } = false;
-    public bool InCombat { get; private set; } = false;
     public bool CanChangeWeapon { get; private set; } = true;
+    public bool CounterAttackable { get; private set; }
+    public bool InCombat { get; private set; } = false;
     public bool Attackable { get; private set; } = true;
+
+    public bool IsAngry { get; set; } = false;
+    public bool Invincible { get; private set; } = false;
     public bool Knockable { get; private set; } = true;
 
     public bool IsRewindingPosition { get; private set; } = false;
@@ -99,6 +100,7 @@ public class Stats : CoreComponent
         IsTimeStopped = false;
         IsTimeSlowed = false;
         Knockable = true;
+        IsAngry = false;
         DebuffActionSpeedMultiplier = 1f;
         TimeEffectMultiplier = 1f;
 

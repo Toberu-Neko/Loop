@@ -40,7 +40,19 @@ public class B1_FlyingIdleState : EnemyFlyingIdleState
             }
             else
             {
-                stateMachine.ChangeState(boss.FlyingMovementState);
+                if(boss.AbovePlayerAttackState.isAttackDone && boss.FourSkyAttackState.isAttackDone && boss.SliceRoomAndExplodeState.isAttackDone)
+                {
+                    boss.AbovePlayerAttackState.ResetAttack();
+                    boss.FourSkyAttackState.ResetAttack();
+                    boss.SliceRoomAndExplodeState.ResetAttack();
+
+                    stateMachine.ChangeState(boss.BackToGroundState);
+
+                }
+                else
+                {
+                    stateMachine.ChangeState(boss.FlyingMovementState);
+                }
             }
         }
     }

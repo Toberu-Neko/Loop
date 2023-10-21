@@ -127,6 +127,12 @@ public class ObjectPoolManager : MonoBehaviour
 
     public static void ReturnObjectToPool(GameObject obj)
     {
+        if (!obj.activeInHierarchy)
+        {
+            Debug.LogWarning("Object is already inactive, can't return to pool.");
+            return;
+        }
+
         string goName = obj.name.Substring(0, obj.name.Length - 7);
 
         PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);

@@ -161,7 +161,6 @@ public class Entity : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
         {
-
             if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
             {
                 knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, movement.ParentTransform.position, false);
