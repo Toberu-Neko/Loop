@@ -1,9 +1,7 @@
 using System;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.SceneManagement;
 using Eflatun.SceneReference;
-using Cinemachine;
 
 public class ChangeSceneTrigger : MonoBehaviour
 {

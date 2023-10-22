@@ -7,7 +7,6 @@ public class Savepoint : MonoBehaviour, IDataPersistance
     [field: SerializeField] public Transform TeleportTransform { get; private set; }
 
     [SerializeField] private GameObject pressEObject;
-    public string SceneName { get; private set; }
     private PlayerInputHandler inputHandler;
 
     public event Action<string> OnSavePointInteract;
@@ -64,10 +63,6 @@ public class Savepoint : MonoBehaviour, IDataPersistance
         }
     }
 
-    public void SetSceneName(string name)
-    {
-        SceneName = name;
-    }
 
     public void LoadData(GameData data)
     {

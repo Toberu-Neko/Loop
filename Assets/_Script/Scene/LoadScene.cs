@@ -24,10 +24,11 @@ public class LoadScene : MonoBehaviour
             sc.StartSpawning();
         }
 
-        if (other.CompareTag("SavePoint"))
+        if (other.CompareTag("PressETeleport"))
         {
-            Savepoint sc = other.GetComponent<Savepoint>();
-            sc.SetSceneName(scene.Name);
+            Debug.Log("Press E Teleport");
+            PressETeleportTrigger sc = other.GetComponent<PressETeleportTrigger>();
+            sc.SetCurrentScene(scene);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
