@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8187652289178855412}
   - component: {fileID: 240190075365313412}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: ORG_EnemySpawner
   m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78119db64c89015418b3c7088912455a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 
-  isAdded: 2
   isAddedID: 0
-  enemy: {fileID: 7156145169986226348, guid: 0063320f80541c8469905513862723c6, type: 3}
+  ID: 
+  enemy: {fileID: 5748294777729018724, guid: 5d297bd23079368458dc914d08511907, type: 3}
+  facingDir: 0
   SR: {fileID: 3582140068058230616}
 --- !u!212 &3582140068058230616
 SpriteRenderer:
@@ -101,7 +101,7 @@ SpriteRenderer:
   m_Size: {x: 4.0015635, y: 2.5000002}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &8187652289178855412
