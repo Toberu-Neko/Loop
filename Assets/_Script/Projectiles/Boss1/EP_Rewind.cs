@@ -6,6 +6,7 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
 {
     [SerializeField] private GameObject bookmarkPrefab;
     [SerializeField] private Collider2D col;
+    [SerializeField] private GameObject dangerText;
     private GameObject bookmarkObj;
     private bool startRewind = false;
     private bool fire = false;
@@ -78,6 +79,7 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
         startRewind = false;
         HasHitGround = false;
         bookmarkObj = null;
+        dangerText.SetActive(false);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -123,6 +125,16 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
     {
         this.details = details;
 
+        if (details.combatDetails.blockable)
+        {
+            SR.color = Color.yellow;
+        }
+        else
+        {
+            SR.color = Color.red;
+            dangerText.SetActive(true);
+        }
+
         if (doRewind)
         {
             bookmarkObj = ObjectPoolManager.SpawnObject(bookmarkPrefab, transform.position, transform.rotation);
@@ -144,15 +156,15 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
     {
         if (collider.TryGetComponent(out IDamageable damageable))
         {
-            damageable.Damage(details.combatDetails.damageAmount, transform.position);
+            damageable.Damage(details.combatDetails.damageAmount, transform.position, details.combatDetails.blockable);
         }
         if (collider.TryGetComponent(out IKnockbackable knockbackable))
         {
-            knockbackable.Knockback(details.combatDetails.knockbackAngle, details.combatDetails.knockbackStrength, transform.position);
+            knockbackable.Knockback(details.combatDetails.knockbackAngle, details.combatDetails.knockbackStrength, transform.position, details.combatDetails.blockable);
         }
         if (collider.TryGetComponent(out IStaminaDamageable staminaDamageable))
         {
-            staminaDamageable.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position);
+            staminaDamageable.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position, details.combatDetails.blockable);
         }
     }
 

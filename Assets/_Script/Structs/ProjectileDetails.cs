@@ -22,4 +22,5 @@ public class DamageDetails
     public float knockbackStrength = 5f;
     [Tooltip("À»°h¨¤«×")]
     public Vector2 knockbackAngle;
+    public bool blockable = true;
 }

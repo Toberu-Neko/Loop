@@ -28,7 +28,6 @@ public class BossRoomTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             enterPosX = (collision.transform.position - col.bounds.center).normalized.x;
-            camLookat.SetPlayer(collision.transform);
         }
     }
 
@@ -53,6 +52,7 @@ public class BossRoomTrigger : MonoBehaviour
 
                 bossRoomDoor.SetActive(true);
                 CamManager.Instance.SwitchCamera(bossCamera);
+                camLookat.SetPlayer(collision.transform);
                 boss.HandleEnterBossRoom();
                 UI_Manager.Instance.ActiveBossUI(boss);
             }

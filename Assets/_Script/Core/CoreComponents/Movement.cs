@@ -262,12 +262,12 @@ public class Movement : CoreComponent
 
         if (CanSetVelocity)
         {
-            Vector2 velocity = new(velocityWorkspace.x * stats.AnimationSpeed, velocityWorkspace.y);
+            Vector2 velocity = new(velocityWorkspace.x * stats.AnimationSpeed, velocityWorkspace.y * stats.AnimationSpeed);
 
             if(stats.IsTimeSlowed)
             {
-                RB.velocity =  velocity * stats.TimeSlowMultiplier;
-                CurrentVelocity = velocity * stats.TimeSlowMultiplier;
+                RB.velocity = velocity;
+                CurrentVelocity = velocity;
             }
             else
             {
