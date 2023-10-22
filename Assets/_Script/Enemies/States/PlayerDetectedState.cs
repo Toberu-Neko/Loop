@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerDetectedState : EnemyState
 {
-    protected ED_EnemyPlayerDetectedState stateData;
+    protected ED_PlayerDetectedState stateData;
 
     protected bool isPlayerInMinAgroRange;
     protected bool isPlayerInMaxAgroRange;
@@ -12,7 +12,9 @@ public class PlayerDetectedState : EnemyState
     protected bool performCloseRangeAction;
     protected bool isDetectingLedge;
 
-    public PlayerDetectedState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyPlayerDetectedState stateData) : base(entity, stateMachine, animBoolName)
+    private float randomDelayTime;
+
+    public PlayerDetectedState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_PlayerDetectedState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
@@ -25,6 +27,7 @@ public class PlayerDetectedState : EnemyState
             Movement.SetVelocityZero();
 
         performLongRangeAction = false;
+        randomDelayTime = Random.Range(stateData.minDelayTime, stateData.maxDelayTime);
     }
 
     public override void Exit()
@@ -39,7 +42,7 @@ public class PlayerDetectedState : EnemyState
         if (CollisionSenses.Ground)
             Movement.SetVelocityZero();
 
-        if (Time.time >= StartTime + stateData.delayTime) 
+        if (Time.time >= StartTime + randomDelayTime) 
         {
             performLongRangeAction = true;
         }

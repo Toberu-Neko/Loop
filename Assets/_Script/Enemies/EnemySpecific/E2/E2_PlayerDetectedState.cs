@@ -6,7 +6,7 @@ public class E2_PlayerDetectedState : PlayerDetectedState
 {
     private Enemy2 enemy;
 
-    public E2_PlayerDetectedState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyPlayerDetectedState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E2_PlayerDetectedState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_PlayerDetectedState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

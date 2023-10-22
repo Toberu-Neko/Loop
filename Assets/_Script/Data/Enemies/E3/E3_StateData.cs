@@ -8,7 +8,7 @@ public class E3_StateData : BaseEnemyStateData
     [Header("Movement")]
     public ED_EnemyIdleState idleStateData;
     public ED_EnemyGroundMoveState groundMoveStateData;
-    public ED_EnemyPlayerDetectedState playerDetectedStateData;
+    public ED_PlayerDetectedState playerDetectedStateData;
     public ED_EnemyShieldMoveState shieldMoveStateData;
 
     [Header("Attack")]

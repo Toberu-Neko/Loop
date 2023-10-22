@@ -7,7 +7,7 @@ public class B0_StateData : BaseEnemyStateData
 {
     [Header("Normal")]
     public ED_EnemyIdleState idleStateData;
-    public ED_EnemyPlayerDetectedState playerDetectedStateData;
+    public ED_PlayerDetectedState playerDetectedStateData;
     public ED_PlayerDetectedMoveState playerDetectedMoveStateData;
 
     [Header("Skills")]

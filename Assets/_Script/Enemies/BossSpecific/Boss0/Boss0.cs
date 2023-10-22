@@ -23,7 +23,7 @@ public class Boss0 : BossBase
     [SerializeField] private B0_StateData stateData;
 
     private ED_EnemyIdleState idleStateData;
-    private ED_EnemyPlayerDetectedState playerDetectedStateData;
+    private ED_PlayerDetectedState playerDetectedStateData;
     private ED_PlayerDetectedMoveState playerDetectedMoveStateData;
 
     private ED_EnemyChargeState chargeStateData;

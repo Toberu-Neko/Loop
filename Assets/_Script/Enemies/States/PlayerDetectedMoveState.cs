@@ -37,7 +37,7 @@ public class PlayerDetectedMoveState : EnemyState
     {
         base.LogicUpdate();
 
-        if (isPlayerInMaxAgroRange && CollisionSenses.Ground)
+        if ((isPlayerInMaxAgroRange && CollisionSenses.Ground) || Time.time <= StartTime + stateData.minMovementTime)
         {
             Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
         }
@@ -49,7 +49,7 @@ public class PlayerDetectedMoveState : EnemyState
 
     public bool CanChangeState()
     {
-        return Time.time - StartTime > Random.Range(stateData.minInStateTime, stateData.maxInStateTime);
+        return Time.time >= StartTime + Random.Range(stateData.minInStateTime, stateData.maxInStateTime) && Time.time >= StartTime + stateData.minMovementTime;
     }
 
 }

@@ -20,7 +20,7 @@ public class Enemy2 : Entity
 
     private ED_EnemyIdleState idleStateData;
     private ED_EnemyGroundMoveState moveStateData;
-    private ED_EnemyPlayerDetectedState playerDetectedStateData;
+    private ED_PlayerDetectedState playerDetectedStateData;
     private ED_EnemyMeleeAttackState meleeAttackStateData;
     private ED_EnemyLookForPlayerState lookForPlayerStateData;
     private ED_EnemyStunState stunStateData;

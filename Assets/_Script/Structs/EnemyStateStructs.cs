@@ -25,15 +25,18 @@ public class ED_PlayerDetectedMoveState
     [Tooltip("移動速度")]
     public float movementSpeed = 5f;
 
+    public float minMovementTime = 0f;
+
     public float minInStateTime = 3f;
     public float maxInStateTime = 5f;
 }
 
 [Serializable]
-public class ED_EnemyPlayerDetectedState
+public class ED_PlayerDetectedState
 {
     [Tooltip("偵測到玩家後, 執行下一個動作的延遲")]
-    public float delayTime = 1f;
+    public float minDelayTime = 1f;
+    public float maxDelayTime = 2f;
 }
 
 [Serializable]

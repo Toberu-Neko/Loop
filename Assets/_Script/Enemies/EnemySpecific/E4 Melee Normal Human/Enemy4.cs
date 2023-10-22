@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy4 : Entity
@@ -15,47 +13,22 @@ public class Enemy4 : Entity
     public E4_DodgeState DodgeState { get; private set; }
     public E4_KinematicState KinematicState { get; private set; }
 
-
     [SerializeField] private E4_StateData stateData;
-
-    private ED_EnemyIdleState idleStateData;
-    private ED_EnemyGroundMoveState moveStateData;
-    private ED_EnemyPlayerDetectedState playerDetectedStateData;
-    private ED_EnemyLookForPlayerState lookForPlayerStateData;
-    private ED_EnemyMeleeAttackState meleeAttackStateData;
-    private ED_EnemyStunState stunStateData;
-    private ED_EnemyDeadState deadStateData;
-    private ED_PlayerDetectedMoveState detectedPlayerMoveStateData;
-    protected ED_EnemyDodgeState dodgeStateData;
-
-
     [SerializeField] private Transform meleeAttackPosition;
-
-    private float healthDelta;
 
     public override void Awake()
     {
         base.Awake();
 
-        idleStateData = stateData.idleStateData;
-        moveStateData = stateData.groundMoveStateData;
-        playerDetectedStateData = stateData.playerDetectedStateData;
-        lookForPlayerStateData = stateData.lookForPlayerStateData;
-        meleeAttackStateData = stateData.meleeAttackStateData;
-        stunStateData = stateData.stunStateData;
-        deadStateData = stateData.deadStateData;
-        detectedPlayerMoveStateData = stateData.detectedPlayerMoveStateData;
-        dodgeStateData = stateData.dodgeStateData;
-
-        MoveState = new E4_MoveState(this, StateMachine, "move", moveStateData, this);
-        IdleState = new E4_IdleState(this, StateMachine, "idle", idleStateData, this);
-        PlayerDetectedState = new E4_PlayerDetectedState(this, StateMachine, "idle", playerDetectedStateData, this);
-        LookForPlayerState = new E4_LookForPlayerState(this, StateMachine, "idle", lookForPlayerStateData, this);
-        MeleeAttackState = new E4_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackPosition, meleeAttackStateData, this);
-        StunState = new E4_StunState(this, StateMachine, "stun", stunStateData, this);
-        DeadState = new E4_DeadState(this, StateMachine, "dead", deadStateData, this);
-        PlayerDetectedMoveState = new E4_PlayerDetectedMoveState(this, StateMachine, "move", detectedPlayerMoveStateData, this);
-        DodgeState = new E4_DodgeState(this, StateMachine, "dodge", dodgeStateData, this);
+        MoveState = new E4_MoveState(this, StateMachine, "move", stateData.groundMoveStateData, this);
+        IdleState = new E4_IdleState(this, StateMachine, "idle", stateData.idleStateData, this);
+        PlayerDetectedState = new E4_PlayerDetectedState(this, StateMachine, "idle", stateData.playerDetectedStateData, this);
+        LookForPlayerState = new E4_LookForPlayerState(this, StateMachine, "idle", stateData.lookForPlayerStateData, this);
+        MeleeAttackState = new E4_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackPosition, stateData.meleeAttackStateData, this);
+        StunState = new E4_StunState(this, StateMachine, "stun", stateData.stunStateData, this);
+        DeadState = new E4_DeadState(this, StateMachine, "dead", this);
+        PlayerDetectedMoveState = new E4_PlayerDetectedMoveState(this, StateMachine, "move", stateData.detectedPlayerMoveStateData, this);
+        DodgeState = new E4_DodgeState(this, StateMachine, "dodge", stateData.dodgeStateData, this);
         KinematicState = new E4_KinematicState(this, StateMachine, "kinematic", this);
     }
     protected override void Start()

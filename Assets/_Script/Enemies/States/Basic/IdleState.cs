@@ -23,14 +23,26 @@ public class IdleState : EnemyState
         base.Enter();
 
         Movement.SetVelocityX(0f);
+        Combat.OnDamaged += HandleOnDamaged;
         isIdleTimeOver = false;
 
         SetRandomIdleTime();
     }
 
+    private void HandleOnDamaged()
+    {
+        if (!isPlayerInMaxAgroRange)
+        {
+            Debug.Log("Flip");
+            Movement.Flip();
+        }
+    }
+
     public override void Exit()
     {
         base.Exit();
+
+        Combat.OnDamaged -= HandleOnDamaged;
 
         if (flipAfterIdle)
         {
@@ -43,7 +55,10 @@ public class IdleState : EnemyState
     {
         base.LogicUpdate();
 
-        Movement.SetVelocityX(0f);
+        if (CollisionSenses.Ground)
+        {
+            Movement.SetVelocityX(0f);
+        }
 
         if (Time.time >= StartTime + idleTime)
         {
