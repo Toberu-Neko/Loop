@@ -26,7 +26,6 @@ public class LoadScene : MonoBehaviour
 
         if (other.CompareTag("PressETeleport"))
         {
-            Debug.Log("Press E Teleport");
             PressETeleportTrigger sc = other.GetComponent<PressETeleportTrigger>();
             sc.SetCurrentScene(scene);
         }

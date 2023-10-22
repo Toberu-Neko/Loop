@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,8 +31,6 @@ public class GameManager : MonoBehaviour
     public event Action OnChangeSceneGoUp;
     public event Action OnChangeSceneGoDown;
     public event Action OnChangeSceneFinished;
-    private List<ChangeSceneTrigger> changeSceneTriggers;
-    private List<EnterSceneTrigger> enterSceneTriggers;
 
     #endregion
 
@@ -50,28 +49,12 @@ public class GameManager : MonoBehaviour
         TimeStopAll = false;
         TimeSlowAll = false;
 
-        changeSceneTriggers = new List<ChangeSceneTrigger>();
-        enterSceneTriggers = new List<EnterSceneTrigger>();
         Savepoints = new();
     }
 
 
     private void OnDisable()
     {
-        foreach (var trigger in changeSceneTriggers)
-        {
-            trigger.OnChangeSceneGoUp -= HandleChangeSceneGoUp;
-            trigger.OnChangeSceneGoDown -= HandleChangeSceneGoDown;
-            trigger.OnChangeSceneGoLeft -= HandleChangeSceneGoLeft;
-            trigger.OnChangeSceneGoRight -= HandleChangeSceneGoRight;
-        }
-
-        foreach (var trigger in enterSceneTriggers)
-        {
-            trigger.OnChangeSceneFinished -= HandleChangeSceneFinished;
-        }
-        changeSceneTriggers.Clear();
-
         foreach (var savepoint in Savepoints)
         {
             savepoint.Value.OnSavePointInteract -= HandleSavePointInteraction;
@@ -154,43 +137,36 @@ public class GameManager : MonoBehaviour
 
     #region ChangeScene
 
-    public void RegisterChangeSceneTrigger(ChangeSceneTrigger trigger)
+    public void HandleChangeScene(string sceneName, ChangeSceneDir dir = ChangeSceneDir.Right)
     {
-        changeSceneTriggers.Add(trigger);
-        trigger.OnChangeSceneGoLeft += HandleChangeSceneGoLeft;
-        trigger.OnChangeSceneGoRight += HandleChangeSceneGoRight;
-        trigger.OnChangeSceneGoUp += HandleChangeSceneGoUp;
-        trigger.OnChangeSceneGoDown += HandleChangeSceneGoDown;
+        switch (dir)
+        {
+            case ChangeSceneDir.Right:
+                OnChangeSceneGoRight?.Invoke();
+                break;
+            case ChangeSceneDir.Left:
+                OnChangeSceneGoLeft?.Invoke();
+                break;
+            case ChangeSceneDir.Up:
+                OnChangeSceneGoUp?.Invoke();
+                break;
+            case ChangeSceneDir.Down:
+                OnChangeSceneGoDown?.Invoke();
+                break;
+            default:
+                OnChangeSceneGoRight?.Invoke();
+                break;
+        }
+        SceneManager.UnloadSceneAsync(sceneName);
     }
-
-    public void RegisterEnterSceneTrigger(EnterSceneTrigger trigger)
-    {
-        enterSceneTriggers.Add(trigger);
-        trigger.OnChangeSceneFinished += HandleChangeSceneFinished;
-    }
-
-    private void HandleChangeSceneGoLeft()
-    {
-        OnChangeSceneGoLeft?.Invoke();
-    }
-
-    private void HandleChangeSceneGoRight()
-    {
-        OnChangeSceneGoRight?.Invoke();
-    }
-
-    private void HandleChangeSceneGoUp()
-    {
-        OnChangeSceneGoUp?.Invoke();
-    }
-
-    private void HandleChangeSceneGoDown()
-    {
-        OnChangeSceneGoDown?.Invoke();
-    }
-    private void HandleChangeSceneFinished()
+    public void HandleChangeSceneFinished()
     {
         OnChangeSceneFinished?.Invoke();
+    }
+
+    public enum ChangeSceneDir
+    {
+        Right, Left, Up, Down
     }
     #endregion
 }

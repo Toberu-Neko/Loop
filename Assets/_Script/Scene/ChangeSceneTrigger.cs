@@ -21,11 +21,6 @@ public class ChangeSceneTrigger : MonoBehaviour
     private Collider2D col;
     private bool isUnloaded = false;
 
-    public event Action OnChangeSceneGoLeft;
-    public event Action OnChangeSceneGoRight;
-    public event Action OnChangeSceneGoUp;
-    public event Action OnChangeSceneGoDown;
-
     private float enterPosX;
     private float enterPosY;
     private void Awake()
@@ -34,8 +29,6 @@ public class ChangeSceneTrigger : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.Instance.RegisterChangeSceneTrigger(this);
-
         if(changeSceneDirection == ChangeSceneDirection.LeftRight)
         {
             if(leftScene == null || rightScene == null)
@@ -72,7 +65,6 @@ public class ChangeSceneTrigger : MonoBehaviour
                     if (!isUnloaded)
                     {
                         UnloadScene(leftScene.Name);
-                        OnChangeSceneGoRight?.Invoke();
                         collision.transform.position = teleport_RightOrDown.position;
                     }
                 }
@@ -81,8 +73,7 @@ public class ChangeSceneTrigger : MonoBehaviour
                 {
                     if (!isUnloaded)
                     {
-                        UnloadScene(rightScene.Name);
-                        OnChangeSceneGoLeft?.Invoke();
+                        UnloadScene(rightScene.Name, GameManager.ChangeSceneDir.Left);
                         collision.transform.position = teleport_LeftOrUp.position;
                     }
                 }
@@ -95,8 +86,7 @@ public class ChangeSceneTrigger : MonoBehaviour
                 {
                     if (!isUnloaded)
                     {
-                        UnloadScene(downScene.Name);
-                        OnChangeSceneGoUp?.Invoke();
+                        UnloadScene(downScene.Name, GameManager.ChangeSceneDir.Up);
                         collision.transform.position = teleport_LeftOrUp.position;
                     }
                 }
@@ -105,8 +95,7 @@ public class ChangeSceneTrigger : MonoBehaviour
                 {
                     if (!isUnloaded)
                     {
-                        UnloadScene(upScene.Name);
-                        OnChangeSceneGoDown?.Invoke();
+                        UnloadScene(upScene.Name, GameManager.ChangeSceneDir.Down);
                         collision.transform.position = teleport_RightOrDown.position;
                     }
                 }
@@ -115,10 +104,10 @@ public class ChangeSceneTrigger : MonoBehaviour
         }
     }
 
-    private void UnloadScene(string sceneName)
+    private void UnloadScene(string sceneName, GameManager.ChangeSceneDir dir = GameManager.ChangeSceneDir.Right)
     {
         isUnloaded = true;
-        SceneManager.UnloadSceneAsync(sceneName);
+        GameManager.Instance.HandleChangeScene(sceneName, dir);
     }
     private void OnDrawGizmos()
     {

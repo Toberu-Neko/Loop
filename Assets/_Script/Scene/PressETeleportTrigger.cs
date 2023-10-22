@@ -47,7 +47,7 @@ public class PressETeleportTrigger : MonoBehaviour
 
 
                 playerCol.transform.position = teleportPos.position;
-                SceneManager.UnloadSceneAsync(currentScene.Name);
+                GameManager.Instance.HandleChangeScene(currentScene.Name);
             }
         }
     }

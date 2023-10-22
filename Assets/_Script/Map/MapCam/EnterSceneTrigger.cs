@@ -5,21 +5,12 @@ public class EnterSceneTrigger : MonoBehaviour
 {
     [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
 
-    public event Action OnChangeSceneFinished;
-    private void Start()
-    {
-        GameManager.Instance.RegisterEnterSceneTrigger(this);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            if(CamManager.Instance.CurrentCam != cam)
-            {
-                CamManager.Instance.SwitchCamera(cam);
-                OnChangeSceneFinished?.Invoke();
-            }
+            CamManager.Instance.SwitchCamera(cam);
+            GameManager.Instance.HandleChangeSceneFinished();
         }
     }
     private void OnDrawGizmos()
