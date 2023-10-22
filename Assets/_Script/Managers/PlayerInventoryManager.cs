@@ -11,6 +11,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public event Action OnTimeSkillChanged;
     public SerializableDictionary<string, ItemData> StatusEnhancementInventory { get; private set; }
     public SerializableDictionary<string, ItemData> StoryItemInventory { get; private set; }
+    public SerializableDictionary<string, ItemData> WeaponInventory { get; private set; }
     public SerializableDictionary<string, ItemData> MovementSkillItemInventory { get; private set; }
     public SerializableDictionary<string, ItemData> TimeSkillItemInventory { get; private set; }
     public SerializableDictionary<string, ItemData> ConsumablesInventory { get; private set; }
@@ -18,6 +19,10 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 
     #region Weapon Variables
     public WeaponType[] EquipedWeapon { get; private set; }
+    public bool CanUseSword { get; private set; }
+    public bool CanUseGun { get; private set; }
+    public bool CanUseFist { get; private set; }
+    public int CanUseWeaponCount = 0;
 
     public MultiplierData SwordMultiplier { get; private set; }
     public MultiplierData GunMultiplier { get; private set; }
@@ -49,6 +54,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         SwordMultiplier = new();
         GunMultiplier = new();
         FistMultiplier = new();
+
         ConsumablesInventory = new()
         {
             { "Medkit", new ItemData(3, "Medkit") }
@@ -57,6 +63,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         MovementSkillItemInventory = new();
         TimeSkillItemInventory = new();
         StoryItemInventory = new();
+        WeaponInventory = new();
     }
 
     private void Start()
@@ -64,15 +71,20 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         if (DataPersistenceManager.Instance.DisableDataPersistance)
         {
             Debug.LogError("Data persistance is disabled, so player can't change weapon.");
+            CanUseWeaponCount = 2;
             EquipedWeapon = new WeaponType[2];
             EquipedWeapon[0] = WeaponType.Sword;
             EquipedWeapon[1] = WeaponType.Gun;
 
             Debug.LogError("Data persistance is disabled, so player can't save picked items.");
+            MovementSkillItemInventory = new();
+            TimeSkillItemInventory = new();
+            StoryItemInventory = new();
             ChipInventory = new();
             equipedItems = new();
             StatusEnhancementInventory = new();
             ConsumablesInventory = new();
+            WeaponInventory = new();
             Money = 99999999;
         }
     }
@@ -86,6 +98,18 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         else
         {
             StatusEnhancementInventory.Add(name, new ItemData(amount, name));
+        }
+    }
+
+    public void AddWeaponItem(string name)
+    {
+        if(WeaponInventory.ContainsKey(name))
+        {
+            WeaponInventory[name].itemCount = 1;
+        }
+        else
+        {
+            WeaponInventory.Add(name, new ItemData(1, name));
         }
     }
 
@@ -254,17 +278,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         ChipInventory = new();
         StatusEnhancementInventory = new();
 
-        if (data.equipedWeapon.Length == 0)
-        {
-            EquipedWeapon = new WeaponType[2];
-            EquipedWeapon[0] = WeaponType.Sword;
-            EquipedWeapon[1] = WeaponType.Gun;
-        }
-        else
-        {
-            EquipedWeapon = data.equipedWeapon;
-        }
-
+        EquipedWeapon = data.equipedWeapon;
         ChipInventory = data.chipInventory;
         Money = data.money;
         StatusEnhancementInventory = data.statusEnhancementInventory;
@@ -272,6 +286,30 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         TimeSkillItemInventory = data.timeSkillItemInventory;
         MovementSkillItemInventory = data.movementSkillItemInventory;
         StoryItemInventory = data.storyItemInventory;
+        WeaponInventory = data.weaponInventory;
+        CanUseWeaponCount = 0;
+
+        foreach (var item in WeaponInventory)
+        {
+            if (ItemDataManager.Instance.WeaponItemDict.TryGetValue(item.Key, out SO_WeaponItem weaponItem))
+            {
+                CanUseSword |= weaponItem.unlockSword;
+                CanUseGun |= weaponItem.unlockGun;
+                CanUseFist |= weaponItem.unlockFist;
+            }
+            else
+            {
+                Debug.LogError("The time skill item name in PlayerInventoryManager.Instance.TimeSkillItemInventory is wrong");
+            }
+        }
+
+        if(CanUseSword)
+            CanUseWeaponCount++;
+        if(CanUseGun)
+            CanUseWeaponCount++;
+        if(CanUseFist)
+            CanUseWeaponCount++;
+
     }
 
     public void SaveData(GameData data)
@@ -292,10 +330,11 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         data.timeSkillItemInventory = TimeSkillItemInventory;
         data.movementSkillItemInventory = MovementSkillItemInventory;
         data.storyItemInventory = StoryItemInventory;
+        data.weaponInventory = WeaponInventory;
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class ItemData
 {
     public int itemCount;

@@ -29,6 +29,7 @@ public class GameData
     public SerializableDictionary<string, ItemData> storyItemInventory;
     public SerializableDictionary<string, ItemData> movementSkillItemInventory;
     public SerializableDictionary<string, ItemData> timeSkillItemInventory;
+    public SerializableDictionary<string, ItemData> weaponInventory;
 
     public SerializableDictionary<string, string> equipedItems;
     public WeaponType[] equipedWeapon = new WeaponType[2];
@@ -47,6 +48,7 @@ public class GameData
         storyItemInventory = new();
         movementSkillItemInventory = new();
         timeSkillItemInventory = new();
+        weaponInventory = new();
 
         statusEnhancementInventory = new();
         savepoints = new();
@@ -59,8 +61,8 @@ public class GameData
             { "Medkit", new ItemData(3, "Medkit") }
         };
 
-        equipedWeapon[0] = WeaponType.Sword;
-        equipedWeapon[1] = WeaponType.Gun;
+        equipedWeapon[0] = WeaponType.None;
+        equipedWeapon[1] = WeaponType.None;
     }
 
     public int GetPercentageComplete()

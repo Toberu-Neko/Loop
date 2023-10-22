@@ -45,20 +45,18 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Start()
     {
-        DataPersistenceManager.Instance.OnLoad += InitWeapon;
         InitializeEnergy();
     }
     private void OnEnable()
     {
         combat.OnPerfectBlock += () => perfectBlockThisFram = true;
+        DataPersistenceManager.Instance.OnLoad += InitWeapon;
     }
     private void OnDisable()
     {
         combat.OnPerfectBlock -= () => perfectBlockThisFram = true;
         DataPersistenceManager.Instance.OnLoad -= InitWeapon;
     }
-
-
 
     private void Update()
     {
@@ -81,6 +79,13 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
+    public void EquipWeapon(WeaponType weaponType)
+    {
+        CurrentWeaponType = weaponType;
+
+        OnWeaponChanged?.Invoke();
+    }
+
     private void InitWeapon()
     {
         CurrentWeaponType = PlayerInventoryManager.Instance.EquipedWeapon[0];
@@ -89,7 +94,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void ChangeWeapon()
     {
-        if (inputHandler.ChangeWeapon2)
+        if (inputHandler.ChangeWeapon2 && PlayerInventoryManager.Instance.CanUseWeaponCount > 1)
         {
             inputHandler.UseChangeWeapon2();
             if(CurrentWeaponType == PlayerInventoryManager.Instance.EquipedWeapon[0])
@@ -123,10 +128,12 @@ public class PlayerWeaponManager : MonoBehaviour
                 return FistCurrentEnergy.ToString();
             case WeaponType.Gun:
                 return GunCurrentEnergy.ToString();
+            case WeaponType.None:
+                return "None";
         }
 
-        Debug.Log("WeaponTyperError");
-        return "WeaponTyperError";
+        Debug.Log("WeaponTypeError");
+        return "WeaponTypeError";
     }
 
     private void IncreaseEnergy()
@@ -144,6 +151,8 @@ public class PlayerWeaponManager : MonoBehaviour
             case WeaponType.Gun:
                 if(GrenadeCount < GunData.maxGrenade)
                     GrenadeCount++;
+                break;
+            default:
                 break;
         }
         perfectBlockThisFram = false;
@@ -174,6 +183,8 @@ public class PlayerWeaponManager : MonoBehaviour
                 break;
             case WeaponType.Gun:
                 GrenadeCount--;
+                break;
+            default:
                 break;
         }
         OnEnergyChanged?.Invoke();
@@ -207,6 +218,8 @@ public class PlayerWeaponManager : MonoBehaviour
                 break;
             case WeaponType.Gun:
                 GrenadeCount = 0;
+                break;
+            default:
                 break;
         }
         OnEnergyChanged?.Invoke();

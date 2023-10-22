@@ -182,6 +182,7 @@ public class PlayerAttackState : PlayerState
 
 public enum WeaponType
 {
+    None,
     Sword,
     Gun,
     Fist

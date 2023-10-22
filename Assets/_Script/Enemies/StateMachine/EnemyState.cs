@@ -8,7 +8,6 @@ public class EnemyState
     protected Entity entity;
     protected Core core;
 
-
     protected bool isAnimationFinished;
     protected bool isAnimationStartMovement;
 

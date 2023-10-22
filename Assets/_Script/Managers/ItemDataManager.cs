@@ -12,6 +12,7 @@ public class ItemDataManager : MonoBehaviour
     public Dictionary<string, SO_PlayerStatusEnhancement> StatusEnhancementDict { get; private set; }
     public Dictionary<string, SO_StoryItem> StoryItemDict { get; private set; }
     public Dictionary<string, SO_ConsumeableItem> ConsumableItemDict { get; private set; }
+    public Dictionary<string, SO_WeaponItem> WeaponItemDict { get; private set; }
 
 
     private void Awake()
@@ -31,13 +32,15 @@ public class ItemDataManager : MonoBehaviour
         StatusEnhancementDict = new();
         StoryItemDict = new();
         ConsumableItemDict = new();
+        WeaponItemDict = new();
 
-        LoadAndPopulateDictionary("ChipSO", ChipDict);
-        LoadAndPopulateDictionary("MovementSkillSO", MovementSkillDict);
-        LoadAndPopulateDictionary("TimeSkillSO", TimeSkillDict);
-        LoadAndPopulateDictionary("StatusEnhancementSO", StatusEnhancementDict);
-        LoadAndPopulateDictionary("StoryItemSO", StoryItemDict);
-        LoadAndPopulateDictionary("ConsumableItemSO", ConsumableItemDict);
+        LoadAndPopulateDictionary("SO_Chip", ChipDict);
+        LoadAndPopulateDictionary("SO_MovementSkill", MovementSkillDict);
+        LoadAndPopulateDictionary("SO_TimeSkill", TimeSkillDict);
+        LoadAndPopulateDictionary("SO_StatusEnhancement", StatusEnhancementDict);
+        LoadAndPopulateDictionary("SO_StoryItem", StoryItemDict);
+        LoadAndPopulateDictionary("SO_ConsumableItem", ConsumableItemDict);
+        LoadAndPopulateDictionary("SO_WeaponItem", WeaponItemDict);
     }
 
     private void LoadAndPopulateDictionary<T>(string folderName, Dictionary<string, T> targetDict) where T : SO_ItemsBase

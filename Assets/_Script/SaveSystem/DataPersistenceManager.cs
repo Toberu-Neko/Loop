@@ -153,6 +153,7 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistanceObject.LoadData(GameData);
         }
+
         OnLoad?.Invoke();
     }
 

@@ -42,6 +42,11 @@ public class SavepointUIChangeSkill : MonoBehaviour
         slot2FistText = slot2FistButton.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    private void OnEnable()
+    {
+        UpdateMenu();
+    }
+
 
     public void OnClickBackButton()
     {
@@ -150,6 +155,24 @@ public class SavepointUIChangeSkill : MonoBehaviour
             slot2FistText.color = Color.red;
             slot1FistButton.interactable = false;
             slot2FistButton.interactable = false;
+        }
+
+        if (!PlayerInventoryManager.Instance.CanUseFist)
+        {
+            slot1FistButton.interactable = false;
+            slot2FistButton.interactable = false;
+        }
+
+        if (!PlayerInventoryManager.Instance.CanUseGun)
+        {
+            slot1GunButton.interactable = false;
+            slot2GunButton.interactable = false;
+        }
+
+        if (!PlayerInventoryManager.Instance.CanUseSword)
+        {
+            slot1SwordButton.interactable = false;
+            slot2SwordButton.interactable = false;
         }
 
         if(!playerTimeSkillManager.UnlockedTimeSkills.timeSlowAll)

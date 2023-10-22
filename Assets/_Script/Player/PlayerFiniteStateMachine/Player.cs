@@ -77,6 +77,7 @@ public class Player : MonoBehaviour
     #region Other Variables
     // public int FacingDirection { get; private set; }
 
+
     private Vector2 v2Workspace;
     #endregion
 
@@ -140,26 +141,25 @@ public class Player : MonoBehaviour
         FistS3ChargeState = new PlayerFistS3ChargeState(this, StateMachine, playerData, "fistS3Charge");
         FistS3AttackState = new PlayerFistS3AttackState(this, StateMachine, playerData, "fistS3Attack");
         
-
         movement.OrginalGravityScale = playerData.gravityScale;
 
-        gameManager = GameManager.Instance;
     }
 
     private void OnEnable()
     {
-        gameManager.OnChangeSceneGoUp += HandleChangeSceneToUp;
-        gameManager.OnChangeSceneGoDown += HandleChangeSceneToDown;
-        gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
-        gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
-        gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
-
         stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
 
     private void Start()
     {
+        gameManager = GameManager.Instance;
         StateMachine.Initialize(ChangeSceneState);
+
+        gameManager.OnChangeSceneGoUp += HandleChangeSceneToUp;
+        gameManager.OnChangeSceneGoDown += HandleChangeSceneToDown;
+        gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
+        gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
+        gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
     }
 
     private void OnDisable()
