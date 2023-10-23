@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73c9f42ee86211c4986184efa0a04bd5, type: 3}
-  m_Name: EnemyProjectile
+  m_Name: BoxCoreData
   m_EditorClassIdentifier: 
   maxHealth: 150
   maxStamina: 30
@@ -18,7 +18,7 @@ MonoBehaviour:
   invincibleDurationAfterDamaged: 0.2
   combatTimer: 5
   perfectBlockAttackDuration: 2
-  damageParticles: {fileID: 0}
+  damageParticles: {fileID: 7655857405548607486, guid: cab4e4cffe5ed9f4e9ae0b8f7f235a48, type: 3}
   maxKnockbackTime: 0.3
   blockDamageMultiplier: 0.5
   blockStaminaMultiplier: 0.5
@@ -26,6 +26,7 @@ MonoBehaviour:
   normalBlockKnockbakMultiplier: 0.75
   noFrictionMaterial: {fileID: 0}
   fullFrictionMaterial: {fileID: 0}
-  deathParticles: []
+  deathParticles:
+  - {fileID: 2615349222246815121, guid: a8c7bd747d9139a40bc1f4536f3af323, type: 3}
   lootItems: []
-  dropAmount: 1
+  dropAmount: 2
