@@ -60,6 +60,7 @@ public class PlayerData : ScriptableObject
 
     [Header("WallClimbState")]
     [Tooltip("Àð¾Àª¦¦æ³t«×")]
+    public bool canWallClimb = false;
     public float wallClimbVelocity = 3f;
 
     [Header("CrouchState")]

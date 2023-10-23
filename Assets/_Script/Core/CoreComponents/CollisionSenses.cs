@@ -74,7 +74,8 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private float ledgeCheckDistance = 1f;
 
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private LayerMask whatIsWall;
+    [SerializeField] private LayerMask whatIsClimbableWall;
+    [SerializeField] protected LayerMask whatIsUnclimbableWall;
     [SerializeField] private LayerMask whatIsPlatform;
 
     private Slope slope = new();
@@ -121,15 +122,31 @@ public class CollisionSenses : CoreComponent
             RaycastHit2D hitFront = Physics2D.Raycast(GroundCheck.position, Vector2.right * movement.FacingDirection, slopeCheckDistance, whatIsGround);
             RaycastHit2D hitBack = Physics2D.Raycast(GroundCheck.position, Vector2.right * -movement.FacingDirection, slopeCheckDistance, whatIsGround);
             slope.hasCollisionSenses = true;
+
             if (hitFront)
             {
-                slope.SetSideAngle(Vector2.Angle(hitFront.normal, Vector2.up));
+                if(Vector2.Angle(hitFront.normal, Vector2.up) <= slopeMaxAngle)
+                {
+                    slope.SetSideAngle(Vector2.Angle(hitFront.normal, Vector2.up));
+                }
+                else
+                {
+                    slope.SetSideAngle(0f);
+                    slope.SetIsOnSlope(false);
+                }
                 Debug.Log("fornt angle: " + Vector2.Angle(hitFront.normal, Vector2.up));
             }
             else if (hitBack)
             {
-                slope.SetSideAngle(Vector2.Angle(hitBack.normal, Vector2.up));
-                Debug.Log("back angle: " + Vector2.Angle(hitBack.normal, Vector2.up));
+                if(Vector2.Angle(hitBack.normal, Vector2.up) <= slopeMaxAngle)
+                {
+                    slope.SetSideAngle(Vector2.Angle(hitBack.normal, Vector2.up));
+                }
+                else
+                {
+                    slope.SetSideAngle(0f);
+                    slope.SetIsOnSlope(false);
+                }
             }
             else
             {
@@ -159,6 +176,11 @@ public class CollisionSenses : CoreComponent
     {
         get => Physics2D.BoxCast(GroundCheck.position, groundCheckV2, 0f, Vector2.down, 0.1f, whatIsPlatform);
     }
+
+    public bool UnclimbableWallFront
+    {
+        get=> Physics2D.Raycast(GroundCheck.position, Vector2.right * movement.FacingDirection, slopeCheckDistance, whatIsUnclimbableWall);
+    }
     public bool CanChangeCollider
     {
         get => !Physics2D.BoxCast(ChangeColliderWallCheck.position, changeColliderWallCheckV2, 0f, Vector2.right * movement.FacingDirection, 0.1f, whatIsGround);
@@ -166,19 +188,19 @@ public class CollisionSenses : CoreComponent
 
     public bool WallFront
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsWall);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsClimbableWall);
     }
     public bool WallFrontLong
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsWall);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsClimbableWall);
     }
     public bool WallBack
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -movement.FacingDirection, wallCheckDistance, whatIsWall);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -movement.FacingDirection, wallCheckDistance, whatIsClimbableWall);
     }
     public bool WallBackLong
     {
-        get => Physics2D.Raycast(WallBackCheck.position, -Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsWall);
+        get => Physics2D.Raycast(WallBackCheck.position, -Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsClimbableWall);
     }
     public bool LedgeHorizontal
     {
@@ -191,7 +213,7 @@ public class CollisionSenses : CoreComponent
 
     public bool IsDetectingWall(Vector2 direction, float distance)
     {
-        return Physics2D.Raycast(movement.ParentTransform.position, direction, distance, whatIsWall);
+        return Physics2D.Raycast(movement.ParentTransform.position, direction, distance, whatIsClimbableWall);
     }
 
     private void OnDrawGizmos()

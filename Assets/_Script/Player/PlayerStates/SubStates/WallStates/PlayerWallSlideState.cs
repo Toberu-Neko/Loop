@@ -16,7 +16,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         {
             Movement.SetVelocityY(-playerData.wallSlideVelocity);
 
-            if(grabInput && yInput == 0)
+            if(grabInput && yInput == 0 && player.PlayerData.canWallClimb)
             {
                 stateMachine.ChangeState(player.WallGrabState);
             }

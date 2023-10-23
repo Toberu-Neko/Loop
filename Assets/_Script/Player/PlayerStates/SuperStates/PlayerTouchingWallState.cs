@@ -93,6 +93,6 @@ public class PlayerTouchingWallState : PlayerState
 
     public virtual bool CheckCanClimbWall()
     {
-        return Time.time >= endTime + 1f;
+        return Time.time >= endTime + 0.25f;
     }
 }

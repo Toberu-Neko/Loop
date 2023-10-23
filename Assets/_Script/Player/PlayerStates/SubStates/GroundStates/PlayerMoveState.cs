@@ -22,7 +22,14 @@ public class PlayerMoveState : PlayerGroundedState
 
         if(!isExitingState)
         {
-            Movement.SetVelocityX(playerData.movementVelocity * xInput);
+            if (CollisionSenses.UnclimbableWallFront)
+            {
+                Movement.SetVelocityX(0f);
+            }
+            else
+            {
+                Movement.SetVelocityX(playerData.movementVelocity * xInput);
+            }
 
             if (xInput == 0)
             {
