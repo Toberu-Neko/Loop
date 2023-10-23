@@ -143,7 +143,7 @@ public class PlayerGroundedState : PlayerState
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
         }
-        else if (isTouchingWall && grabInput && isTouchingLedge)
+        else if (isTouchingWall && grabInput && isTouchingLedge && player.PlayerData.canWallClimb)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }

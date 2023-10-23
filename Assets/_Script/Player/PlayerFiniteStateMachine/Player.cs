@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PlayerData playerData;
+    [field: SerializeField] public PlayerData PlayerData { get;private set; }
     private GameManager gameManager;
 
     #region ControlerStates
@@ -98,50 +98,50 @@ public class Player : MonoBehaviour
 
         StateMachine = new PlayerStateMachine();
 
-        IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
-        ChangeSceneState = new PlayerChangeSceneState(this, StateMachine, playerData, "idle");
-        MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
-        JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
-        InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
-        LandState = new PlayerLandState(this, StateMachine, playerData, "land");
-        WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
-        WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
-        WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
-        WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "inAir");
-        LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
-        DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
-        CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
-        CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
-        DeadState = new PlayerDeadState(this, StateMachine, playerData, "dead");
+        IdleState = new PlayerIdleState(this, StateMachine, PlayerData, "idle");
+        ChangeSceneState = new PlayerChangeSceneState(this, StateMachine, PlayerData, "idle");
+        MoveState = new PlayerMoveState(this, StateMachine, PlayerData, "move");
+        JumpState = new PlayerJumpState(this, StateMachine, PlayerData, "inAir");
+        InAirState = new PlayerInAirState(this, StateMachine, PlayerData, "inAir");
+        LandState = new PlayerLandState(this, StateMachine, PlayerData, "land");
+        WallSlideState = new PlayerWallSlideState(this, StateMachine, PlayerData, "wallSlide");
+        WallGrabState = new PlayerWallGrabState(this, StateMachine, PlayerData, "wallGrab");
+        WallClimbState = new PlayerWallClimbState(this, StateMachine, PlayerData, "wallClimb");
+        WallJumpState = new PlayerWallJumpState(this, StateMachine, PlayerData, "inAir");
+        LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, PlayerData, "ledgeClimbState");
+        DashState = new PlayerDashState(this, StateMachine, PlayerData, "inAir");
+        CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, PlayerData, "crouchIdle");
+        CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, PlayerData, "crouchMove");
+        DeadState = new PlayerDeadState(this, StateMachine, PlayerData, "dead");
 
-        BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
-        PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, playerData, "perfectBlock");
-        RegenState = new PlayerRegenState(this, StateMachine, playerData, "regen");
+        BlockState = new PlayerBlockState(this, StateMachine, PlayerData, "block");
+        PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, PlayerData, "perfectBlock");
+        RegenState = new PlayerRegenState(this, StateMachine, PlayerData, "regen");
 
-        SwordHubState = new PlayerSwordHubState(this, StateMachine, playerData, "swordAttack");
-        SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, playerData, "swordNormalAttack");
-        SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, playerData, "swordStrongAttack");
-        SwordSkyAttackState = new PlayerSwordSkyAttackState(this, StateMachine, playerData, "swordSkyAttack");
-        SwordCounterAttackState = new PlayerSwordCounterAttackState(this, StateMachine, playerData, "swordCounterAttack");
-        SwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, playerData, "swordSoulOneAttack");
-        SwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, playerData, "swordSoulMaxAttack");
+        SwordHubState = new PlayerSwordHubState(this, StateMachine, PlayerData, "swordAttack");
+        SwordNormalAttackState = new PlayerSwordNormalAttackState(this, StateMachine, PlayerData, "swordNormalAttack");
+        SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, PlayerData, "swordStrongAttack");
+        SwordSkyAttackState = new PlayerSwordSkyAttackState(this, StateMachine, PlayerData, "swordSkyAttack");
+        SwordCounterAttackState = new PlayerSwordCounterAttackState(this, StateMachine, PlayerData, "swordCounterAttack");
+        SwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, PlayerData, "swordSoulOneAttack");
+        SwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, PlayerData, "swordSoulMaxAttack");
 
-        GunHubState = new PlayerGunHubState(this, StateMachine, playerData, "gunAttack");
-        GunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, playerData, "gunNormalAttack");
-        GunChargeAttackState = new PlayerGunChargingState(this, StateMachine, playerData, "gunChargeAttack");
-        GunCounterAttackState = new PlayerGunCounterState(this, StateMachine, playerData, "gunCounterAttack");
-        GunThrowGrenadeState = new PlayerThrowGrenadeState(this, StateMachine, playerData, "gunThrowGrenade");
-        GunS3State = new PlayerGunS3State(this, StateMachine, playerData, "gunS3Attack");
+        GunHubState = new PlayerGunHubState(this, StateMachine, PlayerData, "gunAttack");
+        GunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, PlayerData, "gunNormalAttack");
+        GunChargeAttackState = new PlayerGunChargingState(this, StateMachine, PlayerData, "gunChargeAttack");
+        GunCounterAttackState = new PlayerGunCounterState(this, StateMachine, PlayerData, "gunCounterAttack");
+        GunThrowGrenadeState = new PlayerThrowGrenadeState(this, StateMachine, PlayerData, "gunThrowGrenade");
+        GunS3State = new PlayerGunS3State(this, StateMachine, PlayerData, "gunS3Attack");
 
-        FistHubState = new PlayerFistHubState(this, StateMachine, playerData, "fistAttack");
-        FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, playerData, "fistNormalAttack");
-        FistStrongAttackState = new PlayerFistStrongAttackState(this, StateMachine, playerData, "fistStrongAttack");
-        FistStaticStrongAttackState = new PlayerFistStaticStrongAttackState(this, StateMachine, playerData, "fistStaticStrongAttack");
-        FistCounterAttackState = new PlayerFistCounterAttackState(this, StateMachine, playerData, "fistCounterAttack");
-        FistS3ChargeState = new PlayerFistS3ChargeState(this, StateMachine, playerData, "fistS3Charge");
-        FistS3AttackState = new PlayerFistS3AttackState(this, StateMachine, playerData, "fistS3Attack");
+        FistHubState = new PlayerFistHubState(this, StateMachine, PlayerData, "fistAttack");
+        FistNormalAttackState = new PlayerFistNormalAttackState(this, StateMachine, PlayerData, "fistNormalAttack");
+        FistStrongAttackState = new PlayerFistStrongAttackState(this, StateMachine, PlayerData, "fistStrongAttack");
+        FistStaticStrongAttackState = new PlayerFistStaticStrongAttackState(this, StateMachine, PlayerData, "fistStaticStrongAttack");
+        FistCounterAttackState = new PlayerFistCounterAttackState(this, StateMachine, PlayerData, "fistCounterAttack");
+        FistS3ChargeState = new PlayerFistS3ChargeState(this, StateMachine, PlayerData, "fistS3Charge");
+        FistS3AttackState = new PlayerFistS3AttackState(this, StateMachine, PlayerData, "fistS3Attack");
         
-        movement.OrginalGravityScale = playerData.gravityScale;
+        movement.OrginalGravityScale = PlayerData.gravityScale;
 
     }
 
@@ -256,7 +256,8 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, playerData.perfectBlockKnockbackRadius);
+        if(PlayerData)
+            Gizmos.DrawWireSphere(transform.position, PlayerData.perfectBlockKnockbackRadius);
     }
 }
 

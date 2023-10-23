@@ -92,7 +92,6 @@ public class PlayerInAirState : PlayerState
         CheckCoyoteTime();
         CheckWallJumpCoyoteTime();
 
-
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
         jumpInput = player.InputHandler.JumpInput;
@@ -181,7 +180,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.JumpState);
         }
-        else if(isTouchingWall && grabInput && isTouchingLedge && player.WallGrabState.CheckCanClimbWall())
+        else if(isTouchingWall && grabInput && isTouchingLedge && player.WallGrabState.CheckCanClimbWall() && player.PlayerData.canWallClimb)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }
@@ -196,7 +195,14 @@ public class PlayerInAirState : PlayerState
         else
         {
             Movement.CheckIfShouldFlip(xInput);
-            Movement.SetVelocityX(playerData.movementVelocity * xInput, true);
+            if (CollisionSenses.UnclimbableWallFront)
+            {
+                Movement.SetVelocityX(0f);
+            }
+            else
+            {
+                Movement.SetVelocityX(playerData.movementVelocity * xInput, true);
+            }
 
             player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
             player.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
