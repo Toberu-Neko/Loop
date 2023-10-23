@@ -63,6 +63,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Vector2 groundCheckV2;
     [SerializeField] private Vector2 slopeCheckV2;
     [SerializeField] private Vector2 changeColliderWallCheckV2;
+    [SerializeField] private Vector2 changeColliderWallCheckV2Crouch;
 
     [SerializeField] private Vector2 ceilingCheckV2;
     [SerializeField] private Vector2 headCheckV2;
@@ -185,6 +186,11 @@ public class CollisionSenses : CoreComponent
         get => !Physics2D.BoxCast(ChangeColliderWallCheck.position, changeColliderWallCheckV2, 0f, Vector2.right * movement.FacingDirection, 0.1f, whatIsGround);
     }
 
+    public bool CrouchCanChangeCollider
+    {
+        get => !Physics2D.BoxCast(ChangeColliderWallCheck.position, changeColliderWallCheckV2Crouch, 0f, Vector2.right * movement.FacingDirection, 0.1f, whatIsGround);
+    }
+
     public bool WallFront
     {
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsClimbableWall);
@@ -225,6 +231,7 @@ public class CollisionSenses : CoreComponent
         if (ChangeColliderWallCheck)
         {
             Gizmos.DrawWireCube(ChangeColliderWallCheck.position, changeColliderWallCheckV2);
+            Gizmos.DrawWireCube(ChangeColliderWallCheck.position, changeColliderWallCheckV2Crouch);
         }
         if (LedgeCheckHorizontal) Gizmos.DrawLine(LedgeCheckHorizontal.position, LedgeCheckHorizontal.position + Vector3.right * wallCheckDistance);
         if (LedgeCheckVertical) Gizmos.DrawLine(LedgeCheckVertical.position, LedgeCheckVertical.position + Vector3.down * ledgeCheckDistance);

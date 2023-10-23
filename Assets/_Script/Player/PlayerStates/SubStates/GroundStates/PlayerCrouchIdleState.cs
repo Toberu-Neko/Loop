@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerCrouchIdleState : PlayerGroundedState
 {
+    private SetCollider setCollider;
     public PlayerCrouchIdleState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        setCollider = player.Core.GetCoreComponent<SetCollider>();
     }
 
     public override void Enter()
@@ -14,12 +16,15 @@ public class PlayerCrouchIdleState : PlayerGroundedState
 
         Movement.SetVelocityZero();
         player.SetColliderHeight(playerData.crouchColliderHeight);
+        setCollider.isCrouching = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+
         player.SetColliderHeight(playerData.standColliderHeight);
+        setCollider.isCrouching = false;
     }
 
     public override void LogicUpdate()
