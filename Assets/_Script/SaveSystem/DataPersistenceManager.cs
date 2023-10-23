@@ -36,6 +36,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public static DataPersistenceManager Instance { get; private set; }
 
+    private int loadObjCount;
+
     private void Awake()
     {
         if(Instance != null)
@@ -83,10 +85,16 @@ public class DataPersistenceManager : MonoBehaviour
         timer += Time.unscaledDeltaTime;
     }
 
+    public void CheckIfShouldSaveOnLoad()
+    {
+        if (FindAllDataPersistenceObjects().Count > loadObjCount)
+        {
+            SaveGame();
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // DataPersistanceObjects = FindAllDataPersistenceObjects();
-
         // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
         {
@@ -102,7 +110,27 @@ public class DataPersistenceManager : MonoBehaviour
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()
     {
+        /*
+        Scene scene = SceneManager.GetSceneByName("MultiSceneBase");
+        GameObject[] objs = scene.GetRootGameObjects();
+        int baseObjCount = 0;
+
+        foreach (GameObject obj in objs)
+        {
+            IDataPersistance[] items = obj.GetComponentsInChildren<IDataPersistance>();
+            baseObjCount += items.Length;
+
+            if(items.Length > 0)
+            {
+                Debug.Log("Found " + items.Length + " data persistance objects in " + obj.name);
+            }
+        }
+
+        Debug.Log("Base object count: " + baseObjCount);
+        */
+
         IEnumerable<IDataPersistance> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistance>();
+
 
         return new List<IDataPersistance>(dataPersistanceObjects);
     }
@@ -120,6 +148,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         DataPersistanceObjects = FindAllDataPersistenceObjects();
         Debug.Log("Load " + DataPersistanceObjects.Count + " objects.");
+        loadObjCount = DataPersistanceObjects.Count;
         if (DisableDataPersistance)
         {
             return;
@@ -148,6 +177,10 @@ public class DataPersistenceManager : MonoBehaviour
         }
         timer = 0f;
 
+        if (firstTimeLoad)
+        {
+            GameData.interectWithSavePointThisSave = true;
+        }
 
         foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
         {
@@ -160,7 +193,7 @@ public class DataPersistenceManager : MonoBehaviour
     public void SaveGame()
     {
         DataPersistanceObjects = FindAllDataPersistenceObjects();
-        Debug.Log("Saved, " + DataPersistanceObjects.Count + "Objects.");
+        Debug.Log("Saved, " + DataPersistanceObjects.Count + " Objects.");
         if (DisableDataPersistance)
         {
             return;
@@ -180,6 +213,8 @@ public class DataPersistenceManager : MonoBehaviour
             Debug.LogWarning("No game data found, create a new one first.");
             return;
         }
+
+        GameData.interectWithSavePointThisSave = false;
 
         foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
         {

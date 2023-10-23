@@ -134,7 +134,6 @@ public class CollisionSenses : CoreComponent
                     slope.SetSideAngle(0f);
                     slope.SetIsOnSlope(false);
                 }
-                Debug.Log("fornt angle: " + Vector2.Angle(hitFront.normal, Vector2.up));
             }
             else if (hitBack)
             {

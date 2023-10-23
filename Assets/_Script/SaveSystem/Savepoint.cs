@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using UnityEngine;
 
 public class Savepoint : MonoBehaviour, IDataPersistance
@@ -13,12 +14,16 @@ public class Savepoint : MonoBehaviour, IDataPersistance
 
     private bool inRange;
     private bool isSavePointActive;
+    private bool finishTutorial = false;
+    private bool interectWithSavePointThisSave = false;
 
 
     private void OnEnable()
     {
         pressEObject.SetActive(false);
         inRange = false;
+        finishTutorial = false;
+        interectWithSavePointThisSave = false;
     }
 
     private void Start()
@@ -35,6 +40,7 @@ public class Savepoint : MonoBehaviour, IDataPersistance
                 isSavePointActive = true;
                 inputHandler.UseInteractInput();
                 pressEObject.SetActive(false);
+                interectWithSavePointThisSave = true;
 
                 // Go to game manager
                 OnSavePointInteract?.Invoke(SavePointName);
@@ -49,6 +55,7 @@ public class Savepoint : MonoBehaviour, IDataPersistance
             if (inputHandler == null)
                 inputHandler = collision.GetComponent<PlayerInputHandler>();
 
+            finishTutorial = true;
             pressEObject.SetActive(true);
             inRange = true;
         }
@@ -81,6 +88,16 @@ public class Savepoint : MonoBehaviour, IDataPersistance
 
     public void SaveData(GameData data)
     {
+        if (finishTutorial)
+        {
+            data.finishTutorial = true;
+        }
+
+        if (interectWithSavePointThisSave)
+        {
+            data.interectWithSavePointThisSave = true;
+        }
+
         if(data.savepoints.ContainsKey(SavePointName))
         {
             data.savepoints.Remove(SavePointName);

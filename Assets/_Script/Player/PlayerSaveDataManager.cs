@@ -29,9 +29,16 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
     {
         data.savepoints.TryGetValue(data.lastInteractedSavepoint, out SavepointDetails details);
 
-        if (details != null)
+        if (data.interectWithSavePointThisSave)
         {
-            transform.position = details.teleportPosition;
+            if (details != null)
+            {
+                transform.position = details.teleportPosition;
+            }
+        }
+        else
+        {
+            transform.position = data.playerPosition;
         }
     }
 
@@ -41,5 +48,7 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
         {
             data.lastInteractedSavepoint = RecentSavepointName;
         }
+
+        data.playerPosition = transform.position;
     }
 }

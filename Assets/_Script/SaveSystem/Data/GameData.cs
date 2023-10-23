@@ -11,15 +11,21 @@ public class GameData
     public int money;
     public float maxHealth;
     public float timePlayed;
+    public Vector2 playerPosition;
+    public bool interectWithSavePointThisSave;
 
     public string currentTimeSkill;
     public string lastInteractedSavepoint;
+
+    public bool finishTutorial;
 
     public PlayerMovementSkills unlockedMovementSkills;
     public PlayerTimeSkills unlockedTimeSkills;
 
     public SerializableDictionary<string, bool> defeatedBosses;
     public SerializableDictionary<string, bool> pickedTreasures;
+    public SerializableDictionary<string, bool> activatedMapItem;
+
     public SerializableDictionary<string, SavepointDetails> savepoints;
 
     public SerializableDictionary<string, ItemData> statusEnhancementInventory;
@@ -40,7 +46,10 @@ public class GameData
         timePlayed = 0f;
         money = 0;
         currentTimeSkill = "PlayerTimeSkill_None";
-        lastInteractedSavepoint = "Defult";
+        lastInteractedSavepoint = "Default";
+        finishTutorial = false;
+        interectWithSavePointThisSave = true;
+        playerPosition = new Vector2(0, 0);
 
         unlockedMovementSkills = new();
         unlockedTimeSkills = new();

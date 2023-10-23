@@ -91,7 +91,9 @@ public class GameManager : MonoBehaviour
     {
         OnSavepointInteracted?.Invoke(savepointName);
 
+
         DataPersistenceManager.Instance.SaveGame();
+
         EnemyManager.Instance.ResetTempData();
     }
 
@@ -157,6 +159,7 @@ public class GameManager : MonoBehaviour
                 OnChangeSceneGoRight?.Invoke();
                 break;
         }
+        // DataPersistenceManager.Instance.CheckIfShouldSaveOnLoad();
         SceneManager.UnloadSceneAsync(sceneName);
     }
     public void HandleChangeSceneFinished()

@@ -63,5 +63,22 @@ public static class HierarchyMonitor
                 }
             }
         }
+
+        var allMapObj = GameObject.FindObjectsOfType<DataPersistMapObjBase>();
+
+        foreach (var item in allMapObj)
+        {
+            if (!Application.isPlaying)
+            {
+                DataPersistMapObjBase script = item.GetComponent<DataPersistMapObjBase>();
+
+                if (!script.isAddedID)
+                {
+                    script.isAddedID = true;
+                    script.ID = System.Guid.NewGuid().ToString();
+                    EditorUtility.SetDirty(item);
+                }
+            }
+        }
     }
 }
