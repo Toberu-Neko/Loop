@@ -246,7 +246,8 @@ public class Player : MonoBehaviour
 
     private void HandleHealthZero()
     {
-        StateMachine.ChangeState(DeadState);
+        if(StateMachine.CurrentState != DeadState)
+            StateMachine.ChangeState(DeadState);
     }
 
     public void TeleportPlayer(Vector2 position)

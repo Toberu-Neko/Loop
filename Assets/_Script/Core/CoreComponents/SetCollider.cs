@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SetCollider : CoreComponent
@@ -15,6 +16,7 @@ public class SetCollider : CoreComponent
     private Vector2 v2Workspace;
 
     private bool changeable;
+    public bool isCrouching;
 
     protected override void Awake()
     {
@@ -34,6 +36,7 @@ public class SetCollider : CoreComponent
         orgHeight = movementCollider.size.y;
         changed = false;
         changeable = true;
+        isCrouching = false;
 
         movement.OnStuck += HandleOnStuck;
         stats.Health.OnCurrentValueZero += HandleHelthZero;
@@ -52,17 +55,28 @@ public class SetCollider : CoreComponent
 
     private void HandleOnStuck()
     {
-        if (!changed && changeable && collisionSenses.CanChangeCollider && !stats.IsTimeStopped)
+        if (!isCrouching)
         {
-            changed = true;
-            StartCoroutine(Change(0.75f));
+            if (!changed && changeable && collisionSenses.CanChangeCollider && !stats.IsTimeStopped)
+            {
+                changed = true;
+                StartCoroutine(Change(0.75f));
+            }
         }
+        else
+        {
+            if (!changed && changeable && collisionSenses.CrouchCanChangeCollider && !stats.IsTimeStopped)
+            {
+                changed = true;
+                StartCoroutine(Change(0.75f));
+            }
+        }
+
     }
 
     public void SetColliderHeight(float height)
     {
         v2Workspace.Set(movementCollider.size.x, height);
-
 
         movementCollider.size = v2Workspace;
 

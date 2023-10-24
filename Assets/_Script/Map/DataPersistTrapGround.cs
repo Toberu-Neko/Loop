@@ -12,7 +12,7 @@ public class DataPersistTrapGround : DataPersistMapObjBase
 
         if (isActivated)
         {
-            trapGroundObj.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 
