@@ -18,6 +18,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public List<IMapDamageableItem> DetectedMapDamageableItems { get; private set; } = new();
 
 
+    public bool PerfectBlockAllDir { get; private set; }
     public bool PerfectBlock { get; private set; }
     private bool normalBlock;
 
@@ -77,6 +78,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         damagedThisFrame = false;
         PerfectBlock = false;
         normalBlock = false;
+        PerfectBlockAllDir = false;
 
         DetectedDamageables = new();
         DetectedKnockbackables = new();
@@ -160,6 +162,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         damagedThisFrame = true;
     }
 
+    public void SetPerfectBlockAllDir(bool value)
+    {
+        PerfectBlockAllDir = value;
+    }
+
     private  void HandleTimeSlowStart()
     {
         maxKnockbackTime /= stats.TimeSlowMultiplier;
@@ -212,19 +219,26 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     {
         if (stats.Invincible)
         {
-            // Debug.Log("invincible");
             return;
         }
-        else if (!blockable || !FacingDamgePosition(damagePosition))
+        else if (!blockable)
         {
             DecreaseHealth(damageAmount);
-            // Debug.Log("!FacingDamgePosition(damagePosition)");
-
         }
-        else if (PerfectBlock)
+        else if (PerfectBlock || PerfectBlockAllDir)
         {
-            // Debug.Log("PerfectBlock");
-            OnPerfectBlock?.Invoke();
+            if (PerfectBlockAllDir)
+            {
+                OnPerfectBlock?.Invoke();
+            }
+            else if (!FacingDamgePosition(damagePosition))
+            {
+                DecreaseHealth(damageAmount);
+            }
+            else
+            {
+                OnPerfectBlock?.Invoke();
+            }
         }
         else if(normalBlock)
         {

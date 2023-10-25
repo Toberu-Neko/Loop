@@ -27,7 +27,7 @@ public class Enemy7 : Entity
         base.Start();
 
         movement.SetRBKinematic();
-        Combat.SetPerfectBlock(true);
+        Combat.SetPerfectBlockAllDir(true);
         StateMachine.Initialize(IdleState);
     }
     protected override void OnEnable()

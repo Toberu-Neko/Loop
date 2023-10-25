@@ -4,6 +4,7 @@ using UnityEngine;
 public class Movement : CoreComponent
 {
     public Rigidbody2D RB { get; private set; }
+    private RigidbodyType2D orgRBBodyType;
 
     public int FacingDirection { get; private set; }
 
@@ -59,6 +60,8 @@ public class Movement : CoreComponent
         {
             OrginalGravityScale = RB.gravityScale;
         }
+
+        orgRBBodyType = RB.bodyType;
 
         stats.OnTimeStopEnd += HandleTimeStopEnd;
         stats.OnTimeStopStart += HandleTimeStopStart;
@@ -118,13 +121,15 @@ public class Movement : CoreComponent
     {
         CurrentVelocity = RB.velocity;
         TimeStopVelocity = CurrentVelocity;
-        RB.isKinematic = true;
+        Debug.Log("TimeStopStart");
+        SetRBKinematic();
         SetVelocityZero();
     }
 
     private void HandleTimeStopEnd()
     {
-        RB.isKinematic = false;
+        Debug.Log("TimeStopEnd");
+        SetRBDynamic();
         SetVelocity(TimeStopVelocity);
     }
     
@@ -341,6 +346,10 @@ public class Movement : CoreComponent
 
     public void SetRBDynamic()
     {
+        if(orgRBBodyType == RigidbodyType2D.Kinematic)
+        {
+            return;
+        }
         inKinematicState = false;
         RB.bodyType = RigidbodyType2D.Dynamic;
     }

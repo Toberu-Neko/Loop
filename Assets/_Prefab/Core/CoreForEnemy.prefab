@@ -132,6 +132,7 @@ Transform:
   - {fileID: 8827469850256828924}
   - {fileID: 7406454105036247234}
   - {fileID: 7095584824494400123}
+  - {fileID: 1790441739097743597}
   m_Father: {fileID: 6317694935012530758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8814559117030986534
@@ -447,7 +448,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4439911822246959578}
-  - {fileID: 1790441739097743597}
   - {fileID: 8399613828603266706}
   - {fileID: 715799080158306530}
   m_Father: {fileID: 6317694935012530758}
@@ -475,18 +475,22 @@ MonoBehaviour:
   groundCheckV2: {x: 0.4, y: 0.1}
   slopeCheckV2: {x: 0.4, y: 0.8}
   changeColliderWallCheckV2: {x: 0.52, y: 0.95}
+  changeColliderWallCheckV2Crouch: {x: 0, y: 0}
   ceilingCheckV2: {x: 0, y: 0}
   headCheckV2: {x: 0, y: 0}
   slopeCheckDistance: 1
   slopeMaxAngle: 80
-  wallCheckDistance: 0.3
-  ledgeCheckDistance: 1.3
+  wallCheckDistance: 0.8
+  ledgeCheckDistance: 0.8
   whatIsGround:
     serializedVersion: 2
     m_Bits: 576
-  whatIsWall:
+  whatIsClimbableWall:
     serializedVersion: 2
-    m_Bits: 65600
+    m_Bits: 0
+  whatIsUnclimbableWall:
+    serializedVersion: 2
+    m_Bits: 0
   whatIsPlatform:
     serializedVersion: 2
     m_Bits: 512
@@ -728,7 +732,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4434635816553806508}
+  m_Father: {fileID: 6616668798133203118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6075139047665762932
 GameObject:
@@ -935,6 +939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementCollider: {fileID: 0}
+  isCrouching: 0
 --- !u!1 &7990351854176527934
 GameObject:
   m_ObjectHideFlags: 0

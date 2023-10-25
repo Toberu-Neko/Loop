@@ -152,13 +152,6 @@ public class DataPersistenceManager : MonoBehaviour
         if (DisableDataPersistance)
         {
             return;
-            /*
-            if(GameData == null)
-            {
-                GameData = new();
-                Debug.Log("Temp game data reset.");
-            }
-            */
         }
 
         GameData = dataHandler.Load(selectedProfileId);
@@ -197,15 +190,6 @@ public class DataPersistenceManager : MonoBehaviour
         if (DisableDataPersistance)
         {
             return;
-            /*
-            foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
-            {
-                dataPersistanceObject.SaveData(GameData);
-            }
-            dataHandler.Save(GameData, "Temp");
-            OnSave?.Invoke();
-            return;
-            */
         }
 
         if (GameData == null)

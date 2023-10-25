@@ -32,7 +32,11 @@ public class DebugPlayerComp : MonoBehaviour
 
     void Start()
     {
-        PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged += UpdateMedkitText;
+        if (PlayerInventoryManager.Instance.ConsumablesInventory.ContainsKey("Medkit"))
+        {
+            //TODO: Do it better
+            PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged += UpdateMedkitText;
+        }
         UpdateMedkitText();
         UpdateHpText();
         UpdateWeaponText();
@@ -50,7 +54,11 @@ public class DebugPlayerComp : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged -= UpdateMedkitText;
+        if (PlayerInventoryManager.Instance.ConsumablesInventory.ContainsKey("Medkit"))
+        {
+            //TODO: Do it better
+            PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged -= UpdateMedkitText;
+        }
         Combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
         Stats.Health.OnValueChanged -= UpdateHpText;
         Combat.OnDamaged -= UpdateHpText;
