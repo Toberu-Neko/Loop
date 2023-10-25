@@ -42,6 +42,11 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         movement = core.GetCoreComponent<Movement>();
         stats = core.GetCoreComponent<Stats>();
     }
+
+    protected virtual void Start()
+    {
+
+    }
     protected virtual void Update()
     {
         core.LogicUpdate();

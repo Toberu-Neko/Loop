@@ -38,6 +38,13 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
         SR.enabled = true;
     }
 
+    protected override void Start()
+    {
+        base.Start();
+
+        movement.SetRBKinematic();
+    }
+
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -46,6 +53,7 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
         OnHitGroundAction -= HandleHitGround;
         OnDuration -= HandleHitGround;
 
+        movement.SetRBKinematic();
     }
 
     protected override void Update()

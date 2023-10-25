@@ -142,7 +142,7 @@ public class SnipingState : AttackState
         drawWire.RenderLine();
 
         GameObject bulletObj = ObjectPoolManager.SpawnObject(stateData.bulletPrefab, attackPosition.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
-        EnemyProjectile_Damage script = bulletObj.GetComponent<EnemyProjectile_Damage>();
+        IFireable script = bulletObj.GetComponent<IFireable>();
         script.Fire(aimPointDelta, stateData.bulletDetails.speed, stateData.bulletDetails);
     }
 
