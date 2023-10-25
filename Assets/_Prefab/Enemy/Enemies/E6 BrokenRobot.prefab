@@ -41,11 +41,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4024847761456541156}
+  - component: {fileID: 6720150970840518850}
   - component: {fileID: 3537391621664279545}
   - component: {fileID: 7519880011486606234}
   - component: {fileID: 2404078463007998693}
   - component: {fileID: 5054313222752167641}
-  - component: {fileID: 6720150970840518850}
   m_Layer: 13
   m_Name: E6 BrokenRobot
   m_TagString: Enemy
@@ -70,6 +70,21 @@ Transform:
   - {fileID: 5006315300362656908}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6720150970840518850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748294777729018724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc8df5ea129ed04c8f670e0efe6ce05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EntityData: {fileID: 11400000, guid: 3091bd02aa41dba4ca7cc68bdd62eb7a, type: 2}
+  spriteRenderer: {fileID: 3537391621664279545}
+  stateData: {fileID: 11400000, guid: 798dfe0fa45931d41a12f8e87d1ecb28, type: 2}
 --- !u!212 &3537391621664279545
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -215,21 +230,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2412231, y: 2.8701122}
   m_EdgeRadius: 0
---- !u!114 &6720150970840518850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5748294777729018724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dc8df5ea129ed04c8f670e0efe6ce05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EntityData: {fileID: 11400000, guid: 3091bd02aa41dba4ca7cc68bdd62eb7a, type: 2}
-  spriteRenderer: {fileID: 3537391621664279545}
-  stateData: {fileID: 11400000, guid: 798dfe0fa45931d41a12f8e87d1ecb28, type: 2}
 --- !u!1001 &147961563127186519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -344,13 +344,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Core
       objectReference: {fileID: 0}
+    - target: {fileID: 679741928876199879, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.857
+      objectReference: {fileID: 0}
+    - target: {fileID: 679741928876199879, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.507
+      objectReference: {fileID: 0}
     - target: {fileID: 715799080158306530, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 715799080158306530, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.62
+      value: -1.642
       objectReference: {fileID: 0}
     - target: {fileID: 830351992707641794, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -375,6 +383,14 @@ PrefabInstance:
     - target: {fileID: 4439911822246959578, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_LocalPosition.y
       value: -1.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 5107890635141627487, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.386
+      objectReference: {fileID: 0}
+    - target: {fileID: 5107890635141627487, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.602
       objectReference: {fileID: 0}
     - target: {fileID: 6317694935012530758, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_RootOrder
@@ -437,12 +453,24 @@ PrefabInstance:
       value: -0.14344531
       objectReference: {fileID: 0}
     - target: {fileID: 6622905753534290228, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: slopeCheckV2.x
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622905753534290228, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: slopeCheckV2.y
       value: 1.22
       objectReference: {fileID: 0}
     - target: {fileID: 6622905753534290228, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: groundCheckV2.x
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622905753534290228, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: groundCheckV2.y
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622905753534290228, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: slopeCheckDistance
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 6622905753534290228, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: changeColliderWallCheckV2.x

@@ -33,7 +33,6 @@ public class IdleState : EnemyState
     {
         if (!isPlayerInMaxAgroRange)
         {
-            Debug.Log("Flip");
             Movement.Flip();
         }
     }
