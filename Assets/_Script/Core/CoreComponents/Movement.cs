@@ -55,6 +55,11 @@ public class Movement : CoreComponent
 
         CanSetVelocity = true;
 
+        if(OrginalGravityScale == 0)
+        {
+            OrginalGravityScale = RB.gravityScale;
+        }
+
         stats.OnTimeStopEnd += HandleTimeStopEnd;
         stats.OnTimeStopStart += HandleTimeStopStart;
 
@@ -305,7 +310,7 @@ public class Movement : CoreComponent
     public void Flip()
     {
         FacingDirection *= -1;
-        RB.transform.Rotate(0.0f, 180, 0.0f);
+        RB.transform.Rotate(0.0f, 180f, 0.0f);
 
         float roundedAngle = Mathf.Round(RB.transform.eulerAngles.y * 1000000f) / 1000000f;
         v3WorkSpace.Set(0f, roundedAngle, 0f);
@@ -315,9 +320,9 @@ public class Movement : CoreComponent
         //TODO: Fixed Rotate, but remove if lag.
     }
 
-    public void Turn()
+    public void Turn(float angle = 180f)
     {
-        v3WorkSpace.Set(0f, 0f, 180f);
+        v3WorkSpace.Set(0f, 0f, angle);
         RB.transform.eulerAngles += v3WorkSpace; 
     }
 

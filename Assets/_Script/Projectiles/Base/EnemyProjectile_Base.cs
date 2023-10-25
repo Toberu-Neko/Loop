@@ -29,6 +29,14 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     private Vector2 counterVelocity;
     protected Vector2 fireDirection;
 
+    [SerializeField] private CounterType counterType;
+
+    private enum CounterType
+    {
+        Flip,
+        Relative
+    }
+
     protected virtual void Awake()
     {
         movement = core.GetCoreComponent<Movement>();
@@ -82,7 +90,6 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         stats.OnTimeSlowEnd += HandleChangeAnimOrigin;
         stats.OnTimeStopStart += HandleChangeAnimSlow;
         stats.OnTimeStopEnd += HandleChangeAnimOrigin;
-
     }
 
     protected virtual void OnDisable()
@@ -93,7 +100,6 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         stats.OnTimeStopEnd -= HandleChangeAnimOrigin;
         stats.OnTimeSlowStart -= HandleChangeAnimSlow;
         stats.OnTimeSlowEnd -= HandleChangeAnimOrigin;
-
     }
 
     private void HandleChangeAnimSlow()
@@ -117,7 +123,6 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
         startTime = Time.time;
         transform.rotation = targetRotation;
-        movement.SetGravityZero();
         movement.SetVelocity(speed, fireDirection);
     }
 
@@ -150,36 +155,74 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
             }
 
 
-            if (stats.IsTimeStopped)
+            if(counterType == CounterType.Flip)
             {
-                if (facingDirection != direction)
+                if (stats.IsTimeStopped)
                 {
-                    counterVelocity = -speed * fireDirection * -4f;
-                    movement.SetTimeStopVelocity(counterVelocity);
-                    movement.Turn();
+                    if (facingDirection != direction)
+                    {
+                        counterVelocity = -speed * fireDirection * -4f;
+                        movement.SetTimeStopVelocity(counterVelocity);
+                        movement.Turn();
+                    }
+                    else
+                    {
+                        counterVelocity = movement.TimeStopVelocity * 4f;
+                        movement.SetTimeStopVelocity(counterVelocity);
+                    }
                 }
-                else
+
+                else if (stats.IsTimeSlowed)
                 {
-                    movement.SetTimeStopVelocity(counterVelocity);
+                    if (facingDirection != direction)
+                    {
+                        counterVelocity = -speed * fireDirection;
+                        movement.SetTimeSlowVelocity(counterVelocity);
+                        movement.Turn();
+                    }
+                    else
+                    {
+                        counterVelocity = movement.TimeSlowVelocity * 4f;
+                        movement.SetVelocity(movement.CurrentVelocity);
+                        movement.SetTimeSlowVelocity(counterVelocity);
+                    }
                 }
             }
-
-            else if (stats.IsTimeSlowed)
+            else if (counterType == CounterType.Relative)
             {
-                if (facingDirection != direction)
+                Vector2 counterDirection = ((Vector2)transform.position - damagePosition).normalized;
+                if (stats.IsTimeStopped)
                 {
-                    counterVelocity = -speed * fireDirection;
-                    movement.SetTimeSlowVelocity(counterVelocity);
-                    movement.Turn();
+                    counterVelocity = speed * counterDirection * -4f;
+                    movement.SetTimeStopVelocity(counterVelocity);
+
+                    DeterminTurn(damagePosition, counterDirection);
                 }
-                else
+
+                else if (stats.IsTimeSlowed)
                 {
-                    counterVelocity = movement.TimeSlowVelocity * 4f;
-                    movement.SetVelocity(movement.CurrentVelocity);
+                    counterVelocity = speed * counterDirection;
                     movement.SetTimeSlowVelocity(counterVelocity);
+
+                    DeterminTurn(damagePosition, counterDirection);
                 }
             }
         }
+    }
+
+    private void DeterminTurn(Vector2 damagePos, Vector2 counterDirection)
+    {
+        float t_angle;
+        if (damagePos.x > transform.position.x)
+        {
+            t_angle = Vector2.Angle(fireDirection, -counterDirection) + 180f;
+        }
+        else
+        {
+            t_angle = Vector2.Angle(fireDirection, counterDirection);
+        }
+
+        movement.Turn(t_angle);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collider)

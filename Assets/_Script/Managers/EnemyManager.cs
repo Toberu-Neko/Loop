@@ -45,7 +45,7 @@ public class EnemyManager : MonoBehaviour
     {
         SaveTempData();
 
-        // Return all enemies to the pool
+        // Return all enemies to the pool when unloaded
         List<EnemyData> enemiesToRemove = new();
 
         foreach (var obj in enemyData)
@@ -75,11 +75,6 @@ public class EnemyManager : MonoBehaviour
         foreach (var obj in tempDataPersistences)
         {
             obj.LoadTempData(tempData);
-        }
-
-        foreach(var obj in tempData.defeatedObjects)
-        {
-            // Debug.Log(obj.Key + " " + obj.Value);
         }
     }
 
@@ -119,9 +114,11 @@ public class EnemyManager : MonoBehaviour
 public class TempData
 {
     public Dictionary<string, bool> defeatedObjects;
+    public Dictionary<string, bool> activatedMapObjects;
 
     public TempData()
     {
         defeatedObjects = new();
+        activatedMapObjects = new();
     }
 }
