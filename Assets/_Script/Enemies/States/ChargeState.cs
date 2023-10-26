@@ -25,7 +25,7 @@ public class ChargeState : EnemyState
         isDetectingLedge = CollisionSenses.LedgeVertical;
         isDetectingWall = CollisionSenses.WallFront;
 
-        performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction;
+        performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction && !isChargeTimeOver;
     }
 
     public override void Enter()

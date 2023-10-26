@@ -23,11 +23,4 @@ public class B0_StateData : BaseEnemyStateData
     [Header("Other")]
     public ED_EnemyStunState stunStateData;
     public ED_EnemyDeadState deadStateData;
-
-    private void OnEnable()
-    {
-        normalAttackStateData.whatIsPlayer = base.whatIsPlayer;
-        strongAttackStateData.whatIsPlayer = base.whatIsPlayer;
-        multiAttackStateData.whatIsPlayer = base.whatIsPlayer;
-    }
 }

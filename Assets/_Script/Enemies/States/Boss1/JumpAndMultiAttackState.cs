@@ -52,7 +52,7 @@ public class JumpAndMultiAttackState : EnemyState
         Movement.SetRBDynamic();
         Movement.SetVelocity(15f, Vector2.one, -Movement.FacingDirection);
 
-        //TODO: Shoot four bullets
+        //Shoot four bullets
         for (int i = 0; i < stateData.attackAmount; i++)
         {
             ShootBullet();

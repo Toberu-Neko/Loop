@@ -50,21 +50,25 @@ public class ED_EnemyRangedAttackState
 
 [Serializable]
 public class ED_EnemyMeleeAttackState
-{
-    [HideInInspector]public LayerMask whatIsPlayer;
-
+{ 
+    [Tooltip("攻擊冷卻時間")]
+    public float attackCooldown = 1f;
     [Tooltip("攻擊傷害")]
     public float attackDamage = 10f;
     [Tooltip("攻擊耐力傷害")]
     public float staminaAttackDamage = 3f;
-    [Tooltip("攻擊冷卻時間")]
-    public float attackCooldown = 1f;
 
     [Tooltip("擊退角度")]
     public Vector2 knockbackAngle;
     [Tooltip("擊退力道")]
     [Range(8, 50)]
     public float knockbackStrength = 10f;
+}
+[Serializable]
+public class ED_MultiAttackState
+{
+    public float attackCooldown = 5f;
+    public WeaponAttackDetails[] details;
 }
 
 [Serializable]

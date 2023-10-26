@@ -470,11 +470,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6971737167171041672}
+  - component: {fileID: 7013017713605745691}
   - component: {fileID: 282872975475028305}
   - component: {fileID: 4075193920782319851}
   - component: {fileID: 6636797965237235889}
   - component: {fileID: 8360536206626392797}
-  - component: {fileID: 7013017713605745691}
   m_Layer: 13
   m_Name: Boss1
   m_TagString: Enemy
@@ -491,7 +491,7 @@ Transform:
   m_GameObject: {fileID: 7843164522504552721}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 30.8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -502,6 +502,25 @@ Transform:
   - {fileID: 2159230627845539053}
   m_Father: {fileID: 5863642905952359327}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7013017713605745691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7843164522504552721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae73fd425618ac745a9e77da0963b0fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EntityData: {fileID: 11400000, guid: 00cf3b5d2fe072c4cb2997b1c01dde4c, type: 2}
+  spriteRenderer: {fileID: 282872975475028305}
+  initFacingPos: -1
+  <BossName>k__BackingField: testboss0
+  stateData: {fileID: 11400000, guid: 1cdebbfc292e58f4b9d2d633253e3439, type: 2}
+  meleeAttackPosition: {fileID: 4802041283533857079}
+  rangedAttackPosition: {fileID: 4355530884790381551}
 --- !u!212 &282872975475028305
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -647,25 +666,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9257599, y: 3.1801386}
   m_EdgeRadius: 0
---- !u!114 &7013017713605745691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7843164522504552721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae73fd425618ac745a9e77da0963b0fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EntityData: {fileID: 11400000, guid: 00cf3b5d2fe072c4cb2997b1c01dde4c, type: 2}
-  spriteRenderer: {fileID: 282872975475028305}
-  initFacingPos: -1
-  <BossName>k__BackingField: testboss0
-  stateData: {fileID: 11400000, guid: 1cdebbfc292e58f4b9d2d633253e3439, type: 2}
-  meleeAttackPosition: {fileID: 4802041283533857079}
-  rangedAttackPosition: {fileID: 4355530884790381551}
 --- !u!1 &8616098933412456296
 GameObject:
   m_ObjectHideFlags: 0

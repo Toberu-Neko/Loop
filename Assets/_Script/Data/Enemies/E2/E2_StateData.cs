@@ -19,9 +19,4 @@ public class E2_StateData : BaseEnemyStateData
     public ED_EnemyStunState stunStateData;
     public ED_EnemyDeadState deadStateData;
     public ED_EnemyDodgeState dodgeStateData;
-
-    private void OnEnable()
-    {
-        meleeAttackStateData.whatIsPlayer = base.whatIsPlayer;
-    }
 }

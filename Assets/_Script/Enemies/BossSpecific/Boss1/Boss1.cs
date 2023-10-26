@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Boss1 : BossBase
 {
-
     public B1_IdleState IdleState { get; private set; }
     public B1_InitAnimState InitAnimState { get; private set; }
     public B1_AngryState AngryState { get; private set; }

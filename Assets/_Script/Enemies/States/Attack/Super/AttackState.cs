@@ -7,6 +7,7 @@ public class AttackState : EnemyState
 
     protected bool isPlayerInMinAgroRange;
     protected bool isPlayerInMaxAgroRange;
+    protected bool isPlayerInCloseActionRange;
 
     public AttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition) : base(entity, stateMachine, animBoolName)
     {
@@ -19,6 +20,7 @@ public class AttackState : EnemyState
 
         isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
         isPlayerInMaxAgroRange = CheckPlayerSenses.IsPlayerInMaxAgroRange;
+        isPlayerInCloseActionRange = CheckPlayerSenses.IsPlayerInCloseRangeAction;
     }
 
     public override void Enter()

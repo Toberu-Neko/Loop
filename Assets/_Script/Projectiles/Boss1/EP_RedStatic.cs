@@ -3,7 +3,6 @@ using UnityEngine;
 public class EP_RedStatic : EP_StaticBase
 {
     [SerializeField] private float startRadius = 5f;
-    [SerializeField] private float duration = 0.5f;
 
     [SerializeField] private GameObject sphereObj;
 

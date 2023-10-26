@@ -18,7 +18,6 @@ public class B0_ChargeState : ChargeState
         }
         else if (StartTime + stateData.chargeTime < Time.time)
         {
-            // TODO: what if player is not in range?
             stateMachine.ChangeState(boss.StrongAttackState);
         }
     }
