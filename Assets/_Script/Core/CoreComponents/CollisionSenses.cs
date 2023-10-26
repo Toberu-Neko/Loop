@@ -57,6 +57,8 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform ledgeCheckHorizontal;
     [SerializeField] private Transform ceilingCheck;
     [SerializeField] private Transform headCheck;
+    [SerializeField] private Transform slopeCheckVerticalFront;
+    [SerializeField] private Transform slopeCheckVerticalBack;
     #endregion
 
     [Tooltip("這個的值要略小於Collider的寬度, 不然碰到牆壁時會卡住.")]
@@ -69,7 +71,9 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Vector2 headCheckV2;
 
     [SerializeField] private float slopeCheckDistance = 1.2f;
+    [SerializeField] private float slopeCheckDistanceBack = 0.25f;
     [SerializeField] private float slopeMaxAngle;
+
     
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private float ledgeCheckDistance = 1f;
@@ -119,11 +123,17 @@ public class CollisionSenses : CoreComponent
     {
         get
         {
-            RaycastHit2D hit = Physics2D.Raycast(GroundCheck.position, Vector2.down, slopeCheckDistance, whatIsGround);
+            slope = new();
+            RaycastHit2D hitVerticleFront = Physics2D.Raycast(slopeCheckVerticalFront.position, Vector2.down, slopeCheckDistance, whatIsGround);
+            RaycastHit2D hitVerticalBack = Physics2D.Raycast(slopeCheckVerticalBack.position, Vector2.down, slopeCheckDistance, whatIsGround);
             RaycastHit2D hitFront = Physics2D.Raycast(GroundCheck.position, Vector2.right * movement.FacingDirection, slopeCheckDistance, whatIsGround);
             RaycastHit2D hitBack = Physics2D.Raycast(GroundCheck.position, Vector2.right * -movement.FacingDirection, slopeCheckDistance, whatIsGround);
             slope.hasCollisionSenses = true;
 
+            float frontAngleHor = Vector2.Angle(hitFront.normal, Vector2.up);
+            float backAngleHor = Vector2.Angle(hitBack.normal, Vector2.up);
+
+            /*
             if (hitFront)
             {
                 if(Vector2.Angle(hitFront.normal, Vector2.up) <= slopeMaxAngle)
@@ -153,17 +163,32 @@ public class CollisionSenses : CoreComponent
                 slope.SetSideAngle(0f);
                 slope.SetIsOnSlope(false);
             }
+            */
+            float frontAngle = Vector2.Angle(hitVerticleFront.normal, Vector2.up);
+            float backAngle = Vector2.Angle(hitVerticalBack.normal, Vector2.up);
 
-            if (!hit)
+
+            if (((frontAngle == 0f && backAngle == 0f) || (frontAngleHor == 0f && backAngleHor == 0f)))
             {
+                slope.SetIsOnSlope(false);
                 return slope;
             }
             else
             {
-                Vector2 normalPerp = Vector2.Perpendicular(hit.normal).normalized;
-                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if (frontAngle != 0f)
+                {
+                    Vector2 normalPerp = Vector2.Perpendicular(hitVerticleFront.normal).normalized;
 
-                slope.Set(normalPerp, slopeAngle);
+                    slope.Set(normalPerp, frontAngle);
+                }
+
+                else
+                {
+                    Vector2 normalPerp = Vector2.Perpendicular(hitVerticalBack.normal).normalized;
+
+                    slope.Set(normalPerp, backAngle);
+                }
+
                 return slope;
             }
         }
@@ -242,9 +267,17 @@ public class CollisionSenses : CoreComponent
             Gizmos.DrawWireCube(GroundCheck.position, groundCheckV2);
             Gizmos.color = Color.gray;
             Gizmos.DrawWireCube(GroundCheck.position, slopeCheckV2);
-            Gizmos.DrawLine(GroundCheck.position, GroundCheck.position + Vector3.down * slopeCheckDistance);
             Gizmos.DrawLine(GroundCheck.position, GroundCheck.position + Vector3.right * slopeCheckDistance);
         }
+        if (slopeCheckVerticalFront)
+        {
+            Gizmos.DrawLine(slopeCheckVerticalFront.position, slopeCheckVerticalFront.position + Vector3.down * slopeCheckDistance);
+        }
+        if(slopeCheckVerticalBack)
+        {
+            Gizmos.DrawLine(slopeCheckVerticalBack.position, slopeCheckVerticalBack.position + Vector3.down * slopeCheckDistanceBack);
+        }
+
         if (GroundCheck && HeadCheck && CeilingCheck)
         {
             Gizmos.color = Color.yellow;
@@ -260,28 +293,17 @@ public class Slope
     public float DownAngle { get; private set; }
     private float downAngleOld;
     public bool IsOnSlope { get; private set; }
-    public float SideAngle { get; private set; }
     public bool hasCollisionSenses;
 
 
     public Slope()
     {
         NormalPrep = Vector2.zero;
-        SideAngle= 0f;
         DownAngle = 0f;
         IsOnSlope = false;
         hasCollisionSenses = false;
     }
 
-    public void SetSideAngle(float angle)
-    {
-        SideAngle = angle;
-
-        if (angle > 10f && angle < 80f)
-            IsOnSlope = true;
-        else
-            IsOnSlope = false;
-    }
 
     public void SetIsOnSlope(bool isOnSlope)
     {
@@ -293,13 +315,10 @@ public class Slope
         NormalPrep = slopeNormal;
         DownAngle = slopeAngle;
 
-        if (DownAngle != downAngleOld)
+        IsOnSlope = true;
+        if (DownAngle < 10f)
         {
-            IsOnSlope = true;
-        }
-        if(DownAngle < 10f)
-        {
-            IsOnSlope = false;
+            // IsOnSlope = false;
         }
 
         downAngleOld = DownAngle;

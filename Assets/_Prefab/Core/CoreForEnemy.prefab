@@ -234,6 +234,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyPrefab: {fileID: 6124393989099812123, guid: e93accc47821a9948802e71003afe169, type: 3}
+--- !u!1 &1507657505354826172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5107890635141627487}
+  m_Layer: 0
+  m_Name: SlopeVerticalBack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5107890635141627487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507657505354826172}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.861, y: -1.625, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4434635816553806508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1595741834018591098
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +386,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9bd329b779c7d4ea4d5c9fed4f8b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2140323189272756786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 679741928876199879}
+  m_Layer: 0
+  m_Name: SlopeVerticalFront
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &679741928876199879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140323189272756786}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.861, y: -1.625, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4434635816553806508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2671696773608489146
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +512,8 @@ Transform:
   - {fileID: 4439911822246959578}
   - {fileID: 8399613828603266706}
   - {fileID: 715799080158306530}
+  - {fileID: 679741928876199879}
+  - {fileID: 5107890635141627487}
   m_Father: {fileID: 6317694935012530758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6622905753534290228
@@ -472,6 +536,8 @@ MonoBehaviour:
   ledgeCheckHorizontal: {fileID: 0}
   ceilingCheck: {fileID: 0}
   headCheck: {fileID: 0}
+  slopeCheckVerticalFront: {fileID: 679741928876199879}
+  slopeCheckVerticalBack: {fileID: 5107890635141627487}
   groundCheckV2: {x: 0.4, y: 0.1}
   slopeCheckV2: {x: 0.4, y: 0.8}
   changeColliderWallCheckV2: {x: 0.52, y: 0.95}
@@ -479,6 +545,7 @@ MonoBehaviour:
   ceilingCheckV2: {x: 0, y: 0}
   headCheckV2: {x: 0, y: 0}
   slopeCheckDistance: 1
+  slopeCheckDistanceBack: 0.4
   slopeMaxAngle: 80
   wallCheckDistance: 0.8
   ledgeCheckDistance: 0.8
@@ -487,10 +554,10 @@ MonoBehaviour:
     m_Bits: 576
   whatIsClimbableWall:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65600
   whatIsUnclimbableWall:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65536
   whatIsPlatform:
     serializedVersion: 2
     m_Bits: 512
