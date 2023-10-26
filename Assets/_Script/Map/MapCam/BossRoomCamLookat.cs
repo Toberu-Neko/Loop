@@ -19,7 +19,7 @@ public class BossRoomCamLookat : MonoBehaviour
         {
             workspace = (player.position + boss.position) / 2;
 
-            transform.position = workspace;
+            transform.position = Vector2.Lerp(transform.position, workspace, Time.deltaTime * 2f);
 
 
             if (Vector2.Distance(player.position, boss.position) < mivFOVDistance)
@@ -28,7 +28,7 @@ public class BossRoomCamLookat : MonoBehaviour
             }
             else
             {
-                CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV + Vector2.Distance(player.position, boss.position) / 2f, Time.deltaTime * 20f);
+                CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV + Vector2.Distance(player.position, boss.position) / 1.2f, Time.deltaTime * 2f);
             }
         }
 

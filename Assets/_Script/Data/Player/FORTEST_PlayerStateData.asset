@@ -21,8 +21,8 @@ MonoBehaviour:
   gravityScale: 5
   regenCost: 10
   regenAmount: 10
-  movementVelocity: 25
-  jumpVelocity: 22
+  movementVelocity: 12
+  jumpVelocity: 20
   amountOfJumps: 2
   maxJumpTime: 0.3
   blockMovementMultiplier: 0.2
@@ -31,26 +31,27 @@ MonoBehaviour:
   perfectBlockKnockbackRadius: 1.8
   perfectBlockKnockbackForce: 6
   perfectBlockKnockbackAngle: {x: 0, y: 1}
-  wallJumpVelocity: 20
+  wallJumpVelocity: 22
   wallJumpTime: 0.3
-  wallJumpAngle: {x: 1, y: 2}
-  coyoteTime: 0.3
+  wallJumpAngle: {x: 1.5, y: 2}
+  coyoteTime: 0.4
   jumpInpusStopYSpeedMultiplier: 0.5
   wallSlideVelocity: 2
+  canWallClimb: 0
   wallClimbVelocity: 5
-  crouchMovementMultiplier: 0.5
+  crouchMovementMultiplier: 2
   crouchColliderHeight: 0.825
-  standColliderHeight: 1.65
+  standColliderHeight: 3.881116
   afterImagePrefab: {fileID: 5533319139291640069, guid: 711b51473a43e114e9771db38144bbb4, type: 3}
   useFixedDegreeAngle: 0
   dashCooldown: 0.5
   maxHoldTime: 2
   holdTimeScale: 0.25
   dashTime: 0.25
-  dashVelocity: 23
+  dashVelocity: 30
   drag: 10
   dashEndYMultiplier: 0.2
   distanceBetweenAfterImages: 0.5
   grabCooldown: 0.2
-  startOffset: {x: 0.4, y: -0.4}
-  stopOffset: {x: 0.4, y: 1.5}
+  startOffset: {x: 0.7, y: 1.65}
+  stopOffset: {x: 1.2, y: 2.8}
