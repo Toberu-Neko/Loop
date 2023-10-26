@@ -121,14 +121,12 @@ public class Movement : CoreComponent
     {
         CurrentVelocity = RB.velocity;
         TimeStopVelocity = CurrentVelocity;
-        Debug.Log("TimeStopStart");
         SetRBKinematic();
         SetVelocityZero();
     }
 
     private void HandleTimeStopEnd()
     {
-        Debug.Log("TimeStopEnd");
         SetRBDynamic();
         SetVelocity(TimeStopVelocity);
     }
