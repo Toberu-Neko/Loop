@@ -15,7 +15,7 @@
    <property name="unity:layer" value="Ground"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="3" x="9" y="0" width="247" height="256"/>
+   <object id="3" x="0" y="0" width="256" height="256"/>
   </objectgroup>
  </tile>
  <tile id="2">
@@ -23,7 +23,7 @@
    <property name="unity:layer" value="Ground"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="0" width="247" height="256"/>
+   <object id="1" x="0" y="0" width="256" height="256"/>
   </objectgroup>
  </tile>
  <tile id="3">
@@ -78,16 +78,13 @@
   <properties>
    <property name="unity:layer" value="Ground"/>
   </properties>
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="9" y="0" width="247" height="256"/>
-  </objectgroup>
  </tile>
  <tile id="10">
   <properties>
    <property name="unity:layer" value="Ground"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="0" width="247" height="256"/>
+   <object id="1" x="0" y="0" width="256" height="256"/>
   </objectgroup>
  </tile>
  <tile id="11">
@@ -146,7 +143,7 @@
    <property name="unity:layer" value="Ground"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="9" y="0" width="247" height="256"/>
+   <object id="1" x="0" y="0" width="256" height="256"/>
   </objectgroup>
  </tile>
  <tile id="18">
@@ -154,7 +151,7 @@
    <property name="unity:layer" value="Ground"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="0" width="247" height="256"/>
+   <object id="1" x="0" y="0" width="256" height="256"/>
   </objectgroup>
  </tile>
  <tile id="19">
