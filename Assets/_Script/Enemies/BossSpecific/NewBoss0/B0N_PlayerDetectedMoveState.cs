@@ -21,7 +21,7 @@ public class B0N_PlayerDetectedMoveState : PlayerDetectedMoveState
 
         if (isPlayerInMaxAgroRange && boss.ChargeState.CheckCanCharge())
         {
-            stateMachine.ChangeState(boss.ChargeState);
+            stateMachine.ChangeState(boss.PreChargeState);
         }
         else if (isPlayerInMaxAgroRange && boss.MultiAttackState.CheckCanAttack())
         {

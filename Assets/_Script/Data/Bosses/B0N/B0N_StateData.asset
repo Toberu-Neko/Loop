@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8ceada227c0314f8b0a0a2d3d6cb64, type: 3}
+  m_Name: B0N_StateData
+  m_EditorClassIdentifier: 
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  idleStateData:
+    minIdleTime: 1
+    maxIdleTime: 3
+  detectedMoveStateData:
+    movementSpeed: 5
+    minMovementTime: 0
+    minInStateTime: 3
+    maxInStateTime: 5
+  normalAttack1StateData:
+    attackCooldown: 3
+    attackDamage: 10
+    staminaAttackDamage: 3
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 15
+  normalAttack2StateData:
+    attackCooldown: 1
+    attackDamage: 10
+    staminaAttackDamage: 3
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 15
+  strongAttackStateData:
+    attackCooldown: 1
+    attackDamage: 20
+    staminaAttackDamage: 3
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 20
+  MultiAttackState:
+    attackCooldown: 5
+    details:
+    - attackName: 
+      damageAmount: 10
+      staminaDamageAmount: 3
+      movementSpeed: 0
+      knockbackForce: 15
+      knockbackAngle: {x: 0, y: 0}
+    - attackName: 
+      damageAmount: 10
+      staminaDamageAmount: 3
+      movementSpeed: 0
+      knockbackForce: 15
+      knockbackAngle: {x: 0, y: 0}
+    - attackName: 
+      damageAmount: 10
+      staminaDamageAmount: 3
+      movementSpeed: 0
+      knockbackForce: 15
+      knockbackAngle: {x: 0, y: 0}
+    - attackName: 
+      damageAmount: 10
+      staminaDamageAmount: 3
+      movementSpeed: 0
+      knockbackForce: 15
+      knockbackAngle: {x: 0, y: 0}
+  ChargeState:
+    chargeCooldown: 10
+    finishChargeDelay: 1
+    chargeSpeed: 6
+    chargeTime: 2
+  stunStateData:
+    stunTime: 1
+    stunKnockbackSpeed: 0
+    stunKnockbackAngle: {x: 0, y: 0}
