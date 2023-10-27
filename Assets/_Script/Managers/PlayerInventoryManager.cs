@@ -106,10 +106,12 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         if(WeaponInventory.ContainsKey(name))
         {
             WeaponInventory[name].itemCount = 1;
+            CanUseWeaponCount = WeaponInventory.Count;
         }
         else
         {
             WeaponInventory.Add(name, new ItemData(1, name));
+            CanUseWeaponCount = WeaponInventory.Count;
         }
     }
 
@@ -303,13 +305,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
             }
         }
 
-        if(CanUseSword)
-            CanUseWeaponCount++;
-        if(CanUseGun)
-            CanUseWeaponCount++;
-        if(CanUseFist)
-            CanUseWeaponCount++;
-
+        CanUseWeaponCount = WeaponInventory.Count;
     }
 
     public void SaveData(GameData data)

@@ -32,7 +32,7 @@ public class EnemyStateMachine
 
             OnChangeState?.Invoke();
 
-            // Debug.Log(newState.ToString());
+            Debug.Log(newState.ToString());
 
             CurrentState.Enter();
         }
