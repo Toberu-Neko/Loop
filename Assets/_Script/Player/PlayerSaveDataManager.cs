@@ -29,7 +29,9 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
     {
         data.savepoints.TryGetValue(data.lastInteractedSavepoint, out SavepointDetails details);
 
-        if (data.interectWithSavePointThisSave)
+        Debug.Log(data.gotoSavePoint);
+
+        if (data.gotoSavePoint)
         {
             if (details != null)
             {

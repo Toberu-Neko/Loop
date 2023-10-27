@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 
 [System.Serializable]
@@ -12,7 +9,7 @@ public class GameData
     public float maxHealth;
     public float timePlayed;
     public Vector2 playerPosition;
-    public bool interectWithSavePointThisSave;
+    public bool gotoSavePoint;
 
     public string currentTimeSkill;
     public string lastInteractedSavepoint;
@@ -48,7 +45,7 @@ public class GameData
         currentTimeSkill = "PlayerTimeSkill_None";
         lastInteractedSavepoint = "Default";
         finishTutorial = false;
-        interectWithSavePointThisSave = true;
+        gotoSavePoint = true;
         playerPosition = new Vector2(0, 0);
 
         unlockedMovementSkills = new();

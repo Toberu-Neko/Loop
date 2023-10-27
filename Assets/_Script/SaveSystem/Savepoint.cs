@@ -95,7 +95,7 @@ public class Savepoint : MonoBehaviour, IDataPersistance
 
         if (interectWithSavePointThisSave)
         {
-            data.interectWithSavePointThisSave = true;
+            data.gotoSavePoint = true;
         }
 
         if(data.savepoints.ContainsKey(SavePointName))

@@ -101,9 +101,9 @@ public class DataPersistenceManager : MonoBehaviour
             LoadGame();
             if (firstTimeLoad)
             {
-                firstTimeLoad = false;
                 SaveGame();
                 LoadGame();
+                firstTimeLoad = false;
             }
         }
     }
@@ -172,7 +172,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         if (firstTimeLoad)
         {
-            GameData.interectWithSavePointThisSave = true;
+            GameData.gotoSavePoint = true;
         }
 
         foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
@@ -198,7 +198,7 @@ public class DataPersistenceManager : MonoBehaviour
             return;
         }
 
-        GameData.interectWithSavePointThisSave = false;
+        GameData.gotoSavePoint = false;
 
         foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
         {
