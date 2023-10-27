@@ -64,7 +64,7 @@ public class GameData
         defeatedBosses = new();
         consumablesInventory = new()
         {
-            { "Medkit", new ItemData(3, "Medkit") }
+            { "Medkit", new ItemData(0, "Medkit") }
         };
 
         equipedWeapon[0] = WeaponType.None;

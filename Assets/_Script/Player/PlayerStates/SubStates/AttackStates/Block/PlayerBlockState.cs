@@ -91,6 +91,6 @@ public class PlayerBlockState : PlayerAttackState
 
     public bool CheckIfCanBlock()
     {
-        return Time.time >= lastBlockTime + playerData.blockCooldown;
+        return Time.time >= lastBlockTime + playerData.blockCooldown ;
     }
 }

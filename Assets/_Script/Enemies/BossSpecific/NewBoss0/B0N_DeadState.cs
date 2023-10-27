@@ -14,6 +14,7 @@ public class B0N_DeadState : DeadState
     {
         base.Enter();
 
+        boss0New.HandleAlreadyDefeated();
         Death.Die();
     }
 }

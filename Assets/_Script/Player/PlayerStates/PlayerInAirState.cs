@@ -157,7 +157,7 @@ public class PlayerInAirState : PlayerState
         }
         #endregion
 
-        else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock() && Stats.Attackable)
+        else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock() && Stats.Attackable && player.WeaponManager.CurrentWeaponType != WeaponType.None)
         {
             stateMachine.ChangeState(player.BlockState);
         }

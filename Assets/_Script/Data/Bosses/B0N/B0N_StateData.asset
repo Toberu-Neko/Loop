@@ -24,13 +24,13 @@ MonoBehaviour:
     minInStateTime: 3
     maxInStateTime: 5
   normalAttack1StateData:
-    attackCooldown: 3
+    attackCooldown: 2
     attackDamage: 10
     staminaAttackDamage: 3
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 15
   normalAttack2StateData:
-    attackCooldown: 1
+    attackCooldown: 0
     attackDamage: 10
     staminaAttackDamage: 3
     knockbackAngle: {x: 1, y: 1}
@@ -49,31 +49,31 @@ MonoBehaviour:
       staminaDamageAmount: 3
       movementSpeed: 0
       knockbackForce: 15
-      knockbackAngle: {x: 0, y: 0}
+      knockbackAngle: {x: 1, y: 1}
     - attackName: 
       damageAmount: 10
       staminaDamageAmount: 3
       movementSpeed: 0
       knockbackForce: 15
-      knockbackAngle: {x: 0, y: 0}
+      knockbackAngle: {x: 1, y: 1}
     - attackName: 
       damageAmount: 10
       staminaDamageAmount: 3
       movementSpeed: 0
       knockbackForce: 15
-      knockbackAngle: {x: 0, y: 0}
+      knockbackAngle: {x: 1, y: 1}
     - attackName: 
       damageAmount: 10
       staminaDamageAmount: 3
       movementSpeed: 0
       knockbackForce: 15
-      knockbackAngle: {x: 0, y: 0}
+      knockbackAngle: {x: 1, y: 1}
   ChargeState:
     chargeCooldown: 10
     finishChargeDelay: 1
-    chargeSpeed: 6
-    chargeTime: 2
+    chargeSpeed: 15
+    chargeTime: 3
   stunStateData:
-    stunTime: 1
+    stunTime: 2
     stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 0, y: 0}

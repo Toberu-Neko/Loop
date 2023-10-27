@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerDetectedMoveState : EnemyState
@@ -37,7 +35,7 @@ public class PlayerDetectedMoveState : EnemyState
     {
         base.LogicUpdate();
 
-        if ((isPlayerInMaxAgroRange && CollisionSenses.Ground) || Time.time <= StartTime + stateData.minMovementTime)
+        if ((isPlayerInMaxAgroRange && CollisionSenses.Ground && !performCloseRangeAction) || Time.time <= StartTime + stateData.minMovementTime)
         {
             Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
         }

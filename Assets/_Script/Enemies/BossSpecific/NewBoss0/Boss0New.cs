@@ -22,11 +22,15 @@ public class Boss0New : BossBase
 
     [SerializeField] private B0N_StateData stateData;
     [SerializeField] private Transform meleeAttackPosition;
+
+    [SerializeField] private GameObject exitDoor;
     
 
     public override void Awake()
     {
         base.Awake();
+
+        exitDoor.SetActive(false);
 
         IdleState = new B0N_Idle(this, StateMachine, "idle", stateData.idleStateData, this);
         AngryState = new B0N_AngryState(this, StateMachine, "angry", this);
@@ -45,12 +49,14 @@ public class Boss0New : BossBase
         KinematicState = new B0N_KinematicState(this, StateMachine, "stun", this);
         DeadState = new B0N_DeadState(this, StateMachine, "dead", this);
     }
+
     protected override void Start()
     {
         base.Start();
 
         StateMachine.Initialize(IdleState);
     }
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -58,12 +64,19 @@ public class Boss0New : BossBase
         Stats.Stamina.OnCurrentValueZero += HandlePoiseZero;
         Stats.Health.OnCurrentValueZero += HandleHealthZero;
         OnEnterBossRoom += HandleEnterBossRoom;
+        OnAlreadyDefeated += HandleAlreadyDefeated;
 
         Combat.OnGoToKinematicState += GotoKinematicState;
         Combat.OnGoToStunState += OnGotoStunState;
 
         StateMachine.OnChangeState += HandleChangeState;
     }
+
+    public void HandleAlreadyDefeated()
+    {
+        exitDoor.SetActive(true);
+    }
+
     private void HandleChangeState()
     {
         if (Stats.Health.CurrentValuePercentage <= 0.5f && !Stats.IsAngry &&
@@ -82,6 +95,7 @@ public class Boss0New : BossBase
         Stats.Stamina.OnCurrentValueZero -= HandlePoiseZero;
         Stats.Health.OnCurrentValueZero -= HandleHealthZero;
         OnEnterBossRoom -= HandleEnterBossRoom;
+        OnAlreadyDefeated -= HandleAlreadyDefeated;
 
         Combat.OnGoToKinematicState -= GotoKinematicState;
         Combat.OnGoToStunState -= OnGotoStunState;

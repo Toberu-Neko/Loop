@@ -8,6 +8,8 @@ public class BossBase : Entity, IDataPersistance
     [field: SerializeField] public string BossName { get; private set;}
     protected event Action OnEnterBossRoom;
     private bool defeated = false;
+
+    protected event Action OnAlreadyDefeated;
     public override void Awake()
     {
         base.Awake();
@@ -39,6 +41,7 @@ public class BossBase : Entity, IDataPersistance
                 if (defeated)
                 {
                     //TODO: Spawn a opened chest or something
+                    OnAlreadyDefeated?.Invoke();
                     gameObject.SetActive(false);
                 }
             }

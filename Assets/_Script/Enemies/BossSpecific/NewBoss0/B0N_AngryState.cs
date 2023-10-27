@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class B0N_AngryState : EnemyWaitForAnimFinishState
+public class B0N_AngryState : BossAngryState
 {
     private Boss0New boss;
     public B0N_AngryState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Boss0New boss) : base(entity, stateMachine, animBoolName)
@@ -13,8 +11,6 @@ public class B0N_AngryState : EnemyWaitForAnimFinishState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
-
-        Stats.IsAngry = true;
 
         stateMachine.ChangeState(boss.PlayerDetectedMoveState);
     }

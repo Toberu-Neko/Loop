@@ -21,7 +21,7 @@ public class B0N_ChargeState : ChargeState
 
         else if (gotoNextState)
         {
-            stateMachine.ChangeState(boss.StunState);
+            stateMachine.ChangeState(boss.PlayerDetectedMoveState);
         }
     }
 
