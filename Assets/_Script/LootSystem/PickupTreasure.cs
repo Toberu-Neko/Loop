@@ -105,7 +105,7 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
                 PlayerInventoryManager.Instance.AddWeaponItem(weaponItem.itemName);
                 UI_Manager.Instance.ActivePickupItemUI(weaponItem.displayName, weaponItem.itemDescription);
 
-                if(PlayerInventoryManager.Instance.CanUseWeaponCount == 0)
+                if(PlayerInventoryManager.Instance.CanUseWeaponCount == 1)
                 {
                     if (weaponItem.unlockGun)
                     {
@@ -124,7 +124,7 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
                     }
                 }
 
-                if(PlayerInventoryManager.Instance.CanUseWeaponCount == 1)
+                if(PlayerInventoryManager.Instance.CanUseWeaponCount == 2)
                 {
                     if (weaponItem.unlockGun)
                     {

@@ -11,10 +11,12 @@ public class BossRoomTrigger : MonoBehaviour
     [SerializeField] private Collider2D col;
 
     private float enterPosX;
+    private bool interacted;
 
     private void Awake()
     {
         bossRoomDoor.SetActive(false);
+        interacted = false;
     }
     private void HandleBossDefeated()
     {
@@ -33,6 +35,10 @@ public class BossRoomTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (interacted)
+        {
+            return;
+        }
         if (collision.CompareTag("Player"))
         {
             Vector2 exitDirection = (collision.transform.position - col.bounds.center).normalized;
@@ -48,6 +54,7 @@ public class BossRoomTrigger : MonoBehaviour
             DataPersistenceManager.Instance.GameData.defeatedBosses.TryGetValue(boss.BossName, out bool defeated);
             if (!defeated)
             {
+                interacted = true;
                 boss.Stats.Health.OnCurrentValueZero += HandleBossDefeated;
 
                 bossRoomDoor.SetActive(true);

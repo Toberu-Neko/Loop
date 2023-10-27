@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossRoomCamLookat : MonoBehaviour
@@ -7,7 +5,9 @@ public class BossRoomCamLookat : MonoBehaviour
     [SerializeField] private Transform boss;
     private Transform player;
 
+    [SerializeField] private bool changeFOV = true;
     [SerializeField] private float mivFOVDistance = 15f;
+    [SerializeField] private float maxFOV = 120f;
 
     private Vector2 workspace = new();
     private float orgFOV;
@@ -21,14 +21,16 @@ public class BossRoomCamLookat : MonoBehaviour
 
             transform.position = Vector2.Lerp(transform.position, workspace, Time.deltaTime * 2f);
 
-
-            if (Vector2.Distance(player.position, boss.position) < mivFOVDistance)
+            if (changeFOV)
             {
-                CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV, Time.deltaTime * 2f);
-            }
-            else
-            {
-                CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV + Vector2.Distance(player.position, boss.position) / 1.2f, Time.deltaTime * 2f);
+                if (Vector2.Distance(player.position, boss.position) < mivFOVDistance)
+                {
+                    CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV, Time.deltaTime * 2f);
+                }
+                else if (CamManager.Instance.CurrentCam.m_Lens.FieldOfView < maxFOV)
+                {
+                    CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV + Vector2.Distance(player.position, boss.position) / 1.2f, Time.deltaTime * 2f);
+                }
             }
         }
 
@@ -39,6 +41,6 @@ public class BossRoomCamLookat : MonoBehaviour
         this.player = player;
 
         orgFOV = CamManager.Instance.CurrentCam.m_Lens.FieldOfView;
-        workspace = (player.position + boss.position) / 2;
+        workspace = (player.position + boss.position) / 2f;
     }
 }
