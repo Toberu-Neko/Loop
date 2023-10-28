@@ -3,6 +3,22 @@ using UnityEngine;
 
 public class CamRange : MonoBehaviour
 {
+    [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
+    [SerializeField] private bool autoChangeCam = true;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!autoChangeCam)
+        {
+            return;
+        }
+
+        if (collision.CompareTag("Player"))
+        {
+            CamManager.Instance.SwitchCamera(cam);
+            GameManager.Instance.HandleChangeSceneFinished();
+        }
+    }
     private void OnDrawGizmos()
     {
         if (!TryGetComponent<CompositeCollider2D>(out var compositeCollider))

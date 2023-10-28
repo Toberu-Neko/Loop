@@ -7715,7 +7715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &625463957
 Transform:
   m_ObjectHideFlags: 0
@@ -13119,6 +13119,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapCamA
       objectReference: {fileID: 0}
+    - target: {fileID: 6724404638797106703, guid: 034d2d2732c7dd44f919bfee203aaeb2, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1094198894}
     - target: {fileID: 6724404638797106736, guid: 034d2d2732c7dd44f919bfee203aaeb2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.8
@@ -14413,6 +14417,10 @@ PrefabInstance:
     - target: {fileID: 4680148680124091276, guid: 448bfb4ba74957549a3e6e6c64b3d3e3, type: 3}
       propertyPath: m_Name
       value: VCamChange_PanTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4680148680124091276, guid: 448bfb4ba74957549a3e6e6c64b3d3e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
