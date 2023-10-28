@@ -51,6 +51,9 @@ public class CoreData : ScriptableObject
     [Header("Loot, 如果物件不會掉東西, 不用填")]
     public List<LootItem> lootItems;
 
+    [Header("TimeSkill, 如果物件不會掉時間技能, 不用填")]
+    public SO_TimeSkillItem timeSkillItem;
+
     [Header("Drop Money, 如果物件不會掉錢, 不用填")]
     public int dropAmount = 1;
 }
