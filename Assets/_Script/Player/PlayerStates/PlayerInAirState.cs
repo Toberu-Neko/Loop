@@ -111,6 +111,12 @@ public class PlayerInAirState : PlayerState
         }
         else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Sword &&
             player.SwordHubState.CheckIfCanAttack() && player.WeaponManager.SwordCurrentEnergy > 0
+            && player.WeaponManager.SwordCurrentEnergy < player.WeaponManager.SwordData.maxEnergy && Stats.Attackable && !player.WeaponManager.EnhanceSwordAttack)
+        {
+            stateMachine.ChangeState(player.SwordEnhanceState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Sword &&
+            player.SwordHubState.CheckIfCanAttack() && player.WeaponManager.SwordCurrentEnergy > 0
             && player.WeaponManager.SwordCurrentEnergy == player.WeaponManager.SwordData.maxEnergy && Stats.Attackable)
         {
             player.SwordHubState.SetCanAttackFalse();

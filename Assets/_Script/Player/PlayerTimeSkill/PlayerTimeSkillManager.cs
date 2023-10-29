@@ -112,6 +112,11 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
             if (UnlockedTimeSkills.bookMark) ChangeToBookMarkSkill();
         }
     }
+
+    public void SetTimeEnergyMax()
+    {
+        CurrentEnergy = maxEnergy;
+    }
     
 
     private void Update()

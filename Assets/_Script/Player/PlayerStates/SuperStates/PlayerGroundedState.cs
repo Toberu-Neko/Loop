@@ -69,6 +69,13 @@ public class PlayerGroundedState : PlayerState
         else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling
             && player.SwordHubState.CheckIfCanAttack() && weaponManager.SwordCurrentEnergy > 0 &&
             Stats.Attackable &&
+            weaponManager.SwordCurrentEnergy < weaponManager.SwordData.maxEnergy && !player.WeaponManager.EnhanceSwordAttack)
+        {
+            stateMachine.ChangeState(player.SwordEnhanceState);
+        }
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling
+            && player.SwordHubState.CheckIfCanAttack() && weaponManager.SwordCurrentEnergy > 0 &&
+            Stats.Attackable &&
             weaponManager.SwordCurrentEnergy == weaponManager.SwordData.maxEnergy)
         {
             stateMachine.ChangeState(player.SwordSoulMaxAttackState);

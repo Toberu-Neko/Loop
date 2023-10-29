@@ -64,9 +64,13 @@ public class PlayerSwordHubState : PlayerSwordAttackState
         {
             stateMachine.ChangeState(player.SwordSkyAttackState);
         }
-        else if (!holdAttackInput && Time.time < StartTime + holdAttackTime) 
+        else if (!holdAttackInput && Time.time < StartTime + holdAttackTime && !player.WeaponManager.EnhanceSwordAttack) 
         {
             stateMachine.ChangeState(player.SwordNormalAttackState);
+        }
+        else if (!holdAttackInput && Time.time < StartTime + holdAttackTime && player.WeaponManager.EnhanceSwordAttack)
+        {
+            stateMachine.ChangeState(player.SwordEnhancedAttackState);
         }
         else if (!holdAttackInput && Time.time >= StartTime + holdAttackTime)
         {
