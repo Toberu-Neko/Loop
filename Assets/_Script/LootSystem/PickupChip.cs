@@ -25,7 +25,6 @@ public class PickupChip : PressEPickItemBase
         UI_Manager.Instance.ActivePickupItemUI(chipSO.itemName, chipSO.itemDescription);
         PlayerInventoryManager.Instance.AddChip(chipSO.itemName);
 
-
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 }
