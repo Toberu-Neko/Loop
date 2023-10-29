@@ -39,6 +39,7 @@ public class TurnoffFrontTrigger : MonoBehaviour
 
     private void TurnOff()
     {
+
         alpha = Mathf.Lerp(alpha, 0.0f, 0.2f);
 
         if (alpha < 0.05f)
@@ -48,6 +49,10 @@ public class TurnoffFrontTrigger : MonoBehaviour
 
         for (int i = 0; i < SRs.Length; i++)
         {
+            if (SRs[i] == null)
+            {
+                return;
+            }
             float r = SRs[i].color.r;
             float g = SRs[i].color.g;
             float b = SRs[i].color.b;
@@ -63,6 +68,7 @@ public class TurnoffFrontTrigger : MonoBehaviour
     }
     private void TurnOn()
     {
+
         alpha = Mathf.Lerp(alpha, 1.0f, 0.2f);
 
         if (alpha >= 0.95f)
@@ -72,6 +78,10 @@ public class TurnoffFrontTrigger : MonoBehaviour
 
         for (int i = 0; i < SRs.Length; i++)
         {
+            if (SRs[i] == null)
+            {
+                return;
+            }
             float r = SRs[i].color.r;
             float g = SRs[i].color.g;
             float b = SRs[i].color.b;

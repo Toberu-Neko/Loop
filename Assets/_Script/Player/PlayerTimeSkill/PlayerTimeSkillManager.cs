@@ -111,10 +111,6 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
             if (UnlockedTimeSkills.timeReverse) ChangeToRewindSkill();
             if (UnlockedTimeSkills.bookMark) ChangeToBookMarkSkill();
         }
-        else
-        {
-            ChangeToNoneSkill();
-        }
     }
     
 
