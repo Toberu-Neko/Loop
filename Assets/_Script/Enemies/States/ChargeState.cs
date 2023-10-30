@@ -50,10 +50,21 @@ public class ChargeState : EnemyState
     {
         base.LogicUpdate();
 
-        if(!isChargeTimeOver)
-            Movement.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
+        if (!isChargeTimeOver)
+        {
+            if (Stats.IsAngry)
+            {
+                Movement.SetVelocityX(stateData.angryChargeSpeed * Movement.FacingDirection);
+            }
+            else
+            {
+                Movement.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
+            }
+        }
         else
+        {
             Movement.SetVelocityX(0f);
+        }
 
 
         if (Time.time >= StartTime + stateData.chargeTime && !isChargeTimeOver)

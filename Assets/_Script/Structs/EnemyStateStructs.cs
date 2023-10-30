@@ -68,6 +68,7 @@ public class ED_EnemyMeleeAttackState
 public class ED_MultiAttackState
 {
     public float attackCooldown = 5f;
+    public float angryMoveSpeed = 8f;
     public WeaponAttackDetails[] details;
 }
 
@@ -137,6 +138,8 @@ public class ED_EnemyChargeState
 
     [Tooltip("衝刺速度")]
     public float chargeSpeed = 6f;
+
+    public float angryChargeSpeed = 18f;
 
     [Tooltip("衝刺時間長度")]
     public float chargeTime = 2f;

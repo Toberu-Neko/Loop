@@ -6,6 +6,8 @@ public class MultiAttackState : AttackState
 {
     protected ED_MultiAttackState stateData;
 
+    private bool startAttack;
+
     private int count = 0;
     public MultiAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_MultiAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
@@ -17,11 +19,30 @@ public class MultiAttackState : AttackState
         base.Enter();
 
         count = 0;
+        startAttack = false;
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (!CheckPlayerSenses.IsPlayerInMaxAgroRange)
+        {
+            Movement.Flip();
+        }
+
+
+        if(Stats.IsAngry && startAttack)
+        {
+            Movement.SetVelocityX(stateData.angryMoveSpeed * Movement.FacingDirection);
+        }
     }
 
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
+
+        startAttack = true;
 
         WeaponAttackDetails details = stateData.details[count];
 
