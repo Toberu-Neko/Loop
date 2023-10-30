@@ -39,6 +39,7 @@ public class TurnoffFrontTrigger : MonoBehaviour
 
     private void TurnOff()
     {
+        CancelInvoke(nameof(TurnOn));
 
         alpha = Mathf.Lerp(alpha, 0.0f, 0.2f);
 
@@ -68,6 +69,7 @@ public class TurnoffFrontTrigger : MonoBehaviour
     }
     private void TurnOn()
     {
+        CancelInvoke(nameof(TurnOff));
 
         alpha = Mathf.Lerp(alpha, 1.0f, 0.2f);
 
