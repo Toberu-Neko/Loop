@@ -8,6 +8,7 @@ public class Boss0New : BossBase
 
     public B0N_PlayerDetectedMoveState PlayerDetectedMoveState { get; private set; }
 
+    public B0N_PreAngryAttackState PreAngryAttackState { get; private set; }
     public B0N_NormalAttackState1 NormalAttackState1 { get; private set; }
     public B0N_NormalAttackState2 NormalAttackState2 { get; private set; }
     public B0N_StrongAttackState StrongAttackState { get; private set; }
@@ -23,6 +24,7 @@ public class Boss0New : BossBase
     [SerializeField] private B0N_StateData stateData;
     [SerializeField] private Transform meleeAttackPosition;
 
+    [field: SerializeField] public GameObject EnterSlowTrigger { get; private set; }
     [SerializeField] private GameObject exitDoor;
     
 
@@ -48,6 +50,8 @@ public class Boss0New : BossBase
         StunState = new B0N_StunState(this, StateMachine, "stun", stateData.stunStateData, this);
         KinematicState = new B0N_KinematicState(this, StateMachine, "stun", this);
         DeadState = new B0N_DeadState(this, StateMachine, "dead", this);
+
+        EnterSlowTrigger.SetActive(false);
     }
 
     protected override void Start()

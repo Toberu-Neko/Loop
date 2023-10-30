@@ -40,7 +40,7 @@ public class OnPlayerProjectile_Blue : OnPlayerProjectileBase
         startDamage = true;
         startMagicTime = 0f;
         orgStartMagicTime = Time.time;
-        playerCombat.SetActionSpeedMultiplier(speedMultiplier, damageDuration);
+        playerCombat.SetDebuffMultiplier(speedMultiplier, damageDuration);
     }
 
     protected override void Update()

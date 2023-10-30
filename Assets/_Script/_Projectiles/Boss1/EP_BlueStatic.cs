@@ -94,7 +94,7 @@ public class EP_BlueStatic : EP_StaticBase
             staminaDamageable?.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position, false);
 
             col.transform.TryGetComponent(out ISlowable slowable);
-            slowable?.SetActionSpeedMultiplier(variables.slowMultiplier, variables.damagePace);
+            slowable?.SetDebuffMultiplier(variables.slowMultiplier, variables.damagePace);
         }
     }
 

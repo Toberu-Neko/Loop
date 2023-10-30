@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface ISlowable
 {
-    void SetActionSpeedMultiplier(float multiplier, float delayTime);
+    void SetDebuffMultiplier(float multiplier, float delayTime = 0f);
+    void SetDebuffMultiplierOne();
 }

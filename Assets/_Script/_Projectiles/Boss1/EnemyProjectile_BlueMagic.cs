@@ -134,7 +134,7 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
             staminaDamageable?.TakeStaminaDamage(details.combatDetails.staminaDamageAmount, transform.position, false);
 
             col.transform.TryGetComponent(out ISlowable slowable);
-            slowable?.SetActionSpeedMultiplier(variables.slowMultiplier, variables.damagePace);
+            slowable?.SetDebuffMultiplier(variables.slowMultiplier, variables.damagePace);
         }
     }
     public override void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)

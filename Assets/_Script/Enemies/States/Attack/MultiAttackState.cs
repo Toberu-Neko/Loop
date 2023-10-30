@@ -26,15 +26,16 @@ public class MultiAttackState : AttackState
     {
         base.LogicUpdate();
 
-        if (!CheckPlayerSenses.IsPlayerInMaxAgroRange)
-        {
-            Movement.Flip();
-        }
-
-
         if(Stats.IsAngry && startAttack)
         {
-            Movement.SetVelocityX(stateData.angryMoveSpeed * Movement.FacingDirection);
+            if (CheckPlayerSenses.IsPlayerInMaxAgroRange)
+            {
+                Movement.SetVelocityX(stateData.angryMoveSpeed * Movement.FacingDirection);
+            }
+            else
+            {
+                Movement.SetVelocityX(stateData.angryMoveSpeed* -Movement.FacingDirection);
+            }
         }
     }
 

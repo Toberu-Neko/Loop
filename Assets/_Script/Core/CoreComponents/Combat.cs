@@ -457,17 +457,20 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     private float tempMovementMultiplier;
 
-    public void SetActionSpeedMultiplier(float multiplier, float delayTime)
+    public void SetDebuffMultiplier(float multiplier, float delayTime = 0f)
     {
         if(multiplier <= stats.DebuffActionSpeedMultiplier)
         {
             stats.DebuffActionSpeedMultiplier = multiplier;
-            CancelInvoke(nameof(ReturnMovementMultiplier));
-            Invoke(nameof(ReturnMovementMultiplier), delayTime);
+
+            CancelInvoke(nameof(SetDebuffMultiplierOne));
+
+            if(delayTime > 0f)
+                Invoke(nameof(SetDebuffMultiplierOne), delayTime);
         }
     }
 
-    private void ReturnMovementMultiplier()
+    public void SetDebuffMultiplierOne()
     {
         stats.DebuffActionSpeedMultiplier = 1f;
     }

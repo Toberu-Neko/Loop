@@ -10,6 +10,26 @@ public class B0N_NormalAttackState2 : SingleMeleeAttackState
         this.boss = boss;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        if (Stats.IsAngry)
+        {
+            boss.EnterSlowTrigger.SetActive(true);
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        if (Stats.IsAngry)
+        {
+            boss.EnterSlowTrigger.SetActive(false);
+        }
+    }
+
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();

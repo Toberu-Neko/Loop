@@ -40,7 +40,7 @@ public class Stats : CoreComponent
             }
             else
             {
-                return orgAnimationSpeed * DebuffActionSpeedMultiplier * TimeEffectMultiplier;
+                return orgAnimationSpeed * (DebuffActionSpeedMultiplier + TimeEffectMultiplier);
             }
         }
         set
