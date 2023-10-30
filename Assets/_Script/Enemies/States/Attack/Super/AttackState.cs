@@ -74,5 +74,6 @@ public class AttackState : EnemyState
             Combat.DetectedDamageables.Clear();
 
         }
+
     }
 }

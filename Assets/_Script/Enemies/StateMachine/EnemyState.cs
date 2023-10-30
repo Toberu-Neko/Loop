@@ -86,4 +86,9 @@ public class EnemyState
     {
         return Stats.Health.CurrentValue / Stats.Health.MaxValue;
     }
+
+    public void SetEndTime(float value)
+    {
+        EndTime = value;
+    }
 }

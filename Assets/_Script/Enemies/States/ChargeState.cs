@@ -80,6 +80,6 @@ public class ChargeState : EnemyState
 
     public bool CheckCanCharge()
     {
-        return Time.time > EndTime + stateData.chargeCooldown || EndTime == 0;
+        return Time.time > EndTime + stateData.chargeCooldown;
     }
 }

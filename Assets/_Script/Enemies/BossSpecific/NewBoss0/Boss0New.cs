@@ -23,6 +23,7 @@ public class Boss0New : BossBase
 
     [SerializeField] private B0N_StateData stateData;
     [SerializeField] private Transform meleeAttackPosition;
+    [field: SerializeField, Range(0f, 1f)] public float EnhancedAttackProbability { get; private set; }
 
     [field: SerializeField] public GameObject EnterSlowTrigger { get; private set; }
     [SerializeField] private GameObject exitDoor;
@@ -42,6 +43,7 @@ public class Boss0New : BossBase
         NormalAttackState1 = new B0N_NormalAttackState1(this, StateMachine, "normalAttack1", meleeAttackPosition, stateData.normalAttack1StateData, this);
         NormalAttackState2 = new B0N_NormalAttackState2(this, StateMachine, "normalAttack2", meleeAttackPosition, stateData.normalAttack2StateData, this);
         StrongAttackState = new B0N_StrongAttackState(this, StateMachine, "strongAttack", meleeAttackPosition, stateData.strongAttackStateData, this);
+        PreAngryAttackState = new B0N_PreAngryAttackState(this, StateMachine, "angry", this);
 
         PreChargeState = new B0N_PreChargeState(this, StateMachine, "preCharge", this);
         ChargeState = new B0N_ChargeState(this, StateMachine, "charge", stateData.ChargeState, this);
@@ -59,6 +61,17 @@ public class Boss0New : BossBase
         base.Start();
 
         StateMachine.Initialize(IdleState);
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (Stats.Health.CurrentValuePercentage <= 0.5f && !Stats.IsAngry &&
+            StateMachine.CurrentState == PlayerDetectedMoveState)
+        {
+            StateMachine.ChangeState(AngryState);
+        }
     }
 
     protected override void OnEnable()
@@ -83,11 +96,13 @@ public class Boss0New : BossBase
 
     private void HandleChangeState()
     {
+        /*
         if (Stats.Health.CurrentValuePercentage <= 0.5f && !Stats.IsAngry &&
             StateMachine.CurrentState != AngryState)
         {
             StateMachine.ChangeState(AngryState);
         }
+        */
     }
 
     protected override void OnDisable()
@@ -122,15 +137,22 @@ public class Boss0New : BossBase
 
     private void HandlePoiseZero()
     {
-        if (Stats.Health.CurrentValue <= 0 || StateMachine.CurrentState == KinematicState)
+        if (Stats.Health.CurrentValue <= 0 || 
+            StateMachine.CurrentState == KinematicState || 
+            StateMachine.CurrentState == AngryState)
+        {
+            Debug.Log("Cant be stunned");
             return;
+        }
 
         if (Stats.Health.CurrentValue <= 0)
         {
             StateMachine.ChangeState(DeadState);
         }
-
-        StateMachine.ChangeState(StunState);
+        else
+        {
+            StateMachine.ChangeState(StunState);
+        }
     }
 
     private void HandleHealthZero()

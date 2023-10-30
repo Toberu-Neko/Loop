@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerObjToCombat : MonoBehaviour, IDamageable, IKnockbackable, IStaminaDamageable
+public class PlayerObjToCombat : MonoBehaviour, IDamageable, IKnockbackable, IStaminaDamageable, ISlowable
 {
     [SerializeField] private Combat combat;
 
@@ -34,5 +34,15 @@ public class PlayerObjToCombat : MonoBehaviour, IDamageable, IKnockbackable, ISt
     public void GoToStunState()
     {
         Debug.LogError("Player don't have kinematic state!");
+    }
+
+    public void SetDebuffMultiplier(float multiplier, float delayTime = 0)
+    {
+        combat.SetDebuffMultiplier(multiplier, delayTime);
+    }
+
+    public void SetDebuffMultiplierOne()
+    {
+        combat.SetDebuffMultiplierOne();
     }
 }

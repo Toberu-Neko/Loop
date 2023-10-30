@@ -283,6 +283,7 @@ public class Movement : CoreComponent
                 CurrentVelocity = velocity;
             }
         }
+
     }
 
     public void CheckIfShouldFlip(int xInput)

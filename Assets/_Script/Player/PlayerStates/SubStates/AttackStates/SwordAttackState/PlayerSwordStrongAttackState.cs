@@ -6,7 +6,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
 {
     private SO_WeaponData_Sword weaponData;
     private bool startMovement;
-    private bool fireObj;
+    // private bool fireObj;
     public PlayerSwordStrongAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         weaponData = player.WeaponManager.SwordData;
@@ -17,12 +17,14 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
 
         Combat.OnKnockback += HandleOnKnockback;
         startMovement = false;
+        /*
         fireObj = false;
 
         if (player.WeaponManager.SwordCurrentEnergy >= weaponData.strongAttackEnergyCost)
         {
             fireObj = true;
         }
+        */
     }
 
     public override void Exit()
@@ -36,7 +38,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
     {
         base.LogicUpdate();
 
-        if (startMovement && !fireObj)
+        if (startMovement)
         {
             Movement.SetVelocityX(weaponData.strongAttackDetails.movementSpeed * Movement.FacingDirection);
         }
@@ -57,7 +59,7 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
-
+        /*
         if(fireObj)
         {
             player.WeaponManager.DecreaseEnergy();
@@ -70,8 +72,8 @@ public class PlayerSwordStrongAttackState : PlayerSwordAttackState
         }
         else
         {
-            DoDamageToDamageList(WeaponType.Sword, weaponData.strongAttackDetails);
-        }
+        }*/
+        DoDamageToDamageList(WeaponType.Sword, weaponData.strongAttackDetails);
     }
 
     private void HandleOnKnockback()

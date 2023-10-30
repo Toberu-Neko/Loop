@@ -15,5 +15,8 @@ public class B0N_InitAnim : EnemyWaitForAnimFinishState
         base.AnimationFinishTrigger();
 
         stateMachine.ChangeState(boss.PlayerDetectedMoveState);
+
+        boss.MultiAttackState.SetEndTime(Time.time);
+        boss.ChargeState.SetEndTime(Time.time);
     }
 }

@@ -14,7 +14,7 @@ public class B0N_NormalAttackState2 : SingleMeleeAttackState
     {
         base.Enter();
 
-        if (Stats.IsAngry)
+        if (boss.NormalAttackState1.DoEnhancedAttack)
         {
             boss.EnterSlowTrigger.SetActive(true);
         }
@@ -24,7 +24,7 @@ public class B0N_NormalAttackState2 : SingleMeleeAttackState
     {
         base.Exit();
 
-        if (Stats.IsAngry)
+        if (boss.NormalAttackState1.DoEnhancedAttack)
         {
             boss.EnterSlowTrigger.SetActive(false);
         }

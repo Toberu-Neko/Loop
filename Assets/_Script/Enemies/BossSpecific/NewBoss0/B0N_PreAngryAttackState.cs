@@ -14,6 +14,7 @@ public class B0N_PreAngryAttackState : EnemyWaitForAnimFinishState
     {
         base.AnimationFinishTrigger();
 
+        boss.NormalAttackState1.SetDoEnhancedAttack(true);
         boss.StateMachine.ChangeState(boss.NormalAttackState1);
     }
 }

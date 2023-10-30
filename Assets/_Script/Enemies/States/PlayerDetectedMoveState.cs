@@ -21,6 +21,13 @@ public class PlayerDetectedMoveState : EnemyState
         performCloseRangeAction = false;
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        entity.Anim.SetBool("detectedIdle", false);
+    }
+
     public override void DoChecks()
     {
         base.DoChecks(); 
@@ -37,10 +44,12 @@ public class PlayerDetectedMoveState : EnemyState
 
         if ((isPlayerInMaxAgroRange && CollisionSenses.Ground && !performCloseRangeAction) || Time.time <= StartTime + stateData.minMovementTime)
         {
+            entity.Anim.SetBool("detectedIdle", false);
             Movement.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
         }
         else
         {
+            entity.Anim.SetBool("detectedIdle", true);
             Movement.SetVelocityX(0f);
         }
     }

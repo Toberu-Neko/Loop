@@ -42,7 +42,8 @@ MonoBehaviour:
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 20
   MultiAttackState:
-    attackCooldown: 5
+    attackCooldown: 15
+    angryMoveSpeed: 5
     details:
     - attackName: 
       damageAmount: 10
@@ -69,10 +70,11 @@ MonoBehaviour:
       knockbackForce: 15
       knockbackAngle: {x: 1, y: 1}
   ChargeState:
-    chargeCooldown: 10
-    finishChargeDelay: 1
-    chargeSpeed: 15
-    chargeTime: 3
+    chargeCooldown: 12
+    finishChargeDelay: 2
+    chargeSpeed: 12
+    angryChargeSpeed: 18
+    chargeTime: 2.5
   stunStateData:
     stunTime: 2
     stunKnockbackSpeed: 0

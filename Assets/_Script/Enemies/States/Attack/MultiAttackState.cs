@@ -54,8 +54,7 @@ public class MultiAttackState : AttackState
 
     public bool CheckCanAttack()
     {
-        return Time.time >= EndTime + stateData.attackCooldown || EndTime == 0f;
+        return Time.time >= EndTime + stateData.attackCooldown;
     }
-
 
 }
