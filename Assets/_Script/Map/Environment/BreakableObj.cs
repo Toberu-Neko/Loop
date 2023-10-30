@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BreakableObj : BreakableWall
 {
-    [SerializeField] private GameObject particlePrefab;
     private void OnEnable()
     {
         OnDefeated += HandleOnDefeated;
@@ -23,8 +22,5 @@ public class BreakableObj : BreakableWall
         }
 
         death.Die();
-        // particleManager.StartParticles(particlePrefab, transform.position, Quaternion.identity);
-
-
     }
 }

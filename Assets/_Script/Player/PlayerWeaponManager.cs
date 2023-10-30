@@ -6,7 +6,9 @@ public class PlayerWeaponManager : MonoBehaviour
     public WeaponType CurrentWeaponType { get; private set; }
 
     [field: SerializeField] public SO_WeaponData_Sword SwordData { get; private set; }
+    [SerializeField] private GameObject swordEnhanceObj;
     public int SwordCurrentEnergy { get; private set; }
+    public bool EnhanceSwordAttack { get; private set; }
 
     [field: SerializeField] public SO_WeaponData_Fist FistData { get; private set; }
     public int FistCurrentEnergy { get; private set; }
@@ -32,6 +34,7 @@ public class PlayerWeaponManager : MonoBehaviour
     private Player player;
     private Stats stats;
     private PlayerInputHandler inputHandler;
+    private PlayerTimeSkillManager timeSkillManager;
 
     private void Awake()
     {
@@ -40,6 +43,7 @@ public class PlayerWeaponManager : MonoBehaviour
         stats = core.GetCoreComponent<Stats>();
         player = GetComponent<Player>();
         inputHandler = GetComponent<PlayerInputHandler>();
+        timeSkillManager = GetComponent<PlayerTimeSkillManager>();
         GunChargeAttackScript.gameObject.SetActive(false);
     }
 
@@ -51,6 +55,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         combat.OnPerfectBlock += () => perfectBlockThisFram = true;
         DataPersistenceManager.Instance.OnLoad += InitWeapon;
+        swordEnhanceObj.SetActive(false);
     }
     private void OnDisable()
     {
@@ -76,7 +81,14 @@ public class PlayerWeaponManager : MonoBehaviour
         if (player.InputHandler.DebugInput)
         {
             AllEnergyMax();
+            timeSkillManager.SetTimeEnergyMax();
         }
+    }
+
+    public void SetEnhanceSwordAttack(bool value)
+    {
+        EnhanceSwordAttack = value;
+        swordEnhanceObj.SetActive(value);
     }
 
     public void EquipWeapon(WeaponType weaponType)
@@ -117,6 +129,7 @@ public class PlayerWeaponManager : MonoBehaviour
         GunCurrentEnergy = GunData.maxEnergy;
         GrenadeCount = 0;
         GunEnergyRegenable = true;
+        EnhanceSwordAttack = false;
     }
     public string GetCurrentTypeEnergyStr()
     {

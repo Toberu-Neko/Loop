@@ -19,6 +19,7 @@ public class Death : CoreComponent
     {
         deathParticles = core.CoreData.deathParticles;
     }
+
     public void Die()
     {
         OnDeath?.Invoke();

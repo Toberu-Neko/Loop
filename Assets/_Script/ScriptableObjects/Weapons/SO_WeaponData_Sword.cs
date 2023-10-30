@@ -12,6 +12,10 @@ public class SO_WeaponData_Sword : SO_WeaponData
     public float resetAttackTime;
     [SerializeField] private WeaponAttackDetails[] normalAttackDetails;
 
+    [Header("Enhanced Attack")]
+    public WeaponAttackDetails[] enhancedAttackDetails;
+
+
     [Header("Sky Attack")]
     public WeaponAttackDetails skyAttackDetails;
 

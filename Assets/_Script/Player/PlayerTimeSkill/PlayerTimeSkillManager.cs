@@ -69,7 +69,6 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
     {
         PlayerInventoryManager.Instance.OnTimeSkillChanged += UpdateUnlockedSkills;
         UpdateUnlockedSkills();
-
     }
 
     private void UpdateUnlockedSkills()
@@ -94,6 +93,29 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
                 Debug.LogError("The time skill item name in PlayerInventoryManager.Instance.TimeSkillItemInventory is wrong");
             }
         }
+
+        int unlockedSkillsCount = 0;
+        if (UnlockedTimeSkills.timeSlowRanged) unlockedSkillsCount++;
+        if (UnlockedTimeSkills.timeSlowAll) unlockedSkillsCount++;
+        if (UnlockedTimeSkills.timeStopRanged) unlockedSkillsCount++;
+        if (UnlockedTimeSkills.timeStopAll) unlockedSkillsCount++;
+        if (UnlockedTimeSkills.timeReverse) unlockedSkillsCount++;
+        if (UnlockedTimeSkills.bookMark) unlockedSkillsCount++;
+
+        if(unlockedSkillsCount == 1)
+        {
+            if (UnlockedTimeSkills.timeSlowRanged) ChangeToBulletTimeRangedSkill();
+            if (UnlockedTimeSkills.timeSlowAll) ChangeToBulletTimeAllSkill();
+            if (UnlockedTimeSkills.timeStopRanged) ChangeToTimeStopThrowSkill();
+            if (UnlockedTimeSkills.timeStopAll) ChangeToTimeStopSkill();
+            if (UnlockedTimeSkills.timeReverse) ChangeToRewindSkill();
+            if (UnlockedTimeSkills.bookMark) ChangeToBookMarkSkill();
+        }
+    }
+
+    public void SetTimeEnergyMax()
+    {
+        CurrentEnergy = maxEnergy;
     }
     
 

@@ -33,6 +33,25 @@ MonoBehaviour:
     movementSpeed: 3
     knockbackForce: 0
     knockbackAngle: {x: 1, y: 2}
+  enhancedAttackDetails:
+  - attackName: 
+    damageAmount: 15
+    staminaDamageAmount: 5
+    movementSpeed: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: 
+    damageAmount: 15
+    staminaDamageAmount: 5
+    movementSpeed: 0
+    knockbackForce: 0
+    knockbackAngle: {x: 0, y: 0}
+  - attackName: 
+    damageAmount: 20
+    staminaDamageAmount: 5
+    movementSpeed: 0
+    knockbackForce: 5
+    knockbackAngle: {x: 1, y: 1}
   skyAttackDetails:
     attackName: 
     damageAmount: 10
@@ -51,12 +70,14 @@ MonoBehaviour:
   strongAttackEnergyCost: 1
   projectile: {fileID: 7587280026452555047, guid: 550bf30c55b84ea4b84c80455626ff6d, type: 3}
   projectileDetails:
-    damageAmount: 30
-    staminaDamageAmount: 15
-    speed: 10
     duration: 2
-    knockbackStrength: 18
-    knockbackAngle: {x: 2, y: 1}
+    speed: 10
+    combatDetails:
+      damageAmount: 5
+      staminaDamageAmount: 1
+      knockbackStrength: 5
+      knockbackAngle: {x: 0, y: 0}
+      blockable: 1
   counterAttackDetails:
     attackName: Counter
     damageAmount: 40
@@ -66,19 +87,19 @@ MonoBehaviour:
     knockbackAngle: {x: 1, y: 1}
   soulThreeAttackDetails:
   - attackName: Defult
-    damageAmount: 25
+    damageAmount: 35
     staminaDamageAmount: 500
     movementSpeed: 0
     knockbackForce: 0
     knockbackAngle: {x: 0, y: 0}
   - attackName: Defult
-    damageAmount: 25
+    damageAmount: 35
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 0
     knockbackAngle: {x: 0, y: 0}
   - attackName: Defult
-    damageAmount: 30
+    damageAmount: 50
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 18

@@ -26,7 +26,7 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
             attackCounter = 0;
         }
 
-        details = swordData.NormalAttackDetails[attackCounter];
+        details = swordData.enhancedAttackDetails[attackCounter];
         player.Anim.SetInteger("attackCount", attackCounter);
     }
     public override void Exit()
@@ -42,6 +42,7 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
             attackCounter = 0;
         }
     }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -51,6 +52,7 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
             Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
         }
     }
+
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();

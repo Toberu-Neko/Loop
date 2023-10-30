@@ -31,11 +31,13 @@ public class Player : MonoBehaviour
     #region SwordStates
     public PlayerSwordHubState SwordHubState { get; private set; }
     public PlayerSwordNormalAttackState SwordNormalAttackState { get; private set; }
+    public PlayerSwordEnhancedAttackState SwordEnhancedAttackState { get; private set; }
     public PlayerSwordStrongAttackState SwordStrongAttackState { get; private set; }
     public PlayerSwordSkyAttackState SwordSkyAttackState { get; private set; }
     public PlayerSwordCounterAttackState SwordCounterAttackState { get; private set; }
-    public PlayerSwordSoulOneAttackState SwordSoulOneAttackState { get; private set; }
+    // public PlayerSwordSoulOneAttackState SwordSoulOneAttackState { get; private set; }
     public PlayerSwordSoulMaxAttackState SwordSoulMaxAttackState { get; private set; }
+    public SwordEnhanceState SwordEnhanceState { get; private set; }
     #endregion
 
     #region GunStates
@@ -123,8 +125,10 @@ public class Player : MonoBehaviour
         SwordStrongAttackState = new PlayerSwordStrongAttackState(this, StateMachine, PlayerData, "swordStrongAttack");
         SwordSkyAttackState = new PlayerSwordSkyAttackState(this, StateMachine, PlayerData, "swordSkyAttack");
         SwordCounterAttackState = new PlayerSwordCounterAttackState(this, StateMachine, PlayerData, "swordCounterAttack");
-        SwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, PlayerData, "swordSoulOneAttack");
+        // SwordSoulOneAttackState = new PlayerSwordSoulOneAttackState(this, StateMachine, PlayerData, "swordSoulOneAttack");
         SwordSoulMaxAttackState = new PlayerSwordSoulMaxAttackState(this, StateMachine, PlayerData, "swordSoulMaxAttack");
+        SwordEnhanceState = new SwordEnhanceState(this, StateMachine, PlayerData, "swordEnhance");
+        SwordEnhancedAttackState = new PlayerSwordEnhancedAttackState(this, StateMachine, PlayerData, "swordEnhancedAttack");
 
         GunHubState = new PlayerGunHubState(this, StateMachine, PlayerData, "gunAttack");
         GunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, PlayerData, "gunNormalAttack");

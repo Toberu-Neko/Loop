@@ -19,6 +19,8 @@ public class GameData
     public PlayerMovementSkills unlockedMovementSkills;
     public PlayerTimeSkills unlockedTimeSkills;
 
+    public SerializableDictionary<string, int> interactableMapItem;
+
     public SerializableDictionary<string, bool> defeatedBosses;
     public SerializableDictionary<string, bool> pickedTreasures;
     public SerializableDictionary<string, bool> activatedMapItem;
@@ -48,6 +50,7 @@ public class GameData
         gotoSavePoint = true;
         playerPosition = new Vector2(0, 0);
 
+        interactableMapItem = new();
         unlockedMovementSkills = new();
         unlockedTimeSkills = new();
 
