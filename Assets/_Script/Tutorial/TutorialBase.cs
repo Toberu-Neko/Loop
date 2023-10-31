@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class TutorialBase : MonoBehaviour
 {
+    [SerializeField] private Level level;
+    private enum Level
+    {
+        one,
+        two,
+        three,
+    }
     protected virtual void Start()
     {
-        if (DataPersistenceManager.Instance.GameData.finishTutorial)
+        if(level == Level.one)
         {
-            gameObject.SetActive(false);
+            if (DataPersistenceManager.Instance.GameData.finishTutorial)
+            {
+                gameObject.SetActive(false);
+            }
         }
+        
     }
 }
