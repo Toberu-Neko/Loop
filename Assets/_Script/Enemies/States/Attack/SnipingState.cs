@@ -56,7 +56,10 @@ public class SnipingState : AttackState
     {
         base.LogicUpdate();
 
-        if(state == states.reloading && Time.time >= lastShootTime + stateData.reloadTime)
+        if (CollisionSenses.Ground)
+            Movement.SetVelocityZero();
+
+        if (state == states.reloading && Time.time >= lastShootTime + stateData.reloadTime)
         {
             state = states.aiming;
             StartTime = Time.time;

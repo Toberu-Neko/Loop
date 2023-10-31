@@ -23,7 +23,7 @@ public class PlayerDetectedState : EnemyState
     {
         base.Enter();
 
-        if(CollisionSenses.Ground)  
+        if(CollisionSenses.Ground)
             Movement.SetVelocityZero();
 
         performLongRangeAction = false;

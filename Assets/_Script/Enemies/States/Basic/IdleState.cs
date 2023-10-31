@@ -56,7 +56,7 @@ public class IdleState : EnemyState
 
         if (CollisionSenses.Ground)
         {
-            Movement.SetVelocityX(0f);
+            Movement.SetVelocityZero();
         }
 
         if (Time.time >= StartTime + idleTime)
