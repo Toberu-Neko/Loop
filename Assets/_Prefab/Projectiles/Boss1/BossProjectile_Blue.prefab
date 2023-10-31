@@ -383,18 +383,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 66112
+    m_Bits: 65600
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
   core: {fileID: 3049410540354384412}
   SR: {fileID: 8389792333474829000}
   anim: {fileID: 1235707335898099278}
-  startRadius: 1.1
-  expandRate: 0.4
-  duration: 4
-  damagePace: 0.33
-  slowMultiplier: 0.5
+  counterType: 0
+  variables:
+    startRadius: 1.1
+    expandRate: 0.4
+    duration: 4
+    damagePace: 0.33
+    slowMultiplier: 0.5
   sphereObj: {fileID: 1542367791616914004}
 --- !u!50 &8389792333474829003
 Rigidbody2D:

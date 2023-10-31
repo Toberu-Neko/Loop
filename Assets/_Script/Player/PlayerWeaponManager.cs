@@ -19,9 +19,9 @@ public class PlayerWeaponManager : MonoBehaviour
 
 
     [field: SerializeField] public Transform ProjectileStartPos { get; private set; }
-    public float GunCurrentEnergy { get; private set; }
-    public int GrenadeCount { get; private set; }
-    public bool GunEnergyRegenable { get; private set; }
+    public float GunCurrentNormalAttackEnergy { get; private set; }
+    public int GunCurrentEnergy { get; private set; }
+    public bool GunNormalAttackEnergyRegenable { get; private set; }
     
     
     public event Action OnEnergyChanged;
@@ -73,7 +73,7 @@ public class PlayerWeaponManager : MonoBehaviour
             IncreaseEnergy();
         }
 
-        if(CurrentWeaponType == WeaponType.Gun && GunEnergyRegenable)
+        if(CurrentWeaponType == WeaponType.Gun && GunNormalAttackEnergyRegenable)
         {
             IncreaseGunEnergy();
         }
@@ -126,27 +126,28 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         SwordCurrentEnergy = 0;
         FistCurrentEnergy = 0;
-        GunCurrentEnergy = GunData.maxEnergy;
-        GrenadeCount = 0;
-        GunEnergyRegenable = true;
+        GunCurrentNormalAttackEnergy = GunData.maxEnergy;
+        GunCurrentEnergy = 0;
+        GunNormalAttackEnergyRegenable = true;
         EnhanceSwordAttack = false;
     }
-    public string GetCurrentTypeEnergyStr()
+
+    public int GetCurrentTypeEnergy()
     {
         switch (CurrentWeaponType)
         {
             case WeaponType.Sword:
-                return SwordCurrentEnergy.ToString();
+                return SwordCurrentEnergy;
             case WeaponType.Fist:
-                return FistCurrentEnergy.ToString();
+                return FistCurrentEnergy;
             case WeaponType.Gun:
-                return GunCurrentEnergy.ToString();
+                return GunCurrentEnergy;
             case WeaponType.None:
-                return "None";
+                return 0;
+            default:
+                Debug.LogError("No Weapon Type");
+                return 0;
         }
-
-        Debug.Log("WeaponTypeError");
-        return "WeaponTypeError";
     }
 
     private void IncreaseEnergy()
@@ -162,8 +163,8 @@ public class PlayerWeaponManager : MonoBehaviour
                     FistCurrentEnergy++;
                 break;
             case WeaponType.Gun:
-                if(GrenadeCount < GunData.maxGrenade)
-                    GrenadeCount++;
+                if(GunCurrentEnergy < GunData.maxGrenade)
+                    GunCurrentEnergy++;
                 break;
             default:
                 break;
@@ -174,11 +175,11 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void IncreaseGunEnergy()
     {
-        if (GunCurrentEnergy < GunData.maxEnergy)
-            GunCurrentEnergy += GunData.energyRegen * Time.deltaTime;
+        if (GunCurrentNormalAttackEnergy < GunData.maxEnergy)
+            GunCurrentNormalAttackEnergy += GunData.energyRegen * Time.deltaTime;
 
-        if (GunCurrentEnergy > GunData.maxEnergy)
-            GunCurrentEnergy = GunData.maxEnergy;
+        if (GunCurrentNormalAttackEnergy > GunData.maxEnergy)
+            GunCurrentNormalAttackEnergy = GunData.maxEnergy;
 
         OnEnergyChanged?.Invoke();
     }
@@ -195,7 +196,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 FistCurrentEnergy--;
                 break;
             case WeaponType.Gun:
-                GrenadeCount--;
+                GunCurrentEnergy--;
                 break;
             default:
                 break;
@@ -203,18 +204,18 @@ public class PlayerWeaponManager : MonoBehaviour
         OnEnergyChanged?.Invoke();
     }
 
-    public void DecreaseGunEnergy()
+    public void DecreaseGunNormalAttackEnergy()
     {
-        GunCurrentEnergy -= GunData.energyCostPerShot;
+        GunCurrentNormalAttackEnergy -= GunData.energyCostPerShot;
         OnEnergyChanged?.Invoke();
     }
 
-    public void DecreaseGunEnergy(float amount)
+    public void DecreaseGunNormalAttackEnergy(float amount)
     {
-        if(GunCurrentEnergy < amount)
-            GunCurrentEnergy = 0;
+        if(GunCurrentNormalAttackEnergy < amount)
+            GunCurrentNormalAttackEnergy = 0;
         else
-            GunCurrentEnergy -= amount;
+            GunCurrentNormalAttackEnergy -= amount;
 
         OnEnergyChanged?.Invoke();
     }
@@ -230,7 +231,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 FistCurrentEnergy = 0;
                 break;
             case WeaponType.Gun:
-                GrenadeCount = 0;
+                GunCurrentEnergy = 0;
                 break;
             default:
                 break;
@@ -242,24 +243,25 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         SwordCurrentEnergy = SwordData.maxEnergy;
         FistCurrentEnergy = FistData.maxEnergy;
-        GunCurrentEnergy = GunData.maxEnergy;
-        GrenadeCount = GunData.maxGrenade;
+        GunCurrentEnergy = GunData.maxGrenade;
+        GunCurrentNormalAttackEnergy = GunData.maxEnergy;
 
         OnEnergyChanged?.Invoke();
     }
 
     public void SetGunRegenable(bool regenable)
     {
-        GunEnergyRegenable = regenable;
+        GunNormalAttackEnergyRegenable = regenable;
     }
 
     public void GunFiredRegenDelay()
     {
-        GunEnergyRegenable = false;
+        GunNormalAttackEnergyRegenable = false;
         CancelInvoke(nameof(SetGunRagenableTrue));
         Invoke(nameof(SetGunRagenableTrue), GunData.energyRegenDelay);
     }
-    private void SetGunRagenableTrue() => GunEnergyRegenable = true;
+
+    private void SetGunRagenableTrue() => GunNormalAttackEnergyRegenable = true;
 
 }
 

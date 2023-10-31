@@ -18,7 +18,6 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject pickUpItemUIObj;
     private PickupItemUI pickUpItemUI;
 
-
     [Header("Pause UI")]
     [SerializeField] private GameObject pauseUIObj;
     [SerializeField] private GameObject pauseUIMainObj;

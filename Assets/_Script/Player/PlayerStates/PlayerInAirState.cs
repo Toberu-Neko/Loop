@@ -134,12 +134,12 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.GunCounterAttackState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Gun && Stats.Attackable && player.WeaponManager.GrenadeCount > 0 && player.WeaponManager.GrenadeCount < player.WeaponManager.GunData.maxGrenade)
+        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Gun && Stats.Attackable && player.WeaponManager.GunCurrentEnergy > 0 && player.WeaponManager.GunCurrentEnergy < player.WeaponManager.GunData.maxGrenade)
         {
             player.InputHandler.UseWeaponSkillInput();
             stateMachine.ChangeState(player.GunThrowGrenadeState);
         }
-        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Gun && player.WeaponManager.GrenadeCount == player.WeaponManager.GunData.maxGrenade && Stats.Attackable)
+        else if (player.InputHandler.WeaponSkillInput && player.WeaponManager.CurrentWeaponType == WeaponType.Gun && player.WeaponManager.GunCurrentEnergy == player.WeaponManager.GunData.maxGrenade && Stats.Attackable)
         {
             player.InputHandler.UseWeaponSkillInput();
             stateMachine.ChangeState(player.GunS3State);

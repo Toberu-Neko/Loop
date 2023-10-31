@@ -26,6 +26,7 @@ public class PressEPickItemBase : DropableItemBase
             if (inputHandler.InteractInput)
             {
                 inputHandler.UseInteractInput();
+                inputHandler.NResetAllInput();
                 pickUpText.SetActive(false);
 
                 OnItemPicked?.Invoke();

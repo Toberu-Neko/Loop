@@ -93,12 +93,12 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.GunCounterAttackState);
         }
         else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && 
-            weaponManager.GrenadeCount > 0 && weaponManager.GrenadeCount < weaponManager.GunData.maxGrenade && Stats.Attackable)
+            weaponManager.GunCurrentEnergy > 0 && weaponManager.GunCurrentEnergy < weaponManager.GunData.maxGrenade && Stats.Attackable)
         {
             player.InputHandler.UseWeaponSkillInput();
             stateMachine.ChangeState(player.GunThrowGrenadeState);
         }
-        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && weaponManager.GrenadeCount == weaponManager.GunData.maxGrenade && Stats.Attackable)
+        else if (player.InputHandler.WeaponSkillInput && weaponManager.CurrentWeaponType == WeaponType.Gun && weaponManager.GunCurrentEnergy == weaponManager.GunData.maxGrenade && Stats.Attackable)
         {
             player.InputHandler.UseWeaponSkillInput();
             stateMachine.ChangeState(player.GunS3State);

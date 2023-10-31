@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class DebugPlayerComp : MonoBehaviour
 {
@@ -14,16 +15,24 @@ public class DebugPlayerComp : MonoBehaviour
     private PlayerWeaponManager weaponManager;
     private PlayerTimeSkillManager timeSkillManager;
 
+    public event Action<float, float, float> OnInit;
+    public event Action<float> OnUpdateHp;
+    public event Action<string, float> OnUpdateTimeSkill;
+    public event Action<WeaponType, int, float> OnUpdateWeapon;
+
     private Core core;
 
-    private Stats Stats => stats ? stats : stats = core.GetCoreComponent<Stats>();
+    // private Stats Stats => stats ? stats : stats = core.GetCoreComponent<Stats>();
     private Stats stats;
 
-    private Combat Combat => combat ? combat : combat = core.GetCoreComponent<Combat>();
+    // private Combat Combat => combat ? combat : combat = core.GetCoreComponent<Combat>();
     private Combat combat;
     private void Awake()
     {
         core = GetComponentInChildren<Core>();
+        stats = core.GetCoreComponent<Stats>();
+        combat = core.GetCoreComponent<Combat>();
+
         weaponManager = GetComponent<PlayerWeaponManager>();
         timeSkillManager = GetComponent<PlayerTimeSkillManager>();
 
@@ -37,6 +46,7 @@ public class DebugPlayerComp : MonoBehaviour
             //TODO: Do it better
             PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged += UpdateMedkitText;
         }
+        InitBars();
         UpdateMedkitText();
         UpdateHpText();
         UpdateWeaponText();
@@ -44,9 +54,10 @@ public class DebugPlayerComp : MonoBehaviour
 
     private void OnEnable()
     {
-        Combat.OnPerfectBlock += () => perfectBlockAttack.SetActive(true);
-        Stats.Health.OnValueChanged += UpdateHpText;
-        Combat.OnDamaged += UpdateHpText;
+        combat.OnPerfectBlock += () => perfectBlockAttack.SetActive(true);
+
+        stats.Health.OnValueChanged += UpdateHpText;
+        combat.OnDamaged += UpdateHpText;
         weaponManager.OnEnergyChanged += UpdateWeaponText;
         weaponManager.OnWeaponChanged += UpdateWeaponText;
         timeSkillManager.OnStateChanged += UpdateTimeSkillText;
@@ -59,9 +70,9 @@ public class DebugPlayerComp : MonoBehaviour
             //TODO: Do it better
             PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged -= UpdateMedkitText;
         }
-        Combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
-        Stats.Health.OnValueChanged -= UpdateHpText;
-        Combat.OnDamaged -= UpdateHpText;
+        combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
+        stats.Health.OnValueChanged -= UpdateHpText;
+        combat.OnDamaged -= UpdateHpText;
         weaponManager.OnEnergyChanged -= UpdateWeaponText;
         weaponManager.OnWeaponChanged -= UpdateWeaponText;
         timeSkillManager.OnStateChanged -= UpdateTimeSkillText;
@@ -69,7 +80,7 @@ public class DebugPlayerComp : MonoBehaviour
 
     void Update()
     {
-        if(!Stats.CounterAttackable && perfectBlockAttack.activeInHierarchy)
+        if(!stats.CounterAttackable && perfectBlockAttack.activeInHierarchy)
         {
             perfectBlockAttack.SetActive(false);
         }
@@ -80,27 +91,36 @@ public class DebugPlayerComp : MonoBehaviour
         medkitText.text = "血包" + PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount.ToString();
     }
 
-    void UpdateHpText()
+    private void InitBars()
     {
-        HpText.text =  "\n生命值: " + Stats.Health.CurrentValue.ToString();
+        OnInit?.Invoke(stats.Health.MaxValue, timeSkillManager.MaxEnergy, weaponManager.GunData.maxEnergy);
+    }
+    private void UpdateHpText()
+    {
+        OnUpdateHp?.Invoke(stats.Health.CurrentValue);
+        HpText.text =  "\n生命值: " + stats.Health.CurrentValue.ToString();
     }
 
     void UpdateWeaponText()
     {
-        if(weaponManager.CurrentWeaponType != WeaponType.Gun)
+        OnUpdateWeapon?.Invoke(weaponManager.CurrentWeaponType, weaponManager.GetCurrentTypeEnergy(), weaponManager.GunCurrentNormalAttackEnergy);
+
+        if (weaponManager.CurrentWeaponType != WeaponType.Gun)
         {
             weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
-                "\n 能量: " + weaponManager.GetCurrentTypeEnergyStr();
+                "\n 能量: " + weaponManager.GetCurrentTypeEnergy();
         }
         else
         {
             weaponText.text = "武器: " + weaponManager.CurrentWeaponType.ToString() +
-                "\n 能量: " + weaponManager.GetCurrentTypeEnergyStr() + ", 手榴彈: " + weaponManager.GrenadeCount;
+                "\n 能量: " + weaponManager.GetCurrentTypeEnergy() + ", 手榴彈: " + weaponManager.GunCurrentEnergy;
         }
     }
 
     void UpdateTimeSkillText()
     {
+        OnUpdateTimeSkill?.Invoke(timeSkillManager.StateMachine.CurrentState.ToString()[16..], timeSkillManager.CurrentEnergy);
+
         timeText.text = "裝備技能: " + timeSkillManager.StateMachine.CurrentState.ToString()[16..] +
             "\n 能量: " + timeSkillManager.CurrentEnergy.ToString();
     }

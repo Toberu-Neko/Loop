@@ -25,7 +25,7 @@ public class PlayerGunChargingState : PlayerGunAttackState
         Combat.OnKnockback += () => isAttackDone = true;
 
         player.WeaponManager.SetGunRegenable(false);
-        player.WeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond);
+        player.WeaponManager.DecreaseGunNormalAttackEnergy(data.chargeAttackEnergyCostPerSecond);
 
         lastDamageTime = 0;
         shootable = true;
@@ -55,9 +55,9 @@ public class PlayerGunChargingState : PlayerGunAttackState
             Movement.SetVelocityX(playerData.movementVelocity * data.chargeMovementSpeedMultiplier * xInput);
         }
 
-        if (holdAttackInput && player.WeaponManager.GunCurrentEnergy > 0)
+        if (holdAttackInput && player.WeaponManager.GunCurrentNormalAttackEnergy > 0)
         {
-            player.WeaponManager.DecreaseGunEnergy(data.chargeAttackEnergyCostPerSecond * Time.deltaTime);
+            player.WeaponManager.DecreaseGunNormalAttackEnergy(data.chargeAttackEnergyCostPerSecond * Time.deltaTime);
         }
         else if(shootable)
         {

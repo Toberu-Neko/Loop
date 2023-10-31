@@ -27,7 +27,7 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
     public Transform[] PredictLineTransforms { get; set; }
     [SerializeField] private Transform predictObjMother;
 
-    private float maxEnergy;
+    public float MaxEnergy { get; private set; }
     public float CurrentEnergy { get; private set; }
 
     public event Action OnStateChanged;
@@ -40,8 +40,8 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
 
         BulletTimeEffectObj.SetActive(false);
 
-        maxEnergy = data.maxEnergy;
-        CurrentEnergy = maxEnergy;
+        MaxEnergy = data.maxEnergy;
+        CurrentEnergy = MaxEnergy;
 
         PredictLineObjects = new GameObject[data.numberOfPredictLineObj];
         PredictLineTransforms = new Transform[data.numberOfPredictLineObj];
@@ -115,7 +115,7 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
 
     public void SetTimeEnergyMax()
     {
-        CurrentEnergy = maxEnergy;
+        CurrentEnergy = MaxEnergy;
     }
     
 
@@ -153,14 +153,14 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
     public void DecreaseEnergy(float amount)
     {
         CurrentEnergy -= amount;
-        CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, maxEnergy);
+        CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, MaxEnergy);
         OnStateChanged?.Invoke();
     }
 
     public void IncreaseEnergy(float amount)
     {
         CurrentEnergy += amount;
-        CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, maxEnergy);
+        CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, MaxEnergy);
         OnStateChanged?.Invoke();
     }
 

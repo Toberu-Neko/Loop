@@ -54,9 +54,9 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
     private void Shoot()
     {
-        if (player.WeaponManager.GunCurrentEnergy >= data.energyCostPerShot)
+        if (player.WeaponManager.GunCurrentNormalAttackEnergy >= data.energyCostPerShot)
         {
-            player.WeaponManager.DecreaseGunEnergy();
+            player.WeaponManager.DecreaseGunNormalAttackEnergy();
             player.WeaponManager.GunFiredRegenDelay();
 
             PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.WeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
@@ -69,6 +69,6 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
     public bool CheckCanAttack()
     {
-        return (StartTime == 0f || Time.time >= StartTime + data.attackSpeed) && player.WeaponManager.GunCurrentEnergy >= data.energyCostPerShot;
+        return (StartTime == 0f || Time.time >= StartTime + data.attackSpeed) && player.WeaponManager.GunCurrentNormalAttackEnergy >= data.energyCostPerShot;
     }
 }
