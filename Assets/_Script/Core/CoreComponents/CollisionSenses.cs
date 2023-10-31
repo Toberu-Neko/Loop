@@ -175,19 +175,9 @@ public class CollisionSenses : CoreComponent
             }
             else
             {
-                if (frontAngle != 0f)
-                {
-                    Vector2 normalPerp = Vector2.Perpendicular(hitVerticleFront.normal).normalized;
+                Vector2 normalPerp = Vector2.Perpendicular(hitVerticleFront.normal).normalized;
 
-                    slope.Set(normalPerp, frontAngle);
-                }
-
-                else
-                {
-                    Vector2 normalPerp = Vector2.Perpendicular(hitVerticalBack.normal).normalized;
-
-                    slope.Set(normalPerp, backAngle);
-                }
+                slope.Set(normalPerp, frontAngle);
 
                 return slope;
             }
@@ -291,7 +281,6 @@ public class Slope
 {
     public Vector2 NormalPrep { get; private set; }
     public float DownAngle { get; private set; }
-    private float downAngleOld;
     public bool IsOnSlope { get; private set; }
     public bool hasCollisionSenses;
 
@@ -316,12 +305,5 @@ public class Slope
         DownAngle = slopeAngle;
 
         IsOnSlope = true;
-        if (DownAngle < 10f)
-        {
-            // IsOnSlope = false;
-        }
-
-        downAngleOld = DownAngle;
-
     }
 }
