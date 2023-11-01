@@ -3,7 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Chip", menuName = "Items/New Chip")]
 public class SO_Chip : SO_ItemsBase
 {
-
     [Header("Available Equipment Type")]
     public bool canEquipOnSword;
     public bool canEquipOnGun;

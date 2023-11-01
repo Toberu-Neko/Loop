@@ -140,6 +140,8 @@ public class ObjectPoolManager : MonoBehaviour
         if(pool == null)
         {
             Debug.LogWarning("No pool found for " + goName);
+            obj.SetActive(false);
+            return;
         }
         else
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class LootPool : CoreComponent
 {
     [SerializeField] private GameObject dropItemPrefab;
-    private List<LootItem> lootItems = new();
+    [SerializeField] private List<LootItem> lootItems = new();
 
     private Death death;
     protected override void Awake()
@@ -14,7 +14,11 @@ public class LootPool : CoreComponent
 
         death = core.GetCoreComponent<Death>();
 
-        lootItems = core.CoreData.lootItems;
+        foreach (LootItem item in core.CoreData.lootItems)
+        {
+            if (item != null)
+                lootItems.Add(item);
+        }
     }
 
     private void OnEnable()
@@ -58,21 +62,20 @@ public class LootPool : CoreComponent
     private void SpawnItem(Vector3 position, LootItem lootItem)
     {
         GameObject dropItem = ObjectPoolManager.SpawnObject(dropItemPrefab, position, Quaternion.identity, ObjectPoolManager.PoolType.GameObjects);
-        dropItem.GetComponent<SpriteRenderer>().sprite = lootItem.lootdetails.itemSprite;
 
         float dropForce = 10f;
         Vector2 dir = new(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(0.5f, 1f));
         Rigidbody2D rig = dropItem.GetComponent<Rigidbody2D>();
         rig.velocity = dir * dropForce;
 
-        dropItem.GetComponent<PickupChip>().chipSO = lootItem.lootdetails;
+        dropItem.GetComponent<PickupItem>().itemSO = lootItem.lootdetails;
     }
 }
 
 [Serializable]
 public class LootItem
 {
-    public SO_Chip lootdetails;
+    public SO_ItemsBase lootdetails;
     public int amount = 1;
 
     [Range(0f, 100f)]
