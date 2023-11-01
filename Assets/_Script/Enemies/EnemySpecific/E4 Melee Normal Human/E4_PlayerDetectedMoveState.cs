@@ -14,7 +14,7 @@ public class E4_PlayerDetectedMoveState : PlayerDetectedMoveState
     {
         base.LogicUpdate();
 
-        if (performCloseRangeAction && enemy.DodgeState.CheckCanDodge())
+        if (performCloseRangeAction && enemy.DodgeState.CheckCanDodge() && enemy.GotoDodgeState)
         {
             stateMachine.ChangeState(enemy.DodgeState);
         }

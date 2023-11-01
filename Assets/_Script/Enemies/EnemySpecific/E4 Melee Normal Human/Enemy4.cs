@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Enemy4 : Entity
 {
+    [field: SerializeField] public bool GotoMoveState { get; private set; }
+    [field: SerializeField] public bool GotoDodgeState { get; private set; }
     public E4_IdleState IdleState { get; private set; }
     public E4_MoveState MoveState { get; private set; }
     public E4_PlayerDetectedState PlayerDetectedState { get; private set; }

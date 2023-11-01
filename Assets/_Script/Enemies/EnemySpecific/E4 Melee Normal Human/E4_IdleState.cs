@@ -14,11 +14,11 @@ public class E4_IdleState : IdleState
     {
         base.LogicUpdate();
 
-        if (isPlayerInMinAgroRange)
+        if (isPlayerInMaxAgroRange)
         {
             stateMachine.ChangeState(enemy.PlayerDetectedState);
         }
-        else if (isIdleTimeOver)
+        else if (isIdleTimeOver && enemy.GotoMoveState)
         {
             stateMachine.ChangeState(enemy.MoveState);
         }

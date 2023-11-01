@@ -14,7 +14,7 @@ public class E4_PlayerDetectedState : PlayerDetectedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (performCloseRangeAction && enemy.DodgeState.CheckCanDodge())
+        if (performCloseRangeAction && enemy.DodgeState.CheckCanDodge() && enemy.GotoDodgeState)
         {
             stateMachine.ChangeState(enemy.DodgeState);
         }
@@ -33,7 +33,15 @@ public class E4_PlayerDetectedState : PlayerDetectedState
         else if (!isDetectingLedge)
         {
             Movement.Flip();
-            stateMachine.ChangeState(enemy.MoveState);
+
+            if (enemy.GotoMoveState)
+            {
+                stateMachine.ChangeState(enemy.MoveState);
+            }
+            else
+            {
+                stateMachine.ChangeState(enemy.IdleState);
+            }
         }
     }
 }

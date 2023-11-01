@@ -55,7 +55,7 @@ public class EnemySpawner : MonoBehaviour, ITempDataPersistence
 
     private void HandleDefeated()
     {
-        Debug.Log("Enemy defeated: " + enemy.name);
+        // Debug.Log("Enemy defeated: " + enemy.name);
         isDefeated = true;
     }
 

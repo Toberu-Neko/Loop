@@ -23,13 +23,20 @@ public class E4_LookForPlayerState : LookForPlayerState
     {
         base.LogicUpdate();
 
-        if (isPlayerInMinAgroRange)
+        if (isPlayerInMaxAgroRange)
         {
             stateMachine.ChangeState(enemy.PlayerDetectedState);
         }
         else if (isAllTurnsTimeDone)
         {
-            stateMachine.ChangeState(enemy.MoveState);
+            if (enemy.GotoMoveState)
+            {
+                stateMachine.ChangeState(enemy.MoveState);
+            }
+            else
+            {
+                stateMachine.ChangeState(enemy.IdleState);
+            }
         }
     }
 
