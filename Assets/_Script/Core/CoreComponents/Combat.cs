@@ -180,7 +180,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     #region Stamina
     public void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
-        if (stats.Invincible || !stats.Stamina.decreaseable)
+        if (stats.Invincible || stats.InvinvibleAfterDamaged || !stats.Stamina.decreaseable)
         {
             return;
         }
@@ -217,7 +217,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     public void Damage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
-        if (stats.Invincible)
+        if (stats.Invincible || stats.InvinvibleAfterDamaged)
         {
             return;
         }
@@ -306,7 +306,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
             direction = 1;
         }
 
-        if (stats.Invincible || !stats.Knockable)
+        if (stats.Invincible || stats.InvinvibleAfterDamaged || !stats.Knockable)
         {
             return;
         }

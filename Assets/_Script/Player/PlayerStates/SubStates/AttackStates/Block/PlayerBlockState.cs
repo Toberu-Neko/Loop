@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBlockState : PlayerAttackState
@@ -72,6 +70,7 @@ public class PlayerBlockState : PlayerAttackState
             }
             else if(knockbackFinished && damageFinished)
             {
+                player.InputHandler.UseBlockInput();
                 lastBlockTime = Time.time;
                 isAttackDone = true;
             }

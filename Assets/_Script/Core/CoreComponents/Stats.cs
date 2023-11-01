@@ -20,6 +20,7 @@ public class Stats : CoreComponent
 
     public bool IsAngry { get; set; } = false;
     public bool Invincible { get; private set; } = false;
+    public bool InvinvibleAfterDamaged { get; private set; } = false;
     public bool Knockable { get; private set; } = true;
 
     public bool IsRewindingPosition { get; private set; } = false;
@@ -92,6 +93,7 @@ public class Stats : CoreComponent
 
     private void OnEnable()
     {
+        InvinvibleAfterDamaged = false;
         Invincible = false;
         InCombat = false;
         CanChangeWeapon = true;
@@ -156,9 +158,23 @@ public class Stats : CoreComponent
 
     public void SetInvincibleTrueAfterDamaged()
     {
-        SetInvincibleTrue();
-        CancelInvoke(nameof(SetInvincibleFalse));
-        Invoke(nameof(SetInvincibleFalse), invincibleDurationAfterDamaged);
+        SetInvincibleAfterDamageTrue();
+        CancelInvoke(nameof(SetInvincibleAfterDamageFalse));
+        Invoke(nameof(SetInvincibleAfterDamageFalse), invincibleDurationAfterDamaged);
+    }
+
+    private void SetInvincibleAfterDamageTrue()
+    {
+        InvinvibleAfterDamaged = true;
+        Physics2D.IgnoreLayerCollision(7, 11, true);
+        Physics2D.IgnoreLayerCollision(7, 13, true);
+    }
+
+    private void SetInvincibleAfterDamageFalse()
+    {
+        InvinvibleAfterDamaged = false;
+        Physics2D.IgnoreLayerCollision(7, 11, false);
+        Physics2D.IgnoreLayerCollision(7, 13, false);
     }
     #endregion
 

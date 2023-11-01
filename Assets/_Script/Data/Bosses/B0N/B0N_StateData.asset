@@ -19,19 +19,19 @@ MonoBehaviour:
     minIdleTime: 1
     maxIdleTime: 3
   detectedMoveStateData:
-    movementSpeed: 5
+    movementSpeed: 6
     minMovementTime: 0
     minInStateTime: 3
     maxInStateTime: 5
   normalAttack1StateData:
-    attackCooldown: 1.5
-    attackDamage: 10
+    attackCooldown: 1.25
+    attackDamage: 12
     staminaAttackDamage: 3
-    knockbackAngle: {x: 1, y: 1}
-    knockbackStrength: 2.5
+    knockbackAngle: {x: 0.2, y: 1}
+    knockbackStrength: 5
   normalAttack2StateData:
     attackCooldown: 0
-    attackDamage: 10
+    attackDamage: 15
     staminaAttackDamage: 3
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 15
@@ -42,7 +42,7 @@ MonoBehaviour:
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 20
   MultiAttackState:
-    attackCooldown: 15
+    attackCooldown: 12
     angryMoveSpeed: 5
     details:
     - attackName: 
@@ -70,16 +70,16 @@ MonoBehaviour:
       knockbackForce: 15
       knockbackAngle: {x: 1, y: 1}
   ChargeState:
-    chargeCooldown: 12
+    chargeCooldown: 10
     finishChargeDelay: 2
     chargeSpeed: 12
     angryChargeSpeed: 18
     chargeTime: 2.5
   stunStateData:
-    stunTime: 2
+    stunTime: 1.5
     stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 0, y: 0}
   angrySkillData:
     minCooldown: 8
-    maxCooldown: 10
-    duration: 6
+    maxCooldown: 12
+    duration: 5.5
