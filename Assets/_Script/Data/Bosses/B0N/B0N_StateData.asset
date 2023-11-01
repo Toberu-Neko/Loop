@@ -24,11 +24,11 @@ MonoBehaviour:
     minInStateTime: 3
     maxInStateTime: 5
   normalAttack1StateData:
-    attackCooldown: 2
+    attackCooldown: 1.5
     attackDamage: 10
     staminaAttackDamage: 3
     knockbackAngle: {x: 1, y: 1}
-    knockbackStrength: 15
+    knockbackStrength: 2.5
   normalAttack2StateData:
     attackCooldown: 0
     attackDamage: 10
@@ -79,3 +79,7 @@ MonoBehaviour:
     stunTime: 2
     stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 0, y: 0}
+  angrySkillData:
+    minCooldown: 8
+    maxCooldown: 10
+    duration: 6

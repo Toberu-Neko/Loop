@@ -204,6 +204,11 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
+    public void UseBlockInput()
+    {
+        BlockInput = false;
+    }
+
     public void OnWeaponSkillInput(InputAction.CallbackContext context)
     {
         if (gameManager.IsPaused)

@@ -10,6 +10,8 @@ public class PlayerPerfectBlockState : PlayerAttackState
     {
         base.Enter();
 
+        player.InputHandler.UseBlockInput();
+
         Collider2D[] enemy = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemy);
 
         foreach (Collider2D enemyCollider in enemy)

@@ -35,6 +35,9 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject bossFightUIObj;
     private BossFightUI bossFightUI;
 
+    [Header("Die UI")]
+    [SerializeField] private DieUI dieUI;
+
     private SavepointUIMain savepointUIMain;
     private SavepointUIInventory savepointUIInventory;
 
@@ -75,6 +78,8 @@ public class UI_Manager : MonoBehaviour
 
         pickUpItemUIObj.SetActive(false);
         pickUpItemUI = pickUpItemUIObj.GetComponent<PickupItemUI>();
+
+        dieUI.gameObject.SetActive(false);
 
         savePointNames = new();
         savepoints = new();
@@ -130,6 +135,11 @@ public class UI_Manager : MonoBehaviour
                 pickUpItemUI.Deactive();
             }
         }
+    }
+
+    public void ActiveDieUI()
+    {
+        dieUI.Activate();
     }
 
     public void ActiveBossUI(BossBase bossBase)

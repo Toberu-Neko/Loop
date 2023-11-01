@@ -54,11 +54,11 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         previousItem = currentItem;
         currentItem = script;
 
-        script.OnReturnToOriginalParent += HandleNoTarget;
-        script.OnStartDragging += HandleDragStart;
-        script.OnEndDragging += HandleEndDragging;
+        currentItem.OnReturnToOriginalParent += HandleNoTarget;
+        currentItem.OnStartDragging += HandleDragStart;
+        currentItem.OnEndDragging += HandleEndDragging;
 
-        script.SetValue(so, Count);
+        currentItem.SetValue(so, Count);
         draggableItems.Add(script);
     }
 
@@ -116,6 +116,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private void HandleNoTarget(DraggableItem item)
     {
         Count++;
+        currentItem.SetValue(LootSO, Count);
         countText.text = Count.ToString();
 
         item.OnReturnToOriginalParent -= HandleNoTarget;
@@ -135,7 +136,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(canOpenDescription)
-            OnEnterTarget?.Invoke(LootSO.itemName, LootSO.itemDescription);
+            OnEnterTarget?.Invoke(LootSO.displayName, LootSO.itemDescription);
     }
 
     public void OnPointerExit(PointerEventData eventData)

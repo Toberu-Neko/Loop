@@ -12,7 +12,8 @@ public class PlayerDeadState : PlayerState
     {
         base.Enter();
         //TODO: Player Die
-        DataPersistenceManager.Instance.ReloadBaseScene();
+        UI_Manager.Instance.ActiveDieUI();
+        player.gameObject.SetActive(false);
     }
 
 }

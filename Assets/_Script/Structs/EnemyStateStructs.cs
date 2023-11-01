@@ -61,7 +61,7 @@ public class ED_EnemyMeleeAttackState
     [Tooltip("À»°h¨¤«×")]
     public Vector2 knockbackAngle;
     [Tooltip("À»°h¤O¹D")]
-    [Range(8, 50)]
+    [Range(0, 50)]
     public float knockbackStrength = 10f;
 }
 [Serializable]
