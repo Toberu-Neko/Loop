@@ -272,3 +272,12 @@ public class ED_AbovePlayerAttackState
     public float attackDistance = 7.5f;
 
 }
+
+[Serializable]
+public class ED_TimeSlowSkill
+{
+    public float minCooldown = 8f;
+    public float maxCooldown = 10f;
+    public float duration = 6f;
+
+}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class B0N_NormalAttackState2 : SingleMeleeAttackState
@@ -13,21 +11,11 @@ public class B0N_NormalAttackState2 : SingleMeleeAttackState
     public override void Enter()
     {
         base.Enter();
-
-        if (boss.NormalAttackState1.DoEnhancedAttack)
-        {
-            boss.EnterSlowTrigger.SetActive(true);
-        }
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        if (boss.NormalAttackState1.DoEnhancedAttack)
-        {
-            boss.EnterSlowTrigger.SetActive(false);
-        }
     }
 
     public override void AnimationFinishTrigger()

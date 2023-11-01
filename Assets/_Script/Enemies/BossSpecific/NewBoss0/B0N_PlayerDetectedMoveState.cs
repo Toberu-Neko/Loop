@@ -1,16 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class B0N_PlayerDetectedMoveState : PlayerDetectedMoveState
 {
     private Boss0New boss;
-
-    private bool firstTimeAngry;
     public B0N_PlayerDetectedMoveState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_PlayerDetectedMoveState stateData, Boss0New boss) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.boss = boss;
-        firstTimeAngry = false;
     }
 
     public override void LogicUpdate()
@@ -21,11 +19,13 @@ public class B0N_PlayerDetectedMoveState : PlayerDetectedMoveState
         {
             Movement.Flip();
         }
-
-        if (!firstTimeAngry && Stats.IsAngry && performCloseRangeAction && boss.NormalAttackState1.CheckCanAttack())
+        if (Stats.Health.CurrentValuePercentage <= 0.5f && !Stats.IsAngry)
         {
-            firstTimeAngry = true;
-            stateMachine.ChangeState(boss.PreAngryAttackState);
+            stateMachine.ChangeState(boss.AngryState);
+        }
+        else if (Stats.IsAngry && boss.AngryMagicState.CheckCanAttack())
+        {
+            stateMachine.ChangeState(boss.AngryMagicState);
         }
         else if (isPlayerInMaxAgroRange && boss.ChargeState.CheckCanCharge())
         {
@@ -35,23 +35,9 @@ public class B0N_PlayerDetectedMoveState : PlayerDetectedMoveState
         {
             stateMachine.ChangeState(boss.MultiAttackState);
         }
-        else if (!Stats.IsAngry && performCloseRangeAction && boss.NormalAttackState1.CheckCanAttack())
+        else if (performCloseRangeAction && boss.NormalAttackState1.CheckCanAttack())
         {
             stateMachine.ChangeState(boss.NormalAttackState1);
         }
-        else if (Stats.IsAngry && performCloseRangeAction && boss.NormalAttackState1.CheckCanAttack())
-        {
-            boss.NormalAttackState1.SetDoEnhancedAttack(false);
-
-            if (Random.Range(0f, 1f) <= boss.EnhancedAttackProbability)
-            {
-                stateMachine.ChangeState(boss.PreAngryAttackState);
-            }
-            else
-            {
-                stateMachine.ChangeState(boss.NormalAttackState1);
-            }
-        }
-
     }
 }

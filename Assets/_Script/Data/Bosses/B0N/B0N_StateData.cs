@@ -19,4 +19,9 @@ public class B0N_StateData : BaseEnemyStateData
 
     [Header("Other")]
     public ED_EnemyStunState stunStateData;
+    public ED_TimeSlowSkill angrySkillData;
+
+    
 }
+
+

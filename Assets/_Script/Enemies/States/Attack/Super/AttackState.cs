@@ -40,6 +40,11 @@ public class AttackState : EnemyState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if (CollisionSenses.Ground)
+        {
+            Movement.SetVelocityZero();
+        }
     }
 
     public override void AnimationActionTrigger()
