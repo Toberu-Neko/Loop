@@ -13,9 +13,18 @@ public class DeadState : EnemyState
         base.Enter();
 
         Movement.SetCanSetVelocity(false);
+        Stats.SetInvincibleTrue();
 
         if (CollisionSenses.Ground)
             Movement.SetVelocityZero();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        Stats.SetInvincibleFalse();
+        Movement.SetCanSetVelocity(true);
     }
 
     public override void LogicUpdate()
