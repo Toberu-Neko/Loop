@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class DebugEntityStats : WorldCanvasBase
 {
-    [SerializeField] TextMeshProUGUI hpText;
+    [SerializeField] private HealthBar hp;
+    [SerializeField] private HealthBar st;
     private Core core;
     private Stats stats;
+
+    private bool firstInit;
 
     protected override void Awake()
     {
@@ -20,21 +23,30 @@ public class DebugEntityStats : WorldCanvasBase
     {
         base.OnEnable();
 
-        stats.Health.OnValueChanged += UpdateText;
-        stats.Stamina.OnValueChanged += UpdateText;
+        stats.Health.OnValueChanged += UpdateBar;
+        stats.Stamina.OnValueChanged += UpdateBar;
 
-        UpdateText();
+        firstInit = true;
+
+        UpdateBar();
     }
 
     protected override void OnDisable()
     {
-        stats.Health.OnValueChanged -= UpdateText;
-        stats.Stamina.OnValueChanged -= UpdateText;
+        stats.Health.OnValueChanged -= UpdateBar;
+        stats.Stamina.OnValueChanged -= UpdateBar;
     }
 
-    void UpdateText()
+    void UpdateBar()
     {
-        hpText.text = "HP: " + stats.Health.CurrentValue.ToString() +
-            "\nST: " + stats.Stamina.CurrentValue.ToString();
+        if (firstInit)
+        {
+            firstInit = false;
+            hp.Init(stats.Health.MaxValue);
+            st.Init(stats.Stamina.MaxValue);
+        }
+
+        hp.UpdateHealthBar(stats.Health.CurrentValue);
+        st.UpdateHealthBar(stats.Stamina.CurrentValue);
     }
 }
