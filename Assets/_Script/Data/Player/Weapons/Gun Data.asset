@@ -12,58 +12,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae8c2ce1219dbd4285c5480c2520879, type: 3}
   m_Name: Gun Data
   m_EditorClassIdentifier: 
-  maxEnergy: 100
-  energyRegen: 5
-  energyRegenDelay: 1
+  maxEnergy: 150
+  energyRegen: 8
+  energyRegenDelay: 0.75
   maxGrenade: 3
   bulletObject: {fileID: 4763303106170138442, guid: 017f74101e07e384a9eaac15ff7d27db, type: 3}
   minChargeTime: 1
   attackSpeed: 0.5
   energyCostPerShot: 4
   normalAttackDetails:
-    damageAmount: 10
-    staminaDamageAmount: 1
-    speed: 30
     duration: 5
-    knockbackStrength: 0
-    knockbackAngle: {x: 1, y: 0.2}
+    speed: 45
+    combatDetails:
+      damageAmount: 7
+      staminaDamageAmount: 0
+      knockbackStrength: 0
+      knockbackAngle: {x: 0, y: 0}
+      blockable: 1
   counterAttackDetails:
-    damageAmount: 20
-    staminaDamageAmount: 15
-    speed: 30
     duration: 5
-    knockbackStrength: 20
-    knockbackAngle: {x: 1, y: 1}
+    speed: 30
+    combatDetails:
+      damageAmount: 15
+      staminaDamageAmount: 1
+      knockbackStrength: 12
+      knockbackAngle: {x: 1, y: 1}
+      blockable: 1
   grenadeObj: {fileID: 7089407954526637746, guid: 70ab74009c2fd46498fe1552b17658c2, type: 3}
   grenadeDetails:
-    damageAmount: 20
-    staminaDamageAmount: 30
-    speed: 15
     duration: 3
-    knockbackStrength: 20
-    knockbackAngle: {x: 1, y: 1}
-  s3UpVelocity: 15
+    speed: 15
+    combatDetails:
+      damageAmount: 5
+      staminaDamageAmount: 1
+      knockbackStrength: 5
+      knockbackAngle: {x: 0, y: 0}
+      blockable: 1
+  s3UpVelocity: 20
   s3AttackDetails:
   - attackName: 
-    damageAmount: 10
+    damageAmount: 15
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 5
     knockbackAngle: {x: 1, y: 1}
   - attackName: 
-    damageAmount: 10
+    damageAmount: 15
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 5
     knockbackAngle: {x: 1, y: 1}
   - attackName: 
-    damageAmount: 10
+    damageAmount: 15
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 5
     knockbackAngle: {x: 1, y: 1}
   - attackName: 
-    damageAmount: 10
+    damageAmount: 15
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 5

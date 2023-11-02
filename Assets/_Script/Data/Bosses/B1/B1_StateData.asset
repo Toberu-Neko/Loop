@@ -20,27 +20,28 @@ MonoBehaviour:
     maxIdleTime: 3
   playerDetectedMoveStateData:
     movementSpeed: 2
-    minInStateTime: 1
-    maxInStateTime: 2
+    minMovementTime: 0
+    minInStateTime: 0.8
+    maxInStateTime: 1.8
   flyingMovementStateData:
     minMoveCount: 1
     maxMoveCount: 3
     moveTime: 2
-    movementSpeed: 5
+    movementSpeed: 4
   flyingIdleStateData:
-    minIdleTime: 0.8
-    maxIdleTime: 2.2
+    minIdleTime: 0.5
+    maxIdleTime: 1.5
   backToIdleStateData:
-    stunTime: 3
+    stunTime: 4
   blueRangedAttackStateData:
     aimPlayer: 1
     attackCooldown: 0
     projectile: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
     projectileDetails:
-      duration: 4
-      speed: 20
+      duration: 3
+      speed: 25
       combatDetails:
-        damageAmount: 5
+        damageAmount: 2.5
         staminaDamageAmount: 1
         knockbackStrength: 5
         knockbackAngle: {x: 0, y: 0}
@@ -53,7 +54,7 @@ MonoBehaviour:
       duration: 3
       speed: 25
       combatDetails:
-        damageAmount: 5
+        damageAmount: 20
         staminaDamageAmount: 1
         knockbackStrength: 8
         knockbackAngle: {x: 1, y: 1}
@@ -61,7 +62,7 @@ MonoBehaviour:
   perfectBlockStateData:
     cooldown: 10
     radius: 1.5
-    knockbackForce: 10
+    knockbackForce: 15
     knockbackAngle: {x: 1, y: 1}
   counterAttackObjsData:
     pasteItems:
@@ -70,9 +71,9 @@ MonoBehaviour:
   chooseRandomBulletStateData:
     randomCount: 3
     everyBulletProb:
-    - 0.4
-    - 0.4
-    - 0.2
+    - 0.425
+    - 0.425
+    - 0.15
     getCertainBulletHPPercentage:
     - 0.75
     - 0.5
@@ -80,19 +81,19 @@ MonoBehaviour:
   jumpAndMultiAttackStateData:
     jumpAngle: {x: 1, y: 2.5}
     jumpForce: 33
-    attackCooldown: 10
+    attackCooldown: 12
     attackVelocity: 20
-    attackAmount: 4
+    attackAmount: 5
     bullets:
     - obj: {fileID: 8389792333474829002, guid: 9301c4eae8fbf7c42a4dcfa4d088a044, type: 3}
       details:
         duration: 3
         speed: 25
         combatDetails:
-          damageAmount: 5
+          damageAmount: 20
           staminaDamageAmount: 1
-          knockbackStrength: 5
-          knockbackAngle: {x: 0, y: 0}
+          knockbackStrength: 8
+          knockbackAngle: {x: 1, y: 1}
           blockable: 1
     - obj: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
       details:
@@ -109,14 +110,14 @@ MonoBehaviour:
     - {fileID: 8389792333474829002, guid: a20559c03b9a5994483d45b940b5c14b, type: 3}
     details:
       duration: 5
-      speed: 71.8
+      speed: 75
       combatDetails:
-        damageAmount: 5
+        damageAmount: 12
         staminaDamageAmount: 1
-        knockbackStrength: 5
-        knockbackAngle: {x: 0, y: 0}
+        knockbackStrength: 14
+        knockbackAngle: {x: 1, y: 1}
         blockable: 1
-    spawnDelay: 0.75
+    spawnDelay: 0.5
     fireDelay: 1
     rewindDelay: 0.25
     attackDistance: 8
@@ -124,14 +125,14 @@ MonoBehaviour:
     bullets:
     - obj: {fileID: 8389792333474829002, guid: d8b08c52d2474cc45af4dfb0e64cefcd, type: 3}
       details:
-        duration: 4
+        duration: 3
         speed: 10
         combatDetails:
-          damageAmount: 5
+          damageAmount: 2.5
           staminaDamageAmount: 1
           knockbackStrength: 0
           knockbackAngle: {x: 0, y: 0}
-          blockable: 1
+          blockable: 0
     - obj: {fileID: 8389792333474829002, guid: c3536fb594d7edd4c830504f87649d81, type: 3}
       details:
         duration: 5
@@ -141,7 +142,7 @@ MonoBehaviour:
           staminaDamageAmount: 10
           knockbackStrength: 12
           knockbackAngle: {x: 1, y: 1}
-          blockable: 1
+          blockable: 0
     row: 5
     column: 4
     spawnCount: 3
@@ -153,18 +154,18 @@ MonoBehaviour:
     - {fileID: 8389792333474829002, guid: a20559c03b9a5994483d45b940b5c14b, type: 3}
     details:
       duration: 5
-      speed: 55
+      speed: 60
       combatDetails:
-        damageAmount: 5
+        damageAmount: 10
         staminaDamageAmount: 1
         knockbackStrength: 12
         knockbackAngle: {x: 1, y: 1}
         blockable: 0
     spawnCount: 4
-    spawnDelay: 0.7
-    fireDelay: 0.25
+    spawnDelay: 0.6
+    fireDelay: 0.2
     rewindDelay: 0.5
-    attackDistance: 8
+    attackDistance: 7.5
   stunStateData:
     stunTime: 2
     stunKnockbackSpeed: 0

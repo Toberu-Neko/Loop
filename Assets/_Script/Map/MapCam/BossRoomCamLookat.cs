@@ -8,6 +8,7 @@ public class BossRoomCamLookat : MonoBehaviour
     [SerializeField] private bool changeFOV = true;
     [SerializeField] private float mivFOVDistance = 15f;
     [SerializeField] private float maxFOV = 120f;
+    [SerializeField] private float devideFOV = 1.2f;
 
     private Vector2 workspace = new();
     private float orgFOV;
@@ -29,9 +30,9 @@ public class BossRoomCamLookat : MonoBehaviour
                 }
                 else
                 {
-                    if(orgFOV + Vector2.Distance(player.position, boss.position) / 1.2f < maxFOV)
+                    if(orgFOV + Vector2.Distance(player.position, boss.position) / devideFOV < maxFOV)
                     {
-                        CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV + Vector2.Distance(player.position, boss.position) / 1.2f, Time.deltaTime * 2f);
+                        CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV + Vector2.Distance(player.position, boss.position) / devideFOV, Time.deltaTime * 2f);
                     }
                     else
                     {

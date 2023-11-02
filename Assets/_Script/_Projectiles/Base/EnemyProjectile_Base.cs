@@ -141,6 +141,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     {
         if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered && !interected)
         {
+            CamManager.Instance.CameraShake(2.5f);
             countered = true;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             whatIsTargetLayer = LayerMask.GetMask("Damageable");
