@@ -36,6 +36,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool TimeSkillHoldInput { get; private set; }
 
     public bool DebugInput { get; private set; }
+    public bool DevInput { get; private set; }
     public bool InteractInput { get; private set; }
     public bool ESCInput { get; private set; }
 
@@ -46,9 +47,12 @@ public class PlayerInputHandler : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-        gameManager = GameManager.Instance;
+    }
 
+    private void Start()
+    {
         cam = Camera.main;
+        gameManager = GameManager.Instance;
     }
 
     private void Update()
@@ -96,6 +100,27 @@ public class PlayerInputHandler : MonoBehaviour
     public void UseESCInput() => ESCInput = false;
 
     #endregion
+
+    public void OnDevInput(InputAction.CallbackContext context)
+    {
+        if (gameManager.IsPaused)
+            return;
+
+        if (context.started)
+        {
+            DevInput = true;
+        }
+
+        if(context.canceled)
+        {
+            DevInput = false;
+        }
+    }
+
+    public void UseDevInput()
+    {
+        DevInput = false;
+    }
 
     public void OnDebugInput(InputAction.CallbackContext context)
     {

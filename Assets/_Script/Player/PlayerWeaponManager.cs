@@ -82,6 +82,7 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             AllEnergyMax();
             timeSkillManager.SetTimeEnergyMax();
+            stats.Health.Increase(50f);
         }
     }
 
