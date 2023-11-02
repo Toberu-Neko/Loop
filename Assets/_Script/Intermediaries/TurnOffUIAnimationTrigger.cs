@@ -22,7 +22,7 @@ public class TurnOffUIAnimationTrigger : MonoBehaviour
         if(Time.time > activeTime + 0.75f && !forceTurnOffUI)
         {
             forceTurnOffUI = true;
-            Debug.LogError("The turnoff ui bug.");
+            // Debug.LogError("The turnoff ui bug.");
             anim.SetBool("finishLoading", true);
         }
     }
