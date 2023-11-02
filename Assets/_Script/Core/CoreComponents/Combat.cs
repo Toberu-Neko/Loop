@@ -18,7 +18,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public List<IMapDamageableItem> DetectedMapDamageableItems { get; private set; } = new();
 
 
-    public bool PerfectBlockAllDir { get; private set; }
+    public bool PerfectBlockAllDir { get; private set; } = false;
     public bool PerfectBlock { get; private set; }
     private bool normalBlock;
 
@@ -78,7 +78,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         damagedThisFrame = false;
         PerfectBlock = false;
         normalBlock = false;
-        PerfectBlockAllDir = false;
 
         DetectedDamageables = new();
         DetectedKnockbackables = new();

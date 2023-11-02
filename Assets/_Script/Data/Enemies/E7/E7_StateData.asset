@@ -27,9 +27,9 @@ MonoBehaviour:
       m_Bits: 64
     bulletPrefab: {fileID: 8389792333474829002, guid: 9301c4eae8fbf7c42a4dcfa4d088a044, type: 3}
     cooldown: 0
-    aimTime: 1.2
-    freazeTime: 0.8
-    reloadTime: 2
+    aimTime: 0.4
+    freazeTime: 0.6
+    reloadTime: 1.5
     shakeCurve:
       serializedVersion: 2
       m_Curve:
@@ -38,35 +38,26 @@ MonoBehaviour:
         value: 0
         inSlope: 2
         outSlope: 2
-        tangentMode: 34
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0.33333334
+        outWeight: 0
       - serializedVersion: 3
-        time: 0.5
+        time: 1
         value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: -1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     aimColor:
       serializedVersion: 2
-      key0: {r: 0.38685048, g: 1, b: 0, a: 1}
-      key1: {r: 0.38685048, g: 1, b: 0, a: 1}
+      key0: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
+      key1: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -124,11 +115,11 @@ MonoBehaviour:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     bulletDetails:
-      duration: 10
+      duration: 3
       speed: 35
       combatDetails:
-        damageAmount: 5
+        damageAmount: 10
         staminaDamageAmount: 1
-        knockbackStrength: 5
-        knockbackAngle: {x: 0, y: 0}
+        knockbackStrength: 12
+        knockbackAngle: {x: 1, y: 1}
         blockable: 1

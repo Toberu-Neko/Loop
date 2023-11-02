@@ -37,6 +37,7 @@ public class Boss1 : BossBase
     [field: SerializeField] public Transform SkyTeleportPos { get; private set; }
     [field: SerializeField] public Transform GroundTeleportPos { get; private set; }
     [field: SerializeField] public BoxCollider2D BossRoomCollider { get; private set; }
+    [SerializeField] private GameObject exitTP;
 
     public override void Awake()
     {
@@ -66,6 +67,8 @@ public class Boss1 : BossBase
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);
         DeadState = new B1_DeadState(this, StateMachine, "dead", this);
+
+        exitTP.SetActive(false);
     }
     protected override void Start()
     {
@@ -85,6 +88,12 @@ public class Boss1 : BossBase
         Combat.OnGoToStunState += OnGotoStunState;
 
         StateMachine.OnChangeState += HandleChangeState;
+        OnAlreadyDefeated += HandleAlreadyDefeated;
+    }
+
+    private void HandleAlreadyDefeated()
+    {
+        exitTP.SetActive(true);
     }
 
     private void HandleChangeState()
@@ -114,6 +123,7 @@ public class Boss1 : BossBase
         Combat.OnGoToStunState -= OnGotoStunState;
 
         StateMachine.OnChangeState -= HandleChangeState;
+        OnAlreadyDefeated -= HandleAlreadyDefeated;
     }
 
     private void GotoKinematicState(float time)
@@ -147,7 +157,9 @@ public class Boss1 : BossBase
     {
         if (StateMachine.CurrentState == KinematicState)
             return;
+
         StateMachine.ChangeState(DeadState);
+        HandleAlreadyDefeated();
     }
 
     private new void HandleEnterBossRoom()

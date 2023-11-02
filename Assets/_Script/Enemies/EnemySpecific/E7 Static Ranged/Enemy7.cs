@@ -27,13 +27,13 @@ public class Enemy7 : Entity
         base.Start();
 
         movement.SetRBKinematic();
-        Combat.SetPerfectBlockAllDir(true);
         StateMachine.Initialize(IdleState);
     }
     protected override void OnEnable()
     {
         base.OnEnable();
 
+        Combat.SetPerfectBlockAllDir(true);
         Stats.Health.OnCurrentValueZero += HandleHealthZero;
     }
 

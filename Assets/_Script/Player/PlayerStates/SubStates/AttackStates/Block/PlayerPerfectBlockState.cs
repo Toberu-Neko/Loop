@@ -10,7 +10,6 @@ public class PlayerPerfectBlockState : PlayerAttackState
     {
         base.Enter();
 
-        player.InputHandler.UseBlockInput();
 
         Collider2D[] enemy = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemy);
 
@@ -33,10 +32,17 @@ public class PlayerPerfectBlockState : PlayerAttackState
     {
         base.LogicUpdate();
 
-        if(player.InputHandler.AttackInput || player.InputHandler.NormInputX != 0)
+        if(player.InputHandler.AttackInput || player.InputHandler.NormInputX != 0 || !player.InputHandler.BlockInput)
         {
             isAttackDone = true;
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        player.InputHandler.UseBlockInput();
     }
 
     public override void AnimationFinishTrigger()
