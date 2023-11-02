@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FourSkyAttackState : EnemySkyAttackBase
@@ -49,6 +47,17 @@ public class FourSkyAttackState : EnemySkyAttackBase
         attackPos[1] = (Vector2)playerPos.position + Vector2.left * stateData.attackDistance;
         attackPos[2] = (Vector2)playerPos.position + Vector2.one.normalized * stateData.attackDistance;
         attackPos[3] = (Vector2)playerPos.position + new Vector2(-1f, 1f).normalized * stateData.attackDistance;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        foreach (var item in projectiles)
+        {
+            if (item != null)
+                item.Rewind(false);
+        }
     }
 
     public override void LogicUpdate()
@@ -132,8 +141,6 @@ public class FourSkyAttackState : EnemySkyAttackBase
 
             }
         }
-
-
     }
 
     private void SpawnObj(int index)

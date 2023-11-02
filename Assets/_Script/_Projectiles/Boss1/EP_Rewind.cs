@@ -10,6 +10,7 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
     private GameObject bookmarkObj;
     private bool startRewind = false;
     private bool fire = false;
+    private float startRewindTime;
 
     public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
@@ -43,6 +44,7 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
             col.enabled = true;
             startRewind = true;
             HasHitGround = false;
+            startRewindTime = Time.time;
         }
         else
         {
@@ -107,6 +109,11 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
             movement.SetVelocity(speed * -fireDirection);
 
             if (Vector2.Distance((Vector2)transform.position, startPos) < 0.1f)
+            {
+                ReturnToPool();
+            }
+
+            if(startRewindTime >= Time.time + 3f)
             {
                 ReturnToPool();
             }

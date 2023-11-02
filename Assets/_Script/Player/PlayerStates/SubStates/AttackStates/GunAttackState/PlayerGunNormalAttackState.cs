@@ -60,7 +60,17 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
             player.WeaponManager.GunFiredRegenDelay();
 
             PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.WeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
-            ProjectileDetails details = data.normalAttackDetails;
+            ProjectileDetails details = new();
+            details.duration = data.normalAttackDetails.duration;
+            details.speed = data.normalAttackDetails.speed;
+            details.combatDetails = new();
+            details.combatDetails.damageAmount = data.normalAttackDetails.combatDetails.damageAmount * PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
+            details.combatDetails.staminaDamageAmount = data.normalAttackDetails.combatDetails.staminaDamageAmount;
+            details.combatDetails.knockbackStrength = data.normalAttackDetails.combatDetails.knockbackStrength;
+            details.combatDetails.knockbackAngle = data.normalAttackDetails.combatDetails.knockbackAngle;
+            details.combatDetails.blockable = data.normalAttackDetails.combatDetails.blockable;
+
+
             details.combatDetails.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
             proj.Fire(details, mouseDirectionInput);
         }

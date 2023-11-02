@@ -87,26 +87,12 @@ public class Boss1 : BossBase
         Combat.OnGoToKinematicState += GotoKinematicState;
         Combat.OnGoToStunState += OnGotoStunState;
 
-        StateMachine.OnChangeState += HandleChangeState;
         OnAlreadyDefeated += HandleAlreadyDefeated;
     }
 
     private void HandleAlreadyDefeated()
     {
         exitTP.SetActive(true);
-    }
-
-    private void HandleChangeState()
-    {
-        if(Stats.Health.CurrentValuePercentage <= 0.5f && !Stats.IsAngry && 
-            StateMachine.CurrentState != AngryState && 
-            StateMachine.CurrentState != BackToGroundState &&
-            StateMachine.CurrentState != KinematicState &&
-            StateMachine.CurrentState != StunState &&
-            StateMachine.CurrentState is not EnemyFlyingStateBase)
-        {
-            StateMachine.ChangeState(AngryState);
-        }
     }
 
     protected override void OnDisable()
@@ -122,7 +108,6 @@ public class Boss1 : BossBase
         Combat.OnGoToKinematicState -= GotoKinematicState;
         Combat.OnGoToStunState -= OnGotoStunState;
 
-        StateMachine.OnChangeState -= HandleChangeState;
         OnAlreadyDefeated -= HandleAlreadyDefeated;
     }
 

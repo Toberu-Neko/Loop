@@ -50,6 +50,18 @@ public class AbovePlayerAttackState : EnemySkyAttackBase
 
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+
+        foreach (var item in projectiles)
+        {
+            if(item != null)
+                item.Rewind(false);
+        }
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class B1_PlayerDetectedMoveState : PlayerDetectedMoveState
@@ -17,6 +18,11 @@ public class B1_PlayerDetectedMoveState : PlayerDetectedMoveState
         if (!isPlayerInMaxAgroRange)
         {
             Movement.Flip();
+        }
+
+        if (Stats.Health.CurrentValuePercentage <= 0.5f && !Stats.IsAngry)
+        {
+            stateMachine.ChangeState(boss.AngryState);
         }
 
         if (performCloseRangeAction && (boss.JumpAndMultiAttackState.CanChangeState() || boss.PerfectBlockState.CanChangeState()))
