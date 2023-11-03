@@ -262,7 +262,7 @@
                 {
                     "name": "",
                     "id": "93af27e8-07e2-47c9-82c6-7ad1ff489277",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -350,7 +350,7 @@
                 {
                     "name": "",
                     "id": "5c4d1daa-5210-4c2c-bda3-6f5a8e6d437f",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -372,7 +372,7 @@
                 {
                     "name": "",
                     "id": "599bbc77-8c1d-4637-86a5-2806fe8159e0",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -398,6 +398,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
+                    "action": "ChangeWeapon2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4ce6a628-f993-4214-b28e-17d71751d7d0",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "ChangeWeapon2",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -437,11 +448,33 @@
                 },
                 {
                     "name": "",
+                    "id": "0ff75d66-ee9c-47aa-986c-1387024f7d57",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "TimeSkill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "22a3c4c1-bb28-44cd-aa3c-b09b9bce559e",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
+                    "action": "PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ca7ff8ee-4bbb-4280-b848-a3fd64fdf653",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "PauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -459,11 +492,33 @@
                 },
                 {
                     "name": "",
+                    "id": "37bcbc6d-afcb-4be5-a737-b9d20a281b45",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6d1874a7-93d8-4224-ab1a-d08212d3efd1",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
+                    "action": "Regen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "33f95d7b-ace9-4c97-a5fc-2c92c2880913",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Regen",
                     "isComposite": false,
                     "isPartOfComposite": false
