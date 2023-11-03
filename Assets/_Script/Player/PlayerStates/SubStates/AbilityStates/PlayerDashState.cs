@@ -22,6 +22,8 @@ public class PlayerDashState : PlayerAbilityState
 
         StartTime = Time.time;
         Stats.SetInvincibleTrue();
+        Physics2D.IgnoreLayerCollision(7, 11, true);
+        Physics2D.IgnoreLayerCollision(7, 13, true);
         Movement.SetVelocityY(0f);
         Movement.SetRBKinematic();
         PlaceAfterImage();
@@ -38,6 +40,8 @@ public class PlayerDashState : PlayerAbilityState
         }
 
         Stats.SetInvincibleFalse();
+        Physics2D.IgnoreLayerCollision(7, 11, false);
+        Physics2D.IgnoreLayerCollision(7, 13, false);
         Movement.SetRBDynamic();
         player.RB.drag = 0f;
     }
