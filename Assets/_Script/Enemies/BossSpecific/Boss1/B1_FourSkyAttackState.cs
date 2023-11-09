@@ -11,6 +11,20 @@ public class B1_FourSkyAttackState : FourSkyAttackState
         this.boss = boss;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        boss.BossCam.SetLookatPlayer(true);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        boss.BossCam.SetLookatPlayer(false);
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

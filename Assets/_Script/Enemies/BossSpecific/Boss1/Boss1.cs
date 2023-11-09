@@ -38,6 +38,7 @@ public class Boss1 : BossBase
     [field: SerializeField] public Transform GroundTeleportPos { get; private set; }
     [field: SerializeField] public BoxCollider2D BossRoomCollider { get; private set; }
     [SerializeField] private GameObject exitTP;
+    [field: SerializeField] public BossRoomCamLookat BossCam { get; private set; }
 
     public override void Awake()
     {

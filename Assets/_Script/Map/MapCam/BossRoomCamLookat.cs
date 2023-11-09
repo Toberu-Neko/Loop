@@ -12,7 +12,17 @@ public class BossRoomCamLookat : MonoBehaviour
 
     private Vector2 workspace = new();
     private float orgFOV;
+    private bool lookatPlayer = false;
 
+    private void OnEnable()
+    {
+        lookatPlayer = false;
+    }
+
+    public void SetLookatPlayer(bool value)
+    {
+        lookatPlayer = value;
+    }
 
     private void Update()
     {
@@ -20,11 +30,18 @@ public class BossRoomCamLookat : MonoBehaviour
         {
             workspace = (player.position + boss.position) / 2;
 
-            transform.position = Vector2.Lerp(transform.position, workspace, Time.deltaTime * 2f);
+            if (lookatPlayer)
+            {
+                transform.position = Vector2.Lerp(transform.position, player.position, Time.deltaTime * 2f);
+            }
+            else
+            {
+                transform.position = Vector2.Lerp(transform.position, workspace, Time.deltaTime * 2f);
+            }
 
             if (changeFOV)
             {
-                if (Vector2.Distance(player.position, boss.position) < mivFOVDistance)
+                if (Vector2.Distance(player.position, boss.position) < mivFOVDistance || lookatPlayer)
                 {
                     CamManager.Instance.CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CamManager.Instance.CurrentCam.m_Lens.FieldOfView, orgFOV, Time.deltaTime * 2f);
                 }
