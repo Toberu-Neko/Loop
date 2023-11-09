@@ -296,6 +296,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6616668798133203118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1637128936980569790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5527648082905954396}
+  m_Layer: 11
+  m_Name: DamageNumPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5527648082905954396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637128936980569790}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5983566837817423622}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2016422953751678849
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,6 +637,7 @@ GameObject:
   - component: {fileID: 6514876414037765179}
   - component: {fileID: 2210357719243484920}
   - component: {fileID: 5406705854469219225}
+  - component: {fileID: 3849086067660992117}
   m_Layer: 11
   m_Name: Combat
   m_TagString: Untagged
@@ -625,7 +657,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5527648082905954396}
   m_Father: {fileID: 6317694935012530758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8151573326504845291
@@ -709,6 +742,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517c84bbffe5bd14e9fac4ab71c866f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3849086067660992117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4295136773307901466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 062ac63d1966acb4780f9960d025922c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageNumberPrefab: {fileID: 2512107021460781100, guid: f71f2c35cba85ee49839f1916ad3491e, type: 3}
+  spawnPoint: {fileID: 5527648082905954396}
 --- !u!1 &4527020440722873108
 GameObject:
   m_ObjectHideFlags: 0

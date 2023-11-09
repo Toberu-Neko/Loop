@@ -11,12 +11,14 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
     private bool startRewind = false;
     private bool fire = false;
     private float startRewindTime;
+    private bool interacted;
 
     public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
         base.Fire(fireDirection, speed, details);
 
         fire = true;
+        interacted = false;
         if (HasHitGround)
         {
             HasHitGround = false;
@@ -41,6 +43,7 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
 
         if (doRewind)
         {
+            interacted = false;
             col.enabled = true;
             startRewind = true;
             HasHitGround = false;
@@ -161,6 +164,10 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
 
     private void HandleHitTarget(Collider2D collider)
     {
+        if(interacted)
+            return;
+
+        interacted = true;
         if (collider.TryGetComponent(out IDamageable damageable))
         {
             damageable.Damage(details.combatDetails.damageAmount, transform.position, details.combatDetails.blockable);

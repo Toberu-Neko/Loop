@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Death : CoreComponent
 {
+    public bool IsDead { get; private set; }
+
     private GameObject[] deathParticles;
     public event Action OnDeath;
 
@@ -15,13 +17,25 @@ public class Death : CoreComponent
         particleManager = core.GetCoreComponent<ParticleManager>();
     }
 
+    private void OnEnable()
+    {
+        IsDead = false;
+    }
+
     private void Start()
     {
         deathParticles = core.CoreData.deathParticles;
     }
 
+
     public void Die()
     {
+        if (IsDead)
+        {
+            Debug.LogError("Trying to kill a dead object");
+            return;
+        }
+        IsDead = true;
         OnDeath?.Invoke();
 
         foreach (var particle in deathParticles)

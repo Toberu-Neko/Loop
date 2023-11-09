@@ -35,6 +35,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     // events
     public event Action OnPerfectBlock;
     public event Action OnDamaged;
+    public event Action<float> OnDamageAmount;
     public event Action OnKnockback;
     public event Action OnStaminaDamaged;
     public event Action<float> OnGoToKinematicState;
@@ -275,6 +276,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         }
 
         OnDamaged?.Invoke();
+        OnDamageAmount?.Invoke(damageAmount);
 
         if (damageAmount > 0)
         {

@@ -20102,6 +20102,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458188472}
   m_CullTransparentMesh: 1
+--- !u!1 &1461203471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1461203472}
+  m_Layer: 7
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1461203472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461203471}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.99, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1779046443}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1469280332
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24212,6 +24243,7 @@ GameObject:
   - component: {fileID: 1779046443}
   - component: {fileID: 1779046445}
   - component: {fileID: 1779046444}
+  - component: {fileID: 1779046446}
   m_Layer: 7
   m_Name: Combat
   m_TagString: Untagged
@@ -24231,7 +24263,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1461203472}
   m_Father: {fileID: 1125877909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1779046444
@@ -24291,6 +24324,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa1d21cd18dc704bb3f108543735945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1779046446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779046442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 062ac63d1966acb4780f9960d025922c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageNumberPrefab: {fileID: 2512107021460781100, guid: f71f2c35cba85ee49839f1916ad3491e, type: 3}
+  spawnPoint: {fileID: 1461203472}
 --- !u!61 &1780665088 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 8562314457922098895, guid: 06235240d8c80eb498a872b053458df8, type: 3}
