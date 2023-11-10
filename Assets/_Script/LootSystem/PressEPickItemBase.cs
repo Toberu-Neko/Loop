@@ -4,7 +4,7 @@ using UnityEngine;
 public class PressEPickItemBase : DropableItemBase
 {
     [SerializeField] private GameObject pickUpText;
-    [field: SerializeField] public bool PressE { get; private set; } = 
+    [field: SerializeField] public bool PressE { get; private set; } = false;
 
     private PlayerInputHandler inputHandler;
     private bool inRange;
