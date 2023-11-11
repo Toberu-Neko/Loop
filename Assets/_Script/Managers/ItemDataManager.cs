@@ -66,3 +66,14 @@ public class ItemDataManager : MonoBehaviour
         }
     }
 }
+
+public enum ItemType
+{
+    Chip,
+    MovementSkill,
+    TimeSkill,
+    StatusEnhancement,
+    StoryItem,
+    ConsumableItem,
+    WeaponItem
+}
