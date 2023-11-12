@@ -32,10 +32,9 @@ public class DamageNumber : CoreComponent
     {
         if(amount <= 0 || death.IsDead)
         {
-            Debug.Log("No damage to show");
             return;
         }
-        Debug.Log("Showing damage number" + spawnPoint.position);
+
         GameObject obj = ObjectPoolManager.SpawnObject(damageNumberPrefab, spawnPoint.position, Quaternion.identity, ObjectPoolManager.PoolType.GameObjects);
         obj.GetComponent<DamageNum>().Init(amount);
     }

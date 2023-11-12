@@ -22,7 +22,7 @@ public class PickupItem : PressEPickItemBase
 
     private void HandlePickUp()
     {
-        UI_Manager.Instance.ActivePickupItemUI(itemSO.displayName, itemSO.itemDescription);
+        UI_Manager.Instance.ActivatePickupItemUIHUD(itemSO.displayName, itemSO.itemDescription);
 
         if(itemSO is SO_Chip)
         {
@@ -40,8 +40,6 @@ public class PickupItem : PressEPickItemBase
         {
             Debug.LogError("This item should not be added by this script.");
         }
-
-
 
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }

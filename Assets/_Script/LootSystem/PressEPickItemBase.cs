@@ -39,11 +39,18 @@ public class PressEPickItemBase : DropableItemBase
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (inputHandler == null)
-                inputHandler = collision.GetComponent<PlayerInputHandler>();
+            if (PressE)
+            {
+                if (inputHandler == null)
+                    inputHandler = collision.GetComponent<PlayerInputHandler>();
 
-            pickUpText.SetActive(true);
-            inRange = true;
+                pickUpText.SetActive(true);
+                inRange = true;
+            }
+            else
+            {
+                OnItemPicked?.Invoke();
+            }
         }
     }
 
