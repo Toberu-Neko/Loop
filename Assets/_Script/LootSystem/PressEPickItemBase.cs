@@ -4,6 +4,7 @@ using UnityEngine;
 public class PressEPickItemBase : DropableItemBase
 {
     [SerializeField] private GameObject pickUpText;
+    [field: SerializeField] public bool PressE { get; private set; } = false;
 
     private PlayerInputHandler inputHandler;
     private bool inRange;
@@ -38,11 +39,18 @@ public class PressEPickItemBase : DropableItemBase
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (inputHandler == null)
-                inputHandler = collision.GetComponent<PlayerInputHandler>();
+            if (PressE)
+            {
+                if (inputHandler == null)
+                    inputHandler = collision.GetComponent<PlayerInputHandler>();
 
-            pickUpText.SetActive(true);
-            inRange = true;
+                pickUpText.SetActive(true);
+                inRange = true;
+            }
+            else
+            {
+                OnItemPicked?.Invoke();
+            }
         }
     }
 

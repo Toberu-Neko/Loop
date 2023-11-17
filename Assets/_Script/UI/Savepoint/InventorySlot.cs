@@ -22,8 +22,6 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public int Count { get; private set; }
 
-    
-
     private void Awake()
     {
         draggableItems = new();

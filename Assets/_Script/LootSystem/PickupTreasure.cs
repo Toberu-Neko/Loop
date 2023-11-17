@@ -10,39 +10,7 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
     public string ID;
 
     [Header("Treasure Data")]
-    [SerializeField] private TreasureType treasureType;
-
-    [Header("Chip")]
-    [SerializeField] private SO_Chip chip;
-
-    [Header("StoryItem")]
-    [SerializeField] private SO_StoryItem storyItem;
-
-    [Header("PlayerStatusEnhancement")]
-    [SerializeField] private SO_PlayerStatusEnhancement playerStatusEnhancement;
-
-    [Header("Skill")]
-    [SerializeField] private SO_TimeSkillItem timeSkills;
-
-    [Header("Movement")]
-    [SerializeField] private SO_MovementSkillItem movementSkills;
-
-    [Header("Consumable")]
-    [SerializeField] private SO_ConsumeableItem consumeableItem;
-
-    [Header("Weapon")]
-    [SerializeField] private SO_WeaponItem weaponItem;
-
-    public enum TreasureType
-    {
-        Chip,
-        PlayerStatusEnhancement,
-        StoryItem,
-        Movement,
-        TimeSkill,
-        Weapon,
-        Consumable
-    }
+    [SerializeField] private SO_ItemsBase treasureData;
 
     private bool ispicked;
     private PlayerWeaponManager playerWeaponManager;
@@ -72,75 +40,83 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
 
         OnItemPicked -= HandlePickUp;
     }
+    
+    private void EquipWeapon(SO_WeaponItem item)
+    {
+        if(item.unlockFist && item.unlockGun && item.unlockSword)
+        {
+            playerWeaponManager.EquipWeapon(WeaponType.Sword);
+            PlayerInventoryManager.Instance.ChangeEquipWeapon1(WeaponType.Sword);
+            PlayerInventoryManager.Instance.ChangeEquipWeapon2(WeaponType.Gun);
+            return;
+        }
+
+        if (PlayerInventoryManager.Instance.CanUseWeaponCount == 1)
+        {
+            if (item.unlockGun)
+            {
+                playerWeaponManager.EquipWeapon(WeaponType.Gun);
+                PlayerInventoryManager.Instance.ChangeEquipWeapon1(WeaponType.Gun);
+            }
+            if (item.unlockSword)
+            {
+                playerWeaponManager.EquipWeapon(WeaponType.Sword);
+                PlayerInventoryManager.Instance.ChangeEquipWeapon1(WeaponType.Sword);
+            }
+            if (item.unlockFist)
+            {
+                playerWeaponManager.EquipWeapon(WeaponType.Fist);
+                PlayerInventoryManager.Instance.ChangeEquipWeapon1(WeaponType.Fist);
+            }
+        }
+
+        if (PlayerInventoryManager.Instance.CanUseWeaponCount == 2)
+        {
+            if (item.unlockGun)
+            {
+                PlayerInventoryManager.Instance.ChangeEquipWeapon2(WeaponType.Gun);
+            }
+            if (item.unlockSword)
+            {
+                PlayerInventoryManager.Instance.ChangeEquipWeapon2(WeaponType.Sword);
+            }
+            if (item.unlockFist)
+            {
+                PlayerInventoryManager.Instance.ChangeEquipWeapon2(WeaponType.Fist);
+            }
+        }
+    }
 
     private void HandlePickUp()
     {
-        switch(treasureType)
+        switch (treasureData)
         {
-            case TreasureType.Chip:
-                PlayerInventoryManager.Instance.AddChip(chip.itemName);
-                UI_Manager.Instance.ActivePickupItemUI(chip.displayName, chip.itemDescription);
+            case SO_Chip:
+                PlayerInventoryManager.Instance.AddChip(treasureData.itemName);
                 break;
-            case TreasureType.StoryItem:
-                PlayerInventoryManager.Instance.AddStoryItem(storyItem.itemName);
-                UI_Manager.Instance.ActivePickupItemUI(storyItem.displayName, storyItem.itemDescription);
+            case SO_ConsumeableItem:
+                PlayerInventoryManager.Instance.AddConsumableItem(treasureData.itemName);
                 break;
-            case TreasureType.Movement:
-                PlayerInventoryManager.Instance.AddMovemnetSkillItem(movementSkills.itemName);
-                UI_Manager.Instance.ActivePickupItemUI(movementSkills.displayName, movementSkills.itemDescription);
+            case SO_PlayerStatusEnhancement:
+                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(treasureData.itemName);
                 break;
-            case TreasureType.TimeSkill:
-                PlayerInventoryManager.Instance.AddTimeSkillItem(timeSkills.itemName);
-                UI_Manager.Instance.ActivePickupItemUI(timeSkills.displayName, timeSkills.itemDescription);
+            case SO_StoryItem:
+                PlayerInventoryManager.Instance.AddStoryItem(treasureData.itemName);
                 break;
-            case TreasureType.PlayerStatusEnhancement:
-                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(playerStatusEnhancement.itemName);
-                UI_Manager.Instance.ActivePickupItemUI(playerStatusEnhancement.displayName, playerStatusEnhancement.itemDescription);
+            case SO_TimeSkillItem:
+                PlayerInventoryManager.Instance.AddTimeSkillItem(treasureData.itemName);
                 break;
-            case TreasureType.Consumable:
-                PlayerInventoryManager.Instance.AddConsumableItem(consumeableItem.itemName);
-                UI_Manager.Instance.ActivePickupItemUI(consumeableItem.displayName, consumeableItem.itemDescription);
+            case SO_MovementSkillItem:
+                PlayerInventoryManager.Instance.AddMovemnetSkillItem(treasureData.itemName);
                 break;
-            case TreasureType.Weapon:
-                PlayerInventoryManager.Instance.AddWeaponItem(weaponItem.itemName);
-                UI_Manager.Instance.ActivePickupItemUI(weaponItem.displayName, weaponItem.itemDescription);
-
-                if(PlayerInventoryManager.Instance.CanUseWeaponCount == 1)
-                {
-                    if (weaponItem.unlockGun)
-                    {
-                        playerWeaponManager.EquipWeapon(WeaponType.Gun);
-                        PlayerInventoryManager.Instance.ChangeEquipWeapon1(WeaponType.Gun);
-                    }
-                    if(weaponItem.unlockSword)
-                    {
-                        playerWeaponManager.EquipWeapon(WeaponType.Sword);
-                        PlayerInventoryManager.Instance.ChangeEquipWeapon1(WeaponType.Sword);
-                    }
-                    if(weaponItem.unlockFist)
-                    {
-                        playerWeaponManager.EquipWeapon(WeaponType.Fist);
-                        PlayerInventoryManager.Instance.ChangeEquipWeapon1(WeaponType.Fist);
-                    }
-                }
-
-                if(PlayerInventoryManager.Instance.CanUseWeaponCount == 2)
-                {
-                    if (weaponItem.unlockGun)
-                    {
-                        PlayerInventoryManager.Instance.ChangeEquipWeapon2(WeaponType.Gun);
-                    }
-                    if (weaponItem.unlockSword)
-                    {
-                        PlayerInventoryManager.Instance.ChangeEquipWeapon2(WeaponType.Sword);
-                    }
-                    if (weaponItem.unlockFist)
-                    {
-                        PlayerInventoryManager.Instance.ChangeEquipWeapon2(WeaponType.Fist);
-                    }
-                }
+            case SO_WeaponItem:
+                PlayerInventoryManager.Instance.AddWeaponItem(treasureData.itemName);
+                SO_WeaponItem item = (SO_WeaponItem)treasureData;
+                EquipWeapon(item);
                 break;
         }
+
+        UI_Manager.Instance.ActivePickupItemUI(treasureData.displayName, treasureData.itemDescription);
 
         ispicked = true;
         gameObject.SetActive(false);
@@ -151,7 +127,7 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
     {
         base.OnTriggerEnter2D(collision);
 
-        if(treasureType == TreasureType.Weapon)
+        if(treasureData is SO_WeaponItem)
         {
             if (collision.CompareTag("Player"))
             {
@@ -180,58 +156,3 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
         }
     }
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(PickupTreasure))]
-public class PickupTreasureEditor : Editor
-{
-    PickupTreasure treasure;
-
-    private void OnEnable()
-    {
-        treasure = (PickupTreasure)target;
-    }
-
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        /*
-        so.treasureType = (SO_Treasure.TreasureType) EditorGUILayout.EnumPopup("Treasure Type", so.treasureType);
-
-        if(so.treasureType == SO_Treasure.TreasureType.Chip)
-        {
-            EditorGUILayout.LabelField("Chip", EditorStyles.boldLabel);
-            so.chip = (SO_Chip)EditorGUILayout.ObjectField("Chip", so.chip, typeof(SO_Chip), true);
-        }
-
-        if (so.treasureType == SO_Treasure.TreasureType.StoryItem)
-        {
-            EditorGUILayout.LabelField("Story Item", EditorStyles.boldLabel);
-            so.storyItem = (SO_StoryItem)EditorGUILayout.ObjectField("Story Item", so.storyItem, typeof(SO_StoryItem), true);
-        }
-
-        if (so.treasureType == SO_Treasure.TreasureType.PlayerStatusEnhancement)
-        {
-            EditorGUILayout.LabelField("Player Status Enhancement", EditorStyles.boldLabel);
-            so.playerStatusEnhancement = (SO_PlayerStatusEnhancement)EditorGUILayout.ObjectField("Player Status Enhancement", so.playerStatusEnhancement, typeof(SO_PlayerStatusEnhancement), true);
-        }
-
-        if (so.treasureType == SO_Treasure.TreasureType.TimeSkill)
-        {
-            EditorGUILayout.LabelField("Time Skill", EditorStyles.boldLabel);
-            so.timeSkills = (SO_TimeSkillItem)EditorGUILayout.ObjectField("Time Skill", so.timeSkills, typeof(SO_TimeSkillItem), true);
-        }
-
-        if (so.treasureType == SO_Treasure.TreasureType.Movement)
-        {
-            EditorGUILayout.LabelField("Movement", EditorStyles.boldLabel);
-            so.movementSkills = (SO_MovementSkillItem)EditorGUILayout.ObjectField("Movement", so.movementSkills, typeof(SO_MovementSkillItem), true);
-        }
-        */
-
-        if (GUI.changed)
-            EditorUtility.SetDirty(treasure);
-    }
-}
-#endif

@@ -4,10 +4,12 @@ public class PauseUIMain : MonoBehaviour
 {
     [SerializeField] private GameObject pauseUIObj;
     [SerializeField] private TutorialMenu tutorialMenu;
+    [SerializeField] private PauseInventoryMain pauseInventoryMain;
 
     private void Awake()
     {
         tutorialMenu.gameObject.SetActive(false);
+        pauseInventoryMain.gameObject.SetActive(false);
     }
 
     public void OnClickResumeButton()
@@ -33,6 +35,12 @@ public class PauseUIMain : MonoBehaviour
         tutorialMenu.Activate();
     }
 
+    public void OnClickInventoryButton()
+    {
+        DeactivateMenu();
+        pauseInventoryMain.Activate();
+    }
+
     public void ActivateMenu(bool init = false)
     {
         if(init)
@@ -53,6 +61,7 @@ public class PauseUIMain : MonoBehaviour
         GameManager.Instance.ResumeGame();
         pauseUIObj.SetActive(false);
         tutorialMenu.Deactivate();
+        pauseInventoryMain.Deactivate();
         DeactivateMenu();
     }
 

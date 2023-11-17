@@ -162,15 +162,11 @@ public class Stats : CoreComponent
     private void SetInvincibleAfterDamageTrue()
     {
         InvinvibleAfterDamaged = true;
-        Physics2D.IgnoreLayerCollision(7, 11, true);
-        Physics2D.IgnoreLayerCollision(7, 13, true);
     }
 
     private void SetInvincibleAfterDamageFalse()
     {
         InvinvibleAfterDamaged = false;
-        Physics2D.IgnoreLayerCollision(7, 11, false);
-        Physics2D.IgnoreLayerCollision(7, 13, false);
     }
     #endregion
 

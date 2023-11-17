@@ -31,7 +31,8 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject savepointUIInventoryObj;
     [SerializeField] private GameObject savepointUITeleportObj;
 
-    [Header("Boss Fight UI")]
+    [Header("HUD")]
+    [SerializeField] private PickupHUD pickupHUD;
     [SerializeField] private GameObject bossFightUIObj;
     private BossFightUI bossFightUI;
 
@@ -150,6 +151,11 @@ public class UI_Manager : MonoBehaviour
     public void ActivePickupItemUI(string name, string description)
     {
         pickUpItemUI.Active(name, description);
+    }
+
+    public void ActivatePickupItemUIHUD(string name, string description)
+    {
+        pickupHUD.AddToQueue(name, description);
     }
 
     private void OpenPauseMainUI()

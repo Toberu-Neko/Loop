@@ -22,7 +22,7 @@ public class PlayerDashState : PlayerAbilityState
 
         StartTime = Time.time;
         Stats.SetInvincibleTrue();
-        Physics2D.IgnoreLayerCollision(7, 11, true);
+
         Physics2D.IgnoreLayerCollision(7, 13, true);
         Movement.SetVelocityY(0f);
         Movement.SetRBKinematic();
@@ -40,7 +40,7 @@ public class PlayerDashState : PlayerAbilityState
         }
 
         Stats.SetInvincibleFalse();
-        Physics2D.IgnoreLayerCollision(7, 11, false);
+
         Physics2D.IgnoreLayerCollision(7, 13, false);
         Movement.SetRBDynamic();
         player.RB.drag = 0f;
@@ -50,7 +50,7 @@ public class PlayerDashState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        if (CollisionSenses.CanChangeCollider && !CollisionSenses.UnclimbableWallFront)
+        if (CollisionSenses.CanDash)
         {
             Movement.SetVelocityX(playerData.dashVelocity * Movement.FacingDirection);
         }

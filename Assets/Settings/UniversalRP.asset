@@ -17,7 +17,7 @@ MonoBehaviour:
   m_RendererType: 1
   m_RendererData: {fileID: 0}
   m_RendererDataList:
-  - {fileID: 11400000, guid: 78b683c521583cc4988707c65bdd9172, type: 2}
+  - {fileID: 11400000, guid: 424799608f7334c24bf367e4bbfa7f9a, type: 2}
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 0
   m_RequireOpaqueTexture: 1
@@ -82,8 +82,8 @@ MonoBehaviour:
   m_Textures:
     blueNoise64LTex: {fileID: 2800000, guid: e3d24661c1e055f45a7560c033dbb837, type: 3}
     bayerMatrixTex: {fileID: 2800000, guid: f9ee4ed84c1d10c49aabb9b210b0fc44, type: 3}
-  m_PrefilteringModeMainLightShadows: 4
-  m_PrefilteringModeAdditionalLight: 4
+  m_PrefilteringModeMainLightShadows: 3
+  m_PrefilteringModeAdditionalLight: 3
   m_PrefilteringModeAdditionalLightShadows: 0
   m_PrefilterXRKeywords: 1
   m_PrefilteringModeForwardPlus: 0
@@ -104,6 +104,10 @@ MonoBehaviour:
   m_PrefilterDBufferMRT1: 1
   m_PrefilterDBufferMRT2: 1
   m_PrefilterDBufferMRT3: 1
+  m_PrefilterSoftShadowsQualityLow: 1
+  m_PrefilterSoftShadowsQualityMedium: 1
+  m_PrefilterSoftShadowsQualityHigh: 1
+  m_PrefilterSoftShadows: 0
   m_PrefilterScreenCoord: 1
   m_PrefilterNativeRenderPass: 1
   m_ShaderVariantLogLevel: 0
