@@ -29,6 +29,11 @@ public class Entity : MonoBehaviour
         Combat = Core.GetCoreComponent<Combat>();
 
         Anim = GetComponent<Animator>();
+        if(Anim == null)
+        {
+            Anim = GetComponentInChildren<Animator>();
+        }
+
         collisionAttackDetails = EntityData.collisionAttackDetails;
 
         movement.OrginalGravityScale = EntityData.gravityScale;
