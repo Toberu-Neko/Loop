@@ -4,7 +4,7 @@ using System;
 
 public class Entity : MonoBehaviour
 {
-    public EnemyStateMachine StateMachine { get; private set; }
+    [field: SerializeField] public EnemyStateMachine StateMachine { get; private set; }
     [SerializeField] private D_Entity EntityData;
     [SerializeField] private SpriteRenderer spriteRenderer;
 

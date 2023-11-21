@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public class EnemyStateMachine
 {
     public EnemyState CurrentState { get; private set; }
     public EnemyState PreviousState { get; private set; }
     public event Action OnChangeState;
     private bool canChangeState = true;
-
+    [SerializeField] private bool debugCanChangeState = true;
     public void Initialize(EnemyState startingState)
     {
         CurrentState = startingState;
@@ -17,7 +18,7 @@ public class EnemyStateMachine
 
     public void ChangeState(EnemyState newState)
     {
-        if (canChangeState)
+        if (canChangeState && debugCanChangeState)
         {
             if(CurrentState == null)
             {
