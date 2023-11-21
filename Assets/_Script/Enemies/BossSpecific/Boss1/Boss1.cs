@@ -55,8 +55,8 @@ public class Boss1 : BossBase
         BackToGroundState = new B1_BackToGroundState(this, StateMachine, "backToGround", StateData.backToIdleStateData, this);
 
         ChooseRandomBulletState = new B1_ChooseRandomBulletState(this, StateMachine, "chooseRandomBullet", StateData.chooseRandomBulletStateData, this);
-        BlueRangedAttackState = new B1_RangedAttackState(this, StateMachine, "blueRangedAttack", rangedAttackPosition, StateData.blueRangedAttackStateData, this);
-        RedRangedAttackState = new B1_RangedAttackState(this, StateMachine, "redRangedAttack", rangedAttackPosition, StateData.redRangedAttackStateData, this);
+        BlueRangedAttackState = new B1_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, StateData.blueRangedAttackStateData, this);
+        RedRangedAttackState = new B1_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, StateData.redRangedAttackStateData, this);
 
         PerfectBlockState = new B1_EnemyPerfectBlockState(this, StateMachine, "perfectBlock", StateData.perfectBlockStateData, this);
         CounterAttackState = new B1_CounterAttackState(this, StateMachine, "counterAttack", this);
