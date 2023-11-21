@@ -10,10 +10,13 @@ public class B1_JumpAndMultiAttackState : JumpAndMultiAttackState
         this.boss = boss;
     }
 
-    public override void AnimationFinishTrigger()
+    public override void LogicUpdate()
     {
-        base.AnimationFinishTrigger();
+        base.LogicUpdate();
 
-        stateMachine.ChangeState(boss.PlayerDetectedMoveState);
+        if(isAnimationFinished && CollisionSenses.Ground)
+        {
+            stateMachine.ChangeState(boss.AfterMultiAttackState);
+        }
     }
 }

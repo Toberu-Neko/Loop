@@ -59,6 +59,11 @@ public class JumpAndMultiAttackState : EnemyState
         }
     }
 
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+    }
+
     private void ShootBullet()
     {
         int index = Random.Range(0, stateData.bullets.Length);

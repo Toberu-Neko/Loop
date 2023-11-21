@@ -44,6 +44,7 @@ public class EnemyState
     {
         StartTime = Time.time;
         entity.Anim.SetBool(animBoolName, true);
+        isAnimationFinished = false;
 
         DoChecks();
     }
