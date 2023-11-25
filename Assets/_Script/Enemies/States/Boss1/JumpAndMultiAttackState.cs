@@ -72,8 +72,8 @@ public class JumpAndMultiAttackState : EnemyState
 
         Vector2 shootAngle = new(Random.Range(0.1f, 0.94f) * Movement.FacingDirection, Random.Range(-0.25f, -0.19f));
 
-        projectileScript.Init(shootAngle.normalized, stateData.bullets[index].details.speed, stateData.bullets[index].details);
-        projectileScript.Fire();
+        projectileScript.Init(stateData.bullets[index].details.speed, stateData.bullets[index].details);
+        projectileScript.Fire(shootAngle.normalized);
     }
 
     public bool CanChangeState()

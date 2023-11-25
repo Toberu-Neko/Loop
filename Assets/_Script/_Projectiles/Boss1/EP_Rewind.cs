@@ -13,9 +13,9 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
     private float startRewindTime;
     private bool interacted;
 
-    public override void Fire()
+    public override void Fire(Vector2 fireDirection)
     {
-        base.Fire();
+        base.Fire(fireDirection);
 
         fire = true;
         interacted = false;

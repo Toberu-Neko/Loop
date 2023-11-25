@@ -21,8 +21,8 @@ public class TDP_DropTrap : TempDataPersist_MapObjBase
 
             IFireable fireable = obj.GetComponent<IFireable>();
 
-            fireable.Init(Vector2.down, details.speed, details);
-            fireable.Fire();
+            fireable.Init(details.speed, details);
+            fireable.Fire(Vector2.down);
             gameObject.SetActive(false);
         }
     }

@@ -84,9 +84,9 @@ public class EnemyProjectile_Damage : EnemyProjectile_Base
         base.FixedUpdate();
     }
 
-    public override void Fire()
+    public override void Fire(Vector2 fireDirection)
     {
-        base.Fire();
+        base.Fire(fireDirection);
     }
 
     public override void HandlePerfectBlock()

@@ -112,9 +112,9 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
         base.FixedUpdate();
     }
 
-    public override void Fire()
+    public override void Fire(Vector2 fireDir)
     {
-        base.Fire();
+        base.Fire(fireDir);
     }
 
     public override void HandlePerfectBlock()

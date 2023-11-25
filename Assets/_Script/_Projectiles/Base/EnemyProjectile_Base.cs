@@ -63,21 +63,23 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         {
             startTime = stats.Timer(startTime);
             movement.SetVelocity(speed, fireDirection);
+            if (Time.time >= startTime + details.duration)
+            {
+                HandleDuration();
+            }
         }
         if (movementType == MovementType.Counter)
         {
             startTime = stats.Timer(startTime);
             movement.SetVelocity(counterVelocity);
+            if (Time.time >= startTime + details.duration)
+            {
+                HandleDuration();
+            }
         }
         if (movementType == MovementType.Hitted)
         {
             movement.SetVelocityZero();
-        }
-
-
-        if(Time.time >= startTime + details.duration)
-        {
-            HandleDuration();
         }
     }
 
@@ -109,7 +111,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
     protected virtual void OnDisable()
     {
-        anim.SetBool("timeSlow", false);
+        // anim.SetBool("timeSlow", false);
 
         stats.OnTimeStopStart -= HandleChangeAnimSlow;
         stats.OnTimeStopEnd -= HandleChangeAnimOrigin;
@@ -119,22 +121,23 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
     private void HandleChangeAnimSlow()
     {
-        anim.SetBool("timeSlow", true);
+        // anim.SetBool("timeSlow", true);
     }
 
     private void HandleChangeAnimOrigin()
     {
-        anim.SetBool("timeSlow", false);
+        // anim.SetBool("timeSlow", false);
     }
 
-    public virtual void Init(Vector2 fireDirection, float speed, ProjectileDetails details)
+    public virtual void Init(float speed, ProjectileDetails details)
     {
-        this.fireDirection = fireDirection;
         this.speed = speed;
         this.details = details;
+        movementType = MovementType.Idle;
     }
-    public virtual void Fire()
+    public virtual void Fire(Vector2 fireDirection)
     {
+        this.fireDirection = fireDirection;
         movementType = MovementType.Move;
         whatIsTargetLayer = whatIsPlayer;
         startPos = transform.position;
@@ -153,7 +156,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
     public virtual void Knockback(Vector2 angle, float force, Vector2 damagePosition, bool blockable = true)
     {
-        if ((stats.IsTimeStopped || stats.IsTimeSlowed) && !countered && !interected)
+        if ((stats.IsTimeStopped || stats.IsTimeSlowed) && movementType == MovementType.Move)
         {
             CamManager.Instance.CameraShake(2.5f);
             countered = true;

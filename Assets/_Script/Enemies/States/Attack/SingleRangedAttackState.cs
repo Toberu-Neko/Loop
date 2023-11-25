@@ -5,6 +5,7 @@ using UnityEngine;
 public class SingleRangedAttackState : AttackState
 {
     private ED_EnemyRangedAttackState stateData;
+    private IFireable fireable;
 
     public SingleRangedAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemyRangedAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
@@ -14,20 +15,49 @@ public class SingleRangedAttackState : AttackState
     {
         base.AnimationActionTrigger();
 
-        GameObject projectile = ObjectPoolManager.SpawnObject(stateData.projectile, attackPosition.position, attackPosition.rotation, ObjectPoolManager.PoolType.Projectiles);
-        IFireable projectileScript = projectile.GetComponent<IFireable>();
-
-        if (CheckPlayerSenses.IsPlayerInMaxAgroRange && stateData.aimPlayer)
+        if(fireable == null)
         {
-            Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPosition.position;
-            projectileScript.Init(delta.normalized, stateData.projectileDetails.speed, stateData.projectileDetails);
-            projectileScript.Fire();
+            GameObject projectile = ObjectPoolManager.SpawnObject(stateData.projectile, attackPosition.position, attackPosition.rotation, ObjectPoolManager.PoolType.Projectiles);
+            fireable = projectile.GetComponent<IFireable>();
+
+            if (CheckPlayerSenses.IsPlayerInMaxAgroRange && stateData.aimPlayer)
+            {
+                Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPosition.position;
+                fireable.Init(stateData.projectileDetails.speed, stateData.projectileDetails);
+                fireable.Fire(delta.normalized);
+            }
+            else
+            {
+                fireable.Init(stateData.projectileDetails.speed, stateData.projectileDetails);
+                fireable.Fire(Movement.ParentTransform.right);
+            }
         }
         else
         {
-            projectileScript.Init(Movement.ParentTransform.right, stateData.projectileDetails.speed, stateData.projectileDetails);
-            projectileScript.Fire();
+            if (CheckPlayerSenses.IsPlayerInMaxAgroRange && stateData.aimPlayer)
+            {
+                Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPosition.position;
+                fireable.Init(stateData.projectileDetails.speed, stateData.projectileDetails);
+                fireable.Fire(delta);
+            }
+            else
+            {
+                fireable.Init(stateData.projectileDetails.speed, stateData.projectileDetails);
+                fireable.Fire(Movement.ParentTransform.right);
+            }
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        fireable = null;
+    }
+
+    public void SetFireable(IFireable fireable)
+    {
+        this.fireable = fireable;
     }
 
     public bool CheckCanAttack()

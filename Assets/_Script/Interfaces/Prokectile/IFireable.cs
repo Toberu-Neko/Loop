@@ -4,8 +4,8 @@ using UnityEngine;
 
 public interface IFireable
 {
-    void Init(Vector2 fireDirection, float speed, ProjectileDetails details);
-    void Fire();
+    void Init(float speed, ProjectileDetails details);
+    void Fire(Vector2 fireDirection);
 
 
     void HandlePerfectBlock();

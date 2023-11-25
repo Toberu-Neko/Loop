@@ -39,7 +39,7 @@ MonoBehaviour:
     projectile: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
     projectileDetails:
       duration: 3
-      speed: 25
+      speed: 2
       combatDetails:
         damageAmount: 2.5
         staminaDamageAmount: 1
@@ -52,7 +52,7 @@ MonoBehaviour:
     projectile: {fileID: 8389792333474829002, guid: 9301c4eae8fbf7c42a4dcfa4d088a044, type: 3}
     projectileDetails:
       duration: 3
-      speed: 25
+      speed: 2
       combatDetails:
         damageAmount: 15
         staminaDamageAmount: 1
@@ -70,6 +70,9 @@ MonoBehaviour:
     - {fileID: 8389792333474829002, guid: e0da44ac2feaebb4c86a8b7f33102206, type: 3}
   chooseRandomBulletStateData:
     randomCount: 3
+    redAttackPrefab: {fileID: 8389792333474829002, guid: 9301c4eae8fbf7c42a4dcfa4d088a044, type: 3}
+    blueAttackPrefab: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
+    greenAttackPrefab: {fileID: 8389792333474829002, guid: f8d865d21453ef7488e667a5df0f1cb7, type: 3}
     everyBulletProb:
     - 0.425
     - 0.425

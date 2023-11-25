@@ -198,6 +198,9 @@ public class MultiProjectileObjContainer
 public class ED_ChooseRandomBulletState
 {
     public int randomCount = 3;
+    public GameObject redAttackPrefab;
+    public GameObject blueAttackPrefab;
+    public GameObject greenAttackPrefab;
     public float[] everyBulletProb;
     public float[] getCertainBulletHPPercentage;
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAfterImageSprite : MonoBehaviour
 {
-    [SerializeField] private float activeTime = 0.1f;
+    [SerializeField] private float updateRate = 0.02f;
     private float timeActivated;
     private float alpha;
     [SerializeField] private float alphaSet = 0.8f;
@@ -17,31 +17,37 @@ public class PlayerAfterImageSprite : MonoBehaviour
     {
         if (facingDir == -1)
         {
-            this.SR.flipX = true;
+            SR.flipX = true;
         }
         else
         {
-            this.SR.flipX = false;
+            SR.flipX = false;
         }
 
-        this.SR.sprite = t_SR.sprite;
+        SR.sprite = t_SR.sprite;
     }
 
     private void OnEnable()
     {
         alpha = alphaSet;
         timeActivated = Time.time;
+        Invoke(nameof(SetAlpha), updateRate);
     }
 
-    private void Update()
+    private void SetAlpha()
     {
+        CancelInvoke(nameof(SetAlpha));
         alpha *= alphaMultiplier;
         color = new Color(1f, 1f, 1f, alpha);
         SR.color = color;
-
-        if(Time.time >= (timeActivated + activeTime))
+        if(alpha > 0.01f)
+        {
+            Invoke(nameof(SetAlpha), updateRate);
+        }
+        else
         {
             ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }
+
 }

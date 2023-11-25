@@ -121,10 +121,6 @@ public class EP_BlueStatic : EP_StaticBase
             base.Knockback(angle, force, damagePosition, blockable);
         }
     }
-    public override void Fire()
-    {
-        base.Fire();
-    }
     public override void Init(Vector2 destination, float explodeTime)
     {
         base.Init(destination, explodeTime);

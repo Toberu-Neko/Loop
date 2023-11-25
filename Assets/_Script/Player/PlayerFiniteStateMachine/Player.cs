@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
         WallClimbState = new PlayerWallClimbState(this, StateMachine, PlayerData, "wallClimb");
         WallJumpState = new PlayerWallJumpState(this, StateMachine, PlayerData, "inAir");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, PlayerData, "ledgeClimbState");
-        DashState = new PlayerDashState(this, StateMachine, PlayerData, "inAir");
+        DashState = new PlayerDashState(this, StateMachine, PlayerData, "move");
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, PlayerData, "crouchIdle");
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, PlayerData, "crouchMove");
         DeadState = new PlayerDeadState(this, StateMachine, PlayerData, "dead");

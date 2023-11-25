@@ -83,8 +83,8 @@ public class FourSkyAttackState : EnemySkyAttackBase
         if(fireObjs && Time.time >= spawnTime + stateData.fireDelay && !startRewind)
         {
             Vector2 dir = (Vector2)playerPos.position - attackPos[attackCount];
-            projectiles[attackCount].Init(dir.normalized, stateData.details.speed, stateData.details);
-            projectiles[attackCount].Fire();
+            projectiles[attackCount].Init(stateData.details.speed, stateData.details);
+            projectiles[attackCount].Fire(dir.normalized);
 
             attackCount++;
             spawnTime = Time.time;

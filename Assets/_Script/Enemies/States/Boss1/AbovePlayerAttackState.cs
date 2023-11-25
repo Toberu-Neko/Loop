@@ -84,8 +84,8 @@ public class AbovePlayerAttackState : EnemySkyAttackBase
                 {
                     canSpawn = true;
                     fireTime = Time.time;
-                    projectiles[spawnCount].Init(Vector2.down, stateData.details.speed, stateData.details);
-                    projectiles[spawnCount].Fire();
+                    projectiles[spawnCount].Init(stateData.details.speed, stateData.details);
+                    projectiles[spawnCount].Fire(Vector2.down);
                     spawnCount++;
                 }
             }

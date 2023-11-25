@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ChooseRandomBulletState : EnemyState
 {
-    private ED_ChooseRandomBulletState stateData;
+    protected ED_ChooseRandomBulletState stateData;
     protected int bulletIndex;
     private bool gotoFirstState;
     private bool gotoSecondState;
     private bool[] gotoThirdState;
-    public ChooseRandomBulletState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_ChooseRandomBulletState stateData) : base(entity, stateMachine, animBoolName)
+    public ChooseRandomBulletState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_ChooseRandomBulletState stateData, Transform spawnPos) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
         gotoFirstState = true;
@@ -28,17 +28,17 @@ public class ChooseRandomBulletState : EnemyState
 
         if (gotoFirstState)
         {
+            Debug.Log("FIRST");
             gotoFirstState = false;
             bulletIndex = 0;
-            entity.Anim.SetInteger("bulletIndex", bulletIndex);
             return;
         }
 
         if (gotoSecondState)
         {
+            Debug.Log("SECOND");
             gotoSecondState = false;
             bulletIndex = 1;
-            entity.Anim.SetInteger("bulletIndex", bulletIndex);
             return;
         }
 
@@ -46,10 +46,8 @@ public class ChooseRandomBulletState : EnemyState
         {
             if (Stats.Health.CurrentValuePercentage <= stateData.getCertainBulletHPPercentage[i] && gotoThirdState[i])
             {
-                Debug.Log(stateData.getCertainBulletHPPercentage[i]);
                 gotoThirdState[i] = false;
                 bulletIndex = 2;
-                entity.Anim.SetInteger("bulletIndex", bulletIndex);
                 return;
             }
         }
@@ -71,7 +69,6 @@ public class ChooseRandomBulletState : EnemyState
             if (random <= sum)
             {
                 bulletIndex = i;
-                entity.Anim.SetInteger("bulletIndex", bulletIndex);
                 return;
             }
         }
@@ -95,4 +92,5 @@ public class ChooseRandomBulletState : EnemyState
             Movement.SetVelocityZero();
         }
     }
+
 }
