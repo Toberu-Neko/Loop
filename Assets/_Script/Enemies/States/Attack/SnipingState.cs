@@ -146,7 +146,8 @@ public class SnipingState : AttackState
 
         GameObject bulletObj = ObjectPoolManager.SpawnObject(stateData.bulletPrefab, attackPosition.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
         IFireable script = bulletObj.GetComponent<IFireable>();
-        script.Fire(aimPointDelta, stateData.bulletDetails.speed, stateData.bulletDetails);
+        script.Init(aimPointDelta, stateData.bulletDetails.speed, stateData.bulletDetails);
+        script.Fire();
     }
 
     public override void AnimationActionTrigger()

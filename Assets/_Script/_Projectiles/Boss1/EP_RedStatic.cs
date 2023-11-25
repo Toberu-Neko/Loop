@@ -72,9 +72,9 @@ public class EP_RedStatic : EP_StaticBase
         OnExplodeAction -= HandleExplode;
     }
 
-    public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
+    public override void Fire()
     {
-        base.Fire(fireDirection, speed, details);
+        base.Fire();
     }
 
     public override void HandlePerfectBlock()

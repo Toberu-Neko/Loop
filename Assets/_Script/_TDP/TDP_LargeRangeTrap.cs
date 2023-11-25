@@ -43,7 +43,8 @@ public class TDP_LargeRangeTrap : TempDataPersist_MapObjBase
                 spawnedTraps[i] = obj.GetComponent<EnemyProjectile_Damage>();
                 spawnedTraps[i].OnHitPlayer += HandleHitPlayer;
 
-                spawnedTraps[i].Fire(Vector2.down, details.speed, details);
+                spawnedTraps[i].Init(Vector2.down, details.speed, details);
+                spawnedTraps[i].Fire();
             }
 
             isActivated = true;

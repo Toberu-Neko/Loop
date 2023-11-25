@@ -20,11 +20,13 @@ public class SingleRangedAttackState : AttackState
         if (CheckPlayerSenses.IsPlayerInMaxAgroRange && stateData.aimPlayer)
         {
             Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPosition.position;
-            projectileScript.Fire(delta.normalized, stateData.projectileDetails.speed, stateData.projectileDetails);
+            projectileScript.Init(delta.normalized, stateData.projectileDetails.speed, stateData.projectileDetails);
+            projectileScript.Fire();
         }
         else
         {
-            projectileScript.Fire(Movement.ParentTransform.right, stateData.projectileDetails.speed, stateData.projectileDetails);
+            projectileScript.Init(Movement.ParentTransform.right, stateData.projectileDetails.speed, stateData.projectileDetails);
+            projectileScript.Fire();
         }
     }
 

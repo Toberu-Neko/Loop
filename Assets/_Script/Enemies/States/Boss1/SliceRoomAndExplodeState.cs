@@ -148,7 +148,8 @@ public class SliceRoomAndExplodeState : EnemySkyAttackBase
 
         float speed = distance / stateData.flyTime;
 
-        fireable.Fire(direction.normalized, speed, stateData.bullets[index].details);
+        fireable.Init(direction.normalized, speed, stateData.bullets[index].details);
+        fireable.Fire();
         staticScript.Init(targetPosition, delay);
     }
 }

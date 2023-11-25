@@ -93,9 +93,9 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
         sphereObj.transform.localScale = sphereOrgScale * currentRadius;
     }
 
-    public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
+    public override void Fire()
     {
-        base.Fire(fireDirection, speed, details);
+        base.Fire();
     }
 
     private void HandleHitTarget(Collider2D collider)

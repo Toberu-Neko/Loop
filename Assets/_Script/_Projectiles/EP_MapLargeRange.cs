@@ -77,9 +77,9 @@ public class EP_MapLargeRange : EnemyProjectile_Base
         base.FixedUpdate();
     }
 
-    public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
+    public override void Fire()
     {
-        base.Fire(fireDirection, speed, details);
+        base.Fire();
     }
 
     public override void HandlePerfectBlock()

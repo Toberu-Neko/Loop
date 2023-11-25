@@ -11,7 +11,7 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
 
     private float startMagicTime;
     private bool startMagic;
-
+    private bool damaged;
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -23,6 +23,7 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
         sphereObj.SetActive(false);
 
         SR.enabled = true;
+        damaged = false;
         startMagic = false;
         startMagicTime = 0f;
     }
@@ -44,7 +45,7 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
         {
             startMagicTime = stats.Timer(startMagicTime);
 
-            if (Time.time >= startMagicTime + duration)
+            if (Time.time >= startMagicTime + duration && !damaged)
             {
                 DoDamage();
                 ReturnToPool();
@@ -74,6 +75,7 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
 
     private void DoDamage()
     {
+        damaged = true;
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, startRadius, whatIsTargetLayer);
         SR.enabled = false;
 
@@ -110,9 +112,9 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
         base.FixedUpdate();
     }
 
-    public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
+    public override void Fire()
     {
-        base.Fire(fireDirection, speed, details);
+        base.Fire();
     }
 
     public override void HandlePerfectBlock()

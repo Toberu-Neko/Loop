@@ -30,11 +30,19 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     protected Vector2 fireDirection;
 
     [SerializeField] private CounterType counterType;
-
+    private MovementType movementType;
     private enum CounterType
     {
         Flip,
         Relative
+    }
+
+    private enum MovementType
+    {
+        Idle,
+        Move,
+        Counter,
+        Hitted
     }
 
     protected virtual void Awake()
@@ -51,20 +59,21 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     {
         core.LogicUpdate();
 
-        if (!HasHitGround && !countered)
+        if (movementType == MovementType.Move)
         {
+            startTime = stats.Timer(startTime);
             movement.SetVelocity(speed, fireDirection);
         }
-        if (!HasHitGround && countered)
+        if (movementType == MovementType.Counter)
         {
+            startTime = stats.Timer(startTime);
             movement.SetVelocity(counterVelocity);
         }
-        if (HasHitGround || interected)
+        if (movementType == MovementType.Hitted)
         {
             movement.SetVelocityZero();
         }
 
-        startTime = stats.Timer(startTime);
 
         if(Time.time >= startTime + details.duration)
         {
@@ -87,6 +96,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
         whatIsTargetLayer = whatIsPlayer;
 
+        movementType = MovementType.Idle;
         HasHitGround = false;
         interected = false;
         countered = false;
@@ -117,14 +127,18 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         anim.SetBool("timeSlow", false);
     }
 
-    public virtual void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
+    public virtual void Init(Vector2 fireDirection, float speed, ProjectileDetails details)
     {
         this.fireDirection = fireDirection;
         this.speed = speed;
         this.details = details;
+    }
+    public virtual void Fire()
+    {
+        movementType = MovementType.Move;
         whatIsTargetLayer = whatIsPlayer;
         startPos = transform.position;
-        Quaternion targetRotation = Quaternion.FromToRotation(Vector3.right, fireDirection);
+        Quaternion targetRotation = Quaternion.FromToRotation(Vector3.up, fireDirection);
 
         startTime = Time.time;
         transform.rotation = targetRotation;
@@ -143,6 +157,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         {
             CamManager.Instance.CameraShake(2.5f);
             countered = true;
+            movementType = MovementType.Counter;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             whatIsTargetLayer = LayerMask.GetMask("Damageable");
 
@@ -167,7 +182,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
                 {
                     if (facingDirection != direction)
                     {
-                        counterVelocity = -speed * fireDirection * -4f;
+                        counterVelocity = -4f * -speed * fireDirection;
                         movement.SetTimeStopVelocity(counterVelocity);
                         movement.Turn();
                     }
@@ -199,7 +214,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
                 Vector2 counterDirection = ((Vector2)transform.position - damagePosition).normalized;
                 if (stats.IsTimeStopped)
                 {
-                    counterVelocity = speed * counterDirection * -4f;
+                    counterVelocity = -4f * speed * counterDirection;
                     movement.SetTimeStopVelocity(counterVelocity);
 
                     DeterminTurn(damagePosition, counterDirection);
@@ -236,6 +251,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         if (((1 << collider.gameObject.layer) & whatIsTargetLayer) != 0 && !HasHitGround && !interected)
         {
             interected = true;
+            movementType = MovementType.Hitted;
             OnHitTargetAction?.Invoke(collider);
         }
 
@@ -243,6 +259,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         {
             HasHitGround = true;
             
+            movementType = MovementType.Hitted;
             movement.SetVelocityZero();
 
             OnHitGroundAction?.Invoke();

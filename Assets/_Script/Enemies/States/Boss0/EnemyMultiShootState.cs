@@ -40,7 +40,8 @@ public class EnemyMultiShootState : EnemyState
         if (obj.TryGetComponent(out IFireable scr))
         {
             Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPos.position;
-            scr.Fire(delta, data.bullet[randomInt].details.speed, data.bullet[randomInt].details);
+            scr.Init(delta, data.bullet[randomInt].details.speed, data.bullet[randomInt].details);
+            scr.Fire();
         }
     }
 

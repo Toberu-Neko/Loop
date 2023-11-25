@@ -63,9 +63,9 @@ public class EP_StaticBase : EnemyProjectile_Base, IStaticProjectile
         this.explodeTime = explodeTime;
     }
 
-    public override void Fire(Vector2 fireDirection, float speed, ProjectileDetails details)
+    public override void Fire()
     {
-        base.Fire(fireDirection, speed, details);
+        base.Fire();
 
         state = State.Moving;
     }
