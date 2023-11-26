@@ -38,7 +38,7 @@ public class SingleRangedAttackState : AttackState
             {
                 Vector2 delta = ((Vector2)CheckPlayerSenses.IsPlayerInMaxAgroRange.transform.position) - (Vector2)attackPosition.position;
                 fireable.Init(stateData.projectileDetails.speed, stateData.projectileDetails);
-                fireable.Fire(delta);
+                fireable.Fire(delta.normalized);
             }
             else
             {
