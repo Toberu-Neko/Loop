@@ -9,6 +9,11 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     protected LayerMask whatIsTargetLayer;
     [SerializeField] protected Core core;
     [SerializeField] protected SpriteRenderer SR;
+
+    [SerializeField] private GameObject afterImagePrefab;
+    [SerializeField] private float afterImageDistance;
+    private Vector2 lastAfterImagePosition;
+
     protected Movement movement;
     protected Stats stats;
 
@@ -63,6 +68,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         {
             startTime = stats.Timer(startTime);
             movement.SetVelocity(speed, fireDirection);
+            CheckShouldPlaceAfterImage();
             if (Time.time >= startTime + details.duration)
             {
                 HandleDuration();
@@ -72,6 +78,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         {
             startTime = stats.Timer(startTime);
             movement.SetVelocity(counterVelocity);
+            CheckShouldPlaceAfterImage();
             if (Time.time >= startTime + details.duration)
             {
                 HandleDuration();
@@ -97,6 +104,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     {
         gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
         whatIsTargetLayer = whatIsPlayer;
+        lastAfterImagePosition = transform.position;
 
         movementType = MovementType.Idle;
         HasHitGround = false;
@@ -117,6 +125,25 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         stats.OnTimeStopEnd -= HandleChangeAnimOrigin;
         stats.OnTimeSlowStart -= HandleChangeAnimSlow;
         stats.OnTimeSlowEnd -= HandleChangeAnimOrigin;
+    }
+
+    private void CheckShouldPlaceAfterImage()
+    {
+        if (Vector2.Distance(transform.position, lastAfterImagePosition) >= afterImageDistance && !(stats.IsTimeSlowed || stats.IsTimeStopped))
+        {
+            PlaceAfterImage();
+        }
+    }
+
+    private void PlaceAfterImage()
+    {
+        var obj = ObjectPoolManager.SpawnObject(afterImagePrefab, transform.position, Quaternion.identity, ObjectPoolManager.PoolType.GameObjects);
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        sr.sprite = SR.sprite;
+        obj.transform.localScale = transform.localScale;
+        obj.transform.rotation = transform.rotation;
+
+        lastAfterImagePosition = transform.position;
     }
 
     private void HandleChangeAnimSlow()
