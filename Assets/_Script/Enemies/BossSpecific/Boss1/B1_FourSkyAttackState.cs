@@ -31,7 +31,7 @@ public class B1_FourSkyAttackState : FourSkyAttackState
 
         if (isAttackDone)
         {
-            stateMachine.ChangeState(boss.FlyingIdleState);
+            stateMachine.ChangeState(boss.AfterMagic);
         }
     }
 }

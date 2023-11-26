@@ -60,12 +60,19 @@ public class FourSkyAttackState : EnemySkyAttackBase
         }
     }
 
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        Stats.Timer(spawnTime);
         Movement.SetVelocityZero();
+
+
+        Stats.Timer(spawnTime);
 
         if(Time.time >= spawnTime + stateData.spawnDelay && attackCount < attackPos.Length && !fireObjs)
         {

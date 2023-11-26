@@ -29,7 +29,7 @@ public class B1_AbovePlayerAttackState : AbovePlayerAttackState
 
         if (isAttackDone)
         {
-            stateMachine.ChangeState(boss.FlyingIdleState);
+            stateMachine.ChangeState(boss.AfterMagic);
         }
     }
 }

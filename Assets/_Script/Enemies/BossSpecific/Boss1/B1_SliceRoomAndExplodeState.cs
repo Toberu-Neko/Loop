@@ -17,7 +17,7 @@ public class B1_SliceRoomAndExplodeState : SliceRoomAndExplodeState
 
         if (isAttackDone)
         {
-            stateMachine.ChangeState(boss.FlyingIdleState);
+            stateMachine.ChangeState(boss.AfterMagic);
         }
     }
 }

@@ -15,6 +15,19 @@ public class B1_ChooseRandomBulletState : ChooseRandomBulletState
         this.spawnPos = spawnPos;
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        if (!isAnimationFinished && spawnedObj != null && spawnedObj.activeInHierarchy)
+        {
+            ObjectPoolManager.ReturnObjectToPool(spawnedObj);
+        }
+
+        spawnedObj = null;
+        fireable = null;
+    }
+
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();

@@ -35,7 +35,8 @@ public class B1_FlyingIdleState : EnemyFlyingIdleState
                 if (unfinishedAttacks.Count > 0)
                 {
                     int randomIndex = Random.Range(0, unfinishedAttacks.Count);
-                    stateMachine.ChangeState(unfinishedAttacks[randomIndex]);
+                    boss.PreMagic.SetNextState(unfinishedAttacks[randomIndex]);
+                    stateMachine.ChangeState(boss.PreMagic);
                 }
             }
             else

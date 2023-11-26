@@ -5,6 +5,9 @@ public class Boss1 : BossBase
     public B1_IdleState IdleState { get; private set; }
     public B1_InitAnimState InitAnimState { get; private set; }
     public B1_AngryState AngryState { get; private set; }
+    public B1_PreMagic PreMagic { get; private set; }
+    public B1_AfterMagic AfterMagic { get; private set; }
+
 
     public B1_PlayerDetectedMoveState PlayerDetectedMoveState { get; private set; }
     public B1_FlyingIdleState FlyingIdleState { get; private set; }
@@ -48,6 +51,9 @@ public class Boss1 : BossBase
         IdleState = new B1_IdleState(this, StateMachine, "idle", StateData.idleStateData, this);
         InitAnimState = new B1_InitAnimState(this, StateMachine, "init", this);
         AngryState = new B1_AngryState(this, StateMachine, "angry", this);
+        PreMagic = new B1_PreMagic(this, StateMachine, "preMagic", this);
+        AfterMagic = new B1_AfterMagic(this, StateMachine, "afterMagic", this);
+        
 
         PlayerDetectedMoveState = new B1_PlayerDetectedMoveState(this, StateMachine, "move", StateData.playerDetectedMoveStateData, this);
         FlyingIdleState = new B1_FlyingIdleState(this, StateMachine, "idle", StateData.flyingIdleStateData, this);
@@ -63,9 +69,9 @@ public class Boss1 : BossBase
 
         JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
         AfterMultiAttackState = new B1_AfterMultiAttackState(this, StateMachine, "afterMultiAttack", this);
-        FourSkyAttackState = new B1_FourSkyAttackState(this, StateMachine, "counterAttack", StateData.fourSkyAttackStateData, this); //TODO: Anim
-        SliceRoomAndExplodeState = new B1_SliceRoomAndExplodeState(this, StateMachine, "sliceRoomAndExplode", StateData.sliceRoomAndExplodeStateData, BossRoomCollider, rangedAttackPosition, this);
-        AbovePlayerAttackState = new B1_AbovePlayerAttackState(this, StateMachine, "abovePlayerAttack", StateData.abovePlayerAttackStateData, this);
+        FourSkyAttackState = new B1_FourSkyAttackState(this, StateMachine, "skyMagic", StateData.fourSkyAttackStateData, this); //TODO: Anim
+        SliceRoomAndExplodeState = new B1_SliceRoomAndExplodeState(this, StateMachine, "skyMagic", StateData.sliceRoomAndExplodeStateData, BossRoomCollider, rangedAttackPosition, this);
+        AbovePlayerAttackState = new B1_AbovePlayerAttackState(this, StateMachine, "skyMagic", StateData.abovePlayerAttackStateData, this);
 
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);
