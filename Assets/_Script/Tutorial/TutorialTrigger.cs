@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class TutorialTrigger : TutorialBase
 {
-    [SerializeField] private GameObject tutorialObject;
+    [SerializeField] private GameObject keyboardTutorialObject;
+    [SerializeField] private GameObject gamepadTutorialObject;
 
     private void Awake()
     {
-        tutorialObject.SetActive(false);
+        keyboardTutorialObject.SetActive(false);
+        gamepadTutorialObject.SetActive(false);
     }
 
     protected override void Start()
@@ -20,7 +22,14 @@ public class TutorialTrigger : TutorialBase
     {
         if (other.CompareTag("Player"))
         {
-            tutorialObject.SetActive(true);
+            if(GameManager.Instance.PlayerInput.currentControlScheme == "Gamepad")
+            {
+                gamepadTutorialObject.SetActive(true);
+            }
+            else
+            {
+                keyboardTutorialObject.SetActive(true);
+            }
         }
     }
 
@@ -28,7 +37,8 @@ public class TutorialTrigger : TutorialBase
     {
         if (other.CompareTag("Player"))
         {
-            tutorialObject.SetActive(false);
+            keyboardTutorialObject.SetActive(false);
+            gamepadTutorialObject.SetActive(false);
         }
     }
 }

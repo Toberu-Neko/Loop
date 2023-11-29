@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     public event Action OnAllTimeStopStart;
 
     [field: SerializeField, Range(0.001f, 1f)] public float TimeSlowMultiplier { get; private set; } = 0.2f;
+    [field: SerializeField] public PlayerInput PlayerInput { get; private set; }
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
 
