@@ -7,7 +7,6 @@ public class InteractableMapItem_Base : MonoBehaviour
     [SerializeField] private GameObject pressEText;
     protected bool interactable;
 
-
     private PlayerInputHandler inputHandler;
     private bool inRange;
     protected event Action OnInteract;
