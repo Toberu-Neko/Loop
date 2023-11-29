@@ -183,7 +183,7 @@ public class DataPersistenceManager : MonoBehaviour
         OnLoad?.Invoke();
     }
 
-    public void SaveGame()
+    public void SaveGame(bool gotoSavepoint = true)
     {
         DataPersistanceObjects = FindAllDataPersistenceObjects();
         Debug.Log("Saved, " + DataPersistanceObjects.Count + " Objects.");
@@ -198,7 +198,7 @@ public class DataPersistenceManager : MonoBehaviour
             return;
         }
 
-        GameData.gotoSavePoint = false;
+        GameData.gotoSavePoint = gotoSavepoint;
 
         foreach (IDataPersistance dataPersistanceObject in DataPersistanceObjects)
         {

@@ -93,11 +93,6 @@ public class Savepoint : MonoBehaviour, IDataPersistance
             data.finishTutorial = true;
         }
 
-        if (interectWithSavePointThisSave)
-        {
-            data.gotoSavePoint = true;
-        }
-
         if(data.savepoints.ContainsKey(SavePointName))
         {
             data.savepoints.Remove(SavePointName);

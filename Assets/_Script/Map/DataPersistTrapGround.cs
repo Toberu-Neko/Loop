@@ -32,6 +32,6 @@ public class DataPersistTrapGround : DataPersistMapObjBase
     private void SaveData()
     {
         CancelInvoke(nameof(SaveData));
-        DataPersistenceManager.Instance.SaveGame();
+        DataPersistenceManager.Instance.SaveGame(false);
     }
 }
