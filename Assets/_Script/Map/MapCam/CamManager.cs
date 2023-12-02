@@ -6,6 +6,7 @@ using UnityEngine;
 public class CamManager : MonoBehaviour
 {
     public static CamManager Instance { get; private set;}
+    public Camera MainCamera { get; private set; }
 
     // private List<CinemachineVirtualCamera> cams = new();
     public CinemachineVirtualCamera CurrentCam { get; private set; }
@@ -33,6 +34,7 @@ public class CamManager : MonoBehaviour
 
         impulseSource = GetComponent<CinemachineImpulseSource>();
         canShackCamera = true;
+        MainCamera = Camera.main;
     }
     /*
     #region Register/Unregister Cams

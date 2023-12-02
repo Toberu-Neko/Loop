@@ -6,7 +6,7 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
     private int xInput;
     private Vector2 mouseDirectionInput;
-
+    private Camera cam;
     public PlayerGunNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         data = player.WeaponManager.GunData;
@@ -18,8 +18,8 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
         mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
         xInput = player.InputHandler.NormInputX;
-
-        Shoot();
+        cam = CamManager.Instance.MainCamera;
+        player.Anim.SetFloat("mouseDegree", mouseDirectionInput.y);
     }
 
     public override void LogicUpdate()
@@ -28,10 +28,12 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
         mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
         xInput = player.InputHandler.NormInputX;
+        player.Anim.SetFloat("mouseDegree", mouseDirectionInput.y);
 
         Movement.SetVelocityX(playerData.movementVelocity * xInput);
 
         Jump();
+
 
         if (mouseDirectionInput.x < 0)
             Movement.CheckIfShouldFlip(-1);
@@ -43,6 +45,7 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
     {
         base.AnimationActionTrigger();
 
+        Shoot();
     }
 
     public override void AnimationFinishTrigger()

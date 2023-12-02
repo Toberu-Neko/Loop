@@ -51,7 +51,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Start()
     {
-        cam = Camera.main;
+        cam = CamManager.Instance.MainCamera;
         gameManager = GameManager.Instance;
     }
 
