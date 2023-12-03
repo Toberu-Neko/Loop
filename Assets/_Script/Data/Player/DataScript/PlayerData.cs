@@ -16,6 +16,7 @@ public class PlayerData : ScriptableObject
     [Header("MoveState")]
     [Tooltip("移動速度")]
     public float movementVelocity = 10f;
+    [Range(-100f,-10f)] public float landingVelocity = -50f;
 
     [Header("JumpState")]
     [Tooltip("跳躍高度")]

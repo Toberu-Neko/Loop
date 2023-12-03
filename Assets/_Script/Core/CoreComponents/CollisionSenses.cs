@@ -199,7 +199,7 @@ public class CollisionSenses : CoreComponent
 
     public bool CanDash
     {
-        get => !Physics2D.Raycast(GroundCheck.position, Vector2.right * movement.FacingDirection, slopeCheckDistance, whatIsUnclimbableWall + whatIsClimbableWall);
+        get => !Physics2D.BoxCast(ChangeColliderWallCheck.position, changeColliderWallCheckV2, 0f, Vector2.right * movement.FacingDirection, 0.1f, whatIsUnclimbableWall + whatIsClimbableWall);
     }
 
     public bool CanChangeCollider

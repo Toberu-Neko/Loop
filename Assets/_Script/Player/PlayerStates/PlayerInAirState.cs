@@ -24,6 +24,8 @@ public class PlayerInAirState : PlayerState
     private bool wallJumpCoyoteTime;
     private float startWallJumpCoyoteTime;
 
+    private float minYVelocity;
+    private float maxYVelocity;
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -83,6 +85,9 @@ public class PlayerInAirState : PlayerState
         isToucingWallBack = false;
         isJumping = false;
         jumpInputStop = false;
+
+        minYVelocity = 0f;
+        maxYVelocity = 0f;
     }
 
     public override void LogicUpdate()
@@ -102,6 +107,15 @@ public class PlayerInAirState : PlayerState
         dashInput = player.InputHandler.DashInput;
 
         CheckJumpMultiplier();
+
+        if(minYVelocity > Movement.CurrentVelocity.y)
+        {
+            minYVelocity = Movement.CurrentVelocity.y;
+        }
+        if(maxYVelocity < Movement.CurrentVelocity.y)
+        {
+            maxYVelocity = Movement.CurrentVelocity.y;
+        }
 
         #region Sword
         if (player.InputHandler.AttackInput && player.WeaponManager.CurrentWeaponType == WeaponType.Sword &&
@@ -169,7 +183,10 @@ public class PlayerInAirState : PlayerState
         }
         else if (isGrounded && !isJumping)
         {
-            stateMachine.ChangeState(player.IdleState);
+            if(minYVelocity < playerData.landingVelocity)
+                stateMachine.ChangeState(player.LandState);
+            else
+                stateMachine.ChangeState(player.IdleState);
         }
         else if (yInput >= 0 && player.LedgeClimbState.CheckCanGrabWall() && isTouchingWall && !isTouchingLedge && !isGrounded && !Stats.IsRewindingPosition)
         {
@@ -224,10 +241,11 @@ public class PlayerInAirState : PlayerState
 
                 isJumping = false;
             }
-            else if (Movement.CurrentVelocity.y < -0.01f)
+            else if (minYVelocity < -1f)
             {
                 isJumping = false;
             }
+            // TODO: set jump velocity every frame when isJumping is true
         }
     }
     private void CheckCoyoteTime()
