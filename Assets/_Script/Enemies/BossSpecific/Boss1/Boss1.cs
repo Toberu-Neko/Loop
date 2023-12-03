@@ -35,8 +35,8 @@ public class Boss1 : BossBase
     [field: SerializeField] public B1_StateData StateData { get; private set; }
 
     [Header("Positions")]
-    [SerializeField] private Transform rangedAttackPosition;
     [SerializeField] private Transform jumpAttackPosition;
+    [field: SerializeField] public Transform RangedAttackPosition { get; private set; }
 
     [field: SerializeField] public Transform SkyTeleportPos { get; private set; }
     [field: SerializeField] public Transform GroundTeleportPos { get; private set; }
@@ -60,17 +60,17 @@ public class Boss1 : BossBase
         FlyingMovementState = new B1_FlyingMovementState(this, StateMachine, "move", StateData.flyingMovementStateData, this);
         BackToGroundState = new B1_BackToGroundState(this, StateMachine, "backToGround", StateData.backToIdleStateData, this);
 
-        ChooseRandomBulletState = new B1_ChooseRandomBulletState(this, StateMachine, "chooseRandomBullet", StateData.chooseRandomBulletStateData, rangedAttackPosition, this);
-        BlueRangedAttackState = new B1_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, StateData.blueRangedAttackStateData, this);
-        RedRangedAttackState = new B1_RangedAttackState(this, StateMachine, "rangedAttack", rangedAttackPosition, StateData.redRangedAttackStateData, this);
+        ChooseRandomBulletState = new B1_ChooseRandomBulletState(this, StateMachine, "chooseRandomBullet", StateData.chooseRandomBulletStateData, RangedAttackPosition, this);
+        BlueRangedAttackState = new B1_RangedAttackState(this, StateMachine, "rangedAttack", RangedAttackPosition, StateData.blueRangedAttackStateData, this);
+        RedRangedAttackState = new B1_RangedAttackState(this, StateMachine, "rangedAttack", RangedAttackPosition, StateData.redRangedAttackStateData, this);
 
-        PerfectBlockState = new B1_EnemyPerfectBlockState(this, StateMachine, "perfectBlock", StateData.perfectBlockStateData, this);
+        PerfectBlockState = new B1_EnemyPerfectBlockState(this, StateMachine, "perfectBlock", StateData.perfectBlockStateData, RangedAttackPosition, this);
         CounterAttackState = new B1_CounterAttackState(this, StateMachine, "counterAttack", this);
 
         JumpAndMultiAttackState = new B1_JumpAndMultiAttackState(this, StateMachine, "jumpAndMultiAttack", StateData.jumpAndMultiAttackStateData, jumpAttackPosition,  this);
         AfterMultiAttackState = new B1_AfterMultiAttackState(this, StateMachine, "afterMultiAttack", this);
         FourSkyAttackState = new B1_FourSkyAttackState(this, StateMachine, "skyMagic", StateData.fourSkyAttackStateData, this); //TODO: Anim
-        SliceRoomAndExplodeState = new B1_SliceRoomAndExplodeState(this, StateMachine, "skyMagic", StateData.sliceRoomAndExplodeStateData, BossRoomCollider, rangedAttackPosition, this);
+        SliceRoomAndExplodeState = new B1_SliceRoomAndExplodeState(this, StateMachine, "skyMagic", StateData.sliceRoomAndExplodeStateData, BossRoomCollider, RangedAttackPosition, this);
         AbovePlayerAttackState = new B1_AbovePlayerAttackState(this, StateMachine, "skyMagic", StateData.abovePlayerAttackStateData, this);
 
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);

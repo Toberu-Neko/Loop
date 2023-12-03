@@ -208,6 +208,7 @@ public class ED_ChooseRandomBulletState
 [Serializable]
 public class ED_EnemyPerfectBlockState
 {
+    public GameObject perfectObjPrefab;
     public float cooldown = 10f;
     public float radius = 1.5f;
     public float knockbackForce = 10f;

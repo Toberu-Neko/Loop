@@ -7,7 +7,7 @@ public class B1_EnemyPerfectBlockState : EnemyPerfectBlockState
     private Boss1 boss;
     private ED_EnemyProjectiles stateData;
 
-    public B1_EnemyPerfectBlockState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyPerfectBlockState stateData, Boss1 boss) : base(entity, stateMachine, animBoolName, stateData)
+    public B1_EnemyPerfectBlockState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyPerfectBlockState stateData, Transform rangedattackPos, Boss1 boss) : base(entity, stateMachine, animBoolName, stateData, rangedattackPos)
     {
         this.boss = boss;
         this.stateData = boss.StateData.counterAttackObjsData;

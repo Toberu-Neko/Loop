@@ -8,9 +8,11 @@ public class EnemyPerfectBlockState : EnemyState
     protected bool gotoCounterState;
     private ED_EnemyPerfectBlockState stateData;
     private int actionCounter = 0;
-    public EnemyPerfectBlockState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyPerfectBlockState stateData) : base(entity, stateMachine, animBoolName)
+    private Transform rangedattackPos;
+    public EnemyPerfectBlockState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_EnemyPerfectBlockState stateData, Transform rangedattackPos) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
+        this.rangedattackPos = rangedattackPos;
     }
 
     public override void Enter()
@@ -51,6 +53,10 @@ public class EnemyPerfectBlockState : EnemyState
         switch (actionCounter)
         {
             case 0:
+                if (stateData.perfectObjPrefab)
+                {
+                    ObjectPoolManager.SpawnObject(stateData.perfectObjPrefab, rangedattackPos.position, Quaternion.identity);
+                }
                 Combat.SetPerfectBlock(true);
                 break;
             case 1:

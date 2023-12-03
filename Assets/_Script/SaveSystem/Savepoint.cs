@@ -15,7 +15,6 @@ public class Savepoint : MonoBehaviour, IDataPersistance
     private bool inRange;
     private bool isSavePointActive;
     private bool finishTutorial = false;
-    private bool interectWithSavePointThisSave = false;
 
 
     private void OnEnable()
@@ -23,7 +22,6 @@ public class Savepoint : MonoBehaviour, IDataPersistance
         pressEObject.SetActive(false);
         inRange = false;
         finishTutorial = false;
-        interectWithSavePointThisSave = false;
     }
 
     private void Start()
@@ -40,7 +38,6 @@ public class Savepoint : MonoBehaviour, IDataPersistance
                 isSavePointActive = true;
                 inputHandler.UseInteractInput();
                 pressEObject.SetActive(false);
-                interectWithSavePointThisSave = true;
 
                 // Go to game manager
                 OnSavePointInteract?.Invoke(SavePointName);
