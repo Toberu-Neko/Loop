@@ -20,6 +20,9 @@ public class CamManager : MonoBehaviour
     private Coroutine panCameraCoroutine;
 
     private Vector2 startingTrackedObjectOffset;
+    private float targetFOV;
+    private float orgFOV;
+
     private void Awake()
     {
         if(Instance == null)
@@ -58,6 +61,8 @@ public class CamManager : MonoBehaviour
 
         CurrentCam = vcam;
         CurrentCam.enabled = true;
+        orgFOV = CurrentCam.m_Lens.FieldOfView;
+        ChangeFOV();
 
         framingTransposer = CurrentCam.GetCinemachineComponent<CinemachineFramingTransposer>();
         startingTrackedObjectOffset = framingTransposer.m_TrackedObjectOffset;
@@ -74,6 +79,33 @@ public class CamManager : MonoBehaviour
         {
             cameraRight.enabled = false;
             SwitchCamera(cameraLeft);
+        }
+    }
+
+    public void ChangeFOV(float FOV = 0f)
+    {
+        if (CurrentCam == null)
+        {
+            Debug.LogError("CurrentCam is null");
+            return;
+        }
+
+        if(FOV == 0f)
+        {
+            FOV = orgFOV;
+        }
+
+        targetFOV = FOV;
+        Inv_ChangeFOV();
+    }
+
+    private void Inv_ChangeFOV()
+    {
+        CancelInvoke(nameof(Inv_ChangeFOV));
+        CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CurrentCam.m_Lens.FieldOfView, targetFOV, Time.deltaTime * 2f);  
+        if (Mathf.Abs(CurrentCam.m_Lens.FieldOfView - targetFOV) > 0.1f)
+        {
+            Invoke(nameof(Inv_ChangeFOV), Time.deltaTime);
         }
     }
     #endregion
