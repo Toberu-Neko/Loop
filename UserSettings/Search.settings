@@ -1,7 +1,7 @@
 trackSelection = true
 refreshSearchWindowsInPlayMode = false
 fetchPreview = true
-defaultFlags = 0
+defaultFlags = 8
 keepOpen = false
 queryFolder = "Assets"
 onBoardingDoNotAskAgain = true
@@ -11,6 +11,12 @@ scopes = {
 	"last_search.E8DA15E5" = ""
 	"OpenInspectorPreview.E8DA15E5" = "0"
 	"currentGroup.E8DA15E5" = "all"
+	"last_search.110DEAA3" = "p: dir=_NPlayer"
+	"OpenInspectorPreview.110DEAA3" = "0"
+	"currentGroup.110DEAA3" = "asset"
+	"last_search.110DEA9B" = "p: dir=_NPlayer"
+	"OpenInspectorPreview.110DEA9B" = "0"
+	"currentGroup.110DEA9B" = "asset"
 }
 providers = {
 	adb = {
@@ -58,18 +64,30 @@ providers = {
 		priority = 100
 		defaultAction = null
 	}
+	st = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
+	at = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
 }
 objectSelectors = {
 }
 recentSearches = [
+	"p: dir=_NPlayer"
+	"p: dir=_NPlayer dir=\"folder name\""
+	"p: dir=\"_NPlayer\" "
 ]
 searchItemFavorites = [
 ]
 savedSearchesSortOrder = 0
-showSavedSearchPanel = false
+showSavedSearchPanel = true
 hideTabs = false
-expandedQueries = [
-]
+expandedQueries = [961552606]
 queryBuilder = false
 ignoredProperties = "id;name;classname;imagecontentshash"
 helperWidgetCurrentArea = "all"

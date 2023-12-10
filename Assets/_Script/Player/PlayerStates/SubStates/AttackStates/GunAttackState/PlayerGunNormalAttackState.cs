@@ -29,6 +29,14 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
         mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
         xInput = player.InputHandler.NormInputX;
         player.Anim.SetFloat("mouseDegree", mouseDirectionInput.y);
+        if(Movement.CurrentVelocity.x < 0)
+        {
+            player.Anim.SetFloat("xVelocity", -Movement.CurrentVelocity.x);
+        }
+        else
+        {
+            player.Anim.SetFloat("xVelocity", Movement.CurrentVelocity.x);
+        }
 
         Movement.SetVelocityX(playerData.movementVelocity * xInput);
 
