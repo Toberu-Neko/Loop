@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 529797330712659861}
   - component: {fileID: 596081428557275208}
   - component: {fileID: 8678170955729831606}
+  - component: {fileID: 8950590719204850618}
   m_Layer: 5
   m_Name: StatusCanvas
   m_TagString: Untagged
@@ -102,6 +103,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8950590719204850618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792821731634122078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99797008c35ad849b51c68846e7df59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3364607259897982443
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,14 +177,6 @@ MonoBehaviour:
   isAddedID: 0
   ID: 
   treasureData: {fileID: 11400000, guid: 2aa2bdd836d60334db6df61d69f2d9ce, type: 2}
-  treasureType: 4
-  chip: {fileID: 0}
-  storyItem: {fileID: 0}
-  playerStatusEnhancement: {fileID: 0}
-  timeSkills: {fileID: 0}
-  movementSkills: {fileID: 0}
-  consumeableItem: {fileID: 0}
-  weaponItem: {fileID: 0}
 --- !u!50 &7636918268201584774
 Rigidbody2D:
   serializedVersion: 4
@@ -361,7 +366,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E \u64BF\u8D77\u9053\u5177"
+  m_text: "E \u64BF\u8D77"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 59de2d1eccff40e47b7a288ddd3a24a1, type: 2}
   m_sharedMaterial: {fileID: -983714892147896719, guid: 59de2d1eccff40e47b7a288ddd3a24a1, type: 2}
