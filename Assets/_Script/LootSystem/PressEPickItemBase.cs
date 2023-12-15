@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PressEPickItemBase : DropableItemBase
 {
-    [SerializeField] private GameObject pickUpText;
+    [SerializeField] private GameObject keyboardTutorialObject;
+    [SerializeField] private GameObject gamepadTutorialObject;
     [field: SerializeField] public bool PressE { get; private set; } = false;
 
     private PlayerInputHandler inputHandler;
@@ -14,7 +15,8 @@ public class PressEPickItemBase : DropableItemBase
     {
         base.Awake();
 
-        pickUpText.SetActive(false);
+        keyboardTutorialObject.SetActive(false);
+        gamepadTutorialObject.SetActive(false);
         inRange = false;
     }
 
@@ -28,7 +30,8 @@ public class PressEPickItemBase : DropableItemBase
             {
                 inputHandler.UseInteractInput();
                 inputHandler.NResetAllInput();
-                pickUpText.SetActive(false);
+                keyboardTutorialObject.SetActive(false);
+                gamepadTutorialObject.SetActive(false);
 
                 OnItemPicked?.Invoke();
             }
@@ -44,7 +47,14 @@ public class PressEPickItemBase : DropableItemBase
                 if (inputHandler == null)
                     inputHandler = collision.GetComponent<PlayerInputHandler>();
 
-                pickUpText.SetActive(true);
+                if (GameManager.Instance.PlayerInput.currentControlScheme == "Gamepad")
+                {
+                    gamepadTutorialObject.SetActive(true);
+                }
+                else
+                {
+                    keyboardTutorialObject.SetActive(true);
+                }
                 inRange = true;
             }
             else
@@ -59,7 +69,8 @@ public class PressEPickItemBase : DropableItemBase
     {
         if (collision.CompareTag("Player"))
         {
-            pickUpText.SetActive(false);
+            keyboardTutorialObject.SetActive(false);
+            gamepadTutorialObject.SetActive(false);
             inRange = false;
         }
     }
