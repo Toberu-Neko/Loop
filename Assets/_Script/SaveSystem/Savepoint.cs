@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Savepoint : MonoBehaviour, IDataPersistance
 {
+    [SerializeField] private GameObject keyboardTutorialObject;
+    [SerializeField] private GameObject gamepadTutorialObject;
     [field: SerializeField] public string SavePointName { get; private set; }
     [field: SerializeField] public Transform TeleportTransform { get; private set; }
 
-    [SerializeField] private GameObject pressEObject;
     private PlayerInputHandler inputHandler;
 
     public event Action<string> OnSavePointInteract;
@@ -19,7 +20,8 @@ public class Savepoint : MonoBehaviour, IDataPersistance
 
     private void OnEnable()
     {
-        pressEObject.SetActive(false);
+        keyboardTutorialObject.SetActive(false);
+        gamepadTutorialObject.SetActive(false);
         inRange = false;
         finishTutorial = false;
     }
@@ -37,7 +39,8 @@ public class Savepoint : MonoBehaviour, IDataPersistance
             {
                 isSavePointActive = true;
                 inputHandler.UseInteractInput();
-                pressEObject.SetActive(false);
+                keyboardTutorialObject.SetActive(false);
+                gamepadTutorialObject.SetActive(false);
 
                 // Go to game manager
                 OnSavePointInteract?.Invoke(SavePointName);
@@ -53,7 +56,14 @@ public class Savepoint : MonoBehaviour, IDataPersistance
                 inputHandler = collision.GetComponent<PlayerInputHandler>();
 
             finishTutorial = true;
-            pressEObject.SetActive(true);
+            if (GameManager.Instance.PlayerInput.currentControlScheme == "Gamepad")
+            {
+                gamepadTutorialObject.SetActive(true);
+            }
+            else
+            {
+                keyboardTutorialObject.SetActive(true);
+            }
             inRange = true;
         }
     }
@@ -62,7 +72,8 @@ public class Savepoint : MonoBehaviour, IDataPersistance
     {
         if (collision.CompareTag("Player"))
         {
-            pressEObject.SetActive(false);
+            keyboardTutorialObject.SetActive(false);
+            gamepadTutorialObject.SetActive(false);
             inRange = false;
         }
     }
