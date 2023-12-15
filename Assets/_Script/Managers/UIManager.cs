@@ -10,6 +10,9 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private PlayerInputHandler inputHandler;
     [SerializeField] private GameObject savedNotificationObj;
 
+    [Header("Loading UI")]
+    [SerializeField] private GameObject loadingObj;
+
     [Header("Change Scene UI")]
     [SerializeField] private GameObject changeSceneUI;
     [SerializeField] private Animator changeSceneAnimator;
@@ -82,6 +85,8 @@ public class UI_Manager : MonoBehaviour
 
         dieUI.gameObject.SetActive(false);
 
+        loadingObj.SetActive(true);
+
         savePointNames = new();
         savepoints = new();
     }
@@ -96,6 +101,8 @@ public class UI_Manager : MonoBehaviour
         GameManager.Instance.OnSavepointInteracted += HandleSavePointInteraction;
 
         DataPersistenceManager.Instance.OnSave += HandleSave;
+
+        LoadSceneManager.Instance.LoadingObj = loadingObj;
     }
 
     private void OnDisable()
@@ -222,6 +229,8 @@ public class UI_Manager : MonoBehaviour
     }
     private void HandleChangeSceneFinish()
     {
+        loadingObj.SetActive(false);
+
         if(changeSceneUI.activeInHierarchy)
             changeSceneAnimator.SetBool("finishLoading", true);
     }

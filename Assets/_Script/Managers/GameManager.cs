@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     [field: SerializeField, Range(0.001f, 1f)] public float TimeSlowMultiplier { get; private set; } = 0.2f;
     [field: SerializeField] public PlayerInput PlayerInput { get; private set; }
+    [SerializeField] private GameObject loadingObj;
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
 
@@ -52,6 +53,11 @@ public class GameManager : MonoBehaviour
         TimeSlowAll = false;
 
         Savepoints = new();
+    }
+
+    private void Start()
+    {
+        LoadSceneManager.Instance.LoadingObj = loadingObj;
     }
 
 
@@ -164,6 +170,7 @@ public class GameManager : MonoBehaviour
         // DataPersistenceManager.Instance.CheckIfShouldSaveOnLoad();
         SceneManager.UnloadSceneAsync(sceneName);
     }
+
     public void HandleChangeSceneFinished()
     {
         OnChangeSceneFinished?.Invoke();
