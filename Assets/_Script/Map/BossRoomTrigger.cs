@@ -12,17 +12,33 @@ public class BossRoomTrigger : MonoBehaviour
 
     private float enterPosX;
     private bool interacted;
+    private bool defeated;
 
     private void Awake()
     {
         bossRoomDoor.SetActive(false);
         interacted = false;
     }
+
+    private void Start()
+    {
+        DataPersistenceManager.Instance.GameData.defeatedBosses.TryGetValue(boss.BossName, out defeated);
+
+        if (defeated)
+        {
+            AudioManager.instance.Play("NormalBGM");
+        }
+        else
+        {
+            AudioManager.instance.Stop("NormalBGM", 1f);
+        }
+    }
     private void HandleBossDefeated()
     {
         bossRoomDoor.SetActive(false);
         CamManager.Instance.SwitchCamera(orgCamera);
         boss.Stats.Health.OnCurrentValueZero -= HandleBossDefeated;
+        AudioManager.instance.Stop("Boss0BGM");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -39,6 +55,7 @@ public class BossRoomTrigger : MonoBehaviour
         {
             return;
         }
+
         if (collision.CompareTag("Player"))
         {
             Vector2 exitDirection = (collision.transform.position - col.bounds.center).normalized;
@@ -51,11 +68,11 @@ public class BossRoomTrigger : MonoBehaviour
                 return;
             }
 
-            DataPersistenceManager.Instance.GameData.defeatedBosses.TryGetValue(boss.BossName, out bool defeated);
             if (!defeated)
             {
                 interacted = true;
                 boss.Stats.Health.OnCurrentValueZero += HandleBossDefeated;
+                AudioManager.instance.Play("Boss0BGM");
 
                 bossRoomDoor.SetActive(true);
                 CamManager.Instance.SwitchCamera(bossCamera);

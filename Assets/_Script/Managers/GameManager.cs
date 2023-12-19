@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         TimeSlowAll = false;
 
         Savepoints = new();
+
     }
 
     private void Start()
