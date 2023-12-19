@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerChangeSceneState : PlayerState
 {
     private bool canChangeState;
+    private bool firstTime;
     public PlayerChangeSceneState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+        firstTime = true;
     }
     public override void Enter()
     {
@@ -31,7 +33,12 @@ public class PlayerChangeSceneState : PlayerState
 
         Movement.SetVelocityZero();
 
-        if (canChangeState)
+        if (firstTime)
+        {
+            firstTime = false;
+            stateMachine.ChangeState(player.TurnOnState);
+        }
+        else if (canChangeState)
         {
             stateMachine.ChangeState(player.IdleState);
         }

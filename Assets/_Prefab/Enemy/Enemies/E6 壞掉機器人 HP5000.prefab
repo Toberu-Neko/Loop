@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4024847761456541156}
   - component: {fileID: 6720150970840518850}
   - component: {fileID: 3537391621664279545}
+  - component: {fileID: 5054313222752167641}
   - component: {fileID: 7519880011486606234}
   - component: {fileID: 2404078463007998693}
-  - component: {fileID: 5054313222752167641}
   m_Layer: 13
   m_Name: "E6 \u58DE\u6389\u6A5F\u5668\u4EBA HP5000"
   m_TagString: Enemy
@@ -95,7 +95,7 @@ SpriteRenderer:
   m_SortingLayerID: -245874441
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 66591156df551ed49940a886ffd9648e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4e76a9ff57027540bd3a21dae5ada1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,6 +106,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &5054313222752167641
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748294777729018724}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.24608588, y: -1.2220042}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 2}
+    oldSize: {x: 2.975, y: 0.82}
+    newSize: {x: 3.125, y: 1.71875}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.646152, y: 0.7442355}
+  m_EdgeRadius: 0
 --- !u!50 &7519880011486606234
 Rigidbody2D:
   serializedVersion: 4
@@ -154,51 +199,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &5054313222752167641
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5748294777729018724}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.04362142, y: -0.15906584}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.4133334, y: 3.4133334}
-    newSize: {x: 3.125, y: 1.71875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.2412231, y: 2.8701122}
-  m_EdgeRadius: 0
 --- !u!1001 &1357544121468503754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -305,19 +305,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6514876414037765179, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Size.x
-      value: 2.1802435
+      value: 2.1802433
       objectReference: {fileID: 0}
     - target: {fileID: 6514876414037765179, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Size.y
-      value: 3.1811624
+      value: 0.9338069
       objectReference: {fileID: 0}
     - target: {fileID: 6514876414037765179, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Offset.x
-      value: 0.03622818
+      value: 0.09696755
       objectReference: {fileID: 0}
     - target: {fileID: 6514876414037765179, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Offset.y
-      value: -0.14344531
+      value: -1.267123
       objectReference: {fileID: 0}
     - target: {fileID: 6622905753534290228, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: slopeCheckV2.x

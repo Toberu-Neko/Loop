@@ -11,7 +11,6 @@ public class ChangeFOVTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("ChangeFOVTrigger");
             CamManager.Instance.ChangeFOV(newFOV);
         }
     }

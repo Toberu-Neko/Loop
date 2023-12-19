@@ -4,10 +4,10 @@ public class Player : MonoBehaviour
 {
     [field: SerializeField] public PlayerData PlayerData { get;private set; }
     private GameManager gameManager;
-
-    #region ControlerStates
     public PlayerStateMachine StateMachine { get; private set; }
 
+    #region ControlerStates
+    public PlayerTurnOnState TurnOnState { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
     public PlayerChangeSceneState ChangeSceneState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
@@ -100,6 +100,7 @@ public class Player : MonoBehaviour
 
         StateMachine = new PlayerStateMachine();
 
+        TurnOnState = new PlayerTurnOnState(this, StateMachine, PlayerData, "turnOn");
         IdleState = new PlayerIdleState(this, StateMachine, PlayerData, "idle");
         ChangeSceneState = new PlayerChangeSceneState(this, StateMachine, PlayerData, "idle");
         MoveState = new PlayerMoveState(this, StateMachine, PlayerData, "move");
