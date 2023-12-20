@@ -44,7 +44,6 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if(Instance != null)
         {
-            // Debug.Log("Found more than one data persistence manager in the scene, delete the new one.");
             Destroy(gameObject);
             return;
         }
@@ -94,21 +93,45 @@ public class DataPersistenceManager : MonoBehaviour
 
     #region OptionData
 
-    private void LoadOptionData()
+    public void LoadOptionData()
     {
         OptionData = dataHandler.LoadOptionData();
+
         if(OptionData == null)
         {
             OptionData = new OptionData();
             SaveOptionData();
         }
+
+        List<IOptionData> options = FindAllOptionDataObjects();
+
+        foreach (IOptionData option in options)
+        {
+            option.LoadOptionData(OptionData);
+        }
+
+        //TODO: Apply option data
     }
 
     public void SaveOptionData()
     {
+        List<IOptionData> options = FindAllOptionDataObjects();
+
+        foreach (IOptionData option in options)
+        {
+            option.SaveOptionData(OptionData);
+        }
+
         dataHandler.SaveOptionData(OptionData);
+        LoadOptionData();
     }
 
+    private List<IOptionData> FindAllOptionDataObjects()
+    {
+        IEnumerable<IOptionData> objs = FindObjectsOfType<MonoBehaviour>(true).OfType<IOptionData>();
+
+        return new List<IOptionData>(objs);
+    }
     #endregion
 
     public void CheckIfShouldSaveOnLoad()
@@ -136,27 +159,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private List<IDataPersistance> FindAllDataPersistenceObjects()
     {
-        /*
-        Scene scene = SceneManager.GetSceneByName("MultiSceneBase");
-        GameObject[] objs = scene.GetRootGameObjects();
-        int baseObjCount = 0;
-
-        foreach (GameObject obj in objs)
-        {
-            IDataPersistance[] items = obj.GetComponentsInChildren<IDataPersistance>();
-            baseObjCount += items.Length;
-
-            if(items.Length > 0)
-            {
-                Debug.Log("Found " + items.Length + " data persistance objects in " + obj.name);
-            }
-        }
-
-        Debug.Log("Base object count: " + baseObjCount);
-        */
-
         IEnumerable<IDataPersistance> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistance>();
-
 
         return new List<IDataPersistance>(dataPersistanceObjects);
     }

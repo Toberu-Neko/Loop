@@ -11,6 +11,12 @@ public class PauseUIMain : MonoBehaviour
     {
         tutorialMenu.gameObject.SetActive(false);
         pauseInventoryMain.gameObject.SetActive(false);
+        optionUI.OnDeactivate += ActivateMenu;
+    }
+
+    private void OnDestroy()
+    {
+        optionUI.OnDeactivate -= ActivateMenu;
     }
 
     public void OnClickResumeButton()

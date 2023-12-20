@@ -1,20 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Audio;
+using UnityEngine.UI;
 
-public class OptionUI : MonoBehaviour
+public class OptionUI : MonoBehaviour, IOptionData
 {
-    [SerializeField] private PauseUIMain pauseUIMain;
+    public event Action<bool> OnDeactivate;
+
+    [SerializeField] private Slider masterVolumeSlider;
+    [SerializeField] private Slider bgmVolumeSlider;
+    [SerializeField] private Slider soundFXVolumeSlider;
     public void Activate()
     {
+        DataPersistenceManager.Instance.LoadOptionData();
         gameObject.SetActive(true);
     }
 
     public void Deactivate()
     {
         gameObject.SetActive(false);
-        pauseUIMain.ActivateMenu();
+        OnDeactivate?.Invoke(false);
+        DataPersistenceManager.Instance.SaveOptionData();
+        // pauseUIMain.ActivateMenu();
     }
 
     public void SetMasterVolume(float volume)
@@ -30,5 +36,25 @@ public class OptionUI : MonoBehaviour
     public void SetBGMVolume(float volume)
     {
         AudioManager.instance.SetBGMVolume(Mathf.Log10(volume) * 20f);
+    }
+
+    public void LoadOptionData(OptionData data)
+    {
+        Debug.Log("Load");
+        masterVolumeSlider.value = data.masterVolume;
+        soundFXVolumeSlider.value = data.sfxVolume;
+        bgmVolumeSlider.value = data.musicVolume;
+
+        SetMasterVolume(data.masterVolume);
+        SetSoundFXVolume(data.sfxVolume);
+        SetBGMVolume(data.musicVolume);
+    }
+
+    public void SaveOptionData(OptionData data)
+    {
+        Debug.Log("Save");
+        data.masterVolume = masterVolumeSlider.value;
+        data.sfxVolume = soundFXVolumeSlider.value;
+        data.musicVolume = bgmVolumeSlider.value;
     }
 }

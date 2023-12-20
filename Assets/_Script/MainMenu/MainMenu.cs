@@ -15,6 +15,16 @@ public class MainMenu : MenuFirstSelecter
     [SerializeField] private Button continueGameButton;
     [SerializeField] private Button loadButton;
 
+    [Header("Option")]
+    [SerializeField] private OptionUI optionUI;
+
+    private void Awake()
+    {
+        saveSlotMenu.gameObject.SetActive(false);
+        optionUI.gameObject.SetActive(false);
+        optionUI.OnDeactivate += ActiveMenu;
+    }
+
     private void Start()
     {
         if (!DataPersistenceManager.Instance.HasGameData())
@@ -22,6 +32,12 @@ public class MainMenu : MenuFirstSelecter
             continueGameButton.interactable = false;
             loadButton.interactable = false;
         }
+    }
+
+
+    protected void OnDestroy()
+    {
+        optionUI.OnDeactivate -= ActiveMenu;
     }
 
     public void OnNewGameClicked()
@@ -43,13 +59,20 @@ public class MainMenu : MenuFirstSelecter
         DeactiveMenu();
     }
 
+    public void OnClickOptionButton()
+    {
+        optionUI.Activate();
+
+        DeactiveMenu();
+    }
+
     private void DisableAllButton()
     {
         newGameButton.interactable = false;
         continueGameButton.interactable = false;
     }
 
-    public void ActiveMenu()
+    public void ActiveMenu(bool init = false)
     {
         gameObject.SetActive(true);
     }
