@@ -18,9 +18,12 @@ public class PlayerGroundedState : PlayerState
 
     private PlayerWeaponManager weaponManager;
 
+    private float lastStepTime;
+
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         weaponManager = player.WeaponManager;
+        lastStepTime = 0f;
     }
 
     public override void DoChecks()
@@ -157,6 +160,14 @@ public class PlayerGroundedState : PlayerState
         else if (dashInput && player.DashState.CheckIfCanDash() && !isTouchingCeiling)
         {
             stateMachine.ChangeState(player.DashState);
+        }
+    }
+    protected void PlayStepSFX(float time)
+    {
+        if (Time.time > lastStepTime + time)
+        {
+            lastStepTime = Time.time;
+            AudioManager.instance.PlaySoundFX(player.PlayerSFX.footstep, player.transform, 1f);
         }
     }
 

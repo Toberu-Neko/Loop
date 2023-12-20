@@ -29,6 +29,7 @@ public class PlayerCrouchMoveState : PlayerGroundedState
         base.LogicUpdate();
 
         Movement.CheckIfShouldFlip(xInput);
+        PlayStepSFX(0.6f);
 
         if (!isExitingState)
         {

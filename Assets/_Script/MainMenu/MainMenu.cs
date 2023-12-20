@@ -18,10 +18,14 @@ public class MainMenu : MenuFirstSelecter
     [Header("Option")]
     [SerializeField] private OptionUI optionUI;
 
+    [Header("Credit")]
+    [SerializeField] private Credit credit;
+
     private void Awake()
     {
         saveSlotMenu.gameObject.SetActive(false);
         optionUI.gameObject.SetActive(false);
+        credit.gameObject.SetActive(false);
         optionUI.OnDeactivate += ActiveMenu;
     }
 
@@ -62,6 +66,13 @@ public class MainMenu : MenuFirstSelecter
     public void OnClickOptionButton()
     {
         optionUI.Activate();
+
+        DeactiveMenu();
+    }
+
+    public void OnClickCreditButton()
+    {
+        credit.Activate();
 
         DeactiveMenu();
     }

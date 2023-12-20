@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundedState
 {
-    private float lastStepTime;
     public PlayerMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        lastStepTime = 0f;
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        PlayStepSFX();
     }
 
     public override void LogicUpdate()
@@ -23,7 +19,7 @@ public class PlayerMoveState : PlayerGroundedState
 
         Movement.CheckIfShouldFlip(xInput);
 
-        PlayStepSFX();
+        PlayStepSFX(0.4f);
 
         if (!isExitingState)
         {
@@ -47,13 +43,5 @@ public class PlayerMoveState : PlayerGroundedState
         }
     }
 
-    private void PlayStepSFX()
-    {
-        if (Time.time>lastStepTime + 0.4f)
-        {
-            lastStepTime = Time.time;
-            AudioManager.instance.PlaySoundFX(player.PlayerSFX.footstep, player.transform, 1f);
-        }
-    }
 
 }
