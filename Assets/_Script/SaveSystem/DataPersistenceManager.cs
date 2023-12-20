@@ -109,8 +109,6 @@ public class DataPersistenceManager : MonoBehaviour
         {
             option.LoadOptionData(OptionData);
         }
-
-        //TODO: Apply option data
     }
 
     public void SaveOptionData()

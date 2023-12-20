@@ -6,7 +6,7 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
     private int xInput;
     private Vector2 mouseDirectionInput;
-    private Camera cam;
+    private bool shot;
     public PlayerGunNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         data = player.WeaponManager.GunData;
@@ -18,8 +18,8 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
         mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
         xInput = player.InputHandler.NormInputX;
-        cam = CamManager.Instance.MainCamera;
         player.Anim.SetFloat("mouseDegree", mouseDirectionInput.y);
+        shot = false;
     }
 
     public override void LogicUpdate()
@@ -65,8 +65,9 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
     private void Shoot()
     {
-        if (player.WeaponManager.GunCurrentNormalAttackEnergy >= data.energyCostPerShot)
+        if (player.WeaponManager.GunCurrentNormalAttackEnergy >= data.energyCostPerShot && !shot)
         {
+            shot = true;
             AudioManager.instance.PlaySoundFX(player.PlayerSFX.gunAttack, player.transform, 1f);
             player.WeaponManager.DecreaseGunNormalAttackEnergy();
             player.WeaponManager.GunFiredRegenDelay();
