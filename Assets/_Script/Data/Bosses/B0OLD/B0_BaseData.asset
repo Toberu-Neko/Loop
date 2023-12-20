@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975447ccf87b87240b4ec091fcaffcb9, type: 3}
   m_Name: B0_BaseData
   m_EditorClassIdentifier: 
-  collideDamage: 1
-  collisionAttackDetails:
-    attackName: 
-    movementSpeed: 0
-    damageAmount: 5
-    staminaDamageAmount: 0
-    knockbackForce: 12
-    knockbackAngle: {x: 1, y: 0.75}
-  minAgroDistance: 7
-  maxAgroDistance: 8
-  closeRangeActionDistance: 0.95
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
+  collideDamage: 1
+  collisionAttackDetails:
+    attackName: 
+    damageAmount: 5
+    staminaDamageAmount: 0
+    movementSpeed: 0
+    knockbackForce: 12
+    knockbackAngle: {x: 1, y: 0.75}
+  gravityScale: 8
+  damagedSFX: {fileID: 8300000, guid: c47f17948f55d41c5876af88204e7f46, type: 3}

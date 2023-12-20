@@ -11,6 +11,9 @@ public class SO_PlayerSFX : ScriptableObject
     public AudioClip land;
     public AudioClip dash;
 
+    [Header("Skill")]
+    public AudioClip turnOn;
+
     [Header("Attack")]
     public AudioClip[] swordAttack;
     public AudioClip swordHit;

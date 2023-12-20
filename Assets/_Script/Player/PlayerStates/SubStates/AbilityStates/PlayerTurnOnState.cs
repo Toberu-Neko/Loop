@@ -8,6 +8,13 @@ public class PlayerTurnOnState : PlayerAbilityState
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        AudioManager.instance.PlaySoundFX(player.PlayerSFX.turnOn, player.transform, 1f);
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

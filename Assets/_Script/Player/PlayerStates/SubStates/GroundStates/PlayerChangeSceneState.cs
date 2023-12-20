@@ -33,14 +33,17 @@ public class PlayerChangeSceneState : PlayerState
 
         Movement.SetVelocityZero();
 
-        if (firstTime)
+        if (canChangeState)
         {
-            firstTime = false;
-            stateMachine.ChangeState(player.TurnOnState);
-        }
-        else if (canChangeState)
-        {
-            stateMachine.ChangeState(player.IdleState);
+            if (firstTime)
+            {
+                firstTime = false;
+                stateMachine.ChangeState(player.TurnOnState);
+            }
+            else
+            {
+                stateMachine.ChangeState(player.IdleState);
+            }
         }
     }
 

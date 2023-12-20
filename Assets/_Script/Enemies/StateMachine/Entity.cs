@@ -45,10 +45,19 @@ public class Entity : MonoBehaviour
         Stats.OnTimeStopStart += HandleOnTimeStop;
         Stats.OnTimeStopEnd += HandleOnTimeStart;
         Stats.Health.OnCurrentValueZero += HandleHealthZero;
+        Combat.OnDamaged += HandleOnDamaged;
 
         Stats.Health.Init();
         Stats.Stamina.Init();
 
+    }
+
+    private void HandleOnDamaged()
+    {
+        if(EntityData.damagedSFX != null)
+        {
+            AudioManager.instance.PlaySoundFX(EntityData.damagedSFX, transform, 1f);
+        }
     }
 
     protected virtual void Start()
@@ -61,6 +70,7 @@ public class Entity : MonoBehaviour
         Stats.OnTimeStopStart -= HandleOnTimeStop;
         Stats.OnTimeStopEnd -= HandleOnTimeStart;
         Stats.Health.OnCurrentValueZero -= HandleHealthZero;
+        Combat.OnDamaged -= HandleOnDamaged;
 
         Anim.speed = 1f;
     }
