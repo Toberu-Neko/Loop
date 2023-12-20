@@ -11,12 +11,12 @@ public class SubSceneAudioManager : MonoBehaviour
     {
         if (stopBGMOnLoad)
         {
-            AudioManager.instance.Stop(bgmName, 1f);
+            AudioManager.instance.StopBGM(bgmName, 1f);
         }
 
         if(bgmName != "")
         {
-            AudioManager.instance.Play(bgmName);
+            AudioManager.instance.PlayBGM(bgmName);
         }
     }
 }

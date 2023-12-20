@@ -3,6 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [field: SerializeField] public PlayerData PlayerData { get;private set; }
+    [field: SerializeField] public SO_PlayerSFX PlayerSFX { get; private set; }
     private GameManager gameManager;
     public PlayerStateMachine StateMachine { get; private set; }
 
@@ -219,6 +220,8 @@ public class Player : MonoBehaviour
     private void AnimationStartMovementTrigger() => StateMachine.CurrentState.AnimationStartMovementTrigger();
 
     private void AnimationStopMovementTrigger() => StateMachine.CurrentState.AnimationStopMovementTrigger();
+
+    private void AnimationSFXTrigger() => StateMachine.CurrentState.AnimationSFXTrigger();
 
     #region Change Scene
     private void HandleChangeSceneToUp()

@@ -2,12 +2,35 @@ using UnityEngine.Audio;
 using UnityEngine;
 using System;
 using System.Collections;
-using UnityEngine.Localization.SmartFormat.Utilities;
 
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
     public static AudioManager instance;
+
+    [SerializeField] private GameObject soundFXObj;
+
+    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private AudioMixerGroup soundFXMixerGroup;
+    [SerializeField] private AudioMixerGroup bgmMixerGroup;
+
+    #region Set Volume
+
+    public void SetMasterVolume(float volume)
+    {
+        audioMixer.SetFloat("MasterVolume", volume);
+    }
+
+    public void SetSoundFXVolume(float volume)
+    {
+        audioMixer.SetFloat("SFXVolume", volume);
+    }
+
+    public void SetBGMVolume(float volume)
+    {
+        audioMixer.SetFloat("BGMVolume", volume);
+    }
+    #endregion
 
     private void Awake()
     {
@@ -31,10 +54,48 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+            s.source.outputAudioMixerGroup = bgmMixerGroup;
         }
     }
 
-    public void Play(string name)
+    public void PlaySoundFX(AudioClip audioClip, Transform spawnTransform, float volume)
+    {
+        AudioSource audioSource = ObjectPoolManager.SpawnObject(soundFXObj, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
+
+        audioSource.clip = audioClip;
+        audioSource.volume = volume;
+        audioSource.loop = false;
+
+        audioSource.Play();
+
+        float time = audioSource.clip.length;
+
+        StartCoroutine(ReturnSFXObj(audioSource.gameObject, time));
+    }
+
+    public void PlayRandomSoundFX(AudioClip[] audioClip, Transform spawnTransform, float volume)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, audioClip.Length);
+        AudioSource audioSource = ObjectPoolManager.SpawnObject(soundFXObj, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
+
+        audioSource.clip = audioClip[randomIndex];
+        audioSource.volume = volume;
+        audioSource.loop = false;
+
+        audioSource.Play();
+
+        float time = audioSource.clip.length;
+
+        StartCoroutine(ReturnSFXObj(audioSource.gameObject, time));
+    }
+
+    private IEnumerator ReturnSFXObj(GameObject sfxObj, float time)
+    {
+        yield return new WaitForSeconds(time);
+        ObjectPoolManager.ReturnObjectToPool(sfxObj);
+    }
+
+    public void PlayBGM(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         Debug.Log("play " + name);
@@ -54,7 +115,7 @@ public class AudioManager : MonoBehaviour
         {
             if (sound.source.isPlaying && sound.name != name)
             {
-                Stop(sound.name);
+                StopBGM(sound.name);
             }
         }
 
@@ -64,7 +125,7 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
-    public void Stop(string name, float time = 1f)
+    public void StopBGM(string name, float time = 1f)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
 
@@ -74,10 +135,10 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        StartCoroutine(StopSound(s, time));
+        StartCoroutine(IE_StopBGM(s, time));
     }
 
-    IEnumerator StopSound(Sound s, float time)
+    IEnumerator IE_StopBGM(Sound s, float time)
     {
         while(s.source.volume > 0)
         {

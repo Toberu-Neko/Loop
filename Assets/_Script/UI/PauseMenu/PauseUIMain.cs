@@ -5,6 +5,7 @@ public class PauseUIMain : MonoBehaviour
     [SerializeField] private GameObject pauseUIObj;
     [SerializeField] private TutorialMenu tutorialMenu;
     [SerializeField] private PauseInventoryMain pauseInventoryMain;
+    [SerializeField] private OptionUI optionUI;
 
     private void Awake()
     {
@@ -27,6 +28,12 @@ public class PauseUIMain : MonoBehaviour
     {
         DeactiveAllMenu();
         DataPersistenceManager.Instance.LoadMainMenuScene();
+    }
+
+    public void OnClickOption()
+    {
+        DeactivateMenu();
+        optionUI.Activate();
     }
 
     public void OnClickTutorialButton()
@@ -62,6 +69,7 @@ public class PauseUIMain : MonoBehaviour
         pauseUIObj.SetActive(false);
         tutorialMenu.Deactivate();
         pauseInventoryMain.Deactivate();
+        optionUI.Deactivate();
         DeactivateMenu();
     }
 

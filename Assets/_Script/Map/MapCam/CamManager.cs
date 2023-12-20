@@ -101,6 +101,12 @@ public class CamManager : MonoBehaviour
 
     private void Inv_ChangeFOV()
     {
+        if (CurrentCam == null)
+        {
+            Debug.LogWarning("CurrentCam is null, in ChangeFOV");
+            return;
+        }
+
         CancelInvoke(nameof(Inv_ChangeFOV));
         CurrentCam.m_Lens.FieldOfView = Mathf.Lerp(CurrentCam.m_Lens.FieldOfView, targetFOV, Time.deltaTime * 2f);  
         if (Mathf.Abs(CurrentCam.m_Lens.FieldOfView - targetFOV) > 0.1f)

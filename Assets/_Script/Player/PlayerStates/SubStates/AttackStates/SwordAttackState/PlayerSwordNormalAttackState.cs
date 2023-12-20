@@ -9,7 +9,6 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
 
     private float lastAttackTime;
 
-
     public PlayerSwordNormalAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         attackCounter = 0;
@@ -67,11 +66,11 @@ public class PlayerSwordNormalAttackState : PlayerSwordAttackState
         Movement.SetVelocityX(details.movementSpeed * Movement.FacingDirection);
     }
 
-
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
         isAttackDone = true;
     }
+
 
 }

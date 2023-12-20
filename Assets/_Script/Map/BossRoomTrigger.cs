@@ -26,11 +26,11 @@ public class BossRoomTrigger : MonoBehaviour
 
         if (defeated)
         {
-            AudioManager.instance.Play("NormalBGM");
+            AudioManager.instance.PlayBGM("NormalBGM");
         }
         else
         {
-            AudioManager.instance.Stop("NormalBGM", 1f);
+            AudioManager.instance.StopBGM("NormalBGM", 1f);
         }
     }
     private void HandleBossDefeated()
@@ -38,7 +38,7 @@ public class BossRoomTrigger : MonoBehaviour
         bossRoomDoor.SetActive(false);
         CamManager.Instance.SwitchCamera(orgCamera);
         boss.Stats.Health.OnCurrentValueZero -= HandleBossDefeated;
-        AudioManager.instance.Stop("Boss0BGM");
+        AudioManager.instance.StopBGM("Boss0BGM");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -72,7 +72,7 @@ public class BossRoomTrigger : MonoBehaviour
             {
                 interacted = true;
                 boss.Stats.Health.OnCurrentValueZero += HandleBossDefeated;
-                AudioManager.instance.Play("Boss0BGM");
+                AudioManager.instance.PlayBGM("Boss0BGM");
 
                 bossRoomDoor.SetActive(true);
                 CamManager.Instance.SwitchCamera(bossCamera);

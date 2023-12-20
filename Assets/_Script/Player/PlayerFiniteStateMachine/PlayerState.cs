@@ -72,4 +72,6 @@ public class PlayerState
     public virtual void AnimationTurnOnFlipTrigger() { }
 
     public virtual void AnimationTurnOffFlipTrigger() { }
+
+    public virtual void AnimationSFXTrigger() { }
 }
