@@ -1,3 +1,4 @@
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour
 
     private Movement movement;
     private Stats stats;
+    private Combat combat;
 
     public Animator Anim { get; private set; }
     public PlayerWeaponManager WeaponManager { get; private set; }
@@ -90,6 +92,7 @@ public class Player : MonoBehaviour
         Core = GetComponentInChildren<Core>();
         stats = Core.GetCoreComponent<Stats>();
         movement = Core.GetCoreComponent<Movement>();
+        combat = Core.GetCoreComponent<Combat>();
 
         TimeSkillManager = GetComponent<PlayerTimeSkillManager>();
         Anim = GetComponent<Animator>();
@@ -154,6 +157,19 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         stats.Health.OnCurrentValueZero += HandleHealthZero;
+
+        combat.OnPerfectBlock += Combat_OnPerfectBlock;
+        combat.OnDamaged += Combat_OnDamaged;
+    }
+
+    private void Combat_OnDamaged()
+    {
+        AudioManager.instance.PlaySoundFX(PlayerSFX.getHit, transform, 1f);
+    }
+
+    private void Combat_OnPerfectBlock()
+    {
+        AudioManager.instance.PlaySoundFX(PlayerSFX.perfectBlock, transform, 1f);
     }
 
     private void Start()

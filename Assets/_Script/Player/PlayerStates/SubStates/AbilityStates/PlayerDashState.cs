@@ -20,6 +20,7 @@ public class PlayerDashState : PlayerAbilityState
         CanDash = false;
         player.InputHandler.UseDashInput();
 
+        AudioManager.instance.PlaySoundFX(player.PlayerSFX.dash, player.transform, 1f);
         StartTime = Time.time;
         Stats.SetInvincibleTrue();
 

@@ -9,15 +9,18 @@ public class SO_PlayerSFX : ScriptableObject
     public AudioClip footstep;
     public AudioClip jump;
     public AudioClip land;
-    public AudioClip dash;
 
     [Header("Skill")]
     public AudioClip turnOn;
+    public AudioClip heal;
+    public AudioClip dash;
 
     [Header("Attack")]
     public AudioClip[] swordAttack;
     public AudioClip swordHit;
     public AudioClip gunAttack;
+    public AudioClip getHit;
+    public AudioClip perfectBlock;
 
     
 }
