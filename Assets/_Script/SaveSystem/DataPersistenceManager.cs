@@ -22,6 +22,8 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private SceneReference mainMenuScene;
 
     public GameData GameData { get; private set;}
+    public OptionData OptionData { get; private set; }
+
     public List<IDataPersistance> DataPersistanceObjects { get; private set; }
     private FileDataHandler dataHandler;
 
@@ -80,10 +82,34 @@ public class DataPersistenceManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    private void Start()
+    {
+        LoadOptionData();
+    }
+
     private void Update()
     {
         timer += Time.unscaledDeltaTime;
     }
+
+    #region OptionData
+
+    private void LoadOptionData()
+    {
+        OptionData = dataHandler.LoadOptionData();
+        if(OptionData == null)
+        {
+            OptionData = new OptionData();
+            SaveOptionData();
+        }
+    }
+
+    public void SaveOptionData()
+    {
+        dataHandler.SaveOptionData(OptionData);
+    }
+
+    #endregion
 
     public void CheckIfShouldSaveOnLoad()
     {

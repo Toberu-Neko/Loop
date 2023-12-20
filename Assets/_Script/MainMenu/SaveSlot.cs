@@ -33,7 +33,8 @@ public class SaveSlot : MonoBehaviour
         {
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
-            percentageCompleteText.text = data.GetPercentageComplete() + "%";
+            percentageCompleteText.text = data.lastInteractedSavepoint;
+            // percentageCompleteText.text = data.GetPercentageComplete() + "%";
             timePlayedText.text = data.timePlayed.ToString("0.00") + "s";
         }
     }
