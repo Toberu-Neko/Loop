@@ -9,5 +9,6 @@ public class MainMenuGM : MonoBehaviour
     public void Start()
     {
         LoadSceneManager.Instance.LoadingObj = loadingObj;
+        DataPersistenceManager.Instance.LoadOptionData();
     }
 }

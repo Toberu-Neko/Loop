@@ -98,16 +98,16 @@ public class AudioManager : MonoBehaviour
     public void PlayBGM(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        Debug.Log("play " + name);
+
         if(s == null)
         {
-            Debug.LogWarning("音效名稱" + name + "錯誤");
+            Debug.LogError("音效名稱" + name + "錯誤");
             return;
         }
 
         if (s.source.isPlaying)
         {
-            Debug.LogError("音效名稱" + name + "已經在播放中");
+            Debug.LogWarning("音效名稱" + name + "已經在播放中");
             return;
         }
 

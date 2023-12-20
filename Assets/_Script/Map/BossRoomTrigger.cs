@@ -10,6 +10,10 @@ public class BossRoomTrigger : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera orgCamera;
     [SerializeField] private Collider2D col;
 
+    [Header("BGM")]
+    [SerializeField] private string normalBGMName;
+    [SerializeField] private string bossBGMName;
+
     private float enterPosX;
     private bool interacted;
     private bool defeated;
@@ -26,11 +30,11 @@ public class BossRoomTrigger : MonoBehaviour
 
         if (defeated)
         {
-            AudioManager.instance.PlayBGM("NormalBGM");
+            AudioManager.instance.PlayBGM(normalBGMName);
         }
         else
         {
-            AudioManager.instance.StopBGM("NormalBGM", 1f);
+            AudioManager.instance.StopBGM(normalBGMName, 1f);
         }
     }
     private void HandleBossDefeated()
@@ -38,7 +42,7 @@ public class BossRoomTrigger : MonoBehaviour
         bossRoomDoor.SetActive(false);
         CamManager.Instance.SwitchCamera(orgCamera);
         boss.Stats.Health.OnCurrentValueZero -= HandleBossDefeated;
-        AudioManager.instance.StopBGM("Boss0BGM");
+        AudioManager.instance.StopBGM(bossBGMName, 1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -72,7 +76,7 @@ public class BossRoomTrigger : MonoBehaviour
             {
                 interacted = true;
                 boss.Stats.Health.OnCurrentValueZero += HandleBossDefeated;
-                AudioManager.instance.PlayBGM("Boss0BGM");
+                AudioManager.instance.PlayBGM(bossBGMName);
 
                 bossRoomDoor.SetActive(true);
                 CamManager.Instance.SwitchCamera(bossCamera);

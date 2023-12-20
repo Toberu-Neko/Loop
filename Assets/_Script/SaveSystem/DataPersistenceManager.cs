@@ -147,6 +147,7 @@ public class DataPersistenceManager : MonoBehaviour
         // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
         {
+            LoadOptionData();
             LoadGame();
             if (firstTimeLoad)
             {
