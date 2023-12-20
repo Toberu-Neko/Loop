@@ -232,7 +232,7 @@ public class Player : MonoBehaviour
     {
         StateMachine.ChangeState(ChangeSceneState);
     }
-    private void HandleChangeSceneToRight()
+    public void HandleChangeSceneToRight()
     {
         StateMachine.ChangeState(ChangeSceneState);
     }

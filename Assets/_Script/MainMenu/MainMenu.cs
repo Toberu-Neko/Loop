@@ -81,5 +81,4 @@ public class MainMenu : MenuFirstSelecter
     {
         gameObject.SetActive(false);
     }
-
 }

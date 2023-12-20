@@ -6,11 +6,13 @@ public class PauseUIMain : MonoBehaviour
     [SerializeField] private TutorialMenu tutorialMenu;
     [SerializeField] private PauseInventoryMain pauseInventoryMain;
     [SerializeField] private OptionUI optionUI;
+    [SerializeField] private PauseTeleport teleportUI;
 
     private void Awake()
     {
         tutorialMenu.gameObject.SetActive(false);
         pauseInventoryMain.gameObject.SetActive(false);
+        teleportUI.gameObject.SetActive(false);
         optionUI.OnDeactivate += ActivateMenu;
     }
 
@@ -54,6 +56,12 @@ public class PauseUIMain : MonoBehaviour
         pauseInventoryMain.Activate();
     }
 
+    public void OnClickTeleportButton()
+    {
+        DeactivateMenu();
+        teleportUI.Activate();
+    }
+
     public void ActivateMenu(bool init = false)
     {
         if(init)
@@ -76,6 +84,7 @@ public class PauseUIMain : MonoBehaviour
         tutorialMenu.Deactivate();
         pauseInventoryMain.Deactivate();
         optionUI.Deactivate();
+        teleportUI.Deactivate();
         DeactivateMenu();
     }
 

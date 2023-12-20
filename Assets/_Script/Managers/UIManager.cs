@@ -208,23 +208,32 @@ public class UI_Manager : MonoBehaviour
     private void HandleChangeSceneGoUp()
     {
         changeSceneUI.SetActive(true);
+        if (bossFightUIObj.activeInHierarchy)
+            bossFightUI.Deactive();
         changeSceneAnimator.SetTrigger("toUp");
     }
 
     private void HandleChangeSceneGoDown()
     {
         changeSceneUI.SetActive(true);
+        if (bossFightUIObj.activeInHierarchy)
+            bossFightUI.Deactive();
         changeSceneAnimator.SetTrigger("toDown");
     }
 
     private void HandleChangeSceneGoLeft()
     {
         changeSceneUI.SetActive(true);
+        if (bossFightUIObj.activeInHierarchy)
+            bossFightUI.Deactive();
+        bossFightUIObj.SetActive(false);
         changeSceneAnimator.SetTrigger("toLeft");
     }
-    private void HandleChangeSceneGoRight()
+    public void HandleChangeSceneGoRight()
     {
         changeSceneUI.SetActive(true);
+        if(bossFightUIObj.activeInHierarchy)
+            bossFightUI.Deactive();
         changeSceneAnimator.SetTrigger("toRight");
     }
     private void HandleChangeSceneFinish()

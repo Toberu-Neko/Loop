@@ -7,6 +7,7 @@ public class LoadSceneManager : MonoBehaviour
 {
     public static LoadSceneManager Instance { get; private set; }
     [field: SerializeField] public GameObject LoadingObj { get; set; }
+    public string CurrentSceneName { get; set; }
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class LoadSceneManager : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         StartCoroutine(LoadSceneAsync(sceneName));
+        CurrentSceneName = sceneName;
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)
