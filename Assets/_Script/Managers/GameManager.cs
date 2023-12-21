@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
 
+
+    [SerializeField] private GameObject globalVolumeNight;
+    [SerializeField] private GameObject globalVolumeDay;
+
     public Dictionary<string, Savepoint> Savepoints { get; private set; }
 
     #region Change Scene Variables
@@ -54,6 +58,24 @@ public class GameManager : MonoBehaviour
 
         Savepoints = new();
 
+        SceneManager.sceneLoaded += HandleSceneLoaded;
+
+    }
+
+    private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if ((scene.name == "Level1-0" || scene.name == "Level1-1") && mode == LoadSceneMode.Additive)
+        {
+            Debug.Log("Night");
+            globalVolumeDay.SetActive(false);
+            globalVolumeNight.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Day");
+            globalVolumeDay.SetActive(true);
+            globalVolumeNight.SetActive(false);
+        }
     }
 
     private void Start()
