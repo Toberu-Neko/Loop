@@ -52,6 +52,7 @@ public class PlayerGunS3State : PlayerGunAttackState
 
         if(data.s3AttackDetails.Length > count)
         {
+            AudioManager.instance.PlaySoundFX(player.PlayerSFX.gunAttack, Movement.ParentTransform);
             DoDamageToDamageList(WeaponType.Gun, data.s3AttackDetails[count]);
             count++;
         }
