@@ -59,6 +59,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform headCheck;
     [SerializeField] private Transform slopeCheckVerticalFront;
     [SerializeField] private Transform slopeCheckVerticalBack;
+    [SerializeField] private Transform crouchChangeColliderWallCheck;
     #endregion
 
     [Tooltip("這個的值要略小於Collider的寬度, 不然碰到牆壁時會卡住.")]
@@ -209,7 +210,7 @@ public class CollisionSenses : CoreComponent
 
     public bool CrouchCanChangeCollider
     {
-        get => !Physics2D.BoxCast(ChangeColliderWallCheck.position, changeColliderWallCheckV2Crouch, 0f, Vector2.right * movement.FacingDirection, 0.1f, whatIsGround);
+        get => !Physics2D.BoxCast(crouchChangeColliderWallCheck.position, changeColliderWallCheckV2Crouch, 0f, Vector2.right * movement.FacingDirection, 0.1f, whatIsGround);
     }
 
     public bool WallFront
@@ -249,10 +250,10 @@ public class CollisionSenses : CoreComponent
         {
             Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallCheckDistance);
         }
-        if (ChangeColliderWallCheck)
+        if (ChangeColliderWallCheck && crouchChangeColliderWallCheck)
         {
             Gizmos.DrawWireCube(ChangeColliderWallCheck.position, changeColliderWallCheckV2);
-            Gizmos.DrawWireCube(ChangeColliderWallCheck.position, changeColliderWallCheckV2Crouch);
+            Gizmos.DrawWireCube(crouchChangeColliderWallCheck.position, changeColliderWallCheckV2Crouch);
         }
         if (LedgeCheckHorizontal) Gizmos.DrawLine(LedgeCheckHorizontal.position, LedgeCheckHorizontal.position + Vector3.right * wallCheckDistance);
         if (LedgeCheckVertical) Gizmos.DrawLine(LedgeCheckVertical.position, LedgeCheckVertical.position + Vector3.down * ledgeCheckDistance);
