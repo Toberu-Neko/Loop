@@ -13,6 +13,7 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
     [SerializeField] private GameObject door;
     [SerializeField] private GameObject textObj;
     [SerializeField] private TextMeshProUGUI descriptText;
+    [SerializeField] private Sound interactSFX;
     private int onItemConsumableCount;
 
     private event Action OnItemConsumableCountChange;
@@ -73,6 +74,7 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
         {
             if (inv.ConsumablesInventory[counsumableName].itemCount > 0)
             {
+                AudioManager.instance.PlaySoundFX(interactSFX, transform);
                 inv.RemoveConsumableItem(counsumableName);
                 onItemConsumableCount++;
                 OnItemConsumableCountChange?.Invoke();
