@@ -21,7 +21,9 @@ public class B0N_StateData : BaseEnemyStateData
     public ED_EnemyStunState stunStateData;
     public ED_TimeSlowSkill angrySkillData;
 
+    [Header("SFX")]
+    public Sound normalAttackSFX;
+    public Sound strongAttackSFX;
+    public Sound multiSkillSFX;
     
 }
-
-

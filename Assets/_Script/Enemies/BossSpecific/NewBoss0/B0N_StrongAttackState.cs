@@ -10,6 +10,14 @@ public class B0N_StrongAttackState : UnblockableAttackState
         this.boss = boss;
     }
 
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        AudioManager.instance.PlaySoundFX(boss.StateData.strongAttackSFX, Movement.ParentTransform);
+    }
+
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();

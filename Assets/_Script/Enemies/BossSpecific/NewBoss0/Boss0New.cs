@@ -21,7 +21,7 @@ public class Boss0New : BossBase
     public B0N_KinematicState KinematicState { get; private set; }
     public B0N_DeadState DeadState { get; private set; }
 
-    [SerializeField] private B0N_StateData stateData;
+    [field: SerializeField] public B0N_StateData StateData { get; private set; }
     [SerializeField] private Transform meleeAttackPosition;
     [field: SerializeField, Range(0f, 1f)] public float EnhancedAttackProbability { get; private set; }
 
@@ -36,21 +36,21 @@ public class Boss0New : BossBase
 
         exitDoor.SetActive(false);
 
-        IdleState = new B0N_Idle(this, StateMachine, "idle", stateData.idleStateData, this);
+        IdleState = new B0N_Idle(this, StateMachine, "idle", StateData.idleStateData, this);
         AngryState = new B0N_AngryState(this, StateMachine, "angry", this);
         InitAnim = new B0N_InitAnim(this, StateMachine, "init", this);
 
-        PlayerDetectedMoveState = new B0N_PlayerDetectedMoveState(this, StateMachine, "move", stateData.detectedMoveStateData, this);
-        NormalAttackState1 = new B0N_NormalAttackState1(this, StateMachine, "normalAttack1", meleeAttackPosition, stateData.normalAttack1StateData, this);
-        NormalAttackState2 = new B0N_NormalAttackState2(this, StateMachine, "normalAttack2", meleeAttackPosition, stateData.normalAttack2StateData, this);
-        StrongAttackState = new B0N_StrongAttackState(this, StateMachine, "strongAttack", meleeAttackPosition, stateData.strongAttackStateData, this);
-        AngryMagicState = new B0N_AngryMagicState(this, StateMachine, "angryMagic", this, stateData.angrySkillData);
+        PlayerDetectedMoveState = new B0N_PlayerDetectedMoveState(this, StateMachine, "move", StateData.detectedMoveStateData, this);
+        NormalAttackState1 = new B0N_NormalAttackState1(this, StateMachine, "normalAttack1", meleeAttackPosition, StateData.normalAttack1StateData, this);
+        NormalAttackState2 = new B0N_NormalAttackState2(this, StateMachine, "normalAttack2", meleeAttackPosition, StateData.normalAttack2StateData, this);
+        StrongAttackState = new B0N_StrongAttackState(this, StateMachine, "strongAttack", meleeAttackPosition, StateData.strongAttackStateData, this);
+        AngryMagicState = new B0N_AngryMagicState(this, StateMachine, "angryMagic", this, StateData.angrySkillData);
 
         PreChargeState = new B0N_PreChargeState(this, StateMachine, "preCharge", this);
-        ChargeState = new B0N_ChargeState(this, StateMachine, "charge", stateData.ChargeState, this);
-        MultiAttackState = new B0N_MultiAttackState(this, StateMachine, "multiAttack", meleeAttackPosition, stateData.MultiAttackState, this);
+        ChargeState = new B0N_ChargeState(this, StateMachine, "charge", StateData.ChargeState, this);
+        MultiAttackState = new B0N_MultiAttackState(this, StateMachine, "multiAttack", meleeAttackPosition, StateData.MultiAttackState, this);
 
-        StunState = new B0N_StunState(this, StateMachine, "stun", stateData.stunStateData, this);
+        StunState = new B0N_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B0N_KinematicState(this, StateMachine, "stun", this);
         DeadState = new B0N_DeadState(this, StateMachine, "dead", this);
 
@@ -71,7 +71,7 @@ public class Boss0New : BossBase
 
         Stats.Timer(slowOnTimer);
 
-        if (EnterSlowTrigger.activeInHierarchy && Time.time >= slowOnTimer + stateData.angrySkillData.duration)
+        if (EnterSlowTrigger.activeInHierarchy && Time.time >= slowOnTimer + StateData.angrySkillData.duration)
         {
             EnterSlowTrigger.SetActive(false);
         }
