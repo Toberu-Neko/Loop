@@ -59,7 +59,11 @@ public class GameManager : MonoBehaviour
         Savepoints = new();
 
         SceneManager.sceneLoaded += HandleSceneLoaded;
+    }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
     }
 
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
