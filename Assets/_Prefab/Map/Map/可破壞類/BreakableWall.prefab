@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2259549589849698365}
   - component: {fileID: 5373193106178013210}
-  - component: {fileID: 2344946663664992165}
   - component: {fileID: 5294219069640272044}
+  - component: {fileID: 2344946663664992165}
   m_Layer: 16
   m_Name: BreakableWall
   m_TagString: Untagged
@@ -87,6 +87,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5294219069640272044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316738072539658883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d658473ed4d7e4bb57348502cffd91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  core: {fileID: 2736039114183009230}
+  isAddedID: 0
+  ID: 
+  health: 1
+  breakSFX:
+    name: 
+    clip: {fileID: 8300000, guid: 7c59ead1c0a254004bc52e663fd40aa4, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandomRangeMin: -0.1
+    pitchRandomRangeMax: 0.1
+    loop: 0
+    source: {fileID: 0}
 --- !u!61 &2344946663664992165
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,22 +157,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5294219069640272044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3316738072539658883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36d658473ed4d7e4bb57348502cffd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  core: {fileID: 2736039114183009230}
-  isAddedID: 0
-  ID: 
-  health: 1
 --- !u!1001 &8785768647526599571
 PrefabInstance:
   m_ObjectHideFlags: 0

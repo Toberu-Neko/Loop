@@ -68,7 +68,7 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
         if (player.WeaponManager.GunCurrentNormalAttackEnergy >= data.energyCostPerShot && !shot)
         {
             shot = true;
-            AudioManager.instance.PlaySoundFX(player.PlayerSFX.gunAttack, player.transform, 1f);
+            AudioManager.instance.PlaySoundFX(player.PlayerSFX.gunAttack, player.transform);
             player.WeaponManager.DecreaseGunNormalAttackEnergy();
             player.WeaponManager.GunFiredRegenDelay();
 

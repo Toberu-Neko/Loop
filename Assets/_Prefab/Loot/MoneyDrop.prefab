@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2077092171547478453}
   - component: {fileID: 1883499646424926046}
   - component: {fileID: 8749580600515950347}
+  - component: {fileID: 5695589540920914585}
   m_Layer: 15
   m_Name: MoneyDrop
   m_TagString: Untagged
@@ -78,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 550143649
   m_SortingLayer: 3
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.96774197, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 094e0c5cb82a0bb418fc27d082983e20, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -152,7 +153,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.925, y: 1.29}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -180,6 +181,36 @@ MonoBehaviour:
     m_Bits: 576
   col: {fileID: 1883499646424926046}
   rb: {fileID: 2077092171547478453}
+  pickSFX:
+    name: 
+    clip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+    volume: 1
+    pitch: 1.5
+    pitchRandomRangeMin: 0
+    pitchRandomRangeMax: 0
+    loop: 0
+    source: {fileID: 0}
+--- !u!95 &5695589540920914585
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124393989099812123}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1fe2a2786dc1610499524956c9097a9e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7855569185741520324
 GameObject:
   m_ObjectHideFlags: 0

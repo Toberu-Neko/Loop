@@ -164,12 +164,12 @@ public class Player : MonoBehaviour
 
     private void Combat_OnDamaged()
     {
-        AudioManager.instance.PlaySoundFX(PlayerSFX.getHit, transform, 1f);
+        AudioManager.instance.PlaySoundFX(PlayerSFX.getHit, transform);
     }
 
     private void Combat_OnPerfectBlock()
     {
-        AudioManager.instance.PlaySoundFX(PlayerSFX.perfectBlock, transform, 1f);
+        AudioManager.instance.PlaySoundFX(PlayerSFX.perfectBlock, transform);
     }
 
     private void Start()

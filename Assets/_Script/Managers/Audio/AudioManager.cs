@@ -58,13 +58,15 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySoundFX(AudioClip audioClip, Transform spawnTransform, float volume)
+    public void PlaySoundFX(Sound sound, Transform spawnTransform)
     {
         AudioSource audioSource = ObjectPoolManager.SpawnObject(soundFXObj, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
 
-        audioSource.clip = audioClip;
-        audioSource.volume = volume;
-        audioSource.loop = false;
+        audioSource.clip = sound.clip;
+        audioSource.volume = sound.volume;
+        audioSource.loop = sound.loop;
+        audioSource.pitch = sound.pitch;
+        audioSource.pitch += UnityEngine.Random.Range(sound.pitchRandomRangeMin, sound.pitchRandomRangeMax);
 
         audioSource.Play();
 
@@ -73,14 +75,19 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(ReturnSFXObj(audioSource.gameObject, time));
     }
 
-    public void PlayRandomSoundFX(AudioClip[] audioClip, Transform spawnTransform, float volume)
+    public void PlayRandomSoundFX(Sound[] sounds, Transform spawnTransform)
     {
-        int randomIndex = UnityEngine.Random.Range(0, audioClip.Length);
+        int randomIndex = UnityEngine.Random.Range(0, sounds.Length);
         AudioSource audioSource = ObjectPoolManager.SpawnObject(soundFXObj, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
 
-        audioSource.clip = audioClip[randomIndex];
-        audioSource.volume = volume;
-        audioSource.loop = false;
+        Sound s = sounds[randomIndex];
+        audioSource.clip = s.clip;
+
+        audioSource.clip = s.clip;
+        audioSource.volume = s.volume;
+        audioSource.loop = s.loop;
+        audioSource.pitch = s.pitch;
+        audioSource.pitch += UnityEngine.Random.Range(s.pitchRandomRangeMin, s.pitchRandomRangeMax);
 
         audioSource.Play();
 

@@ -10,6 +10,7 @@ public class TDP_LargeRangeTrap : TempDataPersist_MapObjBase
     [SerializeField] private int spawnCount;
     [SerializeField] private float xSpawnDistance;
 
+    [SerializeField] private Sound activeSFX;
     [SerializeField] private Transform teleportPos;
 
     private Vector2[] spawnPositions;
@@ -36,6 +37,7 @@ public class TDP_LargeRangeTrap : TempDataPersist_MapObjBase
         if (collision.CompareTag("Player") && !isActivated)
         {
             playerCol = collision;
+            AudioManager.instance.PlaySoundFX(activeSFX, transform);
             CamManager.Instance.CameraShake(3f);
             for (int i = 0; i < spawnCount; i++)
             {

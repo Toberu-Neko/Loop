@@ -36,7 +36,7 @@ public class PlayerRegenState : PlayerAbilityState
         }
         Stats.Health.Increase(playerData.regenAmount);
 
-        AudioManager.instance.PlaySoundFX(player.PlayerSFX.heal, player.transform, 1f);
+        AudioManager.instance.PlaySoundFX(player.PlayerSFX.heal, player.transform);
 
         isAbilityDone = true;
     }

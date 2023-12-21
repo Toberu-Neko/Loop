@@ -28,6 +28,6 @@ public class PlayerSwordAttackState : PlayerAttackState
     public override void AnimationSFXTrigger()
     {
         base.AnimationSFXTrigger();
-        AudioManager.instance.PlayRandomSoundFX(player.PlayerSFX.swordAttack, Movement.ParentTransform, 1f);
+        AudioManager.instance.PlayRandomSoundFX(player.PlayerSFX.swordAttack, Movement.ParentTransform);
     }
 }

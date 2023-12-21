@@ -12,5 +12,5 @@ public class D_Entity : ScriptableObject
     public WeaponAttackDetails collisionAttackDetails;
 
     public float gravityScale = 8f;
-    public AudioClip damagedSFX;
+    public Sound damagedSFX;
 }

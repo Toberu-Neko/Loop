@@ -10,6 +10,7 @@ public class BreakableWall : MonoBehaviour, IMapDamageableItem, ITempDataPersist
     public bool isAddedID;
     public string ID;
     [SerializeField] private int health = 1;
+    [SerializeField] private Sound breakSFX;
 
     private bool isDefeated = false;
     protected event Action OnDefeated;
@@ -48,6 +49,7 @@ public class BreakableWall : MonoBehaviour, IMapDamageableItem, ITempDataPersist
             OnDefeated?.Invoke();
             gameObject.SetActive(false);
             isDefeated = true;
+            AudioManager.instance.PlaySoundFX(breakSFX, transform);
         }
     }
 }

@@ -53,6 +53,7 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
         if(onItemConsumableCount >= maxNeededCount)
         {
             //TODO: Play animation
+            descriptText.text = "你已經供奉了心香";
             door.SetActive(false);
         }
     }

@@ -12,7 +12,7 @@ public class PlayerLandState : PlayerGroundedState
     {
         base.Enter();
 
-        AudioManager.instance.PlaySoundFX(player.PlayerSFX.land, Movement.ParentTransform, 1f);
+        AudioManager.instance.PlaySoundFX(player.PlayerSFX.land, Movement.ParentTransform);
     }
 
     public override void LogicUpdate()

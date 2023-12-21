@@ -5,7 +5,7 @@ public class PressEPickItemBase : DropableItemBase
 {
     [SerializeField] private GameObject keyboardTutorialObject;
     [SerializeField] private GameObject gamepadTutorialObject;
-    [SerializeField] private AudioClip pickUpSFX;
+    [SerializeField] private Sound pickUpSFX;
     [field: SerializeField] public bool PressE { get; private set; } = false;
 
     private PlayerInputHandler inputHandler;
@@ -37,7 +37,7 @@ public class PressEPickItemBase : DropableItemBase
 
     private void HandlePick()
     {
-        AudioManager.instance.PlaySoundFX(pickUpSFX, transform, 1f);
+        AudioManager.instance.PlaySoundFX(pickUpSFX, transform);
     }
 
     protected override void Update()

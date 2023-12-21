@@ -6,21 +6,21 @@ using UnityEngine;
 public class SO_PlayerSFX : ScriptableObject
 {
     [Header("Movement")]
-    public AudioClip footstep;
-    public AudioClip jump;
-    public AudioClip land;
+    public Sound footstep;
+    public Sound jump;
+    public Sound land;
 
     [Header("Skill")]
-    public AudioClip turnOn;
-    public AudioClip heal;
-    public AudioClip dash;
+    public Sound turnOn;
+    public Sound heal;
+    public Sound dash;
 
     [Header("Attack")]
-    public AudioClip[] swordAttack;
-    public AudioClip swordHit;
-    public AudioClip gunAttack;
-    public AudioClip getHit;
-    public AudioClip perfectBlock;
+    public Sound[] swordAttack;
+    public Sound swordHit;
+    public Sound gunAttack;
+    public Sound getHit;
+    public Sound perfectBlock;
 
     
 }
