@@ -10,8 +10,12 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     [SerializeField] protected Core core;
     [SerializeField] protected SpriteRenderer SR;
 
+    [Header("After Image")]
     [SerializeField] private GameObject afterImagePrefab;
     [SerializeField] private float afterImageDistance;
+
+    [Header("SFX")]
+    [SerializeField] protected Sound shootSFX;
     private Vector2 lastAfterImagePosition;
 
     protected Movement movement;
@@ -173,6 +177,9 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         startTime = Time.time;
         transform.rotation = targetRotation;
         movement.SetVelocity(speed, fireDirection);
+
+        if(shootSFX != null)
+            AudioManager.instance.PlaySoundFX(shootSFX, transform);
     }
 
 

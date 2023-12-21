@@ -6,7 +6,8 @@ public class Entity : MonoBehaviour
 {
     [field: SerializeField] public EnemyStateMachine StateMachine { get; private set; }
     [SerializeField] private D_Entity EntityData;
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] public SpriteRenderer spriteRenderer;
+    [field: SerializeField] public GameObject DeathParticles { get; private set; }
 
     public Core Core { get; private set; }
     protected Movement movement;

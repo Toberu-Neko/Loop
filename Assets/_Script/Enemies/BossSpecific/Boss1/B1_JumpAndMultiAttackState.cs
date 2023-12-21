@@ -19,4 +19,11 @@ public class B1_JumpAndMultiAttackState : JumpAndMultiAttackState
             stateMachine.ChangeState(boss.AfterMultiAttackState);
         }
     }
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        // AudioManager.instance.PlaySoundFX(boss.StateData.shootSFX, Movement.ParentTransform);
+    }
 }

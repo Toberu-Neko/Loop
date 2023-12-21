@@ -13,6 +13,13 @@ public class B1_EnemyPerfectBlockState : EnemyPerfectBlockState
         this.stateData = boss.StateData.counterAttackObjsData;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        AudioManager.instance.PlaySoundFX(boss.StateData.block, Movement.ParentTransform);
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

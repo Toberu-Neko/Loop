@@ -19,6 +19,7 @@ public class EnemyState
     protected CollisionSenses CollisionSenses { get; private set; }
     protected Combat Combat { get; private set; }
     protected Movement Movement { get; private set; }
+    protected ParticleManager ParticleManager { get; private set; }
     protected Death Death { get; private set; }
     protected CheckPlayerSenses CheckPlayerSenses { get; private set; }
 
@@ -34,6 +35,7 @@ public class EnemyState
         Movement = core.GetCoreComponent<Movement>();
         Combat = core.GetCoreComponent<Combat>();
         CollisionSenses = core.GetCoreComponent<CollisionSenses>();
+        ParticleManager = core.GetCoreComponent<ParticleManager>();
         Stats = core.GetCoreComponent<Stats>();
 
         StartTime = 0f;

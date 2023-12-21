@@ -27,4 +27,8 @@ public class B1_StateData : BaseEnemyStateData
 
     [Header("Other")]
     public ED_EnemyStunState stunStateData;
+
+    [Header("SFX")]
+    public Sound block;
+    
 }
