@@ -6,7 +6,8 @@ public class PressETeleportTrigger : MonoBehaviour
 {
     [Header("這個物件一定要在綠框中")]
     [SerializeField] private Transform teleportPos;
-    [SerializeField] private GameObject pressEObject;
+    [SerializeField] private GameObject keyboardTutorialObject;
+    [SerializeField] private GameObject gamepadTutorialObject;
 
     protected bool inRange;
     private SceneReference currentScene;
@@ -16,7 +17,8 @@ public class PressETeleportTrigger : MonoBehaviour
     private void OnEnable()
     {
         inRange = false;
-        pressEObject.SetActive(false);
+        keyboardTutorialObject.SetActive(false);
+        gamepadTutorialObject.SetActive(false);
     }
 
     private void Update()
@@ -47,6 +49,8 @@ public class PressETeleportTrigger : MonoBehaviour
 
 
                 playerCol.transform.position = teleportPos.position;
+                keyboardTutorialObject.SetActive(false);
+                gamepadTutorialObject.SetActive(false);
                 GameManager.Instance.HandleChangeScene(currentScene.Name);
             }
         }
@@ -57,9 +61,16 @@ public class PressETeleportTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             inRange = true;
-            pressEObject.SetActive(true);
+            if (GameManager.Instance.PlayerInput.currentControlScheme == "Gamepad")
+            {
+                gamepadTutorialObject.SetActive(true);
+            }
+            else
+            {
+                keyboardTutorialObject.SetActive(true);
+            }
 
-            if(inputHandler == null)
+            if (inputHandler == null)
             {
                 playerCol = collision;
                 inputHandler = collision.GetComponent<PlayerInputHandler>();
@@ -72,7 +83,8 @@ public class PressETeleportTrigger : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             inRange = false;
-            pressEObject.SetActive(false);
+            keyboardTutorialObject.SetActive(false);
+            gamepadTutorialObject.SetActive(false);
         }
     }
 
