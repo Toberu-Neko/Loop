@@ -28,8 +28,10 @@ public class E4_MeleeAttackState : SingleMeleeAttackState
         }
     }
 
-    public override void AnimationFinishTrigger()
+    public override void AnimationActionTrigger()
     {
-        base.AnimationFinishTrigger();
+        base.AnimationActionTrigger();
+
+        AudioManager.instance.PlaySoundFX(enemy.stateData.attackSFX, Movement.ParentTransform);
     }
 }

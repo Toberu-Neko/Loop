@@ -21,14 +21,12 @@ MonoBehaviour:
   groundMoveStateData:
     movementSpeed: 3
   playerDetectedStateData:
-    delayTime: 1.5
+    minDelayTime: 1
+    maxDelayTime: 2
   meleeAttackStateData:
-    whatIsPlayer:
-      serializedVersion: 2
-      m_Bits: 128
+    attackCooldown: 1
     attackDamage: 10
     staminaAttackDamage: 3
-    attackCooldown: 1
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 10
   lookForPlayerStateData:
@@ -40,6 +38,7 @@ MonoBehaviour:
     dodgeAngle: {x: 1, y: 1}
   detectedPlayerMoveStateData:
     movementSpeed: 5
+    minMovementTime: 0
     minInStateTime: 3
     maxInStateTime: 5
   stunStateData:
@@ -49,3 +48,12 @@ MonoBehaviour:
   deadStateData:
     deathChunkParticle: {fileID: 514008935881032697, guid: 2b7e98a56000226409b0277c751f3f30, type: 3}
     deathBloodParticle: {fileID: 2615349222246815121, guid: db18ab1de83847b4fa75fa59ee0730ce, type: 3}
+  attackSFX:
+    name: 
+    clip: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandomRangeMin: 0
+    pitchRandomRangeMax: 0
+    loop: 0
+    source: {fileID: 0}

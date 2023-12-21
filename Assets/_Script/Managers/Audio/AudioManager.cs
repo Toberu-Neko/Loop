@@ -14,6 +14,19 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup soundFXMixerGroup;
     [SerializeField] private AudioMixerGroup bgmMixerGroup;
 
+    [SerializeField] private Sound buttonHover;
+    [SerializeField] private Sound buttonClick;
+
+    public void PlayButtonHover(Transform spawnTransform)
+    {
+        PlaySoundFX(buttonHover, spawnTransform);
+    }
+
+    public void PlayButtonClick(Transform spawnTransform)
+    {
+        PlaySoundFX(buttonClick, spawnTransform);
+    }
+
     #region Set Volume
 
     public void SetMasterVolume(float volume)
@@ -98,8 +111,9 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator ReturnSFXObj(GameObject sfxObj, float time)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         ObjectPoolManager.ReturnObjectToPool(sfxObj);
+
     }
 
     public void PlayBGM(string name)
@@ -150,7 +164,7 @@ public class AudioManager : MonoBehaviour
         while(s.source.volume > 0)
         {
             s.source.volume -= Time.deltaTime / time;
-            yield return null;
+            yield return new WaitForSecondsRealtime(Time.deltaTime);
         }
 
         s.source.Stop();

@@ -19,4 +19,7 @@ public class E4_StateData : BaseEnemyStateData
     public ED_PlayerDetectedMoveState detectedPlayerMoveStateData;
     public ED_EnemyStunState stunStateData;
     public ED_EnemyDeadState deadStateData;
+
+    [Header("SFX")]
+    public Sound attackSFX;
 }

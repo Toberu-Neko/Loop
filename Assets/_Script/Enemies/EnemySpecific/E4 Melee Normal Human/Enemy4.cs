@@ -15,7 +15,7 @@ public class Enemy4 : Entity
     public E4_DodgeState DodgeState { get; private set; }
     public E4_KinematicState KinematicState { get; private set; }
 
-    [SerializeField] private E4_StateData stateData;
+    [SerializeField] public E4_StateData stateData;
     [SerializeField] private Transform meleeAttackPosition;
 
     public override void Awake()
