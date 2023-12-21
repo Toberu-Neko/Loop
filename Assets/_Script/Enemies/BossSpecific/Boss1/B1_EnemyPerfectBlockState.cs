@@ -36,6 +36,26 @@ public class B1_EnemyPerfectBlockState : EnemyPerfectBlockState
     }
     private void PasteMagicOnPlayer()
     {
+        /*
+        int a = 0, b = 0;
+        for(int i = 0; i < 100; i++)
+        {
+            int testr = Random.Range(0, stateData.pasteItems.Length);
+            if(testr == 0)
+            {
+                a++;
+            }
+            else if(testr == 1)
+            {
+                b++;
+            }
+
+
+        }
+
+        Debug.Log("0: " + a + " 1: " + b);
+        */
+
         int random = Random.Range(0, stateData.pasteItems.Length);
 
         if (Combat.DetectedDamageables.Count == 0)
