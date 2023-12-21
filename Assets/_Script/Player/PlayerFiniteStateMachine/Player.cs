@@ -1,4 +1,3 @@
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 
 public class Player : MonoBehaviour
