@@ -85,6 +85,14 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
 
 
             details.combatDetails.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
+
+            if(mouseDirectionInput == Vector2.zero)
+            {
+                if (Movement.FacingDirection == 1)
+                    mouseDirectionInput = Vector2.right;
+                else
+                    mouseDirectionInput = Vector2.left;
+            }
             proj.Fire(details, mouseDirectionInput);
         }
 
