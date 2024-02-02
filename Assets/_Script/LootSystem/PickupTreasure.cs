@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Localization.Components;
+
 
 public class PickupTreasure : PressEPickItemBase, IDataPersistance
 {
+    [SerializeField] private LocalizeStringEvent nameLocalizeString;
     [Header("ID")]
     public bool isAddedID;
     public string ID;
@@ -116,7 +116,7 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
                 break;
         }
 
-        UI_Manager.Instance.ActivePickupItemUI(treasureData.displayName, treasureData.itemDescription);
+        UI_Manager.Instance.ActivePickupItemUI(treasureData.displayNameLocalization, treasureData.shortDescriptionLocalization);
 
         ispicked = true;
         gameObject.SetActive(false);

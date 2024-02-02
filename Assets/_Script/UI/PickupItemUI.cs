@@ -1,19 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class PickupItemUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI itemNameText;
-    [SerializeField] private TextMeshProUGUI itemDescriptionText;
+    [SerializeField] private LocalizeStringEvent itemNameText;
+    [SerializeField] private LocalizeStringEvent itemDescriptionText;
 
-    public void Active(string name, string description)
+    [SerializeField] private LocalizedString defaultItemName;
+    [SerializeField] private LocalizedString defaultItemDescription;
+
+    public void Active(LocalizedString name, LocalizedString description)
     {
         GameManager.Instance.PauseGame();
         gameObject.SetActive(true);
-        itemNameText.text = name;
-        itemDescriptionText.text = description;
+
+        if(name.IsEmpty || description.IsEmpty)
+        {
+            itemNameText.StringReference = defaultItemName;
+            itemDescriptionText.StringReference = defaultItemDescription;
+            return;
+        }
+
+        itemNameText.StringReference = name;
+        itemDescriptionText.StringReference = description;
     }
 
     public void Deactive()

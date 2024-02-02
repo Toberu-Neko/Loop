@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -155,7 +156,7 @@ public class UI_Manager : MonoBehaviour
         bossFightUI.Active(bossBase);
     }
 
-    public void ActivePickupItemUI(string name, string description)
+    public void ActivePickupItemUI(LocalizedString name, LocalizedString description)
     {
         pickUpItemUI.Active(name, description);
     }
