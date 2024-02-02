@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class OptionData
 {
+    public int languageIndex;
+
     public float masterVolume;
     public float musicVolume;
     public float sfxVolume;
@@ -13,6 +15,7 @@ public class OptionData
 
     public OptionData()
     {
+        languageIndex = 0;
         masterVolume = 1f;
         musicVolume = 1f;
         sfxVolume = 1f;
