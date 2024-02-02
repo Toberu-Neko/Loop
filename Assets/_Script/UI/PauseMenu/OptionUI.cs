@@ -48,19 +48,10 @@ public class OptionUI : MonoBehaviour, IOptionData
 
     public void ChangeLocaleButton(int index)
     {
-        if(hasChangedLocale || !gameObject.activeInHierarchy)
-            return;
         languageIndex = index;
-        StartCoroutine(SetLocale(index));
+        LocalizationManager.Instance.ChangeLocale(index);
     }
 
-    private IEnumerator SetLocale(int index)
-    {
-        hasChangedLocale = true;
-        yield return LocalizationSettings.InitializationOperation;
-        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
-        hasChangedLocale = false;
-    }
 
     public void LoadOptionData(OptionData data)
     {
