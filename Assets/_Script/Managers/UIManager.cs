@@ -161,9 +161,9 @@ public class UI_Manager : MonoBehaviour
         pickUpItemUI.Active(name, description);
     }
 
-    public void ActivatePickupItemUIHUD(string name, string description)
+    public void ActivatePickupItemUIHUD(LocalizedString name)
     {
-        pickupHUD.AddToQueue(name, description);
+        pickupHUD.AddToQueue(name);
     }
 
     private void OpenPauseMainUI()

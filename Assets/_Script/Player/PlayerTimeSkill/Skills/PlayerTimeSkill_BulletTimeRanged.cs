@@ -18,6 +18,7 @@ public class PlayerTimeSkill_BulletTimeRanged : PlayerTimeSkillBase
     {
         base.Enter();
 
+        SkillName = Data.bulletTimeRangedSkillName;
         started = false;
         timeSlowables = new();
     }
@@ -35,16 +36,16 @@ public class PlayerTimeSkill_BulletTimeRanged : PlayerTimeSkillBase
     {
         base.LogicUpdate();
 
-        if (player.InputHandler.TimeSkillInput && !started && manager.CurrentEnergy >= data.bulletTimeRangedCost)
+        if (player.InputHandler.TimeSkillInput && !started && manager.CurrentEnergy >= Data.bulletTimeRangedCost)
         {
-            manager.DecreaseEnergy(data.bulletTimeRangedCost);
+            manager.DecreaseEnergy(Data.bulletTimeRangedCost);
             player.InputHandler.UseTimeSkillInput();
             started = true;
             startTime = Time.time;
             manager.BulletTimeEffectObj.SetActive(true);
         }
 
-        if(started && Time.time > startTime + data.bulletTimeRangedDuration)
+        if(started && Time.time > startTime + Data.bulletTimeRangedDuration)
         {
             started = false;
             manager.BulletTimeEffectObj.SetActive(false);
@@ -54,7 +55,7 @@ public class PlayerTimeSkill_BulletTimeRanged : PlayerTimeSkillBase
 
         if (started)
         {
-            RaycastHit2D[] hit = Physics2D.CircleCastAll(player.transform.position, data.bulletTimeRangedRadius, Vector2.zero, 0f, data.whatIsInteractable);
+            RaycastHit2D[] hit = Physics2D.CircleCastAll(player.transform.position, Data.bulletTimeRangedRadius, Vector2.zero, 0f, Data.whatIsInteractable);
 
             List<ITimeSlowable> t_slowables = new();
 

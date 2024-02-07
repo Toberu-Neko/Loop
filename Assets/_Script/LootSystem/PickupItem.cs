@@ -22,7 +22,7 @@ public class PickupItem : PressEPickItemBase
 
     private void HandlePickUp()
     {
-        UI_Manager.Instance.ActivatePickupItemUIHUD(itemSO.displayName, itemSO.itemDescription);
+        UI_Manager.Instance.ActivatePickupItemUIHUD(itemSO.displayNameLocalization);
 
         if(itemSO is SO_Chip)
         {

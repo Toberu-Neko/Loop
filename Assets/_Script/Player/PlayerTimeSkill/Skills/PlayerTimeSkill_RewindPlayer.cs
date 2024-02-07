@@ -14,6 +14,7 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
     {
         base.Enter();
 
+        SkillName = Data.rewindSkillName;
         pointsInTime = new();
     }
 
@@ -27,7 +28,7 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
     {
         base.LogicUpdate();
 
-        if (player.InputHandler.TimeSkillInput && !Stats.IsRewindingPosition && manager.CurrentEnergy > data.rewindCostPerSecond * Time.deltaTime)
+        if (player.InputHandler.TimeSkillInput && !Stats.IsRewindingPosition && manager.CurrentEnergy > Data.rewindCostPerSecond * Time.deltaTime)
         {
             player.InputHandler.UseTimeSkillInput();
             StartRewinding();
@@ -37,7 +38,7 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
             if(!player.InputHandler.TimeSkillHoldInput || manager.CurrentEnergy <= 0)
                 StopRewinding();
             else
-                manager.DecreaseEnergy(data.rewindCostPerSecond * Time.deltaTime);
+                manager.DecreaseEnergy(Data.rewindCostPerSecond * Time.deltaTime);
         }
     }
     public override void PhysicsUpdate()
@@ -60,7 +61,7 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
     {
         if (Time.fixedDeltaTime >= 0.02f || fixedDeltaTimer >= 0.02f)
         {
-            if(pointsInTime.Count > Mathf.Round(data.rewindMaxTime / Time.fixedDeltaTime))
+            if(pointsInTime.Count > Mathf.Round(Data.rewindMaxTime / Time.fixedDeltaTime))
             {
                 pointsInTime.RemoveAt(pointsInTime.Count - 1);
             }
@@ -81,7 +82,7 @@ public class PlayerTimeSkill_RewindPlayer : PlayerTimeSkillBase
             Movement.SetPosition(point.position, point.rotation, point.facingDirection);
             player.SR.sprite = point.sprite;
 
-            for (int i = 1; i < data.rewindPlaySpeed; i++)
+            for (int i = 1; i < Data.rewindPlaySpeed; i++)
             {
                 if (pointsInTime.Count > 1)
                     pointsInTime.RemoveAt(0);

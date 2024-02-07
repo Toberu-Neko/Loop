@@ -17,6 +17,7 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
     {
         base.Enter();
 
+        SkillName = Data.bookMarkSkillName;
         pointsInTime = new();
         isRecording = false;
     }
@@ -32,12 +33,12 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
 
         if (player.InputHandler.TimeSkillInput && 
             !isRecording && !Stats.IsRewindingPosition &&
-            manager.CurrentEnergy > data.bookMarkCostPerSecond * Time.deltaTime)
+            manager.CurrentEnergy > Data.bookMarkCostPerSecond * Time.deltaTime)
         {
             player.InputHandler.UseTimeSkillInput();
             isRecording = true;
 
-            mark = ObjectPoolManager.SpawnObject(data.bookMarkPrefab, player.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.GameObjects);
+            mark = ObjectPoolManager.SpawnObject(Data.bookMarkPrefab, player.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.GameObjects);
             SpriteRenderer ren = mark.GetComponent<SpriteRenderer>();
             ren.sprite = player.SR.sprite;
             if(Movement.FacingDirection == -1)
@@ -54,7 +55,7 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
 
         if(isRecording)
         {
-            manager.DecreaseEnergy(data.bookMarkCostPerSecond * Time.deltaTime);
+            manager.DecreaseEnergy(Data.bookMarkCostPerSecond * Time.deltaTime);
         }
     }
     public override void PhysicsUpdate()
@@ -75,7 +76,7 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
     {
         if (Time.fixedDeltaTime >= 0.02f || fixedDeltaTimer >= 0.02f)
         {
-            if (pointsInTime.Count > Mathf.Round(data.rewindMaxTime / Time.fixedDeltaTime))
+            if (pointsInTime.Count > Mathf.Round(Data.rewindMaxTime / Time.fixedDeltaTime))
             {
                 pointsInTime.RemoveAt(pointsInTime.Count - 1);
             }
@@ -95,7 +96,7 @@ public class PlayerTimeSkill_BookMark : PlayerTimeSkillBase
             Movement.SetPosition(point.position, point.rotation, point.facingDirection);
             player.SR.sprite = point.sprite;
 
-            for(int i = 1; i < data.bookmarkPlaySpeed; i++)
+            for(int i = 1; i < Data.bookmarkPlaySpeed; i++)
             {
                 if(pointsInTime.Count > 1)
                     pointsInTime.RemoveAt(0);

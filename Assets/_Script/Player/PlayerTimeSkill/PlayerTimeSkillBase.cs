@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class PlayerTimeSkillBase
 {
@@ -11,15 +12,17 @@ public class PlayerTimeSkillBase
 
     protected Player player;
     protected PlayerTimeSkillStateMachine stateMachine;
-    protected PlayerTimeSkillData data;
     protected PlayerTimeSkillManager manager;
+    public LocalizedString SkillName { get; protected set; }
+    public PlayerTimeSkillData Data { get; protected set; }
+
     private string animBoolName;
 
     public PlayerTimeSkillBase(Player player, PlayerTimeSkillManager manager, PlayerTimeSkillStateMachine stateMachine, PlayerTimeSkillData data, string animBoolName)
     {
         this.player = player;
         this.stateMachine = stateMachine;
-        this.data = data;
+        this.Data = data;
         this.animBoolName = animBoolName;
         this.manager = manager;
 

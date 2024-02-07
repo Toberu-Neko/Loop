@@ -7,4 +7,11 @@ public class PlayerTimeSkill_None : PlayerTimeSkillBase
     public PlayerTimeSkill_None(Player player, PlayerTimeSkillManager manager, PlayerTimeSkillStateMachine stateMachine, PlayerTimeSkillData data, string animBoolName) : base(player, manager, stateMachine, data, animBoolName)
     {
     }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        SkillName = Data.noneSkillName;
+    }
 }

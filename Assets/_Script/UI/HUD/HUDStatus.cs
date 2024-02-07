@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class HUDStatus : MonoBehaviour
@@ -22,7 +24,10 @@ public class HUDStatus : MonoBehaviour
     [SerializeField] private GameObject weaponEnergy1;
     [SerializeField] private GameObject weaponEnergy2;
     [SerializeField] private GameObject weaponEnergy3;
-    [SerializeField] private TextMeshProUGUI skillText;
+
+
+    [SerializeField] private LocalizeStringEvent timeSkillText;
+    [SerializeField] private LocalizedString defaultLocalizedString;
     private void Awake()
     {
     }
@@ -60,9 +65,9 @@ public class HUDStatus : MonoBehaviour
         gunEnergyBar.Init(gun);
     }
 
-    private void UpdateTimeSkill(string skill, float energy)
+    private void UpdateTimeSkill(LocalizedString skillName, float energy, bool active = true)
     {
-        if(skill == "None")
+        if(!active)
         {
             timeUIObj.SetActive(false);
             return;
@@ -71,7 +76,7 @@ public class HUDStatus : MonoBehaviour
         if(!timeUIObj.activeInHierarchy)
             timeUIObj.SetActive(true);
 
-        skillText.text = skill;
+        timeSkillText.StringReference = skillName;
         timeEnergyBar.UpdateHealthBar(energy);
     }
 

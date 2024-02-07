@@ -17,10 +17,11 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
     {
         base.Enter();
 
+        SkillName = Data.timeStopThrowSkillName;
         equipped = false;
         throwable = true;
         charging = false;
-        throwVelocity = data.minThrowVelocity;
+        throwVelocity = Data.minThrowVelocity;
     }
 
     public override void Exit()
@@ -35,7 +36,7 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
     {
         base.LogicUpdate();
 
-        if (player.InputHandler.TimeSkillInput && !equipped && throwable && manager.CurrentEnergy >= data.timeStopThrowCost)
+        if (player.InputHandler.TimeSkillInput && !equipped && throwable && manager.CurrentEnergy >= Data.timeStopThrowCost)
         {
             player.InputHandler.UseTimeSkillInput();
             equipped = true;
@@ -55,34 +56,34 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
 
         if(charging)
         {
-            if(throwVelocity < data.maxThrowVelocity)
+            if(throwVelocity < Data.maxThrowVelocity)
             {
-                throwVelocity += data.throwVelocityIncreaseRate * Time.deltaTime;
+                throwVelocity += Data.throwVelocityIncreaseRate * Time.deltaTime;
             }
 
-            for (int i = 0; i < data.numberOfPredictLineObj; i++)
+            for (int i = 0; i < Data.numberOfPredictLineObj; i++)
             {
                 manager.PredictLineTransforms[i].gameObject.SetActive(true);
-                manager.PredictLineTransforms[i].position = PredictObjPosition(data.spaceBetweenPredictLineObj * i);
+                manager.PredictLineTransforms[i].position = PredictObjPosition(Data.spaceBetweenPredictLineObj * i);
             }
 
             if (!player.InputHandler.HoldAttackInput)
             {
-                manager.DecreaseEnergy(data.timeStopThrowCost);
+                manager.DecreaseEnergy(Data.timeStopThrowCost);
                 charging = false;
                 UnEquip();
 
-                for (int i = 0; i < data.numberOfPredictLineObj; i++)
+                for (int i = 0; i < Data.numberOfPredictLineObj; i++)
                 {
                     manager.PredictLineTransforms[i].gameObject.SetActive(false);
                 }
 
-                GameObject obj = ObjectPoolManager.SpawnObject(data.timeStopThrowObj, player.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
+                GameObject obj = ObjectPoolManager.SpawnObject(Data.timeStopThrowObj, player.transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles);
                 script = obj.GetComponent<TimeStopProjectile>();
-                script.Fire(throwVelocity, player.InputHandler.RawMouseDirectionInput, data.throwStopTime, data.gravityScale, manager.transform);
+                script.Fire(throwVelocity, player.InputHandler.RawMouseDirectionInput, Data.throwStopTime, Data.gravityScale, manager.transform);
                 script.OnReturnToPlayer += HandleObjFlyBack;
 
-                throwVelocity = data.minThrowVelocity;
+                throwVelocity = Data.minThrowVelocity;
             }
         }
     }
@@ -108,7 +109,7 @@ public class PlayerTimeSkill_TimeStopThrow : PlayerTimeSkillBase
     {
         Vector2 position = (Vector2)player.transform.position + 
             (t * throwVelocity * player.InputHandler.RawMouseDirectionInput) + 
-            (t * t) * 0.5f * (Physics2D.gravity * data.gravityScale);
+            (t * t) * 0.5f * (Physics2D.gravity * Data.gravityScale);
         return position;
     }
 }

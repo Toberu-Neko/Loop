@@ -1303,7 +1303,16 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7602284004600983042}
   <DeathParticles>k__BackingField: {fileID: 8038344524183138613, guid: 0277167a12290af47801444830a2be97, type: 3}
   initFacingPos: -1
-  <BossName>k__BackingField: "\u6587\u5224\u5B98"
+  <BossName>k__BackingField: boss1
+  <BossNameLocalized>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:ce73a802bab04634ca3efa31943bcfe8
+    m_TableEntryReference:
+      m_KeyId: 46884118528
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <StateData>k__BackingField: {fileID: 11400000, guid: adedabab4d8c01c4f8d6fdc7443fe776, type: 2}
   jumpAttackPosition: {fileID: 8452791306877808029}
   <RangedAttackPosition>k__BackingField: {fileID: 6990671918803082484}
@@ -1312,6 +1321,9 @@ MonoBehaviour:
   <BossRoomCollider>k__BackingField: {fileID: 0}
   exitTP: {fileID: 0}
   <BossCam>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
 --- !u!50 &8136939625806837525
 Rigidbody2D:
   serializedVersion: 4

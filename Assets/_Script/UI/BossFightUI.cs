@@ -1,12 +1,16 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization;
 
 
 public class BossFightUI : MonoBehaviour
 {
     [SerializeField] private HealthBar bossHealthBar;
     [SerializeField] private HealthBar bossSTBar;
-    [SerializeField] private TextMeshProUGUI bossNameText;
+
+    [SerializeField] private LocalizeStringEvent bossNameText;
+    [SerializeField] private LocalizedString defaultBossName;
     private BossBase boss;
 
     public void Active(BossBase bossBase)
@@ -20,7 +24,7 @@ public class BossFightUI : MonoBehaviour
 
         boss.Stats.Stamina.OnValueChanged += UpdateSTBar;
 
-        bossNameText.text = boss.BossName;
+        bossNameText.StringReference = boss.BossNameLocalized;
     }
 
     public void Deactive()

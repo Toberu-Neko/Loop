@@ -160,12 +160,24 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3840322891778872670}
   <DeathParticles>k__BackingField: {fileID: 8038344524183138613, guid: 0277167a12290af47801444830a2be97, type: 3}
   initFacingPos: -1
-  <BossName>k__BackingField: "\u6B66\u5224\u5B98"
+  <BossName>k__BackingField: boss0
+  <BossNameLocalized>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:ce73a802bab04634ca3efa31943bcfe8
+    m_TableEntryReference:
+      m_KeyId: 10251067392
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <StateData>k__BackingField: {fileID: 11400000, guid: c2b922dbc480a1d4c8f3c286cb48f790, type: 2}
   meleeAttackPosition: {fileID: 3090606463626459348}
   <EnhancedAttackProbability>k__BackingField: 0.5
   <EnterSlowTrigger>k__BackingField: {fileID: 7207786754045660301}
   exitDoor: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
 --- !u!61 &982967924553131533
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -201,8 +213,8 @@ BoxCollider2D:
   m_Offset: {x: -0.016792297, y: -1.408783}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.42, y: 0.35}
-    oldSize: {x: 12, y: 10}
+    pivot: {x: 0.42, y: 0.28}
+    oldSize: {x: 15, y: 12.5}
     newSize: {x: 10.666667, y: 5.3333335}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

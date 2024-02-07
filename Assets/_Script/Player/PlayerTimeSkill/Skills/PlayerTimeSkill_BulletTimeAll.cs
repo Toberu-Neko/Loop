@@ -13,6 +13,7 @@ public class PlayerTimeSkill_BulletTimeAll : PlayerTimeSkillBase
     {
         base.Enter();
 
+        SkillName = Data.bulletTimeAllSkillName;
         started = false;
     }
 
@@ -24,17 +25,17 @@ public class PlayerTimeSkill_BulletTimeAll : PlayerTimeSkillBase
     {
         base.LogicUpdate();
 
-        if (player.InputHandler.TimeSkillInput && manager.CurrentEnergy >= data.bulletTimeAllCost && !started)
+        if (player.InputHandler.TimeSkillInput && manager.CurrentEnergy >= Data.bulletTimeAllCost && !started)
         {
             started = true;
             startTime = Time.time;
-            manager.DecreaseEnergy(data.bulletTimeAllCost);
+            manager.DecreaseEnergy(Data.bulletTimeAllCost);
 
             player.InputHandler.UseTimeSkillInput();
-            GameManager.Instance.StartAllTimeSlow(data.bulletTimeAllDuration);
+            GameManager.Instance.StartAllTimeSlow(Data.bulletTimeAllDuration);
         }
 
-        if(started && Time.time - startTime >= data.bulletTimeAllDuration)
+        if(started && Time.time - startTime >= Data.bulletTimeAllDuration)
         {
             started = false;
         }

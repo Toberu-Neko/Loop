@@ -10,6 +10,7 @@ public class PlayerTimeSkill_TimeStopAll : PlayerTimeSkillBase
     {
         base.Enter();
 
+        SkillName = Data.timeStopAllSkillName;
         GameManager.Instance.OnChangeSceneFinished += HandleChangeScene;
     }
     public override void Exit()
@@ -23,7 +24,7 @@ public class PlayerTimeSkill_TimeStopAll : PlayerTimeSkillBase
     {
         base.LogicUpdate();
 
-        if (player.InputHandler.TimeSkillInput && !GameManager.Instance.TimeStopAll && manager.CurrentEnergy >= data.timeStopAllCostPerSecond * Time.deltaTime)
+        if (player.InputHandler.TimeSkillInput && !GameManager.Instance.TimeStopAll && manager.CurrentEnergy >= Data.timeStopAllCostPerSecond * Time.deltaTime)
         {
             player.InputHandler.UseTimeSkillInput();
             GameManager.Instance.SetTimeStopEnemyTrue();
@@ -36,7 +37,7 @@ public class PlayerTimeSkill_TimeStopAll : PlayerTimeSkillBase
 
         if(GameManager.Instance.TimeStopAll)
         {
-            manager.DecreaseEnergy(data.timeStopAllCostPerSecond * Time.deltaTime);
+            manager.DecreaseEnergy(Data.timeStopAllCostPerSecond * Time.deltaTime);
         }
     }
 

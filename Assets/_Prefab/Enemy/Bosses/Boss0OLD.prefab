@@ -376,7 +376,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.285}
-    oldSize: {x: 10.666667, y: 5.3333335}
+    oldSize: {x: 16, y: 8}
     newSize: {x: 3.125, y: 1.71875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -397,13 +397,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae73fd425618ac745a9e77da0963b0fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateMachine>k__BackingField:
+    debugCanChangeState: 1
   EntityData: {fileID: 11400000, guid: 00cf3b5d2fe072c4cb2997b1c01dde4c, type: 2}
   spriteRenderer: {fileID: 325084048158660728}
-  <BossName>k__BackingField: testboss0
+  <DeathParticles>k__BackingField: {fileID: 0}
   initFacingPos: -1
+  <BossName>k__BackingField: boss0Old
+  <BossNameLocalized>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: GUID:ce73a802bab04634ca3efa31943bcfe8
+    m_TableEntryReference:
+      m_KeyId: 79402557440
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   stateData: {fileID: 11400000, guid: 1cdebbfc292e58f4b9d2d633253e3439, type: 2}
   meleeAttackPosition: {fileID: 5028935675539376158}
   rangedAttackPosition: {fileID: 4260384371857932998}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &8141541744361623105
 GameObject:
   m_ObjectHideFlags: 0

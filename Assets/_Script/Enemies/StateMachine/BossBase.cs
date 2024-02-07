@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class BossBase : Entity, IDataPersistance
 {
     [Header("Boss Basic")]
     [SerializeField, Range(-1, 1), Tooltip("1R, -1L")] private int initFacingPos = 1;
-    [field: SerializeField] public string BossName { get; private set;}
+    [field: SerializeField] public string BossName { get; private set; } //TODO: Change to BossId
+    [field: SerializeField] public LocalizedString BossNameLocalized { get; private set; }
+
     protected event Action OnEnterBossRoom;
     private bool defeated = false;
 

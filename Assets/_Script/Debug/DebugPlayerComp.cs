@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.Localization;
 
 public class DebugPlayerComp : MonoBehaviour
 {
@@ -12,12 +11,15 @@ public class DebugPlayerComp : MonoBehaviour
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI medkitText;
 
+    [Header("TimeSkill")]
+    [SerializeField] private LocalizedString timeSkillText;
+
     private PlayerWeaponManager weaponManager;
     private PlayerTimeSkillManager timeSkillManager;
 
     public event Action<float, float, float> OnInit;
     public event Action<float> OnUpdateHp;
-    public event Action<string, float> OnUpdateTimeSkill;
+    public event Action<LocalizedString, float, bool> OnUpdateTimeSkill;
     public event Action<WeaponType, int, float> OnUpdateWeapon;
 
     private Core core;
@@ -119,7 +121,15 @@ public class DebugPlayerComp : MonoBehaviour
 
     void UpdateTimeSkillText()
     {
-        OnUpdateTimeSkill?.Invoke(timeSkillManager.StateMachine.CurrentState.ToString()[16..], timeSkillManager.CurrentEnergy);
+        if(timeSkillManager.StateMachine.CurrentState.SkillName == timeSkillManager.StateMachine.CurrentState.Data.noneSkillName)
+        {
+            OnUpdateTimeSkill?.Invoke(timeSkillManager.StateMachine.CurrentState.SkillName, timeSkillManager.CurrentEnergy, false);
+        }
+        else
+        {
+            Debug.Log(timeSkillManager.StateMachine.CurrentState.SkillName.GetLocalizedString());
+            OnUpdateTimeSkill?.Invoke(timeSkillManager.StateMachine.CurrentState.SkillName, timeSkillManager.CurrentEnergy, true);
+        }
 
         timeText.text = "裝備技能: " + timeSkillManager.StateMachine.CurrentState.ToString()[16..] +
             "\n 能量: " + timeSkillManager.CurrentEnergy.ToString();

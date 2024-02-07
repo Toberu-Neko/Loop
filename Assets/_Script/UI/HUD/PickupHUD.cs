@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class PickupHUD : MonoBehaviour
 {
     [SerializeField] private Animator anim;
 
-    [SerializeField] private TextMeshProUGUI itemNameText;
-    [SerializeField] private TextMeshProUGUI itemDescriptionText;
+    [SerializeField] private LocalizeStringEvent itemNameText;
+    [SerializeField] private LocalizedString defaultItemName;
 
     private Queue<ItemText> queue = new();
 
@@ -16,20 +18,19 @@ public class PickupHUD : MonoBehaviour
         queue = new();
     }
 
-    public void AddToQueue(string itemName, string shortItemDescription)
+    public void AddToQueue(LocalizedString itemName)
     {
-        queue.Enqueue(new ItemText { itemName = itemName, shortItemDescription = shortItemDescription });
+        queue.Enqueue(new ItemText { itemName = itemName});
 
         if (queue.Count == 1)
         {
-            Activate(itemName, shortItemDescription);
+            Activate(itemName);
         }
     }
 
-    public void Activate(string itemName, string shortItemDescription)
+    public void Activate(LocalizedString itemName)
     {
-        itemNameText.text = itemName;
-        itemDescriptionText.text = "";
+        itemNameText.StringReference = itemName;
         anim.SetTrigger("Activate");
     }
 
@@ -40,13 +41,12 @@ public class PickupHUD : MonoBehaviour
         if (queue.Count > 0)
         {
             var itemText = queue.Peek();
-            Activate(itemText.itemName, itemText.shortItemDescription);
+            Activate(itemText.itemName);
         }
     }
 
     private class ItemText
     {
-        public string itemName;
-        public string shortItemDescription;
+        public LocalizedString itemName;
     }
 }
