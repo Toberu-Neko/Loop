@@ -82,8 +82,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7fc9211839477142a7bef4908eb3cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateMachine>k__BackingField:
+    debugCanChangeState: 1
   EntityData: {fileID: 11400000, guid: dd4bc156899d3c9419b6165760c74aab, type: 2}
   spriteRenderer: {fileID: 3537391621664279545}
+  <DeathParticles>k__BackingField: {fileID: 0}
   stateData: {fileID: 11400000, guid: 7bba4287dbc39ee49b5a74e4dc51897c, type: 2}
   rangedAttackPosition: {fileID: 1484381774255090563}
 --- !u!212 &3537391621664279545
@@ -218,7 +221,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.029429525, y: -0.4347477}
+  m_Offset: {x: 0.16315615, y: -0.4347477}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -229,7 +232,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1257136, y: 2.269403}
+  m_Size: {x: 3.5047128, y: 2.269403}
   m_EdgeRadius: 0
 --- !u!1001 &1064613022700746871
 PrefabInstance:
@@ -367,19 +370,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6514876414037765179, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Size.x
-      value: 1.8466965
+      value: 4.0912933
       objectReference: {fileID: 0}
     - target: {fileID: 6514876414037765179, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Size.y
-      value: 2.3238604
+      value: 2.7956548
       objectReference: {fileID: 0}
     - target: {fileID: 6514876414037765179, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Offset.x
-      value: -0.10989195
+      value: 0.05452156
       objectReference: {fileID: 0}
     - target: {fileID: 6514876414037765179, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Offset.y
-      value: -0.48254645
+      value: -0.24664932
       objectReference: {fileID: 0}
     - target: {fileID: 6622905753534290228, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: slopeCheckV2.x

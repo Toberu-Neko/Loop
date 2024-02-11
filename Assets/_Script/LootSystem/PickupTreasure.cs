@@ -4,7 +4,6 @@ using UnityEngine.Localization.Components;
 
 public class PickupTreasure : PressEPickItemBase, IDataPersistance
 {
-    [SerializeField] private LocalizeStringEvent nameLocalizeString;
     [Header("ID")]
     public bool isAddedID;
     public string ID;

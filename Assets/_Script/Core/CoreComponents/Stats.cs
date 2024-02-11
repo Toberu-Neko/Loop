@@ -12,7 +12,6 @@ public class Stats : CoreComponent
     private float combatTimer = 2f;
     private float lastCombatTime;
 
-
     public bool CanChangeWeapon { get; private set; } = true;
     public bool CounterAttackable { get; private set; }
     public bool InCombat { get; private set; } = false;
