@@ -1,18 +1,21 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class SavepointUIMain : MonoBehaviour
 {
     [SerializeField] private GameObject savepointUIObj;
-    [SerializeField] private TextMeshProUGUI savepointNameText;
+    [SerializeField] private LocalizeStringEvent savepointNameText;
+    [SerializeField] private LocalizedString defaultSavepointName;
+
     [SerializeField] private SavepointUIInventory savepointUIInventory;
     [SerializeField] private SavepointUIChangeSkill savepointUIChangeSkill;
     [SerializeField] private SavepointUITeleport savepointUITeleport;
 
 
-    public void SetSavepointNameText(string name)
+    public void SetSavepointNameText(LocalizedString name)
     {
-        savepointNameText.text = name;
+        savepointNameText.StringReference = name;
     }
 
     public void OnClickSaveButton()

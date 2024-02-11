@@ -1,17 +1,18 @@
 using System;
-using System.Data;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class Savepoint : MonoBehaviour, IDataPersistance
 {
     [SerializeField] private GameObject keyboardTutorialObject;
     [SerializeField] private GameObject gamepadTutorialObject;
-    [field: SerializeField] public string SavePointName { get; private set; }
+    [field: SerializeField] public string SavePointID { get; private set; }
+    [SerializeField] private LocalizedString SavePointName;
     [field: SerializeField] public Transform TeleportTransform { get; private set; }
 
     private PlayerInputHandler inputHandler;
 
-    public event Action<string> OnSavePointInteract;
+    public event Action<string, LocalizedString> OnSavePointInteract;
 
     private bool inRange;
     private bool isSavePointActive;
@@ -43,7 +44,7 @@ public class Savepoint : MonoBehaviour, IDataPersistance
                 gamepadTutorialObject.SetActive(false);
 
                 // Go to game manager
-                OnSavePointInteract?.Invoke(SavePointName);
+                OnSavePointInteract?.Invoke(SavePointID, SavePointName);
             }
         }
     }
@@ -81,12 +82,12 @@ public class Savepoint : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        if(SavePointName == null)
+        if(SavePointID == null)
         {
-            Debug.LogError("SavePointName is null");
+            Debug.LogError("SavePointID is null");
             return;
         }
-        data.savepoints.TryGetValue(SavePointName, out SavepointDetails details);
+        data.savepoints.TryGetValue(SavePointID, out SavepointDetails details);
 
         if (details != null)
         {
@@ -101,10 +102,10 @@ public class Savepoint : MonoBehaviour, IDataPersistance
             data.finishTutorial = true;
         }
 
-        if(data.savepoints.ContainsKey(SavePointName))
+        if(data.savepoints.ContainsKey(SavePointID))
         {
-            data.savepoints.Remove(SavePointName);
+            data.savepoints.Remove(SavePointID);
         }
-        data.savepoints.Add(SavePointName, new SavepointDetails(isSavePointActive, TeleportTransform.position));
+        data.savepoints.Add(SavePointID, new SavepointDetails(isSavePointActive, TeleportTransform.position));
     }
 }

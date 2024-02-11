@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
     public bool TimeStopAll { get; private set; } = false;
     public bool TimeSlowAll { get; private set; } = false;
 
-    public event Action<string> OnSavepointInteracted;
+    public event Action<string, LocalizedString> OnSavepointInteracted;
 
     public event Action OnAllTimeStopEnd;
     public event Action OnAllTimeStopStart;
@@ -99,13 +100,13 @@ public class GameManager : MonoBehaviour
 
     public void RegisterSavePoints(Savepoint savePoint)
     {
-        if (Savepoints.ContainsKey(savePoint.SavePointName))
+        if (Savepoints.ContainsKey(savePoint.SavePointID))
         {
-            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointName);
+            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointID);
             return;
         }
 
-        Savepoints.Add(savePoint.SavePointName, savePoint);
+        Savepoints.Add(savePoint.SavePointID, savePoint);
 
         savePoint.OnSavePointInteract += HandleSavePointInteraction;
     }
@@ -122,9 +123,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void HandleSavePointInteraction(string savepointName)
+    public void HandleSavePointInteraction(string savepointID, LocalizedString savepointName)
     {
-        OnSavepointInteracted?.Invoke(savepointName);
+        OnSavepointInteracted?.Invoke(savepointID, savepointName);
 
 
         DataPersistenceManager.Instance.SaveGame();

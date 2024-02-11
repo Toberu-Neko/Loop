@@ -183,7 +183,7 @@ public class UI_Manager : MonoBehaviour
         savepointUIMain.DeactiveAllMenu();
     }
 
-    public void HandleSavePointInteraction(string savePointName)
+    public void HandleSavePointInteraction(string savePointID, LocalizedString savePointName)
     {
         savepointUIMain.ActivateMenu(true);
         savepointUIMain.SetSavepointNameText(savePointName);

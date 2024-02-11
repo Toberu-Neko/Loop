@@ -15,7 +15,7 @@ public class TeleportButton : MonoBehaviour
 
     public void OnClick()
     {
-        PlayerSaveDataManager.Instance.RecentSavepointName = SavePointName;
+        PlayerSaveDataManager.Instance.RecentSavepointID = SavePointName;
         UI_Manager.Instance.CloseAllSavePointUI();
     }
 
