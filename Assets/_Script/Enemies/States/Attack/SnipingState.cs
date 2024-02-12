@@ -12,7 +12,7 @@ public class SnipingState : AttackState
 
     private Vector2 v2WorkSpace;
 
-    private bool firesShoot;
+    private bool firstShoot;
     private bool startShooting;
     private states state;
     private enum states 
@@ -41,7 +41,7 @@ public class SnipingState : AttackState
         startShooting = false;
         goToIdleState = false;
         player = null;
-        firesShoot = true;
+        firstShoot = true;
         state = states.reloading;
         entity.Anim.SetBool("isAiming", true);
     }
@@ -67,20 +67,25 @@ public class SnipingState : AttackState
 
         if (state == states.aiming)
         {
-            if (CheckPlayerSenses.IsPlayerInMaxAgroRange && !player)
+            if (!player)
             {
                 player = CheckPlayerSenses.IsPlayerInMaxAgroRange.collider.gameObject.transform;
                 targetPos = player.position;
             }
+
             if (player)
             {
                 float leftTime = stateData.aimTime - (Time.time - StartTime);
                 v2WorkSpace.Set(0f, stateData.shakeCurve.Evaluate(leftTime / stateData.aimTime) * 2f);
 
                 // Debug.Log("Angle: " + Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right));
-                if (CheckPlayerSenses.CanSeePlayer && Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right) < 30f)
+                if (CheckPlayerSenses.CanSeePlayer && Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right) < 70f)
                 {
                     targetPos = Vector3.Slerp((Vector3)targetPos, player.position, (stateData.aimTime - leftTime) / stateData.aimTime);
+                }
+                else
+                {
+                    targetPos = Vector3.Slerp((Vector3)targetPos, Vector3.right * Movement.FacingDirection, (stateData.aimTime - leftTime) / stateData.aimTime);
                 }
 
                 aimPointDelta = (targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized;
@@ -117,12 +122,11 @@ public class SnipingState : AttackState
 
         else if(state == states.reloading && Time.time >= lastShootTime + stateData.reloadTime)
         {
-            player = null;
             // entity.Anim.SetBool("isAiming", true);
             StartTime = Time.time;
         }
 
-        if (!CheckPlayerSenses.CanSeePlayer && state == states.reloading && !firesShoot)
+        if (!CheckPlayerSenses.CanSeePlayer && state == states.reloading && !firstShoot)
         {
             goToIdleState = true;
         }
@@ -132,13 +136,14 @@ public class SnipingState : AttackState
 
     private void Lock()
     {
+        player = null;
         drawWire.ChangeColor(stateData.lockColor);
     }
 
     private void Shoot()
     {
         state = states.reloading;
-        firesShoot = false;
+        firstShoot = false;
         startShooting = false;
         lastShootTime = Time.time;
         drawWire.ClearPoints();
