@@ -178,8 +178,11 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         transform.rotation = targetRotation;
         movement.SetVelocity(speed, fireDirection);
 
-        if(shootSFX != null)
+        if(shootSFX.clip != null)
+        {
+            Debug.LogWarning("SFX is null");
             AudioManager.instance.PlaySoundFX(shootSFX, transform);
+        }
     }
 
 

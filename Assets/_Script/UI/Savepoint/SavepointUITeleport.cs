@@ -17,7 +17,7 @@ public class SavepointUITeleport : MonoBehaviour
         {
             var buttonObj = ObjectPoolManager.SpawnObject(buttonPrefab, buttonParent);
             var script = buttonObj.GetComponent<TeleportButton>();
-            script.SetText(item.Value.SavePointID);
+            script.SetText(item.Value.SavePointData.savepointID, item.Value.SavePointData.savepointName);
         }
     }
 

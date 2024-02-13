@@ -11,6 +11,7 @@ public class SnipingState : AttackState
     private Vector2 targetPos;
 
     private Vector2 v2WorkSpace;
+    private Vector3 lastPlayerPos;
 
     private bool firstShoot;
     private bool startShooting;
@@ -69,7 +70,7 @@ public class SnipingState : AttackState
         {
             if (!player)
             {
-                player = CheckPlayerSenses.IsPlayerInMaxAgroRange.collider.gameObject.transform;
+                player = CheckPlayerSenses.AllRnagePlayerRaycast.collider.gameObject.transform;
                 targetPos = player.position;
             }
 
@@ -78,14 +79,16 @@ public class SnipingState : AttackState
                 float leftTime = stateData.aimTime - (Time.time - StartTime);
                 v2WorkSpace.Set(0f, stateData.shakeCurve.Evaluate(leftTime / stateData.aimTime) * 2f);
 
+
                 // Debug.Log("Angle: " + Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right));
                 if (CheckPlayerSenses.CanSeePlayer && Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right) < 70f)
                 {
                     targetPos = Vector3.Slerp((Vector3)targetPos, player.position, (stateData.aimTime - leftTime) / stateData.aimTime);
+                    lastPlayerPos = player.position;
                 }
                 else
                 {
-                    targetPos = Vector3.Slerp((Vector3)targetPos, Vector3.right * Movement.FacingDirection, (stateData.aimTime - leftTime) / stateData.aimTime);
+                    targetPos = Vector3.Slerp((Vector3)targetPos, lastPlayerPos, (stateData.aimTime - leftTime) / stateData.aimTime);
                 }
 
                 aimPointDelta = (targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized;
@@ -137,6 +140,7 @@ public class SnipingState : AttackState
     private void Lock()
     {
         player = null;
+        lastPlayerPos = Vector3.right;
         drawWire.ChangeColor(stateData.lockColor);
     }
 

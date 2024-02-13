@@ -9,15 +9,12 @@ public class OptionUI : MonoBehaviour, IOptionData
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider bgmVolumeSlider;
     [SerializeField] private Slider soundFXVolumeSlider;
-
-    private bool hasChangedLocale;
     private int languageIndex;
 
     public void Activate()
     {
         DataPersistenceManager.Instance.LoadOptionData();
         gameObject.SetActive(true);
-        hasChangedLocale = false;
     }
 
     public void Deactivate()

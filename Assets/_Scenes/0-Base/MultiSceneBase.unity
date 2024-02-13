@@ -264,7 +264,7 @@ MonoBehaviour:
   crouchChangeColliderWallCheck: {fileID: 1076303437}
   groundCheckV2: {x: 0.75, y: 0.3}
   slopeCheckV2: {x: 0.75, y: 1.61}
-  changeColliderWallCheckV2: {x: 0.5, y: 2.8}
+  changeColliderWallCheckV2: {x: 0.26, y: 3.07}
   changeColliderWallCheckV2Crouch: {x: 0.48, y: 0.73}
   ceilingCheckV2: {x: 0.7, y: 1.01}
   headCheckV2: {x: 0.8, y: 1.67}
@@ -4298,6 +4298,10 @@ PrefabInstance:
       propertyPath: <SavePointID>k__BackingField
       value: Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
+      propertyPath: <SavePointData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f9fc70bb6942564893d6c5302ab397c, type: 2}
     - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
       propertyPath: <SavePointName>k__BackingField
       value: Wall
@@ -8617,6 +8621,10 @@ PrefabInstance:
       propertyPath: <SavePointID>k__BackingField
       value: Mid_Temple
       objectReference: {fileID: 0}
+    - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
+      propertyPath: <SavePointData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 48ac3d0fb66d4f74ab15db4c495c7af5, type: 2}
     - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
       propertyPath: <SavePointName>k__BackingField
       value: Mid_Temple
@@ -13755,6 +13763,10 @@ PrefabInstance:
       propertyPath: <SavePointID>k__BackingField
       value: Test
       objectReference: {fileID: 0}
+    - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
+      propertyPath: <SavePointData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 5419ce080670bd04fb321fb516f4217e, type: 2}
     - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
       propertyPath: <SavePointName>k__BackingField
       value: Test
@@ -22981,7 +22993,7 @@ Transform:
   m_GameObject: {fileID: 1211599903}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.49, y: -0.528, z: 0}
+  m_LocalPosition: {x: 0.49, y: -0.551, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25151,6 +25163,10 @@ PrefabInstance:
       value: In_Temple
       objectReference: {fileID: 0}
     - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
+      propertyPath: <SavePointData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 345f7f650891e30499e4bf484fc0e61d, type: 2}
+    - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
       propertyPath: <SavePointName>k__BackingField
       value: In_Temple
       objectReference: {fileID: 0}
@@ -26136,7 +26152,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.8414742, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.58360845, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -27623,7 +27639,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.08326721, y: -0.51834106}
+  m_Offset: {x: 0.055877686, y: -0.58488464}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.48, y: 0.5}
@@ -27634,7 +27650,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0485535, y: 3.110077}
+  m_Size: {x: 0.9937744, y: 3.243164}
   m_EdgeRadius: 0
 --- !u!95 &1446678357
 Animator:
@@ -34343,7 +34359,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.008280754, y: -0.18494451}
+  m_Offset: {x: 0.08569336, y: -0.18494451}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -34354,7 +34370,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6080265, y: 1.6128018}
+  m_Size: {x: 0.5140991, y: 1.6128018}
   m_EdgeRadius: 0
 --- !u!114 &1779046445
 MonoBehaviour:
@@ -35084,7 +35100,7 @@ Transform:
   m_GameObject: {fileID: 1865131051}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.079, z: 0}
+  m_LocalPosition: {x: 0, y: -2.196, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35301,6 +35317,10 @@ PrefabInstance:
       propertyPath: <SavePointID>k__BackingField
       value: Default
       objectReference: {fileID: 0}
+    - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
+      propertyPath: <SavePointData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b4267033bfc95948b57bd3375a8ba21, type: 2}
     - target: {fileID: 5535344531240832082, guid: b9401034c5c72b742be811599bf44e67, type: 3}
       propertyPath: <SavePointName>k__BackingField
       value: Default
@@ -36853,7 +36873,7 @@ Transform:
   m_GameObject: {fileID: 2004288228}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 736.8518, y: 216.73734, z: -15}
+  m_LocalPosition: {x: 160.6, y: -10.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

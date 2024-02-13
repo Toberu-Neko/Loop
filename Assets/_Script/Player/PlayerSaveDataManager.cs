@@ -28,7 +28,7 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        data.savepoints.TryGetValue(data.lastInteractedSavepoint, out SavepointDetails details);
+        data.savepoints.TryGetValue(data.lastInteractedSavepointID, out SavepointDetails details);
 
         if (data.gotoSavePoint)
         {
@@ -47,7 +47,7 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
     {
         if(RecentSavepointID != "")
         {
-            data.lastInteractedSavepoint = RecentSavepointID;
+            data.lastInteractedSavepointID = RecentSavepointID;
         }
 
         data.playerPosition = transform.position;

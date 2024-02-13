@@ -100,13 +100,13 @@ public class GameManager : MonoBehaviour
 
     public void RegisterSavePoints(Savepoint savePoint)
     {
-        if (Savepoints.ContainsKey(savePoint.SavePointID))
+        if (Savepoints.ContainsKey(savePoint.SavePointData.savepointID))
         {
-            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointID);
+            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointData.savepointID);
             return;
         }
 
-        Savepoints.Add(savePoint.SavePointID, savePoint);
+        Savepoints.Add(savePoint.SavePointData.savepointID, savePoint);
 
         savePoint.OnSavePointInteract += HandleSavePointInteraction;
     }
