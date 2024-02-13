@@ -47,6 +47,11 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
             Movement.CheckIfShouldFlip(-1);
         else if (mouseDirectionInput.x > 0)
             Movement.CheckIfShouldFlip(1);
+
+        if(Time.time > StartTime + data.maxAttackTime)
+        {
+            isAttackDone = true;
+        }
     }
 
     public override void AnimationActionTrigger()
@@ -101,5 +106,10 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
     public bool CheckCanAttack()
     {
         return (StartTime == 0f || Time.time >= StartTime + data.attackSpeed) && player.WeaponManager.GunCurrentNormalAttackEnergy >= data.energyCostPerShot;
+    }
+
+    public void SetStartTime()
+    {
+        StartTime = Time.time;
     }
 }

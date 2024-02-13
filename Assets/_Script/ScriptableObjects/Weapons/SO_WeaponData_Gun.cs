@@ -18,6 +18,7 @@ public class SO_WeaponData_Gun : SO_WeaponData
     [Header("NormalAttack")]
     public float attackSpeed = 0.5f;
     public float energyCostPerShot;
+    public float maxAttackTime = 2f;
     public ProjectileDetails normalAttackDetails;
 
     [Header("CounterAttack")]
@@ -30,9 +31,10 @@ public class SO_WeaponData_Gun : SO_WeaponData
     [Header("S3Attack")]
     public float s3UpVelocity = 15f;
     public WeaponAttackDetails[] s3AttackDetails;
-    
+
 
     [Header("ChargeAttack")]
+    public bool doChargeAttack = false;
     public float chargeMovementSpeedMultiplier = 0.3f;
     public float chargeAttackBackFireVelocity = 3f;
     public float chargeAttackHeight = 1f;

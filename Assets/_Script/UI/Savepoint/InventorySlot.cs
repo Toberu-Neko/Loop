@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
 
 public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -15,7 +16,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public SO_Chip LootSO { get; private set; }
     private List<DraggableItem> draggableItems;
 
-    public event Action<string, string> OnEnterTarget;
+    public event Action<LocalizedString, LocalizedString> OnEnterTarget;
     public event Action OnExitTarget;
 
     private bool canOpenDescription;
@@ -134,7 +135,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(canOpenDescription)
-            OnEnterTarget?.Invoke(LootSO.displayName, LootSO.itemDescription);
+            OnEnterTarget?.Invoke(LootSO.displayNameLocalization, LootSO.descriptionLocalization);
     }
 
     public void OnPointerExit(PointerEventData eventData)

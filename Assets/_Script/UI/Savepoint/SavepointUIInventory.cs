@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class SavepointUIInventory : MonoBehaviour
 {
@@ -10,8 +12,9 @@ public class SavepointUIInventory : MonoBehaviour
     [SerializeField] private GameObject inventoryGrid;
 
     [SerializeField] private GameObject descriptionUI;
-    [SerializeField] private TextMeshProUGUI descriptionNameText;
-    [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private LocalizeStringEvent itemNameStringEvent;
+    [SerializeField] private LocalizeStringEvent descriptionStringEvent;
+    [SerializeField] private LocalizedString defaultString;
 
     public InventorySlot[] InventorySlots { get; private set;}
 
@@ -37,18 +40,18 @@ public class SavepointUIInventory : MonoBehaviour
         fistSlots = fistGrid.transform.GetComponentsInChildren<EquipmentSlot>();
     }
 
-    public void ActiveDescriptionUI(string name, string description)
+    public void ActiveDescriptionUI(LocalizedString name, LocalizedString description)
     {
         descriptionUI.SetActive(true);
-        descriptionNameText.text = name;
-        descriptionText.text = description;
+        itemNameStringEvent.StringReference = name;
+        descriptionStringEvent.StringReference = description;
     }
 
     public void DeactiveDescriptionUI()
     {
         descriptionUI.SetActive(false);
-        descriptionNameText.text = "";
-        descriptionText.text = "";
+        itemNameStringEvent.StringReference = defaultString;
+        descriptionStringEvent.StringReference = defaultString;
     }
 
     public void OnClickBackButton()
@@ -132,7 +135,7 @@ public class SavepointUIInventory : MonoBehaviour
         }
     }
 
-    private void HandleEnterTarget(string name, string description)
+    private void HandleEnterTarget(LocalizedString name, LocalizedString description)
     {
         ActiveDescriptionUI(name, description);
     }

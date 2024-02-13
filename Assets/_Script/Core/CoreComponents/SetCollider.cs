@@ -13,6 +13,7 @@ public class SetCollider : CoreComponent
 
     private bool changed;
     private float orgHeight;
+    private float crouchHeight;
     private Vector2 v2Workspace;
 
     private bool changeable;
@@ -68,7 +69,8 @@ public class SetCollider : CoreComponent
             if (!changed && changeable && collisionSenses.CrouchCanChangeCollider && !stats.IsTimeStopped)
             {
                 changed = true;
-                StartCoroutine(Change(0.75f));
+                crouchHeight = movementCollider.size.y;
+                StartCoroutine(ChangeCrouchHeight(0.75f));
             }
         }
 
@@ -95,6 +97,25 @@ public class SetCollider : CoreComponent
             yield return new WaitForSeconds(Time.deltaTime);
         }
         SetColliderHeight(orgHeight);
+    }
+
+    private IEnumerator ChangeCrouchHeight(float multiplier)
+    {
+        while (multiplier < 1f && changeable)
+        {
+            SetColliderHeight(orgHeight * multiplier);
+            multiplier += 0.15f;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        if (isCrouching)
+        {
+            SetColliderHeight(crouchHeight);
+        }
+        else
+        {
+            SetColliderHeight(orgHeight);
+        }
     }
 
 }

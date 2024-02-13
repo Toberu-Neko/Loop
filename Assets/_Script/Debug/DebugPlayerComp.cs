@@ -154,7 +154,7 @@ public class DebugPlayerComp : MonoBehaviour
         }
         else
         {
-            Debug.Log(timeSkillManager.StateMachine.CurrentState.SkillName.GetLocalizedString());
+            // Debug.Log(timeSkillManager.StateMachine.CurrentState.SkillName.GetLocalizedString());
             OnUpdateTimeSkill?.Invoke(timeSkillManager.StateMachine.CurrentState.SkillName, timeSkillManager.CurrentEnergy, true);
         }
 
