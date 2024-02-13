@@ -91,25 +91,25 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
         switch (treasureData)
         {
             case SO_Chip:
-                PlayerInventoryManager.Instance.AddChip(treasureData.itemName);
+                PlayerInventoryManager.Instance.AddChip(treasureData.ID);
                 break;
             case SO_ConsumeableItem:
-                PlayerInventoryManager.Instance.AddConsumableItem(treasureData.itemName);
+                PlayerInventoryManager.Instance.AddConsumableItem(treasureData.ID);
                 break;
             case SO_PlayerStatusEnhancement:
-                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(treasureData.itemName);
+                PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(treasureData.ID);
                 break;
             case SO_StoryItem:
-                PlayerInventoryManager.Instance.AddStoryItem(treasureData.itemName);
+                PlayerInventoryManager.Instance.AddStoryItem(treasureData.ID);
                 break;
             case SO_TimeSkillItem:
-                PlayerInventoryManager.Instance.AddTimeSkillItem(treasureData.itemName);
+                PlayerInventoryManager.Instance.AddTimeSkillItem(treasureData.ID);
                 break;
             case SO_MovementSkillItem:
-                PlayerInventoryManager.Instance.AddMovemnetSkillItem(treasureData.itemName);
+                PlayerInventoryManager.Instance.AddMovemnetSkillItem(treasureData.ID);
                 break;
             case SO_WeaponItem:
-                PlayerInventoryManager.Instance.AddWeaponItem(treasureData.itemName);
+                PlayerInventoryManager.Instance.AddWeaponItem(treasureData.ID);
                 SO_WeaponItem item = (SO_WeaponItem)treasureData;
                 EquipWeapon(item);
                 break;

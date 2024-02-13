@@ -54,19 +54,19 @@ public class ItemDataManager : MonoBehaviour
         foreach (var item in items)
         {
 
-            if (string.IsNullOrEmpty(item.itemName))
+            if (string.IsNullOrEmpty(item.ID))
             {
-                Debug.LogError($"There is an item with no name, name: {item.itemName}");
+                Debug.LogError($"There is an item with no name, name: {item.ID}");
                 continue;
             }
 
-            if (targetDict.ContainsKey(item.itemName))
+            if (targetDict.ContainsKey(item.ID))
             {
-                Debug.LogError($"There are more than one item with the same name: {item.itemName}");
+                Debug.LogError($"There are more than one item with the same name: {item.ID}");
                 continue;
             }
 
-            targetDict.Add(item.itemName, item);
+            targetDict.Add(item.ID, item);
         }
     }
     private void LoadAndPopulateSavepointDictionary<T>(string folderName, Dictionary<string, T> targetDict) where T : SO_Savepoint
