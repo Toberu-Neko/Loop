@@ -88,6 +88,11 @@ public class SnipingState : AttackState
                 }
                 else
                 {
+                    if(lastPlayerPos == Vector3.zero)
+                    {
+                        lastPlayerPos = player.position;
+                    }
+
                     targetPos = Vector3.Slerp((Vector3)targetPos, lastPlayerPos, (stateData.aimTime - leftTime) / stateData.aimTime);
                 }
 
@@ -140,7 +145,7 @@ public class SnipingState : AttackState
     private void Lock()
     {
         player = null;
-        lastPlayerPos = Vector3.right;
+        lastPlayerPos = Vector3.zero;
         drawWire.ChangeColor(stateData.lockColor);
     }
 

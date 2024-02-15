@@ -18,7 +18,7 @@ public class SO_WeaponData_Gun : SO_WeaponData
     [Header("NormalAttack")]
     public float attackSpeed = 0.5f;
     public float energyCostPerShot;
-    public float maxAttackTime = 2f;
+    public float maxAttackTime = 1f;
     public ProjectileDetails normalAttackDetails;
 
     [Header("CounterAttack")]
