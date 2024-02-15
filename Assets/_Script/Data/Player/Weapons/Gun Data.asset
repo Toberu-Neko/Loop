@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: Gun Data
   m_EditorClassIdentifier: 
   maxEnergy: 150
-  energyRegen: 8
+  energyRegen: 10
   energyRegenDelay: 0.75
   maxGrenade: 3
   bulletObject: {fileID: 4763303106170138442, guid: 017f74101e07e384a9eaac15ff7d27db, type: 3}
   minChargeTime: 1
   attackSpeed: 0.5
-  energyCostPerShot: 4
-  maxAttackTime: 1
+  energyCostPerShot: 3
+  maxAttackTime: 0.7
   normalAttackDetails:
     duration: 5
-    speed: 45
+    speed: 50
     combatDetails:
-      damageAmount: 8
+      damageAmount: 10
       staminaDamageAmount: 0
       knockbackStrength: 0
       knockbackAngle: {x: 0, y: 0}
@@ -44,33 +44,33 @@ MonoBehaviour:
     duration: 3
     speed: 15
     combatDetails:
-      damageAmount: 5
+      damageAmount: 30
       staminaDamageAmount: 1
-      knockbackStrength: 5
-      knockbackAngle: {x: 0, y: 0}
+      knockbackStrength: 8
+      knockbackAngle: {x: 1, y: 1}
       blockable: 1
   s3UpVelocity: 20
   s3AttackDetails:
   - attackName: 
-    damageAmount: 15
+    damageAmount: 20
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 5
     knockbackAngle: {x: 1, y: 1}
   - attackName: 
-    damageAmount: 15
+    damageAmount: 20
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 5
     knockbackAngle: {x: 1, y: 1}
   - attackName: 
-    damageAmount: 15
+    damageAmount: 20
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 5
     knockbackAngle: {x: 1, y: 1}
   - attackName: 
-    damageAmount: 15
+    damageAmount: 20
     staminaDamageAmount: 0
     movementSpeed: 0
     knockbackForce: 5
