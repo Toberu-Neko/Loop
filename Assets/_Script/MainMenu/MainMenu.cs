@@ -77,6 +77,11 @@ public class MainMenu : MenuFirstSelecter
         DeactiveMenu();
     }
 
+    public void OnClickExitButton()
+    {
+        Application.Quit();
+    }
+
     private void DisableAllButton()
     {
         newGameButton.interactable = false;
