@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
 {
@@ -12,7 +11,11 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
 
     [SerializeField] private GameObject door;
     [SerializeField] private GameObject textObj;
-    [SerializeField] private TextMeshProUGUI descriptText;
+    [SerializeField] private LocalizeStringEvent descriptionStringEvent;
+
+    [SerializeField] private LocalizedString noItemText;
+    [SerializeField] private LocalizedString gaveItemText;
+    [SerializeField] private LocalizedString openedText;
     [SerializeField] private Sound interactSFX;
     private int onItemConsumableCount;
 
@@ -54,7 +57,7 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
         if(onItemConsumableCount >= maxNeededCount)
         {
             //TODO: Play animation
-            descriptText.text = "你已經供奉了心香";
+            descriptionStringEvent.StringReference = openedText;
             door.SetActive(false);
         }
     }
@@ -78,17 +81,17 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
                 inv.RemoveConsumableItem(counsumableName);
                 onItemConsumableCount++;
                 OnItemConsumableCountChange?.Invoke();
-                descriptText.text = "你在香爐裡面插了一根香";
+                descriptionStringEvent.StringReference = gaveItemText;
                 DataPersistenceManager.Instance.SaveGame();
             }
             else
             {
-                descriptText.text = "你沒有香可以插";
+                descriptionStringEvent.StringReference = noItemText;
             }
         }
         else
         {
-            descriptText.text = "你沒有香可以插";
+            descriptionStringEvent.StringReference = noItemText;
         }
 
         TextObjOn();

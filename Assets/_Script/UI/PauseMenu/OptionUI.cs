@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
-using UnityEngine.Localization.Settings;
 
 public class OptionUI : MonoBehaviour, IOptionData
 {
@@ -12,15 +9,12 @@ public class OptionUI : MonoBehaviour, IOptionData
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider bgmVolumeSlider;
     [SerializeField] private Slider soundFXVolumeSlider;
-
-    private bool hasChangedLocale;
     private int languageIndex;
 
     public void Activate()
     {
         DataPersistenceManager.Instance.LoadOptionData();
         gameObject.SetActive(true);
-        hasChangedLocale = false;
     }
 
     public void Deactivate()
@@ -55,7 +49,7 @@ public class OptionUI : MonoBehaviour, IOptionData
 
     public void LoadOptionData(OptionData data)
     {
-        Debug.Log("Load");
+        Debug.Log("Load Option");
         languageIndex = data.languageIndex;
         masterVolumeSlider.value = data.masterVolume;
         soundFXVolumeSlider.value = data.sfxVolume;
@@ -69,7 +63,7 @@ public class OptionUI : MonoBehaviour, IOptionData
 
     public void SaveOptionData(OptionData data)
     {
-        Debug.Log("Save");
+        Debug.Log("Save Option");
         data.languageIndex = languageIndex;
         data.masterVolume = masterVolumeSlider.value;
         data.sfxVolume = soundFXVolumeSlider.value;

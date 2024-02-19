@@ -19,6 +19,7 @@ public class PlayerGunCounterState : PlayerGunAttackState
         mouseDirectionInput = player.InputHandler.RawMouseDirectionInput;
 
         Stats.SetPerfectBlockAttackFalse();
+        player.GunNormalAttackState.SetStartTime();
     }
 
     public override void LogicUpdate()

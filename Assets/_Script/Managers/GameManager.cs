@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
     public bool TimeStopAll { get; private set; } = false;
     public bool TimeSlowAll { get; private set; } = false;
 
-    public event Action<string> OnSavepointInteracted;
+    public event Action<string, LocalizedString> OnSavepointInteracted;
 
     public event Action OnAllTimeStopEnd;
     public event Action OnAllTimeStopStart;
@@ -68,15 +69,21 @@ public class GameManager : MonoBehaviour
 
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if(scene.name == "MultiSceneBase" || scene.name == "MainMenu")
+        {
+            // Debug.LogWarning("MultiSceneBase or MainMenu loaded");
+            return;
+        }
+
         if ((scene.name == "Level1-0" || scene.name == "Level1-1") && mode == LoadSceneMode.Additive)
         {
-            Debug.Log("Night");
+            // Debug.LogWarning("Level1-0 or Level1-1 loaded");
             globalVolumeDay.SetActive(false);
             globalVolumeNight.SetActive(true);
         }
         else
         {
-            Debug.Log("Day");
+            // Debug.LogWarning("Other scene loaded");
             globalVolumeDay.SetActive(true);
             globalVolumeNight.SetActive(false);
         }
@@ -99,13 +106,13 @@ public class GameManager : MonoBehaviour
 
     public void RegisterSavePoints(Savepoint savePoint)
     {
-        if (Savepoints.ContainsKey(savePoint.SavePointName))
+        if (Savepoints.ContainsKey(savePoint.SavePointData.savepointID))
         {
-            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointName);
+            Debug.LogError("Savepoint name already exists! Check: " + savePoint.SavePointData.savepointID);
             return;
         }
 
-        Savepoints.Add(savePoint.SavePointName, savePoint);
+        Savepoints.Add(savePoint.SavePointData.savepointID, savePoint);
 
         savePoint.OnSavePointInteract += HandleSavePointInteraction;
     }
@@ -122,9 +129,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void HandleSavePointInteraction(string savepointName)
+    public void HandleSavePointInteraction(string savepointID, LocalizedString savepointName)
     {
-        OnSavepointInteracted?.Invoke(savepointName);
+        OnSavepointInteracted?.Invoke(savepointID, savepointName);
 
 
         DataPersistenceManager.Instance.SaveGame();

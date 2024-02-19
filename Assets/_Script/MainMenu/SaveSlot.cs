@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class SaveSlot : MonoBehaviour
@@ -14,6 +15,8 @@ public class SaveSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI percentageCompleteText;
     [SerializeField] private TextMeshProUGUI timePlayedText;
     [SerializeField] private TextMeshProUGUI deathCountText;
+
+    [SerializeField] private LocalizeStringEvent savepointNameStringEvent;
 
     private Button saveSlotButton;
 
@@ -33,8 +36,10 @@ public class SaveSlot : MonoBehaviour
         {
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
-            percentageCompleteText.text = data.lastInteractedSavepoint;
-            // percentageCompleteText.text = data.GetPercentageComplete() + "%";
+
+            ItemDataManager.Instance.SavepointDict.TryGetValue(data.lastInteractedSavepointID, out SO_Savepoint details);
+            savepointNameStringEvent.StringReference = details.savepointName;
+
             timePlayedText.text = data.timePlayed.ToString("0.00") + "s";
         }
     }

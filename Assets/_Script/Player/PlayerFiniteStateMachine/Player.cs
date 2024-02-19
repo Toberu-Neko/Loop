@@ -157,16 +157,17 @@ public class Player : MonoBehaviour
     {
         stats.Health.OnCurrentValueZero += HandleHealthZero;
 
-        combat.OnPerfectBlock += Combat_OnPerfectBlock;
-        combat.OnDamaged += Combat_OnDamaged;
+        combat.OnPerfectBlock += OnPerfectBlock_SFX;
+        combat.OnDamaged += OnDamaged_SFX;
+        combat.OnDamaged += OnDamaged_IgnoreEnemy;
     }
 
-    private void Combat_OnDamaged()
+    private void OnDamaged_SFX()
     {
         AudioManager.instance.PlaySoundFX(PlayerSFX.getHit, transform);
     }
 
-    private void Combat_OnPerfectBlock()
+    private void OnPerfectBlock_SFX()
     {
         AudioManager.instance.PlaySoundFX(PlayerSFX.perfectBlock, transform);
     }
@@ -190,6 +191,13 @@ public class Player : MonoBehaviour
         gameManager.OnChangeSceneGoRight -= HandleChangeSceneToRight;
         gameManager.OnChangeSceneGoLeft -= HandleChangeSceneToLeft;
         gameManager.OnChangeSceneFinished -= HandleChangeSceneFinished;
+
+        stats.Health.OnCurrentValueZero -= HandleHealthZero;
+
+        combat.OnPerfectBlock -= OnPerfectBlock_SFX;
+        combat.OnDamaged -= OnDamaged_SFX;
+        combat.OnDamaged -= OnDamaged_IgnoreEnemy;
+
     }
 
     private void Update()
@@ -267,6 +275,21 @@ public class Player : MonoBehaviour
         ChangeSceneState.SetCanChangeStateTrue();
     }
     #endregion
+
+    private void OnDamaged_IgnoreEnemy()
+    {
+        Physics2D.IgnoreLayerCollision(7, 13, true);
+        CancelInvoke(nameof(EnemyCollisionOn));
+        Invoke(nameof(EnemyCollisionOn), PlayerData.ignoreEnemyAfterDamagedDuration);
+    }
+
+    private void EnemyCollisionOn()
+    {
+        if(StateMachine.CurrentState != DashState)
+        {
+            Physics2D.IgnoreLayerCollision(7, 13, false);
+        }
+    }
 
     private void HandleHealthZero()
     {

@@ -1,12 +1,15 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class TeleportButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private Button button;
-    public string SavePointName { get; set; }
+    [SerializeField] private LocalizeStringEvent localizeStringEvent;
+    private string savePointID;
 
     private void OnEnable()
     {
@@ -15,15 +18,15 @@ public class TeleportButton : MonoBehaviour
 
     public void OnClick()
     {
-        PlayerSaveDataManager.Instance.RecentSavepointName = SavePointName;
+        PlayerSaveDataManager.Instance.RecentSavepointID = savePointID;
         UI_Manager.Instance.CloseAllSavePointUI();
     }
 
-    public void SetText(string text)
+    public void SetText(string savepointID, LocalizedString text)
     {
-        SavePointName = text;
-        buttonText.text = text;
-        DataPersistenceManager.Instance.GameData.savepoints.TryGetValue(text, out SavepointDetails details);
+        savePointID = savepointID;
+        localizeStringEvent.StringReference = text;
+        DataPersistenceManager.Instance.GameData.savepoints.TryGetValue(savepointID, out SavepointDetails details);
 
         if (details.isActivated)
         {

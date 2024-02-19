@@ -35,13 +35,17 @@ public class PlayerGunHubState : PlayerGunAttackState
 
         attackInput = player.InputHandler.AttackInput;
 
+        stateMachine.ChangeState(player.GunNormalAttackState);
+
+        /*
         if (!attackInput && Time.time < StartTime + data.minChargeTime)
         {
             stateMachine.ChangeState(player.GunNormalAttackState);
         }
-        else if (Time.time >= StartTime + data.minChargeTime)
+        else if (Time.time >= StartTime + data.minChargeTime && data.doChargeAttack)
         {
             stateMachine.ChangeState(player.GunChargeAttackState);
         }
+        */
     }
 }

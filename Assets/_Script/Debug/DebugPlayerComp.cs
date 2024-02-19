@@ -9,10 +9,8 @@ public class DebugPlayerComp : MonoBehaviour
     [SerializeField] TextMeshProUGUI HpText;
     [SerializeField] TextMeshProUGUI weaponText;
     [SerializeField] TextMeshProUGUI timeText;
+    [SerializeField] LocalizedString medkitLocalizedText;
     [SerializeField] TextMeshProUGUI medkitText;
-
-    [Header("TimeSkill")]
-    [SerializeField] private LocalizedString timeSkillText;
 
     private PlayerWeaponManager weaponManager;
     private PlayerTimeSkillManager timeSkillManager;
@@ -46,10 +44,16 @@ public class DebugPlayerComp : MonoBehaviour
         if (PlayerInventoryManager.Instance.ConsumablesInventory.ContainsKey("Medkit"))
         {
             //TODO: Do it better
-            PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged += UpdateMedkitText;
+            PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged += ChangeMedkitCount;
+            medkitLocalizedText.Arguments = new object[] { PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount };
+            medkitLocalizedText.StringChanged += UpdateMedkitText;
+        }
+        else
+        {
+            Invoke(nameof(CheckInventory), 0.1f);
         }
         InitBars();
-        UpdateMedkitText();
+        ChangeMedkitCount();
         UpdateHpText();
         UpdateWeaponText();
     }
@@ -63,6 +67,7 @@ public class DebugPlayerComp : MonoBehaviour
         weaponManager.OnEnergyChanged += UpdateWeaponText;
         weaponManager.OnWeaponChanged += UpdateWeaponText;
         timeSkillManager.OnStateChanged += UpdateTimeSkillText;
+
     }
 
     private void OnDisable()
@@ -70,8 +75,10 @@ public class DebugPlayerComp : MonoBehaviour
         if (PlayerInventoryManager.Instance.ConsumablesInventory.ContainsKey("Medkit"))
         {
             //TODO: Do it better
-            PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged -= UpdateMedkitText;
+            PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged -= ChangeMedkitCount;
+            medkitLocalizedText.StringChanged -= UpdateMedkitText;
         }
+
         combat.OnPerfectBlock -= () => perfectBlockAttack.SetActive(true);
         stats.Health.OnValueChanged -= UpdateHpText;
         combat.OnDamaged -= UpdateHpText;
@@ -88,9 +95,29 @@ public class DebugPlayerComp : MonoBehaviour
         }
     }
 
-    void UpdateMedkitText()
+    private void ChangeMedkitCount()
     {
-        medkitText.text = "¦å¥]" + PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount.ToString();
+        medkitLocalizedText.Arguments = new object[] { PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount };
+        medkitLocalizedText.RefreshString();
+    }
+
+    void UpdateMedkitText(string value)
+    {
+        medkitText.text = value;
+    }
+
+    private void CheckInventory()
+    {
+        if (PlayerInventoryManager.Instance.ConsumablesInventory.ContainsKey("Medkit"))
+        {
+            PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].OnValueChanged += ChangeMedkitCount;
+            medkitLocalizedText.Arguments = new object[] { PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount };
+            medkitLocalizedText.StringChanged += UpdateMedkitText;
+        }
+        else
+        {
+            Invoke(nameof(CheckInventory), 0.1f);
+        }
     }
 
     private void InitBars()
@@ -127,7 +154,7 @@ public class DebugPlayerComp : MonoBehaviour
         }
         else
         {
-            Debug.Log(timeSkillManager.StateMachine.CurrentState.SkillName.GetLocalizedString());
+            // Debug.Log(timeSkillManager.StateMachine.CurrentState.SkillName.GetLocalizedString());
             OnUpdateTimeSkill?.Invoke(timeSkillManager.StateMachine.CurrentState.SkillName, timeSkillManager.CurrentEnergy, true);
         }
 

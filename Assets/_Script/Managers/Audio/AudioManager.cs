@@ -73,6 +73,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundFX(Sound sound, Transform spawnTransform)
     {
+        if(sound == null)
+        {
+            Debug.LogError("Sound == null in audio manager.");
+            return;
+        }
+
         AudioSource audioSource = ObjectPoolManager.SpawnObject(soundFXObj, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
 
         audioSource.clip = sound.clip;

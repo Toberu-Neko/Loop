@@ -8,6 +8,7 @@ public class PlayerData : ScriptableObject
     public LayerMask whatIsEnemy;
     public LayerMask whatIsEnemyProjectile;
     public float gravityScale = 5f;
+    public float ignoreEnemyAfterDamagedDuration = 1.5f;
 
     [Header("Regen")]
     public float regenCost = 10f;

@@ -12,7 +12,7 @@ public class GameData
     public bool gotoSavePoint;
 
     public string currentTimeSkill;
-    public string lastInteractedSavepoint;
+    public string lastInteractedSavepointID;
 
     public bool finishTutorial;
 
@@ -45,7 +45,7 @@ public class GameData
         timePlayed = 0f;
         money = 0;
         currentTimeSkill = "PlayerTimeSkill_None";
-        lastInteractedSavepoint = "Default";
+        lastInteractedSavepointID = "Default";
         finishTutorial = false;
         gotoSavePoint = true;
         playerPosition = new Vector2(0, 0);
@@ -86,6 +86,7 @@ public class SavepointDetails
 {
     public bool isActivated = false;
     public Vector3 teleportPosition;
+    public string savePointName;
 
     public SavepointDetails(bool isSavePointActive, Vector3 teleportPos)
     {

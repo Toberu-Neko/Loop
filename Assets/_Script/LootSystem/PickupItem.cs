@@ -26,15 +26,15 @@ public class PickupItem : PressEPickItemBase
 
         if(itemSO is SO_Chip)
         {
-            PlayerInventoryManager.Instance.AddChip(itemSO.itemName);
+            PlayerInventoryManager.Instance.AddChip(itemSO.ID);
         }
         else if(itemSO is SO_ConsumeableItem)
         {
-            PlayerInventoryManager.Instance.AddConsumableItem(itemSO.itemName);
+            PlayerInventoryManager.Instance.AddConsumableItem(itemSO.ID);
         }
         else if(itemSO is SO_PlayerStatusEnhancement)
         {
-            PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(itemSO.itemName);
+            PlayerInventoryManager.Instance.AddPlayerStatusEnhancementItem(itemSO.ID);
         }
         else
         {

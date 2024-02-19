@@ -13,6 +13,7 @@ public class ItemDataManager : MonoBehaviour
     public Dictionary<string, SO_StoryItem> StoryItemDict { get; private set; }
     public Dictionary<string, SO_ConsumeableItem> ConsumableItemDict { get; private set; }
     public Dictionary<string, SO_WeaponItem> WeaponItemDict { get; private set; }
+    public Dictionary<string, SO_Savepoint> SavepointDict { get; private set; }
 
 
     private void Awake()
@@ -33,6 +34,7 @@ public class ItemDataManager : MonoBehaviour
         StoryItemDict = new();
         ConsumableItemDict = new();
         WeaponItemDict = new();
+        SavepointDict = new();
 
         LoadAndPopulateDictionary("SO_Chip", ChipDict);
         LoadAndPopulateDictionary("SO_MovementSkill", MovementSkillDict);
@@ -41,6 +43,8 @@ public class ItemDataManager : MonoBehaviour
         LoadAndPopulateDictionary("SO_StoryItem", StoryItemDict);
         LoadAndPopulateDictionary("SO_ConsumableItem", ConsumableItemDict);
         LoadAndPopulateDictionary("SO_WeaponItem", WeaponItemDict);
+
+        LoadAndPopulateSavepointDictionary("SO_Savepoint", SavepointDict);
     }
 
     private void LoadAndPopulateDictionary<T>(string folderName, Dictionary<string, T> targetDict) where T : SO_ItemsBase
@@ -50,19 +54,41 @@ public class ItemDataManager : MonoBehaviour
         foreach (var item in items)
         {
 
-            if (string.IsNullOrEmpty(item.itemName))
+            if (string.IsNullOrEmpty(item.ID))
             {
-                Debug.LogError($"There is an item with no name, name: {item.itemName}");
+                Debug.LogError($"There is an item with no name, name: {item.ID}");
                 continue;
             }
 
-            if (targetDict.ContainsKey(item.itemName))
+            if (targetDict.ContainsKey(item.ID))
             {
-                Debug.LogError($"There are more than one item with the same name: {item.itemName}");
+                Debug.LogError($"There are more than one item with the same name: {item.ID}");
                 continue;
             }
 
-            targetDict.Add(item.itemName, item);
+            targetDict.Add(item.ID, item);
+        }
+    }
+    private void LoadAndPopulateSavepointDictionary<T>(string folderName, Dictionary<string, T> targetDict) where T : SO_Savepoint
+    {
+        var items = Resources.LoadAll<T>(folderName);
+
+        foreach (var item in items)
+        {
+
+            if (string.IsNullOrEmpty(item.savepointID))
+            {
+                Debug.LogError($"There is an savepoint with no ID, ID: {item.savepointID}");
+                continue;
+            }
+
+            if (targetDict.ContainsKey(item.savepointID))
+            {
+                Debug.LogError($"There are more than one item with the same ID: {item.savepointID}");
+                continue;
+            }
+
+            targetDict.Add(item.savepointID, item);
         }
     }
 }
