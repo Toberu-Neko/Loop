@@ -132,7 +132,8 @@ public class UI_Manager : MonoBehaviour
 
             if (!pauseUIObj.activeInHierarchy && 
                 !savepointUIObj.activeInHierarchy &&
-                !pickUpItemUIObj.activeInHierarchy)
+                !pickUpItemUIObj.activeInHierarchy &&
+                !shopUIObj.activeInHierarchy)
             {
                 OpenPauseMainUI();
             }
@@ -203,7 +204,7 @@ public class UI_Manager : MonoBehaviour
 
     public void ActivateShopUI(string shopID, LocalizedString shopName)
     {
-        shopUI.Activate(shopID, shopName);
+        shopUI.Activate(shopID, shopName);  
     }
 
     private void HandleSave()

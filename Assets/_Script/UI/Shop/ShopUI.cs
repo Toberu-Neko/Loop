@@ -13,8 +13,8 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     [SerializeField] private LocalizeStringEvent descriptionName;
     [SerializeField] private LocalizeStringEvent descriptionText;
     [SerializeField] private TextMeshProUGUI descriptionPriceText;
+    [SerializeField] private TextMeshProUGUI moneyText;
 
-    private string ID;
     private SerializableDictionary<string, ShopInventory> shopsData;
     private SerializableDictionary<string, ItemData> inventory;
 
@@ -23,8 +23,6 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     private void Awake()
     {
         shopSlots = iniventoryGrid.GetComponentsInChildren<ShopSlot>();
-
-        shopsData = new();
 
         foreach (var slot in shopSlots)
         {
@@ -61,7 +59,7 @@ public class ShopUI : MonoBehaviour, IDataPersistance
         }
         else
         {
-            Debug.Log("Not enough money");
+            Debug.Log("Not enough money or no item to sell");
         }
     }
 
@@ -69,10 +67,18 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     public void Activate(string shopID, LocalizedString shopName)
     {
         gameObject.SetActive(true);
+        descriptionObj.SetActive(false);    
+
+        moneyText.text = PlayerInventoryManager.Instance.Money.ToString();
 
         GameManager.Instance.PauseGame();
         this.shopName.StringReference = shopName;
-        ID = shopID;
+
+        if(shopsData == null)
+        {
+            Debug.LogError("shopsData == null");
+            return;
+        }
 
         if (!shopsData.ContainsKey(shopID))
         {
@@ -83,7 +89,7 @@ public class ShopUI : MonoBehaviour, IDataPersistance
             GetShopDataFromGameData(shopID);
         }
 
-        // TODO: Load shop inventory
+        //Load shop inventory
         int count = 0;
         foreach (var item in inventory)
         {
@@ -172,12 +178,12 @@ public class ShopUI : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        data.shopsData = shopsData;
+        shopsData = data.shopsData;
     }
 
     public void SaveData(GameData data)
     {
-        shopsData = data.shopsData;
+        data.shopsData = shopsData;
     }
 
     #region Description

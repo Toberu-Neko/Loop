@@ -27,14 +27,19 @@ public class ShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         countText.gameObject.SetActive(true);
 
         ItemBase = itemBase;
+
         countText.text = quantity.ToString();
         countText.color = quantity > 0 ? normalTextColor : emptyTextColor;
 
-        //TODO: Spawn item prefab
-        GameObject spawnedObj = ObjectPoolManager.SpawnObject(shopItemPrefab, spawnPoint.position, Quaternion.identity);
+        //Spawn item prefab
+        if (spawnedItem != null)
+        {
+            spawnedItem.ReturnToPool();
+        }
+
+        GameObject spawnedObj = ObjectPoolManager.SpawnObject(shopItemPrefab, spawnPoint);
         spawnedItem = spawnedObj.GetComponent<ShopItem>();
 
-        Debug.Log(itemBase.ID);
         spawnedItem.SetValue(itemBase.itemSprite);
     }
 

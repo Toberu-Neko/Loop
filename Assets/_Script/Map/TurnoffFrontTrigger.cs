@@ -13,7 +13,7 @@ public class TurnoffFrontTrigger : MonoBehaviour
     {
         if(frontObj == null)
         {
-            Debug.LogError("No obj in " + gameObject.name);
+            Debug.LogWarning("No obj in " + gameObject.name);
             gameObject.SetActive(false);
             return;
         }
@@ -22,7 +22,7 @@ public class TurnoffFrontTrigger : MonoBehaviour
 
         if(SRs == null)
         {
-            Debug.LogError("No SR in children.");
+            Debug.LogWarning("No SR in children.");
             gameObject.SetActive(false);
             return;
         }

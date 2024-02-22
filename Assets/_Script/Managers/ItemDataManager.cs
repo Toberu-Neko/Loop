@@ -69,11 +69,6 @@ public class ItemDataManager : MonoBehaviour
         {
             Debug.LogError($"Item with id: {id} not found");
         }
-        else
-        {
-            Debug.Log($"Item with id: {id} found" + item.name);
-        }
-
         return item;
     }
 
