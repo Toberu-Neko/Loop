@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if ((scene.name == "Level1-0" || scene.name == "Level1-1") && mode == LoadSceneMode.Additive)
+        if ((scene.name == "Level1-0" || scene.name == "Level1-1" || scene.name == "Level1-2-1") && mode == LoadSceneMode.Additive)
         {
             // Debug.LogWarning("Level1-0 or Level1-1 loaded");
             globalVolumeDay.SetActive(false);

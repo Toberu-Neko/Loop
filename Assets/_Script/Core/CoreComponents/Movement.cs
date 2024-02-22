@@ -218,7 +218,7 @@ public class Movement : CoreComponent
     {
         velocityWorkspace.Set(velocity, CurrentVelocity.y);
 
-        if (Slope.IsOnSlope && !ignoreSlope)
+        if (Slope.IsOnSlope && !ignoreSlope && Slope.NormalPrep!= Vector2.zero)
         {
             SetVelocity(velocity, -Slope.NormalPrep);
             return;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.1" name="Level1 Tileset" tilewidth="256" tileheight="256" tilecount="56" columns="8" tilerendersize="grid">
+<tileset version="1.10" tiledversion="1.10.2" name="Level1 Tileset" tilewidth="256" tileheight="256" tilecount="56" columns="8" tilerendersize="grid">
  <grid orientation="orthogonal" width="16" height="16"/>
  <image source="../../2D/TileSets/0828 tiles.png" trans="9d9d9d" width="2048" height="1792"/>
  <tile id="0">
@@ -401,9 +401,12 @@
   </objectgroup>
  </tile>
  <tile id="47">
+  <properties>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="256">
-    <polygon points="0,0 256,0 -1,-62"/>
+   <object id="2" x="0" y="256">
+    <polygon points="0,0 256,0 0.67707,-58.9728"/>
    </object>
   </objectgroup>
  </tile>

@@ -192,7 +192,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }
-        else if (jumpInput && (isTouchingWall || isToucingWallBack || wallJumpCoyoteTime))
+        else if (jumpInput && ((isTouchingWall && CollisionSenses.WallFrontDegree < 95f) || isToucingWallBack || wallJumpCoyoteTime))
         {
             StopWallJumpCoyoteTime();
             isTouchingWall = CollisionSenses.WallFront;
@@ -207,7 +207,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.WallGrabState);
         }
-        else if(isTouchingWall && xInput == Movement.FacingDirection && Movement.CurrentVelocity.y <= 0 && player.WallSlideState.CheckCanClimbWall())
+        else if(isTouchingWall && xInput == Movement.FacingDirection && Movement.CurrentVelocity.y <= 0 && CollisionSenses.WallFrontDegree < 95f && player.WallSlideState.CheckCanClimbWall())
         {
             stateMachine.ChangeState(player.WallSlideState);
         }

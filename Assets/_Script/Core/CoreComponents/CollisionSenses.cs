@@ -217,10 +217,23 @@ public class CollisionSenses : CoreComponent
     {
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsClimbableWall);
     }
-    public bool WallFrontLong
+
+    public float WallFrontDegree
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance * 3f, whatIsClimbableWall);
+        get 
+        {
+            RaycastHit2D wallFront = Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsClimbableWall);
+            if(wallFront)
+            {
+                return Vector2.Angle(wallFront.normal, Vector2.up);
+            }
+            else
+            {
+                return 0f;
+            }
+        }
     }
+
     public bool WallBack
     {
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * -movement.FacingDirection, wallCheckDistance, whatIsClimbableWall);

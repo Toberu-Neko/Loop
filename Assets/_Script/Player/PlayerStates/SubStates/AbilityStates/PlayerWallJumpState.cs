@@ -13,6 +13,8 @@ public class PlayerWallJumpState : PlayerAbilityState
     {
         base.Enter();
 
+        //TODO: Should not enter if wall degree is greater than 95
+
         player.JumpState.ResetAmountOfJumpsLeft();
         Movement.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
         Movement.CheckIfShouldFlip(wallJumpDirection);
