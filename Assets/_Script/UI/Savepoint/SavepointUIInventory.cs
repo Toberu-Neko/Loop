@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
@@ -6,8 +5,6 @@ using UnityEngine.Localization.Components;
 public class SavepointUIInventory : MonoBehaviour
 {
     [SerializeField] private SavepointUIMain savepointUIMain;
-
-    [SerializeField] private GameObject draggablePrefab;
 
     [SerializeField] private GameObject inventoryGrid;
 
@@ -88,7 +85,7 @@ public class SavepointUIInventory : MonoBehaviour
 
         foreach(var item in inventory)
         {
-            SO_Chip so = ItemDataManager.Instance.ChipDict[item.Value.itemName];
+            SO_Chip so = ItemDataManager.Instance.ChipDict[item.Value.itemdataID];
             if (so == null) 
             {
                 Debug.LogError("ItemDataManager.Instance.ChipDict[item.Value.itemName] == null");

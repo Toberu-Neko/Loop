@@ -26,6 +26,7 @@ public class GameData
     public SerializableDictionary<string, bool> activatedMapItem;
 
     public SerializableDictionary<string, SavepointDetails> savepoints;
+    public SerializableDictionary<string, ShopInventory> shopsData;
 
     public SerializableDictionary<string, ItemData> statusEnhancementInventory;
     public SerializableDictionary<string, ItemData> consumablesInventory;
@@ -59,6 +60,8 @@ public class GameData
         timeSkillItemInventory = new();
         weaponInventory = new();
 
+        shopsData = new();
+
         statusEnhancementInventory = new();
         savepoints = new();
         chipInventory = new();
@@ -86,12 +89,22 @@ public class SavepointDetails
 {
     public bool isActivated = false;
     public Vector3 teleportPosition;
-    public string savePointName;
 
     public SavepointDetails(bool isSavePointActive, Vector3 teleportPos)
     {
         isActivated = isSavePointActive;
         teleportPosition = teleportPos;
+    }
+}
+
+[System.Serializable]
+public class ShopInventory
+{
+    public SerializableDictionary<string, ItemData> shopInventory;
+
+    public ShopInventory()
+    {
+        shopInventory = new();
     }
 }
 

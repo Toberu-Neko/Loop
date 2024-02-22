@@ -72,25 +72,25 @@ public class PauseInventoryMain : MonoBehaviour
             switch(itemType)
             {
                 case ItemType.Chip:
-                    so = ItemDataManager.Instance.ChipDict[item.Value.itemName];
+                    so = ItemDataManager.Instance.ChipDict[item.Value.itemdataID];
                     break;
                 case ItemType.MovementSkill:
-                    so = ItemDataManager.Instance.MovementSkillDict[item.Value.itemName];
+                    so = ItemDataManager.Instance.MovementSkillDict[item.Value.itemdataID];
                     break;
                 case ItemType.TimeSkill:
-                    so = ItemDataManager.Instance.TimeSkillDict[item.Value.itemName];
+                    so = ItemDataManager.Instance.TimeSkillDict[item.Value.itemdataID];
                     break;
                 case ItemType.StatusEnhancement:
-                    so = ItemDataManager.Instance.StatusEnhancementDict[item.Value.itemName];
+                    so = ItemDataManager.Instance.StatusEnhancementDict[item.Value.itemdataID];
                     break;
                 case ItemType.StoryItem:
-                    so = ItemDataManager.Instance.StoryItemDict[item.Value.itemName];
+                    so = ItemDataManager.Instance.StoryItemDict[item.Value.itemdataID];
                     break;
                 case ItemType.ConsumableItem:
-                    so = ItemDataManager.Instance.ConsumableItemDict[item.Value.itemName];
+                    so = ItemDataManager.Instance.ConsumableItemDict[item.Value.itemdataID];
                     break;
                 case ItemType.WeaponItem:
-                    so = ItemDataManager.Instance.WeaponItemDict[item.Value.itemName];
+                    so = ItemDataManager.Instance.WeaponItemDict[item.Value.itemdataID];
                     break;
             }
 

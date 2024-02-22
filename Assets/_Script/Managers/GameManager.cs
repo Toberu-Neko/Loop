@@ -139,6 +139,13 @@ public class GameManager : MonoBehaviour
         EnemyManager.Instance.ResetTempData();
     }
 
+    public void HandleShopInteraction(string shopID, LocalizedString shopName)
+    {
+        // OnShopInteracted?.Invoke(shopID, shopName);
+
+
+    }
+
     public Vector3 GetSavepointTeleportPos(string savepointName)
     {
         Savepoints.TryGetValue(savepointName, out Savepoint savepoint);

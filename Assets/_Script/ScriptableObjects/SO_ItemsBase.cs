@@ -10,6 +10,7 @@ public class SO_ItemsBase : ScriptableObject
     public LocalizedString displayNameLocalization;
     public LocalizedString shortDescriptionLocalization;
     public LocalizedString descriptionLocalization;
+    public int price = 1;
 
     public Sprite itemSprite;
 }

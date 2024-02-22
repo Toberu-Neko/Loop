@@ -35,6 +35,10 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject savepointUIInventoryObj;
     [SerializeField] private GameObject savepointUITeleportObj;
 
+    [Header("Shop UI")]
+    [SerializeField] private GameObject shopUIObj;
+    [SerializeField] private ShopUI shopUI;
+
     [Header("HUD")]
     [SerializeField] private PickupHUD pickupHUD;
     [SerializeField] private GameObject bossFightUIObj;
@@ -83,6 +87,8 @@ public class UI_Manager : MonoBehaviour
 
         pickUpItemUIObj.SetActive(false);
         pickUpItemUI = pickUpItemUIObj.GetComponent<PickupItemUI>();
+
+        shopUIObj.SetActive(false);
 
         dieUI.gameObject.SetActive(false);
 
@@ -143,6 +149,10 @@ public class UI_Manager : MonoBehaviour
             {
                 pickUpItemUI.Deactive();
             }
+            else if (shopUIObj.activeInHierarchy)
+            {
+                shopUI.Deactivate();
+            }
         }
     }
 
@@ -189,6 +199,11 @@ public class UI_Manager : MonoBehaviour
         savepointUIMain.SetSavepointNameText(savePointName);
 
         inputHandler.NResetAllInput();
+    }
+
+    public void ActivateShopUI(string shopID, LocalizedString shopName)
+    {
+        shopUI.Activate(shopID, shopName);
     }
 
     private void HandleSave()

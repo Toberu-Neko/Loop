@@ -89,6 +89,44 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
     }
 
+    public void AddItemByID(string id, int amount = 1)
+    {
+        var item = ItemDataManager.Instance.TryGetItemFromAllDict(id);
+
+        if (item is SO_PlayerStatusEnhancement)
+        {
+            AddPlayerStatusEnhancementItem(id, amount);
+        }
+        else if (item is SO_StoryItem)
+        {
+            AddStoryItem(id);
+        }
+        else if (item is SO_WeaponItem)
+        {
+            AddWeaponItem(id);
+        }
+        else if (item is SO_MovementSkillItem)
+        {
+            AddMovemnetSkillItem(id);
+        }
+        else if (item is SO_TimeSkillItem)
+        {
+            AddTimeSkillItem(id);
+        }
+        else if (item is SO_ConsumeableItem)
+        {
+            AddConsumableItem(id, amount);
+        }
+        else if (item is SO_Chip)
+        {
+            AddChip(id, amount);
+        }
+        else
+        {
+            Debug.LogError("Item not found in ItemDataManager.");
+        }
+    }
+
     public void AddPlayerStatusEnhancementItem(string name, int amount = 1)
     {
         if (StatusEnhancementInventory.ContainsKey(name))
@@ -334,13 +372,13 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 public class ItemData
 {
     public int itemCount;
-    public string itemName;
+    public string itemdataID;
     public event Action OnValueChanged;
 
     public ItemData(int count, string name)
     {
         itemCount = count;
-        itemName = new(name);
+        itemdataID = new(name);
     }
 
     public void ReduceItemCount(int amount)
