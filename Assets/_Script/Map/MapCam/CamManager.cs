@@ -9,6 +9,7 @@ public class CamManager : MonoBehaviour
     public Camera MainCamera { get; private set; }
 
     // private List<CinemachineVirtualCamera> cams = new();
+    private List<CinemachineVirtualCamera> activeCams;
     public CinemachineVirtualCamera CurrentCam { get; private set; }
     private CinemachineFramingTransposer framingTransposer;
     
@@ -35,6 +36,7 @@ public class CamManager : MonoBehaviour
             return;
         }
 
+        activeCams = new();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         canShackCamera = true;
         MainCamera = Camera.main;
@@ -54,13 +56,54 @@ public class CamManager : MonoBehaviour
     */
     #region Swap/Switch Cameras
 
+    public void EnterCamBoarder(CinemachineVirtualCamera vcam)
+    {
+        if(activeCams.Contains(vcam))
+        {
+            Debug.LogWarning("Trying to enter the same camera");
+            return;
+        }
+
+        activeCams.Add(vcam);
+
+        if (activeCams.Count == 1)
+        {
+            SwitchCamera(vcam);
+        }
+    }
+
+    public void ExitCamBoarder(CinemachineVirtualCamera vcam)
+    {
+        if (!activeCams.Contains(vcam))
+        {
+            Debug.LogWarning("Trying to exit a camera that is not active");
+            return;
+        }
+
+        activeCams.Remove(vcam);
+        
+        if (activeCams.Count == 1)
+        {
+            SwitchCamera(activeCams[0]);
+        }
+    }
+
     public void SwitchCamera(CinemachineVirtualCamera vcam)
     {
+        if(CurrentCam == vcam)
+        {
+            Debug.LogWarning("Trying to switch to the same camera");
+            return;
+        }
+
         if(CurrentCam)
             CurrentCam.enabled = false;
 
         CurrentCam = vcam;
         CurrentCam.enabled = true;
+        activeCams.Clear();
+        activeCams.Add(vcam);
+
         orgFOV = CurrentCam.m_Lens.FieldOfView;
         ChangeFOV();
 
@@ -86,7 +129,7 @@ public class CamManager : MonoBehaviour
     {
         if (CurrentCam == null)
         {
-            Debug.LogError("CurrentCam is null");
+            Debug.LogWarning("CurrentCam is null");
             return;
         }
 

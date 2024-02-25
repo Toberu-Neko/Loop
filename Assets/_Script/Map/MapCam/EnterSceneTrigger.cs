@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnterSceneTrigger : MonoBehaviour
 {
+    /*
     [SerializeField] private Cinemachine.CinemachineVirtualCamera cam;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -23,4 +24,5 @@ public class EnterSceneTrigger : MonoBehaviour
         Bounds bounds = boxCollider.bounds;
         Gizmos.DrawWireCube(bounds.center, bounds.size);
     }
+    */
 }

@@ -15,8 +15,16 @@ public class CamRange : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            CamManager.Instance.SwitchCamera(cam);
+            CamManager.Instance.EnterCamBoarder(cam);
             GameManager.Instance.HandleChangeSceneFinished();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            CamManager.Instance.ExitCamBoarder(cam);
         }
     }
     private void OnDrawGizmos()

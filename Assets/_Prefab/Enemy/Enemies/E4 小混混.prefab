@@ -81,8 +81,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9703662dd30fd5447854303aeec8380e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateMachine>k__BackingField:
+    debugCanChangeState: 1
   EntityData: {fileID: 11400000, guid: ecd68d7bcab6d044bb6f43f923c706ae, type: 2}
   spriteRenderer: {fileID: 671724138867124728}
+  <DeathParticles>k__BackingField: {fileID: 0}
   <GotoMoveState>k__BackingField: 1
   <GotoDodgeState>k__BackingField: 1
   stateData: {fileID: 11400000, guid: e8607b56315d1644fbf460f9ba721f62, type: 2}
@@ -240,9 +243,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2072718633092471214}
     m_Modifications:
+    - target: {fileID: 102967134076565523, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102967134076565523, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 254108877684010433, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_Name
       value: CoreForEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 354037920976314973, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 354037920976314973, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 679741928876199879, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -260,9 +279,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 5.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1215993879597986038, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 1215993879597986038, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.78
+      objectReference: {fileID: 0}
     - target: {fileID: 1790441739097743597, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.472
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790441739097743597, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.29
       objectReference: {fileID: 0}
     - target: {fileID: 3828623697472041620, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: <CoreData>k__BackingField
@@ -403,6 +434,22 @@ PrefabInstance:
     - target: {fileID: 8827469850256828924, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846583381611955663, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846583381611955663, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9169745813901483905, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9169745813901483905, guid: f4bdafb0dc552344398ab83ad8263b6d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

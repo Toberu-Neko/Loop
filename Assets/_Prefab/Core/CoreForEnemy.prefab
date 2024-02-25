@@ -53,6 +53,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CoreData>k__BackingField: {fileID: 0}
+--- !u!1 &484106420979774798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1215993879597986038}
+  m_Layer: 0
+  m_Name: WallCheckHead
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1215993879597986038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484106420979774798}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4434635816553806508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &939049757995187776
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +577,7 @@ Transform:
   - {fileID: 679741928876199879}
   - {fileID: 5107890635141627487}
   - {fileID: 1790441739097743597}
+  - {fileID: 1215993879597986038}
   m_Father: {fileID: 6317694935012530758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6622905753534290228
@@ -563,6 +595,7 @@ MonoBehaviour:
   groundCheck: {fileID: 715799080158306530}
   changeColliderWallCheck: {fileID: 1790441739097743597}
   wallCheck: {fileID: 1790441739097743597}
+  wallCheckHead: {fileID: 1215993879597986038}
   ledgeCheckVertical: {fileID: 4439911822246959578}
   wallBackCheck: {fileID: 8399613828603266706}
   ledgeCheckHorizontal: {fileID: 0}
@@ -570,6 +603,7 @@ MonoBehaviour:
   headCheck: {fileID: 0}
   slopeCheckVerticalFront: {fileID: 679741928876199879}
   slopeCheckVerticalBack: {fileID: 5107890635141627487}
+  crouchChangeColliderWallCheck: {fileID: 0}
   groundCheckV2: {x: 0.4, y: 0.1}
   slopeCheckV2: {x: 0.4, y: 0.8}
   changeColliderWallCheckV2: {x: 0.52, y: 0.95}

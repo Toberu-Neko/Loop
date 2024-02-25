@@ -23,7 +23,12 @@ public class CollisionSenses : CoreComponent
     }
     public Transform WallCheck {
         get => GenericNotImplementedError<Transform>.TryGet(wallCheck, transform.parent.name);
-        private set => wallCheck = value; 
+        private set => wallCheck = value;
+    }
+    public Transform WallCheckHead
+    {
+        get => GenericNotImplementedError<Transform>.TryGet(wallCheckHead, transform.parent.name);
+        private set => wallCheckHead = value;
     }
     public Transform WallBackCheck
     {
@@ -52,6 +57,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform changeColliderWallCheck;
     [SerializeField] private Transform wallCheck;
+    [SerializeField] private Transform wallCheckHead;
     [SerializeField] private Transform ledgeCheckVertical;
     [SerializeField] private Transform wallBackCheck;
     [SerializeField] private Transform ledgeCheckHorizontal;
@@ -218,6 +224,11 @@ public class CollisionSenses : CoreComponent
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsClimbableWall);
     }
 
+    public bool WallFrontHead
+    {
+        get => Physics2D.Raycast(WallCheckHead.position, Vector2.right * movement.FacingDirection, wallCheckDistance, whatIsClimbableWall);
+    }
+
     public float WallFrontDegree
     {
         get 
@@ -263,6 +274,12 @@ public class CollisionSenses : CoreComponent
         {
             Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallCheckDistance);
         }
+
+        if (WallCheckHead)
+        {
+            Gizmos.DrawLine(WallCheckHead.position, WallCheckHead.position + Vector3.right * wallCheckDistance);
+        }
+
         if (ChangeColliderWallCheck && crouchChangeColliderWallCheck)
         {
             Gizmos.DrawWireCube(ChangeColliderWallCheck.position, changeColliderWallCheckV2);
