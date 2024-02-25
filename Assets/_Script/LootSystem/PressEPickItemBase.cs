@@ -37,7 +37,7 @@ public class PressEPickItemBase : DropableItemBase
 
     private void HandlePick()
     {
-        AudioManager.instance.PlaySoundFX(pickUpSFX, transform);
+        AudioManager.instance.PlaySoundFX(pickUpSFX, transform, AudioManager.SoundType.twoD);
     }
 
     protected override void Update()

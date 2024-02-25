@@ -15,7 +15,7 @@ public class B0N_StrongAttackState : UnblockableAttackState
     {
         base.AnimationActionTrigger();
 
-        AudioManager.instance.PlaySoundFX(boss.StateData.strongAttackSFX, Movement.ParentTransform);
+        AudioManager.instance.PlaySoundFX(boss.StateData.strongAttackSFX, Movement.ParentTransform, AudioManager.SoundType.threeD);
     }
 
     public override void AnimationFinishTrigger()

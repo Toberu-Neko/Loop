@@ -181,7 +181,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         if(shootSFX.clip != null)
         {
             Debug.LogWarning("SFX is null");
-            AudioManager.instance.PlaySoundFX(shootSFX, transform);
+            AudioManager.instance.PlaySoundFX(shootSFX, transform, AudioManager.SoundType.threeD);
         }
     }
 

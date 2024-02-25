@@ -17,7 +17,7 @@ public class B1_EnemyPerfectBlockState : EnemyPerfectBlockState
     {
         base.Enter();
 
-        AudioManager.instance.PlaySoundFX(boss.StateData.block, Movement.ParentTransform);
+        AudioManager.instance.PlaySoundFX(boss.StateData.block, Movement.ParentTransform, AudioManager.SoundType.threeD);
     }
 
     public override void LogicUpdate()

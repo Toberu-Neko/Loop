@@ -167,7 +167,7 @@ public class PlayerGroundedState : PlayerState
         if (Time.time > lastStepTime + time)
         {
             lastStepTime = Time.time;
-            AudioManager.instance.PlaySoundFX(player.PlayerSFX.footstep, player.transform);
+            AudioManager.instance.PlaySoundFX(player.PlayerSFX.footstep, player.transform, AudioManager.SoundType.twoD);
         }
     }
 

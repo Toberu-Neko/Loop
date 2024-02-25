@@ -21,7 +21,7 @@ public class PlayerJumpState : PlayerAbilityState
         player.InAirState.SetIsJumping();
 
         isAbilityDone = true;
-        AudioManager.instance.PlaySoundFX(player.PlayerSFX.jump, Movement.ParentTransform);
+        AudioManager.instance.PlaySoundFX(player.PlayerSFX.jump, Movement.ParentTransform, AudioManager.SoundType.twoD);
     }
     public override void LogicUpdate()
     {

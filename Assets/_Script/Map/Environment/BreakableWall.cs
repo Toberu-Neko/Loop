@@ -49,7 +49,7 @@ public class BreakableWall : MonoBehaviour, IMapDamageableItem, ITempDataPersist
             OnDefeated?.Invoke();
             gameObject.SetActive(false);
             isDefeated = true;
-            AudioManager.instance.PlaySoundFX(breakSFX, transform);
+            AudioManager.instance.PlaySoundFX(breakSFX, transform, AudioManager.SoundType.threeD);
         }
     }
 }

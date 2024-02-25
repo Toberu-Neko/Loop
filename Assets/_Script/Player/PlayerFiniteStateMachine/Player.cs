@@ -164,12 +164,12 @@ public class Player : MonoBehaviour
 
     private void OnDamaged_SFX()
     {
-        AudioManager.instance.PlaySoundFX(PlayerSFX.getHit, transform);
+        AudioManager.instance.PlaySoundFX(PlayerSFX.getHit, transform, AudioManager.SoundType.twoD);
     }
 
     private void OnPerfectBlock_SFX()
     {
-        AudioManager.instance.PlaySoundFX(PlayerSFX.perfectBlock, transform);
+        AudioManager.instance.PlaySoundFX(PlayerSFX.perfectBlock, transform, AudioManager.SoundType.twoD);
     }
 
     private void Start()

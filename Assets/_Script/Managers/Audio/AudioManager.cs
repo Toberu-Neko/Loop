@@ -8,7 +8,8 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
     public static AudioManager instance;
 
-    [SerializeField] private GameObject soundFXObj;
+    [SerializeField] private GameObject soundFXObj2D;
+    [SerializeField] private GameObject soundFXObj3D;
 
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private AudioMixerGroup soundFXMixerGroup;
@@ -17,14 +18,20 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private Sound buttonHover;
     [SerializeField] private Sound buttonClick;
 
+    public enum SoundType 
+    { 
+        twoD,
+        threeD
+    }
+
     public void PlayButtonHover(Transform spawnTransform)
     {
-        PlaySoundFX(buttonHover, spawnTransform);
+        PlaySoundFX(buttonHover, spawnTransform, SoundType.twoD);
     }
 
     public void PlayButtonClick(Transform spawnTransform)
     {
-        PlaySoundFX(buttonClick, spawnTransform);
+        PlaySoundFX(buttonClick, spawnTransform, SoundType.twoD);
     }
 
     #region Set Volume
@@ -71,7 +78,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySoundFX(Sound sound, Transform spawnTransform)
+    public void PlaySoundFX(Sound sound, Transform spawnTransform, SoundType type)
     {
         if(sound == null)
         {
@@ -79,7 +86,8 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        AudioSource audioSource = ObjectPoolManager.SpawnObject(soundFXObj, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
+
+        AudioSource audioSource = ObjectPoolManager.SpawnObject(type == SoundType.twoD ? soundFXObj2D : soundFXObj3D, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
 
         audioSource.clip = sound.clip;
         audioSource.volume = sound.volume;
@@ -97,7 +105,7 @@ public class AudioManager : MonoBehaviour
     public void PlayRandomSoundFX(Sound[] sounds, Transform spawnTransform)
     {
         int randomIndex = UnityEngine.Random.Range(0, sounds.Length);
-        AudioSource audioSource = ObjectPoolManager.SpawnObject(soundFXObj, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
+        AudioSource audioSource = ObjectPoolManager.SpawnObject(soundFXObj3D, spawnTransform.position, Quaternion.identity).GetComponent<AudioSource>();
 
         Sound s = sounds[randomIndex];
         audioSource.clip = s.clip;

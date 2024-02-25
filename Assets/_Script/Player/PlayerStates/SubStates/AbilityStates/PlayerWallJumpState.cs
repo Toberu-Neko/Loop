@@ -19,7 +19,7 @@ public class PlayerWallJumpState : PlayerAbilityState
         Movement.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
         Movement.CheckIfShouldFlip(wallJumpDirection);
         player.JumpState.DecreaseAmountOfJumpsLeft();
-        AudioManager.instance.PlaySoundFX(player.PlayerSFX.jump, Movement.ParentTransform);
+        AudioManager.instance.PlaySoundFX(player.PlayerSFX.jump, Movement.ParentTransform, AudioManager.SoundType.twoD);
     }
 
     public override void LogicUpdate()
