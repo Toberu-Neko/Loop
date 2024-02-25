@@ -38,7 +38,7 @@ public class MoveState : EnemyState
         base.DoChecks();
 
         isDetectingLedge = CollisionSenses.LedgeVertical;
-        isDetectingWall = CollisionSenses.WallFront;
+        isDetectingWall = CollisionSenses.WallFront || CollisionSenses.WallFrontHead;
         isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
     }
 }

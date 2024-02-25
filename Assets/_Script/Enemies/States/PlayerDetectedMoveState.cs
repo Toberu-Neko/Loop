@@ -34,7 +34,7 @@ public class PlayerDetectedMoveState : EnemyState
         isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
         isPlayerInMaxAgroRange = CheckPlayerSenses.IsPlayerInMaxAgroRange;
         isDetectingLedge = CollisionSenses.LedgeVertical;
-        isDetectingWall = CollisionSenses.WallFront;
+        isDetectingWall = CollisionSenses.WallFront || CollisionSenses.WallFrontHead;
         performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction;
     }
 

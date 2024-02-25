@@ -23,7 +23,7 @@ public class ChargeState : EnemyState
 
         isPlayerInMinAgroRange = CheckPlayerSenses.IsPlayerInMinAgroRange;
         isDetectingLedge = CollisionSenses.LedgeVertical;
-        isDetectingWall = CollisionSenses.WallFront;
+        isDetectingWall = CollisionSenses.WallFront || CollisionSenses.WallFrontHead;
 
         performCloseRangeAction = CheckPlayerSenses.IsPlayerInCloseRangeAction && !isChargeTimeOver;
     }

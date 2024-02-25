@@ -28,6 +28,7 @@ public class PickupItemUI : MonoBehaviour
 
     public void Deactive()
     {
+        Debug.Log("deactive");
         GameManager.Instance.ResumeGame();
         gameObject.SetActive(false);
     }
