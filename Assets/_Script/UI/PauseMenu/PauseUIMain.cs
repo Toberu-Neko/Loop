@@ -8,6 +8,8 @@ public class PauseUIMain : MonoBehaviour
     [SerializeField] private OptionUI optionUI;
     [SerializeField] private PauseTeleport teleportUI;
 
+    [SerializeField] private GameObject firstSelectedObj;
+
     private void Awake()
     {
         tutorialMenu.gameObject.SetActive(false);
@@ -70,10 +72,12 @@ public class PauseUIMain : MonoBehaviour
             GameManager.Instance.PauseGame();
         }
         gameObject.SetActive(true);
+        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
     }
 
     public void DeactivateMenu()
     {
+        UI_Manager.Instance.SetFirstSelectedObj(null);
         gameObject.SetActive(false);
     }
 

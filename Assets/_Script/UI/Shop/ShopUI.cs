@@ -15,6 +15,8 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     [SerializeField] private TextMeshProUGUI descriptionPriceText;
     [SerializeField] private TextMeshProUGUI moneyText;
 
+    [SerializeField] private GameObject firstSelectedObj;
+
     private SerializableDictionary<string, ShopInventory> shopsData;
     private SerializableDictionary<string, ItemData> inventory;
 
@@ -68,6 +70,7 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     {
         gameObject.SetActive(true);
         descriptionObj.SetActive(false);    
+        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
 
         moneyText.text = PlayerInventoryManager.Instance.Money.ToString();
 
@@ -159,6 +162,7 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     {
         GameManager.Instance.ResumeGame();
         gameObject.SetActive(false);
+        UI_Manager.Instance.FirstSelectedObjNull();
 
         foreach (var slot in shopSlots)
         {

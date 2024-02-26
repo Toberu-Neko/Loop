@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class OptionUI : MonoBehaviour, IOptionData
@@ -9,16 +10,20 @@ public class OptionUI : MonoBehaviour, IOptionData
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider bgmVolumeSlider;
     [SerializeField] private Slider soundFXVolumeSlider;
+
+    [SerializeField] private GameObject firstSelectedObj;
     private int languageIndex;
 
     public void Activate()
     {
         DataPersistenceManager.Instance.LoadOptionData();
         gameObject.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(firstSelectedObj);
     }
 
     public void Deactivate()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         gameObject.SetActive(false);
         OnDeactivate?.Invoke(false);
         DataPersistenceManager.Instance.SaveOptionData();

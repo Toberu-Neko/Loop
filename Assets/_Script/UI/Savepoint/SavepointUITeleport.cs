@@ -13,11 +13,18 @@ public class SavepointUITeleport : MonoBehaviour
 
     private void UpdateButtons()
     {
+        int count = 0;
         foreach(var item in GameManager.Instance.Savepoints)
         {
             var buttonObj = ObjectPoolManager.SpawnObject(buttonPrefab, buttonParent);
+            if(count == 0)
+            {
+                UI_Manager.Instance.SetFirstSelectedObj(buttonObj);
+            }
             var script = buttonObj.GetComponent<TeleportButton>();
             script.SetText(item.Value.SavePointData.savepointID, item.Value.SavePointData.savepointName);
+
+            count++;
         }
     }
 
@@ -30,5 +37,6 @@ public class SavepointUITeleport : MonoBehaviour
     public void Deactivate()
     {
         gameObject.SetActive(false);
+        UI_Manager.Instance.FirstSelectedObjNull();
     }
 }

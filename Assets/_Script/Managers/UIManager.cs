@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Localization;
+using UnityEngine.UI;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -210,7 +212,7 @@ public class UI_Manager : MonoBehaviour
 
     public void ActivateShopUI(string shopID, LocalizedString shopName)
     {
-        shopUI.Activate(shopID, shopName);  
+        shopUI.Activate(shopID, shopName);
     }
 
     private void HandleSave()
@@ -224,6 +226,16 @@ public class UI_Manager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1f);
         savedNotificationObj.SetActive(false);
+    }
+
+    public void SetFirstSelectedObj(GameObject parent)
+    {
+        EventSystem.current.SetSelectedGameObject(parent);
+    }
+
+    public void FirstSelectedObjNull()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     #region Change Scene

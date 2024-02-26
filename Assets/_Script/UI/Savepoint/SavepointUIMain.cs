@@ -12,6 +12,8 @@ public class SavepointUIMain : MonoBehaviour
     [SerializeField] private SavepointUIChangeSkill savepointUIChangeSkill;
     [SerializeField] private SavepointUITeleport savepointUITeleport;
 
+    [SerializeField] private GameObject firstSelectedObj;
+
 
     public void SetSavepointNameText(LocalizedString name)
     {
@@ -42,8 +44,8 @@ public class SavepointUIMain : MonoBehaviour
 
     public void OnClickInventoryButton()
     {
-        savepointUIInventory.ActiveMenu();
         DeactivateMenu();
+        savepointUIInventory.ActiveMenu();
     }
 
     public void OnClickGoToMainMenu()
@@ -60,11 +62,13 @@ public class SavepointUIMain : MonoBehaviour
             GameManager.Instance.PauseGame();
         }
         gameObject.SetActive(true);
+        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
     }
 
     public void DeactivateMenu()
     {
         gameObject.SetActive(false);
+        UI_Manager.Instance.FirstSelectedObjNull();
     }
 
     public void DeactiveAllMenu()
@@ -74,7 +78,7 @@ public class SavepointUIMain : MonoBehaviour
         savepointUITeleport.Deactivate();
         savepointUIObj.SetActive(false);
         GameManager.Instance.ResumeGame();
-        gameObject.SetActive(false);
+        DeactivateMenu();
         DataPersistenceManager.Instance.ReloadBaseScene();
     }
 }

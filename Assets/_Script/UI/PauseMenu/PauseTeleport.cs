@@ -9,6 +9,9 @@ public class PauseTeleport : MonoBehaviour
     [SerializeField] private PauseUIMain pauseUIMain;
     [SerializeField] private Player player;
     [SerializeField] private List<Transform> teleports;
+
+    [SerializeField] private GameObject firstSelectedObj;
+
     [Serializable] private class Teleport
     {
         public string levelName;
@@ -19,10 +22,12 @@ public class PauseTeleport : MonoBehaviour
     public void Activate()
     {
         gameObject.SetActive(true);
+        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
     }
 
     public void Deactivate()
     {
+        UI_Manager.Instance.FirstSelectedObjNull();
         gameObject.SetActive(false);
         pauseUIMain.ActivateMenu();
     }

@@ -22,6 +22,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
     [SerializeField] private Button timeStopAllButton;
     [SerializeField] private Button bulletTimeAllButton;
     [SerializeField] private Button bulletTimeRangedButton;
+    [SerializeField] private GameObject firstSelectedObj;
 
     private TextMeshProUGUI slot1SwordText;
     private TextMeshProUGUI slot1GunText;
@@ -50,8 +51,8 @@ public class SavepointUIChangeSkill : MonoBehaviour
 
     public void OnClickBackButton()
     {
-        savepointUIMain.ActivateMenu();
         Deactivate();
+        savepointUIMain.ActivateMenu();
     }
 
     public void OnClickSlot1Sword()
@@ -209,6 +210,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
 
     public void Activate()
     {
+        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
         gameObject.SetActive(true); 
         UpdateMenu();
     }
@@ -216,6 +218,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
     public void Deactivate()
     {
         gameObject.SetActive(false);
+        UI_Manager.Instance.FirstSelectedObjNull();
         DataPersistenceManager.Instance.SaveGame();
     }
 }
