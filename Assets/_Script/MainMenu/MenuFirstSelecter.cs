@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MenuFirstSelecter : MonoBehaviour
@@ -13,8 +12,13 @@ public class MenuFirstSelecter : MonoBehaviour
         SetFirstSelected(firstSelectedButton);
     }
 
+    protected virtual void OnDisable()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
     public void SetFirstSelected(Button selectedButton)
     {
-        selectedButton.Select();
+        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
     }
 }
