@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class GiveTimeSkillDead : CoreComponent
 {
@@ -28,5 +29,10 @@ public class GiveTimeSkillDead : CoreComponent
     {
         PlayerInventoryManager.Instance.AddTimeSkillItem(timeSkillItem.ID);
         UI_Manager.Instance.ActivePickupItemUI(timeSkillItem.displayNameLocalization, timeSkillItem.shortDescriptionLocalization);
+
+        if(!timeSkillItem.popupTutorialLocalization.IsEmpty)
+        {
+            UI_Manager.Instance.ActivateTutorialPopUpUI(timeSkillItem.popupTutorialLocalization);
+        }
     }
 }

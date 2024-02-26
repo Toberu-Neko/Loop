@@ -8,8 +8,8 @@ public class PickupHUD : MonoBehaviour
 {
     [SerializeField] private Animator anim;
 
-    [SerializeField] private LocalizeStringEvent itemNameText;
-    [SerializeField] private LocalizedString defaultItemName;
+    [SerializeField] private LocalizeStringEvent localizedText;
+    [SerializeField] private LocalizedString defaultText;
 
     private Queue<ItemText> queue = new();
 
@@ -30,7 +30,7 @@ public class PickupHUD : MonoBehaviour
 
     public void Activate(LocalizedString itemName)
     {
-        itemNameText.StringReference = itemName;
+        localizedText.StringReference = itemName;
         anim.SetTrigger("Activate");
     }
 

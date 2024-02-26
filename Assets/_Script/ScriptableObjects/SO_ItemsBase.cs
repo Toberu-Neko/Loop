@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -10,6 +8,7 @@ public class SO_ItemsBase : ScriptableObject
     public LocalizedString displayNameLocalization;
     public LocalizedString shortDescriptionLocalization;
     public LocalizedString descriptionLocalization;
+    public LocalizedString popupTutorialLocalization;
     public int price = 1;
 
     public Sprite itemSprite;

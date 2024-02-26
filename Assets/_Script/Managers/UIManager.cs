@@ -41,6 +41,7 @@ public class UI_Manager : MonoBehaviour
 
     [Header("HUD")]
     [SerializeField] private PickupHUD pickupHUD;
+    [SerializeField] private PickupHUD tutorialHUD;
     [SerializeField] private GameObject bossFightUIObj;
     private BossFightUI bossFightUI;
 
@@ -175,6 +176,11 @@ public class UI_Manager : MonoBehaviour
     public void ActivatePickupItemUIHUD(LocalizedString name)
     {
         pickupHUD.AddToQueue(name);
+    }
+
+    public void ActivateTutorialPopUpUI(LocalizedString description)
+    {
+        tutorialHUD.AddToQueue(description);
     }
 
     private void OpenPauseMainUI()
