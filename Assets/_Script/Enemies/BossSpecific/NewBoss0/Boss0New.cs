@@ -15,6 +15,7 @@ public class Boss0New : BossBase
 
     public B0N_PreChargeState PreChargeState { get; private set; }
     public B0N_ChargeState ChargeState { get; private set; }
+    public B0N_AfterChargeState AfterChargeState { get; private set; }
     public B0N_MultiAttackState MultiAttackState { get; private set; }
 
     public B0N_StunState StunState { get; private set; }
@@ -48,6 +49,7 @@ public class Boss0New : BossBase
 
         PreChargeState = new B0N_PreChargeState(this, StateMachine, "preCharge", this);
         ChargeState = new B0N_ChargeState(this, StateMachine, "charge", StateData.ChargeState, this);
+        AfterChargeState = new B0N_AfterChargeState(this, StateMachine, "afterCharge", this);
         MultiAttackState = new B0N_MultiAttackState(this, StateMachine, "multiAttack", meleeAttackPosition, StateData.MultiAttackState, this);
 
         StunState = new B0N_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
