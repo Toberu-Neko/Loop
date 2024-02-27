@@ -262,9 +262,9 @@ public class CollisionSenses : CoreComponent
         get => Physics2D.Raycast(LedgeCheckVertical.position, Vector2.down, ledgeCheckDistance, whatIsGround);
     }
 
-    public bool IsDetectingWall(Vector2 direction, float distance)
+    public bool IsDetectingWall(Vector2 position, Vector2 direction, float distance)
     {
-        return Physics2D.Raycast(movement.ParentTransform.position, direction, distance, whatIsClimbableWall);
+        return Physics2D.Raycast(position, direction, distance, whatIsClimbableWall);
     }
 
     private void OnDrawGizmos()

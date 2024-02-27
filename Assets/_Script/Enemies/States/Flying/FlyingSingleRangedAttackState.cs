@@ -2,21 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleRangedAttackState : AttackState
+public class FlyingSingleRangedAttackState : EnemyFlyingStateBase
 {
     private ED_EnemyRangedAttackState stateData;
     private IFireable fireable;
+    private Transform attackPosition;
 
-    public SingleRangedAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemyRangedAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public FlyingSingleRangedAttackState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, Transform attackPosition, ED_EnemyRangedAttackState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
+        this.attackPosition = attackPosition;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        if (!CheckPlayerSenses.IsPlayerInMaxAgroRange && CheckPlayerSenses.AllRnagePlayerRaycast)
+        {
+            Movement.Flip();
+        }
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        Movement.SetVelocityZero();
     }
 
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
 
-        if(fireable == null)
+        if (fireable == null)
         {
             GameObject projectile = ObjectPoolManager.SpawnObject(stateData.projectile, attackPosition.position, attackPosition.rotation, ObjectPoolManager.PoolType.Projectiles);
             fireable = projectile.GetComponent<IFireable>();
