@@ -53,7 +53,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnContinueGameClicked()
     {
-        LoadSceneManager.Instance.LoadScene(gameBaseScene.Name);
+        LoadSceneManager.Instance.LoadSceneSingle(gameBaseScene.Name);
     }
 
     public void OnLoadButtobClicked()

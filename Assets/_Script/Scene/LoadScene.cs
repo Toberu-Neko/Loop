@@ -13,8 +13,7 @@ public class LoadScene : MonoBehaviour
         if (other.CompareTag("Player") && !SceneManager.GetSceneByName(scene.Name).isLoaded && !isLoadedThisFram)
         {
             isLoadedThisFram = true;
-            LoadSceneManager.Instance.CurrentSceneName = scene.Name;
-            SceneManager.LoadSceneAsync(scene.Name, LoadSceneMode.Additive);
+            LoadSceneManager.Instance.LoadSceneAdditive(scene.Name);
         }
 
         if (other.CompareTag("EnemySpawner"))
