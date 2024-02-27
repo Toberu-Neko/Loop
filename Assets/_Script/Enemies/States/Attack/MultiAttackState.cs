@@ -26,8 +26,6 @@ public class MultiAttackState : AttackState
     {
         base.LogicUpdate();
 
-        entity.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
-
         if(Stats.IsAngry && startAttack)
         {
             if (CheckPlayerSenses.IsPlayerInMaxAgroRange)
@@ -39,6 +37,8 @@ public class MultiAttackState : AttackState
                 Movement.SetVelocityX(stateData.angryMoveSpeed* -Movement.FacingDirection);
             }
         }
+
+        entity.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
     }
 
     public override void AnimationActionTrigger()

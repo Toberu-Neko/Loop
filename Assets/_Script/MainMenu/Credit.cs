@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Credit : MenuFirstSelecter
+public class Credit : MonoBehaviour
 {
     [SerializeField] private MainMenu mainMenu;
     

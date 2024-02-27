@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MenuFirstSelecter
+public class MainMenu : MonoBehaviour
 {
     [Header("Navigation")]
     [SerializeField] private SaveSlotMenu saveSlotMenu;

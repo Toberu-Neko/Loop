@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SaveSlotMenu : MenuFirstSelecter
+public class SaveSlotMenu : MonoBehaviour
 {
     [Header("Navigation")]
     [SerializeField] private MainMenu mainMenu;
@@ -69,8 +70,7 @@ public class SaveSlotMenu : MenuFirstSelecter
             }
         }
 
-        Button firstSelectedButton = firstSelected.GetComponent<Button>();
-        SetFirstSelected(firstSelectedButton);
+        EventSystem.current.SetSelectedGameObject(firstSelected);
     }
 
     public void DeactiveMenu()
