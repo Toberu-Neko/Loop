@@ -56,6 +56,8 @@ public class Stats : CoreComponent
     public event Action OnTimeSlowStart;
     public event Action OnTimeSlowEnd;
 
+    public event Action<float> OnInvincibleStart;
+
     #region Overrides
 
     protected override void Awake()
@@ -161,6 +163,7 @@ public class Stats : CoreComponent
     private void SetInvincibleAfterDamageTrue()
     {
         InvinvibleAfterDamaged = true;
+        OnInvincibleStart?.Invoke(invincibleDurationAfterDamaged);
     }
 
     private void SetInvincibleAfterDamageFalse()
