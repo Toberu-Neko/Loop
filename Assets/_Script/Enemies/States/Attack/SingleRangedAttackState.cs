@@ -11,6 +11,7 @@ public class SingleRangedAttackState : AttackState
     {
         this.stateData = stateData;
     }
+
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();

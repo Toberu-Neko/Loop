@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -192,6 +193,12 @@ public class MultiProjectileObjContainer
 {
     public GameObject obj;
     public ProjectileDetails details;
+}
+
+[Serializable]
+public class ED_ChooseSingleBulletState
+{
+    public GameObject bulletPrefab;
 }
 
 [Serializable]

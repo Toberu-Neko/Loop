@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -74,6 +75,8 @@ public class Player : MonoBehaviour
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public SpriteRenderer SR { get; private set; }
+    private Color srDefaultColor;
+
     [field: SerializeField] public Transform DashDirectionIndicator { get; private set; }
     public BoxCollider2D MovementCollider { get; private set; }
     #endregion
@@ -98,6 +101,7 @@ public class Player : MonoBehaviour
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
         SR = GetComponent<SpriteRenderer>();
+        srDefaultColor = SR.color;
         MovementCollider = GetComponent<BoxCollider2D>();
         WeaponManager = GetComponent<PlayerWeaponManager>();
 
@@ -156,11 +160,53 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         stats.Health.OnCurrentValueZero += HandleHealthZero;
+        stats.OnInvincibleStart += Stats_OnInvincibleStart;
 
         combat.OnPerfectBlock += OnPerfectBlock_SFX;
         combat.OnDamaged += OnDamaged_SFX;
         combat.OnDamaged += OnDamaged_IgnoreEnemy;
     }
+
+    private void Stats_OnInvincibleStart(float sec)
+    {
+        StopCoroutine(InvincibleColorChange(sec));
+        StartCoroutine(InvincibleColorChange(sec));
+    }
+
+    private IEnumerator InvincibleColorChange(float sec)
+    {
+
+        float alpha = 1f;
+        float startTime = Time.time;
+        bool isDecreasing = true;
+
+        while(startTime + sec > Time.time)
+        {
+            if (isDecreasing)
+            {
+                alpha = Mathf.Lerp(alpha, 0.35f, Time.deltaTime * 12f);
+            }
+            else
+            {
+                alpha = Mathf.Lerp(alpha, 1f, Time.deltaTime * 12f);
+            }
+
+            if(alpha <= 0.4f)
+            {
+                isDecreasing = false;
+            }
+            else if(alpha >= 0.95f)
+            {
+                isDecreasing = true;
+            }
+
+            SR.color = new Color(SR.color.r, SR.color.g, SR.color.b, alpha);
+
+            yield return null;
+        }
+        SR.color = srDefaultColor;
+    }
+
 
     private void OnDamaged_SFX()
     {
@@ -193,6 +239,7 @@ public class Player : MonoBehaviour
         gameManager.OnChangeSceneFinished -= HandleChangeSceneFinished;
 
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
+        stats.OnInvincibleStart -= Stats_OnInvincibleStart;
 
         combat.OnPerfectBlock -= OnPerfectBlock_SFX;
         combat.OnDamaged -= OnDamaged_SFX;

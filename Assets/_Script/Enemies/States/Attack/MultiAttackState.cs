@@ -37,6 +37,8 @@ public class MultiAttackState : AttackState
                 Movement.SetVelocityX(stateData.angryMoveSpeed* -Movement.FacingDirection);
             }
         }
+
+        entity.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
     }
 
     public override void AnimationActionTrigger()

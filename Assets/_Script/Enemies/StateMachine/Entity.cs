@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
     [field: SerializeField] public EnemyStateMachine StateMachine { get; private set; }
     [SerializeField] private D_Entity EntityData;
     [SerializeField] public SpriteRenderer spriteRenderer;
+    [SerializeField] private BoxCollider2D col;
     [field: SerializeField] public GameObject DeathParticles { get; private set; }
 
     public Core Core { get; private set; }
@@ -203,6 +204,16 @@ public class Entity : MonoBehaviour
     }
 
     public void SetSkillCollideDamage(bool value) => SkillCollideDamage = value;
+
+    public float GetColliderX()
+    {
+        return col.size.x + col.offset.x;
+    }
+
+    public float GetColliderY()
+    {
+        return col.size.y + col.offset.y;
+    }
 
     private void HandleHealthZero()
     {

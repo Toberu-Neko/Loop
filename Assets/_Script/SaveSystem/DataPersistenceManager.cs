@@ -250,13 +250,13 @@ public class DataPersistenceManager : MonoBehaviour
     public void ReloadBaseScene()
     {
         ObjectPoolManager.ReturnAllObjectsToPool();
-        LoadSceneManager.Instance.LoadScene(baseScene.Name);
+        LoadSceneManager.Instance.LoadSceneSingle(baseScene.Name);
     }
 
     public void LoadMainMenuScene()
     {
         ObjectPoolManager.ReturnAllObjectsToPool();
-        LoadSceneManager.Instance.LoadScene(mainMenuScene.Name);
+        LoadSceneManager.Instance.LoadSceneSingle(mainMenuScene.Name);
     }
 
     public bool HasGameData()

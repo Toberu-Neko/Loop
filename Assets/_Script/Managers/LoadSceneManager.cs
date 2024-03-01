@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class LoadSceneManager : MonoBehaviour
 {
     public static LoadSceneManager Instance { get; private set; }
-    [field: SerializeField] public GameObject LoadingObj { get; set; }
+    public GameObject LoadingObj { get; set; }
     public string CurrentSceneName { get; set; }
 
     private void Awake()
@@ -20,13 +20,19 @@ public class LoadSceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadSceneAdditive(string sceneName)
     {
-        StartCoroutine(LoadSceneAsync(sceneName));
+        StartCoroutine(LoadSceneAsyncAdditive(sceneName));
         CurrentSceneName = sceneName;
     }
 
-    private IEnumerator LoadSceneAsync(string sceneName)
+    public void LoadSceneSingle(string sceneName)
+    {
+        StartCoroutine(LoadSceneAsyncSingle(sceneName));
+        CurrentSceneName = sceneName;
+    }
+
+    private IEnumerator LoadSceneAsyncSingle(string sceneName)
     {
         LoadingObj.SetActive(true);
         ObjectPoolManager.ReturnAllObjectsToPool();
@@ -35,8 +41,23 @@ public class LoadSceneManager : MonoBehaviour
         while (!asyncLoad.isDone)
         {
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            Debug.Log("LoadSceneAsync " + progress);
+            Debug.Log("LoadSceneAsyncSingle " + progress);
             yield return null;
         }
     }
+
+    private IEnumerator LoadSceneAsyncAdditive(string sceneName)
+    {
+        // LoadingObj.SetActive(true);
+        // ObjectPoolManager.ReturnAllObjectsToPool();
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+        while (!asyncLoad.isDone)
+        {
+            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+            Debug.Log("LoadSceneAsyncAdditive " + progress);
+            yield return null;
+        }
+    }
+
 }

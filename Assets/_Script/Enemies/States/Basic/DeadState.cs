@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class DeadState : EnemyState
 {
 
@@ -14,6 +10,7 @@ public class DeadState : EnemyState
 
         Movement.SetCanSetVelocity(false);
         Stats.SetInvincibleTrue();
+        entity.gameObject.layer = 15;
 
         if (CollisionSenses.Ground)
             Movement.SetVelocityZero();
@@ -25,6 +22,7 @@ public class DeadState : EnemyState
 
         Stats.SetInvincibleFalse();
         Movement.SetCanSetVelocity(true);
+        entity.gameObject.layer = 13;
     }
 
     public override void LogicUpdate()

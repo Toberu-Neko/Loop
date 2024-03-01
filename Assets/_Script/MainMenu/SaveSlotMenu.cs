@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+<<<<<<< HEAD
+=======
+using UnityEngine.SceneManagement;
+>>>>>>> ee1fcfe1b227e17d527b3477b22032e5ee2119a7
 using UnityEngine.UI;
 
 public class SaveSlotMenu : MonoBehaviour

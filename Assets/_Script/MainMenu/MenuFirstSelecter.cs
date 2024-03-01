@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class MenuFirstSelecter : MonoBehaviour
 {
+    /*
     [Header("First Selected Button")]
     [SerializeField] private Button firstSelectedButton;
 
@@ -21,4 +22,5 @@ public class MenuFirstSelecter : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
     }
+    */
 }

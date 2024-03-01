@@ -40,13 +40,14 @@ public class PlayerAfterImageSprite : MonoBehaviour
         alpha *= alphaMultiplier;
         color = new Color(1f, 1f, 1f, alpha);
         SR.color = color;
-        if(alpha > 0.01f)
+        if(alpha > 0.03f)
         {
             Invoke(nameof(SetAlpha), updateRate);
         }
         else
         {
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
+            if(gameObject.activeInHierarchy)
+                ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }
 
