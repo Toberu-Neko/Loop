@@ -2,8 +2,9 @@ using Eflatun.SceneReference;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class MainMenu : MenuFirstSelecter
+public class MainMenu : MonoBehaviour
 {
     [Header("Navigation")]
     [SerializeField] private SaveSlotMenu saveSlotMenu;
@@ -21,6 +22,8 @@ public class MainMenu : MenuFirstSelecter
     [Header("Credit")]
     [SerializeField] private Credit credit;
 
+    [SerializeField] private GameObject firstSelectedObj;
+
     private void Awake()
     {
         saveSlotMenu.gameObject.SetActive(false);
@@ -36,6 +39,7 @@ public class MainMenu : MenuFirstSelecter
             continueGameButton.interactable = false;
             loadButton.interactable = false;
         }
+        ActiveMenu();
     }
 
 
@@ -46,9 +50,9 @@ public class MainMenu : MenuFirstSelecter
 
     public void OnNewGameClicked()
     {
-        saveSlotMenu.ActiveMenu(false);
-
         DeactiveMenu();
+
+        saveSlotMenu.ActiveMenu(false);
     }
 
     public void OnContinueGameClicked()
@@ -58,23 +62,23 @@ public class MainMenu : MenuFirstSelecter
 
     public void OnLoadButtobClicked()
     {
-        saveSlotMenu.ActiveMenu(true);
-
         DeactiveMenu();
+
+        saveSlotMenu.ActiveMenu(true);
     }
 
     public void OnClickOptionButton()
     {
-        optionUI.Activate();
-
         DeactiveMenu();
+
+        optionUI.Activate();
     }
 
     public void OnClickCreditButton()
     {
-        credit.Activate();
-
         DeactiveMenu();
+
+        credit.Activate();
     }
 
     public void OnClickExitButton()
@@ -91,10 +95,12 @@ public class MainMenu : MenuFirstSelecter
     public void ActiveMenu(bool init = false)
     {
         gameObject.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(firstSelectedObj);
     }
 
     public void DeactiveMenu()
     {
         gameObject.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 }

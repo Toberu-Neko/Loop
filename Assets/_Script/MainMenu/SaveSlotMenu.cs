@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SaveSlotMenu : MenuFirstSelecter
+public class SaveSlotMenu : MonoBehaviour
 {
     [Header("Navigation")]
     [SerializeField] private MainMenu mainMenu;
@@ -36,8 +36,9 @@ public class SaveSlotMenu : MenuFirstSelecter
 
     public void OnBackButtonClicked()
     {
-        mainMenu.ActiveMenu();
         DeactiveMenu();
+
+        mainMenu.ActiveMenu();
     }
 
     public void ActiveMenu(bool isLoadingGame)
@@ -49,8 +50,10 @@ public class SaveSlotMenu : MenuFirstSelecter
         Dictionary<string, GameData> profilesGameData = DataPersistenceManager.Instance.GetAllProfilesGameData();
 
         GameObject firstSelected = backButton.gameObject;
+
         foreach (SaveSlot saveSlot in saveSlots)
         {
+
             profilesGameData.TryGetValue(saveSlot.GetProfileId(), out GameData profileData);
             saveSlot.SetData(profileData);
 
@@ -69,13 +72,13 @@ public class SaveSlotMenu : MenuFirstSelecter
             }
         }
 
-        Button firstSelectedButton = firstSelected.GetComponent<Button>();
-        SetFirstSelected(firstSelectedButton);
+        EventSystem.current.SetSelectedGameObject(firstSelected);
     }
 
     public void DeactiveMenu()
     {
         gameObject.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     private void DisableMenuButtons()
