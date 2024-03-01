@@ -210,6 +210,11 @@ public class UI_Manager : MonoBehaviour
         inputHandler.NResetAllInput();
     }
 
+    public void ResetAllInput()
+    {
+        inputHandler.NResetAllInput();
+    }
+
     public void ActivateShopUI(string shopID, LocalizedString shopName)
     {
         shopUI.Activate(shopID, shopName);

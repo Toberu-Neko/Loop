@@ -56,6 +56,7 @@ public class ShopUI : MonoBehaviour, IDataPersistance
             PlayerInventoryManager.Instance.RemoveMoney(itemBase.price);
             shopItem.itemCount--;
             shopSlots[Array.FindIndex(shopSlots, x => x.ItemBase == itemBase)].SetValue(shopItem.itemCount, itemBase);
+            moneyText.text = PlayerInventoryManager.Instance.Money.ToString();
 
             DataPersistenceManager.Instance.SaveGame();
         }
@@ -71,6 +72,7 @@ public class ShopUI : MonoBehaviour, IDataPersistance
         gameObject.SetActive(true);
         descriptionObj.SetActive(false);    
         UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
+        UI_Manager.Instance.ResetAllInput();
 
         moneyText.text = PlayerInventoryManager.Instance.Money.ToString();
 
