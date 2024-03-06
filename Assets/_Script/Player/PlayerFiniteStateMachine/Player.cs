@@ -252,7 +252,7 @@ public class Player : MonoBehaviour
         Core.LogicUpdate();
 
         StateMachine.CurrentState.LogicUpdate();
-
+        Anim.SetFloat("xVelocity", Mathf.Abs(movement.CurrentVelocity.x));
     }
 
     private void FixedUpdate()
