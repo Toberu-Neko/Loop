@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLandState : PlayerGroundedState
+public class PlayerLandState : PlayerAbilityState
 {
     public PlayerLandState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -22,11 +22,22 @@ public class PlayerLandState : PlayerGroundedState
         if(!isExitingState)
         {
             Movement.SetVelocityZero();
-            if (xInput != 0)
+            if (player.InputHandler.NormInputX != 0)
             {
-                stateMachine.ChangeState(player.MoveState);
+                player.Anim.speed = playerData.speedUpLandAnimMulitiplier;
+            }
+            else
+            {
+                player.Anim.speed = 1f;
             }
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        player.Anim.speed = 1f;
     }
 
     public override void AnimationFinishTrigger()

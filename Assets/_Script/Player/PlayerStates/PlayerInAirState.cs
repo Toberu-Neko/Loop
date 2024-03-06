@@ -227,8 +227,6 @@ public class PlayerInAirState : PlayerState
                 Movement.SetVelocityX(playerData.movementVelocity * xInput, true);
             }
 
-            player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
-            player.Anim.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
         }
     }
     private void CheckJumpMultiplier()

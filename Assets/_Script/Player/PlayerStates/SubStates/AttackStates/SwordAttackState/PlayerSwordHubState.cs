@@ -43,11 +43,6 @@ public class PlayerSwordHubState : PlayerSwordAttackState
         holdAttackInput = player.InputHandler.HoldAttackInput;
         xInput = player.InputHandler.NormInputX;
 
-        if (!holdEnough && Time.time >= StartTime + holdAttackTime)
-        {
-            player.Anim.SetBool("swordHoldAttack", true);
-            holdEnough = true;
-        }
         if (CollisionSenses.Ground)
         {
             Movement.SetVelocityZero();
@@ -64,19 +59,29 @@ public class PlayerSwordHubState : PlayerSwordAttackState
         {
             stateMachine.ChangeState(player.SwordSkyAttackState);
         }
-        else if (!holdAttackInput && Time.time < StartTime + holdAttackTime && !player.WeaponManager.EnhanceSwordAttack) 
+        else if (!holdAttackInput && !holdEnough && !player.WeaponManager.EnhanceSwordAttack) 
         {
             stateMachine.ChangeState(player.SwordNormalAttackState);
         }
-        else if (!holdAttackInput && Time.time < StartTime + holdAttackTime && player.WeaponManager.EnhanceSwordAttack)
+        else if (!holdAttackInput && !holdEnough && player.WeaponManager.EnhanceSwordAttack)
         {
             stateMachine.ChangeState(player.SwordEnhancedAttackState);
         }
-        else if (!holdAttackInput && Time.time >= StartTime + holdAttackTime)
+        else if (!holdAttackInput && holdEnough)
         {
             stateMachine.ChangeState(player.SwordStrongAttackState);
         }
     }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+
+        player.Anim.SetBool("swordHoldAttack", true);
+        holdEnough = true;
+    }
+
     public bool CheckIfCanAttack() => canAttack;
     public void SetCanAttackFalse() => canAttack = false;
     public void ResetCanAttack() => canAttack = true;

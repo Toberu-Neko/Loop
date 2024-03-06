@@ -22,13 +22,6 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.LogicUpdate();
 
-
-        if (player.InputHandler.DevInput)
-        {
-            player.Anim.SetTrigger("specialIdle");
-            player.InputHandler.UseDevInput();
-        }
-
         if (!isExitingState)
         {
             Movement.SetVelocityZero();
