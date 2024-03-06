@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     public PlayerCrouchIdleState CrouchIdleState { get; private set; }
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
 
-
+    public PlayerPreBlockState PreBlockState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
     public PlayerPerfectBlockState PerfectBlockState { get; private set; }
 
@@ -127,6 +127,7 @@ public class Player : MonoBehaviour
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, PlayerData, "crouchMove");
         DeadState = new PlayerDeadState(this, StateMachine, PlayerData, "dead");
 
+        PreBlockState = new PlayerPreBlockState(this, StateMachine, PlayerData, "preBlock");
         BlockState = new PlayerBlockState(this, StateMachine, PlayerData, "block");
         PerfectBlockState = new PlayerPerfectBlockState(this, StateMachine, PlayerData, "perfectBlock");
         RegenState = new PlayerRegenState(this, StateMachine, PlayerData, "regen");

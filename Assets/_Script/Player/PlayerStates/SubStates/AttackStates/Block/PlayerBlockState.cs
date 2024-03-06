@@ -5,8 +5,6 @@ public class PlayerBlockState : PlayerAttackState
     private bool blockInput;
     private int xInput;
 
-    private float lastBlockTime;
-
     private bool knockbackFinished;
     private bool damageFinished;
     private bool perfectBlock;
@@ -29,8 +27,6 @@ public class PlayerBlockState : PlayerAttackState
         knockbackFinished = false;
         damageFinished = false;
         perfectBlock = false;
-
-        lastBlockTime = 0;
     }
 
     public override void Exit()
@@ -64,19 +60,19 @@ public class PlayerBlockState : PlayerAttackState
         {
             if (perfectBlock)
             {
-                lastBlockTime = 0f;
+                player.PreBlockState.SetLastBlockTime(0f);
                 CamManager.Instance.CameraShake();
                 stateMachine.ChangeState(player.PerfectBlockState);
             }
             else if(knockbackFinished && damageFinished)
             {
                 player.InputHandler.UseBlockInput();
-                lastBlockTime = Time.time;
+                player.PreBlockState.SetLastBlockTime(Time.time);
                 isAttackDone = true;
             }
             else if (!blockInput)
             {
-                lastBlockTime = Time.time;
+                player.PreBlockState.SetLastBlockTime(Time.time);
                 isAttackDone = true;
             }
         }
@@ -88,8 +84,4 @@ public class PlayerBlockState : PlayerAttackState
 
     private void PerfectBlock() => perfectBlock = true;
 
-    public bool CheckIfCanBlock()
-    {
-        return Time.time >= lastBlockTime + playerData.blockCooldown ;
-    }
 }

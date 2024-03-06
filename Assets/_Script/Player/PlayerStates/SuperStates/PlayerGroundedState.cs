@@ -133,9 +133,9 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.RegenState);
         }
 
-        else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.BlockState.CheckIfCanBlock() && Stats.Attackable && player.WeaponManager.CurrentWeaponType != WeaponType.None)
+        else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.PreBlockState.CheckIfCanBlock() && Stats.Attackable && player.WeaponManager.CurrentWeaponType != WeaponType.None)
         {
-            stateMachine.ChangeState(player.BlockState);
+            stateMachine.ChangeState(player.PreBlockState);
         }
         else if (jumpInput && yInput < 0 && CollisionSenses.GroundPlatform)
         {

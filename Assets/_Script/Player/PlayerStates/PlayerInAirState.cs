@@ -177,9 +177,9 @@ public class PlayerInAirState : PlayerState
         }
         #endregion
 
-        else if (player.InputHandler.BlockInput && player.BlockState.CheckIfCanBlock() && Stats.Attackable && player.WeaponManager.CurrentWeaponType != WeaponType.None)
+        else if (player.InputHandler.BlockInput && player.PreBlockState.CheckIfCanBlock() && Stats.Attackable && player.WeaponManager.CurrentWeaponType != WeaponType.None)
         {
-            stateMachine.ChangeState(player.BlockState);
+            stateMachine.ChangeState(player.PreBlockState);
         }
         else if (isGrounded && !isJumping)
         {
