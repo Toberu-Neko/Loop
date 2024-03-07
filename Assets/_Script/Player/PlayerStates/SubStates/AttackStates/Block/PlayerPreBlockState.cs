@@ -68,6 +68,8 @@ public class PlayerPreBlockState : PlayerAttackState
         }
         else
         {
+            Combat.SetPerfectBlock(false);
+            Combat.SetNormalBlock(false);
             isAttackDone = true;
         }
     }

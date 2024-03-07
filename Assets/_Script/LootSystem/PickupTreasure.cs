@@ -117,11 +117,14 @@ public class PickupTreasure : PressEPickItemBase, IDataPersistance
 
         UI_Manager.Instance.ActivePickupItemUI(treasureData.displayNameLocalization, treasureData.shortDescriptionLocalization);
 
-        if(treasureData.popupTutorialLocalization.Length > 0)
+        if(treasureData.popupTutorialLocalization != null)
         {
-            foreach (var item in treasureData.popupTutorialLocalization)
+            if (treasureData.popupTutorialLocalization.Length > 0)
             {
-                UI_Manager.Instance.ActivateTutorialPopUpUI(item);
+                foreach (var item in treasureData.popupTutorialLocalization)
+                {
+                    UI_Manager.Instance.ActivateTutorialPopUpUI(item);
+                }
             }
         }
 

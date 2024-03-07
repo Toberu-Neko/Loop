@@ -18,7 +18,7 @@ public class TutorialPopopTrigger : DataPersistMapObjBase
             }
 
             gameObject.SetActive(false);
-            Invoke(nameof(SaveData), 2f);
+            Invoke(nameof(SaveData), 0.15f);
         }
     }
     protected override void Start()
