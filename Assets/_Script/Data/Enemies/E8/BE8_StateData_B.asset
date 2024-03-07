@@ -25,6 +25,7 @@ MonoBehaviour:
     movementSpeed: 3
   chooseSingleBulletStateData:
     bulletPrefab: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
+    cooldown: 3
   rangedAttackStateData:
     aimPlayer: 1
     attackCooldown: 1
@@ -33,9 +34,9 @@ MonoBehaviour:
       duration: 5
       speed: 20
       combatDetails:
-        damageAmount: 5
+        damageAmount: 15
         staminaDamageAmount: 1
-        knockbackStrength: 5
+        knockbackStrength: 0
         knockbackAngle: {x: 1, y: 1}
         blockable: 1
   stunStateData:

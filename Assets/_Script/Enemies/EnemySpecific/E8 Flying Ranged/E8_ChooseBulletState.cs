@@ -9,6 +9,8 @@ public class E8_ChooseBulletState : FlyingChooseSingleBulletState
     private Transform spawnPos;
     private IFireable fireable;
 
+    private bool canSpawn;
+
     public E8_ChooseBulletState(Entity entity, EnemyStateMachine stateMachine, string animBoolName, ED_ChooseSingleBulletState stateData, Transform spawnPos, Enemy8 enemy) : base(entity, stateMachine, animBoolName, stateData, spawnPos)
     {
         this.enemy = enemy;
@@ -16,12 +18,23 @@ public class E8_ChooseBulletState : FlyingChooseSingleBulletState
         this.spawnPos = spawnPos;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        canSpawn = true;
+    }
+
 
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
 
-        fireable = ObjectPoolManager.SpawnObject(stateData.bulletPrefab, spawnPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<IFireable>();
+        if (canSpawn)
+        {
+            canSpawn = false;
+            fireable = ObjectPoolManager.SpawnObject(stateData.bulletPrefab, spawnPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<IFireable>();
+        }
     }
 
     public override void Exit()

@@ -25,12 +25,12 @@ MonoBehaviour:
     maxInStateTime: 1.8
   flyingMovementStateData:
     minMoveCount: 1
-    maxMoveCount: 3
-    moveTime: 2
-    movementSpeed: 4
+    maxMoveCount: 2
+    moveTime: 1
+    movementSpeed: 6
   flyingIdleStateData:
-    minIdleTime: 0.5
-    maxIdleTime: 1.5
+    minIdleTime: 0.25
+    maxIdleTime: 0.75
   backToIdleStateData:
     stunTime: 4
   blueRangedAttackStateData:
@@ -41,7 +41,7 @@ MonoBehaviour:
       duration: 3
       speed: 25
       combatDetails:
-        damageAmount: 2.5
+        damageAmount: 15
         staminaDamageAmount: 1
         knockbackStrength: 5
         knockbackAngle: {x: 0, y: 0}
@@ -54,7 +54,7 @@ MonoBehaviour:
       duration: 3
       speed: 25
       combatDetails:
-        damageAmount: 15
+        damageAmount: 30
         staminaDamageAmount: 1
         knockbackStrength: 12
         knockbackAngle: {x: 1, y: 1}
@@ -94,7 +94,7 @@ MonoBehaviour:
         duration: 3
         speed: 25
         combatDetails:
-          damageAmount: 15
+          damageAmount: 20
           staminaDamageAmount: 1
           knockbackStrength: 12
           knockbackAngle: {x: 1, y: 1}
@@ -104,7 +104,7 @@ MonoBehaviour:
         duration: 3
         speed: 20
         combatDetails:
-          damageAmount: 5
+          damageAmount: 15
           staminaDamageAmount: 1
           knockbackStrength: 5
           knockbackAngle: {x: 0, y: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
       duration: 5
       speed: 75
       combatDetails:
-        damageAmount: 10
+        damageAmount: 30
         staminaDamageAmount: 1
         knockbackStrength: 14
         knockbackAngle: {x: 1, y: 1}
@@ -132,7 +132,7 @@ MonoBehaviour:
         duration: 3
         speed: 10
         combatDetails:
-          damageAmount: 2.5
+          damageAmount: 15
           staminaDamageAmount: 1
           knockbackStrength: 0
           knockbackAngle: {x: 0, y: 0}
@@ -142,9 +142,9 @@ MonoBehaviour:
         duration: 5
         speed: 10
         combatDetails:
-          damageAmount: 20
+          damageAmount: 50
           staminaDamageAmount: 10
-          knockbackStrength: 12
+          knockbackStrength: 13.8
           knockbackAngle: {x: 1, y: 1}
           blockable: 0
     row: 5
@@ -171,6 +171,7 @@ MonoBehaviour:
     rewindDelay: 0.5
     attackDistance: 7.5
   stunStateData:
+    thingsToSay: []
     stunTime: 2
     stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 0, y: 0}
@@ -183,3 +184,6 @@ MonoBehaviour:
     pitchRandomRangeMax: 0
     loop: 0
     source: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
