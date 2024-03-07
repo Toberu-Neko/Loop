@@ -9,7 +9,8 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
     [SerializeField] private string counsumableName = "shan";
     [SerializeField] private int maxNeededCount = 3;
 
-    [SerializeField] private GameObject door;
+    [SerializeField] private GameObject teleportObj;
+    [SerializeField] private Animator doorAnim;
     [SerializeField] private GameObject textObj;
     [SerializeField] private LocalizeStringEvent descriptionStringEvent;
 
@@ -32,13 +33,14 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
 
         if(onItemConsumableCount >= maxNeededCount)
         {
-            // Debug.Log("Burner is on");
-            door.SetActive(false);
+            doorAnim.SetBool("AlwaysOpen", true);
+            teleportObj.SetActive(true);
             interactable = false;
         }
         else
         {
             interactable = true;
+            teleportObj.SetActive(false);
         }
 
         textObj.SetActive(false);
@@ -56,9 +58,11 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
     {
         if(onItemConsumableCount >= maxNeededCount)
         {
-            //TODO: Play animation
+            //Play Open animation
             descriptionStringEvent.StringReference = openedText;
-            door.SetActive(false);
+
+            doorAnim.SetBool("Open", true);
+            teleportObj.SetActive(true);
         }
     }
 
@@ -73,7 +77,7 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
     private void HandleInteract()
     {
         PlayerInventoryManager inv = PlayerInventoryManager.Instance;
-        if (inv.ConsumablesInventory.ContainsKey(counsumableName))
+        if (inv.ConsumablesInventory.ContainsKey(counsumableName) && interactable)
         {
             if (inv.ConsumablesInventory[counsumableName].itemCount > 0)
             {
