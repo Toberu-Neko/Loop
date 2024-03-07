@@ -9,6 +9,8 @@ public class PlayerPerfectBlockState : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
+        Combat.SetPerfectBlock(false);
+        Combat.SetNormalBlock(false);
 
 
         Collider2D[] enemy = Physics2D.OverlapCircleAll(player.transform.position, playerData.perfectBlockKnockbackRadius, playerData.whatIsEnemy);
@@ -43,6 +45,8 @@ public class PlayerPerfectBlockState : PlayerAttackState
         base.Exit();
 
         player.InputHandler.UseBlockInput();
+        Combat.SetPerfectBlock(false);
+        Combat.SetNormalBlock(false);
     }
 
     public override void AnimationFinishTrigger()
