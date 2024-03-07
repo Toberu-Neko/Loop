@@ -30,11 +30,14 @@ public class GiveTimeSkillDead : CoreComponent
         PlayerInventoryManager.Instance.AddTimeSkillItem(timeSkillItem.ID);
         UI_Manager.Instance.ActivePickupItemUI(timeSkillItem.displayNameLocalization, timeSkillItem.shortDescriptionLocalization);
 
-        if (timeSkillItem.popupTutorialLocalization.Length > 0)
+        if(timeSkillItem.popupTutorialLocalization!= null)
         {
-            foreach (var item in timeSkillItem.popupTutorialLocalization)
+            if (timeSkillItem.popupTutorialLocalization.Length > 0)
             {
-                UI_Manager.Instance.ActivateTutorialPopUpUI(item);
+                foreach (var item in timeSkillItem.popupTutorialLocalization)
+                {
+                    UI_Manager.Instance.ActivateTutorialPopUpUI(item);
+                }
             }
         }
     }

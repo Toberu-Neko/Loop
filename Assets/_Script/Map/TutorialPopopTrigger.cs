@@ -12,9 +12,15 @@ public class TutorialPopopTrigger : DataPersistMapObjBase
         {
             isActivated = true;
 
-            foreach (var item in popupStings)
+            if(popupStings != null)
             {
-                UI_Manager.Instance.ActivateTutorialPopUpUI(item);
+                if (popupStings.Length > 0)
+                {
+                    foreach (var item in popupStings)
+                    {
+                        UI_Manager.Instance.ActivateTutorialPopUpUI(item);
+                    }
+                }
             }
 
             gameObject.SetActive(false);

@@ -18,14 +18,17 @@ public class MultiAttackState : AttackState
     {
         base.Enter();
 
-        if (stateData.thingsToSay.Length > 0 && !saidThings)
+        if(stateData.thingsToSay != null)
         {
-            foreach (var thing in stateData.thingsToSay)
+            if (stateData.thingsToSay.Length > 0 && !saidThings)
             {
-                UI_Manager.Instance.ActivateTutorialPopUpUI(thing);
-            }
+                foreach (var thing in stateData.thingsToSay)
+                {
+                    UI_Manager.Instance.ActivateTutorialPopUpUI(thing);
+                }
 
-            saidThings = true;
+                saidThings = true;
+            }
         }
 
         count = 0;
