@@ -21,8 +21,8 @@ MonoBehaviour:
   movementStateData:
     minMoveCount: 1
     maxMoveCount: 1
-    moveTime: 2
-    movementSpeed: 5
+    moveTime: 1.5
+    movementSpeed: 3
   chooseSingleBulletStateData:
     bulletPrefab: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
   rangedAttackStateData:
@@ -31,7 +31,7 @@ MonoBehaviour:
     projectile: {fileID: 8389792333474829002, guid: 33a6cfb545929d740b99ed84183ac1fd, type: 3}
     projectileDetails:
       duration: 5
-      speed: 10
+      speed: 20
       combatDetails:
         damageAmount: 5
         staminaDamageAmount: 1
@@ -39,6 +39,10 @@ MonoBehaviour:
         knockbackAngle: {x: 1, y: 1}
         blockable: 1
   stunStateData:
+    thingsToSay: []
     stunTime: 3
     stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 0, y: 0}
+  references:
+    version: 2
+    RefIds: []
