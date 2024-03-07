@@ -49,7 +49,6 @@ GameObject:
   - component: {fileID: 6089772239313807588}
   - component: {fileID: 4698356921806422798}
   - component: {fileID: 8482455232144947405}
-  - component: {fileID: 2963204354876785143}
   m_Layer: 5
   m_Name: StatusCanvas
   m_TagString: Untagged
@@ -64,15 +63,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5158117379534747722}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7888834358101703852}
   - {fileID: 7591297490480277322}
   m_Father: {fileID: 7951668187663791484}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.99}
@@ -141,18 +140,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2963204354876785143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5158117379534747722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99797008c35ad849b51c68846e7df59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5985906859286388126
 GameObject:
   m_ObjectHideFlags: 0

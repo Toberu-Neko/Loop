@@ -37,6 +37,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool DebugInput { get; private set; }
     public bool DevInput { get; private set; }
+    public bool TurnOffUI { get; private set; }
     public bool InteractInput { get; private set; }
     public bool ESCInput { get; private set; }
 
@@ -120,6 +121,23 @@ public class PlayerInputHandler : MonoBehaviour
     public void UseDevInput()
     {
         DevInput = false;
+    }
+
+    public void OnTurnOffUIInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            TurnOffUI = true;
+        }
+        if (context.canceled)
+        {
+            TurnOffUI = false;
+        }
+    }
+
+    public void UseTurnOffUIInput()
+    {
+        TurnOffUI = false;
     }
 
     public void OnDebugInput(InputAction.CallbackContext context)

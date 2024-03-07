@@ -12,6 +12,7 @@ public class UI_Manager : MonoBehaviour
 
     [SerializeField] private PlayerInputHandler inputHandler;
     [SerializeField] private GameObject savedNotificationObj;
+    [SerializeField] private CanvasGroup inGameCanvas;
 
     [Header("Loading UI")]
     [SerializeField] private GameObject loadingObj;
@@ -133,7 +134,7 @@ public class UI_Manager : MonoBehaviour
         {
             inputHandler.UseESCInput();
 
-            if (!pauseUIObj.activeInHierarchy && 
+            if (!pauseUIObj.activeInHierarchy &&
                 !savepointUIObj.activeInHierarchy &&
                 !pickUpItemUIObj.activeInHierarchy &&
                 !shopUIObj.activeInHierarchy)
@@ -156,6 +157,19 @@ public class UI_Manager : MonoBehaviour
             else if (shopUIObj.activeInHierarchy)
             {
                 shopUI.Deactivate();
+            }
+        }
+
+        if (inputHandler.TurnOffUI)
+        {
+            inputHandler.UseTurnOffUIInput();
+            if (inGameCanvas.alpha == 0f)
+            {
+                inGameCanvas.alpha = 1f;
+            }
+            else
+            {
+                inGameCanvas.alpha = 0f;
             }
         }
     }

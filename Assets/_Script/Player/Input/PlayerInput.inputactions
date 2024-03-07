@@ -157,6 +157,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TurnOffUI",
+                    "type": "Button",
+                    "id": "de57738c-456c-4b2c-9531-bb45e2b1d5a5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -531,6 +540,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Dev",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "830d50d7-91ed-4c15-842d-8424096cc15d",
+                    "path": "<Keyboard>/backslash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurnOffUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
