@@ -42,6 +42,15 @@ MonoBehaviour:
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 20
   MultiAttackState:
+    thingsToSay:
+    - m_TableReference:
+        m_TableCollectionName: GUID:5f5cb9f2876165049a34211e61d45d50
+      m_TableEntryReference:
+        m_KeyId: 3701307176910848
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     attackCooldown: 12
     angryMoveSpeed: 5
     details:
@@ -70,12 +79,22 @@ MonoBehaviour:
       knockbackForce: 15
       knockbackAngle: {x: 1, y: 1}
   ChargeState:
+    thingsToSay:
+    - m_TableReference:
+        m_TableCollectionName: GUID:5f5cb9f2876165049a34211e61d45d50
+      m_TableEntryReference:
+        m_KeyId: 3701378547187712
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     chargeCooldown: 10
     finishChargeDelay: 2
     chargeSpeed: 12
     angryChargeSpeed: 18
     chargeTime: 2.5
   stunStateData:
+    thingsToSay: []
     stunTime: 1.5
     stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 0, y: 0}
@@ -110,3 +129,6 @@ MonoBehaviour:
     pitchRandomRangeMax: 0.1
     loop: 0
     source: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class Boss0New : BossBase
 {
@@ -29,6 +30,11 @@ public class Boss0New : BossBase
     [field: SerializeField] public GameObject EnterSlowTrigger { get; private set; }
     private float slowOnTimer;
     [SerializeField] private GameObject exitDoor;
+
+    private bool saidTimeSkillTu;
+    [Header("Things to Say")]
+    [SerializeField] private LocalizedString firstActivateTimeSkillText;
+    [SerializeField] private LocalizedString firstCloseTimeSkillText;
     
 
     public override void Awake()
@@ -36,6 +42,7 @@ public class Boss0New : BossBase
         base.Awake();
 
         exitDoor.SetActive(false);
+        saidTimeSkillTu = false;
 
         IdleState = new B0N_Idle(this, StateMachine, "idle", StateData.idleStateData, this);
         AngryState = new B0N_AngryState(this, StateMachine, "angry", this);
@@ -75,6 +82,11 @@ public class Boss0New : BossBase
 
         if (EnterSlowTrigger.activeInHierarchy && Time.time >= slowOnTimer + StateData.angrySkillData.duration)
         {
+            if (!saidTimeSkillTu)
+            {
+                UI_Manager.Instance.ActivateTutorialPopUpUI(firstCloseTimeSkillText);
+                saidTimeSkillTu = true;
+            }
             EnterSlowTrigger.SetActive(false);
         }
     }
@@ -114,6 +126,10 @@ public class Boss0New : BossBase
 
     public void EnterSlowTriggerOn(float time)
     {
+        if (!saidTimeSkillTu)
+        {
+            UI_Manager.Instance.ActivateTutorialPopUpUI(firstActivateTimeSkillText);
+        }
         EnterSlowTrigger.SetActive(true);
         slowOnTimer = time;
     }

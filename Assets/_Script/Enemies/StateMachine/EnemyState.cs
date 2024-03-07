@@ -13,6 +13,7 @@ public class EnemyState
 
     public float StartTime { get; protected set;}
     public float EndTime { get; protected set;}
+    protected bool saidThings;
     protected string animBoolName;
 
     protected Stats Stats { get; private set; }
@@ -29,6 +30,7 @@ public class EnemyState
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
 
+        saidThings = false;
         core = entity.Core;
         CheckPlayerSenses = core.GetCoreComponent<CheckPlayerSenses>();
         Death = core.GetCoreComponent<Death>();

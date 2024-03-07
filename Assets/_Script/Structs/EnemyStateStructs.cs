@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-public class ED_EnemyStunState
+public class ED_EnemyStunState : EnemyClassDataBase
 {
     [Tooltip("暈眩持續時間")]
     public float stunTime = 1f;
@@ -66,7 +66,7 @@ public class ED_EnemyMeleeAttackState
     public float knockbackStrength = 10f;
 }
 [Serializable]
-public class ED_MultiAttackState
+public class ED_MultiAttackState : EnemyClassDataBase
 {
     public float attackCooldown = 5f;
     public float angryMoveSpeed = 8f;
@@ -129,7 +129,7 @@ public class ED_EnemyDeadState
 }
 
 [Serializable]
-public class ED_EnemyChargeState
+public class ED_EnemyChargeState : EnemyClassDataBase
 {
     [Tooltip("冷卻時間, 從開始衝刺起算。")]
     public float chargeCooldown = 2f;
@@ -285,7 +285,7 @@ public class ED_AbovePlayerAttackState
 }
 
 [Serializable]
-public class ED_TimeSlowSkill
+public class ED_TimeSlowSkill : EnemyClassDataBase
 {
     public float minCooldown = 8f;
     public float maxCooldown = 10f;

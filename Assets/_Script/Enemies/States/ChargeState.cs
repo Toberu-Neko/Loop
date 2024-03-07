@@ -43,6 +43,16 @@ public class ChargeState : EnemyState
     {
         base.Exit();
 
+        if (stateData.thingsToSay.Length > 0 && !saidThings)
+        {
+            foreach (var thing in stateData.thingsToSay)
+            {
+                UI_Manager.Instance.ActivateTutorialPopUpUI(thing);
+            }
+
+            saidThings = true;
+        }
+
         entity.SetSkillCollideDamage(false);
     }
 

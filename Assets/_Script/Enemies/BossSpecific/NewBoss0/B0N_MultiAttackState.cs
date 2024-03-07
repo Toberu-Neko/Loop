@@ -10,6 +10,11 @@ public class B0N_MultiAttackState : MultiAttackState
         this.boss = boss;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
