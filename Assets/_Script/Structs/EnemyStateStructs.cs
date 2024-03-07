@@ -199,6 +199,7 @@ public class MultiProjectileObjContainer
 public class ED_ChooseSingleBulletState
 {
     public GameObject bulletPrefab;
+    public float cooldown = 3f;
 }
 
 [Serializable]

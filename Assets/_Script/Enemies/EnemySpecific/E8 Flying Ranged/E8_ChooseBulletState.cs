@@ -38,4 +38,9 @@ public class E8_ChooseBulletState : FlyingChooseSingleBulletState
         enemy.RangedAttackState.SetFireable(fireable);
         stateMachine.ChangeState(enemy.RangedAttackState);
     }
+
+    public bool CheckCanEnterState()
+    {
+        return Time.time > StartTime + stateData.cooldown || StartTime == 0f;
+    }
 }

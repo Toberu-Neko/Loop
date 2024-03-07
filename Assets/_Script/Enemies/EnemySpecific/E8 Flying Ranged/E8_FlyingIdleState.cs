@@ -18,7 +18,7 @@ public class E8_FlyingIdleState : EnemyFlyingIdleState
         {
             stateMachine.ChangeState(enemy.MoveState);
         }
-        else if (CheckPlayerSenses.IsPlayerInMinAgroRange && CheckPlayerSenses.CanSeePlayer)
+        else if (CheckPlayerSenses.IsPlayerInMinAgroRange && CheckPlayerSenses.CanSeePlayer && enemy.ChooseBulletState.CheckCanEnterState())
         {
             stateMachine.ChangeState(enemy.ChooseBulletState);
         }
