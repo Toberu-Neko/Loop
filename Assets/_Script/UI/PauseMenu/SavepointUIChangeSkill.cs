@@ -31,6 +31,14 @@ public class SavepointUIChangeSkill : MonoBehaviour
     private TextMeshProUGUI slot2GunText;
     private TextMeshProUGUI slot2FistText;
 
+    private TextMeshProUGUI timeReverseText;
+    private TextMeshProUGUI bookMarkText;
+    private TextMeshProUGUI timeStopRangedText;
+    private TextMeshProUGUI timeStopAllText;
+    private TextMeshProUGUI bulletTimeAllText;
+    private TextMeshProUGUI bulletTimeRangedText;
+
+
 
     private void Awake()
     {
@@ -41,6 +49,14 @@ public class SavepointUIChangeSkill : MonoBehaviour
         slot2SwordText = slot2SwordButton.GetComponentInChildren<TextMeshProUGUI>();
         slot2GunText = slot2GunButton.GetComponentInChildren<TextMeshProUGUI>();
         slot2FistText = slot2FistButton.GetComponentInChildren<TextMeshProUGUI>();
+
+        timeReverseText = timeReverseButton.GetComponentInChildren<TextMeshProUGUI>();
+        bookMarkText = bookMarkButton.GetComponentInChildren<TextMeshProUGUI>();
+        timeStopRangedText = timeStopRangedButton.GetComponentInChildren<TextMeshProUGUI>();
+        timeStopAllText = timeStopAllButton.GetComponentInChildren<TextMeshProUGUI>();
+        bulletTimeAllText = bulletTimeAllButton.GetComponentInChildren<TextMeshProUGUI>();
+        bulletTimeRangedText = bulletTimeRangedButton.GetComponentInChildren<TextMeshProUGUI>();
+
     }
 
     private void OnEnable()
@@ -98,12 +114,12 @@ public class SavepointUIChangeSkill : MonoBehaviour
         slot2GunButton.interactable = true;
         slot2FistButton.interactable = true;
 
-        slot1SwordText.color = Color.black;
-        slot1GunText.color = Color.black;
-        slot1FistText.color = Color.black;
-        slot2SwordText.color = Color.black;
-        slot2GunText.color = Color.black;
-        slot2FistText.color = Color.black;
+        slot1SwordText.color = Color.gray;
+        slot1GunText.color = Color.gray;
+        slot1FistText.color = Color.gray;
+        slot2SwordText.color = Color.gray;
+        slot2GunText.color = Color.gray;
+        slot2FistText.color = Color.gray;
 
         timeReverseButton.interactable = true;
         bookMarkButton.interactable = true;
@@ -179,31 +195,37 @@ public class SavepointUIChangeSkill : MonoBehaviour
         if(!playerTimeSkillManager.UnlockedTimeSkills.timeSlowAll)
         {
             bulletTimeAllButton.interactable = false;
+            bulletTimeAllText.color = Color.gray;
         }
 
         if(!playerTimeSkillManager.UnlockedTimeSkills.timeSlowRanged)
         {
             bulletTimeRangedButton.interactable = false;
+            bulletTimeRangedText.color = Color.gray;
         }
 
         if(!playerTimeSkillManager.UnlockedTimeSkills.timeStopAll)
         {
             timeStopAllButton.interactable = false;
+            timeStopAllText.color = Color.gray;
         }
 
         if(!playerTimeSkillManager.UnlockedTimeSkills.timeStopRanged)
         {
             timeStopRangedButton.interactable = false;
+            timeStopRangedText.color = Color.gray;
         }
 
         if(!playerTimeSkillManager.UnlockedTimeSkills.timeReverse)
         {
             timeReverseButton.interactable = false;
+            timeReverseText.color = Color.gray;
         }
 
         if(!playerTimeSkillManager.UnlockedTimeSkills.bookMark)
         {
             bookMarkButton.interactable = false;
+            bookMarkText.color = Color.gray;
         }
     }
 
