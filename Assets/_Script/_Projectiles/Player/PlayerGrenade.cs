@@ -7,6 +7,8 @@ public class PlayerGrenade : MonoBehaviour
     [SerializeField] private Rigidbody2D rig;
     [SerializeField] private float radius = 3f;
     [SerializeField] private GameObject explodeObj;
+    [SerializeField] private Animator explodeAnim;
+
     private ProjectileDetails details;
 
     private void OnEnable()
@@ -33,6 +35,7 @@ public class PlayerGrenade : MonoBehaviour
     {
         CancelInvoke(nameof(Explode));
         explodeObj.SetActive(true);
+        explodeAnim.SetTrigger("explode");
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
 
