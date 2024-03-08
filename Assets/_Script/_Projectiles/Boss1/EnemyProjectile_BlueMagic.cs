@@ -103,7 +103,7 @@ public class EnemyProjectile_BlueMagic : EnemyProjectile_Base
 
         if (collider.TryGetComponent(out IDamageable damageable))
         {
-            damageable.Damage(0.1f, transform.position, true);
+            damageable.Damage(0f, transform.position, true);
         }
         HandleHitGround();
     }

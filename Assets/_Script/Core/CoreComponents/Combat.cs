@@ -240,6 +240,10 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
                 OnPerfectBlock?.Invoke();
             }
         }
+        else if (damageAmount == 0f)
+        {
+            return;
+        }
         else if(normalBlock)
         {
             // Debug.Log("normalBlock");

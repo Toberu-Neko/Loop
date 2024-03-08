@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ChargeState : EnemyState
 {
     protected ED_EnemyChargeState stateData;
 
+    private Vector2 lastAfterImagePosition;
     protected bool isPlayerInMinAgroRange;
     protected bool isDetectingLedge;
     protected bool isDetectingWall;
@@ -62,9 +63,11 @@ public class ChargeState : EnemyState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        if (!isChargeTimeOver)
+        if (!isChargeTimeOver && !isDetectingWall)
         {
+            CheckShouldPlaceAfterImage();
+
+
             if (Stats.IsAngry)
             {
                 Movement.SetVelocityX(stateData.angryChargeSpeed * Movement.FacingDirection);
@@ -89,6 +92,25 @@ public class ChargeState : EnemyState
         {
             gotoNextState = true;
         }
+    }
+
+    private void CheckShouldPlaceAfterImage()
+    {
+        if (Vector2.Distance(Movement.ParentTransform.position, lastAfterImagePosition) >= stateData.afterImageDistance && !(Stats.IsTimeSlowed || Stats.IsTimeStopped))
+        {
+            PlaceAfterImage();
+        }
+    }
+
+    private void PlaceAfterImage()
+    {
+        var obj = ObjectPoolManager.SpawnObject(stateData.afterImagePrefab, Movement.ParentTransform.position, Quaternion.identity, ObjectPoolManager.PoolType.GameObjects);
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        sr.sprite = entity.spriteRenderer.sprite;
+        obj.transform.localScale = Movement.ParentTransform.localScale;
+        obj.transform.rotation = Movement.ParentTransform.rotation;
+
+        lastAfterImagePosition = Movement.ParentTransform.position;
     }
 
     public bool CheckCanCharge()

@@ -13,10 +13,10 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     [Header("After Image")]
     [SerializeField] private GameObject afterImagePrefab;
     [SerializeField] private float afterImageDistance;
+    private Vector2 lastAfterImagePosition;
 
     [Header("SFX")]
     [SerializeField] protected Sound shootSFX;
-    private Vector2 lastAfterImagePosition;
 
     protected Movement movement;
     protected Stats stats;

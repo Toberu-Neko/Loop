@@ -131,6 +131,10 @@ public class ED_EnemyDeadState
 [Serializable]
 public class ED_EnemyChargeState : EnemyClassDataBase
 {
+    [Header("After Image")]
+    public GameObject afterImagePrefab;
+    public float afterImageDistance;
+
     [Tooltip("冷卻時間, 從開始衝刺起算。")]
     public float chargeCooldown = 2f;
 
