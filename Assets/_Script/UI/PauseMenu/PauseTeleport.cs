@@ -40,8 +40,10 @@ public class PauseTeleport : MonoBehaviour
             {
                 UI_Manager.Instance.HandleChangeSceneGoRight();
                 pauseUIMain.DeactiveAllMenu();
-                if(SceneManager.GetSceneByName(LoadSceneManager.Instance.CurrentSceneName).isLoaded)
-                    SceneManager.UnloadSceneAsync(LoadSceneManager.Instance.CurrentSceneName);
+                if (SceneManager.GetSceneByName(LoadSceneManager.Instance.CurrentSceneName).isLoaded)
+                {
+                    LoadSceneManager.Instance.UnloadSceneAdditive(LoadSceneManager.Instance.CurrentSceneName);
+                }
                 player.HandleChangeSceneToRight();
                 player.transform.position = teleport.position;
                 return;

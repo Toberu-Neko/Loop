@@ -6,6 +6,7 @@ using UnityEngine.Localization;
 public class TutorialPopopTrigger : DataPersistMapObjBase
 {
     [SerializeField] private LocalizedString[] popupStings;
+    [SerializeField] private bool returnToSavepoint = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !isActivated)
@@ -24,7 +25,7 @@ public class TutorialPopopTrigger : DataPersistMapObjBase
             }
 
             gameObject.SetActive(false);
-            Invoke(nameof(SaveData), 0.15f);
+            DataPersistenceManager.Instance.SaveGame(returnToSavepoint);
         }
     }
     protected override void Start()
@@ -35,10 +36,5 @@ public class TutorialPopopTrigger : DataPersistMapObjBase
         {
             gameObject.SetActive(false);
         }
-    }
-    private void SaveData()
-    {
-        CancelInvoke(nameof(SaveData));
-        DataPersistenceManager.Instance.SaveGame(false);
     }
 }

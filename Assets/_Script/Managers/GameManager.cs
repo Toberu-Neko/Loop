@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
@@ -59,15 +60,10 @@ public class GameManager : MonoBehaviour
 
         Savepoints = new();
 
-        SceneManager.sceneLoaded += HandleSceneLoaded;
+        SceneManager.sceneLoaded += HandleSceneLoadedForGlobalVolume;
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= HandleSceneLoaded;
-    }
-
-    private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void HandleSceneLoadedForGlobalVolume(Scene scene, LoadSceneMode mode)
     {
         if(scene.name == "MultiSceneBase" || scene.name == "MainMenu")
         {
@@ -92,6 +88,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         LoadSceneManager.Instance.LoadingObj = loadingObj;
+        LoadSceneManager.Instance.OnLoadingAdditiveProgress += HandleLoadingAdditiveProgress;
+
     }
 
 
@@ -102,6 +100,8 @@ public class GameManager : MonoBehaviour
             savepoint.Value.OnSavePointInteract -= HandleSavePointInteraction;
         }
         Savepoints.Clear();
+        LoadSceneManager.Instance.OnLoadingAdditiveProgress -= HandleLoadingAdditiveProgress;
+        SceneManager.sceneLoaded -= HandleSceneLoadedForGlobalVolume;
     }
 
     public void RegisterSavePoints(Savepoint savePoint)
@@ -139,12 +139,6 @@ public class GameManager : MonoBehaviour
         EnemyManager.Instance.ResetTempData();
     }
 
-    public void HandleShopInteraction(string shopID, LocalizedString shopName)
-    {
-        // OnShopInteracted?.Invoke(shopID, shopName);
-
-
-    }
 
     public Vector3 GetSavepointTeleportPos(string savepointName)
     {
@@ -209,12 +203,39 @@ public class GameManager : MonoBehaviour
                 break;
         }
         // DataPersistenceManager.Instance.CheckIfShouldSaveOnLoad();
-        SceneManager.UnloadSceneAsync(sceneName);
+        LoadSceneManager.Instance.UnloadSceneAdditive(sceneName);
     }
 
+    private bool enteredScene = false;
     public void HandleChangeSceneFinished()
     {
-        OnChangeSceneFinished?.Invoke();
+        enteredScene = true;
+    }
+
+    private void HandleLoadingAdditiveProgress(float progress)
+    {
+        if (progress >= 1f)
+        {
+            if (enteredScene)
+            {
+                OnChangeSceneFinished?.Invoke();
+                enteredScene = false;
+            }
+            else
+            {
+                CancelInvoke(nameof(CheckChangeSceneFinished));
+                Invoke(nameof(CheckChangeSceneFinished), Time.fixedDeltaTime);
+            }
+        }
+    }
+
+    private void CheckChangeSceneFinished()
+    {
+        if (enteredScene)
+        {
+            OnChangeSceneFinished?.Invoke();
+            enteredScene = false;
+        }
     }
 
     public enum ChangeSceneDir

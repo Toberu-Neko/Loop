@@ -19,12 +19,14 @@ public class TurnOffUIAnimationTrigger : MonoBehaviour
 
     private void Update()
     {
+        /*
         if(Time.time > activeTime + 0.75f && !forceTurnOffUI)
         {
             forceTurnOffUI = true;
             // Debug.LogError("The turnoff ui bug.");
             anim.SetBool("finishLoading", true);
         }
+        */
     }
 
     private void OnDisable()

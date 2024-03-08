@@ -16,6 +16,7 @@ public class UI_Manager : MonoBehaviour
 
     [Header("Loading UI")]
     [SerializeField] private GameObject loadingObj;
+    [SerializeField] private HealthBar loadingBar;
 
     [Header("Change Scene UI")]
     [SerializeField] private GameObject changeSceneUI;
@@ -100,6 +101,8 @@ public class UI_Manager : MonoBehaviour
 
         savePointNames = new();
         savepoints = new();
+
+        loadingBar.Init(1f);
     }
 
     private void Start()
@@ -114,6 +117,7 @@ public class UI_Manager : MonoBehaviour
         DataPersistenceManager.Instance.OnSave += HandleSave;
 
         LoadSceneManager.Instance.LoadingObj = loadingObj;
+        LoadSceneManager.Instance.OnLoadingSingleProgress += HandleLoadingSingleProgress;
     }
 
     private void OnDisable()
@@ -126,6 +130,8 @@ public class UI_Manager : MonoBehaviour
         GameManager.Instance.OnSavepointInteracted -= HandleSavePointInteraction;
 
         DataPersistenceManager.Instance.OnSave -= HandleSave;
+        LoadSceneManager.Instance.OnLoadingSingleProgress -= HandleLoadingSingleProgress;
+
     }
 
     private void Update()
@@ -258,6 +264,15 @@ public class UI_Manager : MonoBehaviour
     }
 
     #region Change Scene
+
+    private void HandleLoadingSingleProgress(float progress)
+    {
+        loadingBar.UpdateHealthBar(1f - progress);
+
+        if (progress >= 1f)
+            HandleChangeSceneFinish();
+    }
+
 
     private void HandleChangeSceneGoUp()
     {

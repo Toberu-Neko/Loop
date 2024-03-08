@@ -22,6 +22,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
     [SerializeField] private Button timeStopAllButton;
     [SerializeField] private Button bulletTimeAllButton;
     [SerializeField] private Button bulletTimeRangedButton;
+    [SerializeField] private Button noneButton;
     [SerializeField] private GameObject firstSelectedObj;
 
     private TextMeshProUGUI slot1SwordText;
@@ -37,7 +38,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
     private TextMeshProUGUI timeStopAllText;
     private TextMeshProUGUI bulletTimeAllText;
     private TextMeshProUGUI bulletTimeRangedText;
-
+    private TextMeshProUGUI noneText;
 
 
     private void Awake()
@@ -56,7 +57,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
         timeStopAllText = timeStopAllButton.GetComponentInChildren<TextMeshProUGUI>();
         bulletTimeAllText = bulletTimeAllButton.GetComponentInChildren<TextMeshProUGUI>();
         bulletTimeRangedText = bulletTimeRangedButton.GetComponentInChildren<TextMeshProUGUI>();
-
+        noneText = noneButton.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -190,6 +191,48 @@ public class SavepointUIChangeSkill : MonoBehaviour
         {
             slot1SwordButton.interactable = false;
             slot2SwordButton.interactable = false;
+        }
+
+        if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillNone)
+        {
+            noneButton.interactable = false;
+
+        }
+
+        if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillRewindPlayer)
+        {
+            timeReverseButton.interactable = false;
+            timeReverseText.color = Color.red;
+        }
+
+        if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillBookMark)
+        {
+            bookMarkButton.interactable = false;
+            bookMarkText.color = Color.red;
+        }
+
+        if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillTimeStopThrow)
+        {
+            timeStopRangedButton.interactable = false;
+            timeStopRangedText.color = Color.red;
+        }
+
+        if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillTimeStopAll)
+        {
+            timeStopAllButton.interactable = false;
+            timeStopAllText.color = Color.red;
+        }
+
+        if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillBulletTimeAll)
+        {
+            bulletTimeAllButton.interactable = false;
+            bulletTimeAllText.color = Color.red;
+        }
+
+        if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillBulletTimeRanged)
+        {
+            bulletTimeRangedButton.interactable = false;
+            bulletTimeRangedText.color = Color.red;
         }
 
         if(!playerTimeSkillManager.UnlockedTimeSkills.timeSlowAll)

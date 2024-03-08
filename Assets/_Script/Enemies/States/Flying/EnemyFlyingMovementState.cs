@@ -31,8 +31,6 @@ public class EnemyFlyingMovementState : EnemyFlyingStateBase
             direction = GetDirection().normalized;
         }
 
-        Debug.Log(direction + " " + getRandomDir);
-
         getRandomDir = true;
     }
 
