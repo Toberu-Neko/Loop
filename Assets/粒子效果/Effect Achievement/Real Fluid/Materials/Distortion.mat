@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1972506094658082100
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Distortion
+  m_Shader: {fileID: -6465566751694194690, guid: 98785d441756a924a9c5cbd29dadd934, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _CameraSortingLayerTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_78e470cf75e44afb96ddd405e70ac454_Texture_1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TwistTex:
+        m_Texture: {fileID: 2800000, guid: 16fc9d4f505c85243b8962595deda2c5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_1d727a16510a49d7bb2c4f681a687fe5: 8
+    - Vector1_283992269e17470ebbb465b15218bb04: 1
+    - Vector1_34d9d5dc3cf747d3b95a4fc0e6513955: 0.05
+    - Vector1_4f71f40deb554d18ac0342574856ad52: 10
+    - Vector1_72b8299e6b8b47bcb7f812299115f376: 0.5
+    - Vector1_77f25b7653744de2a5398565bc42a445: 11.5
+    - Vector1_803a89f9d3194fedb6fcefc22c78abc5: 15
+    - Vector1_8db674d0a806482e87659ac82887bc29: 4
+    - Vector1_a273ab244e7e49d597558767489be665: 21.59
+    - Vector1_ca2501e7530d4596a0cc1856ec44c1c2: 5
+    - Vector1_e4eb016361d64f3a9968e0d6dfd9082d: 4
+    - _AngleOffset: 0.5
+    - _Density: 8
+    - _DistortDensity: 30
+    - _DistortStrength: 0.005
+    - _Distortion: 0.01
+    - _Offset: 3
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _RippleAttenuation: 4
+    - _RippleNoiseScale: 5
+    - _RipplePower: 4
+    - _RippleScale: 20
+    - _Strength: 0.08
+    - _SurfaceShineRange: 12.5
+    - _Twist: 0.08
+    - _UseBackground: 0
+    m_Colors:
+    - Color_ae6862476a404a02b93667dcc7acb924: {r: 0.8603976, g: 0.8603976, b: 0.8603976, a: 1}
+    - Color_ea1744560e5f4e9a8cbd5a0abae3d1e9: {r: 0.07058824, g: 0.26666668, b: 0.32156864, a: 0.7254902}
+    - Color_eceb24c4cc4a49398b3f914c2dbb08a1: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - Vector2_1215687d497d4e33ac48d71797231df2: {r: 0, g: 0.05, b: 0, a: 0}
+    - Vector2_43878b9b645041eb8a305e92349addc1: {r: 0, g: 0, b: 0, a: 0}
+    - _DistortVelocity: {r: 0, g: -0.1, b: 0, a: 0}
+    - _FluidColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RippleColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RippleSpeed: {r: 0, g: 0.05, b: 0, a: 0}
+    - _SurfaceShineColor: {r: 0.7490196, g: 0.1882353, b: 0, a: 1}
+    - _Velocity: {r: 0, g: -0.3, b: 0, a: 0}
+  m_BuildTextureStacks: []
