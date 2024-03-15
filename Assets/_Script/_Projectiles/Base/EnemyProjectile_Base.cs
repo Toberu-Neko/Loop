@@ -9,6 +9,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     protected LayerMask whatIsTargetLayer;
     [SerializeField] protected Core core;
     [SerializeField] protected SpriteRenderer SR;
+    [SerializeField] protected float counterAttackMultiplier = 6f;
 
     [Header("After Image")]
     [SerializeField] private GameObject afterImagePrefab;
@@ -200,6 +201,25 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
             movementType = MovementType.Counter;
             gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
             whatIsTargetLayer = LayerMask.GetMask("Damageable");
+
+            DamageDetails t_details = new()
+            {
+                damageAmount = details.combatDetails.damageAmount * counterAttackMultiplier,
+                knockbackAngle = details.combatDetails.knockbackAngle,
+                knockbackStrength = details.combatDetails.knockbackStrength,
+                staminaDamageAmount = details.combatDetails.staminaDamageAmount,
+                blockable = details.combatDetails.blockable
+            };
+
+            ProjectileDetails t_projectileDetails = new()
+            {
+                combatDetails = t_details,
+                speed = details.speed,
+                duration = details.duration
+            };
+
+
+            details = t_projectileDetails;
 
             startTime = Time.time; 
 

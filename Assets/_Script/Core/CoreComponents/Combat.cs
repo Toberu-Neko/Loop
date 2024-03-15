@@ -20,6 +20,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     public bool PerfectBlockAllDir { get; private set; } = false;
     public bool PerfectBlock { get; private set; }
+    public bool SpecialBlock { get; private set; }
+
     private bool normalBlock;
 
     //Core

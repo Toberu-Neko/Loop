@@ -9,7 +9,8 @@ public class DamageNum : MonoBehaviour
 
     public void Init(float amount)
     {
-        damageText.text = amount.ToString();
+        string amountString = string.Format("{0:N2}", amount);
+        damageText.text = amountString;
     }
 
     public void ReturnToPool()

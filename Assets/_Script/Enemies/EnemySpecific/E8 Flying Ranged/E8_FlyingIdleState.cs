@@ -10,6 +10,13 @@ public class E8_FlyingIdleState : EnemyFlyingIdleState
         this.enemy = enemy;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        Combat.SetNormalBlock(true);
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

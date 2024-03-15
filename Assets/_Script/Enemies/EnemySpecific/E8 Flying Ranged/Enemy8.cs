@@ -46,7 +46,6 @@ public class Enemy8 : Entity
         Combat.OnGoToKinematicState += GotoKinematicState;
         Combat.OnGoToStunState += OnGotoStunState;
 
-        Combat.SetPerfectBlockAllDir(true);
     }
 
     protected override void OnDisable()
