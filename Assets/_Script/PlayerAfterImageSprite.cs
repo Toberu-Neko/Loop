@@ -31,24 +31,21 @@ public class PlayerAfterImageSprite : MonoBehaviour
     {
         alpha = alphaSet;
         timeActivated = Time.time;
-        Invoke(nameof(SetAlpha), updateRate);
+
+        StopCoroutine(nameof(SetAlpha));
+        StartCoroutine(nameof(SetAlpha));
     }
 
-    private void SetAlpha()
+    private IEnumerator SetAlpha()
     {
-        CancelInvoke(nameof(SetAlpha));
-        alpha *= alphaMultiplier;
-        color = new Color(1f, 1f, 1f, alpha);
-        SR.color = color;
-        if(alpha > 0.03f)
+        while (alpha > 0.03f)
         {
-            Invoke(nameof(SetAlpha), updateRate);
+            alpha *= alphaMultiplier;
+            SR.color = new Color(1f, 1f, 1f, alpha);
+            yield return new WaitForSeconds(Time.deltaTime);
         }
-        else
-        {
-            if(gameObject.activeInHierarchy)
-                ObjectPoolManager.ReturnObjectToPool(gameObject);
-        }
-    }
 
+        if (gameObject.activeInHierarchy)
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
+    }
 }
