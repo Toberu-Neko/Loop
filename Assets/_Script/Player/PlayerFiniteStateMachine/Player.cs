@@ -178,7 +178,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if(stats.Health.CurrentValue / stats.Health.MaxValue <= 0.2f)
+        if(stats.Health.CurrentValue / stats.Health.MaxValue <= 0.33f)
         {
             gameManager.SetPlayerDanger(true);
         }
