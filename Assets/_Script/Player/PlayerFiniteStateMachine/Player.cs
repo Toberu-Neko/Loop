@@ -158,17 +158,34 @@ public class Player : MonoBehaviour
         FistS3AttackState = new PlayerFistS3AttackState(this, StateMachine, PlayerData, "fistS3Attack");
         
         movement.OrginalGravityScale = PlayerData.gravityScale;
-
     }
 
     private void OnEnable()
     {
         stats.Health.OnCurrentValueZero += HandleHealthZero;
         stats.OnInvincibleStart += Stats_OnInvincibleStart;
+        stats.Health.OnValueChanged += HandleValueChanged;
 
         combat.OnPerfectBlock += OnPerfectBlock_SFX;
         combat.OnDamaged += OnDamaged_SFX;
         combat.OnDamaged += OnDamaged_IgnoreEnemy;
+    }
+
+    private void HandleValueChanged()
+    {
+        if(gameManager == null)
+        {
+            return;
+        }
+
+        if(stats.Health.CurrentValue / stats.Health.MaxValue <= 0.2f)
+        {
+            gameManager.SetPlayerDanger(true);
+        }
+        else
+        {
+            gameManager.SetPlayerDanger(false);
+        }
     }
 
     private void Stats_OnInvincibleStart(float sec)
@@ -244,10 +261,12 @@ public class Player : MonoBehaviour
 
         stats.Health.OnCurrentValueZero -= HandleHealthZero;
         stats.OnInvincibleStart -= Stats_OnInvincibleStart;
+        stats.Health.OnValueChanged -= HandleValueChanged;
 
         combat.OnPerfectBlock -= OnPerfectBlock_SFX;
         combat.OnDamaged -= OnDamaged_SFX;
         combat.OnDamaged -= OnDamaged_IgnoreEnemy;
+
 
     }
 

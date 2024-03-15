@@ -9,7 +9,16 @@ public class DamageNum : MonoBehaviour
 
     public void Init(float amount)
     {
-        string amountString = string.Format("{0:N2}", amount);
+        string amountString;
+        if (amount < 1)
+        {
+            amountString = string.Format("{0:N2}", amount);
+        }
+        else
+        {
+            amountString = string.Format("{0:N0}", amount);
+        }
+
         damageText.text = amountString;
     }
 

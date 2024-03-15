@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -27,9 +28,23 @@ public class GameManager : MonoBehaviour
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
 
+    [Header("Global Volume")]
+    [SerializeField] private Volume globalVolume;
+    [SerializeField] private VolumeProfile dayVolumeProfile;
+    [SerializeField] private VolumeProfile nightVolumeProfile;
+    [SerializeField] private float dayWeight;
+    [SerializeField] private float nightWeight;
 
-    [SerializeField] private GameObject globalVolumeNight;
-    [SerializeField] private GameObject globalVolumeDay;
+    [SerializeField] private Color orgVigColor;
+    [SerializeField] private Color hurtVigColor;
+    [SerializeField] private float hurtVigIntensityHigh;
+    [SerializeField] private float hurtVigIntensityLow;
+    [SerializeField] private float orgIntensity;
+
+    private bool playerInDanger;
+
+    private Vignette dayVignette;
+    private Vignette nightVignette;
 
     public Dictionary<string, Savepoint> Savepoints { get; private set; }
 
@@ -57,31 +72,46 @@ public class GameManager : MonoBehaviour
         IsPaused = false;
         TimeStopAll = false;
         TimeSlowAll = false;
+        playerInDanger = false;
 
         Savepoints = new();
 
         SceneManager.sceneLoaded += HandleSceneLoadedForGlobalVolume;
+
+        dayVolumeProfile.TryGet(out dayVignette);
+        nightVolumeProfile.TryGet(out nightVignette);
+        globalVolume.gameObject.SetActive(true);
     }
 
     private void HandleSceneLoadedForGlobalVolume(Scene scene, LoadSceneMode mode)
     {
         if(scene.name == "MultiSceneBase" || scene.name == "MainMenu")
         {
-            // Debug.LogWarning("MultiSceneBase or MainMenu loaded");
             return;
         }
 
         if ((scene.name == "Level1-0" || scene.name == "Level1-1" || scene.name == "Level1-2-1") && mode == LoadSceneMode.Additive)
         {
-            // Debug.LogWarning("Level1-0 or Level1-1 loaded");
-            globalVolumeDay.SetActive(false);
-            globalVolumeNight.SetActive(true);
+            if(globalVolume.profile != nightVolumeProfile)
+            {
+                Debug.Log("Change to night");
+                globalVolume.profile = nightVolumeProfile;
+                globalVolume.weight = nightWeight;
+                nightVignette.color.value = orgVigColor;
+                nightVignette.intensity.value = orgIntensity;
+
+            }
         }
         else
         {
-            // Debug.LogWarning("Other scene loaded");
-            globalVolumeDay.SetActive(true);
-            globalVolumeNight.SetActive(false);
+            if(globalVolume.profile != dayVolumeProfile)
+            {
+                Debug.Log("Change to day");
+                globalVolume.profile = dayVolumeProfile;
+                globalVolume.weight = dayWeight;
+                dayVignette.color.value = orgVigColor;
+                dayVignette.intensity.value = orgIntensity;
+            }
         }
     }
 
@@ -89,9 +119,42 @@ public class GameManager : MonoBehaviour
     {
         LoadSceneManager.Instance.LoadingObj = loadingObj;
         LoadSceneManager.Instance.OnLoadingAdditiveProgress += HandleLoadingAdditiveProgress;
-
     }
 
+    private void Update()
+    {
+        if (playerInDanger)
+        {
+            if(globalVolume.profile == dayVolumeProfile)
+            {
+                dayVignette.color.value = Color.Lerp(dayVignette.color.value, hurtVigColor, Time.deltaTime * 2f);
+                dayVignette.intensity.value = Mathf.Lerp(dayVignette.intensity.value, hurtVigIntensityHigh, Time.deltaTime * 2f);
+            }
+            else
+            {
+                nightVignette.color.value = Color.Lerp(nightVignette.color.value, hurtVigColor, Time.deltaTime * 2f);
+                nightVignette.intensity.value = Mathf.Lerp(nightVignette.intensity.value, hurtVigIntensityHigh, Time.deltaTime * 2f);
+            }
+        }
+        else
+        {
+            if (globalVolume.profile == dayVolumeProfile)
+            {
+                dayVignette.color.value = Color.Lerp(dayVignette.color.value, orgVigColor, Time.deltaTime * 2f);
+                dayVignette.intensity.value = Mathf.Lerp(dayVignette.intensity.value, orgIntensity, Time.deltaTime * 2f);
+            }
+            else
+            {
+                nightVignette.color.value = Color.Lerp(nightVignette.color.value, hurtVigColor, Time.deltaTime * 2f);
+                nightVignette.intensity.value = Mathf.Lerp(nightVignette.intensity.value, orgIntensity, Time.deltaTime * 2f);
+            }
+        }
+    }
+
+    public void SetPlayerDanger(bool vol)
+    {
+        playerInDanger = vol;
+    }
 
     private void OnDisable()
     {
@@ -133,9 +196,7 @@ public class GameManager : MonoBehaviour
     {
         OnSavepointInteracted?.Invoke(savepointID, savepointName);
 
-
         DataPersistenceManager.Instance.SaveGame();
-
         EnemyManager.Instance.ResetTempData();
     }
 
