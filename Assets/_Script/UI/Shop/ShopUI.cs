@@ -162,19 +162,14 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     
     public void Deactivate()
     {
-        Debug.LogError("1");
         GameManager.Instance.ResumeGame();
-        Debug.LogError("2");
         gameObject.SetActive(false);
-        Debug.LogError("3");
         UI_Manager.Instance.FirstSelectedObjNull();
-        Debug.LogError("4");
 
         foreach (var slot in shopSlots)
         {
             slot.Deactvate();
         }
-        Debug.LogError("5");
     }
 
     private void OnDestroy()

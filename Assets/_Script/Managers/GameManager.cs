@@ -81,6 +81,12 @@ public class GameManager : MonoBehaviour
         dayVolumeProfile.TryGet(out dayVignette);
         nightVolumeProfile.TryGet(out nightVignette);
         globalVolume.gameObject.SetActive(true);
+
+        dayVignette.color.value = orgVigColor;
+        dayVignette.intensity.value = orgIntensity;
+
+        nightVignette.color.value = orgVigColor;
+        nightVignette.intensity.value = orgIntensity;
     }
 
     private void HandleSceneLoadedForGlobalVolume(Scene scene, LoadSceneMode mode)
@@ -97,9 +103,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Change to night");
                 globalVolume.profile = nightVolumeProfile;
                 globalVolume.weight = nightWeight;
-                nightVignette.color.value = orgVigColor;
-                nightVignette.intensity.value = orgIntensity;
-
             }
         }
         else
@@ -109,11 +112,10 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Change to day");
                 globalVolume.profile = dayVolumeProfile;
                 globalVolume.weight = dayWeight;
-                dayVignette.color.value = orgVigColor;
-                dayVignette.intensity.value = orgIntensity;
             }
         }
     }
+
 
     private void Start()
     {
@@ -165,6 +167,13 @@ public class GameManager : MonoBehaviour
         Savepoints.Clear();
         LoadSceneManager.Instance.OnLoadingAdditiveProgress -= HandleLoadingAdditiveProgress;
         SceneManager.sceneLoaded -= HandleSceneLoadedForGlobalVolume;
+
+
+        dayVignette.color.value = orgVigColor;
+        dayVignette.intensity.value = orgIntensity;
+
+        nightVignette.color.value = orgVigColor;
+        nightVignette.intensity.value = orgIntensity;
     }
 
     public void RegisterSavePoints(Savepoint savePoint)

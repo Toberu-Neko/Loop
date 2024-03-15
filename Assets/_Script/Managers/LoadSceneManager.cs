@@ -52,7 +52,7 @@ public class LoadSceneManager : MonoBehaviour
         {
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
             OnLoadingSingleProgress?.Invoke(progress);
-            Debug.Log("LoadSceneAsyncSingle " + progress);
+            // Debug.Log("LoadSceneAsyncSingle " + progress);
             yield return null;
         }
     }
@@ -65,7 +65,7 @@ public class LoadSceneManager : MonoBehaviour
         {
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
             OnLoadingAdditiveProgress?.Invoke(progress);
-            Debug.Log("LoadSceneAsyncAdditive " + progress);
+            // Debug.Log("LoadSceneAsyncAdditive " + progress);
             yield return null;
         }
     }
@@ -78,11 +78,11 @@ public class LoadSceneManager : MonoBehaviour
         {
             float progress = Mathf.Clamp01(asyncUnload.progress / 0.9f);
             OnUnloadingAdditiveProgress?.Invoke(progress);
-            Debug.Log("UnloadSceneAsuncAdditive " + progress);
+            // Debug.Log("UnloadSceneAsuncAdditive " + progress);
             yield return null;
         }
 
-        Debug.Log("UnloadSceneAsuncAdditive " + sceneName + " is done");
+        // Debug.Log("UnloadSceneAsuncAdditive " + sceneName + " is done");
     }
 
 }
