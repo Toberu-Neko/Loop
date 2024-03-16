@@ -70,6 +70,7 @@ public class SetCollider : CoreComponent
             {
                 changed = true;
                 crouchHeight = movementCollider.size.y;
+                Debug.Log("Crouch and stuck");
                 StartCoroutine(ChangeCrouchHeight(0.75f));
             }
         }
@@ -81,11 +82,6 @@ public class SetCollider : CoreComponent
         v2Workspace.Set(movementCollider.size.x, height);
 
         movementCollider.size = v2Workspace;
-
-        if(height == orgHeight)
-        {
-            changed = false;
-        }
     }
 
     private IEnumerator Change(float multiplier)
@@ -96,6 +92,7 @@ public class SetCollider : CoreComponent
             multiplier += 0.15f;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        changed = false;
         SetColliderHeight(orgHeight);
     }
 
@@ -103,7 +100,7 @@ public class SetCollider : CoreComponent
     {
         while (multiplier < 1f && changeable)
         {
-            SetColliderHeight(orgHeight * multiplier);
+            SetColliderHeight(crouchHeight * multiplier);
             multiplier += 0.15f;
             yield return new WaitForSeconds(Time.deltaTime);
         }
@@ -116,6 +113,7 @@ public class SetCollider : CoreComponent
         {
             SetColliderHeight(orgHeight);
         }
+        changed = false;
     }
 
 }
