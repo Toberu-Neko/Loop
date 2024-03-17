@@ -570,6 +570,7 @@ GameObject:
   - component: {fileID: 3282308389763543894}
   - component: {fileID: 3586862103402596805}
   - component: {fileID: 293473736642934210}
+  - component: {fileID: 7188180169286122417}
   m_Layer: 0
   m_Name: "\u5546\u4EBA"
   m_TagString: Untagged
@@ -634,7 +635,7 @@ SpriteRenderer:
   m_SortingLayerID: 1217561011
   m_SortingLayer: 1
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: fcfaf756aea22dc4e9c986510d66b06a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b7769efac2d688d4592fd13d3b8ac677, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -680,8 +681,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.36, y: 0.5}
-    oldSize: {x: 6.17, y: 5}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 20, y: 17.15}
     newSize: {x: 13.253335, y: 21.09}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -705,6 +706,27 @@ MonoBehaviour:
   keyboardTutorialObject: {fileID: 8164205675071842938}
   gamepadTutorialObject: {fileID: 4468037695493828846}
   data: {fileID: 11400000, guid: b7b92f4ef92fd9a4a9bff8532994c2cb, type: 2}
+--- !u!95 &7188180169286122417
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6999059171069718528}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66c7b1d85d9d20e4ea57e715d1727fa8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8164205675071842938
 GameObject:
   m_ObjectHideFlags: 0

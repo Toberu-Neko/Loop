@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                nightVignette.color.value = Color.Lerp(nightVignette.color.value, hurtVigColor, Time.deltaTime * 2f);
+                nightVignette.color.value = Color.Lerp(nightVignette.color.value, orgVigColor, Time.deltaTime * 2f);
                 nightVignette.intensity.value = Mathf.Lerp(nightVignette.intensity.value, orgIntensity, Time.deltaTime * 2f);
             }
         }
@@ -167,7 +167,6 @@ public class GameManager : MonoBehaviour
         Savepoints.Clear();
         LoadSceneManager.Instance.OnLoadingAdditiveProgress -= HandleLoadingAdditiveProgress;
         SceneManager.sceneLoaded -= HandleSceneLoadedForGlobalVolume;
-
 
         dayVignette.color.value = orgVigColor;
         dayVignette.intensity.value = orgIntensity;
