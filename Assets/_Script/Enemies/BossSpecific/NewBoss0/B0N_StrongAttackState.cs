@@ -24,4 +24,11 @@ public class B0N_StrongAttackState : UnblockableAttackState
 
         stateMachine.ChangeState(boss.PlayerDetectedMoveState);
     }
+
+    public override void AnimationDangerParticleTrigger()
+    {
+        base.AnimationDangerParticleTrigger();
+
+        boss.SpawnDnagerParticle();
+    }
 }

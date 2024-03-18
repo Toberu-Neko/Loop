@@ -17,4 +17,11 @@ public class B0N_PreChargeState : EnemyWaitForAnimFinishState
 
         stateMachine.ChangeState(boss.ChargeState);
     }
+
+    public override void AnimationDangerParticleTrigger()
+    {
+        base.AnimationDangerParticleTrigger();
+
+        boss.SpawnDnagerParticle();
+    }
 }

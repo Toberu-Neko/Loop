@@ -25,7 +25,8 @@ public class Boss0New : BossBase
 
     [field: SerializeField] public B0N_StateData StateData { get; private set; }
     [SerializeField] private Transform meleeAttackPosition;
-    [field: SerializeField, Range(0f, 1f)] public float EnhancedAttackProbability { get; private set; }
+    [SerializeField] private Transform dangerAttackParticlePos;
+    [SerializeField] private GameObject dangerParticlePrefab;
 
     [field: SerializeField] public GameObject EnterSlowTrigger { get; private set; }
     private float slowOnTimer;
@@ -178,5 +179,10 @@ public class Boss0New : BossBase
     private new void HandleEnterBossRoom()
     {
         StateMachine.ChangeState(InitAnim);
+    }
+
+    public void SpawnDnagerParticle()
+    {
+        ObjectPoolManager.SpawnObject(dangerParticlePrefab, dangerAttackParticlePos.position, Quaternion.identity);
     }
 }

@@ -29,4 +29,10 @@ public class B0N_MultiAttackState : MultiAttackState
         stateMachine.ChangeState(boss.PlayerDetectedMoveState);
     }
 
+    public override void AnimationDangerParticleTrigger()
+    {
+        base.AnimationDangerParticleTrigger();
+
+        boss.SpawnDnagerParticle();
+    }
 }

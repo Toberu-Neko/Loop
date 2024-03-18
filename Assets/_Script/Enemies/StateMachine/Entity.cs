@@ -130,6 +130,10 @@ public class Entity : MonoBehaviour
     {
         StateMachine.CurrentState.AnimationStopMovementTrigger();
     }
+    private void AnimationDangerParticle()
+    {
+        StateMachine.CurrentState.AnimationDangerParticleTrigger();
+    }
 
 
     public void SetFacingDirection(int dir)

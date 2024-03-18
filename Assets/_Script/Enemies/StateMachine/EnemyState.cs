@@ -79,6 +79,7 @@ public class EnemyState
     }
     public virtual void AnimationStartMovementTrigger() { isAnimationStartMovement = true; }
     public virtual void AnimationStopMovementTrigger() { isAnimationStartMovement = false; }
+    public virtual void AnimationDangerParticleTrigger() { }
 
     public virtual void Disable()
     {
