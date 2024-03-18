@@ -6,7 +6,7 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
 {
     [SerializeField] private GameObject bookmarkPrefab;
     [SerializeField] private Collider2D col;
-    [SerializeField] private GameObject dangerText;
+    [SerializeField] private GameObject dangerProjectile;
     private GameObject bookmarkObj;
     private bool startRewind = false;
     private bool fire = false;
@@ -84,7 +84,6 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
         startRewind = false;
         HasHitGround = false;
         bookmarkObj = null;
-        dangerText.SetActive(false);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -137,12 +136,11 @@ public class EP_Rewind : EnemyProjectile_Base, IRewindable
 
         if (details.combatDetails.blockable)
         {
-            SR.color = Color.yellow;
+
         }
         else
         {
-            SR.color = Color.red;
-            dangerText.SetActive(true);
+            ObjectPoolManager.SpawnObject(dangerProjectile, transform.position, transform.rotation);
         }
 
         if (doRewind)
