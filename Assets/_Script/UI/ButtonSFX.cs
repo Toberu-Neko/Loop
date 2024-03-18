@@ -13,6 +13,8 @@ public class ButtonSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("OnPointerEnter" + gameObject.name);
+
         if(button == null)
         {
             return;
@@ -27,6 +29,9 @@ public class ButtonSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
+
+        Debug.Log("OnPointerClick" + gameObject.name);
+
         if (button == null)
         {
             return;

@@ -255,12 +255,11 @@ public class UI_Manager : MonoBehaviour
 
     public void SetFirstSelectedObj(GameObject parent)
     {
-        EventSystem.current.SetSelectedGameObject(parent);
+        // EventSystem.current.SetSelectedGameObject(parent);
     }
 
     public void FirstSelectedObjNull()
     {
-        EventSystem.current.SetSelectedGameObject(null);
     }
 
     #region Change Scene
