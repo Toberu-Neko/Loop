@@ -10,7 +10,6 @@ public class PauseInventoryMain : MonoBehaviour
 
     [SerializeField] private GameObject inventoryGrid;
 
-    [SerializeField] private GameObject firstSelectedObj;
 
     private PauseInventorySlot[] inventorySlots;
     private List<PauseInventorySlot> activeInventorySlots;
@@ -29,14 +28,12 @@ public class PauseInventoryMain : MonoBehaviour
     {
         gameObject.SetActive(true);
         pauseInvDescription.Deactivate();
-        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
         OnClickStoryButtion();
     }
 
     public void Deactivate()
     {
         gameObject.SetActive(false);
-        UI_Manager.Instance.FirstSelectedObjNull();
         pauseInvDescription.Deactivate();
     }
 

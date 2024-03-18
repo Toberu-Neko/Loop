@@ -70,8 +70,7 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     public void Activate(string shopID, LocalizedString shopName)
     {
         gameObject.SetActive(true);
-        descriptionObj.SetActive(false);    
-        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
+        descriptionObj.SetActive(false);
         UI_Manager.Instance.ResetAllInput();
 
         moneyText.text = PlayerInventoryManager.Instance.Money.ToString();
@@ -164,7 +163,6 @@ public class ShopUI : MonoBehaviour, IDataPersistance
     {
         GameManager.Instance.ResumeGame();
         gameObject.SetActive(false);
-        UI_Manager.Instance.FirstSelectedObjNull();
 
         foreach (var slot in shopSlots)
         {

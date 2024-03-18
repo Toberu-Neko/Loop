@@ -22,8 +22,6 @@ public class MainMenu : MonoBehaviour
     [Header("Credit")]
     [SerializeField] private Credit credit;
 
-    [SerializeField] private GameObject firstSelectedObj;
-
     private void Awake()
     {
         saveSlotMenu.gameObject.SetActive(false);
@@ -95,7 +93,6 @@ public class MainMenu : MonoBehaviour
     public void ActiveMenu(bool init = false)
     {
         gameObject.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(firstSelectedObj);
     }
 
     public void DeactiveMenu()

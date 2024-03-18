@@ -10,13 +10,10 @@ public class PickupItemUI : MonoBehaviour
     [SerializeField] private LocalizedString defaultItemName;
     [SerializeField] private LocalizedString defaultItemDescription;
 
-    [SerializeField] private GameObject firstSelectedObj;
-
     public void Active(LocalizedString name, LocalizedString description)
     {
         GameManager.Instance.PauseGame();
         gameObject.SetActive(true);
-        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
 
         if(name.IsEmpty || description.IsEmpty)
         {
@@ -32,7 +29,6 @@ public class PickupItemUI : MonoBehaviour
     public void Deactive()
     {
         GameManager.Instance.ResumeGame();
-        UI_Manager.Instance.FirstSelectedObjNull();
         gameObject.SetActive(false);
     }
 }

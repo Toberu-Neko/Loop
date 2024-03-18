@@ -72,12 +72,10 @@ public class PauseUIMain : MonoBehaviour
             GameManager.Instance.PauseGame();
         }
         gameObject.SetActive(true);
-        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
     }
 
     public void DeactivateMenu()
     {
-        UI_Manager.Instance.SetFirstSelectedObj(null);
         gameObject.SetActive(false);
     }
 

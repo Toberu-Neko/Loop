@@ -11,13 +11,11 @@ public class OptionUI : MonoBehaviour, IOptionData
     [SerializeField] private Slider bgmVolumeSlider;
     [SerializeField] private Slider soundFXVolumeSlider;
 
-    [SerializeField] private GameObject firstSelectedObj;
     private int languageIndex;
 
     public void Activate()
     {
         DataPersistenceManager.Instance.LoadOptionData();
-        EventSystem.current.SetSelectedGameObject(firstSelectedObj);
         gameObject.SetActive(true);
     }
 

@@ -25,9 +25,11 @@ public class GameManager : MonoBehaviour
     [field: SerializeField, Range(0.001f, 1f)] public float TimeSlowMultiplier { get; private set; } = 0.2f;
     [field: SerializeField] public PlayerInput PlayerInput { get; private set; }
     [SerializeField] private GameObject loadingObj;
+    [SerializeField] private VirtualMouseUI virtualMouseUI;
+
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
-
+    
     [Header("Global Volume")]
     [SerializeField] private Volume globalVolume;
     [SerializeField] private VolumeProfile dayVolumeProfile;
@@ -191,12 +193,16 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         IsPaused = true;
+        PlayerInput.enabled = false;
+        virtualMouseUI.SetIsUIOpen(true);
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
         IsPaused = false;
+        PlayerInput.enabled = true;
+        virtualMouseUI.SetIsUIOpen(false);
         Time.timeScale = 1f;
     }
 

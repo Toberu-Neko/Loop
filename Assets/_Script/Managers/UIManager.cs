@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 using UnityEngine.UI;
 
@@ -251,15 +250,6 @@ public class UI_Manager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1f);
         savedNotificationObj.SetActive(false);
-    }
-
-    public void SetFirstSelectedObj(GameObject parent)
-    {
-        // EventSystem.current.SetSelectedGameObject(parent);
-    }
-
-    public void FirstSelectedObjNull()
-    {
     }
 
     #region Change Scene

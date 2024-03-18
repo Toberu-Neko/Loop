@@ -71,14 +71,11 @@ public class SaveSlotMenu : MonoBehaviour
                 }
             }
         }
-
-        EventSystem.current.SetSelectedGameObject(firstSelected);
     }
 
     public void DeactiveMenu()
     {
         gameObject.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(null);
     }
 
     private void DisableMenuButtons()

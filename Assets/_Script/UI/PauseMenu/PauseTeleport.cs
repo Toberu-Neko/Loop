@@ -22,12 +22,10 @@ public class PauseTeleport : MonoBehaviour
     public void Activate()
     {
         gameObject.SetActive(true);
-        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
     }
 
     public void Deactivate()
     {
-        UI_Manager.Instance.FirstSelectedObjNull();
         gameObject.SetActive(false);
         pauseUIMain.ActivateMenu();
     }

@@ -275,7 +275,6 @@ public class SavepointUIChangeSkill : MonoBehaviour
 
     public void Activate()
     {
-        UI_Manager.Instance.SetFirstSelectedObj(firstSelectedObj);
         gameObject.SetActive(true); 
         UpdateMenu();
     }
@@ -283,7 +282,6 @@ public class SavepointUIChangeSkill : MonoBehaviour
     public void Deactivate()
     {
         gameObject.SetActive(false);
-        UI_Manager.Instance.FirstSelectedObjNull();
         DataPersistenceManager.Instance.SaveGame();
     }
 }

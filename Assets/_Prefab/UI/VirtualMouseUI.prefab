@@ -100,6 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7253940171141063938}
+  - component: {fileID: 7160348338692246521}
   - component: {fileID: 3697798268715958567}
   m_Layer: 5
   m_Name: VirtualMouseUI
@@ -128,6 +129,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7160348338692246521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4781815754982188351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c139ed220f2466469f174a0158c83a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasRectTransform: {fileID: 0}
+  virtualMouseInput: {fileID: 3697798268715958567}
+  MouseObj: {fileID: 4335100773059397917}
 --- !u!114 &3697798268715958567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +180,7 @@ MonoBehaviour:
         m_Action: Stick
         m_Flags: 0
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: 5991172590761445765, guid: 2fdf0895a51efcf42850ff77f0f535b5, type: 3}
   m_LeftButtonAction:
     m_UseReference: 0
     m_Action:
@@ -184,9 +200,9 @@ MonoBehaviour:
         m_Action: Left Button
         m_Flags: 0
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -1875580178761316920, guid: 2fdf0895a51efcf42850ff77f0f535b5, type: 3}
   m_MiddleButtonAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Middle Button
       m_Type: 0
@@ -196,9 +212,9 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: 1384199947436043882, guid: 2fdf0895a51efcf42850ff77f0f535b5, type: 3}
   m_RightButtonAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Right Button
       m_Type: 0
@@ -208,9 +224,9 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -1094131882932526560, guid: 2fdf0895a51efcf42850ff77f0f535b5, type: 3}
   m_ForwardButtonAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Forward Button
       m_Type: 0
@@ -220,9 +236,9 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -4727939532521505007, guid: 2fdf0895a51efcf42850ff77f0f535b5, type: 3}
   m_BackButtonAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Back Button
       m_Type: 0
@@ -232,9 +248,9 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -4727939532521505007, guid: 2fdf0895a51efcf42850ff77f0f535b5, type: 3}
   m_ScrollWheelAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Scroll Wheel
       m_Type: 0
@@ -244,4 +260,4 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -2249273936813729835, guid: 2fdf0895a51efcf42850ff77f0f535b5, type: 3}
