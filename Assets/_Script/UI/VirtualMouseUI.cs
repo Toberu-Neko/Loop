@@ -37,31 +37,32 @@ public class VirtualMouseUI : MonoBehaviour
 
     private void HandleActionChange(object arg1, InputActionChange inputActionChange)
     {
-        Debug.Log("HandleActionChange");
         if(inputActionChange == InputActionChange.ActionPerformed && arg1 is InputAction)
         {
             InputAction inputAction = (InputAction)arg1;
 
-            if(inputAction.activeControl.device.displayName == "Virtual Mouse")
+            if (inputAction.activeControl.device.displayName == "VirtualMouse")
             {
                 // Ignore the first device that is not a virtual mouse
                 return;
             }
 
-            if(inputAction.activeControl.device is Gamepad)
+            Debug.Log("Change detected.");
+
+            if (inputAction.activeControl.device is Gamepad)
             {
-                Debug.Log("Gamepad");
                 if (activeGameDevice != GameDevice.Gamepad)
                 {
+                    Debug.Log(inputAction.activeControl.device.displayName);
                     ChangeActiveGameDevice(GameDevice.Gamepad);
                 }
             }
-            
-            if(inputAction.activeControl.device is Keyboard)
+            else if((inputAction.activeControl.device is Keyboard && inputAction.activeControl.device is not Gamepad) || inputAction.activeControl.device is Mouse)
             {
-                Debug.Log("Keyboard");
                 if (activeGameDevice != GameDevice.Keyboard)
                 {
+                    Debug.Log("Keyboard: " + (inputAction.activeControl.device is Keyboard) + " Mouse: " + (inputAction.activeControl.device is Mouse));
+                    Debug.Log(inputAction.activeControl.device.displayName);
                     ChangeActiveGameDevice(GameDevice.Keyboard);
                 }
             }
@@ -86,12 +87,10 @@ public class VirtualMouseUI : MonoBehaviour
     {
         if (activeGameDevice == GameDevice.Gamepad && isUIOpen)
         {
-            Debug.Log("Show");
             Show();
         }
         else
         {
-            Debug.Log("Hide");
             Hide();
         }
     }
