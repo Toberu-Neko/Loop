@@ -47,13 +47,10 @@ public class VirtualMouseUI : MonoBehaviour
                 return;
             }
 
-            Debug.Log("Change detected.");
-
             if (inputAction.activeControl.device is Gamepad)
             {
                 if (activeGameDevice != GameDevice.Gamepad)
                 {
-                    Debug.Log(inputAction.activeControl.device.displayName);
                     ChangeActiveGameDevice(GameDevice.Gamepad);
                 }
             }
@@ -61,8 +58,6 @@ public class VirtualMouseUI : MonoBehaviour
             {
                 if (activeGameDevice != GameDevice.Keyboard)
                 {
-                    Debug.Log("Keyboard: " + (inputAction.activeControl.device is Keyboard) + " Mouse: " + (inputAction.activeControl.device is Mouse));
-                    Debug.Log(inputAction.activeControl.device.displayName);
                     ChangeActiveGameDevice(GameDevice.Keyboard);
                 }
             }
