@@ -15,7 +15,7 @@ public class OptionData
 
     public OptionData()
     {
-        languageIndex = 0;
+        languageIndex = 1;
         masterVolume = 1f;
         musicVolume = 1f;
         sfxVolume = 1f;
