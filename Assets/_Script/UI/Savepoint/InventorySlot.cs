@@ -19,6 +19,11 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public event Action<LocalizedString, LocalizedString> OnEnterTarget;
     public event Action OnExitTarget;
 
+    public event Action OnDragCantEquipOnSword;
+    public event Action OnDragCantEquipOnGun;
+    public event Action OnDragCantEquipOnFist;
+    public event Action OnDragFinish;
+
     private bool canOpenDescription;
 
     public int Count { get; private set; }
@@ -77,6 +82,19 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         currentItem.OnStartDragging -= HandleDragStart;
         canOpenDescription = false;
 
+        if (!currentItem.CanEquipOnSword)
+        {
+            OnDragCantEquipOnSword?.Invoke();
+        }
+        if (!currentItem.CanEquipOnGun)
+        {
+            OnDragCantEquipOnGun?.Invoke();
+        }
+        if (!currentItem.CanEquipOnFist)
+        {
+            OnDragCantEquipOnFist?.Invoke();
+        }
+
         HandleExit();
 
         if (previousItem != null)
@@ -130,6 +148,8 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         item.OnReturnToOriginalParent -= HandleNoTarget;
 
         canOpenDescription = true;
+
+        OnDragFinish?.Invoke();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

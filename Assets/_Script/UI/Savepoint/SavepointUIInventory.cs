@@ -14,12 +14,16 @@ public class SavepointUIInventory : MonoBehaviour
     [SerializeField] private LocalizedString defaultString;
 
     public InventorySlot[] InventorySlots { get; private set;}
+    private int activeSlotCount;
 
-    [SerializeField] private GameObject swordGrid;
+    [SerializeField] private GameObject swordGridObj;
+    [SerializeField] private EquipGrid swordGrid;
     private EquipmentSlot[] swordSlots;
-    [SerializeField] private GameObject gunGrid;
+    [SerializeField] private GameObject gunGridObj;
+    [SerializeField] private EquipGrid gunGrid;
     private EquipmentSlot[] gunSlots;
-    [SerializeField] private GameObject fistGrid;
+    [SerializeField] private GameObject fistGridObj;
+    [SerializeField] private EquipGrid fistGrid;
     private EquipmentSlot[] fistSlots;
 
     private SerializableDictionary<string, ItemData> inventory;
@@ -30,11 +34,11 @@ public class SavepointUIInventory : MonoBehaviour
 
         InventorySlots = inventoryGrid.transform.GetComponentsInChildren<InventorySlot>();
 
-        swordSlots = swordGrid.transform.GetComponentsInChildren<EquipmentSlot>();
+        swordSlots = swordGridObj.transform.GetComponentsInChildren<EquipmentSlot>();
 
-        gunSlots = gunGrid.transform.GetComponentsInChildren<EquipmentSlot>();
+        gunSlots = gunGridObj.transform.GetComponentsInChildren<EquipmentSlot>();
 
-        fistSlots = fistGrid.transform.GetComponentsInChildren<EquipmentSlot>();
+        fistSlots = fistGridObj.transform.GetComponentsInChildren<EquipmentSlot>();
     }
 
     public void ActiveDescriptionUI(LocalizedString name, LocalizedString description)
@@ -69,9 +73,16 @@ public class SavepointUIInventory : MonoBehaviour
 
         if(InventorySlots != null)
         {
-            for (int i = 0; i < InventorySlots.Length; i++)
+            for (int i = 0; i < activeSlotCount; i++)
             {
                 InventorySlots[i].DeactiveSlot();
+                InventorySlots[i].OnEnterTarget -= HandleEnterTarget;
+                InventorySlots[i].OnExitTarget -= HandleExitTarget;
+
+                InventorySlots[i].OnDragCantEquipOnSword -= HandleCantEquipOnSword;
+                InventorySlots[i].OnDragCantEquipOnGun -= HandleCantEquipOnGun;
+                InventorySlots[i].OnDragCantEquipOnFist -= HandleCantEquipOnFist;
+                InventorySlots[i].OnDragFinish -= HandleDragFinish;
             }
         }
 
@@ -117,19 +128,46 @@ public class SavepointUIInventory : MonoBehaviour
                 }
             }
 
-
             InventorySlots[count].ActiveSlot();
             InventorySlots[count].SetValue(item.Value.itemCount - SOcount, so);
             InventorySlots[count].OnEnterTarget += HandleEnterTarget;
             InventorySlots[count].OnExitTarget += HandleExitTarget;
+            InventorySlots[count].OnDragCantEquipOnSword += HandleCantEquipOnSword;
+            InventorySlots[count].OnDragCantEquipOnGun += HandleCantEquipOnGun;
+            InventorySlots[count].OnDragCantEquipOnFist += HandleCantEquipOnFist;
+            InventorySlots[count].OnDragFinish += HandleDragFinish;
 
             count++;
         }
+
+        activeSlotCount = count;
 
         for (int i = count; i < InventorySlots.Length; i++)
         {
             InventorySlots[i].DeactiveSlot();
         }
+    }
+
+    private void HandleCantEquipOnSword()
+    {
+        swordGrid.SetCanInterect(false);
+    }
+
+    private void HandleCantEquipOnGun()
+    {
+        gunGrid.SetCanInterect(false);
+    }
+
+    private void HandleCantEquipOnFist()
+    {
+        fistGrid.SetCanInterect(false);
+    }
+
+    private void HandleDragFinish()
+    {
+        swordGrid.SetCanInterect(true);
+        gunGrid.SetCanInterect(true);
+        fistGrid.SetCanInterect(true);
     }
 
     private void HandleEnterTarget(LocalizedString name, LocalizedString description)

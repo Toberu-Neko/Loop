@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.HID;
 
 public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
 {
@@ -9,13 +10,38 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler, IDataPersistance
     [SerializeField] private GameObject clickAndReturnPrefab;
     [SerializeField] private WeaponType equipmentType;
     [SerializeField, Range(0, 3)] private int slotIndex;
+    [SerializeField] private GameObject cantInterectObj;
 
     public SO_Chip LootSO { get; private set; }
     private GameObject clickAndReturnObj;
     private ClickAndReturn clickAndReturn;
+
+    private void OnEnable()
+    {
+        cantInterectObj.SetActive(false);
+    }
+
+    public void SetCanInterect(bool value)
+    {
+        if (value)
+        {
+            if(clickAndReturnObj != null)
+                clickAndReturnObj.SetActive(true);
+
+            cantInterectObj.SetActive(false);
+        }
+        else
+        {
+            if(clickAndReturnObj != null)
+                clickAndReturnObj.SetActive(false);
+
+            cantInterectObj.SetActive(true);
+        }
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
-        if(transform.childCount > 0)
+        if(transform.childCount > 1)
         {
             return;
         }
