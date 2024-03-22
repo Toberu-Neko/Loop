@@ -123,6 +123,8 @@ public class GameManager : MonoBehaviour
     {
         LoadSceneManager.Instance.LoadingObj = loadingObj;
         LoadSceneManager.Instance.OnLoadingAdditiveProgress += HandleLoadingAdditiveProgress;
+
+        DataPersistenceManager.Instance.LoadOptionData();
     }
 
     private void Update()

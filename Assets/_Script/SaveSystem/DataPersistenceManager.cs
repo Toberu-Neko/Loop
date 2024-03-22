@@ -80,26 +80,33 @@ public class DataPersistenceManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void Start()
-    {
-        LoadOptionData();
-    }
-
     private void Update()
     {
         timer += Time.unscaledDeltaTime;
     }
 
     #region OptionData
-
     public void LoadOptionData()
     {
         OptionData = dataHandler.LoadOptionData();
 
+        bool doSaveAfterLoad = false;
         if(OptionData == null)
         {
-            OptionData = new OptionData();
-            SaveOptionData();
+            if (Application.systemLanguage == SystemLanguage.Chinese || Application.systemLanguage == SystemLanguage.ChineseSimplified || Application.systemLanguage == SystemLanguage.ChineseTraditional)
+            {
+                OptionData = new OptionData(0);
+            }
+            else if (Application.systemLanguage == SystemLanguage.Japanese)
+            {
+                OptionData = new OptionData(1);
+            }
+            else
+            {
+                OptionData = new OptionData(2);
+            }
+            Debug.Log("No Option data, lan index = " + OptionData.languageIndex);
+            doSaveAfterLoad = true;
         }
 
         List<IOptionData> options = FindAllOptionDataObjects();
@@ -108,6 +115,9 @@ public class DataPersistenceManager : MonoBehaviour
         {
             option.LoadOptionData(OptionData);
         }
+
+        if(doSaveAfterLoad)
+            SaveOptionData();
     }
 
     public void SaveOptionData()
@@ -120,7 +130,6 @@ public class DataPersistenceManager : MonoBehaviour
         }
 
         dataHandler.SaveOptionData(OptionData);
-        LoadOptionData();
     }
 
     private List<IOptionData> FindAllOptionDataObjects()

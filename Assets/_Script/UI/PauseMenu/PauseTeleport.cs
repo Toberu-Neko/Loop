@@ -27,7 +27,6 @@ public class PauseTeleport : MonoBehaviour
     public void Deactivate()
     {
         gameObject.SetActive(false);
-        pauseUIMain.ActivateMenu();
     }
 
     public void OnClickTeleport(string levelName)
@@ -47,5 +46,11 @@ public class PauseTeleport : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void OnClickBack()
+    {
+        Deactivate();
+        pauseUIMain.ActivateMenu();
     }
 }
