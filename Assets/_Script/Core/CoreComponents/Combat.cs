@@ -291,7 +291,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
             if (movement.ParentTransform.gameObject.CompareTag("Player"))
             {
-                CamManager.Instance.CameraShake();
+                CamManager.Instance.CameraShake(damageAmount/5f);
             }
         }
     }

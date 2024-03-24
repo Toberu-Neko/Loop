@@ -61,7 +61,7 @@ public class PlayerBlockState : PlayerAttackState
             if (perfectBlock)
             {
                 player.PreBlockState.SetLastBlockTime(0f);
-                CamManager.Instance.CameraShake();
+                CamManager.Instance.CameraShake(2f);
                 stateMachine.ChangeState(player.PerfectBlockState);
             }
             else if(knockbackFinished && damageFinished)

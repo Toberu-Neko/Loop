@@ -140,7 +140,7 @@ public class PlayerTimeSkillManager : MonoBehaviour, IDataPersistance
         PlayerInventoryManager.Instance.OnTimeSkillChanged -= UpdateUnlockedSkills;
     }
 
-    public void HandleOnAttack()
+    public void HandleOnAttack(float camShakeStrentgh)
     {
         IncreaseEnergy(data.attackInvreaseEnergy);
     }

@@ -43,7 +43,7 @@ public class PlayerPreBlockState : PlayerAttackState
             if (perfectBlock)
             {
                 lastBlockTime = 0f;
-                CamManager.Instance.CameraShake();
+                CamManager.Instance.CameraShake(2f);
                 Combat.SetPerfectBlock(false);
                 Combat.SetNormalBlock(false);
                 stateMachine.ChangeState(player.PerfectBlockState);

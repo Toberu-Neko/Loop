@@ -12,8 +12,8 @@ public class PlayerAttackState : PlayerState
     private bool jumpInputStop;
     private bool isJumping;
 
-    private event Action OnAttack;
-    private event Action OnAttackMapItems;
+    private event Action<float> OnAttack;
+    private event Action<float> OnAttackMapItems;
 
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -86,9 +86,9 @@ public class PlayerAttackState : PlayerState
         base.AnimationFinishTrigger(); 
     }
 
-    private void HandleOnAttack()
+    private void HandleOnAttack(float camShakeStrentgh)
     {
-        CamManager.Instance.CameraShake();
+        CamManager.Instance.CameraShake(camShakeStrentgh);
     }
 
     public void DoDamageToDamageList(WeaponType weaponType, WeaponAttackDetails details , bool blockable = true)
@@ -113,7 +113,15 @@ public class PlayerAttackState : PlayerState
 
         if (Combat.DetectedDamageables.Count > 0)
         {
-            OnAttack?.Invoke();
+            if(damageAmount < 12f)
+            {
+                OnAttack?.Invoke(1f);
+            }
+            else
+            {
+                OnAttack?.Invoke(2.5f);
+            }
+
             foreach (IDamageable damageable in Combat.DetectedDamageables.ToList())
             {
                 damageable.Damage(damageAmount, core.transform.position, blockable);
@@ -138,7 +146,7 @@ public class PlayerAttackState : PlayerState
 
         if(Combat.DetectedMapDamageableItems.Count > 0)
         {
-            OnAttackMapItems?.Invoke();
+            OnAttackMapItems?.Invoke(1f);
             foreach (IMapDamageableItem mapDamageableItem in Combat.DetectedMapDamageableItems.ToList())
             {
                 mapDamageableItem.TakeDamage(damageAmount);
