@@ -113,13 +113,13 @@ public class PlayerAttackState : PlayerState
 
         if (Combat.DetectedDamageables.Count > 0)
         {
-            if(damageAmount < 12f)
+            if(damageAmount < 20f)
             {
-                OnAttack?.Invoke(1f);
+                OnAttack?.Invoke(1.5f);
             }
             else
             {
-                OnAttack?.Invoke(2.5f);
+                OnAttack?.Invoke(2.75f);
             }
 
             foreach (IDamageable damageable in Combat.DetectedDamageables.ToList())
