@@ -14,13 +14,13 @@ public class E1_ChargeState : ChargeState
     {
         base.LogicUpdate();
 
-        if (performCloseRangeAction)
-        {
-            stateMachine.ChangeState(enemy.MeleeAttackState);
-        }
-        else if(!isDetectingLedge || isDetectingWall)
+        if(!isDetectingLedge)
         {
             stateMachine.ChangeState(enemy.LookForPlayerState);
+        }
+        else if (isDetectingWall)
+        {
+            stateMachine.ChangeState(enemy.StunState);
         }
         else if (isChargeTimeOver)
         {   

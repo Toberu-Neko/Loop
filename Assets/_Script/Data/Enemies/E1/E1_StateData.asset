@@ -19,30 +19,36 @@ MonoBehaviour:
     minIdleTime: 1
     maxIdleTime: 2
   groundMoveStateData:
-    movementSpeed: 3
+    movementSpeed: 4
   playerDetectedStateData:
-    delayTime: 1.5
+    minDelayTime: 0.1
+    maxDelayTime: 0.1
   chargeStateData:
-    chargeCooldown: 0
+    thingsToSay: []
+    afterImagePrefab: {fileID: 5533319139291640069, guid: 6d5f59690a0b14047bd66f405bc43255, type: 3}
+    afterImageDistance: 0.1
+    chargeCooldown: 3
     finishChargeDelay: 0
-    chargeSpeed: 6
+    chargeSpeed: 9
+    angryChargeSpeed: 18
     chargeTime: 1.5
   lookForPlayerStateData:
     amountOfTurns: 2
     timeBetweenTurns: 0.75
   meleeAttackStateData:
-    whatIsPlayer:
-      serializedVersion: 2
-      m_Bits: 128
+    attackCooldown: 1.5
     attackDamage: 10
     staminaAttackDamage: 100
-    attackCooldown: 1.5
     knockbackAngle: {x: 1, y: 1}
     knockbackStrength: 10
   stunStateData:
+    thingsToSay: []
     stunTime: 3
     stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 1, y: 2}
   deadStateData:
     deathChunkParticle: {fileID: 514008935881032697, guid: 2b7e98a56000226409b0277c751f3f30, type: 3}
     deathBloodParticle: {fileID: 2615349222246815121, guid: db18ab1de83847b4fa75fa59ee0730ce, type: 3}
+  references:
+    version: 2
+    RefIds: []

@@ -16,13 +16,9 @@ public class E1_StunState : StunState
 
         if(isStunTimeOver)
         {
-            if(performCloseRangeAction)
+            if(isPlayerInMinAgroRange)
             {
-                stateMachine.ChangeState(enemy.MeleeAttackState);
-            }
-            else if(isPlayerInMinAgroRange)
-            {
-                stateMachine.ChangeState(enemy.ChargeState);
+                stateMachine.ChangeState(enemy.PreChargeState);
             }
             else
             {

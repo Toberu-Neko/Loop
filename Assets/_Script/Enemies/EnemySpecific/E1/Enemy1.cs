@@ -7,9 +7,10 @@ public class Enemy1 : Entity
     public E1_IdleState IdleState { get; private set; }
     public E1_MoveState MoveState { get; private set; }
     public E1_PlayerDetectedState PlayerDetectedState { get; private set; }
+    public E1_PreChargeState PreChargeState { get; private set; }
     public E1_ChargeState ChargeState { get; private set; }
     public E1_LookForPlayerState LookForPlayerState { get; private set; }
-    public E1_MeleeAttackState MeleeAttackState { get; private set; }
+    // public E1_MeleeAttackState MeleeAttackState { get; private set; }
     public E1_StunState StunState { get; private set; }
     public E1_DeadState DeadState { get; private set; }
     public E1_KinematicState KinematicState { get; private set; }
@@ -45,10 +46,11 @@ public class Enemy1 : Entity
         PlayerDetectedState = new E1_PlayerDetectedState(this, StateMachine, "playerDetected", playerDetectedStateData, this);
         ChargeState = new E1_ChargeState(this, StateMachine, "charge", chargeStateData, this);
         LookForPlayerState = new E1_LookForPlayerState(this, StateMachine, "lookForPlayer", lookForPlayerStateData, this);
-        MeleeAttackState = new E1_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackPosition, meleeAttackStateData, this);
+        // MeleeAttackState = new E1_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackPosition, meleeAttackStateData, this);
         StunState = new E1_StunState(this, StateMachine, "stun", stunStateData, this);
         DeadState = new E1_DeadState(this, StateMachine, "dead", deadStateData, this);
         KinematicState = new E1_KinematicState(this, StateMachine, "kinematic", this);
+        PreChargeState = new E1_PreChargeState(this, StateMachine, "preCharge", this);
     }
     protected override void Start()
     {
@@ -78,7 +80,7 @@ public class Enemy1 : Entity
         PlayerDetectedState.Disable();
         ChargeState.Disable();
         LookForPlayerState.Disable();
-        MeleeAttackState.Disable();
+        // MeleeAttackState.Disable();
         StunState.Disable();
         DeadState.Disable();
 

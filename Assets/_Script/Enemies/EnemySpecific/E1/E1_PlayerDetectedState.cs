@@ -15,13 +15,9 @@ public class E1_PlayerDetectedState : PlayerDetectedState
     {
         base.LogicUpdate();
 
-        if (performCloseRangeAction && enemy.MeleeAttackState.CheckCanAttack())
+        if (performLongRangeAction)
         {
-            stateMachine.ChangeState(enemy.MeleeAttackState);
-        }
-        else if (performLongRangeAction)
-        {
-            stateMachine.ChangeState(enemy.ChargeState);
+            stateMachine.ChangeState(enemy.PreChargeState);
         }
         else if (!isPlayerInMaxAgroRange)
         {
