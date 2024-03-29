@@ -34,8 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Volume globalVolume;
     [SerializeField] private VolumeProfile dayVolumeProfile;
     [SerializeField] private VolumeProfile nightVolumeProfile;
-    [SerializeField] private float dayWeight;
-    [SerializeField] private float nightWeight;
+    [SerializeField] private VolumeProfile inTempleVolumeProfile;
 
     [SerializeField] private Color orgVigColor;
     [SerializeField] private Color hurtVigColor;
@@ -47,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     private Vignette dayVignette;
     private Vignette nightVignette;
+    private Vignette inTempleVignette;
 
     public Dictionary<string, Savepoint> Savepoints { get; private set; }
 
@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
 
         dayVolumeProfile.TryGet(out dayVignette);
         nightVolumeProfile.TryGet(out nightVignette);
+        inTempleVolumeProfile.TryGet(out inTempleVignette);
         globalVolume.gameObject.SetActive(true);
 
         dayVignette.color.value = orgVigColor;
@@ -89,6 +90,10 @@ public class GameManager : MonoBehaviour
 
         nightVignette.color.value = orgVigColor;
         nightVignette.intensity.value = orgIntensity;
+
+        inTempleVignette.color.value = orgVigColor;
+        inTempleVignette.intensity.value = orgIntensity;
+
     }
 
     private void HandleSceneLoadedForGlobalVolume(Scene scene, LoadSceneMode mode)
@@ -104,16 +109,22 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Change to night");
                 globalVolume.profile = nightVolumeProfile;
-                globalVolume.weight = nightWeight;
             }
         }
-        else
+        else if ((scene.name == "Level1-3" || scene.name == "Level1-3-1" || scene.name == "Level1-4(BOSS)") && mode == LoadSceneMode.Additive)
         {
             if(globalVolume.profile != dayVolumeProfile)
             {
                 Debug.Log("Change to day");
                 globalVolume.profile = dayVolumeProfile;
-                globalVolume.weight = dayWeight;
+            }
+        }
+        else
+        {
+            if(globalVolume.profile != inTempleVolumeProfile)
+            {
+                Debug.Log("Change to temple");
+                globalVolume.profile = inTempleVolumeProfile;
             }
         }
     }
