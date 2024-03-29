@@ -3,13 +3,12 @@
 // (c) 2012-2020 Jean Moreno
 //--------------------------------------------------------------------------------------------------------------------------------
 
-Shader "Cartoon FX/Remaster/Particle Procedural Glow"
+Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 {
 	Properties
 	{
 	//# Blending
 	//#
-
 		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("Blend Source", Float) = 5
 		[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("Blend Destination", Float) = 10
 	
@@ -24,14 +23,20 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 
 	//# --------------------------------------------------------
 
-	//# Procedural Circle
+	//# Textures
 	//#
 
-		[KeywordEnum(P0, P2, P4, P8)] _CFXR_GLOW_POW ("Apply Power of", Float) = 0
-		_GlowMin ("Circle Min", Float) = 0
-		_GlowMax ("Circle Max", Float) = 1
+		_MainTex ("Texture", 2D) = "white" {}
+		[Toggle(_CFXR_SINGLE_CHANNEL)] _SingleChannel ("Single Channel Texture", Float) = 0
+
+	//# --------------------------------------------------------
+
+	//# Ring
 	//#
-		_MaxValue ("Max Value", Float) = 10
+
+		[Toggle(_CFXR_RADIAL_UV)] _UseRadialUV ("Enable Radial UVs", Float) = 0
+		_RingTopOffset ("Ring Offset", float) = 0.05
+		[Toggle(_CFXR_WORLD_SPACE_RING)] _WorldSpaceRing ("World Space", Float) = 0
 
 	//# --------------------------------------------------------
 
@@ -68,12 +73,12 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 			"Queue"="Transparent"
 			"IgnoreProjector"="True"
 			"RenderType"="Transparent"
-			"PreviewType"="Plane"
 		}
-		Blend [_SrcBlend] [_DstBlend], One One
+		Blend [_SrcBlend] [_DstBlend]
 		Cull  Off
 		ZWrite Off
 
+/*** URP ***/
 		//====================================================================================================================================
 		// Universal Rendering Pipeline
 
@@ -92,19 +97,21 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma target 2.0
 				
 				// #pragma multi_compile_instancing
-				// #pragma instancing_options procedural:ParticleInstancingSetup
 				#pragma multi_compile_fog
 
-				#pragma shader_feature_local _ _CFXR_GLOW_POW_P2 _CFXR_GLOW_POW_P4 _CFXR_GLOW_POW_P8
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
+				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
+				#pragma shader_feature_local _ _CFXR_RADIAL_UV
+				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
+				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 
-				#pragma shader_feature_local _FADING_ON
+				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
+				#pragma shader_feature_local _ _FADING_ON
 				#pragma shader_feature_local _ _ALPHATEST_ON
 				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_URP
-				#define CFXR_GLOW_SHADER
+				#define CFXR_PROCEDURAL_RING_SHADER
 				#include "CFXR_PASSES.cginc"
 
 				ENDCG
@@ -124,20 +131,22 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma target 2.0
 				
 				// #pragma multi_compile_instancing
-				// #pragma instancing_options procedural:ParticleInstancingSetup
 				#pragma multi_compile_fog
 
-				#pragma shader_feature_local _ _CFXR_GLOW_POW_P2 _CFXR_GLOW_POW_P4 _CFXR_GLOW_POW_P8
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
+				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
+				#pragma shader_feature_local _ _CFXR_RADIAL_UV
+				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
+				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 
-				#pragma shader_feature_local _FADING_ON
+				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
+				#pragma shader_feature_local _ _FADING_ON
 				#pragma shader_feature_local _ _ALPHATEST_ON
 				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_URP
 				#define DISABLE_SOFT_PARTICLES
-				#define CFXR_GLOW_SHADER
+				#define CFXR_PROCEDURAL_RING_SHADER
 				#include "CFXR_PASSES.cginc"
 
 				ENDCG
@@ -160,11 +169,13 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma vertex vertex_program
 				#pragma fragment fragment_program
 
-				#pragma shader_feature_local _ _CFXR_GLOW_POW_P2 _CFXR_GLOW_POW_P4 _CFXR_GLOW_POW_P8
+				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
+				#pragma shader_feature_local _ _CFXR_RADIAL_UV
+				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
-				#pragma shader_feature_local _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON
+				#pragma shader_feature_local _ _ALPHATEST_ON
+				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#pragma multi_compile_shadowcaster
 				#pragma shader_feature_local _ _CFXR_DITHERED_SHADOWS_ON _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE
@@ -175,13 +186,15 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 
 				#define CFXR_URP
 				#define PASS_SHADOW_CASTER
-				#define CFXR_GLOW_SHADER
+				#define CFXR_PROCEDURAL_RING_SHADER
 				#include "CFXR_PASSES.cginc"
 
 				ENDCG
 			}
 		}
+/*** END URP ***/
 
+/*** BIRP ***/
 		//====================================================================================================================================
 		// Built-in Rendering Pipeline
 
@@ -197,26 +210,24 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma vertex vertex_program
 				#pragma fragment fragment_program
 				
-				//vertInstancingSetup writes to global, not allowed with DXC
-				// #pragma never_use_dxc
-				// #pragma target 2.5
-				// #pragma multi_compile_instancing
-				// #pragma instancing_options procedural:vertInstancingSetup
-
+				#pragma target 2.0
+				
 				#pragma multi_compile_particles
+				// #pragma multi_compile_instancing
 				#pragma multi_compile_fog
 				
-				#pragma shader_feature_local _ _CFXR_GLOW_POW_P2 _CFXR_GLOW_POW_P4 _CFXR_GLOW_POW_P8
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
+				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
+				#pragma shader_feature_local _ _CFXR_RADIAL_UV
+				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
+				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 
-				#pragma shader_feature_local _FADING_ON
+				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
+				#pragma shader_feature_local _ _FADING_ON
 				#pragma shader_feature_local _ _ALPHATEST_ON
 				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
-				#include "UnityStandardParticleInstancing.cginc"
-
-				#define CFXR_GLOW_SHADER
+				#define CFXR_PROCEDURAL_RING_SHADER
 				#include "CFXR_PASSES.cginc"
 
 				ENDCG
@@ -239,17 +250,13 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma vertex vertex_program
 				#pragma fragment fragment_program
 
-				//vertInstancingSetup writes to global, not allowed with DXC
-				// #pragma never_use_dxc
-				// #pragma target 2.5
-				// #pragma multi_compile_instancing
-				// #pragma instancing_options procedural:vertInstancingSetup
-
-				#pragma shader_feature_local _ _CFXR_GLOW_POW_P2 _CFXR_GLOW_POW_P4 _CFXR_GLOW_POW_P8
+				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
+				#pragma shader_feature_local _ _CFXR_RADIAL_UV
+				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
-				#pragma shader_feature_local _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON
+				#pragma shader_feature_local _ _ALPHATEST_ON
+				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#pragma multi_compile_shadowcaster
 				#pragma shader_feature_local _ _CFXR_DITHERED_SHADOWS_ON _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE
@@ -258,15 +265,14 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma target 3.0		//needed for VPOS
 			#endif
 
-				#include "UnityStandardParticleInstancing.cginc"
-
 				#define PASS_SHADOW_CASTER
-				#define CFXR_GLOW_SHADER
+				#define CFXR_PROCEDURAL_RING_SHADER
 				#include "CFXR_PASSES.cginc"
 
 				ENDCG
 			}
 		}
+/*** END BIRP ***/
 	}
 	
 	CustomEditor "CartoonFX.MaterialInspector"

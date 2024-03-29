@@ -180,6 +180,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 		ZWrite [_ZWrite]
 		Cull  Off
 
+/*** URP ***/
 		//====================================================================================================================================
 		// Universal Rendering Pipeline
 
@@ -332,7 +333,9 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				ENDCG
 			}
 		}
+/*** END URP ***/
 
+/*** BIRP ***/
 		//====================================================================================================================================
 		// Built-in Rendering Pipeline
 
@@ -442,6 +445,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				ENDCG
 			}
 		}
+/*** END BIRP ***/
 	}
 	
 	CustomEditor "CartoonFX.MaterialInspector"

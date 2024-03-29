@@ -54,6 +54,7 @@ Shader "Cartoon FX/Remaster/Particle Screen Distortion"
 		ZWrite Off
 		Cull  Off
 
+/*** URP ***/
 		//====================================================================================================================================
 		// Universal Rendering Pipeline
 
@@ -124,7 +125,9 @@ Shader "Cartoon FX/Remaster/Particle Screen Distortion"
 				ENDCG
 			}
 		}
+/*** END URP ***/
 
+/*** BIRP ***/
 		//====================================================================================================================================
 		// Built-in Rendering Pipeline
 
@@ -170,6 +173,7 @@ Shader "Cartoon FX/Remaster/Particle Screen Distortion"
 				ENDCG
 			}
 		}
+/*** END BIRP ***/
 	}
 	
 	CustomEditor "CartoonFX.MaterialInspector"
