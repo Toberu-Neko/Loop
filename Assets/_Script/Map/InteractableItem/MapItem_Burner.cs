@@ -6,8 +6,9 @@ using UnityEngine.Localization.Components;
 public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
 {
     [SerializeField] private string itemName = "burner";
-    [SerializeField] private string counsumableName = "shan";
+    [SerializeField] private SO_ConsumeableItem targetItem;
     [SerializeField] private int maxNeededCount = 3;
+    [SerializeField] private Collider2D col;
 
     [SerializeField] private GameObject teleportObj;
     [SerializeField] private Animator doorAnim;
@@ -33,9 +34,11 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
 
         if(onItemConsumableCount >= maxNeededCount)
         {
-            doorAnim.SetBool("AlwaysOpen", true);
+            if(doorAnim!=null)
+                doorAnim.SetBool("AlwaysOpen", true);
             teleportObj.SetActive(true);
             interactable = false;
+            col.enabled = false;
         }
         else
         {
@@ -61,8 +64,10 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
             //Play Open animation
             descriptionStringEvent.StringReference = openedText;
 
-            doorAnim.SetBool("Open", true);
+            if (doorAnim != null)
+                doorAnim.SetBool("Open", true);
             teleportObj.SetActive(true);
+            col.enabled = false;
         }
     }
 
@@ -77,12 +82,12 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
     private void HandleInteract()
     {
         PlayerInventoryManager inv = PlayerInventoryManager.Instance;
-        if (inv.ConsumablesInventory.ContainsKey(counsumableName) && interactable)
+        if (inv.ConsumablesInventory.ContainsKey(targetItem.ID) && interactable)
         {
-            if (inv.ConsumablesInventory[counsumableName].itemCount > 0)
+            if (inv.ConsumablesInventory[targetItem.ID].itemCount > 0)
             {
                 AudioManager.instance.PlaySoundFX(interactSFX, transform, AudioManager.SoundType.twoD);
-                inv.RemoveConsumableItem(counsumableName);
+                inv.RemoveConsumableItem(targetItem.ID);
                 onItemConsumableCount++;
                 OnItemConsumableCountChange?.Invoke();
                 descriptionStringEvent.StringReference = gaveItemText;
