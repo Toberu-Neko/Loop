@@ -212,6 +212,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
             if (ConsumablesInventory[name].itemCount > 0)
             {
                 ConsumablesInventory[name].ReduceItemCount(amount);
+                Debug.Log(ConsumablesInventory[name].itemCount);
             }
             else
             {

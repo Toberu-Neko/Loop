@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class UI_Manager : MonoBehaviour
     [Header("Pickup Item UI")]
     [SerializeField] private GameObject pickUpItemUIObj;
     private PickupItemUI pickUpItemUI;
+
+    [SerializeField] private GameObject tutorialUIObj;
+    private TutorialUI tutorialUI;
 
     [Header("Pause UI")]
     [SerializeField] private GameObject pauseUIObj;
@@ -91,6 +95,9 @@ public class UI_Manager : MonoBehaviour
 
         pickUpItemUIObj.SetActive(false);
         pickUpItemUI = pickUpItemUIObj.GetComponent<PickupItemUI>();
+
+        tutorialUIObj.SetActive(false);
+        tutorialUI = tutorialUIObj.GetComponent<TutorialUI>();
 
         shopUIObj.SetActive(false);
 
@@ -177,6 +184,16 @@ public class UI_Manager : MonoBehaviour
                 inGameCanvas.alpha = 0f;
             }
         }
+    }
+
+    public void ActiveTutorialUI(VideoClip clip, LocalizedString title, LocalizedString description)
+    {
+        tutorialUI.Activate(clip, title, description);
+    }
+
+    public void DeactiveTutorialUI()
+    {
+        tutorialUI.Deactivate();
     }
 
     public void ActiveDieUI()
