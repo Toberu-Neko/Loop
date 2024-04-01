@@ -4,7 +4,7 @@ public class EP_RedStatic : EP_StaticBase
 {
     [SerializeField] private float startRadius = 5f;
 
-    [SerializeField] private GameObject sphereObj;
+    [SerializeField] private GameObject particleObj;
 
 
     protected override void OnEnable()
@@ -13,7 +13,7 @@ public class EP_RedStatic : EP_StaticBase
 
         OnExplodeAction += HandleExplode;
 
-        sphereObj.SetActive(false);
+        particleObj.SetActive(false);
 
         SR.enabled = true;
     }
@@ -21,7 +21,7 @@ public class EP_RedStatic : EP_StaticBase
 
     private void HandleExplode()
     {
-        sphereObj.SetActive(true);
+        particleObj.SetActive(true);
         SR.enabled = false;
         DoDamage();
         Invoke(nameof(ReturnToPool), 0.5f);

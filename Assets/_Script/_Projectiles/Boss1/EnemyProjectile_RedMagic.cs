@@ -7,7 +7,8 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
     [SerializeField] private float startRadius = 2f;
     [SerializeField] private float duration = 0.5f;
 
-    [SerializeField] private GameObject sphereObj;
+    [SerializeField] private GameObject particlePrefab;
+    [SerializeField] private Transform spawnPos;
 
     private float startMagicTime;
     private bool startMagic;
@@ -19,8 +20,6 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
         OnHitTargetAction += HandleHitTarget;
         OnHitGroundAction += HandleHitGround;
         OnDuration += HandleHitGround;
-
-        sphereObj.SetActive(false);
 
         SR.enabled = true;
         damaged = false;
@@ -68,13 +67,13 @@ public class EnemyProjectile_RedMagic : EnemyProjectile_Base
         {
             startMagic = true;
             startMagicTime = Time.time;
-
-            sphereObj.SetActive(true);
         }
     }
 
     private void DoDamage()
     {
+        ObjectPoolManager.SpawnObject(particlePrefab, spawnPos.position, Quaternion.identity);
+
         damaged = true;
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, startRadius, whatIsTargetLayer);
         SR.enabled = false;

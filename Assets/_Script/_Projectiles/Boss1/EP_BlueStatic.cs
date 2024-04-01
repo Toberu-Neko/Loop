@@ -1,11 +1,12 @@
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class EP_BlueStatic : EP_StaticBase
 {
     [Header("Blue Magic")]
     [SerializeField] private BlueMagicVariables variables;
 
-    [SerializeField] private GameObject sphereObj;
+    [SerializeField] private GameObject particle;
     private Vector3 sphereOrgScale;
 
     private float currentRadius = 1f;
@@ -15,14 +16,14 @@ public class EP_BlueStatic : EP_StaticBase
     protected override void Awake()
     {
         base.Awake();
-        sphereOrgScale = sphereObj.transform.localScale;
+        sphereOrgScale = particle.transform.localScale;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
-        sphereObj.SetActive(false);
+        particle.SetActive(false);
         currentRadius = variables.startRadius;
         lastDamageTime = 0f;
         startMagicTime = 0f;
@@ -62,7 +63,8 @@ public class EP_BlueStatic : EP_StaticBase
     }
     private void HandleExplodeAction()
     {
-        sphereObj.SetActive(true);
+        particle.SetActive(true);
+        particle.transform.rotation = Quaternion.identity;
         lastDamageTime = 0f;
         startMagicTime = Time.time;
     }
@@ -78,7 +80,7 @@ public class EP_BlueStatic : EP_StaticBase
             currentRadius += variables.expandRate * Time.deltaTime;
         }
 
-        sphereObj.transform.localScale = sphereOrgScale * currentRadius;
+        particle.transform.localScale = sphereOrgScale * currentRadius;
     }
     private void DoDamage()
     {

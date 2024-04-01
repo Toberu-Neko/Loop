@@ -8,6 +8,9 @@ public class OnPlayerProjectile_Red : OnPlayerProjectileBase
     [SerializeField] private float damage = 10f;
     [SerializeField] private float knockbackForce = 10f;
     [SerializeField] private Vector2 knockbackDirection = Vector2.one;
+    [SerializeField] private GameObject hitParticlePrefab;
+    [SerializeField] private Transform spawnPos;
+
     protected override void Awake()
     {
         base.Awake();
@@ -29,6 +32,7 @@ public class OnPlayerProjectile_Red : OnPlayerProjectileBase
 
     private void OnPlayerProjectile_Red_OnAction()
     {
+        ObjectPoolManager.SpawnObject(hitParticlePrefab, spawnPos.position, Quaternion.identity);
         if(player.StateMachine.CurrentState == player.IdleState || player.StateMachine.CurrentState == player.CrouchIdleState)
         {
             ReturnToPool();
