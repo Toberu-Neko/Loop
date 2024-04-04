@@ -19,13 +19,24 @@ public class PlayerMoveState : PlayerGroundedState
 
         Movement.CheckIfShouldFlip(xInput);
 
-        PlayStepSFX(0.4f);
+        if (player.NoHand)
+        {
+            PlayStepSFX(0.8f);
+        }
+        else
+        {
+            PlayStepSFX(0.4f);
+        }
 
         if (!isExitingState)
         {
             if (CollisionSenses.UnclimbableWallFront)
             {
                 Movement.SetVelocityX(0f);
+            }
+            else if (player.NoHand)
+            {
+                Movement.SetVelocityX(playerData.noHandMovementVelocity * xInput);
             }
             else
             {

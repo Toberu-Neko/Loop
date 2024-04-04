@@ -22,7 +22,11 @@ public class PlayerLandState : PlayerAbilityState
         if(!isExitingState)
         {
             Movement.SetVelocityZero();
-            if (player.InputHandler.NormInputX != 0)
+            if (player.NoHand)
+            {
+                player.Anim.speed = 1f;
+            }
+            else if (player.InputHandler.NormInputX != 0)
             {
                 player.Anim.speed = playerData.speedUpLandAnimMulitiplier;
             }

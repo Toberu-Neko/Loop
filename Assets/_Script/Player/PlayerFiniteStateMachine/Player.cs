@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [field: SerializeField] public SO_PlayerSFX PlayerSFX { get; private set; }
     private GameManager gameManager;
     public PlayerStateMachine StateMachine { get; private set; }
+    
 
     #region ControlerStates
     public PlayerTurnOnState TurnOnState { get; private set; }
@@ -86,7 +87,7 @@ public class Player : MonoBehaviour
 
     #region Other Variables
     // public int FacingDirection { get; private set; }
-
+    public bool NoHand { get; private set; }
 
     private Vector2 v2Workspace;
     #endregion
@@ -169,6 +170,22 @@ public class Player : MonoBehaviour
         combat.OnPerfectBlock += OnPerfectBlock_SFX;
         combat.OnDamaged += OnDamaged_SFX;
         combat.OnDamaged += OnDamaged_IgnoreEnemy;
+
+        WeaponManager.OnWeaponChanged += HandleWeaponChanged;
+    }
+
+    private void HandleWeaponChanged()
+    {
+        if(PlayerInventoryManager.Instance.CanUseWeaponCount > 0)
+        {
+            NoHand = false;
+            Anim.SetBool("noHand", NoHand);
+        }
+        else
+        {
+            NoHand = true;
+            Anim.SetBool("noHand", NoHand);
+        }
     }
 
     private void HandleValueChanged()
@@ -249,6 +266,8 @@ public class Player : MonoBehaviour
         gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
         gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
         gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
+
+        HandleWeaponChanged();
     }
 
     private void OnDisable()
@@ -267,7 +286,7 @@ public class Player : MonoBehaviour
         combat.OnDamaged -= OnDamaged_SFX;
         combat.OnDamaged -= OnDamaged_IgnoreEnemy;
 
-
+        WeaponManager.OnWeaponChanged -= HandleWeaponChanged;
     }
 
     private void Update()
