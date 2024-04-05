@@ -1,12 +1,15 @@
+using Eflatun.SceneReference;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SaveSlotMenu : MonoBehaviour
 {
     [Header("Navigation")]
     [SerializeField] private MainMenu mainMenu;
+    [SerializeField] private SceneReference startAnimationScene;
     
     [Header("Menu")]
     private SaveSlot[] saveSlots;
@@ -29,9 +32,12 @@ public class SaveSlotMenu : MonoBehaviour
         if (!isLoadingGame)
         {
             DataPersistenceManager.Instance.NewGame();
+            LoadSceneManager.Instance.LoadSceneSingle(startAnimationScene.Name);
         }
-
-        DataPersistenceManager.Instance.ReloadBaseScene();
+        else
+        {
+            DataPersistenceManager.Instance.ReloadBaseScene();
+        }
     }
 
     public void OnBackButtonClicked()

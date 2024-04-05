@@ -1,0 +1,63 @@
+using UnityEngine;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Video;
+
+public class StartAnimationController : MonoBehaviour
+{
+    [SerializeField] private VideoPlayer videoPlayer;
+
+    [SerializeField] private VideoClip zhVid;
+    [SerializeField] private VideoClip jpVid;
+    [SerializeField] private VideoClip enVid;
+
+    [SerializeField] private InputSystemUIInputModule inputSystemUIInputModule;
+    [SerializeField] private GameObject loadingObj;
+
+    private void Awake()
+    {
+
+        if(LocalizationSettings.SelectedLocale == LocalizationSettings.AvailableLocales.Locales[0])
+        {
+            Debug.Log("ZH");
+            videoPlayer.clip = zhVid;
+        }
+        else if(LocalizationSettings.SelectedLocale == LocalizationSettings.AvailableLocales.Locales[1])
+        {
+            Debug.Log("JP");
+            videoPlayer.clip = jpVid;
+        }
+        else if(LocalizationSettings.SelectedLocale == LocalizationSettings.AvailableLocales.Locales[2])
+        {
+            Debug.Log("EN");
+            videoPlayer.clip = enVid;
+        }
+
+        videoPlayer.Play();
+
+        videoPlayer.loopPointReached += EndReached;
+    }
+
+    private void Start()
+    {
+        LoadSceneManager.Instance.LoadingObj = loadingObj;
+    }
+
+    private void Update()
+    {
+        if(inputSystemUIInputModule.cancel.action.triggered)
+        {
+            DataPersistenceManager.Instance.ReloadBaseScene();
+        }
+    }
+
+    private void EndReached(VideoPlayer vp)
+    {
+        DataPersistenceManager.Instance.ReloadBaseScene();
+    }
+
+    private void OnDestroy()
+    {
+        videoPlayer.loopPointReached -= EndReached;
+    }
+}
