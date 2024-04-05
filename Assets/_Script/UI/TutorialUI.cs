@@ -16,6 +16,7 @@ public class TutorialUI : MonoBehaviour
     public void Activate(VideoClip clip, LocalizedString titleString, LocalizedString descriptionString)
     {
         GameManager.Instance.PauseGame();
+        UI_Manager.Instance.ResetAllInput();
         videoPlayer.clip = clip;
         titleStringEvent.StringReference = titleString;
         descriptionStringEvent.StringReference = descriptionString;
