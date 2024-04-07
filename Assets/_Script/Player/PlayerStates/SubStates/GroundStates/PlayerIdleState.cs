@@ -29,7 +29,7 @@ public class PlayerIdleState : PlayerGroundedState
             {
                 stateMachine.ChangeState(player.MoveState);
             }
-            else if (yInput == -1)
+            else if (yInput == -1 && !player.NoHand)
             {
                 stateMachine.ChangeState(player.CrouchIdleState);
             }
