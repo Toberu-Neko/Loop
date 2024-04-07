@@ -8,7 +8,14 @@ public class PlayerJumpState : PlayerAbilityState
 
     public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-        AmountOfJumpsLeft = playerData.amountOfJumps;
+        if (player.NoHand)
+        {
+            AmountOfJumpsLeft = 1;
+        }
+        else
+        {
+            AmountOfJumpsLeft = playerData.amountOfJumps;
+        }
     }
 
     public override void Enter()
@@ -42,7 +49,17 @@ public class PlayerJumpState : PlayerAbilityState
         }
     }
 
-    public void ResetAmountOfJumpsLeft() => AmountOfJumpsLeft = playerData.amountOfJumps;
+    public void ResetAmountOfJumpsLeft()
+    {
+        if(player.NoHand)
+        {
+            AmountOfJumpsLeft = 1;
+        }
+        else
+        {
+            AmountOfJumpsLeft = playerData.amountOfJumps;
+        }
+    }
 
     public void DecreaseAmountOfJumpsLeft() => AmountOfJumpsLeft--;
 }

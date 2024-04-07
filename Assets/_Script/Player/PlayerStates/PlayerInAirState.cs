@@ -222,6 +222,10 @@ public class PlayerInAirState : PlayerState
             {
                 Movement.SetVelocityX(0f);
             }
+            else if (player.NoHand)
+            {
+                Movement.SetVelocityX(playerData.noHandMovementVelocity * xInput, true);
+            }
             else
             {
                 Movement.SetVelocityX(playerData.movementVelocity * xInput, true);

@@ -186,7 +186,7 @@ public class PlayerDashState : PlayerAbilityState
 
     public bool CheckIfCanDash()
     {
-        return CanDash && Time.time >= (lastDashTime + playerData.dashCooldown) && Movement.CanSetVelocity;
+        return CanDash && Time.time >= (lastDashTime + playerData.dashCooldown) && Movement.CanSetVelocity && !player.NoHand;
     }
 
     public void ResetCanDash() => CanDash = true;
