@@ -34,6 +34,7 @@ public class StartAnimationController : MonoBehaviour
         }
 
         videoPlayer.Play();
+        videoPlayer.playbackSpeed = 1;
 
         videoPlayer.loopPointReached += EndReached;
     }
@@ -49,10 +50,22 @@ public class StartAnimationController : MonoBehaviour
         {
             DataPersistenceManager.Instance.ReloadBaseScene();
         }
+        else if(inputSystemUIInputModule.leftClick.action.triggered)
+        {
+            if(videoPlayer.playbackSpeed == 1)
+            {
+                videoPlayer.playbackSpeed = 2;
+            }
+            else
+            {
+                videoPlayer.playbackSpeed = 1;
+            }
+        }
     }
 
     private void EndReached(VideoPlayer vp)
     {
+        videoPlayer.playbackSpeed = 1;
         DataPersistenceManager.Instance.ReloadBaseScene();
     }
 
