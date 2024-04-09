@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.Localization;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -11,6 +12,7 @@ public class UI_Manager : MonoBehaviour
     public static UI_Manager Instance { get; private set; }
 
     [SerializeField] private PlayerInputHandler inputHandler;
+    [SerializeField] private InputSystemUIInputModule inputSystemUIInputModule;
     [SerializeField] private GameObject savedNotificationObj;
     [SerializeField] private CanvasGroup inGameCanvas;
 
@@ -142,14 +144,13 @@ public class UI_Manager : MonoBehaviour
 
     private void Update()
     {
-        if (inputHandler.ESCInput)
+        if (inputSystemUIInputModule.cancel.action.triggered)
         {
-            inputHandler.UseESCInput();
-
             if (!pauseUIObj.activeInHierarchy &&
                 !savepointUIObj.activeInHierarchy &&
                 !pickUpItemUIObj.activeInHierarchy &&
-                !shopUIObj.activeInHierarchy)
+                !shopUIObj.activeInHierarchy && 
+                !tutorialUIObj.activeInHierarchy)
             {
                 OpenPauseMainUI();
             }
@@ -169,6 +170,10 @@ public class UI_Manager : MonoBehaviour
             else if (shopUIObj.activeInHierarchy)
             {
                 shopUI.Deactivate();
+            }
+            else if (tutorialUIObj.activeInHierarchy)
+            {
+                tutorialUI.Deactivate();
             }
         }
 
