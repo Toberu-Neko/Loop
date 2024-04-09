@@ -365,7 +365,6 @@ GameObject:
   - component: {fileID: 533179305}
   - component: {fileID: 533179308}
   - component: {fileID: 533179307}
-  - component: {fileID: 533179306}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -392,46 +391,6 @@ RectTransform:
   m_AnchoredPosition: {x: 764.45776, y: -506.14795}
   m_SizeDelta: {x: -1526.7009, y: -1012.8938}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &533179306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533179304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_StringReference:
-    m_TableReference:
-      m_TableCollectionName: GUID:1180bcf65a0996943bdbb2cfe833cc95
-    m_TableEntryReference:
-      m_KeyId: 38105440256
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  m_FormatArguments: []
-  m_UpdateString:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 533179307}
-        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &533179307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -956,8 +915,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 5530912058676202386}
   zhVid: {fileID: 32900000, guid: 538a07dd3eea76547a8bd21e2aca0e04, type: 3}
-  jpVid: {fileID: 32900000, guid: 9f529cfebb1e0334bbf99010aa052061, type: 3}
-  enVid: {fileID: 32900000, guid: 9f529cfebb1e0334bbf99010aa052061, type: 3}
+  jpVid: {fileID: 32900000, guid: 538a07dd3eea76547a8bd21e2aca0e04, type: 3}
+  enVid: {fileID: 32900000, guid: 538a07dd3eea76547a8bd21e2aca0e04, type: 3}
   inputSystemUIInputModule: {fileID: 145281228}
   loadingObj: {fileID: 1669763399}
 --- !u!1001 &1669763397
