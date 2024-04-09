@@ -19,10 +19,10 @@ MonoBehaviour:
     minIdleTime: 1
     maxIdleTime: 2
   groundMoveStateData:
-    movementSpeed: 3
+    movementSpeed: 3.5
   playerDetectedStateData:
-    minDelayTime: 1
-    maxDelayTime: 2
+    minDelayTime: 0.4
+    maxDelayTime: 0.75
   meleeAttackStateData:
     attackCooldown: 1
     attackDamage: 10
@@ -31,17 +31,18 @@ MonoBehaviour:
     knockbackStrength: 10
   lookForPlayerStateData:
     amountOfTurns: 2
-    timeBetweenTurns: 0.75
+    timeBetweenTurns: 0.25
   dodgeStateData:
     dodgeSpeed: 15
     dodgeCooldown: 10
     dodgeAngle: {x: 1, y: 1}
   detectedPlayerMoveStateData:
-    movementSpeed: 5
+    movementSpeed: 6
     minMovementTime: 0
     minInStateTime: 3
     maxInStateTime: 5
   stunStateData:
+    thingsToSay: []
     stunTime: 3
     stunKnockbackSpeed: 0
     stunKnockbackAngle: {x: 1, y: 1}
@@ -57,3 +58,6 @@ MonoBehaviour:
     pitchRandomRangeMax: 0
     loop: 0
     source: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
