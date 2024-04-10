@@ -80,7 +80,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (player.InputHandler.DebugInput)
         {
-            AllEnergyMax();
+            IncreaseAllEnergy();
             timeSkillManager.SetTimeEnergyMax();
             stats.Health.Increase(50f);
         }
@@ -240,11 +240,17 @@ public class PlayerWeaponManager : MonoBehaviour
         OnEnergyChanged?.Invoke();
     }
 
-    private void AllEnergyMax()
+    private void IncreaseAllEnergy()
     {
-        SwordCurrentEnergy = SwordData.maxEnergy;
-        FistCurrentEnergy = FistData.maxEnergy;
-        GunCurrentEnergy = GunData.maxGrenade;
+        if(SwordCurrentEnergy < SwordData.maxEnergy)
+            SwordCurrentEnergy++;
+
+        if(FistCurrentEnergy < FistData.maxEnergy)
+            FistCurrentEnergy++;
+
+        if(GunCurrentEnergy < GunData.maxGrenade)
+            GunCurrentEnergy++;
+
         GunCurrentNormalAttackEnergy = GunData.maxEnergy;
 
         OnEnergyChanged?.Invoke();
