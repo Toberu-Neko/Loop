@@ -11,6 +11,11 @@ public class TutorialUIOpenObj : DataPersistMapObjBase
 
             UI_Manager.Instance.ActiveTutorialUI(so.clip, so.title, so.description);
 
+            if (so.giveStoryItem)
+            {
+                PlayerInventoryManager.Instance.AddStoryItem(so.giveStoryItem.ID);
+            }
+
             gameObject.SetActive(false);
             DataPersistenceManager.Instance.SaveGame(so.returnToSavepoint);
         }
