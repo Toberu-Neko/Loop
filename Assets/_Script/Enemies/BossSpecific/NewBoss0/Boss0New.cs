@@ -23,6 +23,7 @@ public class Boss0New : BossBase
     public B0N_KinematicState KinematicState { get; private set; }
     public B0N_DeadState DeadState { get; private set; }
 
+    [field: SerializeField] public Transform DeadParticleTrans { get; private set; }
     [field: SerializeField] public B0N_StateData StateData { get; private set; }
     [SerializeField] private Transform meleeAttackPosition;
     [SerializeField] private Transform dangerAttackParticlePos;

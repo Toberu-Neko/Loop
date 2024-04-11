@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4946799464215085407}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2036233289958049027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 201223183631635554}
+  m_Layer: 11
+  m_Name: DeadPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &201223183631635554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036233289958049027}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.74, y: -1.93, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4946799464215085407}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2175979109177808317
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +200,7 @@ Transform:
   - {fileID: 1178777134803965253}
   - {fileID: 3090606463626459348}
   - {fileID: 6342758104435424430}
+  - {fileID: 201223183631635554}
   - {fileID: 3678314520340912211}
   - {fileID: 6299384486067455305}
   - {fileID: 354230260782272746}
@@ -205,6 +237,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  <DeadParticleTrans>k__BackingField: {fileID: 0}
   <StateData>k__BackingField: {fileID: 11400000, guid: c2b922dbc480a1d4c8f3c286cb48f790, type: 2}
   meleeAttackPosition: {fileID: 3090606463626459348}
   dangerAttackParticlePos: {fileID: 8747262243693801458}

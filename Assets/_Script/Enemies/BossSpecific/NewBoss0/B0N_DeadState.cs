@@ -38,6 +38,6 @@ public class B0N_DeadState : DeadState
 
         animFinishTime = Time.time;
         boss0New.spriteRenderer.enabled = false;
-        ParticleManager.StartParticlesWithRandomRotation(boss0New.DeathParticles);
+        ParticleManager.StartParticlesWithRandomRotation(boss0New.DeathParticles, boss0New.DeadParticleTrans.position);
     }
 }
