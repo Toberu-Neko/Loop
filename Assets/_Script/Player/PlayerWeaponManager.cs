@@ -80,9 +80,10 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (player.InputHandler.DebugInput)
         {
+            player.InputHandler.UseDebugInput();
             IncreaseAllEnergy();
             timeSkillManager.SetTimeEnergyMax();
-            stats.Health.Increase(50f);
+            stats.Health.Increase(100f);
         }
     }
 

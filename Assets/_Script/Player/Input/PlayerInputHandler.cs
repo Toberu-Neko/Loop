@@ -155,6 +155,11 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
+    public void UseDebugInput()
+    {
+        DebugInput = false;
+    }
+
     public void OnRegenInput(InputAction.CallbackContext context)
     {
         if(gameManager.IsPaused)
