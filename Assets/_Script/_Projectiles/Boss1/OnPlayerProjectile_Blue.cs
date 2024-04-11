@@ -37,10 +37,18 @@ public class OnPlayerProjectile_Blue : OnPlayerProjectileBase
 
     private void HandleAction()
     {
-        startDamage = true;
-        startMagicTime = 0f;
-        orgStartMagicTime = Time.time;
-        playerCombat.SetDebuffMultiplier(speedMultiplier, damageDuration);
+        if (player.StateMachine.CurrentState != player.IdleState && player.StateMachine.CurrentState != player.CrouchIdleState)
+        {
+            ReturnToPool();
+            return;
+        }
+        else
+        {
+            startDamage = true;
+            startMagicTime = 0f;
+            orgStartMagicTime = Time.time;
+            playerCombat.SetDebuffMultiplier(speedMultiplier, damageDuration);
+        }
     }
 
     protected override void Update()

@@ -32,7 +32,6 @@ public class OnPlayerProjectile_Red : OnPlayerProjectileBase
 
     private void OnPlayerProjectile_Red_OnAction()
     {
-        ObjectPoolManager.SpawnObject(hitParticlePrefab, spawnPos.position, Quaternion.identity);
         if(player.StateMachine.CurrentState == player.IdleState || player.StateMachine.CurrentState == player.CrouchIdleState)
         {
             ReturnToPool();
@@ -40,6 +39,7 @@ public class OnPlayerProjectile_Red : OnPlayerProjectileBase
         }
         else
         {
+            ObjectPoolManager.SpawnObject(hitParticlePrefab, spawnPos.position, Quaternion.identity);
             playerCombat.Damage(damage, transform.position + transform.right, false);
             playerCombat.Knockback(knockbackDirection, knockbackForce, transform.position + transform.right, false);
         }

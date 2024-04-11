@@ -83,7 +83,7 @@ public class Boss1 : BossBase
     {
         base.Start();
 
-        StateMachine.Initialize(StunState);
+        StateMachine.Initialize(IdleState);
     }
     protected override void OnEnable()
     {
