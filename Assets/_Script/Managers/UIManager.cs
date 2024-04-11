@@ -146,6 +146,11 @@ public class UI_Manager : MonoBehaviour
     {
         if (inputSystemUIInputModule.cancel.action.triggered)
         {
+            if(loadingObj.activeInHierarchy)
+            {
+                return;
+            }
+
             if (!pauseUIObj.activeInHierarchy &&
                 !savepointUIObj.activeInHierarchy &&
                 !pickUpItemUIObj.activeInHierarchy &&

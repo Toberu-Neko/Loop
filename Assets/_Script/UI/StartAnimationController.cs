@@ -14,8 +14,11 @@ public class StartAnimationController : MonoBehaviour
     [SerializeField] private InputSystemUIInputModule inputSystemUIInputModule;
     [SerializeField] private GameObject loadingObj;
 
+    private bool skipped;
+
     private void Awake()
     {
+        skipped = false;
 
         if(LocalizationSettings.SelectedLocale == LocalizationSettings.AvailableLocales.Locales[0])
         {
@@ -46,11 +49,13 @@ public class StartAnimationController : MonoBehaviour
 
     private void Update()
     {
-        if(inputSystemUIInputModule.cancel.action.triggered)
+        if(inputSystemUIInputModule.cancel.action.triggered && !skipped)
         {
+            skipped = true;
             DataPersistenceManager.Instance.ReloadBaseScene();
         }
-        else if(inputSystemUIInputModule.leftClick.action.triggered)
+        
+        if(inputSystemUIInputModule.leftClick.action.triggered)
         {
             if(videoPlayer.playbackSpeed == 1)
             {
