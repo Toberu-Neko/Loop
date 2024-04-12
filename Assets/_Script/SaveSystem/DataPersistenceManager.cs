@@ -22,6 +22,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public GameData GameData { get; private set;}
     public OptionData OptionData { get; private set; }
+    public Vector3 playerPosition;
 
     public List<IDataPersistance> DataPersistanceObjects { get; private set; }
     private FileDataHandler dataHandler;

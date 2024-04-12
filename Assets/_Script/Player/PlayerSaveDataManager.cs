@@ -24,6 +24,7 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
     private void HandleSavepointInteract(string id, LocalizedString name)
     {
         RecentSavepointID = id;
+
     }
 
     public void LoadData(GameData data)
