@@ -63,11 +63,17 @@ public class PauseInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnEnter?.Invoke(itemBase);
+        if (spawnObj)
+        {
+            OnEnter?.Invoke(itemBase);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        OnExit?.Invoke();
+        if (spawnObj)
+        {
+            OnExit?.Invoke();
+        }
     }
 }
