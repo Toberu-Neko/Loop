@@ -151,6 +151,28 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
             WeaponInventory.Add(name, new ItemData(1, name));
             CanUseWeaponCount = WeaponInventory.Count;
         }
+
+        if (ItemDataManager.Instance.WeaponItemDict.TryGetValue(name, out SO_WeaponItem weaponItem))
+        {
+            CanUseSword |= weaponItem.unlockSword;
+            CanUseGun |= weaponItem.unlockGun;
+            CanUseFist |= weaponItem.unlockFist;
+        }
+
+        if (CanUseWeaponCount == 2)
+        {
+            EquipedWeapon = new WeaponType[2];
+            EquipedWeapon[0] = WeaponType.Sword;
+
+            if(CanUseGun)
+            {
+                EquipedWeapon[1] = WeaponType.Gun;
+            }
+            else if(CanUseFist)
+            {
+                EquipedWeapon[1] = WeaponType.Fist;
+            }
+        }
     }
 
     public void AddMovemnetSkillItem(string name)
