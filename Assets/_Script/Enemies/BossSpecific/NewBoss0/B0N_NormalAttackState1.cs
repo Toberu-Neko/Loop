@@ -25,7 +25,7 @@ public class B0N_NormalAttackState1 : SingleMeleeAttackState
     {
         base.AnimationActionTrigger();
 
-        AudioManager.instance.PlaySoundFX(boss.StateData.normalAttackSFX, Movement.ParentTransform, AudioManager.SoundType.threeD);
+        AudioManager.Instance.PlaySoundFX(boss.StateData.normalAttackSFX, Movement.ParentTransform, AudioManager.SoundType.threeD);
     }
 
     public override void AnimationFinishTrigger()

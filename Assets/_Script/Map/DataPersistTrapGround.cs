@@ -24,7 +24,7 @@ public class DataPersistTrapGround : DataPersistMapObjBase
             isActivated = true;
             
             gameObject.SetActive(false);
-            AudioManager.instance.PlaySoundFX(activeSFX, transform, AudioManager.SoundType.threeD);
+            AudioManager.Instance.PlaySoundFX(activeSFX, transform, AudioManager.SoundType.threeD);
             CamManager.Instance.CameraShake(2f);
             trapGroundObj.SetActive(false);
             Invoke(nameof(SaveData), 2f);

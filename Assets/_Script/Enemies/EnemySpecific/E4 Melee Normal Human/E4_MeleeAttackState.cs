@@ -32,6 +32,6 @@ public class E4_MeleeAttackState : SingleMeleeAttackState
     {
         base.AnimationActionTrigger();
 
-        AudioManager.instance.PlaySoundFX(enemy.stateData.attackSFX, Movement.ParentTransform, AudioManager.SoundType.threeD);
+        AudioManager.Instance.PlaySoundFX(enemy.stateData.attackSFX, Movement.ParentTransform, AudioManager.SoundType.threeD);
     }
 }

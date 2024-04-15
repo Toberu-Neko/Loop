@@ -29,17 +29,17 @@ public class OptionUI : MonoBehaviour, IOptionData
 
     public void SetMasterVolume(float volume)
     {
-        AudioManager.instance.SetMasterVolume(Mathf.Log10(volume) * 20f);
+        AudioManager.Instance.SetMasterVolume(Mathf.Log10(volume) * 20f);
     }
 
     public void SetSoundFXVolume(float volume)
     {
-        AudioManager.instance.SetSoundFXVolume(Mathf.Log10(volume) * 20f);
+        AudioManager.Instance.SetSoundFXVolume(Mathf.Log10(volume) * 20f);
     }
 
     public void SetBGMVolume(float volume)
     {
-        AudioManager.instance.SetBGMVolume(Mathf.Log10(volume) * 20f);
+        AudioManager.Instance.SetBGMVolume(Mathf.Log10(volume) * 20f);
     }
 
     public void ChangeLocaleButton(int index)

@@ -12,7 +12,7 @@ public class PlayerLandState : PlayerAbilityState
     {
         base.Enter();
 
-        AudioManager.instance.PlaySoundFX(player.PlayerSFX.land, Movement.ParentTransform, AudioManager.SoundType.twoD);
+        AudioManager.Instance.PlaySoundFX(player.PlayerSFX.land, Movement.ParentTransform, AudioManager.SoundType.twoD);
     }
 
     public override void LogicUpdate()

@@ -37,7 +37,7 @@ public class TDP_LargeRangeTrap : TempDataPersist_MapObjBase
         if (collision.CompareTag("Player") && !isActivated)
         {
             playerCol = collision;
-            AudioManager.instance.PlaySoundFX(activeSFX, transform, AudioManager.SoundType.threeD);
+            AudioManager.Instance.PlaySoundFX(activeSFX, transform, AudioManager.SoundType.threeD);
             CamManager.Instance.CameraShake(3f);
             for (int i = 0; i < spawnCount; i++)
             {

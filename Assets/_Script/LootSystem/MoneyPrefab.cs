@@ -8,7 +8,7 @@ public class MoneyPrefab : DropableItemBase
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerInventoryManager.Instance.AddMoney(1);
-            AudioManager.instance.PlaySoundFX(pickSFX, transform, AudioManager.SoundType.twoD);
+            AudioManager.Instance.PlaySoundFX(pickSFX, transform, AudioManager.SoundType.twoD);
             ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }

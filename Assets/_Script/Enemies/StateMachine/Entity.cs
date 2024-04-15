@@ -58,7 +58,7 @@ public class Entity : MonoBehaviour
     {
         if(EntityData.damagedSFX != null)
         {
-            AudioManager.instance.PlaySoundFX(EntityData.damagedSFX, transform, AudioManager.SoundType.threeD);
+            AudioManager.Instance.PlaySoundFX(EntityData.damagedSFX, transform, AudioManager.SoundType.threeD);
         }
     }
 

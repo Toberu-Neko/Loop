@@ -17,6 +17,9 @@ public class ShopUI : MonoBehaviour, IDataPersistance
 
     [SerializeField] private GameObject firstSelectedObj;
 
+    [SerializeField] private Sound buySFX;
+    [SerializeField] private Sound cantBuySFX;
+
     private SerializableDictionary<string, ShopInventory> shopsData;
     private SerializableDictionary<string, ItemData> inventory;
 
@@ -52,6 +55,8 @@ public class ShopUI : MonoBehaviour, IDataPersistance
 
         if (PlayerInventoryManager.Instance.Money >= itemBase.price && shopItem.itemCount > 0)
         {
+            AudioManager.Instance.PlaySoundFX(buySFX, transform, AudioManager.SoundType.twoD);
+
             PlayerInventoryManager.Instance.AddItemByID(itemBase.ID, 1);
             PlayerInventoryManager.Instance.RemoveMoney(itemBase.price);
             shopItem.itemCount--;
@@ -62,6 +67,7 @@ public class ShopUI : MonoBehaviour, IDataPersistance
         }
         else
         {
+            AudioManager.Instance.PlaySoundFX(cantBuySFX, transform, AudioManager.SoundType.twoD);
             Debug.Log("Not enough money or no item to sell");
         }
     }

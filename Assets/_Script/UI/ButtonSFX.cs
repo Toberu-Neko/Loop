@@ -24,7 +24,7 @@ public class ButtonSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
         {
             return;
         }
-        AudioManager.instance.PlayButtonHover(transform);
+        AudioManager.Instance.PlayButtonHover(transform);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -43,6 +43,6 @@ public class ButtonSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
             return;
         }
 
-        AudioManager.instance.PlayButtonClick(transform);
+        AudioManager.Instance.PlayButtonClick(transform);
     }
 }

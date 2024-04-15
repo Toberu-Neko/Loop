@@ -86,7 +86,7 @@ public class MapItem_Burner : InteractableMapItem_Base, IDataPersistance
         {
             if (inv.ConsumablesInventory[targetItem.ID].itemCount > 0)
             {
-                AudioManager.instance.PlaySoundFX(interactSFX, transform, AudioManager.SoundType.twoD);
+                AudioManager.Instance.PlaySoundFX(interactSFX, transform, AudioManager.SoundType.twoD);
                 inv.RemoveConsumableItem(targetItem.ID);
                 onItemConsumableCount++;
                 OnItemConsumableCountChange?.Invoke();

@@ -6,7 +6,7 @@ using System.Collections;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
-    public static AudioManager instance;
+    public static AudioManager Instance { get; private set; }
 
     [SerializeField] private GameObject soundFXObj2D;
     [SerializeField] private GameObject soundFXObj3D;
@@ -54,9 +54,9 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if(Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {

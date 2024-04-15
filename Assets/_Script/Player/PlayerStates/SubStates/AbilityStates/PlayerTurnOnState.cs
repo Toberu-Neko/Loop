@@ -12,7 +12,7 @@ public class PlayerTurnOnState : PlayerAbilityState
     {
         base.Enter();
 
-        AudioManager.instance.PlaySoundFX(player.PlayerSFX.turnOn, player.transform, AudioManager.SoundType.twoD);
+        AudioManager.Instance.PlaySoundFX(player.PlayerSFX.turnOn, player.transform, AudioManager.SoundType.twoD);
     }
 
     public override void LogicUpdate()
