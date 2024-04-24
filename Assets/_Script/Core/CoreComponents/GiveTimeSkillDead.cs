@@ -27,6 +27,10 @@ public class GiveTimeSkillDead : CoreComponent
 
     private void HandleDead()
     {
+        if (timeSkillItem == null)
+            return;
+
+
         PlayerInventoryManager.Instance.AddTimeSkillItem(timeSkillItem.ID);
         UI_Manager.Instance.ActivePickupItemUI(timeSkillItem.displayNameLocalization, timeSkillItem.shortDescriptionLocalization);
         UI_Manager.Instance.ResetAllInput();

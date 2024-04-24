@@ -43,7 +43,9 @@ public class Boss0New : BossBase
     {
         base.Awake();
 
-        exitDoor.SetActive(false);
+        if(exitDoor != null)
+            exitDoor.SetActive(false);
+
         saidTimeSkillTu = false;
 
         IdleState = new B0N_Idle(this, StateMachine, "idle", StateData.idleStateData, this);
@@ -86,7 +88,8 @@ public class Boss0New : BossBase
         {
             if (!saidTimeSkillTu)
             {
-                UI_Manager.Instance.ActivateTutorialPopUpUI(firstCloseTimeSkillText);
+                if(!firstCloseTimeSkillText.IsEmpty)
+                    UI_Manager.Instance.ActivateTutorialPopUpUI(firstCloseTimeSkillText);
                 saidTimeSkillTu = true;
             }
             EnterSlowTrigger.SetActive(false);
@@ -108,7 +111,8 @@ public class Boss0New : BossBase
 
     public void HandleAlreadyDefeated()
     {
-        exitDoor.SetActive(true);
+        if(exitDoor != null)
+            exitDoor.SetActive(true);
     }
 
     protected override void OnDisable()
@@ -130,7 +134,8 @@ public class Boss0New : BossBase
     {
         if (!saidTimeSkillTu)
         {
-            UI_Manager.Instance.ActivateTutorialPopUpUI(firstActivateTimeSkillText);
+            if(!firstActivateTimeSkillText.IsEmpty)
+                UI_Manager.Instance.ActivateTutorialPopUpUI(firstActivateTimeSkillText);
         }
         EnterSlowTrigger.SetActive(true);
         slowOnTimer = time;

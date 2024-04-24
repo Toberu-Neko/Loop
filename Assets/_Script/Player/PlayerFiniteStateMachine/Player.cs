@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ public class Player : MonoBehaviour
     private GameManager gameManager;
     public PlayerStateMachine StateMachine { get; private set; }
     
-
     #region ControlerStates
     public PlayerTurnOnState TurnOnState { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -90,6 +90,8 @@ public class Player : MonoBehaviour
     public bool NoHand { get; private set; }
 
     private Vector2 v2Workspace;
+
+    public event Action OnDead;
     #endregion
 
     #region Unity Callback Functions
@@ -366,6 +368,11 @@ public class Player : MonoBehaviour
         ChangeSceneState.SetCanChangeStateTrue();
     }
     #endregion
+
+    public void HandleDeath()
+    {
+        OnDead?.Invoke();
+    }
 
     private void OnDamaged_IgnoreEnemy()
     {

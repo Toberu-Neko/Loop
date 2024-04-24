@@ -77,7 +77,9 @@ public class Boss1 : BossBase
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);
         DeadState = new B1_DeadState(this, StateMachine, "dead", this);
 
-        exitTP.SetActive(false);
+        if(exitTP != null)
+            exitTP.SetActive(false);
+
     }
     protected override void Start()
     {
@@ -101,7 +103,8 @@ public class Boss1 : BossBase
 
     private void HandleAlreadyDefeated()
     {
-        exitTP.SetActive(true);
+        if(exitTP != null)
+            exitTP.SetActive(true);
     }
 
     protected override void OnDisable()

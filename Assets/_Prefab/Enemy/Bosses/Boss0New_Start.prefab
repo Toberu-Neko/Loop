@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 2378094231542664804}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.86, y: -2.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 2757141502852725404}
   - component: {fileID: 1837879407199747295}
   m_Layer: 13
-  m_Name: Boss0New
+  m_Name: Boss0New_Start
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   col: {fileID: 0}
   <DeathParticles>k__BackingField: {fileID: 8038344524183138613, guid: 0277167a12290af47801444830a2be97, type: 3}
   initFacingPos: -1
-  <BossName>k__BackingField: boss0
+  <BossName>k__BackingField: Boss0New_Start
   <BossNameLocalized>k__BackingField:
     m_TableReference:
       m_TableCollectionName: GUID:ce73a802bab04634ca3efa31943bcfe8
@@ -237,8 +237,8 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  <DeadParticleTrans>k__BackingField: {fileID: 201223183631635554}
-  <StateData>k__BackingField: {fileID: 11400000, guid: c2b922dbc480a1d4c8f3c286cb48f790, type: 2}
+  <DeadParticleTrans>k__BackingField: {fileID: 8747262243693801458}
+  <StateData>k__BackingField: {fileID: 11400000, guid: 83974a44518c11f4baef1b1c17f596c5, type: 2}
   meleeAttackPosition: {fileID: 3090606463626459348}
   dangerAttackParticlePos: {fileID: 8747262243693801458}
   dangerParticlePrefab: {fileID: 8961846873252970645, guid: 2e8b2b9cc6777ce4895d8c5ad5efe517, type: 3}

@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8ceada227c0314f8b0a0a2d3d6cb64, type: 3}
+  m_Name: Start_B0N_StateData 1
+  m_EditorClassIdentifier: 
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  idleStateData:
+    minIdleTime: 1
+    maxIdleTime: 3
+  detectedMoveStateData:
+    movementSpeed: 6
+    minMovementTime: 0
+    minInStateTime: 3
+    maxInStateTime: 5
+  normalAttack1StateData:
+    attackCooldown: 1.25
+    attackDamage: 12
+    staminaAttackDamage: 3
+    knockbackAngle: {x: 0.2, y: 1}
+    knockbackStrength: 5
+  normalAttack2StateData:
+    attackCooldown: 0
+    attackDamage: 15
+    staminaAttackDamage: 3
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 15
+  strongAttackStateData:
+    attackCooldown: 1
+    attackDamage: 20
+    staminaAttackDamage: 3
+    knockbackAngle: {x: 1, y: 1}
+    knockbackStrength: 20
+  MultiAttackState:
+    thingsToSay: []
+    attackCooldown: 12
+    angryMoveSpeed: 5
+    details:
+    - attackName: 
+      damageAmount: 10
+      staminaDamageAmount: 3
+      movementSpeed: 0
+      knockbackForce: 15
+      knockbackAngle: {x: 1, y: 1}
+    - attackName: 
+      damageAmount: 10
+      staminaDamageAmount: 3
+      movementSpeed: 0
+      knockbackForce: 15
+      knockbackAngle: {x: 1, y: 1}
+    - attackName: 
+      damageAmount: 10
+      staminaDamageAmount: 3
+      movementSpeed: 0
+      knockbackForce: 15
+      knockbackAngle: {x: 1, y: 1}
+    - attackName: 
+      damageAmount: 10
+      staminaDamageAmount: 3
+      movementSpeed: 0
+      knockbackForce: 15
+      knockbackAngle: {x: 1, y: 1}
+  ChargeState:
+    thingsToSay: []
+    afterImagePrefab: {fileID: 5533319139291640069, guid: 6d5f59690a0b14047bd66f405bc43255, type: 3}
+    afterImageDistance: 1.5
+    chargeCooldown: 10
+    finishChargeDelay: 0
+    chargeSpeed: 20
+    angryChargeSpeed: 24
+    chargeTime: 1.8
+  stunStateData:
+    thingsToSay: []
+    stunTime: 1.5
+    stunKnockbackSpeed: 0
+    stunKnockbackAngle: {x: 0, y: 0}
+  angrySkillData:
+    thingsToSay: []
+    minCooldown: 10
+    maxCooldown: 14
+    duration: 5
+  normalAttackSFX:
+    name: 
+    clip: {fileID: 8300000, guid: 26c507c8785d841f3bca141ed44cd0a2, type: 3}
+    volume: 1
+    pitch: 1.242
+    pitchRandomRangeMin: 0
+    pitchRandomRangeMax: 0
+    loop: 0
+    source: {fileID: 0}
+  strongAttackSFX:
+    name: 
+    clip: {fileID: 8300000, guid: 26c507c8785d841f3bca141ed44cd0a2, type: 3}
+    volume: 1
+    pitch: 0.883
+    pitchRandomRangeMin: 0
+    pitchRandomRangeMax: 0
+    loop: 0
+    source: {fileID: 0}
+  multiSkillSFX:
+    name: 
+    clip: {fileID: 8300000, guid: 11c07a2f183894950b7b881a1fb66331, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandomRangeMin: -0.2
+    pitchRandomRangeMax: 0.1
+    loop: 0
+    source: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []

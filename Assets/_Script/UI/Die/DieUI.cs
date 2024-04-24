@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DieUI : MonoBehaviour
@@ -13,7 +11,16 @@ public class DieUI : MonoBehaviour
     public void Deactivate()
     {
         GameManager.Instance.ResumeGame();
-        gameObject.SetActive(false);
-        DataPersistenceManager.Instance.ReloadBaseScene();
+
+        if (DataPersistenceManager.Instance.GameData.firstTimePlaying)
+        {
+            GameManager.Instance.LoadStartAnimScene();
+        }
+
+        else
+        {
+            gameObject.SetActive(false);
+            DataPersistenceManager.Instance.ReloadBaseScene();
+        }
     }
 }

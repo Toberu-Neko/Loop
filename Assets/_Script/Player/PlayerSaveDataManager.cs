@@ -1,3 +1,4 @@
+using Eflatun.SceneReference;
 using System;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -8,6 +9,9 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
     public static PlayerSaveDataManager Instance { get; private set; }
     public string RecentSavepointID { get; set; } = "";
 
+    [SerializeField] private SceneReference startAnimScene;
+
+    [SerializeField] private Player player;
 
     private void Awake()
     {
@@ -16,15 +20,34 @@ public class PlayerSaveDataManager : MonoBehaviour, IDataPersistance
             Instance = this;
         }
     }
+
+    private void OnEnable()
+    {
+        player.OnDead += HandleDiedFirstTime;
+    }
+
+    private void OnDisable()
+    {
+        player.OnDead -= HandleDiedFirstTime;
+    }
+
     private void Start()
     {
         GameManager.Instance.OnSavepointInteracted += HandleSavepointInteract;
     }
 
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnSavepointInteracted -= HandleSavepointInteract;
+    }
+
     private void HandleSavepointInteract(string id, LocalizedString name)
     {
         RecentSavepointID = id;
+    }
 
+    private void HandleDiedFirstTime()
+    {
     }
 
     public void LoadData(GameData data)

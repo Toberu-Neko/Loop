@@ -17,8 +17,14 @@ public class B0N_DeadState : DeadState
     {
         base.Enter();
 
-        boss0New.HandleAlreadyDefeated();
         animFinishTime = 0f;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        boss0New.HandleAlreadyDefeated();
     }
 
     public override void LogicUpdate()

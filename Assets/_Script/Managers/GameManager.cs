@@ -1,3 +1,4 @@
+using Eflatun.SceneReference;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,8 @@ public class GameManager : MonoBehaviour
     private Vignette inTempleVignette;
 
     public Dictionary<string, Savepoint> Savepoints { get; private set; }
+
+    [SerializeField] private SceneReference startAnimScene;
 
     #region Change Scene Variables
 
@@ -232,6 +235,19 @@ public class GameManager : MonoBehaviour
     {
         Savepoints.TryGetValue(savepointName, out Savepoint savepoint);
         return savepoint.TeleportTransform.position;
+    }
+
+    public void LoadStartAnimScene()
+    {
+        DataPersistenceManager.Instance.GameData.lastInteractedSavepointID = "Spawn";
+        DataPersistenceManager.Instance.GameData.firstTimePlaying = false;
+
+        DataPersistenceManager.Instance.GameData.equipedWeapon[0] = WeaponType.None;
+        DataPersistenceManager.Instance.GameData.equipedWeapon[1] = WeaponType.None;
+
+        DataPersistenceManager.Instance.SaveGame(true);
+        gameObject.SetActive(false);
+        LoadSceneManager.Instance.LoadSceneSingle(startAnimScene.Name);
     }
 
     #region Time

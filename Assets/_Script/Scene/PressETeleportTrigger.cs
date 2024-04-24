@@ -1,6 +1,5 @@
 using UnityEngine;
 using Eflatun.SceneReference;
-using UnityEngine.SceneManagement;
 
 public class PressETeleportTrigger : MonoBehaviour
 {
@@ -34,6 +33,12 @@ public class PressETeleportTrigger : MonoBehaviour
             if (inputHandler.InteractInput)
             {
                 inputHandler.UseInteractInput();
+
+                if(DataPersistenceManager.Instance.GameData.firstTimePlaying)
+                {
+                    GameManager.Instance.LoadStartAnimScene();
+                    return;
+                }
 
                 if (currentScene == null)
                 {

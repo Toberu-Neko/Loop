@@ -11,7 +11,10 @@ public class PlayerDeadState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         //TODO: Player Die
+
+        player.HandleDeath();
         UI_Manager.Instance.ActiveDieUI();
         player.gameObject.SetActive(false);
     }

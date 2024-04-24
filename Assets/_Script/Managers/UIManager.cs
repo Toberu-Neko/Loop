@@ -53,6 +53,8 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private PickupHUD tutorialHUD;
     [SerializeField] private GameObject bossFightUIObj;
     private BossFightUI bossFightUI;
+    [SerializeField] private GameObject multiBossFightUIObj;
+    private MultiBossFightUI multiBossFightUI;
 
     [Header("Die UI")]
     [SerializeField] private DieUI dieUI;
@@ -94,6 +96,9 @@ public class UI_Manager : MonoBehaviour
 
         bossFightUIObj.SetActive(false);
         bossFightUI = bossFightUIObj.GetComponent<BossFightUI>();
+
+        multiBossFightUIObj.SetActive(false);
+        multiBossFightUI = multiBossFightUIObj.GetComponent<MultiBossFightUI>();
 
         pickUpItemUIObj.SetActive(false);
         pickUpItemUI = pickUpItemUIObj.GetComponent<PickupItemUI>();
@@ -216,6 +221,11 @@ public class UI_Manager : MonoBehaviour
         bossFightUI.Active(bossBase);
     }
 
+    public void ActiveMultiBossUI(BossBase bossBase1, BossBase bossBase2)
+    {
+        multiBossFightUI.Active(bossBase1, bossBase2);
+    }   
+
     public void ActivePickupItemUI(LocalizedString name, LocalizedString description)
     {
         pickUpItemUI.Active(name, description);
@@ -281,7 +291,7 @@ public class UI_Manager : MonoBehaviour
 
     #region Change Scene
 
-    private void HandleLoadingSingleProgress(float progress)
+    public void HandleLoadingSingleProgress(float progress)
     {
         loadingBar.UpdateHealthBar(1f - progress);
 
@@ -295,6 +305,9 @@ public class UI_Manager : MonoBehaviour
         changeSceneUI.SetActive(true);
         if (bossFightUIObj.activeInHierarchy)
             bossFightUI.Deactive();
+
+        if (multiBossFightUIObj.activeInHierarchy)
+            multiBossFightUI.Deactive();
         changeSceneAnimator.SetTrigger("toUp");
     }
 
@@ -303,6 +316,9 @@ public class UI_Manager : MonoBehaviour
         changeSceneUI.SetActive(true);
         if (bossFightUIObj.activeInHierarchy)
             bossFightUI.Deactive();
+
+        if (multiBossFightUIObj.activeInHierarchy)
+            multiBossFightUI.Deactive();
         changeSceneAnimator.SetTrigger("toDown");
     }
 
@@ -311,7 +327,9 @@ public class UI_Manager : MonoBehaviour
         changeSceneUI.SetActive(true);
         if (bossFightUIObj.activeInHierarchy)
             bossFightUI.Deactive();
-        bossFightUIObj.SetActive(false);
+
+        if (multiBossFightUIObj.activeInHierarchy)
+            multiBossFightUI.Deactive();
         changeSceneAnimator.SetTrigger("toLeft");
     }
     public void HandleChangeSceneGoRight()
@@ -319,6 +337,9 @@ public class UI_Manager : MonoBehaviour
         changeSceneUI.SetActive(true);
         if(bossFightUIObj.activeInHierarchy)
             bossFightUI.Deactive();
+
+        if (multiBossFightUIObj.activeInHierarchy)
+            multiBossFightUI.Deactive();
         changeSceneAnimator.SetTrigger("toRight");
     }
     private void HandleChangeSceneFinish()

@@ -9,7 +9,7 @@ public class SaveSlotMenu : MonoBehaviour
 {
     [Header("Navigation")]
     [SerializeField] private MainMenu mainMenu;
-    [SerializeField] private SceneReference startAnimationScene;
+    [SerializeField] private SceneReference baseScene;
     
     [Header("Menu")]
     private SaveSlot[] saveSlots;
@@ -32,7 +32,7 @@ public class SaveSlotMenu : MonoBehaviour
         if (!isLoadingGame)
         {
             DataPersistenceManager.Instance.NewGame();
-            LoadSceneManager.Instance.LoadSceneSingle(startAnimationScene.Name);
+            LoadSceneManager.Instance.LoadSceneSingle(baseScene.Name);
         }
         else
         {

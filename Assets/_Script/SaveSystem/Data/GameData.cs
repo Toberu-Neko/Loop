@@ -10,6 +10,7 @@ public class GameData
     public float timePlayed;
     public Vector2 playerPosition;
     public bool gotoSavePoint;
+    public bool firstTimePlaying;
 
     public string currentTimeSkill;
     public string lastInteractedSavepointID;
@@ -42,6 +43,8 @@ public class GameData
 
     public GameData()
     {
+        firstTimePlaying = true;
+
         maxHealth = 100f;
         timePlayed = 0f;
         money = 100;

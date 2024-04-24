@@ -352,21 +352,36 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         WeaponInventory = data.weaponInventory;
         CanUseWeaponCount = 0;
 
-        foreach (var item in WeaponInventory)
+        if (data.firstTimePlaying)
         {
-            if (ItemDataManager.Instance.WeaponItemDict.TryGetValue(item.Key, out SO_WeaponItem weaponItem))
-            {
-                CanUseSword |= weaponItem.unlockSword;
-                CanUseGun |= weaponItem.unlockGun;
-                CanUseFist |= weaponItem.unlockFist;
-            }
-            else
-            {
-                Debug.LogError("The time skill item name in PlayerInventoryManager.Instance.TimeSkillItemInventory is wrong");
-            }
-        }
+            Debug.Log("First Load in Inventory!");
 
-        CanUseWeaponCount = WeaponInventory.Count;
+            CanUseSword = true;
+            CanUseGun = false;
+            CanUseFist = false;
+
+            CanUseWeaponCount = 1;
+
+            ChangeEquipWeapon1(WeaponType.Sword);
+        }
+        else
+        {
+            foreach (var item in WeaponInventory)
+            {
+                if (ItemDataManager.Instance.WeaponItemDict.TryGetValue(item.Key, out SO_WeaponItem weaponItem))
+                {
+                    CanUseSword |= weaponItem.unlockSword;
+                    CanUseGun |= weaponItem.unlockGun;
+                    CanUseFist |= weaponItem.unlockFist;
+                }
+                else
+                {
+                    Debug.LogError("The time skill item name in PlayerInventoryManager.Instance.TimeSkillItemInventory is wrong");
+                }
+            }
+
+            CanUseWeaponCount = WeaponInventory.Count;
+        }
     }
 
     public void SaveData(GameData data)

@@ -90,12 +90,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f33dfc2ef807b54d9b4778a716dae87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 7835584087748969035}
+  bosses:
+  - {fileID: 7835584087748969035}
   camLookat: {fileID: 2852397795041363228}
   bossRoomDoor: {fileID: 7970962461641793946}
   bossCamera: {fileID: 6924357490729970348}
   orgCamera: {fileID: 0}
   col: {fileID: 5695935435721997620}
+  normalBGMName: 
+  bossBGMName: 
 --- !u!1 &3233532252254985886
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,19 +493,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8534321168915577969, guid: 1ce32b0d60aafad4095fa50d9e810492, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 3.9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8534321168915577969, guid: 1ce32b0d60aafad4095fa50d9e810492, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 5.2642856
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8534321168915577969, guid: 1ce32b0d60aafad4095fa50d9e810492, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 3.9
+      value: 10.38961
       objectReference: {fileID: 0}
     - target: {fileID: 8534321168915577969, guid: 1ce32b0d60aafad4095fa50d9e810492, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 5.2642856
+      value: 10.38961
       objectReference: {fileID: 0}
     - target: {fileID: 8895272099050971455, guid: 1ce32b0d60aafad4095fa50d9e810492, type: 3}
       propertyPath: <BossCam>k__BackingField

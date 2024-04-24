@@ -25,15 +25,15 @@ public class LoadSceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void LoadSceneAdditive(string sceneName)
-    {
-        StartCoroutine(LoadSceneAsyncAdditive(sceneName));
-        CurrentSceneName = sceneName;
-    }
-
     public void LoadSceneSingle(string sceneName)
     {
         StartCoroutine(LoadSceneAsyncSingle(sceneName));
+        CurrentSceneName = sceneName;
+    }
+
+    public void LoadSceneAdditive(string sceneName)
+    {
+        StartCoroutine(LoadSceneAsyncAdditive(sceneName));
         CurrentSceneName = sceneName;
     }
 
@@ -51,7 +51,8 @@ public class LoadSceneManager : MonoBehaviour
         while (!asyncLoad.isDone)
         {
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            OnLoadingSingleProgress?.Invoke(progress);
+            OnLoadingSingleProgress?.Invoke(progress); // UI_Manager.Instance.HandleLoadingSingleProgress();
+
             // Debug.Log("LoadSceneAsyncSingle " + progress);
             yield return null;
         }
