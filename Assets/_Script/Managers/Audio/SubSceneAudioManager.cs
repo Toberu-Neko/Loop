@@ -11,7 +11,7 @@ public class SubSceneAudioManager : MonoBehaviour
     {
         if (stopBGMOnLoad)
         {
-            AudioManager.Instance.StopBGM(bgmName, 1f);
+            AudioManager.Instance.StopAllBGM();
         }
 
         if(bgmName != "")
