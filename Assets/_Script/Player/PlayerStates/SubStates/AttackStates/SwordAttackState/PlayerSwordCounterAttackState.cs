@@ -12,7 +12,7 @@ public class PlayerSwordCounterAttackState : PlayerSwordAttackState
     {
         base.Enter();
 
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.75f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
         Stats.SetPerfectBlockAttackFalse();
     }

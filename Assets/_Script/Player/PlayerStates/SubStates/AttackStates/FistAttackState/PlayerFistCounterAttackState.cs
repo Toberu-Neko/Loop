@@ -13,7 +13,7 @@ public class PlayerFistCounterAttackState : PlayerFistAttackState
         base.Enter();
 
         Stats.SetPerfectBlockAttackFalse();
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.75f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
