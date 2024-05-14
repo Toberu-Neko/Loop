@@ -14,6 +14,7 @@ public class TeleportButton : MonoBehaviour
     private void OnEnable()
     {
         button.interactable = false;
+        buttonText.color = Color.gray;
     }
 
     public void OnClick()
@@ -31,6 +32,7 @@ public class TeleportButton : MonoBehaviour
         if (details.isActivated)
         {
             button.interactable = true;
+            buttonText.color = Color.white;
         }
     }
 }

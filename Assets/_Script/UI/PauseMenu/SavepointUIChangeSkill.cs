@@ -115,12 +115,12 @@ public class SavepointUIChangeSkill : MonoBehaviour
         slot2GunButton.interactable = true;
         slot2FistButton.interactable = true;
 
-        slot1SwordText.color = Color.gray;
-        slot1GunText.color = Color.gray;
-        slot1FistText.color = Color.gray;
-        slot2SwordText.color = Color.gray;
-        slot2GunText.color = Color.gray;
-        slot2FistText.color = Color.gray;
+        slot1SwordText.color = Color.white;
+        slot1GunText.color = Color.white;
+        slot1FistText.color = Color.white;
+        slot2SwordText.color = Color.white;
+        slot2GunText.color = Color.white;
+        slot2FistText.color = Color.white;
 
         timeReverseButton.interactable = true;
         bookMarkButton.interactable = true;
@@ -177,18 +177,24 @@ public class SavepointUIChangeSkill : MonoBehaviour
 
         if (!PlayerInventoryManager.Instance.CanUseFist)
         {
+            slot2FistText.color = Color.gray;
+            slot1FistText.color = Color.gray;
             slot1FistButton.interactable = false;
             slot2FistButton.interactable = false;
         }
 
         if (!PlayerInventoryManager.Instance.CanUseGun)
         {
+            slot1GunText.color = Color.gray;
+            slot2GunText.color = Color.gray;
             slot1GunButton.interactable = false;
             slot2GunButton.interactable = false;
         }
 
         if (!PlayerInventoryManager.Instance.CanUseSword)
         {
+            slot1SwordText.color = Color.gray;
+            slot2SwordText.color = Color.gray;
             slot1SwordButton.interactable = false;
             slot2SwordButton.interactable = false;
         }
