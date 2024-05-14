@@ -173,12 +173,23 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(IE_StopBGM(s, time));
     }
 
+    public void StopAllBGM()
+    {
+        foreach (var sound in sounds)
+        {
+            if (sound.source.isPlaying)
+            {
+                StopBGM(sound.name);
+            }
+        }
+    }
+
     IEnumerator IE_StopBGM(Sound s, float time)
     {
         while(s.source.volume > 0)
         {
-            s.source.volume -= Time.deltaTime / time;
-            yield return new WaitForSecondsRealtime(Time.deltaTime);
+            s.source.volume -= Time.unscaledDeltaTime / time;
+            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
         }
 
         s.source.Stop();
