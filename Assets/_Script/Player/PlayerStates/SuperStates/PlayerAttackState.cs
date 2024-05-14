@@ -11,6 +11,7 @@ public class PlayerAttackState : PlayerState
     private bool jumpInput;
     private bool jumpInputStop;
     private bool isJumping;
+    private bool canFinishAttack;
 
     private event Action<float> OnAttack;
     private event Action<float> OnAttackMapItems;
@@ -33,6 +34,7 @@ public class PlayerAttackState : PlayerState
         base.Enter();
         Stats.SetCanChangeWeapon(false);
         isAttackDone = false;
+        canFinishAttack = false;
         isJumping = false;
         OnAttack += player.TimeSkillManager.HandleOnAttack;
         OnAttack += HandleOnAttack;
@@ -63,6 +65,11 @@ public class PlayerAttackState : PlayerState
         jumpInput = player.InputHandler.JumpInput;
         jumpInputStop = player.InputHandler.JumpInputStop;
 
+        if(canFinishAttack && player.InputHandler.RawMovementInput != Vector2.zero)
+        {
+            isAttackDone = true;
+        }
+
         if (isAttackDone)
         {
             if(isGrounded && Movement.CurrentVelocity.y < 0.01f)
@@ -84,6 +91,13 @@ public class PlayerAttackState : PlayerState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger(); 
+    }
+
+    public override void EarlyFinishAnimation()
+    {
+        base.EarlyFinishAnimation();
+
+        canFinishAttack = true;
     }
 
     private void HandleOnAttack(float camShakeStrentgh)

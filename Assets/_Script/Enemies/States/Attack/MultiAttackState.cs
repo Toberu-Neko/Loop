@@ -60,6 +60,12 @@ public class MultiAttackState : AttackState
 
         startAttack = true;
 
+        if (count >= stateData.details.Length)
+        {
+            count++;
+            return;
+        }
+
         WeaponAttackDetails details = stateData.details[count];
 
         DoDamageToDamageList(details.damageAmount, details.staminaDamageAmount, details.knockbackAngle, details.knockbackForce, false);

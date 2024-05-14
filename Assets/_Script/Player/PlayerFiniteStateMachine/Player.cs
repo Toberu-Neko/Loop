@@ -339,6 +339,8 @@ public class Player : MonoBehaviour
 
     private void AnimationSFXTrigger() => StateMachine.CurrentState.AnimationSFXTrigger();
 
+    private void EarlyFinishAnimation() => StateMachine.CurrentState.EarlyFinishAnimation();
+
     #region Change Scene
     private void HandleChangeSceneToUp()
     {

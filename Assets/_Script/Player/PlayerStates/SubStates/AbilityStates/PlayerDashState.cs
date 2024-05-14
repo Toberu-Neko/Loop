@@ -27,6 +27,7 @@ public class PlayerDashState : PlayerAbilityState
         Physics2D.IgnoreLayerCollision(7, 13, true);
         Movement.SetVelocityY(0f);
         Movement.SetRBKinematic();
+        Movement.CheckIfShouldFlip(player.InputHandler.NormInputX);
         PlaceAfterImage();
         player.RB.drag = playerData.drag;
     }
