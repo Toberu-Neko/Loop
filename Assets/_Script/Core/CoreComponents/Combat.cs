@@ -287,7 +287,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         if (damageAmount > 0)
         {
             stats.Health.Decrease(damageAmount);
-            particleManager.StartParticlesWithRandomRotation(damageParticles);
+
+            if(damageParticles != null)
+            {
+                particleManager.StartParticlesWithRandomRotation(damageParticles);
+            }
 
             if (movement.ParentTransform.gameObject.CompareTag("Player"))
             {
