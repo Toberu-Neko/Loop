@@ -151,7 +151,7 @@ public class UI_Manager : MonoBehaviour
     {
         if (inputSystemUIInputModule.cancel.action.triggered)
         {
-            if(loadingObj.activeInHierarchy)
+            if(loadingObj.activeInHierarchy || dieUI.gameObject.activeInHierarchy)
             {
                 return;
             }

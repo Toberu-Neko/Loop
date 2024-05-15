@@ -136,6 +136,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
         if (PlayerInventoryManager.Instance.EquipedWeapon[0] == WeaponType.Sword)
         {
             slot1SwordText.color = Color.red;
+            slot2SwordText.color = Color.gray;
             slot1SwordButton.interactable = false;
             slot2SwordButton.interactable = false;
         }
@@ -143,6 +144,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
         if (PlayerInventoryManager.Instance.EquipedWeapon[0] == WeaponType.Gun)
         {
             slot1GunText.color = Color.red;
+            slot2GunText.color = Color.gray;
             slot1GunButton.interactable = false;
             slot2GunButton.interactable = false;
         }
@@ -150,12 +152,14 @@ public class SavepointUIChangeSkill : MonoBehaviour
         if (PlayerInventoryManager.Instance.EquipedWeapon[0] == WeaponType.Fist)
         {
             slot1FistText.color = Color.red;
+            slot2FistText.color = Color.gray;
             slot1FistButton.interactable = false;
             slot2FistButton.interactable = false;
         }
 
         if (PlayerInventoryManager.Instance.EquipedWeapon[1] == WeaponType.Sword)
         {
+            slot1SwordText.color = Color.gray;
             slot2SwordText.color = Color.red;
             slot1SwordButton.interactable = false;
             slot2SwordButton.interactable = false;
@@ -163,6 +167,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
 
         if (PlayerInventoryManager.Instance.EquipedWeapon[1] == WeaponType.Gun)
         {
+            slot1GunText.color = Color.gray;
             slot2GunText.color = Color.red;
             slot1GunButton.interactable = false;
             slot2GunButton.interactable = false;
@@ -170,6 +175,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
 
         if (PlayerInventoryManager.Instance.EquipedWeapon[1] == WeaponType.Fist)
         {
+            slot1FistText.color = Color.gray;
             slot2FistText.color = Color.red;
             slot1FistButton.interactable = false;
             slot2FistButton.interactable = false;
