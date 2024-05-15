@@ -35,10 +35,11 @@ public class PauseInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerE
             {
                 countText.gameObject.SetActive(false);
             }
-
-
-            if(amount > 0)  
+            else
+            {
+                countText.gameObject.SetActive(true);
                 countText.text = amount.ToString();
+            }
         }
         else
         {
