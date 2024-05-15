@@ -130,7 +130,7 @@ public class SavepointUIChangeSkill : MonoBehaviour
         bulletTimeRangedButton.interactable = true;
     }
 
-    private void UpdateMenu()
+    public void UpdateMenu()
     {
         ResetMenu();
         if (PlayerInventoryManager.Instance.EquipedWeapon[0] == WeaponType.Sword)
@@ -202,10 +202,24 @@ public class SavepointUIChangeSkill : MonoBehaviour
         if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillNone)
         {
             noneButton.interactable = false;
-
         }
 
-        if(playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillRewindPlayer)
+        timeReverseButton.interactable = true;
+        bookMarkButton.interactable = true;
+        timeStopRangedButton.interactable = true;
+        timeStopAllButton.interactable = true;
+        bulletTimeAllButton.interactable = true;
+        bulletTimeRangedButton.interactable = true;
+
+        timeReverseText.color = Color.white;
+        bookMarkText.color = Color.white;
+        timeStopRangedText.color = Color.white;
+        timeStopAllText.color = Color.white;
+        bulletTimeAllText.color = Color.white;
+        bulletTimeRangedText.color = Color.white;
+
+
+        if (playerTimeSkillManager.StateMachine.CurrentState == playerTimeSkillManager.SkillRewindPlayer)
         {
             timeReverseButton.interactable = false;
             timeReverseText.color = Color.red;

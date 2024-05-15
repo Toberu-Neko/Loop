@@ -47,7 +47,7 @@ public class GameData
 
         maxHealth = 100f;
         timePlayed = 0f;
-        money = 100;
+        money = 0;
         currentTimeSkill = "PlayerTimeSkill_None";
         lastInteractedSavepointID = "Default";
         finishTutorial = false;
