@@ -18,6 +18,8 @@ public class VirtualMouseUI : MonoBehaviour
 
     [SerializeField] private bool isUIOpen = false;
 
+    private float orgCursorSpeed;
+
     private void Awake()
     {
         InputSystem.onActionChange += HandleActionChange;
@@ -25,6 +27,7 @@ public class VirtualMouseUI : MonoBehaviour
 
     private void Start()
     {
+        orgCursorSpeed= virtualMouseInput.cursorSpeed;
         UpdateCursor();
     }
 
@@ -90,11 +93,13 @@ public class VirtualMouseUI : MonoBehaviour
 
     private void Show()
     {
+        virtualMouseInput.cursorSpeed = orgCursorSpeed;
         MouseObj.SetActive(true);
     }
 
     private void Hide()
     {
+        virtualMouseInput.cursorSpeed = 0f;
         MouseObj.SetActive(false);
     }
 
