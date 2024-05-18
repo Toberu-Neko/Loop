@@ -127,9 +127,15 @@ public class ObjectPoolManager : MonoBehaviour
 
     public static void ReturnObjectToPool(GameObject obj)
     {
+        if(obj == null)
+        {
+            Debug.Log("Object is null, can't return to pool.");
+            return;
+        }
+
         if (!obj.activeInHierarchy)
         {
-            Debug.LogWarning("Object is already inactive, can't return to pool.");
+            Debug.Log("Object is already inactive, can't return to pool.");
             return;
         }
 
@@ -139,7 +145,7 @@ public class ObjectPoolManager : MonoBehaviour
 
         if(pool == null)
         {
-            Debug.LogWarning("No pool found for " + goName);
+            Debug.Log("No pool found for " + goName);
             obj.SetActive(false);
             return;
         }
@@ -170,8 +176,15 @@ public class ObjectPoolManager : MonoBehaviour
 
             foreach(GameObject obj in pool.ActiveObjects)
             {
-                obj.SetActive(false);
-                pool.InactiveObjects.Add(obj);
+                if(obj == null)
+                {
+                    pool.ActiveObjects.Remove(obj);
+                }
+                else
+                {
+                    obj.SetActive(false);
+                    pool.InactiveObjects.Add(obj);
+                }
             }
 
             pool.ActiveObjects.Clear();
