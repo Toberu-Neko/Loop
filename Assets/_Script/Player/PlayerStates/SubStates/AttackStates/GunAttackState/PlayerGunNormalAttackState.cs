@@ -98,7 +98,7 @@ public class PlayerGunNormalAttackState : PlayerGunAttackState
                 else
                     mouseDirectionInput = Vector2.left;
             }
-            proj.Fire(details, mouseDirectionInput);
+            proj.Fire(details, mouseDirectionInput.normalized);
         }
 
     }

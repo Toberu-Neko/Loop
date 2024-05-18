@@ -49,7 +49,16 @@ public class PlayerGunCounterState : PlayerGunAttackState
         PlayerProjectile proj = ObjectPoolManager.SpawnObject(data.bulletObject, player.WeaponManager.ProjectileStartPos.position, Quaternion.identity, ObjectPoolManager.PoolType.Projectiles).GetComponent<PlayerProjectile>();
         ProjectileDetails details = data.counterAttackDetails;
         details.combatDetails.damageAmount *= PlayerInventoryManager.Instance.GunMultiplier.damageMultiplier;
-        proj.Fire(details, mouseDirectionInput);
+
+        if (mouseDirectionInput == Vector2.zero)
+        {
+            if (Movement.FacingDirection == 1)
+                mouseDirectionInput = Vector2.right;
+            else
+                mouseDirectionInput = Vector2.left;
+        }
+
+        proj.Fire(details, mouseDirectionInput.normalized);
     }
 
     public override void AnimationFinishTrigger()
