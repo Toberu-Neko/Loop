@@ -27,6 +27,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
     protected event Action OnDuration;
 
     [SerializeField] private Animator anim;
+    [SerializeField] private float maxAliveTime = 10f;
 
     public bool HasHitGround { get; protected set; }
     protected bool countered;
@@ -92,6 +93,11 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
         if (movementType == MovementType.Hitted)
         {
             movement.SetVelocityZero();
+        }
+
+        if (Time.time >= startTime + maxAliveTime && movementType == MovementType.Move)
+        {
+            ReturnToPool();
         }
     }
 
@@ -181,7 +187,7 @@ public class EnemyProjectile_Base : MonoBehaviour, IKnockbackable, IFireable
 
         if(shootSFX.clip != null)
         {
-            Debug.LogWarning("SFX is null");
+            Debug.Log("SFX is null");
             AudioManager.Instance.PlaySoundFX(shootSFX, transform, AudioManager.SoundType.threeD);
         }
     }
