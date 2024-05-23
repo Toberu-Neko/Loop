@@ -93,7 +93,8 @@ public class VirtualMouseUI : MonoBehaviour
 
     private void Show()
     {
-        virtualMouseInput.cursorSpeed = orgCursorSpeed;
+        virtualMouseInput.cursorSpeed = orgCursorSpeed * Screen.width / 1920f;
+        MouseObj.transform.localScale = Vector3.one * (Screen.width / 1920f);
         MouseObj.SetActive(true);
     }
 
@@ -105,7 +106,7 @@ public class VirtualMouseUI : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale = Vector3.one * canvasRectTransform.localScale.x;
+        transform.localScale = Vector3.one * (1920f/ Screen.width);
         transform.SetAsLastSibling();
     }
 
@@ -114,6 +115,7 @@ public class VirtualMouseUI : MonoBehaviour
         Vector2 virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
         virtualMousePosition.x = Mathf.Clamp(virtualMousePosition.x, 0, Screen.width);
         virtualMousePosition.y = Mathf.Clamp(virtualMousePosition.y, 0, Screen.height);
+
         InputState.Change(virtualMouseInput.virtualMouse.position, virtualMousePosition);
 
         // Debug.Log("Input in VMouse: Cancel: " + virtualMouseInput.backButtonAction.action.ReadValue<float>());
