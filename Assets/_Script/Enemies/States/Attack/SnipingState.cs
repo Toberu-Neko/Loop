@@ -81,7 +81,8 @@ public class SnipingState : AttackState
 
 
                 // Debug.Log("Angle: " + Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right));
-                if (CheckPlayerSenses.CanSeePlayer && Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right) < 70f)
+                if (CheckPlayerSenses.CanSeePlayer && 
+                    Vector2.Angle((targetPos + v2WorkSpace - (Vector2)attackPosition.position).normalized, Movement.ParentTransform.right) < 70f)
                 {
                     targetPos = Vector3.Slerp((Vector3)targetPos, player.position, (stateData.aimTime - leftTime) / stateData.aimTime);
                     lastPlayerPos = player.position;
