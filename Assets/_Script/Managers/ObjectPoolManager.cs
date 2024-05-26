@@ -174,7 +174,7 @@ public class ObjectPoolManager : MonoBehaviour
                 continue;
             }
 
-            foreach(GameObject obj in pool.ActiveObjects)
+            foreach(GameObject obj in pool.ActiveObjects.ToList())
             {
                 if(obj == null)
                 {
