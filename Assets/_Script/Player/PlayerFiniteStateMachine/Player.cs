@@ -165,6 +165,7 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
+        EnemyCollisionOn();
         stats.Health.OnCurrentValueZero += HandleHealthZero;
         stats.OnInvincibleStart += Stats_OnInvincibleStart;
         stats.Health.OnValueChanged += HandleValueChanged;
