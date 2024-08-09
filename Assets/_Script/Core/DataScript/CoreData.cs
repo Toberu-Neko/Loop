@@ -21,7 +21,6 @@ public class CoreData : ScriptableObject
     [Tooltip("完美防禦後的反擊攻擊持續時間")]
     public float perfectBlockAttackDuration = 2f;
 
-
     [Space(10)]
     [Header("Combat")]
     [Tooltip("被打到時會生成的粒子效果")]

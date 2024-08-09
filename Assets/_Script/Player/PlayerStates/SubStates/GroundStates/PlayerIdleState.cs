@@ -8,7 +8,6 @@ public class PlayerIdleState : PlayerGroundedState
     {
     }
 
-
     public override void Enter()
     {
         base.Enter();
@@ -16,7 +15,6 @@ public class PlayerIdleState : PlayerGroundedState
         if(!isExitingState)
             Movement.SetVelocityZero();
     }
-
 
     public override void LogicUpdate()
     {

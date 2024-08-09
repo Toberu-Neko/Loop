@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// This class is used to drop money when the object dies, can be used for enemies or destructible objects.
+/// </summary>
 public class MoneyDrop : CoreComponent
 {
     private Death death;

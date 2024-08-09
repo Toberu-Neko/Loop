@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spawn a large range of traps that will teleport the player to a specific position when hit.
+/// </summary>
 public class TDP_LargeRangeTrap : TempDataPersist_MapObjBase
 {
     [SerializeField] private GameObject trapPrefab;

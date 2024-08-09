@@ -125,6 +125,7 @@ public class PlayerGroundedState : PlayerState
         }
         #endregion
 
+        #region Movement
         else if (player.InputHandler.RegenInput && isGrounded && Stats.Health.CurrentValue < Stats.Health.MaxValue &&
             (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0) //TODO: || can use time energy to regen && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
             )
@@ -161,6 +162,7 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.DashState);
         }
+        #endregion
     }
     protected void PlayStepSFX(float time)
     {

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// This class is used to check the collision of surroundings, for player and enemy.
+/// </summary>
 public class CollisionSenses : CoreComponent
 {
     private Movement movement;
@@ -317,15 +320,12 @@ public class CollisionSenses : CoreComponent
 public class Slope
 {
     public Vector2 NormalPrep { get; private set; }
-    public float DownAngle { get; private set; }
     public bool IsOnSlope { get; private set; }
     public bool hasCollisionSenses;
-
 
     public Slope()
     {
         NormalPrep = Vector2.zero;
-        DownAngle = 0f;
         IsOnSlope = false;
         hasCollisionSenses = false;
     }
@@ -339,7 +339,6 @@ public class Slope
     public void Set(Vector2 slopeNormal, float slopeAngle)
     {
         NormalPrep = slopeNormal;
-        DownAngle = slopeAngle;
 
         IsOnSlope = true;
     }

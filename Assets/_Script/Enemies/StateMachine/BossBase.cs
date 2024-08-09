@@ -6,7 +6,7 @@ public class BossBase : Entity, IDataPersistance
 {
     [Header("Boss Basic")]
     [SerializeField, Range(-1, 1), Tooltip("1R, -1L")] private int initFacingPos = 1;
-    [field: SerializeField] public string BossName { get; private set; } //TODO: Change to BossId
+    [field: SerializeField] public string BossName { get; private set; }
     [field: SerializeField] public LocalizedString BossNameLocalized { get; private set; }
 
     protected event Action OnEnterBossRoom;
@@ -43,13 +43,10 @@ public class BossBase : Entity, IDataPersistance
             {
                 if (defeated)
                 {
-                    //TODO: Spawn a opened chest or something
                     OnAlreadyDefeated?.Invoke();
                     gameObject.SetActive(false);
                 }
             }
-
-            // DataPersistenceManager.Instance.AddDataPersistenceObj(this);
         }
     }
 

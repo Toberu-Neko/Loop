@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// The damage number that pops up when enemies take damage.
+/// </summary>
 public class DamageNum : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI damageText;

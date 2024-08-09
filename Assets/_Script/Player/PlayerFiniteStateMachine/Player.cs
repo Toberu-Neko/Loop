@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     public PlayerStateMachine StateMachine { get; private set; }
     
     #region ControlerStates
+    /// <summary>
+    /// Player loading animation.
+    /// </summary>
     public PlayerTurnOnState TurnOnState { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
     public PlayerChangeSceneState ChangeSceneState { get; private set; }
@@ -26,8 +29,14 @@ public class Player : MonoBehaviour
     public PlayerCrouchIdleState CrouchIdleState { get; private set; }
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
 
+    /// <summary>
+    /// Block animation befor block open, can perfect block.
+    /// </summary>
     public PlayerPreBlockState PreBlockState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
+    /// <summary>
+    /// Play effect and sound when perfect block.
+    /// </summary>
     public PlayerPerfectBlockState PerfectBlockState { get; private set; }
 
     public PlayerRegenState RegenState { get; private set; }
@@ -35,21 +44,34 @@ public class Player : MonoBehaviour
     #endregion
 
     #region SwordStates
+    /// <summary>
+    /// Check if player is holding attack button.
+    /// </summary>
     public PlayerSwordHubState SwordHubState { get; private set; }
     public PlayerSwordNormalAttackState SwordNormalAttackState { get; private set; }
+    /// <summary>
+    /// Soul one attack, when player have soul one stats.
+    /// </summary>
     public PlayerSwordEnhancedAttackState SwordEnhancedAttackState { get; private set; }
+    /// <summary>
+    /// Hold attack
+    /// </summary>
     public PlayerSwordStrongAttackState SwordStrongAttackState { get; private set; }
     public PlayerSwordSkyAttackState SwordSkyAttackState { get; private set; }
     public PlayerSwordCounterAttackState SwordCounterAttackState { get; private set; }
-    // public PlayerSwordSoulOneAttackState SwordSoulOneAttackState { get; private set; }
+    /// <summary>
+    /// Sword alt attack, when player have three energy.
+    /// </summary>
     public PlayerSwordSoulMaxAttackState SwordSoulMaxAttackState { get; private set; }
+    /// <summary>
+    /// Soul one enhance animation.
+    /// </summary>
     public SwordEnhanceState SwordEnhanceState { get; private set; }
     #endregion
 
     #region GunStates
     public PlayerGunHubState GunHubState { get; private set; }
     public PlayerGunNormalAttackState GunNormalAttackState { get; private set; }
-    public PlayerGunChargingState GunChargeAttackState { get; private set; }
     public PlayerGunCounterState GunCounterAttackState { get; private set; }
     public PlayerThrowGrenadeState GunThrowGrenadeState { get; private set; }
     public PlayerGunS3State GunS3State { get; private set; }
@@ -57,9 +79,15 @@ public class Player : MonoBehaviour
     #endregion
 
     #region FistStates
+    /// <summary>
+    /// Check if player is holding attack button.
+    /// </summary>
     public PlayerFistHubState FistHubState { get; private set; }
     public PlayerFistNormalAttackState FistNormalAttackState { get; private set; }
     public PlayerFistStrongAttackState FistStrongAttackState { get; private set; }
+    /// <summary>
+    /// Hold S and skill button to static attack.
+    /// </summary>
     public PlayerFistStaticStrongAttackState FistStaticStrongAttackState { get; private set; }
     public PlayerFistCounterAttackState FistCounterAttackState { get; private set; }
     public PlayerFistS3ChargeState FistS3ChargeState { get; private set; }
@@ -86,7 +114,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Other Variables
-    // public int FacingDirection { get; private set; }
     public bool NoHand { get; private set; }
 
     private Vector2 v2Workspace;
@@ -111,6 +138,7 @@ public class Player : MonoBehaviour
         MovementCollider = GetComponent<BoxCollider2D>();
         WeaponManager = GetComponent<PlayerWeaponManager>();
 
+        #region New Player States
         StateMachine = new PlayerStateMachine();
 
         TurnOnState = new PlayerTurnOnState(this, StateMachine, PlayerData, "turnOn");
@@ -147,7 +175,6 @@ public class Player : MonoBehaviour
 
         GunHubState = new PlayerGunHubState(this, StateMachine, PlayerData, "gunAttack");
         GunNormalAttackState = new PlayerGunNormalAttackState(this, StateMachine, PlayerData, "gunNormalAttack");
-        GunChargeAttackState = new PlayerGunChargingState(this, StateMachine, PlayerData, "gunChargeAttack");
         GunCounterAttackState = new PlayerGunCounterState(this, StateMachine, PlayerData, "gunCounterAttack");
         GunThrowGrenadeState = new PlayerThrowGrenadeState(this, StateMachine, PlayerData, "gunThrowGrenade");
         GunS3State = new PlayerGunS3State(this, StateMachine, PlayerData, "gunS3Attack");
@@ -159,6 +186,7 @@ public class Player : MonoBehaviour
         FistCounterAttackState = new PlayerFistCounterAttackState(this, StateMachine, PlayerData, "fistCounterAttack");
         FistS3ChargeState = new PlayerFistS3ChargeState(this, StateMachine, PlayerData, "fistS3Charge");
         FistS3AttackState = new PlayerFistS3AttackState(this, StateMachine, PlayerData, "fistS3Attack");
+        #endregion
         
         movement.OrginalGravityScale = PlayerData.gravityScale;
     }
@@ -175,88 +203,6 @@ public class Player : MonoBehaviour
         combat.OnDamaged += OnDamaged_IgnoreEnemy;
 
         WeaponManager.OnWeaponChanged += HandleWeaponChanged;
-    }
-
-    private void HandleWeaponChanged()
-    {
-        if(PlayerInventoryManager.Instance.CanUseWeaponCount > 0)
-        {
-            NoHand = false;
-            Anim.SetBool("noHand", NoHand);
-        }
-        else
-        {
-            NoHand = true;
-            Anim.SetBool("noHand", NoHand);
-        }
-    }
-
-    private void HandleValueChanged()
-    {
-        if(gameManager == null)
-        {
-            return;
-        }
-
-        if(stats.Health.CurrentValue / stats.Health.MaxValue <= 0.33f)
-        {
-            gameManager.SetPlayerDanger(true);
-        }
-        else
-        {
-            gameManager.SetPlayerDanger(false);
-        }
-    }
-
-    private void Stats_OnInvincibleStart(float sec)
-    {
-        StopCoroutine(InvincibleColorChange(sec));
-        StartCoroutine(InvincibleColorChange(sec));
-    }
-
-    private IEnumerator InvincibleColorChange(float sec)
-    {
-
-        float alpha = 1f;
-        float startTime = Time.time;
-        bool isDecreasing = true;
-
-        while(startTime + sec > Time.time)
-        {
-            if (isDecreasing)
-            {
-                alpha = Mathf.Lerp(alpha, 0.35f, Time.deltaTime * 12f);
-            }
-            else
-            {
-                alpha = Mathf.Lerp(alpha, 1f, Time.deltaTime * 12f);
-            }
-
-            if(alpha <= 0.4f)
-            {
-                isDecreasing = false;
-            }
-            else if(alpha >= 0.95f)
-            {
-                isDecreasing = true;
-            }
-
-            SR.color = new Color(SR.color.r, SR.color.g, SR.color.b, alpha);
-
-            yield return null;
-        }
-        SR.color = srDefaultColor;
-    }
-
-
-    private void OnDamaged_SFX()
-    {
-        AudioManager.Instance.PlaySoundFX(PlayerSFX.getHit, transform, AudioManager.SoundType.twoD);
-    }
-
-    private void OnPerfectBlock_SFX()
-    {
-        AudioManager.Instance.PlaySoundFX(PlayerSFX.perfectBlock, transform, AudioManager.SoundType.twoD);
     }
 
     private void Start()
@@ -314,6 +260,118 @@ public class Player : MonoBehaviour
         Core.LateLogicUpdate();
     }
 
+    #endregion
+
+    #region Event Handlers
+
+    /// <summary>
+    /// Check if player have hand before getting first weapon.
+    /// </summary>
+    private void HandleWeaponChanged()
+    {
+        if (PlayerInventoryManager.Instance.CanUseWeaponCount > 0)
+        {
+            NoHand = false;
+            Anim.SetBool("noHand", NoHand);
+        }
+        else
+        {
+            NoHand = true;
+            Anim.SetBool("noHand", NoHand);
+        }
+    }
+
+    /// <summary>
+    /// HUD Effect when player health is low.
+    /// </summary>
+    private void HandleValueChanged()
+    {
+        if (gameManager == null)
+        {
+            return;
+        }
+
+        if (stats.Health.CurrentValue / stats.Health.MaxValue <= 0.33f)
+        {
+            gameManager.SetPlayerDanger(true);
+        }
+        else
+        {
+            gameManager.SetPlayerDanger(false);
+        }
+    }
+
+    /// <summary>
+    /// Change player color when invincible.
+    /// </summary>
+    /// <param name="sec"></param>
+    private void Stats_OnInvincibleStart(float sec)
+    {
+        StopCoroutine(InvincibleColorChange(sec));
+        StartCoroutine(InvincibleColorChange(sec));
+    }
+
+    /// <summary>
+    /// Change player color when invincible.
+    /// </summary>
+    /// <param name="sec"></param>
+    /// <returns></returns>
+    private IEnumerator InvincibleColorChange(float sec)
+    {
+
+        float alpha = 1f;
+        float startTime = Time.time;
+        bool isDecreasing = true;
+
+        while (startTime + sec > Time.time)
+        {
+            if (isDecreasing)
+            {
+                alpha = Mathf.Lerp(alpha, 0.35f, Time.deltaTime * 12f);
+            }
+            else
+            {
+                alpha = Mathf.Lerp(alpha, 1f, Time.deltaTime * 12f);
+            }
+
+            if (alpha <= 0.4f)
+            {
+                isDecreasing = false;
+            }
+            else if (alpha >= 0.95f)
+            {
+                isDecreasing = true;
+            }
+
+            SR.color = new Color(SR.color.r, SR.color.g, SR.color.b, alpha);
+
+            yield return null;
+        }
+        SR.color = srDefaultColor;
+    }
+
+    private void OnDamaged_SFX()
+    {
+        AudioManager.Instance.PlaySoundFX(PlayerSFX.getHit, transform, AudioManager.SoundType.twoD);
+    }
+
+    private void OnPerfectBlock_SFX()
+    {
+        AudioManager.Instance.PlaySoundFX(PlayerSFX.perfectBlock, transform, AudioManager.SoundType.twoD);
+    }
+
+    private void OnDamaged_IgnoreEnemy()
+    {
+        Physics2D.IgnoreLayerCollision(7, 13, true);
+        CancelInvoke(nameof(EnemyCollisionOn));
+        Invoke(nameof(EnemyCollisionOn), PlayerData.ignoreEnemyAfterDamagedDuration);
+    }
+
+    private void HandleHealthZero()
+    {
+        if (StateMachine.CurrentState != DeadState)
+            StateMachine.ChangeState(DeadState);
+    }
     #endregion
 
     #region Other Functions
@@ -377,13 +435,6 @@ public class Player : MonoBehaviour
         OnDead?.Invoke();
     }
 
-    private void OnDamaged_IgnoreEnemy()
-    {
-        Physics2D.IgnoreLayerCollision(7, 13, true);
-        CancelInvoke(nameof(EnemyCollisionOn));
-        Invoke(nameof(EnemyCollisionOn), PlayerData.ignoreEnemyAfterDamagedDuration);
-    }
-
     private void EnemyCollisionOn()
     {
         if(StateMachine.CurrentState != DashState)
@@ -391,18 +442,7 @@ public class Player : MonoBehaviour
             Physics2D.IgnoreLayerCollision(7, 13, false);
         }
     }
-
-    private void HandleHealthZero()
-    {
-        if(StateMachine.CurrentState != DeadState)
-            StateMachine.ChangeState(DeadState);
-    }
-
-    public void TeleportPlayer(Vector2 position)
-    {
-        movement.Teleport(position);
-    }
-
+    
     private void OnDrawGizmos()
     {
         if(PlayerData)

@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+/// <summary>
+/// The base class of all enemies.
+/// </summary>
 public class Entity : MonoBehaviour
 {
     [field: SerializeField] public EnemyStateMachine StateMachine { get; private set; }
@@ -51,7 +54,6 @@ public class Entity : MonoBehaviour
 
         Stats.Health.Init();
         Stats.Stamina.Init();
-
     }
 
     private void HandleOnDamaged()
@@ -62,10 +64,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    protected virtual void Start()
-    {
-
-    }
+    protected virtual void Start(){}
 
     protected virtual void OnDisable()
     {

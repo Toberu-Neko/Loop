@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is the base class for all the components in the core.
+/// </summary>
 public class CoreComponent : MonoBehaviour
 {
     protected Core core;

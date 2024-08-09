@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is used to drop an item when the object dies. And the item can only be dropped once.
+/// </summary>
 public class DropDatapersistItem : CoreComponent
 {
     private Death death;

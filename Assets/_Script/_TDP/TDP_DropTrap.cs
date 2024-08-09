@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is used to drop a trap on the ground when the player steps on it.
+/// </summary>
 public class TDP_DropTrap : TempDataPersist_MapObjBase
 {
     [SerializeField] private GameObject trapPrefab;

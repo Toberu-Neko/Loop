@@ -35,6 +35,10 @@ public class PlayerState
         CollisionSenses = player.Core.GetCoreComponent<CollisionSenses>();
         StartTime = 0f;
     }
+
+    /// <summary>
+    /// Called when the state is entered.
+    /// </summary>
     public virtual void Enter()
     {
         DoChecks();
@@ -45,20 +49,35 @@ public class PlayerState
         isExitingState = false;
         isAnimationStartMovement = false;
     }
+
+    /// <summary>
+    /// Called when the state is exited.
+    /// </summary>
     public virtual void Exit()
     {
         player.Anim.SetBool(animBoolName, false);
         isExitingState = true;
     }
+
+    /// <summary>
+    /// Called every Update, in player sript using Statemachine.CurrentState.LogicUpdate();.
+    /// </summary>
     public virtual void LogicUpdate() 
     {
         player.Anim.speed = Stats.AnimationSpeed;
     }
 
+    /// <summary>
+    /// Called every fixedUpdate, in player sript using Statemachine.CurrentState.PhysicsUpdate();.
+    /// </summary>
     public virtual void PhysicsUpdate()
     {
         DoChecks();
     }
+
+    /// <summary>
+    /// Called every fixedUpdate, in player sript using Statemachine.CurrentState.DoChecks();.
+    /// </summary>
     public virtual void DoChecks() { }
 
     public virtual void AnimationActionTrigger() { }

@@ -11,7 +11,6 @@ public class CoreStatSystem
     public event Action OnValueDecreased;
 
     [field: SerializeField] public float MaxValue { get; set; }
-    // public float DeltaValue { get; private set; } = 0f;
 
     public float CurrentValue
     {

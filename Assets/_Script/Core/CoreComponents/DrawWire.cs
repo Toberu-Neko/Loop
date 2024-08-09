@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is used to draw a wire between two points.
+/// </summary>
+[RequireComponent(typeof(LineRenderer))]
 public class DrawWire : CoreComponent
 {
     private LineRenderer LR;

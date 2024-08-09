@@ -2,6 +2,9 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// This class is used to set the collider of the player, to prevent from getting stuck by 1px of map.
+/// </summary>
 public class SetCollider : CoreComponent
 {
     private Movement movement;

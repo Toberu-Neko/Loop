@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is used to detect if the player is hit by the enemy weapon.
+/// </summary>
 public class EnemyWeaponHitbox : CoreComponent
 {
     private Combat combat;

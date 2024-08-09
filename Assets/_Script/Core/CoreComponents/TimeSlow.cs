@@ -1,6 +1,8 @@
-
 using UnityEngine;
 
+/// <summary>
+/// If a object has this component, it can be slowed down.
+/// </summary>
 public class TimeSlow : CoreComponent, ITimeSlowable
 {
     private Stats stats;
@@ -12,10 +14,8 @@ public class TimeSlow : CoreComponent, ITimeSlowable
         stats = core.GetCoreComponent<Stats>();
     }
 
-
     private void OnEnable()
     {
-        //TODO: Gamemanager bug
         GameManager.Instance.OnAllTimeSlowStart += DoTimeSlow;
         GameManager.Instance.OnAllTimeSlowEnd += EndTimeSlow;
 

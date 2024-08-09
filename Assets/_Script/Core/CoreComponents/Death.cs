@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// This component is responsible for handling the death of the object, when death animation finished. And it will trigger the death event.
+/// </summary>
 public class Death : CoreComponent
 {
     public bool IsDead { get; private set; }

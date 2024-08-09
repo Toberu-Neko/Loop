@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// If a object has this component, it can be stopped in time.
+/// </summary>
 public class TimeStop : CoreComponent, ITimeStopable
 {
     private Stats stats;

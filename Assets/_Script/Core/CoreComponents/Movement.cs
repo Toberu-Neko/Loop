@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// All rigidbody movement related stuff.
+/// </summary>
 public class Movement : CoreComponent
 {
     public Rigidbody2D RB { get; private set; }
@@ -15,7 +18,6 @@ public class Movement : CoreComponent
 
     private Vector2 velocityWorkspace;
     public Vector2 TimeStopVelocity { get; private set; }
-    private float orginalGrag;
 
     public Vector2 TimeSlowVelocity { get; private set; }
     private float timeSlowOrgGravityScale;
@@ -30,6 +32,7 @@ public class Movement : CoreComponent
     public Slope Slope { get; set; }
     private Stats stats;
     private bool inKinematicState;
+    private Vector3 v3WorkSpace;
 
     protected override void Awake()
     {
@@ -39,7 +42,6 @@ public class Movement : CoreComponent
         RB = GetComponentInParent<Rigidbody2D>();
         stats = core.GetCoreComponent<Stats>();
     }
-
 
     private void OnEnable()
     {
@@ -51,8 +53,6 @@ public class Movement : CoreComponent
         CurrentVelocity = Vector2.zero;
         FacingDirection = 1;
         inKinematicState = false;
-
-        orginalGrag = RB.drag;
 
         CanSetVelocity = true;
 
@@ -70,11 +70,9 @@ public class Movement : CoreComponent
         stats.OnTimeSlowEnd += HandleTimeSlowEnd;
     }
 
-
     private void OnDisable()
     {
         SetGravityOrginal();
-
 
         stats.OnTimeStopEnd -= HandleTimeStopEnd;
         stats.OnTimeStopStart -= HandleTimeStopStart;
@@ -114,6 +112,10 @@ public class Movement : CoreComponent
             }
             previousPosition = ParentTransform.position;
         }
+    }
+    public void Teleport(Vector2 position)
+    {
+        RB.position = position;
     }
 
     #region Time Stop
@@ -245,6 +247,9 @@ public class Movement : CoreComponent
         RB.angularVelocity = velocity;
     }
 
+    /// <summary>
+    /// Cauclates the final velocity, and check if is in time stop stats, and sets it to the rigidbody.
+    /// </summary>
     private void SetFinalVelocity()
     {
         if (stats.IsTimeSlowed)
@@ -283,9 +288,18 @@ public class Movement : CoreComponent
                 CurrentVelocity = velocity;
             }
         }
-
     }
+    public void SetCanSetVelocity(bool a)
+    {
+        CanSetVelocity = a;
+    }
+    #endregion
 
+    #region Flip and Turn
+    /// <summary>
+    /// Checks if the facing direction should be flipped, and flips it if needed.
+    /// </summary>
+    /// <param name="xInput"></param>
     public void CheckIfShouldFlip(int xInput)
     {
         if (xInput != 0 && xInput != FacingDirection)
@@ -293,24 +307,10 @@ public class Movement : CoreComponent
             Flip();
         }
     }
-    public void SetDragZero()
-    {
-        RB.drag = 0.0f;
-    }
 
-    public void SetDragOrginal()
-    {
-        RB.drag = orginalGrag;
-    }
-
-    public void SetCanSetVelocity(bool a)
-    {
-        CanSetVelocity = a;
-    }
-
-
-    private Vector3 v3WorkSpace;
-
+    /// <summary>
+    /// For player and enemy, flips the facing direction.
+    /// </summary>
     public void Flip()
     {
         FacingDirection *= -1;
@@ -321,22 +321,20 @@ public class Movement : CoreComponent
         RB.transform.eulerAngles = v3WorkSpace;
 
         OnFlip?.Invoke();
-        //TODO: Fixed Rotate, but remove if lag.
     }
 
+    /// <summary>
+    /// For bullets and other objects, change through angle and set angle.
+    /// </summary>
+    /// <param name="angle"></param>
     public void Turn(float angle = 180f)
     {
         v3WorkSpace.Set(0f, 0f, angle);
         RB.transform.eulerAngles += v3WorkSpace; 
     }
-
-    public void Teleport(Vector2 position)
-    {
-        RB.position = position;
-    }
     #endregion
 
-
+    #region RB Kinematic Settings
     public void SetRBKinematic()
     {
         inKinematicState = true;
@@ -365,4 +363,5 @@ public class Movement : CoreComponent
             RB.bodyType = RigidbodyType2D.Kinematic;
         }
     }
+    #endregion
 }

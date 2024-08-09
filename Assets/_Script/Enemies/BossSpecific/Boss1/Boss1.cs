@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Boss1 : BossBase
 {
+    #region States
     public B1_IdleState IdleState { get; private set; }
     public B1_InitAnimState InitAnimState { get; private set; }
     public B1_AngryState AngryState { get; private set; }
@@ -31,6 +32,7 @@ public class Boss1 : BossBase
     public B1_StunState StunState { get; private set; }
     public B1_KinematicState KinematicState { get; private set; }
     public B1_DeadState DeadState { get; private set; }
+    #endregion
 
     [field: SerializeField] public B1_StateData StateData { get; private set; }
 
@@ -48,6 +50,7 @@ public class Boss1 : BossBase
     {
         base.Awake();
 
+        #region New States
         IdleState = new B1_IdleState(this, StateMachine, "idle", StateData.idleStateData, this);
         InitAnimState = new B1_InitAnimState(this, StateMachine, "init", this);
         AngryState = new B1_AngryState(this, StateMachine, "angry", this);
@@ -76,8 +79,9 @@ public class Boss1 : BossBase
         StunState = new B1_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B1_KinematicState(this, StateMachine, "stun", this);
         DeadState = new B1_DeadState(this, StateMachine, "dead", this);
+        #endregion
 
-        if(exitTP != null)
+        if (exitTP != null)
             exitTP.SetActive(false);
 
     }
@@ -123,6 +127,7 @@ public class Boss1 : BossBase
         OnAlreadyDefeated -= HandleAlreadyDefeated;
     }
 
+    #region EventHandler
     private void GotoKinematicState(float time)
     {
         KinematicState.SetTimer(time);
@@ -163,5 +168,5 @@ public class Boss1 : BossBase
     {
         StateMachine.ChangeState(InitAnimState);
     }
-
+    #endregion
 }

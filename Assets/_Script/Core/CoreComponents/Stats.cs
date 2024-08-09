@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Health, Stamina, TimeSlow, etc.
+/// </summary>
 public class Stats : CoreComponent
 {
     [field: SerializeField] public CoreStatSystem Health { get; private set; }
@@ -94,6 +97,7 @@ public class Stats : CoreComponent
 
     private void OnEnable()
     {
+        #region Initialize
         InvinvibleAfterDamaged = false;
         Invincible = false;
         InCombat = false;
@@ -109,6 +113,7 @@ public class Stats : CoreComponent
 
         Health.Init();
         Stamina.Init();
+        #endregion
 
         Stamina.OnCurrentValueZero += HandlePoiseZero;
     }

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is for enemy to check player.
+/// </summary>
 public class CheckPlayerSenses : CoreComponent
 {
     [SerializeField] private LayerMask whatIsPlayer;

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// The core of the game object. It can automatically add all the core components to the game object, and can get the core components.
+/// </summary>
 public class Core : MonoBehaviour
 {
     private readonly List<CoreComponent> coreComponents = new();

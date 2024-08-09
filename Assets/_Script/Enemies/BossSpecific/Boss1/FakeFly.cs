@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The fake fly effect of the boss.
+/// </summary>
 public class FakeFly : MonoBehaviour
 {
     [SerializeField] private AnimationCurve speed;

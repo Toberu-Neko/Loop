@@ -1,8 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// Spawned particles need to have particle controller on it.
+/// </summary>
 public class ParticleManager : CoreComponent
 {
-
     public GameObject StartParticles(GameObject particlePrefab, Vector2 position, Quaternion rotation)
     {
         return ObjectPoolManager.SpawnObject(particlePrefab, position, rotation, ObjectPoolManager.PoolType.ParticleSystem);

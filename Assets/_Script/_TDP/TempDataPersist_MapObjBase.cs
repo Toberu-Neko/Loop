@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is the base classes for the map objects that need to persist their state between scenes.
+/// </summary>
 public class TempDataPersist_MapObjBase : MonoBehaviour, ITempDataPersistence
 {
     public bool isAddedID;

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible for showing the damage number when the player takes damage. Need Combat and Death components.
+/// </summary>
 public class DamageNumber : CoreComponent
 {
     [SerializeField] private GameObject damageNumberPrefab;

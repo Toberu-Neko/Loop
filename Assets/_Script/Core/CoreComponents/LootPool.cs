@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible for handling the loot pool of the enemy, randomly drop items from the loot pool when the enemy dies.
+/// </summary>
 public class LootPool : CoreComponent
 {
     [SerializeField] private GameObject dropItemPrefab;

@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Combat related stuff, block, perfect block.
+/// </summary>
 public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamageable, ISlowable
 {
     private GameObject damageParticles;
@@ -17,14 +20,11 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public List<IStaminaDamageable> DetectedStaminaDamageables { get; private set; } = new();
     public List<IMapDamageableItem> DetectedMapDamageableItems { get; private set; } = new();
 
-
     public bool PerfectBlockAllDir { get; private set; } = false;
     public bool PerfectBlock { get; private set; }
-    public bool SpecialBlock { get; private set; }
-
     private bool normalBlock;
 
-    //Core
+    #region Core
     private Movement movement;
     private CollisionSenses collisionSenses;
     private Stats stats;
@@ -33,8 +33,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     private bool isKnockbackActive;
     private float knockbackStartTime;
     private bool damagedThisFrame = false;
+    #endregion
 
-    // events
+    #region Events
     public event Action OnPerfectBlock;
     public event Action OnDamaged;
     public event Action<float> OnDamageAmount;
@@ -42,14 +43,17 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public event Action OnStaminaDamaged;
     public event Action<float> OnGoToKinematicState;
     public event Action OnGoToStunState;
+    #endregion
 
-    // time
+    #region Time
     private float staminaDelta = 0f;
     private float healthDelta = 0f;
     private float knockStrengthDelta = 0f;
     private Vector2 knockbackAngleDelta = Vector2.zero;
     private Vector2 workspace = Vector2.zero;
+    #endregion
 
+    #region Unity Callbacks
     protected override void Awake()
     {
         base.Awake();
@@ -61,6 +65,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     }
     private void Start()
     {
+        // Get data from CoreData
         damageParticles = core.CoreData.damageParticles;
         blockDamageMultiplier = core.CoreData.blockDamageMultiplier;
         blockStaminaMultiplier = core.CoreData.blockStaminaMultiplier;
@@ -71,6 +76,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     private void OnEnable()
     {
+        #region Init
         workspace = Vector2.zero;
         knockbackAngleDelta = Vector2.zero;
         knockStrengthDelta = 0f;
@@ -86,7 +92,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         DetectedKnockbackables = new();
         DetectedStaminaDamageables = new();
         DetectedMapDamageableItems = new();
-
+        #endregion
 
         stats.OnTimeStopEnd += HandleStartTime;
         stats.OnTimeSlowStart += HandleTimeSlowStart;
@@ -104,7 +110,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         OnPerfectBlock -= HandlePerfectBlock;
         OnDamaged -= HandleOnDamaged;
     }
-
+    #endregion
 
     public override void LogicUpdate()
     {
@@ -180,6 +186,13 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     #endregion
 
     #region Stamina
+
+    /// <summary>
+    /// For enemy, player, and everything that need complex stamina calculation.
+    /// </summary>
+    /// <param name="damageAmount">Stamina damage that need to be process by blocking.</param>
+    /// <param name="damagePosition">For block direction calculation.</param>
+    /// <param name="blockable">For collision and boss specile attack damamage.</param>
     public void TakeStaminaDamage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
         if (stats.Invincible || stats.InvinvibleAfterDamaged || !stats.Stamina.decreaseable)
@@ -217,6 +230,12 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
 
     #region Damage
 
+    /// <summary>
+    /// For enemy, player, and everything that need complex damage calculation.
+    /// </summary>
+    /// <param name="damageAmount">Damage that need to be process by blocking.</param>
+    /// <param name="damagePosition">For block direction calculation.</param>
+    /// <param name="blockable">For collision and boss specile attack damamage.</param>
     public void Damage(float damageAmount, Vector2 damagePosition, bool blockable)
     {
         if (stats.Invincible || stats.InvinvibleAfterDamaged)
@@ -273,6 +292,10 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         OnGoToStunState?.Invoke();
     }
 
+    /// <summary>
+    /// This should be called after finished blocking damage calculation.
+    /// </summary>
+    /// <param name="damageAmount">After calculated damage.</param>
     private void DecreaseHealth(float damageAmount)
     {
         if (stats.IsTimeStopped)
@@ -377,7 +400,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
         knockbackStartTime = Time.time;
     }
 
-
+    /// <summary>
+    /// Check if should set movement can set velocity to true.
+    /// </summary>
     private void CheckKnockback()
     {
         if (isKnockbackActive && ((movement.CurrentVelocity.y <= 0.01f && collisionSenses.Ground) || Time.time >= knockbackStartTime + maxKnockbackTime))
@@ -419,6 +444,10 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     #endregion
 
     #region Attack
+    /// <summary>
+    /// This is used by player, using animation to control collider.
+    /// </summary>
+    /// <param name="collision">Enemy collosion</param>
     public void AddToDetected(Collider2D collision)
     {
         if (collision.TryGetComponent(out IDamageable damageable))
@@ -466,8 +495,12 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     }
     #endregion
 
-    private float tempMovementMultiplier;
-
+    /// <summary>
+    /// Set debuff multiplier for action speed.
+    /// If the multiplier is less than the current multiplier, it will be set.
+    /// </summary>
+    /// <param name="multiplier"></param>
+    /// <param name="delayTime"></param>
     public void SetDebuffMultiplier(float multiplier, float delayTime = 0f)
     {
         if(multiplier <= stats.DebuffActionSpeedMultiplier)
@@ -485,5 +518,4 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     {
         stats.DebuffActionSpeedMultiplier = 1f;
     }
-
 }
