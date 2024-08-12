@@ -8,17 +8,13 @@ public class PlayerMoveState : PlayerGroundedState
     {
     }
 
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
         Movement.CheckIfShouldFlip(xInput);
 
+        #region SFX
         if (player.NoHand)
         {
             PlayStepSFX(0.8f);
@@ -27,6 +23,7 @@ public class PlayerMoveState : PlayerGroundedState
         {
             PlayStepSFX(0.4f);
         }
+        #endregion
 
         if (!isExitingState)
         {
@@ -53,6 +50,4 @@ public class PlayerMoveState : PlayerGroundedState
             }
         }
     }
-
-
 }

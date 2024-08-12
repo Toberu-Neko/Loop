@@ -78,7 +78,7 @@ public class PlayerPreBlockState : PlayerAttackState
 
     public bool CheckIfCanBlock()
     {
-        return Time.time >= lastBlockTime + playerData.blockCooldown;
+        return Time.time >= lastBlockTime + playerData.blockCooldown && player.WeaponManager.CurrentWeaponType != WeaponType.None && Stats.Attackable;
     }
 
     public void SetLastBlockTime(float time) => lastBlockTime = time;

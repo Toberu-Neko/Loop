@@ -18,6 +18,9 @@ public class PlayerState
     protected bool isAnimationStartMovement;
     protected bool isExitingState;
 
+    /// <summary>
+    /// Time when the state is entered.
+    /// </summary>
     protected float StartTime;
 
     private string animBoolName;

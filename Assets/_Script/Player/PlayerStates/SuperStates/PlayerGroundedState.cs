@@ -127,14 +127,14 @@ public class PlayerGroundedState : PlayerState
 
         #region Movement
         else if (player.InputHandler.RegenInput && isGrounded && Stats.Health.CurrentValue < Stats.Health.MaxValue &&
-            (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0) //TODO: || can use time energy to regen && player.TimeSkillManager.CurrentEnergy >= playerData.regenCost)
+            (PlayerInventoryManager.Instance.ConsumablesInventory["Medkit"].itemCount > 0)
             )
         {
             player.InputHandler.UseRegenInput();
             stateMachine.ChangeState(player.RegenState);
         }
 
-        else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.PreBlockState.CheckIfCanBlock() && Stats.Attackable && player.WeaponManager.CurrentWeaponType != WeaponType.None)
+        else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.PreBlockState.CheckIfCanBlock() )
         {
             stateMachine.ChangeState(player.PreBlockState);
         }
@@ -164,6 +164,11 @@ public class PlayerGroundedState : PlayerState
         }
         #endregion
     }
+
+    /// <summary>
+    /// Play footstep sound effect, time is the interval between each step sound effect
+    /// </summary>
+    /// <param name="time">The interval between each step sound effect</param>
     protected void PlayStepSFX(float time)
     {
         if (Time.time > lastStepTime + time)

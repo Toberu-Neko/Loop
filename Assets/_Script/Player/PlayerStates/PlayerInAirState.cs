@@ -247,7 +247,7 @@ public class PlayerInAirState : PlayerState
             {
                 isJumping = false;
             }
-            // TODO: set jump velocity every frame when isJumping is true
+            // BEST WAY: set jump velocity every frame when isJumping is true
         }
     }
     private void CheckCoyoteTime()

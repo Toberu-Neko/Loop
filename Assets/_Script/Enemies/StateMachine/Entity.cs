@@ -17,14 +17,15 @@ public class Entity : MonoBehaviour
     protected Movement movement;
     public Stats Stats { get; private set; }
     protected Combat Combat { get;private set; }
+    public event Action OnDefeated;
 
     public Animator Anim { get; private set; }
+
+    // Attack Details for collision with player
     private WeaponAttackDetails collisionAttackDetails;
     public bool SkillCollideDamage { get; private set; }
 
-    public event Action OnDefeated;
-
-
+    #region Unity Callback Functions
     public virtual void Awake()
     {
         Core = GetComponentInChildren<Core>();
@@ -56,13 +57,6 @@ public class Entity : MonoBehaviour
         Stats.Stamina.Init();
     }
 
-    private void HandleOnDamaged()
-    {
-        if(EntityData.damagedSFX != null)
-        {
-            AudioManager.Instance.PlaySoundFX(EntityData.damagedSFX, transform, AudioManager.SoundType.threeD);
-        }
-    }
 
     protected virtual void Start(){}
 
@@ -98,21 +92,41 @@ public class Entity : MonoBehaviour
         StateMachine.CurrentState.PhysicsUpdate();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
+        {
+            if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
+            {
+                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, movement.ParentTransform.position, false);
+            }
+            if (collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
+            {
+                damageable.Damage(collisionAttackDetails.damageAmount, GetPosition(), false);
+            }
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
+        {
+            if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
+            {
+                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, movement.ParentTransform.position, false);
+            }
+            if (collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
+            {
+                damageable.Damage(collisionAttackDetails.damageAmount, GetPosition(), false);
+            }
+        }
+    }
+
     public virtual void OnDrawGizmos()
     {
     }
+    #endregion
 
-
-    private void HandleOnTimeStop()
-    {
-        StateMachine.SetCanChangeState(false);
-    }
-
-    private void HandleOnTimeStart()
-    {
-        StateMachine.SetCanChangeState(true);
-    }
-
+    #region Animation Triggers
     private void AnimationActionTrigger()
     {
         StateMachine.CurrentState.AnimationActionTrigger();
@@ -133,8 +147,12 @@ public class Entity : MonoBehaviour
     {
         StateMachine.CurrentState.AnimationDangerParticleTrigger();
     }
+    #endregion
 
-
+    /// <summary>
+    /// Mainly used for enemy spawning, set the enemy's facing direction.
+    /// </summary>
+    /// <param name="dir">Positive = Facing Right</param>
     public void SetFacingDirection(int dir)
     {
         if(movement == null)
@@ -150,6 +168,14 @@ public class Entity : MonoBehaviour
         return (Vector2)transform.position;
     }
 
+    /// <summary>
+    /// For dealing damage to the player, knockback the player and deal stamina damage.
+    /// </summary>
+    /// <param name="damageAmount"></param>
+    /// <param name="damageStaminaAmount"></param>
+    /// <param name="knockBackAngle"></param>
+    /// <param name="knockBackForce"></param>
+    /// <param name="blockable"></param>
     public void DoDamageToDamageList(float damageAmount, float damageStaminaAmount, Vector2 knockBackAngle, float knockBackForce, bool blockable = true)
     {
         if (Combat.DetectedDamageables.Count > 0)
@@ -177,55 +203,52 @@ public class Entity : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
-        {
-            if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
-            {
-                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, movement.ParentTransform.position, false);
-            }
-            if(collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
-            {
-                damageable.Damage(collisionAttackDetails.damageAmount, GetPosition(), false);
-            }
-        }
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Player") && Stats.Health.CurrentValue > 0f)
-        {
-            if (collision.gameObject.TryGetComponent(out IKnockbackable knockbackable))
-            {
-                knockbackable.Knockback(collisionAttackDetails.knockbackAngle, collisionAttackDetails.knockbackForce, movement.ParentTransform.position, false);
-            }
-            if (collision.gameObject.TryGetComponent(out IDamageable damageable) && (EntityData.collideDamage || SkillCollideDamage))
-            {
-                damageable.Damage(collisionAttackDetails.damageAmount, GetPosition(), false);
-            }
-        }
-    }
-
     public void SetSkillCollideDamage(bool value) => SkillCollideDamage = value;
 
+    /// <summary>
+    /// Get the collider's x size, mainly used for calculating the distance between the wall and the enemy.
+    /// </summary>
+    /// <returns>col.size.x + col.offset.x</returns>
     public float GetColliderX()
     {
         return col.size.x + col.offset.x;
     }
 
+    /// <summary>
+    /// Get the collider's y size, mainly used for calculating the distance between the wall and the enemy.
+    /// </summary>
+    /// <returns>col.size.y + col.offset.y</returns>
     public float GetColliderY()
     {
         return col.size.y + col.offset.y;
-    }
-
-    private void HandleHealthZero()
-    {
-        OnDefeated?.Invoke();
     }
 
     public Sprite GetCurrentSprite()
     {
         return spriteRenderer.sprite;
     }
+    #region Event Handlers
+    private void HandleOnDamaged()
+    {
+        if (EntityData.damagedSFX != null)
+        {
+            AudioManager.Instance.PlaySoundFX(EntityData.damagedSFX, transform, AudioManager.SoundType.threeD);
+        }
+    }
+    private void HandleOnTimeStop()
+    {
+        StateMachine.SetCanChangeState(false);
+    }
+
+    private void HandleOnTimeStart()
+    {
+        StateMachine.SetCanChangeState(true);
+    }
+    private void HandleHealthZero()
+    {
+        OnDefeated?.Invoke();
+    }
+
+    #endregion
 
 }
