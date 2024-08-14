@@ -143,37 +143,6 @@ public class CollisionSenses : CoreComponent
             float frontAngleHor = Vector2.Angle(hitFront.normal, Vector2.up);
             float backAngleHor = Vector2.Angle(hitBack.normal, Vector2.up);
 
-            /*
-            if (hitFront)
-            {
-                if(Vector2.Angle(hitFront.normal, Vector2.up) <= slopeMaxAngle)
-                {
-                    slope.SetSideAngle(Vector2.Angle(hitFront.normal, Vector2.up));
-                }
-                else
-                {
-                    slope.SetSideAngle(0f);
-                    slope.SetIsOnSlope(false);
-                }
-            }
-            else if (hitBack)
-            {
-                if(Vector2.Angle(hitBack.normal, Vector2.up) <= slopeMaxAngle)
-                {
-                    slope.SetSideAngle(Vector2.Angle(hitBack.normal, Vector2.up));
-                }
-                else
-                {
-                    slope.SetSideAngle(0f);
-                    slope.SetIsOnSlope(false);
-                }
-            }
-            else
-            {
-                slope.SetSideAngle(0f);
-                slope.SetIsOnSlope(false);
-            }
-            */
             float frontAngle = Vector2.Angle(hitVerticleFront.normal, Vector2.up);
             float backAngle = Vector2.Angle(hitVerticalBack.normal, Vector2.up);
 

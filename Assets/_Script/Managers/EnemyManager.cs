@@ -3,6 +3,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// A class that manages all enemies and Temp Data Persistence objects in the game.
+/// Returns all enemies to the pool when the scene is unloaded.
+/// Respawn enemies after interacting with a checkpoint.
+/// </summary>
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
@@ -86,6 +91,12 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Register an enemy to the EnemyManager, using enemy spawner in Level Scene.
+    /// For returning to the pool when the level scene is unloaded.
+    /// </summary>
+    /// <param name="enemy"></param>
+    /// <param name="sceneName"></param>
     public void RegisterEnemy(GameObject enemy, string sceneName)
     {
         EnemyData enemyData = new(enemy, sceneName);

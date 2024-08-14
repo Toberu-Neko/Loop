@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.Localization;
-
 /// <summary>
 /// This class is used to give the player a time skill item when the boss dies.
 /// </summary>

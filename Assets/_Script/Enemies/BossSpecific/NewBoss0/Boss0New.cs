@@ -3,6 +3,7 @@ using UnityEngine.Localization;
 
 public class Boss0New : BossBase
 {
+    #region States
     public B0N_Idle IdleState { get; private set; }
     public B0N_AngryState AngryState { get; private set; }
     public B0N_InitAnim InitAnim { get; private set; }
@@ -22,6 +23,7 @@ public class Boss0New : BossBase
     public B0N_StunState StunState { get; private set; }
     public B0N_KinematicState KinematicState { get; private set; }
     public B0N_DeadState DeadState { get; private set; }
+    #endregion
 
     [field: SerializeField] public Transform DeadParticleTrans { get; private set; }
     [field: SerializeField] public B0N_StateData StateData { get; private set; }
@@ -31,6 +33,7 @@ public class Boss0New : BossBase
 
     [field: SerializeField] public GameObject EnterSlowTrigger { get; private set; }
     private float slowOnTimer;
+    // Exit door will be activated when the boss is defeated
     [SerializeField] private GameObject exitDoor;
 
     private bool saidTimeSkillTu;
@@ -48,6 +51,7 @@ public class Boss0New : BossBase
 
         saidTimeSkillTu = false;
 
+        #region New States
         IdleState = new B0N_Idle(this, StateMachine, "idle", StateData.idleStateData, this);
         AngryState = new B0N_AngryState(this, StateMachine, "angry", this);
         InitAnim = new B0N_InitAnim(this, StateMachine, "init", this);
@@ -66,6 +70,7 @@ public class Boss0New : BossBase
         StunState = new B0N_StunState(this, StateMachine, "stun", StateData.stunStateData, this);
         KinematicState = new B0N_KinematicState(this, StateMachine, "stun", this);
         DeadState = new B0N_DeadState(this, StateMachine, "dead", this);
+        #endregion
 
         slowOnTimer = 0f;
         EnterSlowTrigger.SetActive(false);
@@ -109,12 +114,6 @@ public class Boss0New : BossBase
         Combat.OnGoToStunState += OnGotoStunState;
     }
 
-    public void HandleAlreadyDefeated()
-    {
-        if(exitDoor != null)
-            exitDoor.SetActive(true);
-    }
-
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -140,6 +139,7 @@ public class Boss0New : BossBase
         EnterSlowTrigger.SetActive(true);
         slowOnTimer = time;
     }
+
 
     private void GotoKinematicState(float time)
     {
@@ -185,6 +185,12 @@ public class Boss0New : BossBase
     private new void HandleEnterBossRoom()
     {
         StateMachine.ChangeState(InitAnim);
+    }
+
+    public void HandleAlreadyDefeated()
+    {
+        if (exitDoor != null)
+            exitDoor.SetActive(true);
     }
 
     public void SpawnDnagerParticle()

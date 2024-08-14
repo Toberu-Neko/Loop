@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible for managing the player's inventory.
+/// Saves and loads the player's inventory data.
+/// </summary>
 public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
 {
     public static PlayerInventoryManager Instance { get; private set; }

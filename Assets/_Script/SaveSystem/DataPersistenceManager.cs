@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 using System;
 using Eflatun.SceneReference;
 
+/// <summary>
+/// This manager is responsible for saving and loading game data.
+/// Also responsible for saving and loading option data.
+/// Dependencies: ObjectPoolManager.cs, LoadSceneManager.cs
+/// </summary>
 public class DataPersistenceManager : MonoBehaviour
 {
     [Header("Debugging")]
@@ -151,7 +156,6 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // TODO: Load when enter boss room, solved with manually calling load game on bossbase script
         if (scene.name == baseScene.Name)
         {
             LoadOptionData();
@@ -180,7 +184,11 @@ public class DataPersistenceManager : MonoBehaviour
         firstTimeLoad = true;
     }
 
-
+    /// <summary>
+    /// This method is used to load the game data.
+    /// Cant load the objects in the level scene.
+    /// Using Start() method in the level scene to load the objects instead.
+    /// </summary>
     public void LoadGame()
     {
         DataPersistanceObjects = FindAllDataPersistenceObjects();
@@ -220,6 +228,11 @@ public class DataPersistenceManager : MonoBehaviour
         OnLoad?.Invoke();
     }
 
+    /// <summary>
+    /// This method is used to save the game data.
+    /// Will automatically find all data persistance objects in the scene, including the inactive ones and objects in the level scene.
+    /// </summary>
+    /// <param name="gotoSavepoint"></param>
     public void SaveGame(bool gotoSavepoint = true)
     {
         DataPersistanceObjects = FindAllDataPersistenceObjects();

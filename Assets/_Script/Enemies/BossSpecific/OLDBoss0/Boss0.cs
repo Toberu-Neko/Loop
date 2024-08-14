@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Old boss 0 can be found in the test level.
+/// Just for fun.
+/// </summary>
 public class Boss0 : BossBase
 {
     public B0_IdleState IdleState { get; private set; }

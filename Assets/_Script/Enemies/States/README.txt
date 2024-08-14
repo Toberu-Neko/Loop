@@ -1,0 +1,1 @@
+These states can be reuse be inheriting them.

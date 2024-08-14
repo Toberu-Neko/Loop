@@ -8,15 +8,20 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// The GameManager class is a singleton class that manages the game's global settings.
+/// Like pausing the game, time manipulation, changing scenes, global volume, and interacting with savepoints.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
-    // Pause, TimeStop, TimeSlow, ChangeScene, OnSavepoint
-
     public static GameManager Instance { get; private set; }
 
     public bool IsPaused { get; private set; }
     public bool TimeStopAll { get; private set; } = false;
     public bool TimeSlowAll { get; private set; } = false;
+    [field: SerializeField] public PlayerInput PlayerInput { get; private set; }
+    [SerializeField] private GameObject loadingObj;
+    [SerializeField] private VirtualMouseUI virtualMouseUI;
 
     public event Action<string, LocalizedString> OnSavepointInteracted;
 
@@ -24,13 +29,11 @@ public class GameManager : MonoBehaviour
     public event Action OnAllTimeStopStart;
 
     [field: SerializeField, Range(0.001f, 1f)] public float TimeSlowMultiplier { get; private set; } = 0.2f;
-    [field: SerializeField] public PlayerInput PlayerInput { get; private set; }
-    [SerializeField] private GameObject loadingObj;
-    [SerializeField] private VirtualMouseUI virtualMouseUI;
 
     public event Action OnAllTimeSlowStart;
     public event Action OnAllTimeSlowEnd;
-    
+
+    #region Global Volume Variables
     [Header("Global Volume")]
     [SerializeField] private Volume globalVolume;
     [SerializeField] private VolumeProfile dayVolumeProfile;
@@ -48,6 +51,7 @@ public class GameManager : MonoBehaviour
     private Vignette dayVignette;
     private Vignette nightVignette;
     private Vignette inTempleVignette;
+    #endregion
 
     public Dictionary<string, Savepoint> Savepoints { get; private set; }
 
@@ -63,6 +67,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Unity Callbacks
     private void Awake()
     {
         if (Instance == null)
@@ -74,14 +79,16 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        SceneManager.sceneLoaded += HandleSceneLoadedForGlobalVolume;
+
+        #region Initialize Variables
         IsPaused = false;
         TimeStopAll = false;
         TimeSlowAll = false;
         playerInDanger = false;
 
         Savepoints = new();
-
-        SceneManager.sceneLoaded += HandleSceneLoadedForGlobalVolume;
 
         dayVolumeProfile.TryGet(out dayVignette);
         nightVolumeProfile.TryGet(out nightVignette);
@@ -96,42 +103,8 @@ public class GameManager : MonoBehaviour
 
         inTempleVignette.color.value = orgVigColor;
         inTempleVignette.intensity.value = orgIntensity;
-
+        #endregion
     }
-
-    private void HandleSceneLoadedForGlobalVolume(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.name == "MultiSceneBase" || scene.name == "MainMenu")
-        {
-            return;
-        }
-
-        if ((scene.name == "Level1-0" || scene.name == "Level1-1" || scene.name == "Level1-2-1") && mode == LoadSceneMode.Additive)
-        {
-            if(globalVolume.profile != nightVolumeProfile)
-            {
-                Debug.Log("Change to night");
-                globalVolume.profile = nightVolumeProfile;
-            }
-        }
-        else if ((scene.name == "Level1-3" || scene.name == "Level1-3-1" || scene.name == "Level1-4(BOSS)") && mode == LoadSceneMode.Additive)
-        {
-            if(globalVolume.profile != dayVolumeProfile)
-            {
-                Debug.Log("Change to day");
-                globalVolume.profile = dayVolumeProfile;
-            }
-        }
-        else
-        {
-            if(globalVolume.profile != inTempleVolumeProfile)
-            {
-                Debug.Log("Change to temple");
-                globalVolume.profile = inTempleVolumeProfile;
-            }
-        }
-    }
-
 
     private void Start()
     {
@@ -143,6 +116,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // Set hurt vignette effect when player is in danger.
         if (playerInDanger)
         {
             if(globalVolume.profile == dayVolumeProfile)
@@ -171,11 +145,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetPlayerDanger(bool vol)
-    {
-        playerInDanger = vol;
-    }
-
+    // Unsubscribe events and clear the savepoints dictionary when the GameManager is disabled.
     private void OnDisable()
     {
         foreach (var savepoint in Savepoints)
@@ -192,6 +162,48 @@ public class GameManager : MonoBehaviour
         nightVignette.color.value = orgVigColor;
         nightVignette.intensity.value = orgIntensity;
     }
+    #endregion
+
+    #region Global Volume Functions
+    // Change the global volume profile based on the scene loaded.
+    private void HandleSceneLoadedForGlobalVolume(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MultiSceneBase" || scene.name == "MainMenu")
+        {
+            return;
+        }
+
+        if ((scene.name == "Level1-0" || scene.name == "Level1-1" || scene.name == "Level1-2-1") && mode == LoadSceneMode.Additive)
+        {
+            if (globalVolume.profile != nightVolumeProfile)
+            {
+                Debug.Log("Change to night");
+                globalVolume.profile = nightVolumeProfile;
+            }
+        }
+        else if ((scene.name == "Level1-3" || scene.name == "Level1-3-1" || scene.name == "Level1-4(BOSS)") && mode == LoadSceneMode.Additive)
+        {
+            if (globalVolume.profile != dayVolumeProfile)
+            {
+                Debug.Log("Change to day");
+                globalVolume.profile = dayVolumeProfile;
+            }
+        }
+        else
+        {
+            if (globalVolume.profile != inTempleVolumeProfile)
+            {
+                Debug.Log("Change to temple");
+                globalVolume.profile = inTempleVolumeProfile;
+            }
+        }
+    }
+
+    public void SetPlayerDanger(bool vol)
+    {
+        playerInDanger = vol;
+    }
+    #endregion
 
     public void RegisterSavePoints(Savepoint savePoint)
     {
@@ -230,13 +242,13 @@ public class GameManager : MonoBehaviour
         EnemyManager.Instance.ResetTempData();
     }
 
-
     public Vector3 GetSavepointTeleportPos(string savepointName)
     {
         Savepoints.TryGetValue(savepointName, out Savepoint savepoint);
         return savepoint.TeleportTransform.position;
     }
 
+    // Reset the temporary save and load the start animation scene, for the first boss fight.
     public void LoadStartAnimScene()
     {
         DataPersistenceManager.Instance.GameData.lastInteractedSavepointID = "Spawn";

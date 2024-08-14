@@ -1,16 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.Localization;
-using UnityEngine.UI;
 using UnityEngine.Video;
 
+/// <summary>
+/// This manager is responsible for managing all UI in the ingame scene.
+/// </summary>
 public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance { get; private set; }
 
+    #region UI Variables
     [SerializeField] private PlayerInputHandler inputHandler;
     [SerializeField] private InputSystemUIInputModule inputSystemUIInputModule;
     [SerializeField] private GameObject savedNotificationObj;
@@ -61,6 +63,7 @@ public class UI_Manager : MonoBehaviour
 
     private SavepointUIMain savepointUIMain;
     private SavepointUIInventory savepointUIInventory;
+    #endregion
 
     private List<Savepoint> savepoints = new();
     private List<string> savePointNames = new();
@@ -77,6 +80,7 @@ public class UI_Manager : MonoBehaviour
             return;
         }
 
+        #region Initialize UI
         changeSceneUI.SetActive(false);
         savedNotificationObj.SetActive(false);
 
@@ -116,8 +120,10 @@ public class UI_Manager : MonoBehaviour
         savepoints = new();
 
         loadingBar.Init(1f);
+        #endregion
     }
 
+    // Event subscription
     private void Start()
     {
         GameManager.Instance.OnChangeSceneGoUp += HandleChangeSceneGoUp;
@@ -133,6 +139,7 @@ public class UI_Manager : MonoBehaviour
         LoadSceneManager.Instance.OnLoadingSingleProgress += HandleLoadingSingleProgress;
     }
 
+    // Event unsubscription
     private void OnDisable()
     {
         GameManager.Instance.OnChangeSceneGoUp -= HandleChangeSceneGoUp;
@@ -149,6 +156,10 @@ public class UI_Manager : MonoBehaviour
 
     private void Update()
     {
+        // inputSystemUIInputModule and the player input compnent can work with each other, so using inputSystemUIInputModule here.
+        // 
+        // The player can open the pause menu by pressing the cancel button.
+        // The player can close menus automatically by pressing the cancel button again.
         if (inputSystemUIInputModule.cancel.action.triggered)
         {
             if(loadingObj.activeInHierarchy || dieUI.gameObject.activeInHierarchy)
@@ -187,6 +198,8 @@ public class UI_Manager : MonoBehaviour
             }
         }
 
+        // Pressing "\" to turn off the UI.
+        // Mainly used for recording videos and taking screenshots.
         if (inputHandler.TurnOffUI)
         {
             inputHandler.UseTurnOffUIInput();

@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
 
+/// <summary>
+/// This is an alternative to do UI navigation with a virtual mouse.
+/// Cause of the equipment system, we need to use a virtual mouse to navigate the UI.
+/// </summary>
 public class VirtualMouseUI : MonoBehaviour
 {
     private enum GameDevice
@@ -31,11 +35,27 @@ public class VirtualMouseUI : MonoBehaviour
         UpdateCursor();
     }
 
+    private void Update()
+    {
+        transform.localScale = Vector3.one * (1920f / Screen.width);
+        transform.SetAsLastSibling();
+    }
+
+    private void LateUpdate()
+    {
+        Vector2 virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
+        virtualMousePosition.x = Mathf.Clamp(virtualMousePosition.x, 0, Screen.width);
+        virtualMousePosition.y = Mathf.Clamp(virtualMousePosition.y, 0, Screen.height);
+
+        InputState.Change(virtualMouseInput.virtualMouse.position, virtualMousePosition);
+    }
+
     private void OnDisable()
     {
         InputSystem.onActionChange -= HandleActionChange;
     }
 
+    // This method is called when the InputSystem detects a change in the input actions
     private void HandleActionChange(object arg1, InputActionChange inputActionChange)
     {
         if(inputActionChange == InputActionChange.ActionPerformed && arg1 is InputAction)
@@ -79,45 +99,32 @@ public class VirtualMouseUI : MonoBehaviour
         UpdateCursor();
     }
 
+    /// <summary>
+    /// This function is used to show or hide the cursor based on the active game device and the UI state
+    /// </summary>
     public void UpdateCursor()
     {
         if (activeGameDevice == GameDevice.Gamepad && isUIOpen)
         {
-            Show();
+            ShowCursor();
         }
         else
         {
-            Hide();
+            HideCursor();
         }
     }
 
-    private void Show()
+    private void ShowCursor()
     {
         virtualMouseInput.cursorSpeed = orgCursorSpeed * Screen.width / 1920f;
         MouseObj.transform.localScale = Vector3.one * (Screen.width / 1920f);
         MouseObj.SetActive(true);
     }
 
-    private void Hide()
+    private void HideCursor()
     {
         virtualMouseInput.cursorSpeed = 0f;
         MouseObj.SetActive(false);
     }
 
-    private void Update()
-    {
-        transform.localScale = Vector3.one * (1920f/ Screen.width);
-        transform.SetAsLastSibling();
-    }
-
-    private void LateUpdate()
-    {
-        Vector2 virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
-        virtualMousePosition.x = Mathf.Clamp(virtualMousePosition.x, 0, Screen.width);
-        virtualMousePosition.y = Mathf.Clamp(virtualMousePosition.y, 0, Screen.height);
-
-        InputState.Change(virtualMouseInput.virtualMouse.position, virtualMousePosition);
-
-        // Debug.Log("Input in VMouse: Cancel: " + virtualMouseInput.backButtonAction.action.ReadValue<float>());
-    }
 }

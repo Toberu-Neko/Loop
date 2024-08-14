@@ -1,8 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
+/// <summary>
+/// This manager is responsible for changing the locale of the game.
+/// </summary>
 public class LocalizationManager : MonoBehaviour
 {
     public static LocalizationManager Instance { get; private set; }

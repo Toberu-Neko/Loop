@@ -19,10 +19,11 @@ public class Stats : CoreComponent
     public bool CounterAttackable { get; private set; }
     public bool InCombat { get; private set; } = false;
     public bool Attackable { get; private set; } = true;
-
-    public bool IsAngry { get; set; } = false;
     public bool Invincible { get; private set; } = false;
     public bool InvinvibleAfterDamaged { get; private set; } = false;
+
+    // For Enemy
+    public bool IsAngry { get; set; } = false;
     public bool Knockable { get; private set; } = true;
 
     public bool IsRewindingPosition { get; private set; } = false;

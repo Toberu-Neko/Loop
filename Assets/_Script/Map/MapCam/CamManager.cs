@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible for managing the cameras in the game.
+/// </summary>
 public class CamManager : MonoBehaviour
 {
     public static CamManager Instance { get; private set;}
@@ -41,19 +44,7 @@ public class CamManager : MonoBehaviour
         canShackCamera = true;
         MainCamera = Camera.main;
     }
-    /*
-    #region Register/Unregister Cams
-    public void RegisterCam(CinemachineVirtualCamera vcam)
-    {
-        cams.Add(vcam);
-        vcam.enabled = false;
-    }
-    public void UnregisterCam(CinemachineVirtualCamera vcam)
-    {
-        cams.Remove(vcam);
-    }
-    #endregion
-    */
+
     #region Swap/Switch Cameras
 
     public void EnterCamBoarder(CinemachineVirtualCamera vcam)

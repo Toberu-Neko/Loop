@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// This project manages all instantiated objects in this class.
+/// For saving memory, we use object pooling to reuse objects.
+/// </summary>
 public class ObjectPoolManager : MonoBehaviour
 {
     public static ObjectPoolManager Instance { get; private set; }
@@ -42,6 +46,7 @@ public class ObjectPoolManager : MonoBehaviour
         SetupEmpties();
     }
 
+    // Create DDOL parent objects for each pool type
     private void SetupEmpties()
     {
         objectPoolEmptyHolder = new GameObject("Pooled Object");
@@ -64,10 +69,20 @@ public class ObjectPoolManager : MonoBehaviour
         DontDestroyOnLoad(objectPoolEmptyHolder);
     }
 
+    /// <summary>
+    /// This method is used to spawn an object from the pool.
+    /// Without a parent transform.
+    /// </summary>
+    /// <param name="objectToSpawn"></param>
+    /// <param name="spawnPosition"></param>
+    /// <param name="spawnRotation"></param>
+    /// <param name="poolType"></param>
+    /// <returns></returns>
     public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation, PoolType poolType = PoolType.None)
     {
         PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == objectToSpawn.name);
 
+        // If the pool is not found, create a new pool
         if(pool == null)
         {
             pool = new PooledObjectInfo() { LookupString = objectToSpawn.name};
@@ -76,6 +91,7 @@ public class ObjectPoolManager : MonoBehaviour
 
         GameObject spawnableObj = pool.InactiveObjects.FirstOrDefault();
 
+        // If the object is not in the pool, instantiate a new object
         if(spawnableObj == null)
         {
             GameObject parentObject = SetParentObject(poolType);
@@ -96,6 +112,13 @@ public class ObjectPoolManager : MonoBehaviour
         return spawnableObj;
     }
 
+    /// <summary>
+    /// This method is used to spawn an object from the pool.
+    /// With a parent transform.
+    /// </summary>
+    /// <param name="objectToSpawn"></param>
+    /// <param name="parentTransform"></param>
+    /// <returns></returns>
     public static GameObject SpawnObject(GameObject objectToSpawn, Transform parentTransform)
     {
         PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == objectToSpawn.name);
@@ -125,6 +148,11 @@ public class ObjectPoolManager : MonoBehaviour
         return spawnableObj;
     }
 
+    /// <summary>
+    /// This method is used to return an object to the pool.
+    /// Should be called when the object is no longer needed, often in the script of the object itself.
+    /// </summary>
+    /// <param name="obj"></param>
     public static void ReturnObjectToPool(GameObject obj)
     {
         if(obj == null)
@@ -139,6 +167,7 @@ public class ObjectPoolManager : MonoBehaviour
             return;
         }
 
+        // Remove the (Clone) from the object name
         string goName = obj.name.Substring(0, obj.name.Length - 7);
 
         PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
@@ -158,6 +187,10 @@ public class ObjectPoolManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method is used to return all objects to the pool.
+    /// Mostly used when the base scene is unloaded.
+    /// </summary>
     public static void ReturnAllObjectsToPool()
     {
         if(ObjectPools.Count == 0)

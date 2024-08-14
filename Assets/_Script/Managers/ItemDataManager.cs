@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible for managing all the items in the game.
+/// Loads all items from the resources folder and populates the dictionaries when first time opened the game.
+/// </summary>
 public class ItemDataManager : MonoBehaviour
 {
     public static ItemDataManager Instance { get; private set; }
 
+    #region Dictionaries
     public Dictionary<string, SO_Chip> ChipDict { get; private set; }
     public Dictionary<string, SO_MovementSkillItem> MovementSkillDict { get; private set; }
     public Dictionary<string, SO_TimeSkillItem> TimeSkillDict { get; private set; }
@@ -16,7 +21,7 @@ public class ItemDataManager : MonoBehaviour
     public Dictionary<string, SO_WeaponItem> WeaponItemDict { get; private set; }
     public Dictionary<string, SO_Savepoint> SavepointDict { get; private set; }
     public Dictionary<string, SO_Shop> ShopDict { get; private set; }
-
+    #endregion
 
     private void Awake()
     {
@@ -29,6 +34,7 @@ public class ItemDataManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        #region Initialize Dictionaries
         ChipDict = new();
         MovementSkillDict = new();
         TimeSkillDict = new();
@@ -38,21 +44,26 @@ public class ItemDataManager : MonoBehaviour
         WeaponItemDict = new();
         SavepointDict = new();
         ShopDict = new();
+        #endregion
 
-        LoadAndPopulateDictionary("SO_Chip", ChipDict);
-        LoadAndPopulateDictionary("SO_MovementSkill", MovementSkillDict);
-        LoadAndPopulateDictionary("SO_TimeSkill", TimeSkillDict);
-        LoadAndPopulateDictionary("SO_StatusEnhancement", StatusEnhancementDict);
-        LoadAndPopulateDictionary("SO_StoryItem", StoryItemDict);
-        LoadAndPopulateDictionary("SO_ConsumableItem", ConsumableItemDict);
-        LoadAndPopulateDictionary("SO_WeaponItem", WeaponItemDict);
+        LoadAndPopulateItemDictionary("SO_Chip", ChipDict);
+        LoadAndPopulateItemDictionary("SO_MovementSkill", MovementSkillDict);
+        LoadAndPopulateItemDictionary("SO_TimeSkill", TimeSkillDict);
+        LoadAndPopulateItemDictionary("SO_StatusEnhancement", StatusEnhancementDict);
+        LoadAndPopulateItemDictionary("SO_StoryItem", StoryItemDict);
+        LoadAndPopulateItemDictionary("SO_ConsumableItem", ConsumableItemDict);
+        LoadAndPopulateItemDictionary("SO_WeaponItem", WeaponItemDict);
 
+        // Savepoint and Shop dictionaries are different from the item dictionaries.
         LoadAndPopulateSavepointDictionary("SO_Savepoint", SavepointDict);
-
-        
         LoadAndPopulateShopDictionary("SO_Shop", ShopDict);
     }
 
+    /// <summary>
+    /// Provide item ID and get the item from the dictionary.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public SO_ItemsBase TryGetItemFromAllDict(string id)
     {
         SO_ItemsBase item = null;
@@ -72,6 +83,14 @@ public class ItemDataManager : MonoBehaviour
         return item;
     }
 
+    /// <summary>
+    /// Use item ID to get the item from the dictionary, and check if the item is already found in another dictionary.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="dict"></param>
+    /// <param name="id"></param>
+    /// <param name="currentItem">Check if the item is already found in another dictionary</param>
+    /// <returns></returns>
     private SO_ItemsBase CheckDict<T>(Dictionary<string, T> dict, string id, SO_ItemsBase currentItem) where T : SO_ItemsBase
     {
         if (dict.TryGetValue(id, out var tempItem))
@@ -85,8 +104,7 @@ public class ItemDataManager : MonoBehaviour
         return currentItem;
     }
 
-
-    private void LoadAndPopulateDictionary<T>(string folderName, Dictionary<string, T> targetDict) where T : SO_ItemsBase
+    private void LoadAndPopulateItemDictionary<T>(string folderName, Dictionary<string, T> targetDict) where T : SO_ItemsBase
     {
         var items = Resources.LoadAll<T>(folderName);
 
