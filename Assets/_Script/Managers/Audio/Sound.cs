@@ -2,6 +2,9 @@ using UnityEngine.Audio;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// A class that holds custom sound data
+/// </summary>
 [Serializable]
 public class Sound
 {

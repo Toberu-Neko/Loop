@@ -9,6 +9,8 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public event Action OnMoneyChanged;
 
     public event Action OnTimeSkillChanged;
+
+    #region Inventory Dictionaries
     public SerializableDictionary<string, ItemData> StatusEnhancementInventory { get; private set; }
     public SerializableDictionary<string, ItemData> StoryItemInventory { get; private set; }
     public SerializableDictionary<string, ItemData> WeaponInventory { get; private set; }
@@ -16,6 +18,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     public SerializableDictionary<string, ItemData> TimeSkillItemInventory { get; private set; }
     public SerializableDictionary<string, ItemData> ConsumablesInventory { get; private set; }
     public SerializableDictionary<string, ItemData> ChipInventory { get; private set; }
+    #endregion
 
     #region Weapon Variables
     public WeaponType[] EquipedWeapon { get; private set; }
@@ -50,6 +53,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         else
             Destroy(gameObject);
 
+        #region Initialize Dictionary
         equipedItems = new();
         SwordMultiplier = new();
         GunMultiplier = new();
@@ -64,10 +68,12 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         TimeSkillItemInventory = new();
         StoryItemInventory = new();
         WeaponInventory = new();
+        #endregion
     }
 
     private void Start()
     {
+        // If data persistance is disabled, then set the default values.
         if (DataPersistenceManager.Instance.DisableDataPersistance)
         {
             Debug.LogError("Data persistance is disabled, so player can't change weapon.");
@@ -89,6 +95,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
     }
 
+    // This is the better way to add items to the inventory, by item ID.
     public void AddItemByID(string id, int amount = 1)
     {
         var item = ItemDataManager.Instance.TryGetItemFromAllDict(id);
@@ -127,6 +134,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
     }
 
+    #region AddItemByType
     public void AddPlayerStatusEnhancementItem(string name, int amount = 1)
     {
         if (StatusEnhancementInventory.ContainsKey(name))
@@ -152,6 +160,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
             CanUseWeaponCount = WeaponInventory.Count;
         }
 
+        // Check if the weapon can be used by the player.
         if (ItemDataManager.Instance.WeaponItemDict.TryGetValue(name, out SO_WeaponItem weaponItem))
         {
             CanUseSword |= weaponItem.unlockSword;
@@ -159,6 +168,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
             CanUseFist |= weaponItem.unlockFist;
         }
 
+        // Automatically equip the weapon if the player can use only one weapon.
         if (CanUseWeaponCount == 2)
         {
             EquipedWeapon = new WeaponType[2];
@@ -175,6 +185,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         }
     }
 
+    // This project doesn't have any movement skill item, so this method is not used.
     public void AddMovemnetSkillItem(string name)
     {
         if(MovementSkillItemInventory.ContainsKey(name))
@@ -212,6 +223,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
             StoryItemInventory.Add(name, new ItemData(1, name));
         }
     }
+    #endregion
 
     #region ConsumableItem
     public void AddConsumableItem(string name, int amount = 1)
@@ -336,6 +348,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
     }
     #endregion
 
+    #region Data Persistance
     public void LoadData(GameData data)
     {
         ChipInventory = new();
@@ -404,6 +417,7 @@ public class PlayerInventoryManager : MonoBehaviour, IDataPersistance
         data.storyItemInventory = StoryItemInventory;
         data.weaponInventory = WeaponInventory;
     }
+    #endregion
 }
 
 [Serializable]

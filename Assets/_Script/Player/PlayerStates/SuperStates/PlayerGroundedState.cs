@@ -133,17 +133,17 @@ public class PlayerGroundedState : PlayerState
             player.InputHandler.UseRegenInput();
             stateMachine.ChangeState(player.RegenState);
         }
-
-        else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.PreBlockState.CheckIfCanBlock() )
-        {
-            stateMachine.ChangeState(player.PreBlockState);
-        }
         else if (jumpInput && yInput < 0 && CollisionSenses.GroundPlatform)
         {
             if (!CollisionSenses.GroundPlatform.collider.CompareTag("Elevator"))
             {
                 Physics2D.IgnoreCollision(player.MovementCollider, CollisionSenses.GroundPlatform.collider, true);
             }
+        }
+
+        else if (player.InputHandler.BlockInput && !isTouchingCeiling && player.PreBlockState.CheckIfCanBlock() )
+        {
+            stateMachine.ChangeState(player.PreBlockState);
         }
         else if (jumpInput && yInput >= 0 && player.JumpState.CanJump() && !isTouchingCeiling)
         {

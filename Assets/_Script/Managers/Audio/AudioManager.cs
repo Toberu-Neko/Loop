@@ -24,15 +24,6 @@ public class AudioManager : MonoBehaviour
         threeD
     }
 
-    public void PlayButtonHover(Transform spawnTransform)
-    {
-        PlaySoundFX(buttonHover, spawnTransform, SoundType.twoD);
-    }
-
-    public void PlayButtonClick(Transform spawnTransform)
-    {
-        PlaySoundFX(buttonClick, spawnTransform, SoundType.twoD);
-    }
 
     #region Set Volume
 
@@ -78,6 +69,13 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// This function is used to play sound effect
+    /// </summary>
+    /// <param name="sound">The sound effect that you want to play</param>
+    /// <param name="spawnTransform">The position where the sound effect is played</param>
+    /// <param name="type">2D or 3D sound effect</param>
     public void PlaySoundFX(Sound sound, Transform spawnTransform, SoundType type)
     {
         if(sound == null)
@@ -123,6 +121,7 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(ReturnSFXObj(audioSource.gameObject, time));
     }
 
+    // Return the sound effect object to the object pool after the sound effect is finished playing
     private IEnumerator ReturnSFXObj(GameObject sfxObj, float time)
     {
         yield return new WaitForSecondsRealtime(time);
@@ -130,6 +129,11 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    #region BGM
+    /// <summary>
+    /// Play BGM
+    /// </summary>
+    /// <param name="name"> BGM name, need to be added in the AudioManager</param>
     public void PlayBGM(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -160,19 +164,9 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
-    public void StopBGM(string name, float time = 1f)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-
-        if (s == null)
-        {
-            Debug.LogWarning("­µ®Ä¦WºÙ" + name + "¿ù»~");
-            return;
-        }
-
-        StartCoroutine(IE_StopBGM(s, time));
-    }
-
+    /// <summary>
+    /// Stop all BGM using fade out effect
+    /// </summary>
     public void StopAllBGM()
     {
         foreach (var sound in sounds)
@@ -184,7 +178,26 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    IEnumerator IE_StopBGM(Sound s, float time)
+    /// <summary>
+    /// Stop BGM with fade out effect
+    /// </summary>
+    /// <param name="name">BGM name, need to be addded in the AudioManager</param>
+    /// <param name="time">Fade out time</param>
+    public void StopBGM(string name, float time = 1f)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        if (s == null)
+        {
+            Debug.LogWarning("BGM Name " + name + "Error");
+            return;
+        }
+
+        StartCoroutine(IE_StopBGM(s, time));
+    }
+
+
+    private IEnumerator IE_StopBGM(Sound s, float time)
     {
         while(s.source.volume > 0)
         {
@@ -194,5 +207,18 @@ public class AudioManager : MonoBehaviour
 
         s.source.Stop();
     }
+    #endregion
+
+    #region Play Button Sound
+    public void PlayButtonHover(Transform spawnTransform)
+    {
+        PlaySoundFX(buttonHover, spawnTransform, SoundType.twoD);
+    }
+
+    public void PlayButtonClick(Transform spawnTransform)
+    {
+        PlaySoundFX(buttonClick, spawnTransform, SoundType.twoD);
+    }
+    #endregion
 
 }
