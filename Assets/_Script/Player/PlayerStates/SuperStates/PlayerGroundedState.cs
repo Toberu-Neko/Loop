@@ -57,15 +57,17 @@ public class PlayerGroundedState : PlayerState
     {
         base.LogicUpdate();
 
+        #region Input Checks
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
         jumpInput = player.InputHandler.JumpInput;
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
+        #endregion
 
         #region Sword
         if (player.InputHandler.AttackInput && weaponManager.CurrentWeaponType == WeaponType.Sword && !isTouchingCeiling &&
-            player.SwordHubState.CheckIfCanAttack() && Stats.Attackable)
+            player.SwordHubState.CheckIfCanAttack())
         {
             stateMachine.ChangeState(player.SwordHubState);
         }

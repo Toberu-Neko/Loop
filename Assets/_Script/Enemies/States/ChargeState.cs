@@ -1,6 +1,4 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ChargeState : EnemyState
 {
@@ -67,7 +65,6 @@ public class ChargeState : EnemyState
         {
             CheckShouldPlaceAfterImage();
 
-
             if (Stats.IsAngry)
             {
                 Movement.SetVelocityX(stateData.angryChargeSpeed * Movement.FacingDirection);
@@ -81,7 +78,6 @@ public class ChargeState : EnemyState
         {
             Movement.SetVelocityX(0f);
         }
-
 
         if (Time.time >= StartTime + stateData.chargeTime && !isChargeTimeOver)
         {

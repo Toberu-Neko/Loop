@@ -6,34 +6,33 @@ using UnityEngine;
 /// </summary>
 public class Movement : CoreComponent
 {
+    #region Variables
     public Rigidbody2D RB { get; private set; }
     private RigidbodyType2D orgRBBodyType;
 
+    // For CollisionSenses, for decresing dependency.
+    public Slope Slope { get; set; }
     public int FacingDirection { get; private set; }
-
     public bool CanSetVelocity { get; private set; }
-
     public Vector2 CurrentVelocity { get; private set; }
     public Transform ParentTransform { get; private set; }
-
-    private Vector2 velocityWorkspace;
     public Vector2 TimeStopVelocity { get; private set; }
-
     public Vector2 TimeSlowVelocity { get; private set; }
-    private float timeSlowOrgGravityScale;
     public float OrginalGravityScale { get; set; }
+    private Vector2 velocityWorkspace;
+    private float timeSlowOrgGravityScale;
     private float gravityWorkspace;
-
     private Vector2 previousPosition;
 
     public event Action OnFlip;
     public event Action OnStuck;
 
-    public Slope Slope { get; set; }
     private Stats stats;
     private bool inKinematicState;
     private Vector3 v3WorkSpace;
+    #endregion
 
+    #region Unity Callback Functions
     protected override void Awake()
     {
         base.Awake();
@@ -45,6 +44,7 @@ public class Movement : CoreComponent
 
     private void OnEnable()
     {
+        #region Initialization
         Slope = new();
         previousPosition = Vector2.zero;
         velocityWorkspace = Vector2.zero;
@@ -62,6 +62,7 @@ public class Movement : CoreComponent
         }
 
         orgRBBodyType = RB.bodyType;
+        #endregion
 
         stats.OnTimeStopEnd += HandleTimeStopEnd;
         stats.OnTimeStopStart += HandleTimeStopStart;
@@ -113,6 +114,8 @@ public class Movement : CoreComponent
             previousPosition = ParentTransform.position;
         }
     }
+    #endregion
+
     public void Teleport(Vector2 position)
     {
         RB.position = position;
@@ -139,7 +142,7 @@ public class Movement : CoreComponent
     }
     #endregion
 
-    #region TimeSlow
+     #region TimeSlow
     private void HandleTimeSlowStart()
     {
         gravityWorkspace = RB.gravityScale;

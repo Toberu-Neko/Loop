@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
     #region Unity Callback Functions
     private void Awake()
     {
+        #region Get Components
         Core = GetComponentInChildren<Core>();
         stats = Core.GetCoreComponent<Stats>();
         movement = Core.GetCoreComponent<Movement>();
@@ -137,6 +138,7 @@ public class Player : MonoBehaviour
         srDefaultColor = SR.color;
         MovementCollider = GetComponent<BoxCollider2D>();
         WeaponManager = GetComponent<PlayerWeaponManager>();
+        #endregion
 
         #region New Player States
         StateMachine = new PlayerStateMachine();

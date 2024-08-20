@@ -13,21 +13,18 @@ public class E3_ChargeState : ChargeState
     public override void Enter()
     {
         base.Enter();
-
         Combat.SetNormalBlock(true);
     }
 
     public override void Exit()
     {
         base.Exit();
-
         Combat.SetNormalBlock(false);
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
         if (gotoNextState)
         {   
             if (isPlayerInMinAgroRange)

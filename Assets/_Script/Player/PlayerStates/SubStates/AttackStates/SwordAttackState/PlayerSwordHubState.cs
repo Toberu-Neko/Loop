@@ -82,7 +82,7 @@ public class PlayerSwordHubState : PlayerSwordAttackState
         holdEnough = true;
     }
 
-    public bool CheckIfCanAttack() => canAttack;
+    public bool CheckIfCanAttack() => canAttack && Stats.Attackable;
     public void SetCanAttackFalse() => canAttack = false;
     public void ResetCanAttack() => canAttack = true;
 }
