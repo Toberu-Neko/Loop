@@ -154,6 +154,7 @@ public class UI_Manager : MonoBehaviour
 
     }
 
+    // For Escape key and "\" key
     private void Update()
     {
         // inputSystemUIInputModule and the player input compnent can work with each other, so using inputSystemUIInputModule here.
@@ -303,7 +304,8 @@ public class UI_Manager : MonoBehaviour
     }
 
     #region Change Scene
-
+    // This region is responsible for enabling the change scene UI and animating it.
+    // Animations are different for each direction.
     public void HandleLoadingSingleProgress(float progress)
     {
         loadingBar.UpdateHealthBar(1f - progress);

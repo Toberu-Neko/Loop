@@ -176,6 +176,9 @@ public class DataPersistenceManager : MonoBehaviour
         return new List<IDataPersistance>(dataPersistanceObjects);
     }
 
+    /// <summary>
+    /// Create a new game data.
+    /// </summary>
     public void NewGame()
     {
         GameData = new();

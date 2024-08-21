@@ -12,6 +12,9 @@ public class Core : MonoBehaviour
 
     [field: SerializeField] public CoreData CoreData { get; private set; }
 
+    /// <summary>
+    /// Should be called in the Update() of the main object controller script.
+    /// </summary>
     public void LogicUpdate()
     {
         foreach (CoreComponent compent in coreComponents)
@@ -20,6 +23,9 @@ public class Core : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Should be called in the LateUpdate() of the main object controller script.
+    /// </summary>
     public void LateLogicUpdate()
     {
         foreach (CoreComponent compent in coreComponents)
@@ -28,6 +34,9 @@ public class Core : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Should be called in the FixedUpdate() of the main object controller script.
+    /// </summary>
     public void PhysicsUpdate()
     {
         foreach (CoreComponent compent in coreComponents)

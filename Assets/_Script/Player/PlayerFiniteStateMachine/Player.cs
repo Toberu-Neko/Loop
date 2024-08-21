@@ -196,6 +196,9 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         EnemyCollisionOn();
+
+        #region Event Subscriptions
+
         stats.Health.OnCurrentValueZero += HandleHealthZero;
         stats.OnInvincibleStart += Stats_OnInvincibleStart;
         stats.Health.OnValueChanged += HandleValueChanged;
@@ -205,6 +208,7 @@ public class Player : MonoBehaviour
         combat.OnDamaged += OnDamaged_IgnoreEnemy;
 
         WeaponManager.OnWeaponChanged += HandleWeaponChanged;
+        #endregion
     }
 
     private void Start()
@@ -212,17 +216,22 @@ public class Player : MonoBehaviour
         gameManager = GameManager.Instance;
         StateMachine.Initialize(ChangeSceneState);
 
+        #region Event Subscriptions
+        // Can't do this in OnEnable because it will be called before Start
         gameManager.OnChangeSceneGoUp += HandleChangeSceneToUp;
         gameManager.OnChangeSceneGoDown += HandleChangeSceneToDown;
         gameManager.OnChangeSceneGoRight += HandleChangeSceneToRight;
         gameManager.OnChangeSceneGoLeft += HandleChangeSceneToLeft;
         gameManager.OnChangeSceneFinished += HandleChangeSceneFinished;
+        #endregion
 
         HandleWeaponChanged();
     }
 
+
     private void OnDisable()
     {
+        #region Event Unsubscriptions
         gameManager.OnChangeSceneGoUp -= HandleChangeSceneToUp;
         gameManager.OnChangeSceneGoDown -= HandleChangeSceneToDown;
         gameManager.OnChangeSceneGoRight -= HandleChangeSceneToRight;
@@ -238,6 +247,7 @@ public class Player : MonoBehaviour
         combat.OnDamaged -= OnDamaged_IgnoreEnemy;
 
         WeaponManager.OnWeaponChanged -= HandleWeaponChanged;
+        #endregion
     }
 
     private void Update()

@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Stats : CoreComponent
 {
+    #region Variables
     [field: SerializeField] public CoreStatSystem Health { get; private set; }
     [field: SerializeField] public CoreStatSystem Stamina { get; private set; }
 
@@ -61,6 +62,7 @@ public class Stats : CoreComponent
     public event Action OnTimeSlowEnd;
 
     public event Action<float> OnInvincibleStart;
+    #endregion
 
     #region Overrides
 
@@ -68,18 +70,21 @@ public class Stats : CoreComponent
     {
         base.Awake();
 
+        #region Initialize
         Health.MaxValue = core.CoreData.maxHealth;
         Stamina.MaxValue = core.CoreData.maxStamina;
         staminaRecoveryRate = core.CoreData.staminaRecoveryRate;
         perfectBlockAttackDuration = core.CoreData.perfectBlockAttackDuration;
         invincibleDurationAfterDamaged = core.CoreData.invincibleDurationAfterDamaged;
         combatTimer = core.CoreData.combatTimer;
+        #endregion
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
+        // Combat Timer
         if (IsTimeStopped || IsTimeSlowed)
         {
             lastCombatTime += Time.deltaTime;
@@ -89,6 +94,7 @@ public class Stats : CoreComponent
             InCombat = false;
         }
 
+        // Stamina Recovery
         if (!InCombat && !Stamina.CurrentValue.Equals(Stamina.MaxValue))
         {
             Stamina.Increase(staminaRecoveryRate * Time.deltaTime);
@@ -192,6 +198,7 @@ public class Stats : CoreComponent
     #endregion
 
     #region TimeStop
+    // Called by Core Component: TimeStop
     public void SeTimeStopTrue()
     {
         InCombat = true;
@@ -212,6 +219,8 @@ public class Stats : CoreComponent
     #endregion
 
     #region TimeSlow
+
+    // Called by Core Component: TimeSlow
     public void SetTimeSlowTrue()
     {
         InCombat = true;

@@ -90,6 +90,7 @@ public class Movement : CoreComponent
 
         if (Slope.hasCollisionSenses)
         {
+            // Disable gravity when on slope.
             if (Slope.IsOnSlope)
             {
                 SetGravityZero();
@@ -136,13 +137,17 @@ public class Movement : CoreComponent
         SetVelocity(TimeStopVelocity);
     }
     
+    /// <summary>
+    /// For changing the velocity of the object in time stop.
+    /// </summary>
+    /// <param name="value"></param>
     public void SetTimeStopVelocity(Vector2 value)
     {
         TimeStopVelocity = value;
     }
     #endregion
 
-     #region TimeSlow
+    #region TimeSlow
     private void HandleTimeSlowStart()
     {
         gravityWorkspace = RB.gravityScale;
@@ -156,6 +161,10 @@ public class Movement : CoreComponent
         SetVelocity(TimeSlowVelocity);
     }
 
+    /// <summary>
+    /// For changing the velocity of the object in time slow.
+    /// </summary>
+    /// <param name="value"></param>
     public void SetTimeSlowVelocity(Vector2 value)
     {
         TimeSlowVelocity = value;
@@ -198,6 +207,12 @@ public class Movement : CoreComponent
         FacingDirection = facingDirection;
     }
 
+    /// <summary>
+    /// Sets the velocity of the rigidbody, with the given velocity, angle and direction.
+    /// </summary>
+    /// <param name="velocity"></param>
+    /// <param name="angle">Normalized vector2</param>
+    /// <param name="direction"> 1 = right, -1 = left</param>
     public void SetVelocity(float velocity, Vector2 angle, int direction)
     {
         angle.Normalize();
@@ -206,6 +221,11 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Sets the velocity of the rigidbody, with the given velocity and direction.
+    /// </summary>
+    /// <param name="velocity"></param>
+    /// <param name="direction"> Normalized vector2</param>
     public void SetVelocity(float velocity, Vector2 direction)
     {
         velocityWorkspace = direction * velocity;
@@ -213,12 +233,22 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Sets the velocity of the rigidbody, with the given velocity.
+    /// </summary>
+    /// <param name="VectorVelocity">Unnormalized vector2</param>
     public void SetVelocity(Vector2 VectorVelocity)
     {
         velocityWorkspace = VectorVelocity;
 
         SetFinalVelocity();
     }
+
+    /// <summary>
+    /// Sets the X velocity of the rigidbody, with the given velocity and direction.
+    /// </summary>
+    /// <param name="velocity"></param>
+    /// <param name="ignoreSlope"> Can be used when flying, to ignore the slope.</param>
     public void SetVelocityX(float velocity, bool ignoreSlope = false)
     {
         velocityWorkspace.Set(velocity, CurrentVelocity.y);
@@ -232,12 +262,20 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Sets the Y velocity of the rigidbody, with the given velocity.
+    /// </summary>
+    /// <param name="velocity"></param>
     public void SetVelocityY(float velocity)
     {
         velocityWorkspace.Set(CurrentVelocity.x, velocity);
 
         SetFinalVelocity();
     }
+
+    /// <summary>
+    /// Sets the velocity of the rigidbody to zero.
+    /// </summary>
     public void SetVelocityZero()
     {
         velocityWorkspace = Vector2.zero;
@@ -245,6 +283,10 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Sets the angular velocity of the rigidbody, primarily used for rotating objects.
+    /// </summary>
+    /// <param name="velocity"></param>
     public void SetAngularVelocity(float velocity)
     {
         RB.angularVelocity = velocity;
@@ -292,6 +334,11 @@ public class Movement : CoreComponent
             }
         }
     }
+
+    /// <summary>
+    /// Mainly used for knockback, to make object uncontrollable.
+    /// </summary>
+    /// <param name="a"></param>
     public void SetCanSetVelocity(bool a)
     {
         CanSetVelocity = a;

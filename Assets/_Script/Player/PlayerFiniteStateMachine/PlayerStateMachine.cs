@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerStateMachine
 {
+    /// <summary>
+    /// The current state of the player, can be changed by calling ChangeState(), usually from other PlayerStates's LogicUpdate().
+    /// </summary>
     public PlayerState CurrentState { get; private set; }
 
     /// <summary>

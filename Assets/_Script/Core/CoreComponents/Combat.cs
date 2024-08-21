@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Combat related stuff, block, perfect block.
+/// Combat related stuff, block, perfect block.<para> </para>
+/// If you don't want to set a collider on this object, you can set it on the parent object, and add an intermediate script using these interfaces.
 /// </summary>
 public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamageable, ISlowable
 {
+    #region Variables
     private GameObject damageParticles;
     private float blockDamageMultiplier = 0.5f;
     private float blockStaminaMultiplier = 0.5f;
@@ -23,6 +25,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable, IStaminaDamage
     public bool PerfectBlockAllDir { get; private set; } = false;
     public bool PerfectBlock { get; private set; }
     private bool normalBlock;
+    #endregion
 
     #region Core
     private Movement movement;

@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    #region Variables
     public static GameManager Instance { get; private set; }
 
     public bool IsPaused { get; private set; }
@@ -64,6 +65,8 @@ public class GameManager : MonoBehaviour
     public event Action OnChangeSceneGoUp;
     public event Action OnChangeSceneGoDown;
     public event Action OnChangeSceneFinished;
+
+    #endregion
 
     #endregion
 
@@ -218,6 +221,9 @@ public class GameManager : MonoBehaviour
         savePoint.OnSavePointInteract += HandleSavePointInteraction;
     }
 
+    /// <summary>
+    /// Use this to pause the game.
+    /// </summary>
     public void PauseGame()
     {
         IsPaused = true;
@@ -226,6 +232,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    /// <summary>
+    /// Use this to resume the game.
+    /// </summary>
     public void ResumeGame()
     {
         IsPaused = false;
@@ -263,7 +272,10 @@ public class GameManager : MonoBehaviour
     }
 
     #region Time
-
+    /// <summary>
+    /// For global time slow skill.
+    /// </summary>
+    /// <param name="duration"></param>
     public void StartAllTimeSlow(float duration)
     {
         if(TimeSlowAll)
